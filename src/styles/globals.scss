@@ -1,0 +1,32 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
+:root {
+  width: 100%;
+  background: colors.$primary-background;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  border: 0;
+  list-style: none;
+  color: colors.$primary-font;
+  font: fonts.$f400-medium;
+}
+
+body {
+  
+  min-height: 100vh;
+
+  @media (width >= 1728px) {
+    max-width: 1728px;
+    display: flex;
+    flex-direction: column;
+    margin-left: calc((100% - 1728px)/2);
+  }
+}
+
+

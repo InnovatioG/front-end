@@ -1,0 +1,36 @@
+//LOGO
+
+export const LOGO_FULL_LIGHT = '/img/logo/logo-full-light.png';
+export const LOGO = '/img/logo/logo.png';
+
+
+//UI
+
+export const PEOPLE = '/img/ui/people.png';
+export const LAUNCHED = '/img/ui/campaigns.png';
+export const CONTRIBUITED = '/img/ui/contribuited.png';
+export const COLABORATORS = '/img/ui/colaborators.png';
+
+
+//ICONS
+
+export const WALLET_ICON = '/img/icons/wallet.svg#icon';
+export const PLUS_ICON = '/img/icons/plus.svg#icon';
+export const CLOSE_ICON = '/img/icons/x.svg#icon';
+export const CALENDAR = '/img/icons/calendar.svg#icon';
+export const CHART = '/img/icons/chart.svg#icon';
+export const USER = '/img/icons/user.svg#icon';
+export const USERS = '/img/icons/users.svg#icon';
+export const TWO_USERS = '/img/icons/two-user.svg#icon';
+export const CHEVRON_RIGHT = '/img/icons/chevron-right.svg#icon';
+export const CHEVRON_DOWN = '/img/icons/chevron-down.svg#icon';
+export const SEARCH = '/img/icons/search.png';
+export const FACEBOOK = '/img/icons/fb.svg#icon';
+export const DISCORD = '/img/icons/ds.svg#icon';
+export const XS = '/img/icons/xs.svg#icon';
+export const INSTAGRAM = '/img/icons/ig.svg#icon';
+
+
+//ASSETS
+
+export const ADA = '/img/asset/ada.png';

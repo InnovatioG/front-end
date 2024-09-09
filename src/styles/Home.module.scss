@@ -1,0 +1,116 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
+/* MOBILE FIRST */
+
+.main {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 50px;
+  .titleSection {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 60px;
+    .mainTitle {
+      font: fonts.$f900-bold;
+      text-align: center;
+    }
+    .subTitle {
+      font: fonts.$f50-medium;
+      color: colors.$secondary-font;
+      text-align: center;
+      width: 75%;
+      max-width: 320px;
+    }
+  }
+  .peopleSection {
+    width: 100%;
+    display: flex;
+    .imagePeople {
+      margin: 0 auto;
+      width: 90%;
+      height: auto;
+    }
+  }
+}
+
+@media (width >= 380px) {
+
+  .main {
+    .titleSection {
+      .mainTitle {
+        font: fonts.$f1000-bold;
+      }
+    }
+
+    .peopleSection {
+      .imagePeople {
+        max-height: 390px;
+        width: auto;
+      }
+    }
+  }
+}
+
+
+
+/* MEDIUM SCREEN */
+
+@media (width >= 680px) {
+
+  .main {
+
+    .peopleSection {
+      .imagePeople {
+        max-height: 500px;
+        width: auto;
+      }
+    }
+  }
+
+}
+
+
+/* LARGER SCREEN */
+
+
+@media (width >= 1200px) {
+
+  .main {
+    position: relative;
+    .titleSection {
+      margin-top: 120px;
+      z-index: 1;
+      margin-right: 200px;
+      .mainTitle {
+        font: fonts.$f1300-bold;
+      }
+      .subTitle {
+        font: fonts.$f600-medium;
+        max-width: 450px;
+      }
+    }
+    .peopleSection { 
+
+      .imagePeople {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+    }
+  }
+
+}
+
+@media (width >= 1570px) {
+  .main {
+    .titleSection {
+      margin-right: 0px;
+    }
+  }
+
+}

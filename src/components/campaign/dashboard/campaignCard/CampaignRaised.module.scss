@@ -1,0 +1,191 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
+/* MILESTONE TYPE */
+
+.milestoneRaised {
+  width: 100%;
+  display: flex;
+  height: 100px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+
+  .amount, .milestone {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    height: 100%;
+
+    .value {
+      font: fonts.$f800-medium;
+    }
+
+    .text {
+      font: fonts.$f50-medium;
+    }
+  }
+
+  .amount {
+    width: 100%;
+
+    &.active {
+      background: colors.$primary-light-color;
+    }
+
+    &.failed {
+      background: colors.$primary-red;
+
+      .value,
+      .text {
+        color: colors.$white-font;
+      }
+    }
+
+    &.success {
+      background: colors.$primary-green;
+
+      .value,.text {
+        color: colors.$white-font;
+      }
+    }
+  }
+
+  .milestone {
+    min-width: 100px;
+    background: colors.$primary-light-color;
+  }
+}
+
+.actionsMilestone, .actionsTarget{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 5px;
+}
+
+
+/* TARGET TYPE */
+
+.targetUnreached {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 12px;
+
+    .raise,
+    .time {
+      font: fonts.$f50-medium;
+    }
+  }
+
+  .targetInfo {
+    display: flex;
+    height: 100%;
+    gap: 6px;
+    .amount, .target {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 16px;
+      height: 100%;
+
+      .value {
+        font: fonts.$f800-medium;
+      }
+
+      .text {
+        font: fonts.$f50-medium;
+      }
+    }
+
+    .amount {
+      width: 100%;
+
+      &.unreached {
+        background: colors.$secondary-red;
+        .value,.text {
+          color: colors.$white-font;
+        }
+      }
+    }
+    .target {
+      min-width: 100px;
+    }
+  }
+}
+
+.targetFundraising {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: colors.$primary-light-color;
+  border-radius: 16px;
+  align-items: center;
+  justify-content: center;
+  .amount {
+    font: fonts.$f800-medium;
+  }
+  .bar {
+    width: 200px;
+    height: 3px;
+    border-radius: 3px;
+    background: colors.$black-color;
+    .complete {
+      max-width: 100%;
+      height: 100%;
+      background: colors.$primary-green;
+    }
+  }
+  .raise {
+    font: fonts.$f50-medium;
+  }
+}
+
+.targetComplete {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: colors.$primary-blue;
+  border-radius: 16px;
+  align-items: center;
+  justify-content: center;
+  .amount {
+    font: fonts.$f800-medium;
+    color: colors.$white-font;
+  }
+  .raise {
+    font: fonts.$f50-medium;
+    color: colors.$light-color;
+  }
+}
+
+
+/* LARGER SCREEN */
+
+@media (width >=942px) {
+  .milestoneRaised {
+
+    .amount,
+    .milestone {
+      .value {
+        font: fonts.$f900-medium;
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
+
+
+.btnDropdown {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: colors.$secondary-background;
+  border-radius: 34px;
+  transition: all 0.5s ease-in-out;
+  align-items: center;
+  .btnHeader {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    cursor: pointer;
+    gap: 10px;
+    z-index: 2;
+
+    .label {
+      color: colors.$light-font;
+    }
+
+    .icon {
+      transition: transform 0.5s ease-in-out;
+      stroke: colors.$light-font;
+
+      &.open {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .dropdownContent {
+    border-radius: 34px;
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    background: colors.$secondary-background;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0 25px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+    z-index: 1;
+
+    &.open {
+      padding-top: 50px;
+      padding-bottom: 20px;
+      opacity: 1;
+    }
+
+    .dropdownItem {
+      color: colors.$secondary-color;
+      cursor: pointer;
+      transition: color 0.2s ease-in-out;
+
+      &:hover {
+        color: colors.$light-font;
+      }
+    }
+  }
+}
+
+

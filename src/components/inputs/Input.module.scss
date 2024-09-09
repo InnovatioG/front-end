@@ -1,0 +1,39 @@
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
+
+/* BASE INPUT */
+
+.standardInput {
+  height: 50px;
+  display: flex;
+  border-radius: 34px;
+  position: relative;
+  .icon {
+    position: absolute;
+    top: 13px;
+    left: 30px;
+  }
+  .input {
+    width: 100%;
+    background: transparent;
+    border-radius: 34px;
+    padding-left: 60px;
+    border: solid 2px colors.$secondary-color;
+    &::placeholder {
+      color: colors.$placeholder-color;
+      font: fonts.$f400-medium;
+    }
+    &:focus {
+      outline: none;
+      border: 2px solid colors.$secondary-background;
+    }
+  }
+}
+
+
+/* INPUT TYPES */
+
+
+.searchActions {
+  @extend .standardInput;
+}

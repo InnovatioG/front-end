@@ -1,0 +1,138 @@
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
+
+/* BASE MODAL */
+
+.standardModal {
+  position: fixed;
+  height: 100%;
+  z-index: 100;
+  width: 100%;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(1px);
+  background-color: rgba(0, 0, 0, 0.8);
+  .main {
+    position: absolute;
+    width: 90%;
+    left: 5%;
+    top: 50px;
+    .popUp {
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      border-radius: 16px;
+      background: colors.$primary-background;
+      padding: 16px;
+
+      .headerModal {
+        .titleModal {
+          font: fonts.$f600-medium;
+        }
+        .icon {
+          stroke: colors.$primary-dark-color;
+          position: absolute;
+          cursor: pointer;
+          right: 12px;
+          top: 12px;
+        }
+      }
+    }
+  }
+}
+
+/* MEDIUM AND LARGER SCREEN */
+
+@media (width >= 640px) {
+  .standardModal {
+    .main {
+      .popUp {
+        padding: 32px;
+        .headerModal {
+          .titleModal {
+            font: fonts.$f800-bold;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/* MODAL WALLET SELECTOR */
+
+.modalWalletSelector {
+  @extend .standardModal;
+  .main {
+    max-width: 580px;
+    .headerModal {
+      height: 50px;
+      display: flex;
+      align-items: center;
+    }
+    .bodyModal {
+      display: flex;
+      gap: 10px;
+      flex-direction: column;
+      .walletList {
+        display: flex;
+        flex-direction: column;
+        border-radius: 8px;
+        gap: 10px;
+        .walletItem {
+          height: 50px;
+          display: flex;
+          align-items: center;
+          padding-inline: 16px;
+          gap: 10px;
+          background: colors.$white-background;
+          border: 1px solid colors.$border-light-color;
+          border-radius: 8px;
+          cursor: pointer;
+          &:hover {
+            background: colors.$primary-color;
+          }
+          .walletIcon {
+            height: 40px;
+            width: auto;
+          }
+          .walletLine {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+          }
+          &.unAvailable {
+            background: colors.$light-color;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+/* MEDIUM AND LARGER SCREEN */
+
+@media (width >= 640px) {
+  .modalWalletSelector {
+    .main {
+      left: calc(50% - 290px);
+      .popUp {
+        padding: 32px;
+        .headerModal {
+          height: 80px;
+        }
+        .bodyModal {
+          .walletList {
+            .walletItem {
+              height: 60px;
+              .walletName {
+                font: fonts.$f600-medium;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

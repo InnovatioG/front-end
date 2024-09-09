@@ -1,0 +1,40 @@
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
+
+/* BASE BUTTON */
+
+.standarBtnCommons {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 34px;
+  cursor: pointer;
+  .text {
+    font: fonts.$f400-medium;
+  }
+}
+
+/* BUTTON TYPES */
+
+.btnSecondary {
+  @extend .standarBtnCommons;
+  background: colors.$btn-secondary;
+  border: solid 1px colors.$border-dark-color;
+}
+
+
+  @keyframes bounceRotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    60% {
+      transform: rotate(105deg);
+    }
+    80% {
+      transform: rotate(85deg);
+    }
+    100% {
+      transform: rotate(90deg);
+    }
+  }

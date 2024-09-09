@@ -1,0 +1,168 @@
+{
+  "users": [
+    { "id": 1,
+      "email": "user1@example.com",
+      "wallet_address": "addr1qxvv3wzk9qt88w2nza6cqg2587uvxfkldnaw8h64gs7au3nrds6y7mv9ejt6z8tp3r755ytap33vaqtvd3mdja60xtds2u9vne"
+    },
+    {
+      "id": 2,
+      "email": "user2@example.com",
+      "wallet_address": "addr1q93rdw6z8j02mpdw4exp2t4yvzlzlq8qcnp9nrl6knc3eh9glz4js4pan5rq2nyacvy0gmu2ka46865k08yf6zmqsncskn3ssw"
+    }
+  ],
+  "categories": [
+    { "id": 1, "name": "Technology" },
+    { "id": 2, "name": "Event" },
+    { "id": 3, "name": "Education" },
+    { "id": 4, "name": "Gaming" },
+    { "id": 5, "name": "Social" }
+  ],
+  "states": [
+    { "id": 1, "name": "Active" },
+    { "id": 2, "name": "Unreached" },
+    { "id": 3, "name": "Fundraising" },
+    { "id": 4, "name": "Failed" },
+    { "id": 5, "name": "Success" },
+    { "id": 6, "name": "Complete" }
+  ],
+  "campaigns": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "state_id": 1,
+      "category_id": 2,
+      "investors": 2421,
+      "title": "Cardano Women in Tech Summit",
+      "description": "Empowering women in the Cardano ecosystem! Join our summit for inspiring talks, workshops, and networking opportunities. Learn from industry leaders, connect with peers, and shape the future of blockchain technology.",
+      "campaign_type": "Milestone",
+      "milestones": [
+        { "order": 1, "goal": 300000.00 },
+        { "order": 2, "goal": 500000.00 },
+        { "order": 3, "goal": 800000.00}
+      ],
+      "raise_amount": 280000.00,
+      "start_date": "2024-08-01T00:35:24.725Z",
+      "end_date": "2024-12-01T00:35:24.725Z",
+      "logo_url": "/img/database/company_logo_id1.png",
+      "banner_url": "/img/database/banner_logo_id1.png",
+      "created_at": "2024-04-01T00:35:24.725Z",
+      "updated_at": "2024-04-01T00:35:24.725Z"
+    },
+    {
+      "id": 2,
+      "user_id": 2,
+      "state_id": 2,
+      "category_id": 3,
+      "investors": 7123,
+      "title": "Cardano Academy: Empowering Individuals",
+      "description": "This proposal outlines the creation of 'Cardano Academy', a comprehensive educational platform dedicated to empowering individuals with the knowledge and skills to navigate the Cardano ecosystem.",
+      "campaign_type": "Target",
+      "milestones": [
+        { "order": 1, "goal": 50000.00 },
+        { "order": 2, "goal": 100000.00 },
+        { "order": 3, "goal": 150000.00}
+      ],
+      "goal": 120000.00,
+      "raise_amount": 30000.00,
+      "start_date": "2024-08-01T00:35:24.725Z",
+      "end_date": "2024-12-01T00:35:24.725Z",
+      "logo_url": "/img/database/company_logo_id2.png",
+      "banner_url": "/img/database/banner_logo_id2.png",
+      "created_at": "2024-04-01T00:35:24.725Z",
+      "updated_at": "2024-04-01T00:35:24.725Z"
+    },
+    {
+      "id": 3,
+      "user_id": 1,
+      "state_id": 3,
+      "category_id": 1,
+      "investors": 86,
+      "title": "CNFT Studio - Empower Artists",
+      "description": "Help launch a creator-owned NFT studio on Cardano! We empower artists with minting tools & a dedicated marketplace, all powered by ADA. Invest in the future of Cardano art.",
+      "campaign_type": "Target",
+      "milestones": [
+        { "order": 1, "goal": 35000.00 },
+        { "order": 2, "goal": 50000.00 },
+        { "order": 3, "goal": 60000.00}
+      ],
+      "goal": 35000.00,
+      "raise_amount": 30000.00,
+      "start_date": "2024-08-01T00:35:24.725Z",
+      "end_date": "2024-12-01T00:35:24.725Z",
+      "logo_url": "/img/database/company_logo_id3.png",
+      "banner_url": "/img/database/banner_logo_id3.png",
+      "created_at": "2024-04-01T00:35:24.725Z",
+      "updated_at": "2024-04-01T00:35:24.725Z"
+    },
+    {
+      "id": 4,
+      "user_id": 2,
+      "state_id": 6,
+      "category_id": 4,
+      "investors": 100,
+      "title": "Green Gaming Guild: Play & Earn",
+      "description": "Foster eco-friendly gaming with the world's first carbon-neutral Cardano gaming guild. Invest in ADA and earn rewards while playing sustainable games.",
+      "campaign_type": "Target",
+      "milestones": [
+        { "order": 1, "goal": 30000.00 },
+        { "order": 2, "goal": 40000.00 },
+        { "order": 3, "goal": 45000.00}
+      ],
+      "goal": 45000.00,
+      "raise_amount": 50000.00,
+      "start_date": "2024-08-01T00:35:24.725Z",
+      "end_date": "2024-09-04T00:25:24.725Z",
+      "logo_url": "/img/database/company_logo_id2.png",
+      "banner_url": "/img/database/banner_logo_id2.png",
+      "created_at": "2024-04-01T00:35:24.725Z",
+      "updated_at": "2024-04-01T00:35:24.725Z"
+    },
+    {
+      "id": 5,
+      "user_id": 1,
+      "state_id": 4,
+      "category_id": 1,
+      "investors": 7123,
+      "title": "Cardano-verse - The VR Metaverse",
+      "description": "Enter a new world built on Cardano! Invest in the first VR Metaverse powered by ADA. Own virtual land, build experiences, and participate in a thriving digital economy. Invest in ADA to shape the future of virtual interaction!",
+      "campaign_type": "Milestone",
+      "milestones": [
+        { "order": 1, "goal": 50000.00 },
+        { "order": 2, "goal": 80000.00 },
+        { "order": 3, "goal": 100000.00}
+      ],
+      "goal": 500000.00,
+      "raise_amount": 120000.00,
+      "start_date": "2024-08-01T00:35:24.725Z",
+      "end_date": "2024-12-01T00:35:24.725Z",
+      "logo_url": "/img/database/company_logo_id2.png",
+      "banner_url": "/img/database/banner_logo_id2.png",
+      "created_at": "2024-04-01T00:35:24.725Z",
+      "updated_at": "2024-04-01T00:35:24.725Z"
+    },
+    {
+      "id": 6,
+      "user_id": 2,
+      "state_id": 5,
+      "category_id": 5,
+      "investors": 9172,
+      "title": "Weekly Cardano Podcast.",
+      "description": "Have you ever wanted to ask Charles Hoskinson a question, or propose a discussion topic with the greatest minds in the Cardano ecosystem? This is your chance, help us create an innovative, community-driven podcast.",
+      "campaign_type": "Milestone",
+      "milestones": [
+        { "order": 1, "goal": 50000.00 },
+        { "order": 2, "goal": 80000.00 },
+        { "order": 3, "goal": 90000.00}
+      ],
+      "goal": 500000.00,
+      "raise_amount": 98000.00,
+      "start_date": "2024-08-01T00:35:24.725Z",
+      "end_date": "2024-12-01T00:35:24.725Z",
+      "logo_url": "/img/database/company_logo_id2.png",
+      "banner_url": "/img/database/banner_logo_id2.png",
+      "created_at": "2024-04-01T00:35:24.725Z",
+      "updated_at": "2024-04-01T00:35:24.725Z"
+    }
+
+  ]
+}

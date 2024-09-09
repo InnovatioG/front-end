@@ -1,0 +1,124 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
+.cardSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: -60px;
+  margin-bottom: 60px;
+  .card {
+    position: relative;
+    width: 90%;
+    max-width: 520px;
+    min-width: 330px;
+    height: 200px;
+    backdrop-filter: blur(17px);
+    background-color: rgba(255, 255, 255, 0.10);
+    border: 1px solid colors.$white-color;
+    border-radius: 22px;
+    overflow: hidden;
+    padding-left: 32px;
+    display: flex;
+    align-items: center;
+    .icon {
+      fill: colors.$primary-dark-color;
+      position: absolute;
+      left: 32px;
+      top: 25px;
+    }
+    .dataCard {
+      .data {
+        font: fonts.$f1100-regular;
+      }
+      .text {
+        font: fonts.$f400-medium;
+        color: colors.$secondary-font;
+      }
+    }
+    .imageCard {
+      position: absolute;
+      z-index: -1;
+    }
+    &:first-child{
+      .imageCard {
+        width: 178px;
+        height: auto;
+        bottom: -10px;
+        right: -10px;
+      }
+    }
+    &:nth-child(2){
+      .imageCard {
+        width: 118px;
+        height: auto;
+        bottom: 0px;
+        right: 5px;
+      }
+    }
+    &:last-child{
+      .imageCard {
+        width: 112px;
+        height: auto;
+        bottom: 5px;
+        right: -5px;
+      }
+    }
+  }
+}
+
+
+/* LARGER SCREEN */
+
+@media (width >= 1200px) { 
+
+  .cardSection {
+    flex-direction: row;
+    padding-inline: 50px;
+    margin-top: 80px;
+    .card {
+      height: 280px;
+      padding-left: 50px;
+      .icon {
+        transform: scale(1.5);
+        top: 40px;
+        left: 50px;
+      }
+      &:first-child{
+        .imageCard {
+          width: 220px;
+        }
+      }
+      &:nth-child(2){
+        .imageCard {
+          width: 170px;
+        }
+      }
+      &:last-child{
+        .imageCard {
+          width: 250px;
+        }
+      }
+    }
+  }
+
+}
+
+@media (width >= 1570px) { 
+
+  
+  .cardSection {
+    .card {
+      .dataCard {
+        .data {
+          font: fonts.$f1200-regular;
+        }
+        .text {
+          font: fonts.$f600-medium;
+        }
+      }
+    }
+  }
+
+}
