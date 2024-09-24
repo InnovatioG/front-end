@@ -1,4 +1,4 @@
-//import { signIn, useSession, signOut } from "next-auth/react";
+import { signIn, useSession, signOut } from "next-auth/react";
 import styles from "./GoogleConnect.module.scss";
 import Image from "next/image";
 import { AVATAR, GOOGLE } from "@/utils/images";
@@ -10,16 +10,16 @@ interface GoogleConnectProps {
 }
 
 const GoogleConnect: React.FC<GoogleConnectProps> = ({ width, loggedIn }) => {
-  //const { data: session } = useSession();
-  //const userImage = session?.user?.image || AVATAR;
+  const { data: session } = useSession();
+  const userImage = session?.user?.image || AVATAR;
   const [showDisconnect, setShowDisconnect] = useState<boolean>(false);
 
-/*   const handleSignIn = () => {
+  const handleSignIn = () => {
     if (session) {
       signOut();
     }
     signIn("google");
-  }; */
+  };
 
   if (loggedIn) {
     return (
@@ -28,12 +28,12 @@ const GoogleConnect: React.FC<GoogleConnectProps> = ({ width, loggedIn }) => {
         onClick={() => setShowDisconnect(!showDisconnect)}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        {/* <img src={userImage} alt="logo-user" className={styles.logo} /> */}
-        {/* {showDisconnect && session !== null && (
+        <img src={userImage} alt="logo-user" className={styles.logo} />
+        {showDisconnect && session !== null && (
           <p className={styles.btnDisconnect} onClick={() => signOut()}>
             Disconnect
           </p>
-        )} */}
+        )}
       </button>
     );
   }
@@ -41,7 +41,7 @@ const GoogleConnect: React.FC<GoogleConnectProps> = ({ width, loggedIn }) => {
   return (
     <div
       className={styles.googleButton}
-      /* onClick={handleSignIn} */
+      onClick={handleSignIn}
       style={width ? { width: `${width}px` } : undefined}
     >
       <Image src={GOOGLE} height={20} width={20} alt="logo-google" />{" "}
