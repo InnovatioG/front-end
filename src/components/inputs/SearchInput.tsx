@@ -6,7 +6,7 @@ interface SearchInputProps {
   searchTerm: string;
   onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder: string;
-  width: number;
+  width?: number;
 }
 
 export default function SearchInput(props: SearchInputProps) {
@@ -14,7 +14,7 @@ export default function SearchInput(props: SearchInputProps) {
   const { onSearchChange, searchTerm, placeholder, width } = props;
 
   return (
-    <div className={styles.searchActions} style={{width: `${width}px`}}>
+    <div className={styles.searchActions} style={width ? { width: `${width}px` } : undefined}>
       <Image src={SEARCH} height={24} width={24} alt="search" className={styles.icon}/>
       <input
           type="text"

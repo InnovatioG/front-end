@@ -1,0 +1,81 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-inline: 20px;
+  margin-bottom: 30px;
+  .btnActions{
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+    gap: 16px;
+    flex-direction: column;
+    .sectionController {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      .btnDrop {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .toggleController {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        order: -1;
+        .toggleText {
+          color: colors.$secondary-color;
+          &.active {
+            color: colors.$black-color;
+          }
+        }
+      }
+    }
+    .searchInput {
+      width: 100%;
+    }
+  }
+}
+
+
+@media (width >= 1024px) { 
+
+  .filters {
+  padding-inline: 50px;
+  margin-bottom: 40px;
+    .btnActions {
+      max-width: none;
+      flex-direction: row;
+      justify-content: space-between;
+      .sectionController {
+        flex-direction: row;
+        .toggleController {
+          order: 0;
+        }
+      }
+      .searchInput {
+        width: 25%;
+        max-width: 380px;
+      }
+    }
+
+  }
+}
+
+@media (width >= 1050px) { 
+
+  .filters {
+    .btnActions {
+      .searchInput {
+        width: 28%;
+        max-width: 380px;
+      }
+    }
+
+  }
+}

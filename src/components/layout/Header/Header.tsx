@@ -5,9 +5,11 @@ import { LOGO_FULL_LIGHT } from "@/utils/images";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import HeaderMobile from "./HeaderMobile";
 import HeaderDesktop from "./HeaderDesktop";
+import { useSession } from "next-auth/react";
 
 export default function Header() {
   const screenSize = useScreenSize();
+  const { data: session } = useSession();
 
   return (
     <div className={styles.header}>
@@ -18,12 +20,13 @@ export default function Header() {
           src={LOGO_FULL_LIGHT}
           alt="logo-full"
           className={styles.logo}
+          priority
         />
       </Link>
       {screenSize === "mobile" || screenSize === "tablet" ? (
-        <HeaderMobile />
+        <HeaderMobile session={session} />
       ) : (
-        <HeaderDesktop />
+        <HeaderDesktop session={session} />
       )}
     </div>
   );

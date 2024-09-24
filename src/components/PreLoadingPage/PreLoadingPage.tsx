@@ -49,7 +49,7 @@ const PreLoadingPage: React.FC<LoadingPageProps> = ({
   return (
     <div className={styles.loadingPage}>
       <div className={styles.logoContainer}>
-        <NextImage src={LOGO} width={50} height={50} alt="logo"/>
+        <NextImage src={LOGO} width={50} height={50} alt="logo" priority/>
       </div>
     </div>
   );

@@ -14,6 +14,16 @@ export interface State {
   name: string;
 }
 
+export interface Contracts {
+  id: number;
+  name: string;
+}
+
+export interface Vizualization {
+  id: number;
+  name: string;
+}
+
 export interface Milestone {
   order: number;
   goal: number;
@@ -24,6 +34,8 @@ export interface BaseCampaign {
   user_id: number;
   state_id: number;
   category_id: number;
+  contract_id: number;
+  vizualization: number;
   investors: number;
   title: string;
   description: string;

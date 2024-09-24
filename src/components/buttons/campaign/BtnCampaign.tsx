@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "./BtnCampaign.module.scss";
 import { PLUS_ICON } from "@/utils/images";
+import { ROUTES } from "@/utils/routes";
 
 interface BtnCampaignProps {
   type: "mobile" | "primary" | "secondary";
@@ -15,7 +16,7 @@ interface SubComponentProps {
 
 const BtnCampaignMobile: React.FC<SubComponentProps> = () => {
   return (
-    <Link href="/campaign/new" className={styles.btnCampaignMob}>
+    <Link href={ROUTES.draft} className={styles.btnCampaignMob}>
       <svg width="24" height="24" className={styles.icon}>
         <use href={PLUS_ICON}></use>
       </svg>
@@ -26,7 +27,7 @@ const BtnCampaignMobile: React.FC<SubComponentProps> = () => {
 const BtnCampaignPrimary: React.FC<SubComponentProps> = ({ width }) => {
   return (
     <Link
-      href="/campaign/new"
+      href={ROUTES.draft}
       className={styles.BtnCampaignPrimary}
       style={width ? { width: `${width}px` } : undefined}
     >
@@ -41,7 +42,7 @@ const BtnCampaignPrimary: React.FC<SubComponentProps> = ({ width }) => {
 const BtnCampaignSecondary: React.FC<SubComponentProps> = ({ width, closeMenu }) => {
   return (
     <Link
-      href="/campaign/new"
+      href={ROUTES.draft}
       className={styles.btnCampaignSecondary}
       style={width ? { width: `${width}px` } : undefined}
       onClick={closeMenu}

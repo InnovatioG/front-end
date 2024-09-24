@@ -6,6 +6,7 @@ import {
 import styles from "./CampaignRaised.module.scss";
 import { formatMoney } from "@/utils/formats";
 import BtnActions from "./BtnActions";
+import { ROUTES } from "@/utils/routes";
 
 interface CampaignRaisedProps {
   campaign: Campaign;
@@ -67,9 +68,9 @@ function MilestoneRaised(props: MilestoneRaisedProps) {
       </div>
       <div className={styles.actionsMilestone}>
         {getStatusName(campaign.state_id) === "Active" && (
-          <BtnActions type={"secondary"} url={"/"} />
+          <BtnActions type={"secondary"} url={ROUTES.home} />
         )}
-        <BtnActions type={"primary"} url={"/"} />
+        <BtnActions type={"primary"} url={ROUTES.home} />
       </div>
     </>
   );
@@ -154,9 +155,9 @@ function TargetRaised(props: TargetRaisedProps) {
 
       <div className={styles.actionsTarget}>
         {getStatusName(campaign.state_id) === "Fundraising" && (
-          <BtnActions type={"invest"} url={"/"} />
+          <BtnActions type={"invest"} url={ROUTES.home} />
         )}
-        <BtnActions type={"primary"} url={"/"} />
+        <BtnActions type={"primary"} url={ROUTES.home} />
       </div>
     </>
   );

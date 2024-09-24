@@ -1,0 +1,75 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
+.draftDashboard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 100px;
+
+
+  .notFound {
+    display: flex;
+    font: fonts.$f900-bold;
+    height: 421px;
+    align-items: center;
+  }
+
+  .draftGrid {
+    display: grid;
+    gap: 32px;
+    margin-bottom: 60px;
+    grid-template-columns: 1fr;
+    padding: 0 10px;
+
+    .newCampaign {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px, solid colors.$border-light-color;
+      gap: 7px;
+      transition: all 0.5s ease-in-out;
+
+      &:hover {
+        transform: scale(1.05);
+        background: colors.$light-color;
+        border: 1px, solid colors.$secondary-background;
+
+      }
+    }
+  }
+}
+
+/* LARGER SCREEN */
+
+@media (width >=942px) {
+
+  .draftDashboard {
+    .draftGrid {
+      margin-bottom: 90px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+@media (width >=1570px) {
+  .draftDashboard {
+    .draftGrid {
+      grid-template-columns: repeat(3, 1fr);
+
+    }
+  }
+}
+
+@media (width >=1800px) {
+  .draftDashboard {
+    .draftGrid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+}

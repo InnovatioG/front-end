@@ -14,6 +14,11 @@ export const dataBaseService = {
     return data ? JSON.parse(data) : null;
   },
 
+  getUsers: () => {
+    const data = dataBaseService.getData();
+    return data ? data.users : [];
+  },
+
   updateData: (newData: any) => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
   },

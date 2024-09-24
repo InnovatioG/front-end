@@ -1,6 +1,6 @@
 import { useModal } from "@/contexts/ModalContext";
 import styles from "./BtnConnectWallet.module.scss";
-import { ADA, WALLET_ICON } from "@/utils/images";
+import { ADA, AVATAR, WALLET_ICON } from "@/utils/images";
 import { useCardano } from "@/contexts/CardanoContext";
 import { useState } from "react";
 import { formatAddress } from "@/utils/formats";
@@ -38,6 +38,7 @@ const BtnConnectMobile: React.FC<SubComponentProps> = ({
       setShowDisconnect(!showDisconnect);
     }
   };
+
   return (
     <button
       className={`${styles.btnConnectMob} ${

@@ -1,0 +1,56 @@
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
+
+.btn {
+  width: 100%;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 38px;
+  padding-inline: 18px;
+}
+
+.groupBtn {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.primaryBtn {
+  @extend .btn;
+  background: colors.$secondary-background;
+  .text {
+    font: fonts.$f200-medium;
+    color: colors.$light-color;
+  }
+  .icon {
+    stroke: colors.$light-font;
+  }
+}
+
+.secondaryBtn {
+  @extend .btn;
+  background: colors.$light-color;
+  border: solid 1px colors.$black-color;
+  .text {
+    font: fonts.$f200-medium;
+    color: colors.$black-color;
+  }
+  .icon {
+    stroke: colors.$black-color;
+  }
+}
+
+.investBtn {
+  @extend .btn;
+  background: colors.$secondary-green;
+  width: 120%;
+  .text {
+    font: fonts.$f200-medium;
+    color: colors.$light-color;
+  }
+  .icon {
+    stroke: colors.$light-font;
+  }
+}

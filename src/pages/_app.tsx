@@ -1,8 +1,8 @@
 import "@/styles/globals.scss";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import * as Images from '@/utils/images';
-import { useState, useEffect } from 'react';
+import * as Images from "@/utils/images";
+import { useState, useEffect } from "react";
 import PreLoadingPage from "@/components/PreLoadingPage/PreLoadingPage";
 import { CardanoProvider } from "@/contexts/CardanoContext";
 import { ModalProvider } from "@/contexts/ModalContext";
@@ -11,14 +11,17 @@ import Header from "@/components/layout/Header/Header";
 import { ResponsiveProvider } from "@/contexts/ResponsiveContext";
 import { dataBaseService } from "@/HardCode/dataBaseService";
 import Footer from "@/components/layout/Footer/Footer";
+import { SessionProvider } from "next-auth/react";
 
 type ImageType = string | { [key: string]: string };
 
-const getResourcesFromImages = (images: { [key: string]: ImageType }): string[] => {
+const getResourcesFromImages = (images: {
+  [key: string]: ImageType;
+}): string[] => {
   return Object.values(images).flatMap((value): string[] => {
-    if (typeof value === 'string') {
+    if (typeof value === "string") {
       return [value];
-    } else if (typeof value === 'object') {
+    } else if (typeof value === "object") {
       return Object.values(value);
     }
     return [];
@@ -27,13 +30,12 @@ const getResourcesFromImages = (images: { [key: string]: ImageType }): string[] 
 
 const resourcesToPreload = getResourcesFromImages(Images);
 
-export default function App({ Component, pageProps }: AppProps) {
-
+export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const minLoadTime = new Promise(resolve => setTimeout(resolve, 1000));
-    
+    const minLoadTime = new Promise((resolve) => setTimeout(resolve, 1000));
+
     Promise.all([minLoadTime]).then(() => {
       setIsLoading(false);
     });
@@ -44,7 +46,12 @@ export default function App({ Component, pageProps }: AppProps) {
   }, []);
 
   if (isLoading) {
-    return <PreLoadingPage onLoadComplete={() => setIsLoading(false)} resources={resourcesToPreload} />;
+    return (
+      <PreLoadingPage
+        onLoadComplete={() => setIsLoading(false)}
+        resources={resourcesToPreload}
+      />
+    );
   }
 
   return (
@@ -60,18 +67,18 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="theme-color" content="#ffffff" />
       </Head>
-      <ResponsiveProvider>
-        <CardanoProvider>
-          <ModalProvider>
-            <ModalManager />
-            <Header />
-            <Component {...pageProps} />
-            <Footer />
-          </ModalProvider>
-        </CardanoProvider>
-      </ResponsiveProvider>
-
+      <SessionProvider session={session}>
+        <ResponsiveProvider>
+          <CardanoProvider>
+            <ModalProvider>
+              <ModalManager />
+              <Header />
+              <Component {...pageProps} />
+              <Footer />
+            </ModalProvider>
+          </CardanoProvider>
+        </ResponsiveProvider>
+      </SessionProvider>
     </>
   );
 }
-

@@ -3,8 +3,14 @@ import styles from "./HeaderDesktop.module.scss";
 import BtnCampaign from "@/components/buttons/campaign/BtnCampaign";
 import BtnConnectWallet from "@/components/buttons/connectWallet/BtnConnectWallet";
 import { CALENDAR } from "@/utils/images";
+import { Session } from "next-auth";
+import GoogleConnect from "@/components/buttons/googleConnect/GoogleConnect";
 
-export default function HeaderDesktop() {
+export default function HeaderDesktop({
+  session,
+}: {
+  session: Session | null;
+}) {
   return (
     <div className={styles.headerDesktop}>
       <nav className={styles.navSection}>
@@ -24,8 +30,12 @@ export default function HeaderDesktop() {
             <use href={CALENDAR}></use>
           </svg>
         </div>
-        <BtnCampaign type="primary" width={230} />
-        <BtnConnectWallet type="primary" width={166} />
+        <BtnCampaign type="primary" width={210} />
+        {session === null ? (
+          <BtnConnectWallet type="primary" width={166} />
+        ) : (
+          <GoogleConnect loggedIn={true} />
+        )}
       </div>
     </div>
   );

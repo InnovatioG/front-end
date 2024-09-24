@@ -31,6 +31,7 @@ export default function CampaignDashboard() {
   useEffect(() => {
     const results = campaigns.filter(
       (campaign) =>
+        campaign.vizualization === 1 &&
         campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
         (statusFilter === "" || campaign.state_id === parseInt(statusFilter)) &&
         (categoryFilter === "" ||
