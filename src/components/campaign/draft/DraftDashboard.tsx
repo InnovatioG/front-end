@@ -43,8 +43,8 @@ export default function DraftDashboard({
     if (data) {
       setCampaigns(data.campaigns);
       setFilteredCampaigns(data.campaigns);
-      setStatesContracts(data.contracts);
-      setCategories(data.categories);
+      setStatesContracts(data.contracts || []);
+      setCategories(data.categories || []); 
       setCampaignsLoading(false);
     }
   }, []);
