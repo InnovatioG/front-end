@@ -4,6 +4,7 @@ import { State, Category } from "@/HardCode/databaseType";
 import BtnDropdown from "@/components/buttons/dropdown/BtnDropdown";
 import SearchInput from "@/components/inputs/SearchInput";
 import { ScreenSize } from "@/contexts/ResponsiveContext";
+import Checkbox from "@/components/buttons/checkbox/Checkbox";
 
 interface CampaignFiltersProps {
   searchTerm: string;
@@ -14,7 +15,10 @@ interface CampaignFiltersProps {
   onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onStatusFilterChange: (value: string) => void;
   onCategoryFilterChange: (value: string) => void;
-  screenSize: ScreenSize
+  screenSize: ScreenSize;
+  isConnected: boolean;
+  myProposal: boolean;
+  onMyProposalChange: (checked: boolean) => void;
 }
 
 export default function CampaignFilters(props: CampaignFiltersProps) {
@@ -27,7 +31,10 @@ export default function CampaignFilters(props: CampaignFiltersProps) {
     onSearchChange,
     onStatusFilterChange,
     onCategoryFilterChange,
-    screenSize
+    screenSize,
+    isConnected,
+    myProposal,
+    onMyProposalChange,
   } = props;
 
   const stateOptions = [
@@ -47,6 +54,15 @@ export default function CampaignFilters(props: CampaignFiltersProps) {
       <div className={styles.btnActions}>
         <BtnDropdown options={stateOptions} value={statusFilter} onChange={onStatusFilterChange} placeholder="Status Project" width={screenSize === 'desktop' ? 180 : 160}/>
         <BtnDropdown options={categoryOptions} value={categoryFilter} onChange={onCategoryFilterChange} placeholder="Category" width={screenSize === 'desktop' ? 180 : 150}/>
+        {isConnected && (
+          <div className={styles.checkboxContainer}>
+            <Checkbox
+              checked={myProposal}
+              onChange={onMyProposalChange}
+              label="My Proposal"
+            />
+          </div>
+        )}
       </div>
       {
         screenSize === 'desktop' && <SearchInput searchTerm={searchTerm} onSearchChange={onSearchChange} placeholder="Search Project" width={380}/>

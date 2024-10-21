@@ -1,4 +1,4 @@
-import { CardanoWallet } from "@/types/cardanoTypes";
+import { CardanoWallet, Category } from "@/types/ConstantTypes";
 
 export const CARDANO_WALLETS: CardanoWallet[] = [
   {
@@ -39,4 +39,12 @@ export const CARDANO_WALLETS: CardanoWallet[] = [
   },
 ];
 
+export const categories: Category[] = [
+    "Technology",
+    "Event",
+    "Education",
+    "Gaming",
+    "Social",
+    "Food"
+  ];
 

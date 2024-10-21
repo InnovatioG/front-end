@@ -30,11 +30,15 @@ export default function DraftDashboard({
   const [campaignsLoading, setCampaignsLoading] = useState(true);
 
   useEffect(() => {
+    if (!address) {
+      setIsAdmin(false);
+      setLoading(false);
+      return;
+    }
+  
     const users = dataBaseService.getUsers();
-    const adminUser = users.find(
-      (user: User) => user.id === 1 && user.wallet_address === address
-    );
-    setIsAdmin(!!adminUser);
+    const user = users.find((user: User) => user.wallet_address === address);
+    setIsAdmin(user?.is_admin || false);
     setLoading(false);
   }, [address]);
 
@@ -176,6 +180,7 @@ export default function DraftDashboard({
         onCategoryFilterChange={handleCategoryFilterChange}
         screenSize={screenSize}
         onClickAdminView={handleClickAdminView}
+        isAdmin={isAdmin}
       />
       {visibleCampaigns.length === 0 ? (
         <p className={styles.notFound}>No Campaigns Found</p>

@@ -1,11 +1,43 @@
 import database from './database.json';
+import { User } from './databaseType';
 
 const LOCAL_STORAGE_KEY = 'campaignData';
 
 export const dataBaseService = {
   initializeData: () => {
     if (!localStorage.getItem(LOCAL_STORAGE_KEY)) {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(database));
+      const newData = {
+        ...database,
+        version: {
+          ...database.version,
+          stored_at: new Date().toISOString(),
+        },
+      };
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
+    } else {
+      const data = dataBaseService.getData();
+      let shouldUpdate = false;
+      if ( data.version.version !== database.version.version || !data.version) {
+        shouldUpdate = true;
+       } else {
+        const storedAt = new Date(data.version.stored_at);
+        const diffInMs = Date.now() - storedAt.getTime();
+        const oneDayInMs = 24 * 60 * 60 * 1000;
+        if (diffInMs > oneDayInMs) {
+          shouldUpdate = true;
+        }
+       }
+
+      if (shouldUpdate) {
+        const updatedData = {
+          ...database,
+          version: {
+            ...database.version,
+            stored_at: new Date().toISOString(),
+          },
+        };
+        dataBaseService.updateData(updatedData);
+      }
     }
   },
 
@@ -19,7 +51,19 @@ export const dataBaseService = {
     return data ? data.users : [];
   },
 
+  getCategories: () => {
+    const data = dataBaseService.getData();
+    return data ? data.categories : [];
+  },
+
+  getUserByAddress: (userId: number): string | null => {
+    const users = dataBaseService.getUsers();
+    const user = users.find((user: User) => user.id === userId);
+    return user ? user.wallet_address : null;
+  },
+
   updateData: (newData: any) => {
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
   },
 

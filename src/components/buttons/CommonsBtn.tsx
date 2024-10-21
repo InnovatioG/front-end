@@ -5,21 +5,23 @@ interface BtnProps {
   width?: number;
   action: () => void;
   content: string;
+  disabled?: boolean;
 }
 
 interface SubBtnProps {
   width?: number;
   action: () => void;
   content: string;
+  disabled?: boolean;
 }
 
 const BtnPrimary: React.FC<SubBtnProps> = (props: SubBtnProps) => {
-  const { width, action, content } = props;
+  const { width, action, content, disabled } = props;
   return (
     <div
-      className={styles.BtnPrimary}
+      className={`${styles.BtnPrimary} ${disabled ? styles.disabled : ""}`}
       style={width ? { width: `${width}px` } : undefined}
-      onClick={action}
+      onClick={disabled ? undefined : action}
     >
       <p className={styles.text}>{content}</p>
     </div>
@@ -27,10 +29,10 @@ const BtnPrimary: React.FC<SubBtnProps> = (props: SubBtnProps) => {
 };
 
 const BtnSecondary: React.FC<SubBtnProps> = (props: SubBtnProps) => {
-  const { width, action, content } = props;
+  const { width, action, content, disabled } = props;
   return (
     <div
-      className={styles.btnSecondary}
+      className={`${styles.btnSecondary} ${disabled ? styles.disabled : ""}`}
       style={width ? { width: `${width}px` } : undefined}
       onClick={action}
     >
@@ -40,12 +42,12 @@ const BtnSecondary: React.FC<SubBtnProps> = (props: SubBtnProps) => {
 };
 
 const CommonsBtn: React.FC<BtnProps> = (props: BtnProps) => {
-  const { type, width, action, content } = props;
+  const { type, width, action, content, disabled } = props;
   switch (type) {
     case "primary":
-      return <BtnPrimary width={width} action={action} content={content}/>;
+      return <BtnPrimary width={width} action={action} content={content} disabled={disabled}/>;
     case "secondary":
-      return <BtnSecondary width={width} action={action} content={content}/>;
+      return <BtnSecondary width={width} action={action} content={content} disabled={disabled}/>;
     default:
       return null;
   }

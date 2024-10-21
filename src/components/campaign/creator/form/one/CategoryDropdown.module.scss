@@ -1,0 +1,78 @@
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
+
+.btnDropdown {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-radius: 16px;
+  border: 1px solid colors.$border-secondary-dark-color;
+  transition: all 0.5s ease-in-out;
+  align-items: center;
+  width: 100%;
+  padding-inline: 30px;
+  &.open {
+    background-color: colors.$white-background;
+  }
+  .btnHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    width: 100%;
+    cursor: pointer;
+    gap: 10px;
+    z-index: 2;
+
+    .label {
+      color: colors.$placeholder-secondary-color;
+      user-select: none;
+      &.selected {
+        color: colors.$black-color;
+      }
+    }
+
+    .icon {
+      transition: transform 0.5s ease-in-out;
+      stroke: colors.$placeholder-secondary-color;
+
+      &.open {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .dropdownContent {
+    user-select: none;
+    border-radius: 16px;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background: colors.$placeholder-secondary-color;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 0 30px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s ease-in-out;
+    z-index: 1;
+
+    &.open {
+      padding: 20px 30px;
+      opacity: 1;
+    }
+
+    .dropdownItem {
+      color: colors.$black-color;
+      cursor: pointer;
+      transition: color 0.2s ease-in-out;
+
+      &:hover {
+        color: colors.$light-font;
+      }
+    }
+  }
+}

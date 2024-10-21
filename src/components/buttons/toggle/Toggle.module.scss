@@ -31,5 +31,8 @@
         background-color: colors.$primary-green;
       }
     }
+    &.disabled {
+      cursor: not-allowed;
+    }
   }
 }

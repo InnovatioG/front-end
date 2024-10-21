@@ -4,7 +4,7 @@
 .filters {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
   padding-inline: 20px;
   margin-bottom: 30px;
@@ -42,28 +42,32 @@
   }
 }
 
+@media (width >= 940px) {
+  .filters {
+    justify-content: space-between;
+    .btnActions {
+      max-width: none;
+      flex-direction: row;
+      justify-content: space-between;
+      .sectionController {
+        width: 50%;
+        .toggleController {
+          order: 0;
+        }
+      }
+      .searchInput {
+        width: 50%;
+      }
+    }
+  }
+ }
+
 
 @media (width >= 1024px) { 
 
   .filters {
   padding-inline: 50px;
   margin-bottom: 40px;
-    .btnActions {
-      max-width: none;
-      flex-direction: row;
-      justify-content: space-between;
-      .sectionController {
-        flex-direction: row;
-        .toggleController {
-          order: 0;
-        }
-      }
-      .searchInput {
-        width: 25%;
-        max-width: 380px;
-      }
-    }
-
   }
 }
 
@@ -71,6 +75,10 @@
 
   .filters {
     .btnActions {
+      .sectionController {
+        flex-direction: row;
+        width: 72%;
+      }
       .searchInput {
         width: 28%;
         max-width: 380px;

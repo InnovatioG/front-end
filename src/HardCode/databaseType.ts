@@ -1,7 +1,13 @@
+export interface Version {
+  version: string;
+  stored_at: string;
+}
+
 export interface User {
   id: number;
   email: string;
   wallet_address: string;
+  is_admin: boolean;
 }
 
 export interface Category {
@@ -61,6 +67,7 @@ export interface TargetCampaign extends BaseCampaign {
 export type Campaign = MilestoneCampaign | TargetCampaign;
 
 export interface DatabaseStructure {
+  version: Version;
   users: User[];
   categories: Category[];
   states: State[];

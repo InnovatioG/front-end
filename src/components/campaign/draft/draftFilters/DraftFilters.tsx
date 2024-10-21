@@ -17,6 +17,7 @@ interface DraftFiltersProps {
   onCategoryFilterChange: (value: string) => void;
   screenSize: ScreenSize;
   onClickAdminView: () => void;
+  isAdmin: boolean;
 }
 
 export default function DraftFilters(props: DraftFiltersProps) {
@@ -32,6 +33,7 @@ export default function DraftFilters(props: DraftFiltersProps) {
     onCategoryFilterChange,
     screenSize,
     onClickAdminView,
+    isAdmin
   } = props;
 
   const contractOptions = [
@@ -71,7 +73,7 @@ export default function DraftFilters(props: DraftFiltersProps) {
             />
           </div>
           <div className={styles.toggleController}>
-            <Toggle isActive={viewAdmin} onClickToggle={onClickAdminView} />
+            <Toggle isActive={viewAdmin} onClickToggle={onClickAdminView} disabled={!isAdmin}/>
             <span
               className={`${styles.toggleText} ${
                 viewAdmin ? styles.active : ""

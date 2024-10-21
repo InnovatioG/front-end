@@ -12,6 +12,8 @@ import { ResponsiveProvider } from "@/contexts/ResponsiveContext";
 import { dataBaseService } from "@/HardCode/dataBaseService";
 import Footer from "@/components/layout/Footer/Footer";
 import { SessionProvider } from "next-auth/react";
+import { useRouter } from "next/router";
+import { ROUTES } from "@/utils/routes";
 
 type ImageType = string | { [key: string]: string };
 
@@ -32,6 +34,7 @@ const resourcesToPreload = getResourcesFromImages(Images);
 
 export default function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const minLoadTime = new Promise((resolve) => setTimeout(resolve, 1000));
@@ -72,9 +75,9 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
           <CardanoProvider>
             <ModalProvider>
               <ModalManager />
-              <Header />
+              { router.pathname !== ROUTES.new && <Header /> }  
               <Component {...pageProps} />
-              <Footer />
+              { router.pathname !== ROUTES.new && <Footer /> }
             </ModalProvider>
           </CardanoProvider>
         </ResponsiveProvider>

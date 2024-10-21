@@ -2,6 +2,7 @@ import Link from "next/link";
 import styles from "./BtnCampaign.module.scss";
 import { PLUS_ICON } from "@/utils/images";
 import { ROUTES } from "@/utils/routes";
+import { useRouter } from "next/router";
 
 interface BtnCampaignProps {
   type: "mobile" | "primary" | "secondary";
@@ -12,11 +13,12 @@ interface BtnCampaignProps {
 interface SubComponentProps {
   width?: number;
   closeMenu?: () => void;
+  dir: string;
 }
 
-const BtnCampaignMobile: React.FC<SubComponentProps> = () => {
+const BtnCampaignMobile: React.FC<SubComponentProps> = ({ dir }) => {
   return (
-    <Link href={ROUTES.draft} className={styles.btnCampaignMob}>
+    <Link href={dir} className={styles.btnCampaignMob}>
       <svg width="24" height="24" className={styles.icon}>
         <use href={PLUS_ICON}></use>
       </svg>
@@ -24,10 +26,10 @@ const BtnCampaignMobile: React.FC<SubComponentProps> = () => {
   );
 };
 
-const BtnCampaignPrimary: React.FC<SubComponentProps> = ({ width }) => {
+const BtnCampaignPrimary: React.FC<SubComponentProps> = ({ width, dir }) => {
   return (
     <Link
-      href={ROUTES.draft}
+      href={dir}
       className={styles.BtnCampaignPrimary}
       style={width ? { width: `${width}px` } : undefined}
     >
@@ -39,10 +41,10 @@ const BtnCampaignPrimary: React.FC<SubComponentProps> = ({ width }) => {
   );
 };
 
-const BtnCampaignSecondary: React.FC<SubComponentProps> = ({ width, closeMenu }) => {
+const BtnCampaignSecondary: React.FC<SubComponentProps> = ({ width, closeMenu, dir }) => {
   return (
     <Link
-      href={ROUTES.draft}
+      href={dir}
       className={styles.btnCampaignSecondary}
       style={width ? { width: `${width}px` } : undefined}
       onClick={closeMenu}
@@ -56,13 +58,15 @@ const BtnCampaignSecondary: React.FC<SubComponentProps> = ({ width, closeMenu })
 };
 
 const BtnCampaign: React.FC<BtnCampaignProps> = ({ type, width, closeMenu }) => {
+  const router = useRouter();
+  const direction: string = router.pathname !== ROUTES.draft ? ROUTES.draft : ROUTES.new;
   switch (type) {
     case "mobile":
-      return <BtnCampaignMobile />;
+      return <BtnCampaignMobile dir = {direction}/>;
     case "primary":
-      return <BtnCampaignPrimary width={width} />;
+      return <BtnCampaignPrimary width={width} dir = {direction}/>;
     case "secondary":
-      return <BtnCampaignSecondary width={width} closeMenu={closeMenu}/>;
+      return <BtnCampaignSecondary width={width} closeMenu={closeMenu} dir = {direction}/>;
     default:
       return null;
   }

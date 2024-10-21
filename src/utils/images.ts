@@ -1,6 +1,7 @@
 //LOGO
 
 export const LOGO_FULL_LIGHT = '/img/logo/logo-full-light.png';
+export const LOGO_FULL_DARK = '/img/logo/logo-full-dark.png';
 export const LOGO = '/img/logo/logo.png';
 
 

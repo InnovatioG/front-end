@@ -4,7 +4,7 @@ import { CLOSE_ICON } from "@/utils/images";
 import { CARDANO_WALLETS } from "@/utils/constants";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { CardanoWallet } from "@/types/cardanoTypes";
+import { CardanoWallet } from "@/types/ConstantTypes";
 import Link from "next/link";
 import { isWalletInstalled } from "@/HardCode/walletsInstalled";
 import { useCardano } from "@/contexts/CardanoContext";

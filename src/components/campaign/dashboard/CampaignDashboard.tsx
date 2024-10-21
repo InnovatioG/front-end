@@ -1,13 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 import styles from "./CampaignDashboard.module.scss";
 import { dataBaseService } from "@/HardCode/dataBaseService";
-import { Campaign, State, Category } from "@/HardCode/databaseType";
+import { Campaign, State, Category, User } from "@/HardCode/databaseType";
 import CampaignCard from "./campaignCard/CampaignCard";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import CommonsBtn from "@/components/buttons/CommonsBtn";
 import CampaignFilters from "./campaignFilters/CampaignFilters";
+import { useCardano } from "@/contexts/CardanoContext";
 
 export default function CampaignDashboard() {
+  const { address } = useCardano();
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
   const [visibleCampaigns, setVisibleCampaigns] = useState<Campaign[]>([]);
@@ -17,6 +19,7 @@ export default function CampaignDashboard() {
   const [states, setStates] = useState<State[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const screenSize = useScreenSize();
+  const [myProposal, setMyProposal] = useState(false);
 
   useEffect(() => {
     const data = dataBaseService.getData();
@@ -28,18 +31,24 @@ export default function CampaignDashboard() {
     }
   }, []);
 
+
   useEffect(() => {
-    const results = campaigns.filter(
-      (campaign) =>
-        campaign.vizualization === 1 &&
-        campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (statusFilter === "" || campaign.state_id === parseInt(statusFilter)) &&
-        (categoryFilter === "" ||
-          campaign.category_id === parseInt(categoryFilter))
-    );
+    const results = campaigns.filter((campaign) => {
+      const matchesSearch = campaign.title.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesStatus = statusFilter === "" || campaign.state_id === parseInt(statusFilter);
+      const matchesCategory = categoryFilter === "" || campaign.category_id === parseInt(categoryFilter);
+      
+      const campaignOwnerAddress = dataBaseService.getUserByAddress(campaign.user_id);
+      const matchesProposal = !myProposal || campaignOwnerAddress === address; 
+  
+      return campaign.vizualization === 1 && matchesSearch && matchesStatus && matchesCategory && matchesProposal;
+    });
+  
     setFilteredCampaigns(results);
     setVisibleCampaigns([]);
-  }, [searchTerm, statusFilter, categoryFilter, campaigns]);
+  }, [searchTerm, statusFilter, categoryFilter, myProposal, campaigns, address]);
+
+
 
   const getStatusName = useCallback(
     (statusId: number): string => {
@@ -96,6 +105,10 @@ export default function CampaignDashboard() {
     setCategoryFilter(value);
   };
 
+  const handleMyProposalChange = (checked: boolean) => {
+    setMyProposal(checked);
+  };
+
   return (
     <div className={styles.campaignDashboard}>
       <CampaignFilters
@@ -108,6 +121,9 @@ export default function CampaignDashboard() {
         onStatusFilterChange={handleStatusFilterChange}
         onCategoryFilterChange={handleCategoryFilterChange}
         screenSize={screenSize}
+        isConnected={!!address}
+        myProposal={myProposal}
+        onMyProposalChange={handleMyProposalChange}
       />
       {visibleCampaigns.length === 0 ? (
         <p className={styles.notFound}>No Campaigns Found</p>
