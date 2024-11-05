@@ -1,7 +1,7 @@
-import database from './database.json';
-import { User } from './databaseType';
+import database from "./database.json";
+import { User } from "./databaseType";
 
-const LOCAL_STORAGE_KEY = 'campaignData';
+const LOCAL_STORAGE_KEY = "campaignData";
 
 export const dataBaseService = {
   initializeData: () => {
@@ -17,16 +17,16 @@ export const dataBaseService = {
     } else {
       const data = dataBaseService.getData();
       let shouldUpdate = false;
-      if ( data.version.version !== database.version.version || !data.version) {
+      if (data.version.version !== database.version.version || !data.version) {
         shouldUpdate = true;
-       } else {
+      } else {
         const storedAt = new Date(data.version.stored_at);
         const diffInMs = Date.now() - storedAt.getTime();
         const oneDayInMs = 24 * 60 * 60 * 1000;
         if (diffInMs > oneDayInMs) {
           shouldUpdate = true;
         }
-       }
+      }
 
       if (shouldUpdate) {
         const updatedData = {
@@ -105,6 +105,4 @@ export const dataBaseService = {
     }
     return false;
   },
-
-
 };

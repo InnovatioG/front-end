@@ -1,5 +1,5 @@
-@use '@/styles/settings/fonts';
-@use '@/styles/settings/colors';
+@use "@/styles/settings/fonts";
+@use "@/styles/settings/colors";
 
 .createCampaign {
   position: relative;
@@ -25,11 +25,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    .icon {
-      transform: rotate(180deg);
-      fill: colors.$white-color;
-      cursor: pointer;
-    }
+
     .titleSection {
       color: colors.$white-color;
       font: fonts.$f1000-medium;
@@ -42,13 +38,21 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
   }
 }
 
+.backContainer {
+  padding-left: 70px;
+  align-self: flex-start;
+  padding-bottom: 2.5rem;
+}
 
-@media (width > 640px) { 
+.icon {
+  transform: rotate(180deg);
+  cursor: pointer;
+}
 
+@media (width > 640px) {
   .createCampaign {
     flex-direction: row;
     .stepController {
@@ -63,7 +67,6 @@
   }
 }
 
-
 @media (width > 1024px) {
   .createCampaign {
     .stepController {
@@ -73,4 +76,4 @@
       }
     }
   }
- }
+}

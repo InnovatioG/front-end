@@ -15,19 +15,15 @@ import { dataBaseService } from "@/HardCode/dataBaseService";
 import { Category, User } from "@/HardCode/databaseType";
 import FormSteps from "@/components/campaign/creator/form/FormSteps";
 import LoadingPage from "@/components/LoadingPage/LoadingPage";
+import { useCampaignStore } from "@/store/campaign/useCampaignStore";
 
 export default function Home() {
   const screenSize = useScreenSize();
   const { data: session } = useSession();
   const { address } = useCardano();
   const router = useRouter();
-  const [step, setStep] = useState<1 | 2 | 3 | 4>(1);
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [categoryId, setCategoryId] = useState<number | null>(null);
-  const [description, setDescription] = useState("");
-  const [user, setUser] = useState<User>();
-  const [isLoading, setIsLoading] = useState(false);
+  const { step, setStep, title, setTitle, category, setCategory, description, setDescription, user, setUser, isLoading, categoryId, setCategoryId, setIsLoading } = useCampaignStore();
+
 
   const handleClickContinue = (step: 1 | 2 | 3 | 4) => {
     setStep(step);
@@ -54,11 +50,11 @@ export default function Home() {
       }
       setUser(foundUser);
     }
-    
+
     const timeoutId = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-  
+
     return () => clearTimeout(timeoutId);
   }, [address, router]);
 
@@ -101,7 +97,6 @@ export default function Home() {
   };
 
   const handleClickCreate = () => {
-    console.log(newCampaign);
     dataBaseService.createCampaign(newCampaign);
     router.push(ROUTES.draft);
   };
@@ -130,31 +125,24 @@ export default function Home() {
         )}
       </div>
       <div className={styles.stepController}>
-        <svg
-          width="28"
-          height="28"
-          className={styles.icon}
-          onClick={handleClickBack}
-        >
-          <use href={CHEVRON_RIGHT}></use>
-        </svg>
+
         <h2
           className={styles.titleSection}
         >{`Let's start with the inicial description`}</h2>
         <StepController step={step} />
       </div>
       <div className={styles.stepContent}>
-        <FormSteps
-          step={step}
-          handleContinue={handleClickContinue}
-          handleCreate={handleClickCreate}
-          title={title}
-          setTitle={setTitle}
-          category={category}
-          setCategory={setCategory}
-          description={description}
-          setDescription={setDescription}
-        />
+        <div className={styles.backContainer}>
+          <svg
+            width="28"
+            height="28"
+            className={styles.icon}
+            onClick={handleClickBack}
+          >
+            <use href={CHEVRON_RIGHT}></use>
+          </svg>
+        </div>
+        <FormSteps />
       </div>
     </div>
   );

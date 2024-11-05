@@ -1,6 +1,6 @@
-@use '@/styles/settings/fonts';
-@use '@/styles/settings/colors';
-@use '../FormSteps.module.scss';
+@use "@/styles/settings/fonts";
+@use "@/styles/settings/colors";
+@use "../FormSteps.module.scss";
 
 .section {
   display: flex;
@@ -8,6 +8,7 @@
   width: 100%;
   gap: 20px;
   align-items: center;
+  padding: 0 70px;
   .articleGroup {
     display: flex;
     flex-direction: column;
@@ -21,7 +22,6 @@
     align-items: center;
     gap: 12px;
     width: 100%;
-    max-width: 650px;
     .title {
       font: fonts.$f600-medium;
       text-align: center;
@@ -57,12 +57,15 @@
   }
 }
 
-
 @media (width > 1360px) {
   .section {
     gap: 40px;
     .articleGroup {
       flex-direction: row;
+    }
+    .btnActions {
+      width: 33%;
+      align-self: flex-end;
     }
     .article {
       .title {
@@ -71,4 +74,4 @@
       }
     }
   }
- }
+}

@@ -73,11 +73,10 @@ export default function DraftFilters(props: DraftFiltersProps) {
             />
           </div>
           <div className={styles.toggleController}>
-            <Toggle isActive={viewAdmin} onClickToggle={onClickAdminView} disabled={!isAdmin}/>
+            <Toggle isActive={viewAdmin} onClickToggle={onClickAdminView} disabled={!isAdmin} />
             <span
-              className={`${styles.toggleText} ${
-                viewAdmin ? styles.active : ""
-              }`}
+              className={`${styles.toggleText} ${viewAdmin ? styles.active : ""
+                }`}
             >
               {viewAdmin ? "Admin view active" : "Admin view inactive"}
             </span>
@@ -93,7 +92,7 @@ export default function DraftFilters(props: DraftFiltersProps) {
           />
         </div>
       </div>
-      
+
     </div>
   );
 }
