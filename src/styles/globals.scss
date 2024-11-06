@@ -1,5 +1,5 @@
-@use '@/styles/settings/fonts';
-@use '@/styles/settings/colors';
+@use "@/styles/settings/fonts";
+@use "@/styles/settings/colors";
 
 :root {
   width: 100%;
@@ -17,14 +17,34 @@
   font: fonts.$f400-medium;
 }
 body {
-  
   min-height: 100vh;
 
   @media (width >= 1728px) {
     max-width: 1728px;
     display: flex;
     flex-direction: column;
-    margin-left: calc((100% - 1728px)/2);
+    margin-left: calc((100% - 1728px) / 2);
   }
 }
 
+.filepond--root {
+  border-radius: 50%;
+  background-color: red; /* Background color */
+  height: 100px; /* Adjust based on your needs */
+  width: 100px; /* Adjust based on your needs */
+  overflow: hidden;
+}
+
+.filepond--label-action {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  display: block;
+  text-indent: -9999px; /* hides the 'Browse' text */
+}
+.filepond--drop-label {
+  background-color: #292929;
+  border: none;
+}

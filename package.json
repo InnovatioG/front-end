@@ -9,14 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "filepond": "^4.32.1",
+    "@types/react-dropzone": "^5.1.0",
+    "filepond-plugin-file-validate-type": "^1.2.9",
+    "filepond-plugin-image-crop": "^2.0.6",
+    "filepond-plugin-image-edit": "^1.6.3",
+    "filepond-plugin-image-exif-orientation": "^1.0.11",
+    "filepond-plugin-image-resize": "^2.0.10",
+    "filepond-plugin-image-transform": "^3.8.7",
     "immer": "^10.1.1",
     "innovatio": "file:",
     "next": "^14.2.13",
     "next-auth": "^4.24.7",
     "react": "^18",
     "react-dom": "^18",
-    "react-filepond": "^7.1.2",
+    "react-dropzone": "^14.3.5",
     "zustand": "^5.0.1"
   },
   "devDependencies": {

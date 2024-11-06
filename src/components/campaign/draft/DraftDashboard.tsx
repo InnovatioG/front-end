@@ -44,7 +44,6 @@ export default function DraftDashboard({
 
     const users = dataBaseService.getUsers();
     const user = users.find((user: User) => user.wallet_address === address);
-    console.log(user)
     setIsAdmin(user?.is_admin || false);
     setLoading(false);
   }, [address]);
@@ -173,7 +172,6 @@ export default function DraftDashboard({
   };
 
 
-  console.log(isAdmin)
   const handleClickAdminView = () => {
     if (isAdmin) {
       setAdminView(!adminView);

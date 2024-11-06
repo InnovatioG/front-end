@@ -1,0 +1,36 @@
+@use "@/styles/settings/colors";
+
+.plusContainer {
+  position: absolute;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  right: 0;
+  padding: 0.3rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  filter: drop-shadow(11.917px 6.5px 39px rgba(139, 142, 161, 0.33));
+}
+
+.generalContainer,
+.generalContainerGray {
+  position: relative;
+  background-color: colors.$secondary-background;
+  padding: 1rem;
+  border-radius: 50%;
+  width: 76px;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.generalContainerGray {
+  background-color: colors.$disabled;
+}
+
+.plusGray {
+  fill: gray;
+}

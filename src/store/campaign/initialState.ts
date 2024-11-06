@@ -17,6 +17,8 @@ export interface CampaignState {
     vizualization: number;
     title: string;
     description: string;
+    company_logo: string;
+    banner_image: string;
     start_date: string;
     end_date: string;
     goal: number;
@@ -39,6 +41,8 @@ export const initialState: CampaignState = {
     user_id: null,
     state_id: 1,
     category_id: null,
+    company_logo: "",
+    banner_image: "",
     title: "",
     description: "",
     contract_id: 1,

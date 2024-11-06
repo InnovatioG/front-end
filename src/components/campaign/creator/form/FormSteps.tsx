@@ -1,20 +1,19 @@
 import StepOne from "./one/StepOne";
+import StepTwo from "@/components/campaign/creator/form/two/StepTwo";
+import StepThree from "@/components/campaign/creator/form/three/StepThree";
+import StepFour from "@/components/campaign/creator/form/four/StepFour";
 import { useCampaignStore } from "@/store/campaign/useCampaignStore";
 
-interface FormStepsProps {
-
-}
+const stepComponents = {
+  1: StepOne,
+  2: StepTwo,
+  3: StepThree,
+  4: StepFour,
+};
 
 export default function FormSteps() {
-  const { step, title, setTitle, category, setCategory, description, setDescription, handleContinue, handleCreate } = useCampaignStore();
+  const { step } = useCampaignStore();
+  const StepComponent = stepComponents[step];
 
-  if (step === 1) {
-    return (
-      <StepOne title={title} setTitle={setTitle} category={category} setCategory={setCategory} description={description} setDescription={setDescription} handleContinue={handleContinue} />
-    )
-  }
-
-  return (
-    <div>FormSteps</div>
-  )
+  return StepComponent ? <StepComponent /> : <div>FormSteps</div>;
 }

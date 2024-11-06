@@ -2,11 +2,10 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { CampaignState, initialState } from "@/store/campaign/initialState";
 import {
-  setTitleAction,
-  setCategoryAction,
-  setDescriptionAction,
-  setCategoryIdAction,
-  setUserAction,
+  setCampaignStateAction,
+  setNestedCampaignStateAction,
+  setNextStepAction,
+  setPrevStepAction,
 } from "@/store/campaign/actions";
 import type { User } from "@/HardCode/databaseType";
 
@@ -18,6 +17,10 @@ interface UseCampaignStore extends CampaignState {
   setDescription: (description: string) => void;
   setIsLoading: (isLoading: boolean) => void;
   setUser: (user: User) => void;
+  nextStep: () => void;
+  prevStep: () => void;
+  setCompanyLogo: (companyLogo: string) => void;
+  setBanner: (banner: string) => void;
 }
 
 export const useCampaignStore = create<UseCampaignStore>()(
@@ -25,31 +28,47 @@ export const useCampaignStore = create<UseCampaignStore>()(
     ...initialState,
     setStep: (step) =>
       set((state) => {
-        state.step = step;
+        setCampaignStateAction(state, "step", step);
       }),
     setTitle: (title) =>
       set((state) => {
-        setTitleAction(state, title);
+        setCampaignStateAction(state, "title", title);
       }),
     setCategory: (category) =>
       set((state) => {
-        setCategoryAction(state, category);
-      }),
-    setDescription: (description) =>
-      set((state) => {
-        setDescriptionAction(state, description);
-      }),
-    setIsLoading: (isLoading) =>
-      set((state) => {
-        state.isLoading = isLoading;
+        setCampaignStateAction(state, "category", category);
       }),
     setCategoryId: (categoryId) =>
       set((state) => {
-        state.categoryId = categoryId;
+        setCampaignStateAction(state, "categoryId", categoryId);
+      }),
+    setDescription: (description) =>
+      set((state) => {
+        setCampaignStateAction(state, "description", description);
+      }),
+    setIsLoading: (isLoading) =>
+      set((state) => {
+        setCampaignStateAction(state, "isLoading", isLoading);
       }),
     setUser: (user) =>
       set((state) => {
-        setUserAction(state, user);
+        setCampaignStateAction(state, "user", user);
+      }),
+    setCompanyLogo: (companyLogo) =>
+      set((state) => {
+        setNestedCampaignStateAction(state, "company_logo", companyLogo);
+      }),
+    nextStep: () =>
+      set((state) => {
+        setNextStepAction(state);
+      }),
+    prevStep: () =>
+      set((state) => {
+        setPrevStepAction(state);
+      }),
+    setBanner: (banner) =>
+      set((state) => {
+        setNestedCampaignStateAction(state, "banner_image", banner);
       }),
   }))
 );

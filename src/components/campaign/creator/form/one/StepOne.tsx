@@ -2,31 +2,21 @@ import { categories } from "@/utils/constants";
 import CategoryDropdown from "./CategoryDropdown";
 import styles from "./StepOne.module.scss";
 import CommonsBtn from "@/components/buttons/CommonsBtn";
+import { useCampaignStore } from "@/store/campaign/useCampaignStore";
 
-interface StepOneProps {
-  title: string;
-  setTitle: (title: string) => void;
-  category: string;
-  setCategory: (category: string) => void;
-  description: string;
-  setDescription: (description: string) => void;
-  handleContinue: (step: 1 | 2 | 3 | 4) => void;
-}
 
-export default function StepOne(props: StepOneProps) {
-  const {
-    title,
-    setTitle,
-    category,
-    setCategory,
-    description,
-    setDescription,
-    handleContinue,
-  } = props;
+
+export default function StepOne() {
+  const { step, title, setTitle, category, setCategory, setDescription, nextStep, description } = useCampaignStore();
+
+
   const categoryOptions = categories.map((category) => ({
     value: category,
     label: category,
   }));
+
+
+
   const handleDescriptionChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -73,14 +63,14 @@ export default function StepOne(props: StepOneProps) {
         </div>
       </div>
       <div className={styles.btnActions}>
-      <CommonsBtn
-        type="primary"
-        action={() => handleContinue(2)}
-        content="Continue"
-        disabled={title === "" || category === "" || description === ""}
-      />
+        <CommonsBtn
+          type="primary"
+          action={() => nextStep()}
+          content="Continue"
+          disabled={title === "" || category === "" || description === ""}
+        />
       </div>
-      
+
     </div>
   );
 }

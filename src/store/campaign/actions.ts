@@ -1,37 +1,30 @@
 import { CampaignState } from "@/store/campaign/initialState";
 import type { User } from "@/HardCode/databaseType";
-export const setTitleAction = (state: CampaignState, title: string) => {
-  state.title = title;
-};
 
-export const setCategoryAction = (state: CampaignState, category: string) => {
-  state.category = category;
-};
+type CampaignStateKey = keyof CampaignState;
 
-export const setDescriptionAction = (
+export const setCampaignStateAction = <K extends CampaignStateKey>(
   state: CampaignState,
-  description: string
+  key: K,
+  value: CampaignState[K]
 ) => {
-  state.description = description;
+  state[key] = value;
 };
 
-export const setCategoryIdAction = (
+export const setNestedCampaignStateAction = <
+  K extends keyof CampaignState["newCampaign"]
+>(
   state: CampaignState,
-  categoryId: number
+  key: K,
+  value: CampaignState["newCampaign"][K]
 ) => {
-  state.categoryId = categoryId;
-};
-
-export const setUserAction = (state: CampaignState, user: User) => {
-  state.user = user;
+  state.newCampaign[key] = value;
 };
 
 export const setNextStepAction = (state: CampaignState) => {
-  state.step += 1;
+  state.step = (state.step + 1) as 1 | 2 | 3 | 4;
 };
 
 export const setPrevStepAction = (state: CampaignState) => {
-  state.step -= 1;
+  state.step = (state.step - 1) as 1 | 2 | 3 | 4;
 };
-
-export const createCampaignAction = (state: CampaignState) => {};

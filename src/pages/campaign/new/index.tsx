@@ -22,12 +22,9 @@ export default function Home() {
   const { data: session } = useSession();
   const { address } = useCardano();
   const router = useRouter();
-  const { step, setStep, title, setTitle, category, setCategory, description, setDescription, user, setUser, isLoading, categoryId, setCategoryId, setIsLoading } = useCampaignStore();
+  const { step, setStep, category, setUser, isLoading, setCategoryId, setIsLoading } = useCampaignStore();
 
 
-  const handleClickContinue = (step: 1 | 2 | 3 | 4) => {
-    setStep(step);
-  };
   const handleClickBack = () => {
     if (step === 1) {
       router.push(ROUTES.draft);
@@ -71,35 +68,6 @@ export default function Home() {
     }
   }, [category]);
 
-  const newCampaign = {
-    id: Date.now(),
-    user_id: user?.id,
-    state_id: 1,
-    category_id: categoryId,
-    contract_id: 2,
-    vizualization: 2,
-    investors: 0,
-    title: title,
-    description: description,
-    campaign_type: "Milestone", // TODO
-    milestones: [
-      { order: 1, goal: 200000.0 },
-      { order: 2, goal: 400000.0 },
-      { order: 3, goal: 800000.0 },
-    ], // TODO
-    raise_amount: 0,
-    start_date: new Date().toISOString(), // TODO
-    end_date: "", // TODO
-    logo_url: "/img/database/company_logo_id1.png",
-    banner_url: "/img/database/banner_logo_id1.png",
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  };
-
-  const handleClickCreate = () => {
-    dataBaseService.createCampaign(newCampaign);
-    router.push(ROUTES.draft);
-  };
 
   if (isLoading) {
     return <LoadingPage />;
@@ -147,3 +115,44 @@ export default function Home() {
     </div>
   );
 }
+
+
+
+
+/* 
+
+
+const newCampaign = {
+    id: Date.now(),
+    user_id: user?.id,
+    state_id: 1,
+    category_id: categoryId,
+    contract_id: 2,
+    vizualization: 2,
+    investors: 0,
+    title: title,
+    description: description,
+    campaign_type: "Milestone", // TODO
+    milestones: [
+      { order: 1, goal: 200000.0 },
+      { order: 2, goal: 400000.0 },
+      { order: 3, goal: 800000.0 },
+    ], // TODO
+    raise_amount: 0,
+    start_date: new Date().toISOString(), // TODO
+    end_date: "", // TODO
+    logo_url: "/img/database/company_logo_id1.png",
+    banner_url: "/img/database/banner_logo_id1.png",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  };
+
+  const handleClickCreate = () => {
+    dataBaseService.createCampaign(newCampaign);
+    router.push(ROUTES.draft);
+  };
+
+
+
+
+*/
