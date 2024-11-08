@@ -1,0 +1,30 @@
+@use "@/styles/settings/fonts";
+@use "@/styles/settings/colors";
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.5rem 0rem;
+  background-color: white;
+  border: 1.5px solid white;
+  border-radius: 0.8125rem;
+  backdrop-filter: blur(17.399999618530273px);
+  transition: ease-out 300ms;
+}
+
+.button:hover {
+  border: 1.5px solid #{colors.$primary-font};
+}
+
+.buttonSelected {
+  background-color: #292929;
+  border: 1.5px solid #292929;
+  color: white;
+}
+
+@media screen and (max-width: 1300px) {
+  .button {
+  }
+}

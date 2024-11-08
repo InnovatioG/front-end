@@ -4,14 +4,15 @@ import styles from "./StepTwo.module.scss"
 import DropArchive from '@/components/general/dropArchive/DropArchive';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import FundrasingSlider from './FundrasingSlider';
+import MinCollectorSlider from '@/components/campaign/creator/form/two/MinCollectorSlider';
+import CommonsBtn from '@/components/buttons/CommonsBtn';
 interface StepTwoProps {
     // Define props here
 }
 
 const StepTwo: React.FC<StepTwoProps> = (props) => {
-    const { setBanner, newCampaign } = useCampaignStore();
+    const { setBanner, newCampaign, nextStep } = useCampaignStore();
 
-    console.log(newCampaign)
 
     return (
         <article className={styles.articleContainer} >
@@ -28,7 +29,18 @@ const StepTwo: React.FC<StepTwoProps> = (props) => {
             <div>
                 <DropArchive file={newCampaign.banner_image} setFile={setBanner} />
             </div>
-            <FundrasingSlider />
+            <div className={styles.foundraisingController}>
+                <h2 className={styles.title}>Choose the raising goal and your milestones quantity</h2>
+                <FundrasingSlider />
+                <MinCollectorSlider />
+            </div>
+            <div className={styles.btnActions}>
+                <CommonsBtn
+                    type="primary"
+                    action={() => nextStep()}
+                    content="Continue"
+                />
+            </div>
         </article>
     );
 }

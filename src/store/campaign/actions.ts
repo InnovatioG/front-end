@@ -28,3 +28,7 @@ export const setNextStepAction = (state: CampaignState) => {
 export const setPrevStepAction = (state: CampaignState) => {
   state.step = (state.step - 1) as 1 | 2 | 3 | 4;
 };
+
+export const setGotal = (state: CampaignState, goal: number) => {
+  state.newCampaign.goal = goal;
+};

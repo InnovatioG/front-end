@@ -7,7 +7,12 @@ import {
   setNextStepAction,
   setPrevStepAction,
 } from "@/store/campaign/actions";
-import type { User } from "@/HardCode/databaseType";
+import type { User, Milestone } from "@/HardCode/databaseType";
+
+/* export interface Milestone {
+  order: number;
+  goal: number;
+} */
 
 interface UseCampaignStore extends CampaignState {
   setStep: (step: 1 | 2 | 3 | 4) => void;
@@ -21,6 +26,9 @@ interface UseCampaignStore extends CampaignState {
   prevStep: () => void;
   setCompanyLogo: (companyLogo: string) => void;
   setBanner: (banner: string) => void;
+  setGoal: (goal: number) => void;
+  setMilestones: (milestones: Milestone[]) => void;
+  setMinRequest: (minRequest: number) => void;
 }
 
 export const useCampaignStore = create<UseCampaignStore>()(
@@ -69,6 +77,18 @@ export const useCampaignStore = create<UseCampaignStore>()(
     setBanner: (banner) =>
       set((state) => {
         setNestedCampaignStateAction(state, "banner_image", banner);
+      }),
+    setGoal: (goal) =>
+      set((state) => {
+        setNestedCampaignStateAction(state, "goal", goal);
+      }),
+    setMilestones: (milestones) =>
+      set((state) => {
+        setNestedCampaignStateAction(state, "milestones", milestones);
+      }),
+    setMinRequest: (minRequest) =>
+      set((state) => {
+        setNestedCampaignStateAction(state, "min_request", minRequest);
       }),
   }))
 );
