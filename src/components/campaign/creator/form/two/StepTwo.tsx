@@ -11,14 +11,18 @@ interface StepTwoProps {
 }
 
 const StepTwo: React.FC<StepTwoProps> = (props) => {
-    const { setBanner, newCampaign, nextStep } = useCampaignStore();
+    const { setBanner, newCampaign, nextStep, setCompanyLogo } = useCampaignStore();
 
+
+    const disabledButton = () => {
+        return !newCampaign.banner_image || !newCampaign.company_logo || newCampaign.milestones.length === 0 || newCampaign.min_request === 0;
+    };
 
     return (
         <article className={styles.articleContainer} >
             <h2 className={styles.title}>Add Company logo</h2>
             <section className={styles.imagenContainer}>
-                <Avatar />
+                <Avatar setPicture={setCompanyLogo} picture={newCampaign.company_logo} />
                 <div className={styles.spanContainer}>
                     <span className={styles.span}>
                         The image shoud be 600x600 píxeles.t must be a JPG, PNG, GIF, TIFF or BMP file, no larger than 5 MB.
@@ -34,12 +38,15 @@ const StepTwo: React.FC<StepTwoProps> = (props) => {
                 <FundrasingSlider />
                 <MinCollectorSlider />
             </div>
-            <div className={styles.btnActions}>
-                <CommonsBtn
-                    type="primary"
-                    action={() => nextStep()}
-                    content="Continue"
-                />
+            <div className={styles.buttonContainerLayout}>
+                <div className={styles.btnActions}>
+                    <CommonsBtn
+                        type="primary"
+                        action={() => nextStep()}
+                        content="Continue"
+                        disabled={disabledButton()}
+                    />
+                </div>
             </div>
         </article>
     );

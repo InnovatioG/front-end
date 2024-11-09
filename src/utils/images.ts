@@ -35,3 +35,20 @@ export const AVATAR = "/img/icons/defaultavatar.png";
 //ASSETS
 
 export const ADA = "/img/asset/ada.png";
+
+export type IconType =
+  | "/img/icons/wallet.svg#icon"
+  | "/img/icons/plus.svg#icon"
+  | "/img/icons/x.svg#icon"
+  | "/img/icons/calendar.svg#icon"
+  | "/img/icons/chart.svg#icon"
+  | "/img/icons/user.svg#icon"
+  | "/img/icons/users.svg#icon"
+  | "/img/icons/two-user.svg#icon"
+  | "/img/icons/chevron-right.svg#icon"
+  | "/img/icons/chevron-left.svg#icon"
+  | "/img/icons/chevron-down.svg#icon"
+  | "/img/icons/fb.svg#icon"
+  | "/img/icons/ds.svg#icon"
+  | "/img/icons/xs.svg#icon"
+  | "/img/icons/ig.svg#icon";

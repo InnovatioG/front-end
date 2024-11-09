@@ -6,8 +6,13 @@ import {
   setNestedCampaignStateAction,
   setNextStepAction,
   setPrevStepAction,
+  setBrandFieldAction,
+  setMembersTeam,
+  addMemberToTeam,
+  updateMemberField,
 } from "@/store/campaign/actions";
 import type { User, Milestone } from "@/HardCode/databaseType";
+import type { MembersTeam } from "@/store/campaign/initialState";
 
 /* export interface Milestone {
   order: number;
@@ -15,6 +20,7 @@ import type { User, Milestone } from "@/HardCode/databaseType";
 } */
 
 interface UseCampaignStore extends CampaignState {
+  newMember: MembersTeam;
   setStep: (step: 1 | 2 | 3 | 4) => void;
   setTitle: (title: string) => void;
   setCategory: (category: string) => void;
@@ -29,11 +35,44 @@ interface UseCampaignStore extends CampaignState {
   setGoal: (goal: number) => void;
   setMilestones: (milestones: Milestone[]) => void;
   setMinRequest: (minRequest: number) => void;
+  setBrandField: <K extends keyof CampaignState["newCampaign"]["brand"]>(
+    key: K,
+    value: CampaignState["newCampaign"]["brand"][K]
+  ) => void;
+  setMembersTeam: (users: MembersTeam[]) => void;
+  addMemberToTeam: (member: MembersTeam) => void;
+  updateMemberField: <K extends keyof MembersTeam>(
+    memberId: number,
+    key: K,
+    value: MembersTeam[K]
+  ) => void;
+  setNewMemberField: <K extends keyof MembersTeam>(
+    key: K,
+    value: MembersTeam[K]
+  ) => void;
+
+  resetNewMember: () => void;
 }
 
 export const useCampaignStore = create<UseCampaignStore>()(
   immer<UseCampaignStore>((set) => ({
     ...initialState,
+    newMember: {
+      id: Date.now(),
+      member_picture: "",
+      member_name: "",
+      member_role: "",
+      member_description: "",
+      member_email: "",
+      member_admin: false,
+      member_social: {
+        facebook: "",
+        instagram: "",
+        discord: "",
+        x: "",
+      },
+    },
+
     setStep: (step) =>
       set((state) => {
         setCampaignStateAction(state, "step", step);
@@ -89,6 +128,44 @@ export const useCampaignStore = create<UseCampaignStore>()(
     setMinRequest: (minRequest) =>
       set((state) => {
         setNestedCampaignStateAction(state, "min_request", minRequest);
+      }),
+    setBrandField: (key, value) =>
+      set((state) => {
+        setBrandFieldAction(state, key, value);
+      }),
+    setMembersTeam: (users) =>
+      set((state) => {
+        setMembersTeam(state, users);
+      }),
+    addMemberToTeam: (member) =>
+      set((state) => {
+        addMemberToTeam(state, member);
+      }),
+    updateMemberField: (memberId, key, value) =>
+      set((state) => {
+        updateMemberField(state, memberId, key, value);
+      }),
+    setNewMemberField: (key, value) =>
+      set((state) => {
+        state.newMember[key] = value;
+      }),
+    resetNewMember: () =>
+      set((state) => {
+        state.newMember = {
+          id: Date.now(),
+          member_picture: "",
+          member_name: "",
+          member_role: "",
+          member_description: "",
+          member_email: "",
+          member_admin: false,
+          member_social: {
+            facebook: "",
+            instagram: "",
+            discord: "",
+            x: "",
+          },
+        };
       }),
   }))
 );

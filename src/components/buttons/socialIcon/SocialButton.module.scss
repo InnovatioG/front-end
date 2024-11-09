@@ -1,0 +1,26 @@
+.icon {
+  fill: colors.$primary-font;
+  transition: all 0.3s;
+  z-index: 1;
+}
+&:hover {
+  .icon {
+    fill: colors.$light-color;
+  }
+}
+&::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: colors.$secondary-background;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+&:hover::before {
+  width: 40px;
+  height: 40px;
+}

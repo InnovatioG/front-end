@@ -3,10 +3,21 @@ import Image from 'next/image';
 import styles from './Avatar.module.scss';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import UploadFile from '@/components/buttons/uploadFile/UploadFile';
+import { Interface } from 'readline';
 
-const Avatar = () => {
-    const { setCompanyLogo, newCampaign } = useCampaignStore();
 
+export interface AvatarProps {
+    setPicture: (value: string) => void;
+    picture: string;
+}
+
+
+
+const Avatar = ({
+    setPicture, picture
+}: AvatarProps) => {
+    /*     const { setCompanyLogo, newCampaign } = useCampaignStore();
+     */
 
     /* TODO SUBIR LA IMAGEN EN NUESTRA BASE DE DATOS */
 
@@ -15,7 +26,7 @@ const Avatar = () => {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setCompanyLogo(reader.result as string);
+                setPicture(reader.result as string);
             };
             reader.readAsDataURL(file);
         }
@@ -31,11 +42,11 @@ const Avatar = () => {
                 id="fileInput"
             />
             <div className={styles.containerIcon}>
-                {!newCampaign.company_logo ? (
+                {!picture ? (
                     <UploadFile styleType='black' />
                 ) : (
                     <div className={styles.avatarContainer}>
-                        <Image src={newCampaign.company_logo} alt="Avatar" layout="fill"
+                        <Image src={picture} alt="Avatar" layout="fill"
                             objectFit="cover" className={styles.picturePreview} />
                     </div>
                 )}

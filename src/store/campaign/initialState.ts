@@ -1,5 +1,21 @@
 import type { User, Milestone } from "@/HardCode/databaseType";
 
+export interface MembersTeam {
+  id: number;
+  member_picture: string;
+  member_name: string;
+  member_role: string;
+  member_description: string;
+  member_email: string;
+  member_admin: boolean;
+  member_social: {
+    facebook: string;
+    instagram: string;
+    discord: string;
+    x: string;
+  };
+}
+
 export interface CampaignState {
   step: 1 | 2 | 3 | 4;
   title: string;
@@ -11,6 +27,7 @@ export interface CampaignState {
   newCampaign: {
     id: number;
     user_id: number | null;
+
     state_id: number;
     category_id: number | null;
     contract_id: number;
@@ -27,11 +44,19 @@ export interface CampaignState {
     balance: number;
     created_at: string;
     updated_at: string;
+    brand: {
+      website: string;
+      facebook: string;
+      instagram: string;
+      discord: string;
+      x: string;
+    };
+    members_team: MembersTeam[];
   };
 }
 
 export const initialState: CampaignState = {
-  step: 1,
+  step: 4,
   title: "",
   category: "",
   categoryId: null,
@@ -55,7 +80,18 @@ export const initialState: CampaignState = {
     end_date: "",
     goal: 20000,
     balance: 0,
+
     created_at: "",
     updated_at: "",
+
+    brand: {
+      website: "",
+      facebook: "",
+      instagram: "",
+      discord: "",
+      x: "",
+    },
+
+    members_team: [],
   },
 };

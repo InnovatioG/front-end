@@ -15,12 +15,6 @@ const MinCollectorSlider: React.FC<MinCollectorSliderProps> = (props) => {
     const goal = newCampaign.goal;
     const porcentage = calculatePorcentage(goal, min_request);
 
-
-
-
-
-
-
     return (
         <div className={styles.minContainer}>
             <h3>Minimum collection to activate the campaign: {min_request}% </h3>

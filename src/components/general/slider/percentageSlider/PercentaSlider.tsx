@@ -22,7 +22,7 @@ const PercentageSlider: React.FC<PercentageSliderProps> = ({ initialLabel, setVa
         const slider = document.querySelector(`.${styles.slider}`) as HTMLInputElement;
         if (slider) {
             const valuePercentage = ((label - 80) / (100 - 80)) * 100;
-            label < 91 ? slider.style.setProperty('--value-percentage', `${valuePercentage + 2}%`) :
+            label < 91 ? slider.style.setProperty('--value-percentage', `${valuePercentage + 4}%`) :
                 slider.style.setProperty('--value-percentage', `${valuePercentage - 2}%`);
         }
     }, [label]);

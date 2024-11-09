@@ -1,0 +1,6 @@
+@use "../FormSteps.module.scss";
+
+.textarea {
+  @include FormSteps.inputStyles;
+  padding: 20px 30px;
+}

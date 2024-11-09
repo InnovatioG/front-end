@@ -1,16 +1,8 @@
 @use "@/styles/settings/fonts";
 @use "@/styles/settings/colors";
 
-.layout {
-  display: grid;
-  grid-template-columns: 5fr 1fr;
-  gap: 0.5rem;
-  width: 100%;
-}
-
 .articleContainer {
   width: 100%;
-  padding: 0 70px;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -82,7 +74,22 @@
   }
 }
 
+.buttonContainerLayout {
+  width: 246px;
+  align-self: flex-end;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  gap: 0.5rem;
+  width: 100%;
+}
+
 @media screen and (max-width: 1300px) {
+  .articleContainer {
+    padding: 0 1rem;
+  }
   .layout {
     grid-template-columns: 1fr;
   }
@@ -93,7 +100,33 @@
   }
 }
 
-/* font-family: DM Sans;
+@media screen and (max-width: 768px) {
+  .articleContainer {
+    padding: 0 1rem;
+  }
+
+  .buttonContainerLayout {
+    width: 100%;
+  }
+  .imagenContainer {
+    flex-direction: column;
+    gap: 1rem;
+    .spanContainer {
+      max-width: 100%;
+      gap: 0.5rem;
+      .span {
+        font: fonts.$f50-medium;
+        color: colors.$light-gray-span;
+      }
+    }
+  }
+  .foundRasingContainer {
+    grid-template-columns: 1fr;
+  }
+  .sliderContainer {
+    padding: 1rem 1rem 1rem 1rem;
+  }
+} /* font-family: DM Sans;
 font-size: 20px;
 font-weight: 500;
 line-height: 26.04px;
