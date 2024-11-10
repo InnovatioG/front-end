@@ -1,5 +1,5 @@
-@use '@/styles/settings/fonts';
-@use '@/styles/settings/colors';
+@use "@/styles/settings/fonts";
+@use "@/styles/settings/colors";
 
 .checkboxLabel {
   display: flex;
@@ -18,17 +18,46 @@
     margin-right: 10px;
     transition: background-color 0.2s ease;
     user-select: none;
-    &.checked {
-      background-color: colors.$secondary-green;
-    }
+    position: relative;
+
     .checkmark {
       color: colors.$white-color;
       font-size: 12px;
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      opacity: 0; /* Oculta el contenido por defecto */
+      transition: opacity 0.2s ease; /* Agrega una transición suave a la opacidad */
+    }
+
+    &.checked {
+      background-color: colors.$full-black;
+
+      .checkmark {
+        opacity: 1; /* Muestra el contenido cuando está marcado */
+      }
+
+      &:hover {
+        background-color: colors.$red-disabled;
+
+        .checkmark {
+          opacity: 1; /* Asegura que el contenido se vea cuando está en estado hover y marcado */
+        }
+      }
+    }
+
+    &:hover:not(.checked) {
+      .checkmark {
+        opacity: 1; /* Muestra el contenido cuando está en estado hover y no marcado */
+        color: black;
+      }
     }
   }
+
   .labelText {
     cursor: pointer;
     user-select: none;
-    
   }
 }

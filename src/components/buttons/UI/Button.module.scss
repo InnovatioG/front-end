@@ -1,0 +1,20 @@
+@use "@/styles/settings/fonts";
+@use "@/styles/settings/colors";
+
+.generalButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2.375rem;
+  border: 1px solid;
+  padding: 1rem 2rem;
+  background-color: colors.$primary-dark-color;
+  color: colors.$white-background;
+  font: fonts.$f400-medium;
+}
+
+.outline {
+  background: colors.$white-background;
+  color: colors.$primary-dark-color;
+  border: 1px solid colors.$primary-dark-color;
+}

@@ -1,16 +1,13 @@
 import React from 'react';
 import styles from "./SocialButton.module.scss";
-import type { IconType } from '@/utils/images';
 
 interface SocialButtonProps {
-    icon: IconType;
+    icon: string;
 }
 
-const SocialButton: React.FC<SocialButtonProps> = ({
-    icon,
-}) => {
+const SocialButton: React.FC<SocialButtonProps> = ({ icon }) => {
     return (
-        <div>
+        <div className={styles['icon-container']}>
             <svg width="20" height="20" className={styles.icon}>
                 <use href={icon}></use>
             </svg>
