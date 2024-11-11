@@ -13,7 +13,7 @@ interface StepThreeProps {
 
 const StepThree: React.FC<StepThreeProps> = (props) => {
     const { setBrandField, newCampaign, nextStep } = useCampaignStore();
-    const formFields = newCampaign.brand;
+    const formFields: { [key: string]: string } = newCampaign.brand;
 
     const disabledButton = () => {
         return !newCampaign.brand.website
@@ -33,7 +33,7 @@ const StepThree: React.FC<StepThreeProps> = (props) => {
                                 id={key}
                                 value={formFields[key]}
                                 placeholder={key}
-                                onChange={(e) => setBrandField(key, e.target.value)}
+                                onChange={(e) => setBrandField(key as "website" | "facebook" | "instagram" | "discord" | "x", e.target.value)}
                             />
                         </div>
                     );

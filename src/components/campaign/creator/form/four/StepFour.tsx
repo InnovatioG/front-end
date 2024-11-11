@@ -34,7 +34,7 @@ const StepFour: React.FC<StepFourProps> = (props) => {
                         type="text"
                         className={styles.input}
                         placeholder={field.placeholder}
-                        value={newMember[field.key as keyof typeof newMember]}
+                        value={String(newMember[field.key as keyof typeof newMember])}
                         onChange={(e) => setNewMemberField(field.key as keyof typeof newMember, e.target.value)}
                     />
                 ))}

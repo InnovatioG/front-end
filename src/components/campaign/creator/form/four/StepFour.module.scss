@@ -55,3 +55,23 @@
   gap: 0.5rem;
   margin-top: 1rem;
 }
+
+@media screen and (max-width: 768px) {
+  .inputContainer {
+    grid-template-columns: 1fr;
+
+    & > :nth-child(2n + 1):last-child {
+      grid-column: span 1;
+    }
+  }
+
+  .permissionContainer,
+  .buttonContainer {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+  }
+  .containerLayout {
+    padding-bottom: 2rem;
+  }
+}
