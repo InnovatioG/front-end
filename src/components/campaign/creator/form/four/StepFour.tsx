@@ -5,7 +5,7 @@ import Avatar from '@/components/general/pictureUpload/Avatar';
 import SocialButton from '@/components/buttons/socialIcon/SocialButton';
 import { memberFields, socialIcons } from '@/utils/constants';
 import Checkbox from '@/components/buttons/checkbox/Checkbox';
-import Button from '@/components/buttons/UI/Button';
+import GeneralButtonUI from '@/components/buttons/UI/Button';
 
 interface StepFourProps {
     // Define props here
@@ -14,14 +14,15 @@ interface StepFourProps {
 const StepFour: React.FC<StepFourProps> = (props) => {
     const { newCampaign, newMember, addMemberToTeam, resetNewMember, setNewMemberField } = useCampaignStore();
 
-    console.log(newCampaign)
 
-
+    console.log(newCampaign);
 
     const handleAddMember = () => {
         addMemberToTeam(newMember);
         resetNewMember();
     };
+
+    const disabledAddMember = !newMember.member_name || !newMember.member_description /* || !newMember.member_picture  */ || !newMember.member_last_name || !newMember.member_role || !newMember.member_email;
 
     return (
         <section className={styles.containerLayout}>
@@ -61,15 +62,12 @@ const StepFour: React.FC<StepFourProps> = (props) => {
                         label='Edit Campaign'
                     />
                 </div>
-                <input type="text" className={styles.input} placeholder="Email" />
+                <input type="text" className={styles.input} placeholder="Email" value={newMember.member_email} onChange={(e) => { setNewMemberField("member_email", e.target.value) }} />
             </article>
             <div className={styles.buttonContainer}>
-                <Button onClick={handleAddMember} classNameStyle='outline' >Continue creating</Button>
-                <Button onClick={handleAddMember}>Add member</Button>
+                <GeneralButtonUI onClick={handleAddMember} classNameStyle='outline'>Continue creating</GeneralButtonUI>
+                <GeneralButtonUI onClick={handleAddMember} disabled={disabledAddMember}>Add member</GeneralButtonUI>
             </div>
-
-
-
         </section>
     );
 }

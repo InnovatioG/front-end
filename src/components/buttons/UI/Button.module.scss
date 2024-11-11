@@ -11,6 +11,12 @@
   background-color: colors.$primary-dark-color;
   color: colors.$white-background;
   font: fonts.$f400-medium;
+
+  &:disabled {
+    background-color: colors.$disabled;
+    color: colors.$placeholder-color;
+    cursor: not-allowed;
+  }
 }
 
 .outline {

@@ -28,7 +28,7 @@ export default function StepController(props: StepControllerProps) {
             </div>
           ))
         ) : (
-          <div>hola</div>
+          <MemberController />
         )
       }
 

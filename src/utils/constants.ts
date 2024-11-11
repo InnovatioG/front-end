@@ -63,6 +63,7 @@ export const socialIcons = [
 
 export const memberFields = [
   { key: "member_name", placeholder: "Name" },
+  { key: "member_last_name", placeholder: "Last name" },
   { key: "member_role", placeholder: "Role" },
 ];
 export const titleForCampaignCreation = (step: number): string => {

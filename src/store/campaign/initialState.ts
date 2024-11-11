@@ -4,6 +4,7 @@ export interface MembersTeam {
   id: number;
   member_picture: string;
   member_name: string;
+  member_last_name: string;
   member_role: string;
   member_description: string;
   member_email: string;
@@ -56,7 +57,7 @@ export interface CampaignState {
 }
 
 export const initialState: CampaignState = {
-  step: 4,
+  step: 1,
   title: "",
   category: "",
   categoryId: null,

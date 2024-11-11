@@ -1,0 +1,32 @@
+@use "@/styles/settings/fonts";
+@use "@/styles/settings/colors";
+.singleCard {
+  background-color: colors.$background-black;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  padding: 1rem;
+  border-radius: 1.4375rem;
+  gap: 1rem;
+  h3 {
+    font: fonts.$f600-medium;
+    color: colors.$white-color;
+    text-transform: capitalize;
+  }
+  p {
+    font: fonts.$f400-medium;
+    color: colors.$gray-font-color;
+    text-transform: capitalize;
+  }
+}
+
+.cardsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.genralContainer {
+  width: 60%;
+}
