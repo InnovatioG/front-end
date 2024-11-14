@@ -15,7 +15,6 @@ const StepFour: React.FC<StepFourProps> = (props) => {
     const { newCampaign, newMember, addMemberToTeam, resetNewMember, setNewMemberField } = useCampaignStore();
 
 
-    console.log(newCampaign);
 
     const handleAddMember = () => {
         addMemberToTeam(newMember);

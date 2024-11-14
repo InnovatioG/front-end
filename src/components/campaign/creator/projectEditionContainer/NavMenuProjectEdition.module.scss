@@ -1,0 +1,14 @@
+.navContainer,
+.buttonsContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.navContainer {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.buttonsContainer {
+  gap: 1rem;
+}

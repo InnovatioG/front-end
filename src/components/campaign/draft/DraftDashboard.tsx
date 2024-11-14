@@ -10,9 +10,6 @@ import Link from "next/link";
 import { PLUS_ICON } from "@/utils/images";
 import { ROUTES } from "@/utils/routes";
 
-
-
-
 export default function DraftDashboard({
   address,
 }: {
@@ -32,8 +29,6 @@ export default function DraftDashboard({
   const [loading, setLoading] = useState(true);
   const [campaignsLoading, setCampaignsLoading] = useState(true);
 
-
-
   useEffect(() => {
     if (!address) {
       setIsAdmin(false);
@@ -41,17 +36,15 @@ export default function DraftDashboard({
       return;
     }
 
-
     const users = dataBaseService.getUsers();
     const user = users.find((user: User) => user.wallet_address === address);
-    setIsAdmin(user?.is_admin || false);
+    const isAdmin = user?.is_admin || false;
+    setIsAdmin(isAdmin);
+    setAdminView(isAdmin); // Set adminView to true if the user is an admin
     setLoading(false);
   }, [address]);
 
-
-
   /* cargo la data (se esta cargando ahora todos los cards, por mas que no esten linkeados con mi usuario) */
-
   useEffect(() => {
     const data = dataBaseService.getData();
     if (data) {
@@ -100,8 +93,7 @@ export default function DraftDashboard({
             campaign.category_id === parseInt(categoryFilter))
         );
       }
-    }
-    );
+    });
 
     setFilteredCampaigns(results);
     setVisibleCampaigns([]);
@@ -116,6 +108,7 @@ export default function DraftDashboard({
     adminView,
     campaignsLoading,
   ]);
+
   const getContractsName = useCallback(
     (contractId: number): string => {
       const contract = statesContracts.find((s) => s.id === contractId);
@@ -170,7 +163,6 @@ export default function DraftDashboard({
   const handleCategoryFilterChange = (value: string) => {
     setCategoryFilter(value);
   };
-
 
   const handleClickAdminView = () => {
     if (isAdmin) {

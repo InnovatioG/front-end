@@ -20,7 +20,9 @@ export default function Home() {
   const { data: session } = useSession();
   const { address } = useCardano();
   const router = useRouter();
-  const { step, setStep, category, setUser, isLoading, setCategoryId, setIsLoading } = useCampaignStore();
+  const { step, setStep, category, setUser, isLoading, setCategoryId, setIsLoading, newCampaign } = useCampaignStore();
+
+  console.log(newCampaign)
 
 
   const handleClickBack = () => {

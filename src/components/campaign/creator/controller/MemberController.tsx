@@ -6,6 +6,9 @@ interface MemberControllerProps {
     // Define props here
 }
 
+
+//! TODO Seleccionar un member desde el menu 
+
 const MemberController: React.FC<MemberControllerProps> = () => {
 
     const { newCampaign } = useCampaignStore()
@@ -13,7 +16,6 @@ const MemberController: React.FC<MemberControllerProps> = () => {
 
 
     const memberstTeam = newCampaign.members_team
-    console.log(memberstTeam)
 
 
     return (

@@ -1,0 +1,94 @@
+@use "@/styles/settings/fonts";
+@use "@/styles/settings/colors";
+
+.campaignCard {
+  border-radius: 1.375rem;
+  border: 1.5px solid #fff;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(25px);
+  padding: 1rem 2rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.campaignCardStatus {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 100%;
+  align-items: center;
+}
+
+.statusContainer {
+  width: 100%;
+  background-color: #e0ffb1;
+  border-radius: 34px;
+  padding: 0.25rem 1rem;
+  height: 100%;
+  text-transform: capitalize;
+}
+
+.status {
+  font: fonts.$f50-medium;
+  color: colors.$primary-font;
+}
+
+.investors {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: colors.$secondary-background;
+  height: 100%;
+  padding: 0.35rem 1rem;
+  border-radius: 34px;
+  justify-content: center;
+  .span {
+    color: colors.$white-font;
+    font: fonts.$f50-medium;
+    height: 100%;
+  }
+  .icon {
+    fill: colors.$light-font;
+  }
+}
+
+.campaignCardGoal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  p {
+    font: fonts.$f500-medium;
+    color: colors.$primary-font;
+  }
+}
+
+.goal {
+  font: fonts.$goal;
+  color: colors.$primary-font;
+}
+
+.medidor {
+  height: 10px;
+  width: 100%;
+  background-color: black;
+  border-radius: 34px;
+  position: relative;
+}
+
+.campaignCardMinRequest {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.progress {
+  height: 100%;
+  background-color: #76d13e;
+  border-radius: 34px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

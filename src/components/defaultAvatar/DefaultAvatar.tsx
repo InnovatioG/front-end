@@ -2,13 +2,17 @@ import * as React from "react";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 import styles from "./DefaultAvatar.module.scss";
 
+interface AvatarProps extends React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> {
+  big?: boolean;
+}
+
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
->(({ className, ...props }, ref) => (
+  AvatarProps
+>(({ className, big = false, ...props }, ref) => (
   <AvatarPrimitive.Root
     ref={ref}
-    className={`${styles.avatarRoot} ${className}`}
+    className={`${styles.avatarRoot} ${big ? styles.big : ''} ${className}`}
     {...props}
   />
 ));

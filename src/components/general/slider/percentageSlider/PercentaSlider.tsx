@@ -9,7 +9,6 @@ interface PercentageSliderProps {
 
 const PercentageSlider: React.FC<PercentageSliderProps> = ({ initialLabel, setValue }) => {
     const [label, setLabel] = useState(initialLabel);
-    console.log("initialLabel", initialLabel)
 
     const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = parseInt(event.target.value);
@@ -17,7 +16,6 @@ const PercentageSlider: React.FC<PercentageSliderProps> = ({ initialLabel, setVa
         setValue(newValue);
     };
 
-    console.log("label", label)
 
     useEffect(() => {
         const slider = document.querySelector(`.${styles.slider}`) as HTMLInputElement;

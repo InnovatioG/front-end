@@ -5,6 +5,7 @@ import {
   INSTAGRAM,
   LOGO_FULL_LIGHT,
   XS,
+  WEBSITE,
 } from "@/utils/images";
 export const CARDANO_WALLETS: CardanoWallet[] = [
   {

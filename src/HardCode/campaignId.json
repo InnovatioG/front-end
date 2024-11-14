@@ -1,0 +1,80 @@
+[
+  {
+    "id": 2,
+    "user_id": null,
+    "state_id": 1,
+    "category_id": null,
+    "status": "Fundraising",
+    "company_logo": "https://avatars.githubusercontent.com/u/93623817?v=4",
+    "banner_image": "/img/database/banner_logo_id1.png",
+    "investors": 0,
+    "milestones": [
+      {
+        "order": 1,
+        "goal": 0
+      },
+      {
+        "order": 2,
+        "goal": 0
+      },
+      {
+        "order": 3,
+        "goal": 0
+      }
+    ],
+
+    "min_request": 70,
+
+    "title": "Prueba ABC 123",
+    "description": "",
+    "contract_id": 1,
+    "vizualization": 1,
+    "start_date": "",
+    "end_date": "",
+    "goal": 60000,
+    "balance": 0,
+    "created_at": "",
+    "updated_at": "",
+    "brand": {
+      "website": "www.iairkaplun.com.ar",
+      "facebook": "",
+      "instagram": "",
+      "discord": "",
+      "x": ""
+    },
+    "members_team": [
+      {
+        "id": 1731367675829,
+        "member_picture": "",
+        "member_name": "Iair",
+        "member_last_name": "Kaplun",
+        "member_role": "Producer",
+        "member_description": "Fafa",
+        "member_email": "iairkap@gmail.com",
+        "member_admin": true,
+        "member_social": {
+          "facebook": "",
+          "instagram": "",
+          "discord": "",
+          "x": ""
+        }
+      },
+      {
+        "id": 1731367762665,
+
+        "member_name": "Jorge",
+        "member_last_name": "Drexler",
+        "member_role": "Musician",
+        "member_description": "Jorge es nuestra luz",
+        "member_email": "jorge@drexler.com",
+        "member_admin": false,
+        "member_social": {
+          "facebook": "",
+          "instagram": "",
+          "discord": "",
+          "x": ""
+        }
+      }
+    ]
+  }
+]

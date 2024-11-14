@@ -34,7 +34,7 @@ export default function Home() {
         </div>
       ) : (
         <div className={styles.draftSection}>
-          <h2 className={styles.title}>Draft</h2>
+          <h2 className={styles.title}>Manage</h2>
           <DraftDashboard address={address} />
         </div>
       )}

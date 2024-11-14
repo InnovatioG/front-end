@@ -12,6 +12,10 @@
   color: colors.$white-background;
   font: fonts.$f400-medium;
 
+  @media (max-width: 1360px) {
+    padding: 0.7rem 0.5rem;
+  }
+
   &:disabled {
     background-color: colors.$disabled;
     color: colors.$placeholder-color;
@@ -23,4 +27,57 @@
   background: colors.$white-background;
   color: colors.$primary-dark-color;
   border: 1px solid colors.$primary-dark-color;
+}
+
+.active-nav {
+  font: fonts.$f200-medium;
+}
+
+.passive-nav {
+  background-color: colors.$gray-menu;
+  color: colors.$primary-dark-color;
+  border: 1px solid colors.$primary-dark-color;
+  font: fonts.$f200-medium;
+}
+
+.overview {
+  background-color: #3e5bc1;
+  font: fonts.$f200-medium;
+}
+
+.green {
+  background: var(--Green, #76d13e);
+  font: fonts.$f200-medium;
+}
+
+.menu-index,
+.menu-index-selected {
+  background-color: colors.$gray-menu;
+  color: colors.$secondary-background;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  font: fonts.$f200-medium;
+  @media (max-width: 768px) {
+    padding: 0.7rem 0.5rem;
+  }
+
+  @media (max-width: 1360px) {
+    padding: 0.7rem 0.5rem;
+  }
+  transition: all ease 0.1s;
+}
+
+.menu-index:hover,
+.menu-index-selected:hover {
+  border: 1px solid colors.$primary-dark-color;
+}
+
+.menu-index {
+  border: 1px solid colors.$primary-dark-color;
+  scale: 1.1;
+}
+
+.menu-index-selected {
 }

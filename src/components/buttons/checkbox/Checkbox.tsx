@@ -4,11 +4,12 @@ import styles from "./Checkbox.module.scss";
 interface CheckboxProps {
   checked: boolean;
   onChange: (checked: boolean) => void;
-  label: string;
+  label?: string;
+  variant?: boolean
 }
 
 export default function Checkbox(props: CheckboxProps) {
-  const { checked, onChange, label } = props;
+  const { checked, onChange, label, variant = false } = props;
   const [hover, setHover] = useState(false);
 
   return (
@@ -19,6 +20,8 @@ export default function Checkbox(props: CheckboxProps) {
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
+        {/*         {variant && <span className={styles.variant}>+</span>}
+ */}
         <span className={styles.checkmark}>
           {checked ? (hover ? "✖" : "✔") : (hover ? "✔" : "")}
         </span>

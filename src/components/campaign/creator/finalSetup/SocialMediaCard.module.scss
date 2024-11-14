@@ -1,0 +1,38 @@
+@use "@/styles/settings/colors";
+@use "@/styles/settings/fonts";
+
+.socialMediaCard {
+  border-radius: 1.375rem;
+  border: 1.5px solid #fff;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(25px);
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.buttonSelected {
+  background-color: colors.$secondary-background;
+  border-radius: 2.375rem;
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  span {
+    color: colors.$white-background;
+  }
+}
+
+.socialContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 50%;
+  justify-content: flex-end;
+}

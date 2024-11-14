@@ -28,6 +28,7 @@ export const SEARCH = "/img/icons/search.png";
 export const FACEBOOK = "/img/icons/fb.svg#icon";
 export const DISCORD = "/img/icons/ds.svg#icon";
 export const XS = "/img/icons/xs.svg#icon";
+export const WEBSITE = "/img/icons/website.svg#icon";
 export const INSTAGRAM = "/img/icons/ig.svg#icon";
 export const GOOGLE = "/img/icons/google.png";
 export const AVATAR = "/img/icons/defaultavatar.png";
@@ -51,4 +52,5 @@ export type IconType =
   | "/img/icons/fb.svg#icon"
   | "/img/icons/ds.svg#icon"
   | "/img/icons/xs.svg#icon"
+  | "/img/icons/website.svg#icon"
   | "/img/icons/ig.svg#icon";
