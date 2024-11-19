@@ -52,11 +52,15 @@ interface UseCampaignStore extends CampaignState {
   ) => void;
 
   resetNewMember: () => void;
+  selectedMember: MembersTeam | null; // Add this line
+
+  setSelectedMember: (member: MembersTeam | null) => void;
 }
 
 export const useCampaignStore = create<UseCampaignStore>()(
   immer<UseCampaignStore>((set) => ({
     ...initialState,
+    selectedMember: null, // Add this line
     newMember: {
       id: Date.now(),
       member_picture: "",
@@ -149,6 +153,15 @@ export const useCampaignStore = create<UseCampaignStore>()(
     setNewMemberField: (key, value) =>
       set((state) => {
         state.newMember[key] = value;
+      }),
+    setSelectedMember: (member) =>
+      set((state) => {
+        if (member) {
+          state.newMember = { ...member };
+        } else {
+          state.resetNewMember();
+        }
+        state.selectedMember = member;
       }),
     resetNewMember: () =>
       set((state) => {

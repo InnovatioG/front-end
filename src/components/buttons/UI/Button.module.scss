@@ -79,5 +79,12 @@
   scale: 1.1;
 }
 
-.menu-index-selected {
+.hasContentButton {
+  background-color: red;
+}
+
+.non-empty-content {
+  background-color: colors.$primary-dark-color;
+  color: colors.$white-background;
+  font: fonts.$f400-medium;
 }

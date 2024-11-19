@@ -20,10 +20,14 @@ const GeneralButtonUI: React.FC<GeneralButtonUIProps> = ({
     loading = false,
     children
 }) => {
+
+
+
+
     return (
         <button
             type={type}
-            className={`${styles.generalButton} ${classNameStyle ? styles[classNameStyle] : ''}`}
+            className={`${styles.generalButton} ${classNameStyle?.split(' ').map(cls => styles[cls]).join(' ')}`}
             onClick={onClick}
             disabled={disabled || loading}
         >

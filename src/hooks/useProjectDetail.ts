@@ -1,44 +1,98 @@
-import { useState } from "react";
-
-export const initialTextEditorOptions = [
-  {
-    id: 1,
-    title: "What's the product?",
-    content:
-      "In this section, you should provide a clear and concise description of your product, service, or project. Answer questions like what it is, what it does, If it's a physical product, describe its key features and how it benefits the user. If it's a service, explain what it entails and how it satisfies a need or solves a specific problem.",
-  },
-  {
-    id: 2,
-    title: "What's your value?",
-    content:
-      "In this section, highlight the unique and valuable aspects of your digital product, service, or project. Explore how it stands out from other available options in the market and why it's a superior choice. This may include distinctive features, additional benefits, competitive advantages, or core values that support your proposal.",
-  },
-  {
-    id: 3,
-    title: "How it works?",
-    content:
-      "In this section, explain how your product, service, or project operates in practice. Detail the steps or processes involved, from acquisition to use or implementation. If it's a product, describe how it's used and what benefits it offers to users. If it's a service, explain how it's delivered and how customers can access it. If it's a project, describe how it will be carried out and what stages or milestones it will involve.",
-  },
-  {
-    id: 4,
-    title: "Marketing Strategy",
-    content:
-      "In this section, describe your general strategy to promote and market your digital product, service, or project. Explore the marketing channels you will utilize, such as social media, email marketing, digital advertising, etc. Detail your specific tactics, like content creation, participation in events, collaboration with influencers, etc. It's also helpful to explain how you will measure and evaluate the success of your marketing efforts.",
-  },
-];
+import { useState, useEffect } from "react";
+import { initialTextEditorOptions } from "@/utils/constants";
 
 export const useProjectDetail = () => {
+  const initialContent = initialTextEditorOptions.reduce((acc, option) => {
+    acc[option.id] = "";
+    return acc;
+  }, {});
+
+  const initialContentReorder = initialTextEditorOptions.reduce(
+    (acc, option, index) => {
+      acc[option.id] = {
+        id: option.id,
+        title: option.title,
+        content: "",
+        order: index * 10,
+      };
+      return acc;
+    },
+    {}
+  );
+
   const [textEditorOptions, setTextEditorOptions] = useState(
-    initialTextEditorOptions
+    initialTextEditorOptions.map((option, index) => ({
+      ...option,
+      order: index * 10,
+    }))
   );
   const [selectedOption, setSelectedOption] = useState(
     initialTextEditorOptions[0]
   );
-  const [content, setContent] = useState<{ [key: number]: string }>({});
+  const [content, setContent] = useState<{ [key: number]: string }>(
+    initialContent
+  );
+  const [contentReorder, setContentReorder] = useState<{
+    [key: number]: {
+      id: number;
+      title: string;
+      content: string;
+      order: number;
+    };
+  }>(initialContentReorder);
+
   const [newOptionTitle, setNewOptionTitle] = useState("");
   const [checkboxState, setCheckboxState] = useState<{
     [key: number]: boolean;
   }>({});
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+
+  useEffect(() => {
+    const newContentReorder = {};
+    textEditorOptions.forEach((option) => {
+      newContentReorder[option.id] = {
+        id: option.id,
+        title: option.title,
+        content: content[option.id] || "",
+        order: option.order,
+      };
+    });
+    setContentReorder(newContentReorder);
+  }, [content, textEditorOptions]);
+
+  const handleDragStart = (index: number) => {
+    setDraggedIndex(index);
+  };
+
+  const handleDragOver = (index: number) => (event: React.DragEvent) => {
+    event.preventDefault();
+    if (index === draggedIndex) return;
+
+    const options = [...textEditorOptions];
+    const item = options[draggedIndex];
+    options.splice(draggedIndex, 1);
+    options.splice(index, 0, item);
+    setTextEditorOptions(options);
+
+    const updatedContent = {};
+    options.forEach((option) => {
+      updatedContent[option.id] = content[option.id] || "";
+    });
+    setContent(updatedContent);
+
+    console.log(
+      "New order of options:",
+      options.map((option) => option.title)
+    );
+    setDraggedIndex(index);
+  };
+
+  const handleCheckboxChange = (optionId: number) => {
+    setCheckboxState((prevState) => ({
+      ...prevState,
+      [optionId]: !prevState[optionId],
+    }));
+  };
 
   const handleEditorChange = (newContent: string) => {
     setContent((prevContent) => ({
@@ -56,6 +110,7 @@ export const useProjectDetail = () => {
           ? Math.max(...textEditorOptions.map((option) => option.id)) + 1
           : 1,
       title: newOptionTitle,
+      order: textEditorOptions.length * 10,
     };
 
     setTextEditorOptions([...textEditorOptions, newOption]);
@@ -63,11 +118,18 @@ export const useProjectDetail = () => {
     setNewOptionTitle("");
   };
 
-  const handleCheckboxChange = (optionId: number) => {
-    setCheckboxState((prevState) => ({
-      ...prevState,
-      [optionId]: !prevState[optionId],
-    }));
+  const handleDragEnd = () => {
+    const newContentReorder = {};
+    textEditorOptions.forEach((option, index) => {
+      newContentReorder[option.id] = {
+        id: option.id,
+        title: option.title,
+        content: content[option.id] || "",
+        order: index * 10,
+      };
+    });
+    setContentReorder(newContentReorder);
+    setDraggedIndex(null);
   };
 
   return {
@@ -81,5 +143,10 @@ export const useProjectDetail = () => {
     handleEditorChange,
     handleAddOption,
     handleCheckboxChange,
+    handleDragStart,
+    handleDragOver,
+    handleDragEnd,
+    contentReorder,
+    draggedIndex,
   };
 };

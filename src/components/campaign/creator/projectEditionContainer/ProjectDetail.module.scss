@@ -6,6 +6,7 @@
   flex-direction: column;
   width: 100%;
 }
+
 .layoutProject {
   display: grid;
   grid-template-columns: 1fr 4fr;
@@ -31,4 +32,61 @@
   width: 100%;
   text-wrap: nowrap;
   text-align: left;
+}
+
+.optionsContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.draggableItem {
+  cursor: grab;
+  margin-bottom: 0.5rem;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.draggableItem:active {
+  cursor: grabbing;
+}
+
+.dragging {
+  background-color: transparent; /* Cambia el color de fondo cuando se arrastra */
+  opacity: 0.8; /* Cambia la opacidad cuando se arrastra */
+  transform: scale(1.05); /* Escala el elemento cuando se arrastra */
+}
+
+.option {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.activeOption {
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  background-color: #e0e0e0;
+  border: 1px solid #999;
+  border-radius: 0.25rem;
+}
+
+.addOptionContainer {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.input {
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.buttonContainer {
+  margin-top: 1rem;
 }

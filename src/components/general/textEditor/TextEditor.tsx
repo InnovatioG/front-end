@@ -14,16 +14,23 @@ interface TextEditorProps {
 
 export default function TextEditor({ title, content, onChange }: TextEditorProps) {
     const [editorContent, setEditorContent] = useState(content);
+    console.log(content)
+
+
+
 
     useEffect(() => {
-        setEditorContent(content);
+        if (content !== "<p><br></p>") {
+            setEditorContent(content);
+        }
     }, [content]);
 
     const handleEditorChange = (newContent: string) => {
-        setEditorContent(newContent);
-        onChange(newContent);
+        if (newContent !== "<p><br></p>") {
+            setEditorContent(newContent);
+            onChange(newContent);
+        }
     };
-
     const quillModules = {
         toolbar: [
             [{ header: [1, 2, 3, false] }],

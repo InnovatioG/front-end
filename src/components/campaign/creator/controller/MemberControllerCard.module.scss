@@ -1,7 +1,8 @@
 @use "@/styles/settings/fonts";
 @use "@/styles/settings/colors";
 .singleCard {
-  background-color: colors.$background-black;
+  /*   background-color: colors.$background-black;
+ */
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -18,6 +19,11 @@
     color: colors.$gray-font-color;
     text-transform: capitalize;
   }
+  transition: all cubic-bezier(0.215, 0.61, 0.355, 1) 0.2s;
+}
+
+.singleCard:hover {
+  background-color: colors.$background-black;
 }
 
 .cardsContainer {

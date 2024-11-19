@@ -53,6 +53,7 @@ export interface CampaignState {
       x: string;
     };
     members_team: MembersTeam[];
+    selectedMember: MembersTeam | null; // Fix typo here
   };
 }
 
@@ -94,5 +95,6 @@ export const initialState: CampaignState = {
     },
 
     members_team: [],
+    selectedMember: null, // Fix typo here
   },
 };

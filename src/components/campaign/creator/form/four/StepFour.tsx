@@ -1,4 +1,15 @@
 import React from 'react';
+
+interface MembersTeam {
+    id: string;
+    member_name: string;
+    member_description: string;
+    member_last_name: string;
+    member_role: string;
+    member_email: string;
+    member_picture: string;
+    member_admin: boolean;
+}
 import styles from "./StepFour.module.scss";
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import Avatar from '@/components/general/pictureUpload/Avatar';
@@ -12,16 +23,33 @@ interface StepFourProps {
 }
 
 const StepFour: React.FC<StepFourProps> = (props) => {
-    const { newCampaign, newMember, addMemberToTeam, resetNewMember, setNewMemberField } = useCampaignStore();
+    const { newCampaign, newMember, addMemberToTeam, resetNewMember, setNewMemberField, updateMemberField } = useCampaignStore();
+
+    const isEditing = newMember.id && newCampaign.members_team.some(m => m.id === newMember.id);
 
 
-
-    const handleAddMember = () => {
-        addMemberToTeam(newMember);
+    const handleSaveMember = () => {
+        if (isEditing) {
+            // Update existing member
+            Object.keys(newMember).forEach(key => {
+                updateMemberField(
+                    newMember.id,
+                    key as keyof MembersTeam,
+                    newMember[key as keyof MembersTeam]
+                );
+            });
+        } else {
+            // Add new member with new id
+            const memberToAdd = {
+                ...newMember,
+                id: Date.now() // Ensure new ID for new members
+            };
+            addMemberToTeam(memberToAdd);
+        }
         resetNewMember();
     };
 
-    const disabledAddMember = !newMember.member_name || !newMember.member_description /* || !newMember.member_picture  */ || !newMember.member_last_name || !newMember.member_role || !newMember.member_email;
+    const disabledSaveMember = !newMember.member_name || !newMember.member_description || !newMember.member_last_name || !newMember.member_role || !newMember.member_email;
 
     return (
         <section className={styles.containerLayout}>
@@ -64,10 +92,14 @@ const StepFour: React.FC<StepFourProps> = (props) => {
                 <input type="text" className={styles.input} placeholder="Email" value={newMember.member_email} onChange={(e) => { setNewMemberField("member_email", e.target.value) }} />
             </article>
             <div className={styles.buttonContainer}>
-                <GeneralButtonUI onClick={handleAddMember} classNameStyle='outline'>Continue creating</GeneralButtonUI>
-                <GeneralButtonUI onClick={handleAddMember} disabled={disabledAddMember}>Add member</GeneralButtonUI>
+                <GeneralButtonUI onClick={resetNewMember} classNameStyle='outline'>
+                    Cancel
+                </GeneralButtonUI>
+                <GeneralButtonUI onClick={handleSaveMember} disabled={disabledSaveMember}>
+                    {isEditing ? 'Update member' : 'Add member'}
+                </GeneralButtonUI>
             </div>
-        </section>
+        </section >
     );
 }
 

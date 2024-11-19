@@ -28,3 +28,10 @@ export const formatTime = (time: number) => time.toString().padStart(2, "0");
 export const calculatePorcentage = (total: number, porcentage: number) => {
   return (total * porcentage) / 100;
 };
+
+export const formatLink = (link: string) => {
+  if (!link.startsWith("http://") && !link.startsWith("https://")) {
+    return `http://${link}`;
+  }
+  return link;
+};

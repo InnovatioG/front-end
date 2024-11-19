@@ -45,34 +45,52 @@
     "members_team": [
       {
         "id": 1731367675829,
-        "member_picture": "",
+        "member_picture": "www.github.com/iairkap.png",
         "member_name": "Iair",
         "member_last_name": "Kaplun",
-        "member_role": "Producer",
-        "member_description": "Fafa",
+        "member_role": "Director",
+        "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
         "member_email": "iairkap@gmail.com",
         "member_admin": true,
         "member_social": {
-          "facebook": "",
-          "instagram": "",
+          "facebook": "www.facebook.com/iairkap",
+          "instagram": "www.instagram.com/iairkap",
           "discord": "",
-          "x": ""
+          "xs": "x.com/iairkap"
         }
       },
       {
         "id": 1731367762665,
+        "member_picture": "",
 
         "member_name": "Jorge",
         "member_last_name": "Drexler",
         "member_role": "Musician",
-        "member_description": "Jorge es nuestra luz",
+        "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
         "member_email": "jorge@drexler.com",
         "member_admin": false,
         "member_social": {
           "facebook": "",
           "instagram": "",
           "discord": "",
-          "x": ""
+          "xs": ""
+        }
+      },
+      {
+        "id": 1731367762665,
+        "member_picture": "",
+
+        "member_name": "Alan",
+        "member_last_name": "Varela",
+        "member_role": "Electrician",
+        "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
+        "member_email": "jorge@drexler.com",
+        "member_admin": false,
+        "member_social": {
+          "facebook": "www.facebook.com/iairkap",
+          "instagram": "",
+          "discord": "",
+          "xs": "x.com/peter"
         }
       }
     ]

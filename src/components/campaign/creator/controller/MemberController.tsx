@@ -2,6 +2,8 @@ import React from 'react';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import styles from "./MemberControllerCard.module.scss"
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/defaultAvatar/DefaultAvatar"
+import type { MembersTeam } from '@/store/campaign/initialState';
+
 interface MemberControllerProps {
     // Define props here
 }
@@ -11,12 +13,17 @@ interface MemberControllerProps {
 
 const MemberController: React.FC<MemberControllerProps> = () => {
 
-    const { newCampaign } = useCampaignStore()
+    const { newCampaign, setSelectedMember } = useCampaignStore()
+
 
 
 
     const memberstTeam = newCampaign.members_team
+    console.log(memberstTeam)
 
+    const handleSelectMember = (member: MembersTeam) => {
+        setSelectedMember(member);
+    };
 
     return (
 
@@ -26,7 +33,8 @@ const MemberController: React.FC<MemberControllerProps> = () => {
 
                     <ul className={styles.cardsContainer}>
                         {memberstTeam.map(member => (
-                            <li key={member.id} className={styles.singleCard}>
+                            <li key={member.id} className={styles.singleCard} onClick={() => handleSelectMember(member)}
+                            >
 
                                 <div className={styles.avatarContainer}>
                                     <Avatar>
