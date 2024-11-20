@@ -9,6 +9,7 @@ import GeneralButtonUI from '@/components/buttons/UI/Button';
 import { useState } from 'react';
 
 interface ResumeOfTheTeamProps {
+
     // Define props here
 }
 
@@ -40,7 +41,6 @@ const ResumeOfTheTeam: React.FC<ResumeOfTheTeamProps> = (props) => {
                 />
             </div>
             {addNewMember && <FormNewMember />}
-
         </section >
     );
 }

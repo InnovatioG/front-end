@@ -1,15 +1,72 @@
 import React from 'react';
-
-interface RoadMapProps {
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import MilestoneCardEdit from './MilestoneEdit';
+interface RoadMapYMilestonesProps {
     // Define props here
 }
 
-const RoadMap: React.FC<RoadMapProps> = (props) => {
+
+
+
+
+
+
+const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
+
+    const { project, setProject } = useProjectDetailStore();
+    const milestones = project.milestones;
+
+
+
+    const handlePercentageChange = (milestoneId: number, newPercentage: number) => {
+        const otherMilestones = milestones.filter(milestone => milestone.id !== milestoneId);
+        const totalOtherPercentages = otherMilestones.reduce((sum, milestone) => sum + milestone.percentage, 0);
+
+        //check if new percentage would exceed 100% 
+        if (totalOtherPercentages + newPercentage > 100) {
+            return false;
+        }
+
+        const updateMilestones = milestones.map(milestone =>
+            milestone.id === milestoneId ? { ...milestone, percentage: newPercentage } : milestone
+        )
+
+        setProject({
+            ...project,
+            milestones: updateMilestones
+        });
+
+        return true;
+
+    }
+
+
+    const getRemainingPercentage = (currentMilestoneId: number) => {
+        const totalUsed = milestones.filter(milestone => milestone.id !== currentMilestoneId).reduce((sum, milestone) => sum + milestone.percentage, 0);
+        return 100 - totalUsed;
+    }
+
+
+
     return (
         <div>
-            <h1>Roadmap</h1>
+            {
+                milestones.map((milestone, index) => {
+                    return (
+                        <div key={milestone.id}>
+                            <MilestoneCardEdit milestone={milestone}
+                                index={index}
+                                maxAvailablePercentage={getRemainingPercentage(milestone.id)}
+                                onPercentageChange={(newPercentage) =>
+                                    handlePercentageChange(milestone.id, newPercentage)
+                                }
+                            />
+                        </div>
+                    )
+                })
+            }
         </div>
     );
 }
 
-export default RoadMap;
+export default RoadMapYMilestones;

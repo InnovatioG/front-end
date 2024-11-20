@@ -14,8 +14,8 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
 
     const editLinkButton = () => { }
 
-    console.log(project);
-    console.log(selectedLink); // Verifica el estado seleccionado
+
+
 
     return (
         <section className={styles.socialMediaCard}>

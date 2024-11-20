@@ -6,12 +6,26 @@ import SocialButton from '@/components/buttons/socialIcon/SocialButton';
 import { socialIcons } from '@/utils/constants';
 import styles from "./ResumeOftheTeam.module.scss"
 import { formatLink } from '@/utils/formats';
+import { useCampaignStore } from '@/store/campaign/useCampaignStore';
+import { MembersTeam } from '@/store/campaign/initialState';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+
 interface ResumeOfTheTeamAccordionProps {
     // Define props here
 }
 
 const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = (props) => {
     const { project } = useProjectDetailStore();
+    const { setSelectedMember, setStep } = useCampaignStore()
+    const router = useRouter();
+
+
+    const handleClickEditButton = (member: MembersTeam) => {
+        setStep(4);
+        setSelectedMember(member);
+        router.push('/campaign/new');
+    }
 
 
 
@@ -66,6 +80,9 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = (props
                                         Description:</span>
                                     <p className={styles.contentText}>{member.member_description}</p>
                                 </div>
+                                <button
+                                    className={styles.editButton}
+                                    onClick={() => handleClickEditButton(member)}>Edit </button>
                             </div>
                         </AccordionContent>
                     </AccordionItem>

@@ -22,7 +22,7 @@ export default function Home() {
   const router = useRouter();
   const { step, setStep, category, setUser, isLoading, setCategoryId, setIsLoading, newCampaign } = useCampaignStore();
 
-  console.log(newCampaign)
+
 
 
   const handleClickBack = () => {

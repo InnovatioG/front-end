@@ -56,11 +56,11 @@ export interface BaseCampaign {
 }
 
 export interface MilestoneCampaign extends BaseCampaign {
-  campaign_type: 'Milestone';
+  campaign_type: "Milestone";
 }
 
 export interface TargetCampaign extends BaseCampaign {
-  campaign_type: 'Target';
+  campaign_type: "Target";
   goal: number;
 }
 
@@ -72,4 +72,34 @@ export interface DatabaseStructure {
   categories: Category[];
   states: State[];
   campaigns: Campaign[];
+}
+
+export interface MilestoneStatus {
+  id: number;
+  name: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface CampaignStatus {
+  id: number;
+  name: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface MilestoneF {
+  id: number;
+  campaign_id: number;
+  campaign_status_id: number;
+  cmEstimatedDeliveryDate: string;
+  percentage: number;
+  status: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  milestone_status?: MilestoneStatus;
+  campaign_status?: CampaignStatus;
 }

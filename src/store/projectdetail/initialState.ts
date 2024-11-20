@@ -1,4 +1,5 @@
 import type { MembersTeam } from "../campaign/initialState";
+import type { MilestoneF } from "@/HardCode/databaseType";
 
 export interface ProjectDetailState {
   project: {
@@ -31,6 +32,7 @@ export interface ProjectDetailState {
       x: string;
     };
     members_team: MembersTeam[];
+    milestones: MilestoneF[];
   };
   isLoading: boolean;
   menuView:
@@ -40,6 +42,7 @@ export interface ProjectDetailState {
     | "Tokenomics"
     | "Q&A";
   error: string;
+  milestone: MilestoneF | null; // Add this for active/selected milestone
 }
 
 export const initialState: ProjectDetailState = {
@@ -63,8 +66,10 @@ export const initialState: ProjectDetailState = {
       x: "",
     },
     members_team: [],
+    milestones: [],
   },
   menuView: "Project Detail",
   isLoading: false,
   error: "",
+  milestone: null,
 };

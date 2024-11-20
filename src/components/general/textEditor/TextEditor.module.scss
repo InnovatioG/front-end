@@ -47,11 +47,16 @@
   }
 }
 
-.quillEditor {
+.quillEditor,
+.quillEditorB {
   display: flex;
   flex-direction: column;
   gap: 5rem;
   position: relative;
+}
+
+.quillEditorB {
+  gap: 1rem;
 }
 
 .title {

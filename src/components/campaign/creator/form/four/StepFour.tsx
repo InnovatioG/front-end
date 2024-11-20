@@ -1,15 +1,6 @@
 import React from 'react';
 
-interface MembersTeam {
-    id: string;
-    member_name: string;
-    member_description: string;
-    member_last_name: string;
-    member_role: string;
-    member_email: string;
-    member_picture: string;
-    member_admin: boolean;
-}
+
 import styles from "./StepFour.module.scss";
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import Avatar from '@/components/general/pictureUpload/Avatar';
@@ -20,6 +11,17 @@ import GeneralButtonUI from '@/components/buttons/UI/Button';
 
 interface StepFourProps {
     // Define props here
+}
+
+interface MembersTeam {
+    id: string;
+    member_name: string;
+    member_description: string;
+    member_last_name: string;
+    member_role: string;
+    member_email: string;
+    member_picture: string;
+    member_admin: boolean;
 }
 
 const StepFour: React.FC<StepFourProps> = (props) => {

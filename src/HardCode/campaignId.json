@@ -7,19 +7,55 @@
     "status": "Fundraising",
     "company_logo": "https://avatars.githubusercontent.com/u/93623817?v=4",
     "banner_image": "/img/database/banner_logo_id1.png",
+    "cdCampaignToken_PriceADA": null,
+    "cdRequestedMaxADA ": null,
+    "cdCampaignToken_TN": null,
     "investors": 0,
     "milestones": [
       {
-        "order": 1,
-        "goal": 0
+        "id": 1,
+        "campaign_id": 2,
+        "campaign_status_id": 1,
+        "percentage": 0,
+        "status": "pending",
+        "cmEstimatedDeliveryDate": "",
+        "milestone_status": {
+          "id": 1,
+          "name": "pending",
+          "description": "",
+          "created_at": "",
+          "updated_at": ""
+        }
       },
       {
-        "order": 2,
-        "goal": 0
+        "id": 2,
+        "campaign_id": 2,
+        "campaign_status_id": 1,
+        "percentage": 0,
+        "status": "pending",
+        "cmEstimatedDeliveryDate": "",
+        "milestone_status": {
+          "id": 2,
+          "name": "in_progress",
+          "description": "",
+          "created_at": "",
+          "updated_at": ""
+        }
       },
       {
-        "order": 3,
-        "goal": 0
+        "id": 3,
+        "campaign_id": 2,
+        "campaign_status_id": 1,
+        "percentage": 0,
+        "status": "pending",
+        "cmEstimatedDeliveryDate": "3 weeks",
+        "milestone_status": {
+          "id": 3,
+          "name": "completed",
+          "description": "",
+          "created_at": "",
+          "updated_at": ""
+        }
       }
     ],
 
@@ -45,7 +81,7 @@
     "members_team": [
       {
         "id": 1731367675829,
-        "member_picture": "www.github.com/iairkap.png",
+        "member_picture": "",
         "member_name": "Iair",
         "member_last_name": "Kaplun",
         "member_role": "Director",

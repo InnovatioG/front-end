@@ -8,6 +8,7 @@ import {
 interface UseProjectDetailStore extends ProjectDetailState {
   setProject: (project: ProjectDetailState["project"]) => void;
   setMenuView: (menuView: ProjectDetailState["menuView"]) => void;
+  setMilestone: (milestone: ProjectDetailState["milestone"]) => void;
   setIsLoading: (isLoading: boolean) => void;
   setError: (error: string) => void;
 }
@@ -30,6 +31,10 @@ export const useProjectDetailStore = create<UseProjectDetailStore>()(
     setError: (error) =>
       set((state) => {
         state.error = error;
+      }),
+    setMilestone: (milestone) =>
+      set((state) => {
+        state.milestone = milestone;
       }),
   }))
 );

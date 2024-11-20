@@ -1,0 +1,62 @@
+@use "@/styles/settings/fonts";
+@use "@/styles/settings/colors";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: red;
+  height: 80%;
+  padding: 2rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid colors.$light-color;
+  font: fonts.$f600-medium;
+  background-color: colors.$light-color;
+  backdrop-filter: blur(17.399999618530273px);
+  border-radius: 0.8125rem;
+  color: colors.$primary-font;
+  cursor: pointer;
+  transition: cubic-bezier(0.6, 0.04, 0.98, 0.335) 0.1s;
+  width: 100%;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.funds {
+}
+
+.percentageTotal {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  text-align: center;
+  color: #e1e1e1;
+  font: fonts.$f1100-regular;
+  max-width: 15vw;
+  /*  */
+}
+
+.percentageTotal:focus {
+  outline: none;
+}
+
+.percContainer {
+}
+
+// MilestonePercentage.module.scss
+.percentageTotal {
+  // Remove spinner arrows for Chrome, Safari, Edge, Opera
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  // Remove spinner arrows for Firefox
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  // Rest of your existing styles...
+}

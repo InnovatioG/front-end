@@ -6,15 +6,15 @@ import styles from "./TextEditor.module.scss";
 const QuillEditor = dynamic(() => import('react-quill'), { ssr: false });
 
 interface TextEditorProps {
-    title: string;
+    title?: string;
     content: string;
     onChange: (newContent: string) => void;
+    styleOption: string;
 }
 
 
-export default function TextEditor({ title, content, onChange }: TextEditorProps) {
+export default function TextEditor({ title, content, onChange, styleOption = "quillEditor" }: TextEditorProps) {
     const [editorContent, setEditorContent] = useState(content);
-    console.log(content)
 
 
 
@@ -68,7 +68,7 @@ export default function TextEditor({ title, content, onChange }: TextEditorProps
                     placeholder="Insert description"
                     modules={quillModules}
                     formats={quillFormats}
-                    className={styles.quillEditor}
+                    className={styles[styleOption]}
                 />
             </div>
             <style jsx global>{`
