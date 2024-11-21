@@ -57,13 +57,15 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
                                 >
                                     <Checkbox variant={true} checked={!!content[option.id]}
                                         onChange={() => handleCheckboxChange(option.id)} hasContent={hasContent} />
-                                    {option.title}
+                                    <span className={hasContent ? styles.buttonWhite : styles.buttonSpan}>
+                                        {option.title}
+                                    </span>
                                     <ToolTipInformation content={option.content} />
                                 </GeneralButtonUI>
                             </div>
                         );
                     })}
-                    <GeneralButtonUI text="Add index" onClick={handleAddOption} classNameStyle='green' />
+                    <GeneralButtonUI text="Add index" onClick={handleAddOption} classNameStyle='menu-index-selected' />
                 </div>
                 <TextEditor
                     title={selectedOption.title}
@@ -92,33 +94,3 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
 export default ProjectDetail;
 
 
-/* 
-
-el console.log de contentReorder muestra lo siguiente:
-
-{
-    "1": {
-        "id": 1,
-        "title": "What's the product?",
-        "content": "<p>fa</p>",
-        "order": 0
-    },
-    "2": {
-        "id": 2,
-        "title": "What's your value?",
-        "content": "",
-        "order": 10
-    },
-    "3": {
-        "id": 3,
-        "title": "How it works?",
-        "content": "",
-        "order": 20
-    },
-    "4": {
-        "id": 4,
-        "title": "Marketing Strategy",
-        "content": "",
-        "order": 30
-    }
-} */

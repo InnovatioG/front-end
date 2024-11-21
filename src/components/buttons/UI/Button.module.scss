@@ -66,6 +66,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  overflow: visible;
+  text-align: left;
   border: none;
   font: fonts.$f200-medium;
   @media (max-width: 768px) {
@@ -116,5 +119,11 @@
     justify-self: center;
     min-width: 200px;
     height: 100%;
+  }
+  .passive-nav-transparent,
+  .active-nav,
+  .overview {
+    font-size: 1rem;
+    padding: 1rem 2rem;
   }
 }

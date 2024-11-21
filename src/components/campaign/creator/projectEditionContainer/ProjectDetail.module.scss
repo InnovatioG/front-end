@@ -9,7 +9,7 @@
 
 .layoutProject {
   display: grid;
-  grid-template-columns: 1fr 4fr;
+  grid-template-columns: 1fr 3fr;
   gap: 2rem;
   padding: 4rem 1rem;
 }
@@ -130,4 +130,20 @@
     background-color: blue;
     width: 100%;
   }
+}
+
+.hasContentButton {
+  background-color: red;
+  width: 100%;
+}
+
+.buttonSpan {
+  color: black;
+  width: 100%;
+  text-wrap: nowrap;
+}
+
+.buttonWhite {
+  color: white;
+  text-wrap: nowrap;
 }

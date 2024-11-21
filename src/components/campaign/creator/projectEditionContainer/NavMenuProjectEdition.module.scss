@@ -32,11 +32,12 @@
   flex-direction: column;
   justify-content: space-between;
   padding: 1rem;
+  padding: 4rem 1rem;
   align-items: flex-end;
   height: 100dvh;
   z-index: 100;
   overflow: hidden;
-  transition: right 0.2s ease-in-out; /* Transición suave */
+  transition: right 0.3s ease-in-out; /* Transición suave */
 }
 
 .menuMobile.open {
