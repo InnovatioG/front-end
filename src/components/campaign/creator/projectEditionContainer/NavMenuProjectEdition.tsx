@@ -42,11 +42,13 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
                             </li>
                         ))}
                     </ul>
-                    <GeneralButtonUI
-                        text="Overview"
-                        classNameStyle="overview"
-                        onClick={() => console.log("Save")}
-                    />
+                    <div>
+                        <GeneralButtonUI
+                            text="Overview"
+                            classNameStyle="overview"
+                            onClick={() => console.log("Save")}
+                        />
+                    </div>
                 </div>
             </div>
         );
@@ -65,11 +67,13 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
                     </li>
                 ))}
             </ul>
-            <GeneralButtonUI
-                text="Overview"
-                classNameStyle="overview"
-                onClick={() => console.log("Save")}
-            />
+            <div>
+                <GeneralButtonUI
+                    text="Overview"
+                    classNameStyle="overview"
+                    onClick={() => console.log("Save")}
+                />
+            </div>
         </div>
     );
 }

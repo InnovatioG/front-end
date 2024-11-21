@@ -52,6 +52,11 @@
   border-radius: 1.625rem;
 }
 
+.input:focus,
+.inputText:focus {
+  outline: none;
+}
+
 .container {
   position: relative;
 }
@@ -65,7 +70,7 @@
 .plus {
   border: 1px solid black;
   border-radius: 0.2rem;
-  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,9 +79,12 @@
   font-weight: 300;
 }
 
+.plus.open:before {
+  transform: rotate(45deg);
+}
+
 .plus.open {
   border: none;
-  transform: rotate(45deg);
   font-size: 30px;
   font-weight: 300;
 }
@@ -86,10 +94,44 @@
   flex-direction: row;
   align-items: center;
   gap: 0.5rem;
+  width: 100%;
 }
 
 .saveButtonContainer {
   justify-self: flex-end;
   align-self: flex-end;
   width: 15%;
+}
+
+.questionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.buttonGeneral {
+  width: 10vw;
+}
+
+@media screen and (max-width: 768px) {
+  .buttonGeneral {
+    width: 80%;
+    margin-left: 10%;
+    background-color: red;
+  }
+  .buttonContainer {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .saveButtonContainer {
+    width: 100%;
+  }
+  /*   .plus {
+    min-width: 20px;
+    height: 20px;
+  }
+  .plus.open {
+    font-size: 20px;
+  } */
 }

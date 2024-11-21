@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/accordion/Accordion';
-import styles from "./Qa.module.scss"
+import styles from "./Qa.module.scss";
 import GeneralButtonUI from '@/components/buttons/UI/Button';
 import FramerMotionAnimation from '@/utils/framerMotion';
 
@@ -46,30 +45,24 @@ const QYA: React.FC<QYAProps> = (props) => {
     return (
         <div className={styles.generalContainer}>
             {faqs.map((faq, index) => (
-                <Accordion key={index} type="single" collapsible className={styles.faqContainer}>
-                    <AccordionItem value={`item-${index}`}  >
-                        <AccordionTrigger open={true} toggleOpen={() => { }} style={{ background: "transparent", padding: "0.5rem" }}>
-                            <div>
-                                <h4 className={styles.questionTitle}>{faq.name}</h4>
-                            </div>
-                        </AccordionTrigger>
-                        <AccordionContent open={true} style={{ background: "transparent", padding: "0.5rem" }} >
-                            <div className={styles.container}>
-                                <p className={styles.questionAnswer}>{faq.description}</p>
-                                <button onClick={() => handleRemoveQa(index)} className={styles.deleteButton}>
-                                    <img src="/img/icons/delete.svg" alt="deleteIcon" />
-                                </button>
-                            </div>
-                        </AccordionContent>
-                    </AccordionItem>
+                <div key={index} className={styles.questionContainer}>
+                    <div>
+                        <h4 className={styles.questionTitle}>{faq.name}</h4>
+                    </div>
+                    <div className={styles.container}>
+                        <p className={styles.questionAnswer}>{faq.description}</p>
+                        <button onClick={() => handleRemoveQa(index)} className={styles.deleteButton}>
+                            <img src="/img/icons/delete.svg" alt="deleteIcon" />
+                        </button>
+                    </div>
                     <div className={styles.divisor}></div>
-                </Accordion>
+                </div>
             ))}
 
-            <div>
+            <div className={styles.buttonGeneral}>
                 <GeneralButtonUI onClick={handleQuestionOpen} classNameStyle='menu-index'>
                     <div className={styles.buttonContainer}>
-                        <div className={`${styles.plus} ${isOpen ? styles.open : ''}`}>{isOpen ? '+' : '+'}</div>
+                        <div className={`${styles.plus} ${isOpen ? styles.open : ''}`}>{isOpen ? '×' : '+'}</div>
                         <span>
                             {isOpen ? 'Add More' : 'Add More'}
                         </span>
