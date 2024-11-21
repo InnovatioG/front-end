@@ -40,3 +40,27 @@
   height: 100%;
   justify-content: space-between;
 }
+
+@media screen and (max-width: 768px) {
+  .layout {
+    width: 100dvw;
+    padding: 1rem;
+    overflow: hidden;
+  }
+  .dashboardCampaignContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .imagenContainer {
+    display: none;
+  }
+
+  .imageBannerContainer {
+    height: 200px;
+  }
+
+  .campaignContainerCreator {
+  }
+}

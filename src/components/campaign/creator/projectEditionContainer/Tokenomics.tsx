@@ -2,18 +2,21 @@ import React from 'react';
 import styles from "./Tokenomics.module.scss"
 import TextEditor from '@/components/general/textEditor/TextEditor';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-interface TokenomicsProps {
-    // Define props here
-}
-
-const Tokenomics: React.FC<TokenomicsProps> = (props) => {
-
+import { inputFieldsToken } from '@/utils/constants';
+const Tokenomics: React.FC = () => {
     const { project, setProject } = useProjectDetailStore();
 
-    console.log(project);
 
 
+    const handleInputChange = (id: string, value: string, transform: (value: string) => any) => {
+        setProject({
+            ...project,
+            [id]: transform(value)
+        });
+    };
 
+
+    const fields = inputFieldsToken(project);
 
 
 
@@ -21,16 +24,17 @@ const Tokenomics: React.FC<TokenomicsProps> = (props) => {
         <div>
             <h2 className={styles.title}>Explain your tokenomics, quantity and value</h2>
             <div className={styles.formContainer}>
-                <div className={styles.inputContainer}>
-                    <label htmlFor="">Token Tick Name</label>
-                    <input type="text" placeholder='$ADA' />
-                </div>
-                <div className={styles.inputContainer}>
-                    <label htmlFor="">Quantity and value per token.</label>
-                    <input type="text" placeholder='Quantity' />
-                    <input type="text" placeholder='$ADA' />
-                </div>
-
+                {fields.map((field) => (
+                    <div key={field.id} className={styles.inputContainer}>
+                        <label>{field.label}</label>
+                        <input
+                            type={field.type}
+                            placeholder={field.placeholder}
+                            value={field.value}
+                            onChange={(e) => handleInputChange(field.id, e.target.value, field.transform)}
+                        />
+                    </div>
+                ))}
             </div>
             <div className={styles.textEditorContianer}>
                 <TextEditor

@@ -64,3 +64,9 @@
   top: 60px;
   font: fonts.$text-edit;
 }
+
+@media screen and (max-width: 768px) {
+  .title {
+    top: 90px;
+  }
+}

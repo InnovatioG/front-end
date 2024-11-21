@@ -5,3 +5,5 @@ export const navMenu = [
   "Tokenomics",
   "Q&A",
 ];
+
+export type NavMenuItem = (typeof navMenu)[number];

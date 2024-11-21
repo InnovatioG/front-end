@@ -69,6 +69,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
                     title={selectedOption.title}
                     content={content[selectedOption.id] || ''}
                     onChange={handleEditorChange}
+                    styleOption='quillEditor'
+
                 />
                 <div className={styles.addOptionContainer}>
                     <input

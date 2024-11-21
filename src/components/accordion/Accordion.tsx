@@ -1,32 +1,40 @@
-"use client"
+import * as React from "react";
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 
-import * as React from "react"
-import * as AccordionPrimitive from "@radix-ui/react-accordion"
-import { ChevronDown } from "lucide-react"
-import { useState } from "react"
+const Accordion = AccordionPrimitive.Root;
 
-const Accordion = AccordionPrimitive.Root
+type AccordionItemProps = React.ComponentProps<typeof AccordionPrimitive.Item> & {
+    children: React.ReactNode;
+};
 
-const AccordionItem = React.forwardRef<
-    React.ElementRef<typeof AccordionPrimitive.Item>,
-    React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ style, ...props }, ref) => (
-    <AccordionPrimitive.Item
-        ref={ref}
-        style={{ ...style }}
-        {...props}
-    />
-))
-AccordionItem.displayName = "AccordionItem"
-
-const AccordionTrigger = React.forwardRef<
-    React.ElementRef<typeof AccordionPrimitive.Trigger>,
-    React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ style, children, ...props }, ref) => {
+const AccordionItem: React.FC<AccordionItemProps> = ({ children, ...props }) => {
     const [open, setOpen] = useState(false);
-    console.log(open)
+
+    const toggleOpen = () => {
+        setOpen(!open);
+    };
 
     return (
+        <AccordionPrimitive.Item {...props}>
+            {React.Children.map(children, child => {
+                if (React.isValidElement(child)) {
+                    return React.cloneElement(child as React.ReactElement<any>, { open, toggleOpen });
+                }
+                return child;
+            })}
+        </AccordionPrimitive.Item>
+    );
+};
+
+type AccordionTriggerProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
+    open: boolean;
+    toggleOpen: () => void;
+};
+
+const AccordionTrigger = React.forwardRef<HTMLButtonElement, AccordionTriggerProps>(
+    ({ style, children, open, toggleOpen, ...props }, ref) => (
         <AccordionPrimitive.Header style={{ display: 'flex', marginBottom: '0' }}>
             <AccordionPrimitive.Trigger
                 ref={ref}
@@ -40,14 +48,13 @@ const AccordionTrigger = React.forwardRef<
                     fontWeight: '500',
                     transition: 'all 0.2s',
                     backgroundColor: "#FAFAFA",
-                    borderRadius: open ? "20px 20px 20px 20px" : "20px 20px 0px 0px",
+                    borderRadius: open ? "20px 20px 0 0" : "20px 20px 20px 20px",
                     textAlign: 'left',
                     padding: "2rem",
                     cursor: 'pointer',
-                    marginBottom: '0',
                     ...style
                 }}
-                onClick={() => setOpen(!open)}
+                onClick={toggleOpen}
                 {...props}
             >
                 {children}
@@ -62,17 +69,15 @@ const AccordionTrigger = React.forwardRef<
                 />
             </AccordionPrimitive.Trigger>
         </AccordionPrimitive.Header>
-    );
-})
-AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
+    )
+);
 
-const AccordionContent = React.forwardRef<
-    React.ElementRef<typeof AccordionPrimitive.Content>,
-    React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ style, children, ...props }, ref) => {
-    const [open, setOpen] = useState(false);
+type AccordionContentProps = React.ComponentProps<typeof AccordionPrimitive.Content> & {
+    open: boolean;
+};
 
-    return (
+const AccordionContent = React.forwardRef<HTMLDivElement, AccordionContentProps>(
+    ({ style, children, open, ...props }, ref) => (
         <AccordionPrimitive.Content
             ref={ref}
             className={`accordion-content ${open ? 'open' : ''}`}
@@ -83,18 +88,16 @@ const AccordionContent = React.forwardRef<
                 marginTop: '0',
                 ...style
             }}
-            onClick={() => setOpen(!open)}
             {...props}
         >
             <div style={{
                 backgroundColor: "#FAFAFA",
                 padding: "2rem",
-                borderRadius: open ? "0 0 20px 20px" : "0px 0px 20px 20px",
+                borderRadius: "0 0 20px 20px",
                 ...style
             }}>{children}</div>
         </AccordionPrimitive.Content>
-    );
-})
-AccordionContent.displayName = AccordionPrimitive.Content.displayName
+    )
+);
 
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };

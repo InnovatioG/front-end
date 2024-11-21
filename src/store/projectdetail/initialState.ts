@@ -1,5 +1,5 @@
 import type { MembersTeam } from "../campaign/initialState";
-import type { MilestoneF } from "@/HardCode/databaseType";
+import type { MilestoneF, FAQ } from "@/HardCode/databaseType";
 
 export interface ProjectDetailState {
   project: {
@@ -23,7 +23,13 @@ export interface ProjectDetailState {
       | "Archived"; */
     goal: number;
     min_request: number;
+    cdRequestedMaxADA: number | null;
+    cdCampaignToken_PriceADA: number | null;
+    cdCampaignToken_TN: string;
+    /*     "Tokenomics-Description"
 
+ */
+    tokenomics_description: string;
     brand: {
       website: string;
       facebook: string;
@@ -33,6 +39,7 @@ export interface ProjectDetailState {
     };
     members_team: MembersTeam[];
     milestones: MilestoneF[];
+    faqs: FAQ[];
   };
   isLoading: boolean;
   menuView:
@@ -65,11 +72,28 @@ export const initialState: ProjectDetailState = {
       discord: "",
       x: "",
     },
+    cdRequestedMaxADA: null,
+    cdCampaignToken_PriceADA: null,
+    cdCampaignToken_TN: "",
+    tokenomics_description: "",
     members_team: [],
     milestones: [],
+    faqs: [],
   },
   menuView: "Project Detail",
   isLoading: false,
   error: "",
   milestone: null,
 };
+
+/* 
+
+maxSuply, cuantos token existen de algo, 
+
+el precio se calcula con la plata que el usuario quiere en total, y cuantos token el usuarios pone en la venta 
+
+
+
+
+
+*/

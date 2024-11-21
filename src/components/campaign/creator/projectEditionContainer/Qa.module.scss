@@ -1,0 +1,95 @@
+@use "@/styles/settings/fonts";
+@use "@/styles/settings/colors";
+.faqContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.questionTitle {
+  font: fonts.$QA;
+  color: colors.$primary-font;
+}
+
+.questionAnswer {
+  font: fonts.$f400-regular;
+}
+
+.generalContainer {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.divisor {
+  background-color: #292929;
+  height: 1px;
+  width: 100%;
+}
+
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.input,
+.inputText {
+  padding: 1rem 2rem;
+  width: 100%;
+  background-color: colors.$primary-light-color;
+  border-radius: 40px;
+}
+
+.inputText {
+  height: 20ch;
+  padding: 2rem;
+  /* no quiero que se pueda agrandar el textarea */
+  resize: none;
+  border-radius: 1.625rem;
+}
+
+.container {
+  position: relative;
+}
+.deleteButton {
+  background-color: transparent;
+  position: absolute;
+  bottom: 0px;
+  right: -10px;
+}
+
+.plus {
+  border: 1px solid black;
+  border-radius: 0.2rem;
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-weight: 300;
+}
+
+.plus.open {
+  border: none;
+  transform: rotate(45deg);
+  font-size: 30px;
+  font-weight: 300;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.saveButtonContainer {
+  justify-self: flex-end;
+  align-self: flex-end;
+  width: 15%;
+}

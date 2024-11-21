@@ -12,30 +12,24 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 interface ResumeOfTheTeamAccordionProps {
-    // Define props here
+    onEditMember: (member: MembersTeam) => void;
 }
 
-const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = (props) => {
+const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onEditMember }) => {
     const { project } = useProjectDetailStore();
-    const { setSelectedMember, setStep } = useCampaignStore()
+    const { setSelectedMember, setStep } = useCampaignStore();
     const router = useRouter();
 
-
     const handleClickEditButton = (member: MembersTeam) => {
-        setStep(4);
-        setSelectedMember(member);
-        router.push('/campaign/new');
-    }
-
-
-
+        onEditMember(member);
+    };
 
     return (
         <div>
             <Accordion type="single" collapsible className={styles.accordionContainer}>
                 {project.members_team.map((member, index) => (
                     <AccordionItem key={index} value={`item-${index}`} >
-                        <AccordionTrigger>
+                        <AccordionTrigger open={true} toggleOpen={() => { }}>
                             <div className={styles.faqContainer}>
                                 <Avatar big={true}>
                                     <AvatarImage src={formatLink(member.member_picture)} alt={member.member_name} />
@@ -46,7 +40,7 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = (props
                                 </span>
                             </div>
                         </AccordionTrigger>
-                        <AccordionContent>
+                        <AccordionContent open={true}>
                             <div className={styles.contentLayoutHeader}>
                                 <div className={styles.contentHeader}>
                                     <div className={styles.subContentHeader}>

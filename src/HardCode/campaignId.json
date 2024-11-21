@@ -10,6 +10,27 @@
     "cdCampaignToken_PriceADA": null,
     "cdRequestedMaxADA ": null,
     "cdCampaignToken_TN": null,
+    "Tokenomics-Description": "",
+    "faqs": [
+      {
+        "id": 1,
+        "campaign_id": 2,
+        "name": "What payment methods and currencies are accepted on the product?",
+        "description": "The only means of payment and currencies accepted's \"ADA\" and through investors' wallets."
+      },
+      {
+        "id": 2,
+        "campaign_id": 2,
+        "name": "What are the limits of milestones per campaign?",
+        "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
+      },
+      {
+        "id": 3,
+        "campaign_id": 2,
+        "name": "What are the campaign finance limits?",
+        "description": "There is a defined limit for each campaign in which they can raise a minimum of $5,000 and a maximum of $250,000."
+      }
+    ],
     "investors": 0,
     "milestones": [
       {

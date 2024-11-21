@@ -90,3 +90,44 @@
 .buttonContainer {
   margin-top: 1rem;
 }
+
+@media screen and (max-width: 768px) {
+  .generalLayout {
+  }
+
+  .layoutProject {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+  .optionsContainer {
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    width: 100%;
+    align-items: center;
+    min-height: 52px;
+    padding-top: 1rem;
+    padding-left: 1rem;
+  }
+  .draggableItem {
+    width: 100%;
+    flex-wrap: nowrap;
+    height: 100%;
+    align-self: center;
+    justify-self: center;
+    overflow: visible;
+  }
+
+  .menu-index,
+  .menu-index-selected,
+  .non-empty-content,
+  .activeButton,
+  .hasContentButton {
+    width: fit-content;
+    padding: none;
+    text-wrap: nowrap;
+    background-color: blue;
+    width: 100%;
+  }
+}

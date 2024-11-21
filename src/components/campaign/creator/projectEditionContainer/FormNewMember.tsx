@@ -1,42 +1,49 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from "./form.module.scss"
 import { memberFields } from '@/utils/constants';
 import Checkbox from '@/components/buttons/checkbox/Checkbox';
 import ToolTipInformation from '@/components/general/tooltipInformation/tooltipInformation';
 import GeneralButtonUI from '@/components/buttons/UI/Button';
+
 interface FormNewMemberProps {
-    // Define props here
+    newMember: {
+        member_name: string;
+        member_last_name: string;
+        member_email: string;
+        member_role: string;
+        member_description: string;
+        member_picture: string;
+        member_social: {
+            facebook: string;
+            instagram: string;
+            x: string;
+            discord: string;
+        };
+        member_admin: boolean;
+        member_manage_funds: boolean;
+        member_wallet_address: string;
+    };
+    setNewMember: React.Dispatch<React.SetStateAction<{
+        member_name: string;
+        member_last_name: string;
+        member_email: string;
+        member_role: string;
+        member_description: string;
+        member_picture: string;
+        member_social: {
+            facebook: string;
+            instagram: string;
+            x: string;
+            discord: string;
+        };
+        member_admin: boolean;
+        member_manage_funds: boolean;
+        member_wallet_address: string;
+    }>>;
+    setNewMemberField: (key: keyof FormNewMemberProps['newMember'], value: any) => void;
 }
 
-const FormNewMember: React.FC<FormNewMemberProps> = (props) => {
-    const [newMember, setNewMember] = useState({
-        member_name: '',
-        member_last_name: '',
-        member_email: '',
-        member_role: '',
-        member_description: '',
-        member_picture: '',
-        member_social: {
-            facebook: '',
-            instagram: '',
-            x: '',
-            discord: "",
-
-        },
-        member_admin: false,
-        member_manage_funds: false,
-        member_wallet_address: '',
-    });
-
-    const setNewMemberField = (key: keyof typeof newMember, value: any) => {
-        setNewMember(prevState => ({
-            ...prevState,
-            [key]: value
-        }));
-    };
-
-    console.log(newMember);
-
+const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, setNewMemberField }) => {
     return (
         <section className={styles.formLayout}>
             <div className={styles.inputContainer}>
@@ -98,7 +105,6 @@ const FormNewMember: React.FC<FormNewMemberProps> = (props) => {
             <article>
                 <div className={styles.labelHeader}>
                     <label htmlFor="">Social Media</label>
-
                 </div>
                 <div className={styles.socialContainer}>
                     {Object.entries(newMember.member_social).map(([name, link], index) => (
@@ -111,7 +117,6 @@ const FormNewMember: React.FC<FormNewMemberProps> = (props) => {
                             className={styles.input}
                         />
                     ))}
-
                 </div>
             </article>
             <div className={styles.buttonContainer}>

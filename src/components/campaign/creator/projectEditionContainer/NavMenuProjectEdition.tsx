@@ -1,27 +1,66 @@
 import React from 'react';
-import { navMenu } from '@/utils/projectDetailsCreation';
+import { navMenu, NavMenuItem } from '@/utils/projectDetailsCreation';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import styles from "./NavMenuProjectEdition.module.scss"
+import styles from "./NavMenuProjectEdition.module.scss";
 import GeneralButtonUI from '@/components/buttons/UI/Button';
+import { useScreenSize } from '@/hooks/useScreenSize';
+import { useState } from 'react';
+
 interface NavBarProjectEditionProps {
     // Define props here
 }
 
 const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
-
     const { menuView, setMenuView } = useProjectDetailStore();
+    const screenSize = useScreenSize();
 
-    console.log(menuView);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleClickButtonMenuMobile = (item: "Project Detail" | "Resume of the team" | "Roadmap & Milestones" | "Tokenomics" | "Q&A") => {
+        setMenuView(item);
+        setIsOpen(!isOpen);
+    }
+
+    if (screenSize === 'mobile' || screenSize === 'tablet') {
+        return (
+            <div className={styles.navContainerMobile}>
+                <button onClick={() => { setIsOpen(!isOpen) }} className={styles.menuButton}>
+                    <div className={styles.line}></div>
+                    <div className={styles.line}></div>
+                    <div className={styles.line}></div>
+                </button>
+                <div className={`${styles.menuMobile} ${isOpen ? styles.open : ''}`}>
+                    <ul className={styles.bottoncontainermobile}>
+                        <button onClick={() => { setIsOpen(!isOpen) }} className={styles.close}>x</button>
+                        {navMenu.map((item: NavMenuItem, index) => (
+                            <li key={index}>
+                                <GeneralButtonUI
+                                    text={item}
+                                    classNameStyle={menuView === item ? "active-nav" : "passive-nav-transparent"}
+                                    onClick={() => handleClickButtonMenuMobile(item as "Project Detail" | "Resume of the team" | "Roadmap & Milestones" | "Tokenomics" | "Q&A")}
+                                />
+                            </li>
+                        ))}
+                    </ul>
+                    <GeneralButtonUI
+                        text="Overview"
+                        classNameStyle="overview"
+                        onClick={() => console.log("Save")}
+                    />
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.navContainer}>
             <ul className={styles.buttonsContainer}>
-                {navMenu.map((item: any, index) => (
+                {navMenu.map((item: NavMenuItem, index) => (
                     <li key={index}>
                         <GeneralButtonUI
                             text={item}
                             classNameStyle={menuView === item ? "active-nav" : "passive-nav"}
-                            onClick={() => setMenuView(item)}
+                            onClick={() => setMenuView(item as "Project Detail" | "Resume of the team" | "Roadmap & Milestones" | "Tokenomics" | "Q&A")}
                         />
                     </li>
                 ))}

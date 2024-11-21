@@ -66,3 +66,23 @@
   margin-top: 1rem;
   padding: 4rem 8rem;
 }
+
+.editButton {
+  color: #0d7cff;
+  font: fonts.$f400-medium;
+  cursor: pointer;
+  justify-self: flex-end;
+  align-self: flex-end;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+  .layout {
+    padding: 0;
+  }
+}
+
+.title {
+  text-align: center;
+}

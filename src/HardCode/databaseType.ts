@@ -103,3 +103,22 @@ export interface MilestoneF {
   milestone_status?: MilestoneStatus;
   campaign_status?: CampaignStatus;
 }
+
+/* 
+Campaign-Faqs
+Son los bloques de texto de Q&A de la campaña
+
+ID-Campaign-Faqs: Integer
+Campaign-ID: Integer
+ID de la campaña a la que pertenece esta Q&A
+Name: String
+Description: String
+Order: Integer
+CreatedAt: Date
+UpdatedAt: Date
+ */
+export interface FAQ {
+  name: string;
+  description: string;
+  order: number;
+}
