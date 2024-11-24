@@ -5,7 +5,7 @@ import GeneralButtonUI from '@/components/buttons/UI/Button';
 import Checkbox from '@/components/buttons/checkbox/Checkbox';
 import { useProjectDetail } from '@/hooks/useProjectDetail';
 import ToolTipInformation from '@/components/general/tooltipInformation/tooltipInformation';
-
+import ModalTemplate from '@/components/modal/Modal';
 interface ProjectDetailProps {
     // Define props here
 }
@@ -32,10 +32,14 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
     useEffect(() => {
         console.log('Reordered content:', contentReorder);
     }, [contentReorder]);
+    const [openModal, setIsOpenModal] = useState(false);
+
 
     return (
         <article className={styles.generalLayout}>
             <div className={styles.layoutProject}>
+
+                {/* NAVEGACION  */}
                 <div className={styles.optionsContainer}>
                     {textEditorOptions.map((option, index) => {
                         const hasContent = content[option.id] && content[option.id] !== "<p><br></p>";
@@ -65,8 +69,10 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
                             </div>
                         );
                     })}
-                    <GeneralButtonUI text="Add index" onClick={handleAddOption} classNameStyle='menu-index-selected' />
+                    <GeneralButtonUI text="Add index" onClick={() => { setIsOpenModal(true) }} classNameStyle='menu-index-selected' />
                 </div>
+
+                {/* EDITOR DE TEXTOS */}
                 <TextEditor
                     title={selectedOption.title}
                     content={content[selectedOption.id] || ''}
@@ -75,18 +81,35 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
 
                 />
                 <div className={styles.addOptionContainer}>
-                    <input
-                        type="text"
-                        value={newOptionTitle}
-                        onChange={(e) => setNewOptionTitle(e.target.value)}
-                        placeholder="New section title"
-                        className={styles.input}
-                    />
+
                 </div>
             </div>
             <div className={styles.buttonContainer}>
                 <GeneralButtonUI text="Save" onClick={() => console.log("Save")} classNameStyle='green' />
             </div>
+
+
+
+            {/* !! MODAL PARA AGREGAR UN NUEVO INDEX  */}
+
+            <ModalTemplate isOpen={openModal} setIsOpen={setIsOpenModal}>
+                <div className={styles.modalContainer}>
+                    <h2 className={styles.modalTitle}>Add Index</h2>
+                    <div className={styles.inputContainer}>
+                        <input
+                            type="text"
+                            value={newOptionTitle}
+                            onChange={(e) => setNewOptionTitle(e.target.value)}
+                            placeholder="New section title"
+                            className={styles.input}
+                        />
+                        <GeneralButtonUI text="Confirm" onClick={() => { handleAddOption(); setIsOpenModal(false); }} />
+                    </div>
+                </div>
+            </ModalTemplate>
+
+            {/*  */}
+
         </article>
     );
 }

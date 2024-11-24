@@ -15,7 +15,7 @@ const numberToWords: { [key: number]: string } = {
 };
 
 const MilestoneTimeEdit: React.FC<MilestoneTimeEditProps> = ({ milestone }) => {
-    const { project, setProject, setMilestone } = useProjectDetailStore();
+    const { project, setProject, setMilestone, editionMode } = useProjectDetailStore();
     const weekOptions = [2, 3, 4, 5];
 
     const handleWeekSelect = (weeks: number) => {
@@ -51,7 +51,7 @@ const MilestoneTimeEdit: React.FC<MilestoneTimeEditProps> = ({ milestone }) => {
 
     return (
         <div className={styles.general}>
-            {milestone.cmEstimatedDeliveryDate === "" ? (
+            {milestone.cmEstimatedDeliveryDate === "" && editionMode ? (
                 <div className={styles.timeOptionsContainer}>
                     {weekOptions.map(weeks => (
                         <button
@@ -65,9 +65,12 @@ const MilestoneTimeEdit: React.FC<MilestoneTimeEditProps> = ({ milestone }) => {
                 </div>
             ) : (
                 <div className={styles.finalDelivaryDate}>
-                    <button onClick={handleResetWeek} className={styles.backButton}>
-                        <img src="/img/icons/arrow-back.svg" alt="arrow-back" />
-                    </button>
+                    {
+                        editionMode &&
+                        <button onClick={handleResetWeek} className={styles.backButton}>
+                            <img src="/img/icons/arrow-back.svg" alt="arrow-back" />
+                        </button>
+                    }
                     <span>{milestone.cmEstimatedDeliveryDate}</span>
                 </div>
             )}

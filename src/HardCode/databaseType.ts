@@ -122,3 +122,55 @@ export interface FAQ {
   description: string;
   order: number;
 }
+
+export interface MembersTeam {
+  id: number;
+  member_picture: string;
+  member_name: string;
+  member_last_name: string;
+  member_role: string;
+  member_description: string;
+  member_email: string;
+  member_admin: boolean;
+  member_social: {
+    facebook: string;
+    instagram: string;
+    discord: string;
+    x: string;
+  };
+}
+
+export interface Project {
+  id: number;
+  title: string;
+  description: string;
+  banner_image: string;
+  company_logo: string;
+  created_at: string;
+  updated_at: string;
+  investors: number;
+  status: string;
+  goal: number;
+  min_request: number;
+  cdRequestedMaxADA: number | null;
+  cdCampaignToken_PriceADA: number | null;
+  cdCampaignToken_TN: string;
+  tokenomics_description: string;
+  brand: {
+    website: string;
+    facebook: string;
+    instagram: string;
+    discord: string;
+    x: string;
+  };
+  members_team: MembersTeam[];
+  milestones: MilestoneF[];
+  faqs: FAQ[];
+}
+
+export interface campaingContent {
+  id: number;
+  name: string;
+  description: string;
+  order: number;
+}

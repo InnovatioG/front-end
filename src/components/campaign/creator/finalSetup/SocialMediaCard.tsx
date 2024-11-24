@@ -8,6 +8,10 @@ interface SocialMediaCardContainerProps {
     // Define props here
 }
 
+
+/* TODO logica para chequar si estoy en modo edicion o en modo renderizado */
+
+
 const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props) => {
     const { project } = useProjectDetailStore();
     const [selectedLink, setSelectedLink] = useState<string>("website");

@@ -11,7 +11,7 @@ interface NavBarProjectEditionProps {
 }
 
 const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
-    const { menuView, setMenuView } = useProjectDetailStore();
+    const { menuView, setMenuView, editionMode } = useProjectDetailStore();
     const screenSize = useScreenSize();
 
     const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +20,9 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
         setMenuView(item);
         setIsOpen(!isOpen);
     }
+
+    console.log("navEditionMode", editionMode)
+
 
     if (screenSize === 'mobile' || screenSize === 'tablet') {
         return (
@@ -42,13 +45,15 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
                             </li>
                         ))}
                     </ul>
-                    <div>
-                        <GeneralButtonUI
-                            text="Overview"
-                            classNameStyle="overview"
-                            onClick={() => console.log("Save")}
-                        />
-                    </div>
+                    {editionMode && (
+                        <div>
+                            <GeneralButtonUI
+                                text="Overview"
+                                classNameStyle="overview"
+                                onClick={() => console.log("Save")}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         );
@@ -67,13 +72,15 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
                     </li>
                 ))}
             </ul>
-            <div>
-                <GeneralButtonUI
-                    text="Overview"
-                    classNameStyle="overview"
-                    onClick={() => console.log("Save")}
-                />
-            </div>
+            {editionMode && (
+                <div>
+                    <GeneralButtonUI
+                        text="Overview"
+                        classNameStyle="overview"
+                        onClick={() => console.log("Save")}
+                    />
+                </div>
+            )}
         </div>
     );
 }

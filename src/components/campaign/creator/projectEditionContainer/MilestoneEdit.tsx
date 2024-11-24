@@ -1,7 +1,7 @@
 import React from 'react';
 import TextEditor from '@/components/general/textEditor/TextEditor';
 import { getOrdinalString } from '@/utils/formats';
-import styles from "./MilestoneEdit.module.scss"
+import styles from "./MilestoneEdit.module.scss";
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import type { MilestoneF } from "@/HardCode/databaseType";
 import MilestoneTimeEdit from './MilestoneTimeEdit';
@@ -31,6 +31,8 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index,
 
     const totalGoal = project.goal;
 
+    const isLastMilestone = index === project.milestones.length - 1;
+
     return (
         <section>
             <h4 className={styles.milestoneTitle}>{ordinalString} Milestone</h4>
@@ -43,10 +45,16 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index,
                     />
                 </div>
                 <div className={styles.controller}>
-                    <label htmlFor="">Time</label>
+                    <label htmlFor="" className={styles.timeLabel}>Time</label>
                     <div className={styles.controllerContainer}>
                         <MilestoneTimeEdit milestone={milestone} />
-                        <MilestonePercentage milestone={milestone} goal={totalGoal} maxAvailablePercentage={maxAvailablePercentage} onPercentageChange={onPercentageChange} />
+                        <MilestonePercentage
+                            milestone={milestone}
+                            goal={totalGoal}
+                            maxAvailablePercentage={maxAvailablePercentage}
+                            onPercentageChange={onPercentageChange}
+                            isLastMilestone={isLastMilestone}
+                        />
                     </div>
                 </div>
             </article>

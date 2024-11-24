@@ -7,6 +7,7 @@ interface CampaignHeaderProps {
     /*     title: string;
         banner_image: string;
         company_logo: string; */
+
 }
 
 const CampaignHeader: React.FC<CampaignHeaderProps> = () => {

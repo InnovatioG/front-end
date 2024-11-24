@@ -11,6 +11,7 @@ interface UseProjectDetailStore extends ProjectDetailState {
   setMilestone: (milestone: ProjectDetailState["milestone"]) => void;
   setIsLoading: (isLoading: boolean) => void;
   setError: (error: string) => void;
+  setEditionMode: (editionMode: boolean) => void;
 }
 
 export const useProjectDetailStore = create<UseProjectDetailStore>()(
@@ -35,6 +36,10 @@ export const useProjectDetailStore = create<UseProjectDetailStore>()(
     setMilestone: (milestone) =>
       set((state) => {
         state.milestone = milestone;
+      }),
+    setEditionMode: (editionMode) =>
+      set((state) => {
+        state.editionMode = editionMode;
       }),
   }))
 );

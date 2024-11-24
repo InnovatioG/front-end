@@ -64,7 +64,7 @@
   flex-direction: column;
   gap: 2rem;
   margin-top: 1rem;
-  padding: 4rem 8rem;
+  padding: 2rem 6rem;
 }
 
 .editButton {
@@ -77,12 +77,18 @@
   text-decoration: underline;
 }
 
+.buttonAddMember {
+  width: 30%;
+}
+
 @media screen and (max-width: 768px) {
   .layout {
     padding: 0;
   }
-}
-
-.title {
-  text-align: center;
+  .title {
+    text-align: center;
+  }
+  .buttonAddMember {
+    margin-left: 0.5rem;
+  }
 }

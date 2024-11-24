@@ -5,10 +5,14 @@ import CampaignCard from '../creator/finalSetup/CampaignCard';
 import SocialMediaCardContainer from '../creator/finalSetup/SocialMediaCard';
 interface CampaignDashCreationProps {
     styles: any;
+
 }
 
 const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ styles }) => {
-    const { project } = useProjectDetailStore();
+    const { project, } = useProjectDetailStore();
+
+
+
     return (
         <article className={styles.dashboardCampaignContainer}>
             <div className={styles.imagenContainer}>

@@ -12,16 +12,18 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 interface ResumeOfTheTeamAccordionProps {
-    onEditMember: (member: MembersTeam) => void;
+    onEditMember?: (member: MembersTeam) => void;
 }
 
 const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onEditMember }) => {
-    const { project } = useProjectDetailStore();
+    const { project, editionMode } = useProjectDetailStore();
     const { setSelectedMember, setStep } = useCampaignStore();
     const router = useRouter();
 
     const handleClickEditButton = (member: MembersTeam) => {
-        onEditMember(member);
+        if (onEditMember) {
+            onEditMember(member);
+        }
     };
 
     return (
@@ -74,9 +76,12 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
                                         Description:</span>
                                     <p className={styles.contentText}>{member.member_description}</p>
                                 </div>
-                                <button
-                                    className={styles.editButton}
-                                    onClick={() => handleClickEditButton(member)}>Edit </button>
+                                {
+                                    editionMode &&
+                                    <button
+                                        className={styles.editButton}
+                                        onClick={() => handleClickEditButton(member)}>Edit </button>
+                                }
                             </div>
                         </AccordionContent>
                     </AccordionItem>

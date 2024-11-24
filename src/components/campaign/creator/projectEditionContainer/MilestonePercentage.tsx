@@ -1,21 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import type { MilestoneF } from "@/HardCode/databaseType";
-import styles from "./MilestonePercentage.module.scss"
+import styles from "./MilestonePercentage.module.scss";
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 
 interface MilestonePercentageProps {
     milestone: MilestoneF;
-    goal: number;
+    goal: number; // Goal total
     maxAvailablePercentage: number;
     onPercentageChange: (percentage: number) => boolean;
+    isLastMilestone: boolean;
 }
 
 const MilestonePercentage: React.FC<MilestonePercentageProps> = ({
     milestone,
     goal,
     maxAvailablePercentage,
-    onPercentageChange
+    onPercentageChange,
+    isLastMilestone,
 }) => {
-    const [percentage, setPercentage] = React.useState<number>(milestone.percentage);
+    const [percentage, setPercentage] = useState<number>(milestone.percentage);
+    const { editionMode } = useProjectDetailStore();
+
+    useEffect(() => {
+        setPercentage(milestone.percentage);
+    }, [milestone.percentage]);
 
     const handlePercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/[^0-9]/g, ''); // Remove non-digits
@@ -31,22 +39,28 @@ const MilestonePercentage: React.FC<MilestonePercentageProps> = ({
     const percentageGoal = (goal * percentage) / 100;
     const formattedGoal = `$${percentageGoal.toLocaleString('en-US', {
         minimumFractionDigits: 0,
-        maximumFractionDigits: 0
+        maximumFractionDigits: 0,
     })}`;
 
     return (
         <div className={styles.container}>
             <span className={styles.funds}>Funds</span>
-            <input
-                type="text"
-                pattern="\d*"
-                inputMode="numeric"
-                min="0"
-                max={maxAvailablePercentage}
-                className={styles.percentageTotal}
-                onChange={handlePercentageChange}
-                value={percentage ? `${percentage}%` : ''}
-            />
+
+            {editionMode ? (
+                <input
+                    type="text"
+                    pattern="\d*"
+                    inputMode="numeric"
+                    min="0"
+                    max={maxAvailablePercentage}
+                    className={styles.percentageTotal}
+                    onChange={handlePercentageChange}
+                    value={percentage ? `${percentage}%` : ''}
+                />
+            ) : (
+                <span className={styles.percentageTotalSpan}>{percentage ? `${percentage}%` : ''}</span>
+            )}
+
             <span className={styles.percentage}>{formattedGoal}</span>
         </div>
     );

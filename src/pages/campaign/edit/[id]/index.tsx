@@ -1,29 +1,25 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import JSON from "@/HardCode/campaignId.json";
-import styles from "./campainPagelayout.module.scss"
 import CampaignHeader from '@/components/campaign/campaignHeader/CampaignHeader';
+import styles from "./campaignIdLayout.module.scss";
 import CampaignDashCreation from '@/components/campaign/campaignHeader/CampaignDash';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import ProjectContainer from '@/components/projectContainer/ProjectContainer';
+import ProjectEditionContainer from '@/components/campaign/creator/projectEditionContainer/ProjectEditionContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 
-interface CampaignVisualizationProps {
-    // Define props here
+interface CampaignByIndexProps {
+    // Define props aquí si es necesario
 }
 
-const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
-
+const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
     const router = useRouter();
     const { id } = router.query;
-    const { project, setProject, setEditionMode, editionMode, isLoading, setIsLoading } = useProjectDetailStore();
 
-    console.log(editionMode)
+    const { setProject, project, editionMode, setIsLoading, isLoading } = useProjectDetailStore();
 
     useEffect(() => {
         setIsLoading(true);
-        setEditionMode(false);
 
         if (id) {
             const campaignId = Number(id);
@@ -45,18 +41,13 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
         return <LoadingPage />;
     }
 
-
-
-
     return (
         <main className={styles.layout}>
             {project.id !== 0 ? (
                 <div className={styles.campaignContainerCreator}>
                     <CampaignHeader />
-                    <CampaignDashCreation
-                        styles={styles}
-                    />
-                    <ProjectContainer />
+                    <CampaignDashCreation styles={styles} />
+                    <ProjectEditionContainer />
                 </div>
             ) : (
                 <p>Campaign not found</p>
@@ -65,5 +56,4 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
     );
 }
 
-export default CampaignVisualization;
-
+export default CampaignByIndex;

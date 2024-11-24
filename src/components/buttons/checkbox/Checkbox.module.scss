@@ -132,3 +132,11 @@
     user-select: none;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .labelText {
+    font-size: 1rem;
+    width: 100%;
+    text-wrap: nowrap;
+  }
+}

@@ -1,5 +1,5 @@
 import type { MembersTeam } from "../campaign/initialState";
-import type { MilestoneF, FAQ } from "@/HardCode/databaseType";
+import type { MilestoneF, FAQ, campaingContent } from "@/HardCode/databaseType";
 
 export interface ProjectDetailState {
   project: {
@@ -29,6 +29,9 @@ export interface ProjectDetailState {
     /*     "Tokenomics-Description"
 
  */
+
+    /* !! ARREGLAR TIPEO */
+    campaign_content: campaingContent[];
     tokenomics_description: string;
     brand: {
       website: string;
@@ -50,6 +53,7 @@ export interface ProjectDetailState {
     | "Q&A";
   error: string;
   milestone: MilestoneF | null; // Add this for active/selected milestone
+  editionMode: boolean;
 }
 
 export const initialState: ProjectDetailState = {
@@ -79,11 +83,13 @@ export const initialState: ProjectDetailState = {
     members_team: [],
     milestones: [],
     faqs: [],
+    campaign_content: [],
   },
   menuView: "Project Detail",
   isLoading: false,
   error: "",
   milestone: null,
+  editionMode: true,
 };
 
 /* 

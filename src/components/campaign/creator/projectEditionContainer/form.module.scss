@@ -57,4 +57,11 @@
   .buttonContainer {
     width: 75%;
   }
+  .inputContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  .input {
+    font-size: 1rem;
+  }
 }

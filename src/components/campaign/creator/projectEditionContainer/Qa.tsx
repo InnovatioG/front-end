@@ -3,7 +3,7 @@ import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import styles from "./Qa.module.scss";
 import GeneralButtonUI from '@/components/buttons/UI/Button';
 import FramerMotionAnimation from '@/utils/framerMotion';
-
+import AddMore from '@/components/buttons/addMore/AddMore';
 interface QYAProps {
     // Define props here
 }
@@ -60,14 +60,7 @@ const QYA: React.FC<QYAProps> = (props) => {
             ))}
 
             <div className={styles.buttonGeneral}>
-                <GeneralButtonUI onClick={handleQuestionOpen} classNameStyle='menu-index'>
-                    <div className={styles.buttonContainer}>
-                        <div className={`${styles.plus} ${isOpen ? styles.open : ''}`}>{isOpen ? '×' : '+'}</div>
-                        <span>
-                            {isOpen ? 'Add More' : 'Add More'}
-                        </span>
-                    </div>
-                </GeneralButtonUI>
+                <AddMore isOpen={isOpen} setIsOpen={setIsOpen} handleAddMore={handleQuestionOpen} />
             </div>
 
             <FramerMotionAnimation isVisible={viewInputQuestion}>
