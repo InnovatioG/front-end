@@ -51,6 +51,7 @@ export interface CampaignState {
       instagram: string;
       discord: string;
       x: string;
+      linkedin: string;
     };
     members_team: MembersTeam[];
     selectedMember: MembersTeam | null; // Fix typo here
@@ -58,7 +59,7 @@ export interface CampaignState {
 }
 
 export const initialState: CampaignState = {
-  step: 1,
+  step: 3,
   title: "",
   category: "",
   categoryId: null,
@@ -92,6 +93,7 @@ export const initialState: CampaignState = {
       instagram: "",
       discord: "",
       x: "",
+      linkedin: "",
     },
 
     members_team: [],

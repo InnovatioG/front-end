@@ -80,10 +80,6 @@ export const useProjectDetail = () => {
     });
     setContent(updatedContent);
 
-    console.log(
-      "New order of options:",
-      options.map((option) => option.title)
-    );
     setDraggedIndex(index);
   };
 

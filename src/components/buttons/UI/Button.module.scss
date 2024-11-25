@@ -60,17 +60,19 @@
 }
 
 .menu-index,
-.menu-index-selected {
+.menu-index-selected,
+.navegation-buttons-add {
   background-color: colors.$gray-menu;
   color: colors.$secondary-background;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   width: 100%;
   overflow: visible;
   text-align: left;
   border: none;
-  font: fonts.$f200-medium;
+  padding-inline: 1rem;
+  font: fonts.$f150-medium;
   @media (max-width: 768px) {
     padding: 0.7rem 0.5rem;
   }
@@ -126,4 +128,15 @@
     font-size: 1rem;
     padding: 1rem 2rem;
   }
+}
+
+.menu-index-selected {
+  padding: 1rem;
+}
+
+.navegation-buttons-add {
+  scale: 0.8;
+  justify-self: flex-end;
+  align-self: flex-end;
+  background-color: red;
 }

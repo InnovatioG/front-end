@@ -19,7 +19,6 @@ const MemberController: React.FC<MemberControllerProps> = () => {
 
 
     const memberstTeam = newCampaign.members_team
-    console.log(memberstTeam)
 
     const handleSelectMember = (member: MembersTeam) => {
         setSelectedMember(member);

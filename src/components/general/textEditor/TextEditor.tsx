@@ -10,10 +10,11 @@ interface TextEditorProps {
     content: string;
     onChange: (newContent: string) => void;
     styleOption: string;
+    menuOptions?: number;
 }
 
 
-export default function TextEditor({ title, content, onChange, styleOption = "quillEditor" }: TextEditorProps) {
+export default function TextEditor({ title, content, onChange, styleOption = "quillEditor", menuOptions = 0 }: TextEditorProps) {
     const [editorContent, setEditorContent] = useState(content);
 
 
@@ -34,9 +35,9 @@ export default function TextEditor({ title, content, onChange, styleOption = "qu
     const quillModules = {
         toolbar: [
             [{ header: [1, 2, 3, false] }],
-            ['bold', 'italic', 'underline',],
+            ['bold', 'italic', 'underline'],
             [{ list: 'ordered' }, { list: 'bullet' }],
-            ['link', 'image', 'video'],
+            ...(menuOptions === 0 ? [['link', 'image', 'video']] : []),
             [{ align: [] }],
         ],
     };
@@ -48,11 +49,10 @@ export default function TextEditor({ title, content, onChange, styleOption = "qu
         'underline',
         'list',
         'bullet',
-        'link',
-        'image',
-        'video',
+        ...(menuOptions === 0 ? ['link', 'image', 'video'] : []),
         'align',
     ];
+
 
 
     return (

@@ -29,9 +29,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
         draggedIndex
     } = useProjectDetail();
 
-    useEffect(() => {
-        console.log('Reordered content:', contentReorder);
-    }, [contentReorder]);
     const [openModal, setIsOpenModal] = useState(false);
 
 
@@ -40,6 +37,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
             <div className={styles.layoutProject}>
 
                 {/* NAVEGACION  */}
+
+
+
                 <div className={styles.optionsContainer}>
                     {textEditorOptions.map((option, index) => {
                         const hasContent = content[option.id] && content[option.id] !== "<p><br></p>";
@@ -64,7 +64,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
                                     <span className={hasContent ? styles.buttonWhite : styles.buttonSpan}>
                                         {option.title}
                                     </span>
-                                    <ToolTipInformation content={option.content} />
+                                    <ToolTipInformation content={option.tooltip} />
                                 </GeneralButtonUI>
                             </div>
                         );

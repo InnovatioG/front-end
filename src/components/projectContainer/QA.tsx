@@ -13,13 +13,6 @@ const QA: React.FC<QAProps> = (props) => {
     const faqs = project.faqs || [];
 
 
-
-    console.log(faqs)
-
-
-
-
-
     return (
         <div className={styles.generalContainer}>
             <Accordion type='single' collapsible style={{ background: "trasparent" }} >

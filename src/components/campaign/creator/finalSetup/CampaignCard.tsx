@@ -18,7 +18,6 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ status, goal, min_request, 
 
     const progressWidth = `${min_request}%`;
 
-    console.log(status)
 
     return (
         <section className={styles.campaignCard}>

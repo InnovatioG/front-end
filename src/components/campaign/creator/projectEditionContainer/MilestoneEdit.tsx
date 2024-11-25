@@ -40,6 +40,7 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index,
                 <div className={styles.textEditorContianer}>
                     <TextEditor
                         styleOption='quillEditorB'
+                        menuOptions={1}
                         content={milestone.description}
                         onChange={handleDescriptionChange}
                     />

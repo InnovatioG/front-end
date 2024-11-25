@@ -4,31 +4,39 @@ import styles from "./SocialMediaCard.module.scss";
 import { socialIcons } from '@/utils/constants';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import Image from 'next/image';
+import ModalTemplate from '@/components/modal/Modal';
+import GeneralButtonUI from '@/components/buttons/UI/Button';
+
 interface SocialMediaCardContainerProps {
     // Define props here
 }
 
-
-/* TODO logica para chequar si estoy en modo edicion o en modo renderizado */
+/* falta el handler confirm z */
 
 
 const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props) => {
-    const { project } = useProjectDetailStore();
+    const { project, setProject, editionMode } = useProjectDetailStore();
     const [selectedLink, setSelectedLink] = useState<string>("website");
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-    const editLinkButton = () => { }
+    const editLinkButton = () => {
+        setModalOpen(true);
+    }
 
-
-
+    const getPlaceholder = () => {
+        const linkValue = project.brand[selectedLink];
+        return linkValue && linkValue !== "" ? linkValue : `Enter your ${selectedLink} link`;
+    }
 
     return (
         <section className={styles.socialMediaCard}>
-            <button className={styles.buttonSelected}>
-                <span>
-                    Edit {selectedLink}
-                </span>
-                <Image src={"/img/icons/right-arrow.svg"} alt="next" width={10} height={10} />
-            </button>
+            {editionMode && (
+                <button className={styles.buttonSelected} onClick={editLinkButton}>
+                    <span>Edit {selectedLink}</span>
+                    <Image src={"/img/icons/right-arrow.svg"} alt="next" width={10} height={10} />
+                </button>
+            )}
+
             <article className={styles.socialContainer}>
                 {socialIcons.map(social => (
                     <SocialButton
@@ -39,6 +47,28 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
                     />
                 ))}
             </article>
+
+            <ModalTemplate isOpen={modalOpen} setIsOpen={setModalOpen}>
+                <div className={styles.modalContainer}>
+                    <h2 className={styles.modalTitle}>Edit {selectedLink}</h2>
+                    <div className={styles.inputContainer}>
+                        <input
+                            type="text"
+                            value={project.brand[selectedLink] || ""}
+                            placeholder={getPlaceholder()}
+                            onChange={(e) => setProject({
+                                ...project,
+                                brand: {
+                                    ...project.brand,
+                                    [selectedLink]: e.target.value
+                                }
+                            })}
+                            className={styles.input}
+                        />
+                        <GeneralButtonUI text="Confirm" onClick={() => setModalOpen(false)} />
+                    </div>
+                </div>
+            </ModalTemplate>
         </section>
     );
 }

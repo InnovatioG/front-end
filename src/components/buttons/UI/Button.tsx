@@ -9,6 +9,7 @@ interface GeneralButtonUIProps {
     type?: "button" | "submit" | "reset";
     loading?: boolean;
     children?: React.ReactNode;
+    className?: string;
 }
 
 const GeneralButtonUI: React.FC<GeneralButtonUIProps> = ({
@@ -22,7 +23,9 @@ const GeneralButtonUI: React.FC<GeneralButtonUIProps> = ({
 }) => {
 
 
+    const finalClassName = classNameStyle?.split(' ').map(cls => styles[cls]).join(' ');
 
+    console.log(finalClassName);
 
     return (
         <button

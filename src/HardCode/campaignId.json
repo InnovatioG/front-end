@@ -94,6 +94,7 @@
     "updated_at": "",
     "brand": {
       "website": "www.iairkaplun.com.ar",
+      "linkedin": "www.linkedin.com/linkedin",
       "facebook": "",
       "instagram": "",
       "discord": "",
@@ -213,7 +214,7 @@
         "campaign_id": 2,
         "campaign_status_id": 1,
         "percentage": 40,
-        "status": "pending",
+        "status": "Finished",
         "cmEstimatedDeliveryDate": "5 weeks",
         "milestone_status": {
           "id": 1,
@@ -228,7 +229,7 @@
         "campaign_id": 2,
         "campaign_status_id": 1,
         "percentage": 30,
-        "status": "pending",
+        "status": "Started",
         "cmEstimatedDeliveryDate": "3 weeks",
         "milestone_status": {
           "id": 2,
@@ -243,7 +244,7 @@
         "campaign_id": 2,
         "campaign_status_id": 1,
         "percentage": 30,
-        "status": "pending",
+        "status": "Not Started",
         "cmEstimatedDeliveryDate": "3 weeks",
         "milestone_status": {
           "id": 3,

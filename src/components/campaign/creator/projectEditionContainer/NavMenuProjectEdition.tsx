@@ -21,7 +21,6 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
         setIsOpen(!isOpen);
     }
 
-    console.log("navEditionMode", editionMode)
 
 
     if (screenSize === 'mobile' || screenSize === 'tablet') {
@@ -50,7 +49,7 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
                             <GeneralButtonUI
                                 text="Overview"
                                 classNameStyle="overview"
-                                onClick={() => console.log("Save")}
+                                onClick={() => { }}
                             />
                         </div>
                     )}
@@ -77,7 +76,7 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
                     <GeneralButtonUI
                         text="Overview"
                         classNameStyle="overview"
-                        onClick={() => console.log("Save")}
+                        onClick={() => { }}
                     />
                 </div>
             )}

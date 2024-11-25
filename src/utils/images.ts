@@ -32,6 +32,7 @@ export const WEBSITE = "/img/icons/website.svg#icon";
 export const INSTAGRAM = "/img/icons/ig.svg#icon";
 export const GOOGLE = "/img/icons/google.png";
 export const AVATAR = "/img/icons/defaultavatar.png";
+export const LINKEDIN = "/img/icons/linkedin.svg#icon";
 
 //ASSETS
 
@@ -53,4 +54,5 @@ export type IconType =
   | "/img/icons/ds.svg#icon"
   | "/img/icons/xs.svg#icon"
   | "/img/icons/website.svg#icon"
+  | "/img/icons/linkedin.svg#icon"
   | "/img/icons/ig.svg#icon";

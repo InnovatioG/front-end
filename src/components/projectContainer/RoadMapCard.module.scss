@@ -10,7 +10,6 @@
 
 .milestoneTitle {
   font: fonts.$fmilestone;
-  color: colors.$primary-font;
 }
 
 .content {
@@ -81,4 +80,25 @@
   flex-direction: column;
   gap: 1rem;
   align-items: center;
+}
+
+.submited,
+.notStarted {
+  color: colors.$yellow-color !important;
+}
+
+.rejected,
+.failed {
+  color: colors.$red-color !important;
+}
+
+.finished,
+.started {
+  color: colors.$green-color !important;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
 }

@@ -120,7 +120,7 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
                 </div>
             </article>
             <div className={styles.buttonContainer}>
-                <GeneralButtonUI text='Add Member' onClick={() => console.log('Add Member')} />
+                <GeneralButtonUI text='Add Member' onClick={() => { }} />
             </div>
         </section>
     );

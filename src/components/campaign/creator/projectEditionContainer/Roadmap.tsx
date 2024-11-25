@@ -21,7 +21,6 @@ const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
         return 100 - totalUsed;
     };
 
-    console.log(milestones)
 
     return (
         <div>

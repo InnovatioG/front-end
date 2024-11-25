@@ -6,6 +6,7 @@ import {
   LOGO_FULL_LIGHT,
   XS,
   WEBSITE,
+  LINKEDIN,
 } from "@/utils/images";
 export const CARDANO_WALLETS: CardanoWallet[] = [
   {
@@ -56,9 +57,11 @@ export const categories: Category[] = [
 ];
 
 export const socialIcons = [
+  { icon: WEBSITE, name: "website" },
   { icon: FACEBOOK, name: "facebook" },
   { icon: INSTAGRAM, name: "instagram" },
   { icon: XS, name: "xs" },
+  { icon: LINKEDIN, name: "linkedin" },
   { icon: DISCORD, name: "discord" },
 ];
 
@@ -128,3 +131,31 @@ export const inputFieldsToken = (project: any) => [
     transform: (value: string) => (value ? Number(value) : null),
   },
 ];
+
+export const stylesByStatus = (
+  status: string,
+  styles: { [key: string]: string }
+) => {
+  const statusStyles: { [key: string]: string } = {
+    "Not Started": styles.notStarted,
+    Started: styles.started,
+    Submited: styles.submited,
+    Rejected: styles.rejected,
+    Finished: styles.finished,
+    Failed: styles.failed,
+  };
+
+  return statusStyles[status] || styles.pending;
+};
+
+export const imageByStatus = (status: string) => {
+  const statusImages: { [key: string]: string } = {
+    "Not Started": "/img/icons/status/yellow.svg",
+    Started: "/img/icons/status/green.svg",
+    Submited: "/img/icons/status/yellow.svg",
+    Rejected: "/img/icons/status/red.svg",
+    Finished: "/img/icons/status/green.svg",
+    Failed: "/img/icons/status/red.svg",
+  };
+  return statusImages[status] || "/img/icons/status/yellow.svg";
+};
