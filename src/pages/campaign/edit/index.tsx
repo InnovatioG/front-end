@@ -9,7 +9,7 @@ import ProjectEditionContainer from '@/components/campaign/creator/projectEditio
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import { usePathname } from 'next/navigation';
 
-
+import ButtonSaveDraftContainer from '@/components/campaign/creator/projectEditionContainer/GeneralbuttonContainer';
 //! TODO DO MIDDLEWARE CHECK IF IS ADMIN FOR EDITING CAMPAIGN
 
 interface CampaignByIndexProps {
@@ -58,6 +58,7 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
                     <CampaignHeader />
                     <CampaignDashCreation styles={styles} />
                     <ProjectEditionContainer />
+                    <ButtonSaveDraftContainer />
                 </div>
             ) : (
                 <p>Campaign not found</p>

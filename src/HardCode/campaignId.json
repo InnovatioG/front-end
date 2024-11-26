@@ -14,6 +14,7 @@
     "faqs": [
       {
         "id": 1,
+        "order": 10,
         "campaign_id": 2,
         "name": "What payment methods and currencies are accepted on the product?",
         "description": "The only means of payment and currencies accepted's \"ADA\" and through investors' wallets."
@@ -21,12 +22,14 @@
       {
         "id": 2,
         "campaign_id": 2,
+        "order": 20,
         "name": "What are the limits of milestones per campaign?",
         "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
       },
       {
         "id": 3,
         "campaign_id": 2,
+        "order": 30,
         "name": "What are the campaign finance limits?",
         "description": "There is a defined limit for each campaign in which they can raise a minimum of $5,000 and a maximum of $250,000."
       }
@@ -191,18 +194,22 @@
         "id": 1,
         "campaign_id": 2,
         "name": "What payment methods and currencies are accepted on the product?",
+        "order": 0,
         "description": "The only means of payment and currencies accepted's \"ADA\" and through investors' wallets."
       },
       {
         "id": 2,
         "campaign_id": 2,
+
         "name": "What are the limits of milestones per campaign?",
+        "order": 10,
         "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
       },
       {
         "id": 3,
         "campaign_id": 2,
         "name": "What are the campaign finance limits?",
+        "order": 20,
         "description": "There is a defined limit for each campaign in which they can raise a minimum of $5,000 and a maximum of $250,000."
       }
     ],

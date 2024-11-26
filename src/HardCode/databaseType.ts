@@ -132,6 +132,8 @@ export interface MembersTeam {
   member_description: string;
   member_email: string;
   member_admin: boolean;
+  member_manage_funds: boolean;
+  member_wallet_address: string;
   member_social: {
     facebook: string;
     instagram: string;
@@ -150,18 +152,23 @@ export interface Project {
   updated_at: string;
   investors: number;
   status: string;
+
   goal: number;
   min_request: number;
   cdRequestedMaxADA: number | null;
   cdCampaignToken_PriceADA: number | null;
   cdCampaignToken_TN: string;
+
+  campaign_content: campaingContent[];
   tokenomics_description: string;
+
   brand: {
     website: string;
     facebook: string;
     instagram: string;
     discord: string;
-    x: string;
+    linkedin: string;
+    xs: string;
   };
   members_team: MembersTeam[];
   milestones: MilestoneF[];

@@ -16,7 +16,7 @@ interface SocialMediaCardContainerProps {
 
 const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props) => {
     const { project, setProject, editionMode } = useProjectDetailStore();
-    const [selectedLink, setSelectedLink] = useState<string>("website");
+    const [selectedLink, setSelectedLink] = useState<keyof typeof project.brand>("website");
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const editLinkButton = () => {
@@ -42,7 +42,7 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
                     <SocialButton
                         key={social.name}
                         icon={social.icon}
-                        name={social.name}
+                        name={social.name as "website" | "facebook" | "instagram" | "discord" | "linkedin" | "xs"}
                         setSocialLink={setSelectedLink}
                     />
                 ))}

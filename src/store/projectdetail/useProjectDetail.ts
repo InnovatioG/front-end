@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
+import axios from "axios";
 import {
   ProjectDetailState,
   initialState,
 } from "@/store/projectdetail/initialState";
-import axios from "axios";
 
 interface UseProjectDetailStore extends ProjectDetailState {
   setProject: (project: ProjectDetailState["project"]) => void;

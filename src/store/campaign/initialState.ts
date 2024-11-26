@@ -9,6 +9,8 @@ export interface MembersTeam {
   member_description: string;
   member_email: string;
   member_admin: boolean;
+  member_manage_funds: boolean;
+  member_wallet_address: string;
   member_social: {
     facebook: string;
     instagram: string;

@@ -26,6 +26,9 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ children, ...props }) => 
             })}
         </AccordionPrimitive.Item>
     );
+
+    AccordionTrigger.displayName = "AccordionTrigger";
+    AccordionContent.displayName = "AccordionContent";
 };
 
 type AccordionTriggerProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {

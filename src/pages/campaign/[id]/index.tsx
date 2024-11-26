@@ -19,6 +19,7 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
     const { id } = router.query;
     const { project, setProject, setEditionMode, editionMode, isLoading, setIsLoading } = useProjectDetailStore();
 
+    console.log(editionMode)
 
     useEffect(() => {
         setIsLoading(true);

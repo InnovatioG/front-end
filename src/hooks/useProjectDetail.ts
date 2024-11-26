@@ -2,13 +2,27 @@ import { useState, useEffect } from "react";
 import { initialTextEditorOptions } from "@/utils/constants";
 
 export const useProjectDetail = () => {
-  const initialContent = initialTextEditorOptions.reduce((acc, option) => {
-    acc[option.id] = "";
-    return acc;
-  }, {});
+  const initialContent = initialTextEditorOptions.reduce(
+    (acc: { [key: number]: string }, option) => {
+      acc[option.id] = "";
+      return acc;
+    },
+    {}
+  );
 
   const initialContentReorder = initialTextEditorOptions.reduce(
-    (acc, option, index) => {
+    (
+      acc: {
+        [key: number]: {
+          id: number;
+          title: string;
+          content: string;
+          order: number;
+        };
+      },
+      option,
+      index
+    ) => {
       acc[option.id] = {
         id: option.id,
         title: option.title,
@@ -48,7 +62,14 @@ export const useProjectDetail = () => {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    const newContentReorder = {};
+    const newContentReorder: {
+      [key: number]: {
+        id: number;
+        title: string;
+        content: string;
+        order: number;
+      };
+    } = {};
     textEditorOptions.forEach((option) => {
       newContentReorder[option.id] = {
         id: option.id,
@@ -69,12 +90,13 @@ export const useProjectDetail = () => {
     if (index === draggedIndex) return;
 
     const options = [...textEditorOptions];
+    if (draggedIndex === null) return;
     const item = options[draggedIndex];
     options.splice(draggedIndex, 1);
     options.splice(index, 0, item);
     setTextEditorOptions(options);
 
-    const updatedContent = {};
+    const updatedContent: { [key: number]: string } = {};
     options.forEach((option) => {
       updatedContent[option.id] = content[option.id] || "";
     });
@@ -107,6 +129,7 @@ export const useProjectDetail = () => {
           : 1,
       title: newOptionTitle,
       order: textEditorOptions.length * 10,
+      tooltip: "", // Add a default tooltip value
     };
 
     setTextEditorOptions([...textEditorOptions, newOption]);
@@ -115,7 +138,14 @@ export const useProjectDetail = () => {
   };
 
   const handleDragEnd = () => {
-    const newContentReorder = {};
+    const newContentReorder: {
+      [key: number]: {
+        id: number;
+        title: string;
+        content: string;
+        order: number;
+      };
+    } = {};
     textEditorOptions.forEach((option, index) => {
       newContentReorder[option.id] = {
         id: option.id,

@@ -62,7 +62,7 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
                                                         <a href={formatLink(link)} key={index} target="_blank" rel="noopener noreferrer">
                                                             <SocialButton
                                                                 icon={socialIcon.icon}
-                                                                name={name}
+                                                                name={name as "website" | "facebook" | "instagram" | "discord" | "linkedin" | "xs"}
                                                             />
                                                         </a>
                                                     )

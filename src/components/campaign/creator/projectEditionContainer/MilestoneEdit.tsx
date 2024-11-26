@@ -31,7 +31,6 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index,
 
     const totalGoal = project.goal;
 
-    const isLastMilestone = index === project.milestones.length - 1;
 
     return (
         <section>
@@ -54,7 +53,6 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index,
                             goal={totalGoal}
                             maxAvailablePercentage={maxAvailablePercentage}
                             onPercentageChange={onPercentageChange}
-                            isLastMilestone={isLastMilestone}
                         />
                     </div>
                 </div>

@@ -3,8 +3,8 @@ import styles from "./SocialButton.module.scss";
 
 interface SocialButtonProps {
     icon: string;
-    name?: string;
-    setSocialLink?: (link: string) => void;
+    name?: "website" | "facebook" | "instagram" | "discord" | "linkedin" | "xs";
+    setSocialLink?: React.Dispatch<React.SetStateAction<"website" | "facebook" | "instagram" | "discord" | "linkedin" | "xs">>;
 }
 
 const SocialButton: React.FC<SocialButtonProps> = ({ icon, name, setSocialLink }) => {

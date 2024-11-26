@@ -67,7 +67,7 @@ const ProjectDetail: React.FC = () => {
                             className={`${styles.buttonList} ${activeSection === content.id ? styles.active : ''}`}
                             onClick={() => handleClick(content.id)}
                         >
-                            {content.name || content.title}
+                            {content.name}
                         </li>
                     ))}
                 </ul>
@@ -78,10 +78,10 @@ const ProjectDetail: React.FC = () => {
                         key={content.id}
                         id={`section-${content.id}`}
                         className={styles.container}
-                        ref={el => (sectionRefs.current[index] = el!)}
+                        ref={el => { sectionRefs.current[index] = el!; }}
                     >
                         <div className={styles.titleContainer}>
-                            <h2 className={styles.title}>{content.name || content.title}</h2>
+                            <h2 className={styles.title}>{content.name}</h2>
                             <div className={styles.divisor}></div>
                         </div>
                         <div

@@ -8,7 +8,6 @@ interface MilestonePercentageProps {
     goal: number; // Goal total
     maxAvailablePercentage: number;
     onPercentageChange: (percentage: number) => boolean;
-    isLastMilestone: boolean;
 }
 
 const MilestonePercentage: React.FC<MilestonePercentageProps> = ({
@@ -16,7 +15,6 @@ const MilestonePercentage: React.FC<MilestonePercentageProps> = ({
     goal,
     maxAvailablePercentage,
     onPercentageChange,
-    isLastMilestone,
 }) => {
     const [percentage, setPercentage] = useState<number>(milestone.percentage);
     const { editionMode } = useProjectDetailStore();
@@ -28,7 +26,7 @@ const MilestonePercentage: React.FC<MilestonePercentageProps> = ({
     const handlePercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/[^0-9]/g, ''); // Remove non-digits
         if (value === '' || /^\d+$/.test(value)) {
-            const newValue = value === '' ? 0 : Math.min(maxAvailablePercentage, parseInt(value, 10));
+            const newValue = value === '' ? 0 : Math.min(100, parseInt(value, 10));
             const success = onPercentageChange(newValue);
             if (success) {
                 setPercentage(newValue);
@@ -52,7 +50,7 @@ const MilestonePercentage: React.FC<MilestonePercentageProps> = ({
                     pattern="\d*"
                     inputMode="numeric"
                     min="0"
-                    max={maxAvailablePercentage}
+                    max="100"
                     className={styles.percentageTotal}
                     onChange={handlePercentageChange}
                     value={percentage ? `${percentage}%` : ''}

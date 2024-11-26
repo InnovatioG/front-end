@@ -41,7 +41,6 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
                     goal={goal}
                     maxAvailablePercentage={100}
                     onPercentageChange={() => true}
-                    isLastMilestone={false}
                 />
             </div>
         </article>

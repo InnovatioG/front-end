@@ -16,20 +16,20 @@ const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
         return handlePercentageChange(milestoneId, newPercentage, milestones, setProject, project);
     };
 
-    const getRemainingPercentage = (currentMilestoneId: number) => {
-        const totalUsed = milestones.filter(milestone => milestone.id !== currentMilestoneId).reduce((sum, milestone) => sum + milestone.percentage, 0);
-        return 100 - totalUsed;
+    const getTotalPercentage = () => {
+        return milestones.reduce((sum, milestone) => sum + milestone.percentage, 0);
     };
 
+    const totalPercentage = getTotalPercentage();
 
     return (
-        <div>
+        <div className={totalPercentage > 100 ? 'over-limit' : ''}>
             {milestones.map((milestone, index) => (
                 <div key={milestone.id}>
                     <MilestoneCardEdit
                         milestone={milestone}
                         index={index}
-                        maxAvailablePercentage={getRemainingPercentage(milestone.id)}
+                        maxAvailablePercentage={100 - totalPercentage + milestone.percentage}
                         onPercentageChange={(newPercentage) => handlePercentageChangeWrapper(milestone.id, newPercentage)}
                     />
                 </div>

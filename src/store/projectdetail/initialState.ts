@@ -12,15 +12,7 @@ export interface ProjectDetailState {
     updated_at: string;
     investors: number;
     status: string;
-    /*    | "TBL"
-      | "Countdown"
-      | "Fundraising"
-      | "Finishing"
-      | "Active"
-      | "Sucess"
-      | "Failed"
-      | "Unreached"
-      | "Archived"; */
+
     goal: number;
     min_request: number;
     cdRequestedMaxADA: number | null;
@@ -29,12 +21,14 @@ export interface ProjectDetailState {
 
     campaign_content: campaingContent[];
     tokenomics_description: string;
+
     brand: {
       website: string;
       facebook: string;
       instagram: string;
       discord: string;
-      x: string;
+      linkedin: string;
+      xs: string;
     };
     members_team: MembersTeam[];
     milestones: MilestoneF[];
@@ -71,8 +65,9 @@ export const initialState: ProjectDetailState = {
       website: "",
       facebook: "",
       instagram: "",
+      linkedin: "",
       discord: "",
-      x: "",
+      xs: "",
     },
     cdRequestedMaxADA: null,
     cdCampaignToken_PriceADA: null,
