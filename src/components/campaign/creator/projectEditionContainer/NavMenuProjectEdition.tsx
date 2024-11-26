@@ -5,6 +5,7 @@ import styles from "./NavMenuProjectEdition.module.scss";
 import GeneralButtonUI from '@/components/buttons/UI/Button';
 import { useScreenSize } from '@/hooks/useScreenSize';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 interface NavBarProjectEditionProps {
     // Define props here
@@ -13,6 +14,9 @@ interface NavBarProjectEditionProps {
 const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
     const { menuView, setMenuView, editionMode } = useProjectDetailStore();
     const screenSize = useScreenSize();
+    const router = useRouter();
+
+
 
     const [isOpen, setIsOpen] = useState(false);
 

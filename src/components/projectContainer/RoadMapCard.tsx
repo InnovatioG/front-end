@@ -16,7 +16,6 @@ interface RoadMapCardProps {
 const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => {
     const ordinalString = getOrdinalString(index + 1);
 
-    console.log(milestone.status);
 
     return (
         <article className={styles.layout}>

@@ -104,7 +104,6 @@ export const initialTextEditorOptions = [
       "In this section, describe your general strategy to promote and market your digital product, service, or project. Explore the marketing channels you will utilize, such as social media, email marketing, digital advertising, etc. Detail your specific tactics, like content creation, participation in events, collaboration with influencers, etc. It's also helpful to explain how you will measure and evaluate the success of your marketing efforts.",
   },
 ];
-
 export const inputFieldsToken = (project: any) => [
   {
     id: "cdCampaignToken_TN",
@@ -116,22 +115,21 @@ export const inputFieldsToken = (project: any) => [
   },
   {
     id: "cdRequestedMaxADA",
-    label: "Quantity",
+    label: "Quantity and Value per token",
     type: "number",
     placeholder: "Quantity",
     value: project.cdRequestedMaxADA ?? "",
     transform: (value: string) => (value ? Number(value) : null),
   },
-  {
+  /*   {
     id: "cdCampaignToken_PriceADA",
     label: "Value per token",
-    type: "text",
+    type: "read",
     placeholder: "$ADA",
     value: project.cdCampaignToken_PriceADA ?? "",
     transform: (value: string) => (value ? Number(value) : null),
-  },
+  }, */
 ];
-
 export const stylesByStatus = (
   status: string,
   styles: { [key: string]: string }

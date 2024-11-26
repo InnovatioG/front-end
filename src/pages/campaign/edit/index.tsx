@@ -2,12 +2,15 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import JSON from "@/HardCode/campaignId.json";
 import CampaignHeader from '@/components/campaign/campaignHeader/CampaignHeader';
-import styles from "./campaignIdLayout.module.scss";
+import styles from "../[id]/campainPagelayout.module.scss";
 import CampaignDashCreation from '@/components/campaign/campaignHeader/CampaignDash';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import ProjectEditionContainer from '@/components/campaign/creator/projectEditionContainer/ProjectEditionContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import { usePathname } from 'next/navigation';
+
+
+//! TODO DO MIDDLEWARE CHECK IF IS ADMIN FOR EDITING CAMPAIGN
 
 interface CampaignByIndexProps {
     // Define props aquí si es necesario
@@ -15,12 +18,11 @@ interface CampaignByIndexProps {
 
 const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
     const router = useRouter();
-    const { id } = router.query;
-    const pathname = usePathname();
+    const { id, menuview } = router.query;
 
-    console.log(pathname)
+    console.log(menuview)
 
-    const { setProject, project, editionMode, setIsLoading, isLoading } = useProjectDetailStore();
+    const { setProject, project, editionMode, setIsLoading, isLoading, setMenuView } = useProjectDetailStore();
 
     useEffect(() => {
         setIsLoading(true);
@@ -31,6 +33,10 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
 
             if (campaign) {
                 setProject(campaign);
+            }
+
+            if (menuview) {
+                setMenuView(menuview);
             }
         }
 

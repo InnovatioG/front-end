@@ -26,11 +26,7 @@ export interface ProjectDetailState {
     cdRequestedMaxADA: number | null;
     cdCampaignToken_PriceADA: number | null;
     cdCampaignToken_TN: string;
-    /*     "Tokenomics-Description"
 
- */
-
-    /* !! ARREGLAR TIPEO */
     campaign_content: campaingContent[];
     tokenomics_description: string;
     brand: {
@@ -54,6 +50,8 @@ export interface ProjectDetailState {
   error: string;
   milestone: MilestoneF | null; // Add this for active/selected milestone
   editionMode: boolean;
+  isLoadingPrice: boolean;
+  price_ada: number;
 }
 
 export const initialState: ProjectDetailState = {
@@ -85,11 +83,13 @@ export const initialState: ProjectDetailState = {
     faqs: [],
     campaign_content: [],
   },
+  price_ada: 0,
   menuView: "Project Detail",
   isLoading: false,
   error: "",
   milestone: null,
   editionMode: true,
+  isLoadingPrice: false,
 };
 
 /* 

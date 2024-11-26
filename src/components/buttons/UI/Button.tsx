@@ -25,7 +25,6 @@ const GeneralButtonUI: React.FC<GeneralButtonUIProps> = ({
 
     const finalClassName = classNameStyle?.split(' ').map(cls => styles[cls]).join(' ');
 
-    console.log(finalClassName);
 
     return (
         <button
