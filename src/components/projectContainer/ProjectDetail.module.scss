@@ -111,3 +111,54 @@
 
   // Tus estilos adicionales...
 }
+
+@media screen and (max-width: 768px) {
+  .projectLayout {
+    grid-template-columns: 1fr;
+  }
+
+  .buttonList {
+    width: 60%;
+  }
+
+  .divisor {
+    display: none;
+  }
+
+  .titleContainer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0px;
+  }
+  .title {
+    text-align: left;
+  }
+  .content {
+    .container {
+      padding: 0 0.5rem;
+    }
+    .titleContainer {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 100%;
+      margin: 0px;
+    }
+    img {
+      height: 100%;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      object-fit: cover;
+      object-position: center;
+      margin: 0;
+      padding: 0;
+      margin: 2rem 0rem;
+
+      background-color: white;
+      background-color: red;
+    }
+  }
+}

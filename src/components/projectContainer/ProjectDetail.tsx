@@ -13,9 +13,7 @@ const ProjectDetail: React.FC = () => {
         const handleScroll = () => {
             const sections = sectionRefs.current;
             const scrollPosition = window.scrollY + window.innerHeight / 2;
-
             let currentSectionId: number | null = null;
-
             for (let i = 0; i < sections.length; i++) {
                 const section = sections[i];
                 const rect = section.getBoundingClientRect();
@@ -27,8 +25,6 @@ const ProjectDetail: React.FC = () => {
                     break;
                 }
             }
-
-            // Si estamos cerca del final de la página, activamos el último elemento
             const bottomThreshold = document.documentElement.scrollHeight - window.innerHeight - 10;
             if (window.scrollY >= bottomThreshold) {
                 currentSectionId = campaignContentSorted[campaignContentSorted.length - 1].id;
@@ -40,8 +36,6 @@ const ProjectDetail: React.FC = () => {
         };
 
         window.addEventListener('scroll', handleScroll);
-
-        // Llamamos al manejador inicialmente
         handleScroll();
 
         return () => {
