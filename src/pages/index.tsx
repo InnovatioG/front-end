@@ -10,16 +10,22 @@ import { TestApi } from '@/lib/SmartDB/FrontEnd';
 
 export default function Home() {
     const [list, setList] = useState<TestEntity[]>();
+    const [error, setError] = useState<unknown>();
 
     useEffect(() => {
         const fetch = async () => {
-            const list: TestEntity[] = await TestApi.getAllApi_();
-            // const list: TestEntity[] = await TestApi.getByParamsApi_({name: "Test"});
-
-            setList(list);
+            try {
+                const list: TestEntity[] = await TestApi.getAllApi_();
+                setList(list);
+            } catch (err) {
+                console.error('Error fetching data:', err);
+                setError(err);
+            }
         };
         fetch();
     }, []);
+
+    console.log("error", error);
 
     const handleCreate = async () => {
         alert('Creating test entity');
@@ -29,14 +35,14 @@ export default function Home() {
         await TestApi.createApi(test);
     };
 
-    const handleUpdate = async () => {
-        alert('Update test entity');
-        const test: TestEntity | undefined = await TestApi.getOneByParamsApi_({ name: 'Test' });
-        if (test !== undefined) {
-            test.description = 'Test description updated' + Math.random();
-            await TestApi.updateApi(test);
-        }
-    };
+    /*     const handleUpdate = async () => {
+            alert('Update test entity');
+            const test: TestEntity | undefined = await TestApi.getOneByParamsApi_({ name: 'Test' });
+            if (test !== undefined) {
+                test.description = 'Test description updated' + Math.random();
+                await TestApi.updateApi(test);
+            }
+        }; */
 
     return (
         <>
@@ -51,9 +57,13 @@ export default function Home() {
                         Help different crowdfunding campaigns become a reality thanks to your contributions, invest in projects, fund purposes and get rewards.
                     </h5>
                 </section>
-                <section className={styles.peopleSection}>
-                    <Image alt="people" src={PEOPLE} className={styles.imagePeople} priority layout='fill' objectFit='contain' />
-                </section>
+                <div className={styles.peopleContainer}>
+                    <div className={styles.pictureContainer}>
+                        <Image alt="people" src={PEOPLE}
+                            priority layout='fill' objectFit='contain' />
+                    </div>
+                </div>
+
             </main>
             <CampaignHighLight />
             <CampaignDashboard />
@@ -73,13 +83,23 @@ export default function Home() {
                 Create
             </button>
 
-            <button
+            {/*            <button
                 onClick={async () => {
                     handleUpdate();
                 }}
             >
                 Update
-            </button>
+            </button> */}
         </>
     );
 }
+
+
+
+/* 
+<section className={styles.peopleSection}>
+<div className={styles.imagenContainer}>
+    <Image alt="people" src={PEOPLE}
+        width={500} height={500} className={styles.imagePeople} priority layout='fill' objectFit='contain'  />
+</div>
+</section> */

@@ -45,9 +45,9 @@ const CommonsBtn: React.FC<BtnProps> = (props: BtnProps) => {
   const { type, width, action, content, disabled } = props;
   switch (type) {
     case "primary":
-      return <BtnPrimary width={width} action={action} content={content} disabled={disabled}/>;
+      return <BtnPrimary width={width} action={action} content={content} disabled={disabled} />;
     case "secondary":
-      return <BtnSecondary width={width} action={action} content={content} disabled={disabled}/>;
+      return <BtnSecondary width={width} action={action} content={content} disabled={disabled} />;
     default:
       return null;
   }

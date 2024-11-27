@@ -15,14 +15,16 @@ export default function SearchInput(props: SearchInputProps) {
 
   return (
     <div className={styles.searchActions} style={width ? { width: `${width}px` } : undefined}>
-      <Image src={SEARCH} height={24} width={24} alt="search" className={styles.icon}/>
+      <div className={styles.iconContainer}>
+        <Image src={SEARCH} height={24} width={24} alt="search" className={styles.icon} />
+      </div>
       <input
-          type="text"
-          placeholder={placeholder}
-          value={searchTerm}
-          onChange={onSearchChange}
-          className={styles.input}
-        />
+        type="text"
+        placeholder={placeholder}
+        value={searchTerm}
+        onChange={onSearchChange}
+        className={styles.input}
+      />
     </div>
   )
 }
