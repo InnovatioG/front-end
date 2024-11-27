@@ -18,7 +18,6 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
     const { id } = router.query;
     const pathname = usePathname();
 
-    console.log(pathname)
 
     const { setProject, project, editionMode, setIsLoading, isLoading } = useProjectDetailStore();
 

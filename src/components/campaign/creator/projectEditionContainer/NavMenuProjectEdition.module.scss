@@ -78,6 +78,7 @@
 .navContainerMobile {
   justify-self: flex-end;
   align-self: flex-end;
+  z-index: 2;
   ul {
     list-style: none;
   }

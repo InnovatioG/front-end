@@ -3,7 +3,7 @@ import Slider from '@/components/general/slider/fundrasingSlider/Slider';
 import styles from "./StepTwo.module.scss";
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import SelectButton from '@/components/buttons/selectButton/SelectButton';
-
+import Toggle from '@/components/buttons/toggle/Toggle';
 interface FundrasingSliderProps {
     // Define props here
 }
@@ -13,6 +13,8 @@ interface FundrasingSliderProps {
 
 const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
     const { newCampaign, setGoal, setMilestones } = useCampaignStore();
+    const [isActive, setIsActive] = useState(false);
+
     const goal = newCampaign.goal;
     const [selectedMilestones, setSelectedMilestones] = useState<number | null>(null);
 
@@ -29,7 +31,8 @@ const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
         <div className={styles.layout}>
             <article className={styles.sliderContainer}>
                 <div className={styles.sliderHeader}>
-                    <h3>Fundraise goal</h3>
+                    {/*                     <Toggle />
+ */}                    <h3>Fundraise goal</h3>
                     <h2>
                         ${goal.toLocaleString()}
                     </h2>

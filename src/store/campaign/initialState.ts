@@ -61,7 +61,7 @@ export interface CampaignState {
 }
 
 export const initialState: CampaignState = {
-  step: 3,
+  step: 2,
   title: "",
   category: "",
   categoryId: null,

@@ -114,6 +114,14 @@
   width: 10vw;
 }
 
+.borderLine {
+  justify-self: center;
+  width: 95%;
+  margin-left: 2.5%;
+  height: 1px;
+  background-color: #292929;
+}
+
 @media screen and (max-width: 768px) {
   .buttonGeneral {
     width: 80%;
@@ -130,7 +138,6 @@
 
   .textContainer {
     gap: 0.5rem;
-    background-color: yellow;
   }
 
   .saveButtonContainer {
@@ -141,13 +148,14 @@
     right: 2px;
     bottom: -2px;
   }
-  /*   .plus {
-    min-width: 20px;
-    height: 20px;
+
+  .borderLine {
+    justify-self: center;
+    width: 85%;
+    margin-left: 7.5%;
+    height: 1px;
+    background-color: #292929;
   }
-  .plus.open {
-    font-size: 20px;
-  } */
 }
 
 .questionTitle {
@@ -157,11 +165,4 @@
 
 .generalContainer {
   padding-bottom: 2rem;
-}
-
-.borderLine {
-  justify-self: center;
-  width: 80%;
-  height: 1px;
-  background-color: #292929;
 }
