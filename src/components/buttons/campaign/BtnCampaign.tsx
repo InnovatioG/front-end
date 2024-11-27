@@ -29,12 +29,12 @@ const BtnCampaignMobile: React.FC<SubComponentProps> = ({ dir }) => {
 const BtnCampaignPrimary: React.FC<SubComponentProps> = ({ width, dir }) => {
     return (
         <Link href={dir} className={styles.BtnCampaignPrimary} style={width ? { width: `${width}px` } : undefined}>
-            <div>
+            <>
                 <svg width="24" height="24" className={styles.icon}>
                     <use href={PLUS_ICON}></use>
                 </svg>
                 <p className={styles.text}>Start new campaign</p>
-            </div>
+            </>
         </Link>
     );
 };
@@ -42,12 +42,12 @@ const BtnCampaignPrimary: React.FC<SubComponentProps> = ({ width, dir }) => {
 const BtnCampaignSecondary: React.FC<SubComponentProps> = ({ width, closeMenu, dir }) => {
     return (
         <Link href={dir} className={styles.btnCampaignSecondary} style={width ? { width: `${width}px` } : undefined} onClick={closeMenu}>
-            <div>
+            <>
                 <svg width="24" height="24" className={styles.icon}>
                     <use href={PLUS_ICON}></use>
                 </svg>
                 <p className={styles.text}>Start new campaign</p>
-            </div>
+            </>
         </Link>
     );
 };

@@ -160,12 +160,12 @@ export default function DraftDashboard({ address }: { address: string | null }) 
             ) : (
                 <div className={styles.draftGrid}>
                     <Link className={styles.newCampaign} href={ROUTES.new}>
-                        <div>
+                        <>
                             <svg width="24" height="24" className={styles.icon}>
                                 <use href={PLUS_ICON}></use>
                             </svg>
                             <p className={styles.text}>Start new campaign</p>
-                        </div>
+                        </>
                     </Link>
                     {visibleCampaigns.map((campaign) => (
                         <DraftCard key={campaign.id} campaign={campaign} getContractsName={getContractsName} getCategoryName={getCategoryName} adminView={adminView} />
