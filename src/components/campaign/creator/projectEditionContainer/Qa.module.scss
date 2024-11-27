@@ -11,6 +11,7 @@
 .questionTitle {
   font: fonts.$QA;
   color: colors.$primary-font;
+  text-wrap: balance;
 }
 
 .questionAnswer {
@@ -117,11 +118,19 @@
   .buttonGeneral {
     width: 80%;
     margin-left: 10%;
-    background-color: red;
   }
   .buttonContainer {
     align-items: center;
     justify-content: center;
+  }
+
+  .faqContainer {
+    gap: 1rem;
+  }
+
+  .textContainer {
+    gap: 0.5rem;
+    background-color: yellow;
   }
 
   .saveButtonContainer {
@@ -141,6 +150,18 @@
   } */
 }
 
+.questionTitle {
+  font-size: 1.35rem;
+  width: 100%;
+}
+
 .generalContainer {
   padding-bottom: 2rem;
+}
+
+.borderLine {
+  justify-self: center;
+  width: 80%;
+  height: 1px;
+  background-color: #292929;
 }

@@ -17,13 +17,14 @@ const QA: React.FC<QAProps> = (props) => {
         <div className={styles.generalContainer}>
             <Accordion type='single' collapsible style={{ background: "trasparent" }} >
                 {faqs.map((faq, index) => (
-                    <AccordionItem key={index} value={`faq-${index}`} style={{ background: "transparent", borderBottom: "1px solid black" }}>
+                    <AccordionItem key={index} value={`faq-${index}`} style={{ background: "transparent" }}>
                         <AccordionTrigger open={true} toggleOpen={() => { }} style={{ background: "transparent" }}>
                             <h4 className={styles.questionTitle}>{faq.name}</h4>
                         </AccordionTrigger>
-                        <AccordionContent open={true} style={{ background: "transparent" }}>
+                        <AccordionContent open={true} style={{ background: "transparent", padding: "0.3rem 1rem" }}>
                             <p className={styles.questionAnswer}>{faq.description}</p>
                         </AccordionContent>
+                        <div className={styles.borderLine}></div>
                     </AccordionItem>
                 ))}
             </Accordion>

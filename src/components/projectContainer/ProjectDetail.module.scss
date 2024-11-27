@@ -115,10 +115,12 @@
 @media screen and (max-width: 768px) {
   .projectLayout {
     grid-template-columns: 1fr;
+    margin-top: -8rem;
   }
 
   .buttonList {
     width: 60%;
+    display: none;
   }
 
   .divisor {

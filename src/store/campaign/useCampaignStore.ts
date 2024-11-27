@@ -76,6 +76,8 @@ export const useCampaignStore = create<UseCampaignStore>()(
         discord: "",
         x: "",
       },
+      member_manage_funds: false,
+      member_wallet_address: "",
     },
 
     setStep: (step) =>
@@ -174,6 +176,8 @@ export const useCampaignStore = create<UseCampaignStore>()(
           member_description: "",
           member_email: "",
           member_admin: false,
+          member_manage_funds: false,
+          member_wallet_address: "",
           member_social: {
             facebook: "",
             instagram: "",

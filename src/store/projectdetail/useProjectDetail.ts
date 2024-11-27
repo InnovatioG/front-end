@@ -7,8 +7,8 @@ import {
 } from "@/store/projectdetail/initialState";
 
 interface UseProjectDetailStore extends ProjectDetailState {
-  setProject: (project: ProjectDetailState["project"]) => void;
-  setMenuView: (menuView: ProjectDetailState["menuView"]) => void;
+  setProject: /* (project: ProjectDetailState["project"]) => void; */ any;
+  setMenuView: /* (menuView: ProjectDetailState["menuView"]) => void */ any;
   setMilestone: (milestone: ProjectDetailState["milestone"]) => void;
   setIsLoading: (isLoading: boolean) => void;
   setError: (error: string) => void;
@@ -27,7 +27,7 @@ export const useProjectDetailStore = create<UseProjectDetailStore>()(
       set((state) => {
         state.isLoading = isLoading;
       }),
-    setMenuView: (menuView) =>
+    setMenuView: (menuView: ProjectDetailState["menuView"]) =>
       set((state) => {
         state.menuView = menuView;
       }),
