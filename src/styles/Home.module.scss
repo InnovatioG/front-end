@@ -16,6 +16,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 2;
 }
 
 .mainTitle {
@@ -28,6 +29,7 @@
     color: colors.$secondary-font;
     text-align: center;
     max-width: 450px;
+    z-index: 2;
 }
 
 .peopleContainer {
@@ -41,6 +43,8 @@
     position: absolute;
     right: 5vw;
     bottom: -10vw;
+    z-index: 0;
+
     width: 30vw;
     height: 600px;
     overflow: hidden; // Asegúrate de que el contenido no se desborde
@@ -51,7 +55,7 @@
     }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1000px) {
     .main {
         display: flex;
         flex-direction: column;
@@ -95,159 +99,3 @@
         height: 10px;
     }
 }
-
-/* MOBILE FIRST */
-/* 
-.main {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 50px;
-    .titleSection {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        gap: 10px;
-        margin-top: 60px;
-        .mainTitle {
-            font: fonts.$f900-bold;
-            text-align: center;
-        }
-        .subTitle {
-            font: fonts.$f50-medium;
-            color: colors.$secondary-font;
-            text-align: center;
-            width: 75%;
-            max-width: 320px;
-        }
-    } */
-/* 
-    .peopleSection {
-              position: relative;
-        pos */ /* ition: absolute;
-        width: 100%;
-        display: flex;
-        .imagePeople {
-            margin: 0 auto;
-            width: 90%;
-            height: auto;
-        }
-    }
-} */
-/* 
-@media (width >= 380px) {
-    .main {
-        .titleSection {
-            .mainTitle {
-                font: fonts.$f1000-bold;
-            }
-        }
-
-        .peopleSection {
-            .imagePeople {
-                max-height: 390px;
-                width: auto;
-            }
-        }
-    }
-} */
-
-/* MEDIUM SCREEN */
-/* 
-@media (width >= 680px) {
-    .main {
-        .peopleSection {
-            .imagePeople {
-                max-height: 500px;
-                width: auto;
-            }
-        }
-    }
-} */
-
-/* LARGER SCREEN */ /* 
-@media screen and (min-width: 1700px) {
-    .main {
-        position: relative;
-        .titleSection {
-            margin-top: 120px;
-            z-index: 1;
-            .mainTitle {
-                font: fonts.$f1400-bold;
-            }
-            .subTitle {
-                font: fonts.$f600-medium;
-                max-width: 450px;
-            }
-        }
-
-        .peopleSection {
-            position: absolute;
-            top: 0;
-            right: 20px;
-            max-width: 566px;
-            height: 600px;
-        }
-    }
-}
-
-@media screen and (min-width: 1200px) and (max-width: 1699px) {
-    .main {
-        position: relative;
-        .titleSection {
-            margin-top: 120px;
-            z-index: 1;
-            .mainTitle {
-                font: fonts.$f1400-bold;
-            }
-            .subTitle {
-                font: fonts.$f600-medium;
-                max-width: 450px;
-            }
-        }
-
-        .peopleSection {
-            position: absolute;
-            top: 0;
-            right: 20px;
-            max-width: 500px;
-            height: 600px;
-        }
-    }
-} */
-
-/* @media (width >= 1700px) {
-    .main {
-        position: relative;
-        .titleSection {
-            margin-top: 120px;
-            z-index: 1;
-            .mainTitle {
-                font: fonts.$f1400-bold;
-            }
-            .subTitle {
-                font: fonts.$f600-medium;
-                max-width: 450px;
-            }
-        }
-
-        .peopleSection {
-            position: absolute;
-            top: 0;
-            right: 20px;
-            max-width: 566px;
-            height: 600px;
-        }
-    }
-}
-
-
-@media (width >= 1570px)   {
-    .main {
-        .titleSection {
-            margin-right: 0px;
-        }
-    }
-}
- */
