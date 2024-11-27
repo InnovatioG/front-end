@@ -33,7 +33,8 @@ export default function Home() {
         alert('Update test entity');
         const test: TestEntity | undefined = await TestApi.getOneByParamsApi_({ name: 'Test' });
         if (test !== undefined) {
-            await TestApi.updateMeWithParamsApi(test, { updateFields: { description: 'Test description222' } });
+            test.description = 'Test description updated' + Math.random();
+            await TestApi.updateApi(test);
         }
     };
 
