@@ -7,7 +7,6 @@ import CampaignDashCreation from '@/components/campaign/campaignHeader/CampaignD
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import ProjectEditionContainer from '@/components/campaign/creator/projectEditionContainer/ProjectEditionContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
-import { usePathname } from 'next/navigation';
 
 interface CampaignByIndexProps {
     // Define props aquí si es necesario
@@ -16,7 +15,6 @@ interface CampaignByIndexProps {
 const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
     const router = useRouter();
     const { id } = router.query;
-    const pathname = usePathname();
 
 
     const { setProject, project, editionMode, setIsLoading, isLoading } = useProjectDetailStore();
