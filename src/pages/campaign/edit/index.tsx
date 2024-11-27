@@ -7,7 +7,6 @@ import CampaignDashCreation from '@/components/campaign/campaignHeader/CampaignD
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import ProjectEditionContainer from '@/components/campaign/creator/projectEditionContainer/ProjectEditionContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
-import { usePathname } from 'next/navigation';
 
 import ButtonSaveDraftContainer from '@/components/campaign/creator/projectEditionContainer/GeneralbuttonContainer';
 //! TODO DO MIDDLEWARE CHECK IF IS ADMIN FOR EDITING CAMPAIGN

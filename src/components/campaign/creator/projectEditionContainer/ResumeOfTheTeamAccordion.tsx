@@ -9,7 +9,7 @@ import { formatLink } from '@/utils/formats';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import { MembersTeam } from '@/store/campaign/initialState';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 interface ResumeOfTheTeamAccordionProps {
     onEditMember?: (member: MembersTeam) => void;

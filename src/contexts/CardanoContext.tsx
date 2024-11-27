@@ -1,100 +1,76 @@
-import { getWallet, SimulatedBrowserWallet } from "@/HardCode/simulatedBrowserWallet";
-import { createContext, useContext, useState, useEffect, useCallback } from "react";
-
-      /*
-      TODO: usar BrowserWallet con meshjs
-       */
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { CardanoWallet, useWalletActions } from 'smart-db';
 
 interface CardanoContextType {
-  wallet: SimulatedBrowserWallet | null;
-  connectWallet: (walletName: string) => Promise<void>;
-  disconnectWallet: () => void;
-  address: string | null;
-  networkWalletId: number | null;
-  isConnectedWallet: boolean;
-}
-
-interface StorageWalletInfo {
-  address: string;
-  walletName: string;
-  networkWalletId: number;
-  isConnectedWallet: boolean;
+    wallet: CardanoWallet | null;
+    connectWallet: (wallet: CardanoWallet) => Promise<void>;
+    disconnectWallet: () => void;
+    address: string | null;
+    network: string | null;
+    isConnectedWallet: boolean;
 }
 
 const CardanoContext = createContext<CardanoContextType | undefined>(undefined);
 
-export const CardanoProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
+export const CardanoProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const [wallet, setWallet] = useState<CardanoWallet | null>(null);
+    const [address, setAddress] = useState<string | null>(null);
+    const [network, setNetwork] = useState<string | null>(null);
+    const [isConnectedWallet, setIsConnectedWallet] = useState<boolean>(false);
 
-  const [wallet, setWallet] = useState<SimulatedBrowserWallet | null>(null);
-  const [address, setAddress] = useState<string | null>(null);
-  const [networkWalletId, setNetworkWalletId] = useState<number | null>(null);
-  const [isConnectedWallet, setIsConnectedWallet] = useState<boolean>(false);
+    const { status, walletStore, createSignedSession, walletConnect, walletFromSeedConnect, walletFromKeyConnect, walletInstall, walletSelected, walletDisconnect } =
+        useWalletActions();
 
-  const disconnectWallet = () => {
-    setAddress(null);
-    setNetworkWalletId(null);
-    setIsConnectedWallet(false);
-    setWallet(null);
-    localStorage.removeItem('walletInfo');
-  };
+    const disconnectWallet = () => {
+        walletDisconnect();
+    };
 
-  const connectWallet = async (walletName: string) => {
-    try {
-      const wallet = await getWallet(walletName);
-      const address = await wallet.getAddress();
-      const networkWalletId = await wallet.getNetworkId();
-      setAddress(address);
-      setNetworkWalletId(networkWalletId);
-      setIsConnectedWallet(true);
-      setWallet(wallet);
+    const connectWallet = async (wallet: CardanoWallet) => {
+        try {
+            await walletConnect(wallet, createSignedSession, true, false, true);
+        } catch (err) {
+            console.error('Failed to connect wallet:', err);
+        }
+    };
 
-      const walletInfo: StorageWalletInfo = {
+    useEffect(() => {
+        const fetch = async () => {
+            if (walletStore.isConnected === true && walletStore.info !== undefined) {
+                const address = walletStore.info.address;
+                const network = walletStore.info.network;
+                setAddress(address);
+                setNetwork(network);
+                setIsConnectedWallet(true);
+                setWallet(wallet);
+
+                localStorage.setItem('walletInfo', JSON.stringify(walletStore.info));
+            } else {
+                setAddress(null);
+                setNetwork(null);
+                setIsConnectedWallet(false);
+                setWallet(null);
+                localStorage.removeItem('walletInfo');
+            }
+        };
+        fetch();
+    }, [walletStore.isConnected, walletStore.info]);
+
+    const contextValue = {
+        wallet,
+        connectWallet,
+        disconnectWallet,
         address,
-        walletName,
-        networkWalletId,
-        isConnectedWallet: true,
-      };
+        network,
+        isConnectedWallet,
+    };
 
-      localStorage.setItem('walletInfo', JSON.stringify(walletInfo));
-    } catch (err) {
-      console.error('Failed to connect wallet:', err);
-      disconnectWallet();
-    }
-  };
-
-
-
-  useEffect(() => {
-    const storedWalletInfo = localStorage.getItem('walletInfo');
-    if (storedWalletInfo) {
-      const walletInfo: StorageWalletInfo = JSON.parse(storedWalletInfo);
-      connectWallet(walletInfo.walletName);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const contextValue = {
-    wallet,
-    connectWallet,
-    disconnectWallet,
-    address,
-    networkWalletId,
-    isConnectedWallet
-  };
-
-  return (
-    <CardanoContext.Provider value={contextValue}>
-      {children}
-    </CardanoContext.Provider>
-  );
+    return <CardanoContext.Provider value={contextValue}>{children}</CardanoContext.Provider>;
 };
 
 export const useCardano = () => {
-  const context = useContext(CardanoContext);
-  if (context === undefined) {
-    throw new Error('useCardano must be used within a CardanoProvider');
-  }
-  return context;
+    const context = useContext(CardanoContext);
+    if (context === undefined) {
+        throw new Error('useCardano must be used within a CardanoProvider');
+    }
+    return context;
 };
-
-

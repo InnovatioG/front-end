@@ -36,4 +36,5 @@ yarn-error.log*
 next-env.d.ts
 
 src/HardCode/DBSchema.prisma
-smart-db.tgz
+
+**/_OLD
