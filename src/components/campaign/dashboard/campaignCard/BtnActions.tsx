@@ -31,13 +31,13 @@ export default function BtnActions(props: BtnActionsProps) {
 
 const PrimaryBtn = ({ url }: SubComponentProps) => {
     return (
-        <Link className={styles.primaryBtn} href={url}>
-            <>
+        <Link href={url}>
+            <div className={styles.primaryBtn}>
                 <p className={styles.text}>Learn more</p>
                 <svg width="14" height="14" className={styles.icon}>
                     <use href={CHEVRON_RIGHT}></use>
                 </svg>
-            </>
+            </div>
         </Link>
     );
 };
@@ -45,26 +45,26 @@ const PrimaryBtn = ({ url }: SubComponentProps) => {
 const SecondaryBtn = ({ url }: SubComponentProps) => {
     const screenSize = useScreenSize();
     return (
-        <Link className={styles.secondaryBtn} href={url}>
-            <>
+        <Link href={url}>
+            <div className={styles.secondaryBtn}>
                 <p className={styles.text}>{screenSize !== 'mobile' && 'View'} Roadmap</p>
                 <svg width="14" height="14" className={styles.icon}>
                     <use href={CHEVRON_RIGHT}></use>
                 </svg>
-            </>
+            </div>
         </Link>
     );
 };
 
 const InvestBtn = ({ url }: SubComponentProps) => {
     return (
-        <Link className={styles.investBtn} href={url}>
-            <>
+        <Link href={url}>
+            <div className={styles.investBtn}>
                 <p className={styles.text}>Invest</p>
                 <svg width="14" height="14" className={styles.icon}>
                     <use href={CHEVRON_RIGHT}></use>
                 </svg>
-            </>
+            </div>
         </Link>
     );
 };
