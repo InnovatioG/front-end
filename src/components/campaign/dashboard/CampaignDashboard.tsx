@@ -37,13 +37,13 @@ export default function CampaignDashboard() {
       const matchesSearch = campaign.title.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesStatus = statusFilter === "" || campaign.state_id === parseInt(statusFilter);
       const matchesCategory = categoryFilter === "" || campaign.category_id === parseInt(categoryFilter);
-      
+
       const campaignOwnerAddress = dataBaseService.getUserByAddress(campaign.user_id);
-      const matchesProposal = !myProposal || campaignOwnerAddress === address; 
-  
+      const matchesProposal = !myProposal || campaignOwnerAddress === address;
+
       return campaign.vizualization === 1 && matchesSearch && matchesStatus && matchesCategory && matchesProposal;
     });
-  
+
     setFilteredCampaigns(results);
     setVisibleCampaigns([]);
   }, [searchTerm, statusFilter, categoryFilter, myProposal, campaigns, address]);

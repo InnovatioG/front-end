@@ -52,7 +52,7 @@ export default function Home() {
                     </h5>
                 </section>
                 <section className={styles.peopleSection}>
-                    <Image width={1000} height={1070} alt="people" src={PEOPLE} className={styles.imagePeople} priority />
+                    <Image alt="people" src={PEOPLE} className={styles.imagePeople} priority layout='fill' objectFit='contain' />
                 </section>
             </main>
             <CampaignHighLight />

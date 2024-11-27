@@ -38,3 +38,6 @@ next-env.d.ts
 src/HardCode/DBSchema.prisma
 
 **/_OLD
+
+.env
+.env
