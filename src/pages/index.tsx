@@ -63,7 +63,6 @@ export default function Home() {
                             priority layout='fill' objectFit='contain' />
                     </div>
                 </div>
-
             </main>
             <CampaignHighLight />
             <CampaignDashboard />

@@ -1,7 +1,6 @@
 import { useCardano } from "@/contexts/CardanoContext";
 import React from "react";
 import styles from "./Campaign.module.scss";
-import GoogleConnect from "@/components/buttons/googleConnect/GoogleConnect";
 import { useSession } from "next-auth/react";
 import BtnConnectWallet from "@/components/buttons/connectWallet/BtnConnectWallet";
 import { useScreenSize } from "@/hooks/useScreenSize";
@@ -22,9 +21,6 @@ export default function Home() {
               with your Google account or connect wallet
             </h2>
             <div className={styles.btns}>
-              <GoogleConnect
-                width={screenSize === "desktop" ? 225 : undefined}
-              />
               <BtnConnectWallet
                 type="primary"
                 width={screenSize === "desktop" ? 225 : undefined}
