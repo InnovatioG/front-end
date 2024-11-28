@@ -8,8 +8,12 @@ import GoogleConnect from "@/components/buttons/googleConnect/GoogleConnect";
 
 export default function HeaderDesktop({
   session,
+  setIsOpen,
+  isOpen,
 }: {
   session: Session | null;
+  setIsOpen: (isOpen: boolean) => void;
+  isOpen: boolean;
 }) {
   return (
     <div className={styles.headerDesktop}>
@@ -26,16 +30,16 @@ export default function HeaderDesktop({
       </nav>
       <div className={styles.btnSection}>
         <div className={styles.btnCalendar}>
-          <svg width="29" height="29" className={styles.icon}>
+          <svg width="29" height="29" className={styles.icon} onClick={() => { setIsOpen(true) }}>
             <use href={CALENDAR}></use>
           </svg>
         </div>
         <BtnCampaign type="primary" width={210} />
-       {session === null ? (
+        {session === null ? (
           <BtnConnectWallet type="primary" width={166} />
         ) : (
           <GoogleConnect loggedIn={true} />
-        )} 
+        )}
 
       </div>
     </div>

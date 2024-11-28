@@ -4,12 +4,18 @@ import styles from "./Header.module.scss";
 import { LOGO_FULL_LIGHT } from "@/utils/images";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import HeaderMobile from "./HeaderMobile";
+import { useState } from "react";
 import HeaderDesktop from "./HeaderDesktop";
 import { useSession } from "next-auth/react";
+import CalendarModal from "@/components/modal/CalendarModal";
+
 
 export default function Header() {
   const screenSize = useScreenSize();
   const { data: session } = useSession();
+  const [isOpen, setIsOpen] = useState(false);
+
+
 
   return (
     <div className={styles.header}>
@@ -26,8 +32,11 @@ export default function Header() {
       {screenSize === "mobile" || screenSize === "tablet" ? (
         <HeaderMobile session={session} />
       ) : (
-        <HeaderDesktop session={session} />
+        <HeaderDesktop session={session} setIsOpen={setIsOpen} isOpen={isOpen} />
       )}
+      <CalendarModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
+
+
   );
 }

@@ -19,6 +19,7 @@
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-avatar": "^1.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
     "@tiptap/core": "^2.9.1",
     "@tiptap/extension-bullet-list": "^2.9.1",
     "@tiptap/extension-list-item": "^2.9.1",
@@ -27,6 +28,9 @@
     "@tiptap/starter-kit": "^2.9.1",
     "@types/react-dropzone": "^5.1.0",
     "axios": "^1.7.8",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^2.30.0",
     "easy-peasy": "^5.0.4",
     "filepond-plugin-file-validate-type": "^1.2.9",
     "filepond-plugin-image-crop": "^2.0.6",
@@ -40,8 +44,10 @@
     "motion": "^11.11.17",
     "next": "^12.1.6",
     "next-auth": "^4.22.1",
+    "postcss": "^8.4.49",
     "quill": "^2.0.2",
     "react": "18.2.0",
+    "react-day-picker": "^8.10.1",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.3.5",
     "react-icons": "^5.3.0",
@@ -52,6 +58,8 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "tailwind": "^4.0.0",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7",
     "typeorm": "^0.3.20",
     "zustand": "^5.0.1"
   },
@@ -84,6 +92,7 @@
     "prettier": "^2.5.1",
     "reflect-metadata": "^0.1.13",
     "sass": "^1.77.8",
+    "tailwindcss": "^3.4.15",
     "typescript": "^5"
   }
 }

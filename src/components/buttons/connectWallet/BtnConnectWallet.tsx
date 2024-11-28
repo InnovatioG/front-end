@@ -41,9 +41,8 @@ const BtnConnectMobile: React.FC<SubComponentProps> = ({
 
   return (
     <button
-      className={`${styles.btnConnectMob} ${
-        address !== null ? styles.connected : ""
-      }`}
+      className={`${styles.btnConnectMob} ${address !== null ? styles.connected : ""
+        }`}
       onClick={handleClick}
     >
       <svg width="20" height="20" className={styles.icon}>
@@ -75,9 +74,8 @@ const BtnConnectPrimary: React.FC<SubComponentProps> = ({
 
   return (
     <button
-      className={`${styles.BtnConnectPrimary} ${
-        address !== null ? styles.connected : ""
-      }`}
+      className={`${styles.BtnConnectPrimary} ${address !== null ? styles.connected : ""
+        }`}
       onClick={handleClick}
       style={width ? { width: `${width}px` } : undefined}
     >
@@ -115,9 +113,8 @@ const BtnConnectSecondary: React.FC<SecondarySubComponentProps> = ({
 
   return (
     <button
-      className={`${styles.BtnConnectSecondary} ${
-        address !== null ? styles.connected : ""
-      }`}
+      className={`${styles.BtnConnectSecondary} ${address !== null ? styles.connected : ""
+        }`}
       onClick={handleClick}
       style={width ? { width: `${width}px` } : undefined}
     >

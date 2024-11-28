@@ -35,14 +35,14 @@ export default function Home() {
         await TestApi.createApi(test);
     };
 
-    /*     const handleUpdate = async () => {
-            alert('Update test entity');
-            const test: TestEntity | undefined = await TestApi.getOneByParamsApi_({ name: 'Test' });
-            if (test !== undefined) {
-                test.description = 'Test description updated' + Math.random();
-                await TestApi.updateApi(test);
-            }
-        }; */
+    const handleUpdate = async () => {
+        alert('Update test entity');
+        const test: TestEntity | undefined = await TestApi.getOneByParamsApi_({ name: 'Test' });
+        if (test !== undefined) {
+            test.description = 'Test description updated' + Math.random();
+            await TestApi.updateApi(test);
+        }
+    };
 
     return (
         <>
@@ -83,23 +83,14 @@ export default function Home() {
                 Create
             </button>
 
-            {/*            <button
+            <button
                 onClick={async () => {
                     handleUpdate();
                 }}
             >
                 Update
-            </button> */}
+            </button>
         </>
     );
 }
 
-
-
-/* 
-<section className={styles.peopleSection}>
-<div className={styles.imagenContainer}>
-    <Image alt="people" src={PEOPLE}
-        width={500} height={500} className={styles.imagePeople} priority layout='fill' objectFit='contain'  />
-</div>
-</section> */
