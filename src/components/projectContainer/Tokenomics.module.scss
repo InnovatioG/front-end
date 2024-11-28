@@ -1,0 +1,28 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+.layout {
+    padding: 2rem;
+}
+
+.priceInAda {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.headerContainer {
+    display: flex;
+    flex-direction: row;
+    width: 75%;
+    justify-content: space-between;
+    padding: 2rem 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.strong {
+    font: fonts.$f1100-medium;
+}

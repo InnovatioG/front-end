@@ -3,9 +3,10 @@ import styles from "./Tokenomics.module.scss";
 import TextEditor from '@/components/general/textEditor/TextEditor';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import { inputFieldsToken } from '@/utils/constants';
+import { ADAIC, FACEBOOK } from '@/utils/images';
 
 const Tokenomics: React.FC = () => {
-    const { project, setProject } = useProjectDetailStore();
+    const { project, setProject, price_ada } = useProjectDetailStore();
 
     const handleInputChange = (id: string, value: string, transform: (value: string) => any) => {
         setProject({
@@ -16,11 +17,16 @@ const Tokenomics: React.FC = () => {
 
     const fields = inputFieldsToken(project);
 
-    console.log(project.cdRequestedMaxADA);
-
     const valuePerToken = project.cdRequestedMaxADA === null || isNaN(project.cdRequestedMaxADA) || project.goal === null || isNaN(project.goal) || project.goal === 0
         ? "Price per token"
-        : project.goal / project.cdRequestedMaxADA;
+        : (
+            <div className={styles.priceInAda}>
+                <img src={"/img/icons/ADA.svg"} alt="ADA" height={12} width={12} />
+                <span>
+                    {(project.goal / project.cdRequestedMaxADA / price_ada).toFixed(2)}
+                </span>
+            </div>
+        );
 
     return (
         <div className={styles.layout}>
@@ -39,25 +45,22 @@ const Tokenomics: React.FC = () => {
                             placeholder={field.placeholder}
                             onChange={(e) => handleInputChange(field.id, e.target.value, field.transform)}
                         />
-
-
-
                     </div>
                 ))}
             </div>
             <div className={styles.inputTokenContainer}>
-                <label className={styles.inputToken}>
+                <div className={styles.inputToken}>
                     {valuePerToken}
-                </label>
+                </div>
             </div>
 
             <br />
 
-            <div className={styles.textEditorContianer}>
+            <div className={styles.textEditorContainer}>
                 <TextEditor
                     styleOption='quillEditorB'
-                    content={""}
-                    onChange={() => { setProject }}
+                    content={project.tokenomics_description || ""}
+                    onChange={(content) => handleInputChange("tokenomics_description", content, (value) => value)}
                 />
             </div>
         </div>

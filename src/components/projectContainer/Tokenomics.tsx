@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import axios from 'axios';
 import LoadingPage from '../LoadingPage/LoadingPage';
+import styles from "./Tokenomics.module.scss";
 interface TokenomicsProps {
     // Define props here
 }
@@ -11,13 +12,27 @@ const Tokenomics: React.FC<TokenomicsProps> = (props) => {
     const { project, fetchAdaPrice, price_ada, isLoadingPrice } = useProjectDetailStore();
     const goal = project.goal;
     const cdRequestedMaxADA = project.cdRequestedMaxADA;
+    console.log("cdRequestedMaxADA", cdRequestedMaxADA)
 
+
+    console.log(project)
 
     useEffect(() => {
         fetchAdaPrice();
     }, [fetchAdaPrice]);
 
     console.log(price_ada)
+
+    const valuePerToken = project.cdRequestedMaxADA === null || isNaN(project.cdRequestedMaxADA) || project.goal === null || isNaN(project.goal) || project.goal === 0
+        ? "Price per token"
+        : (
+            <div className={styles.priceInAda}>
+                <img src={"/img/icons/ADA.svg"} alt="ADA" height={40} width={40} />
+                <span className={styles.strong}>
+                    {(project.goal / project.cdRequestedMaxADA / price_ada).toFixed(2)}
+                </span>
+            </div>
+        );
 
 
     if (isLoadingPrice) {
@@ -27,7 +42,21 @@ const Tokenomics: React.FC<TokenomicsProps> = (props) => {
 
 
     return (
-        <div>
+        <div className={styles.layout}>
+            <div className={styles.headerContainer}>
+                <div className={styles.container}>
+                    <label htmlFor="">Token Tick Name</label>
+                    <span className={styles.strong}>{project.cdCampaignToken_TN}</span>
+                </div>
+                <div className={styles.container}>
+                    <label htmlFor="">Quantity</label>
+                    <span className={styles.strong}>{cdRequestedMaxADA}</span>
+                </div>
+                <div className={styles.container}>
+                    <label htmlFor="">Value per Token</label>
+                    <span className={styles.strong}>{valuePerToken}</span>
+                </div>
+            </div>
             <div
                 dangerouslySetInnerHTML={{ __html: project.tokenomics_description }}
             />

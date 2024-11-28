@@ -21,10 +21,11 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
 
     console.log(menuview)
 
-    const { setProject, project, editionMode, setIsLoading, isLoading, setMenuView } = useProjectDetailStore();
+    const { setProject, project, editionMode, setIsLoading, isLoading, setMenuView, price_ada, fetchAdaPrice } = useProjectDetailStore();
 
     useEffect(() => {
         setIsLoading(true);
+        fetchAdaPrice()
 
         if (id) {
             const campaignId = Number(id);
@@ -44,7 +45,7 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
         }, 2000);
 
         return () => clearTimeout(timer);
-    }, [id, setProject]);
+    }, [id, setProject, fetchAdaPrice]);
 
     if (isLoading) {
         return <LoadingPage />;
