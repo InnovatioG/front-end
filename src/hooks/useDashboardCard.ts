@@ -19,13 +19,13 @@ export const useDashboardCard = (address: string | null) => {
     const [isAdmin, setIsAdmin] = useState(false);
     const [loading, setLoading] = useState(true);
     const [campaignsLoading, setCampaignsLoading] = useState(true);
+    const [isProtocolTeam, setIsProtocolTeam] = useState(false);
     const router = useRouter();
     const pathName = router.pathname;
     console.log(pathName);
 
     useEffect(() => {
         if (!address) {
-            setIsAdmin(false);
             setLoading(false);
             return;
         }
@@ -34,20 +34,26 @@ export const useDashboardCard = (address: string | null) => {
         const isAdmin = user?.is_admin || false;
         setIsAdmin(isAdmin);
         setAdminView(isAdmin);
+        setIsProtocolTeam(user?.is_protocol_team || false);
         setLoading(false);
     }, [address]);
 
     useEffect(() => {
+        if (!address) return;
+        setLoading(true);
         const fetchData = async () => {
             try {
-                const data = dataBaseService.getFilteredData({
+                const filters = {
                     userId: address,
                     isAdmin,
                     adminView,
                     searchTerm,
                     statusContractsFilter,
                     categoryFilter,
-                });
+                    isProtocolTeam,
+                };
+
+                const data = await dataBaseService.getFilteredData(filters);
                 setCampaigns(data.campaigns);
                 setFilteredCampaigns(data.campaigns);
                 setStatesContracts(data.contracts || []);
@@ -56,11 +62,13 @@ export const useDashboardCard = (address: string | null) => {
             } catch (error) {
                 console.error('Error fetching data:', error);
                 setCampaignsLoading(false);
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchData();
-    }, [address, isAdmin, adminView, searchTerm, statusContractsFilter, categoryFilter]);
+    }, [address, isAdmin, adminView, searchTerm, statusContractsFilter, categoryFilter, isProtocolTeam]);
 
     const getContractsName = useCallback(
         (contractId: number): string => {
@@ -135,5 +143,7 @@ export const useDashboardCard = (address: string | null) => {
         getCategoryName,
         loadMoreCampaigns,
         screenSize,
+        isProtocolTeam,
+        setLoading,
     };
 };

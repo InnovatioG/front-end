@@ -25,7 +25,7 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ styles }) =
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onloadend = () => {
-            setProject({ ...project, banner_image: reader.result as string });
+            setProject({ ...project, banner_url: reader.result as string });
         };
         reader.readAsDataURL(file);
     }
@@ -79,7 +79,7 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ styles }) =
                             +
                         </button>
                     </div>}
-                <Image src={project.banner_image} alt="Banner" layout="fill" objectFit="cover" />
+                <Image src={project.banner_url} alt="Banner" layout="fill" objectFit="cover" />
             </div>
             <div className={styles.cardContainer}>
                 <CampaignCard status={project.status} goal={project.goal} min_request={project.min_request} investors={project.investors} />

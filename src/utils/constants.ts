@@ -103,6 +103,8 @@ export const imageByStatus = (status: string) => {
     return statusImages[status] || '/img/icons/status/yellow.svg';
 };
 
+//! ME VA A VENIR DE LA API, es MOMENTANEO   */
+
 export const statedById = (id: number) => {
     const status: { [key: number]: string } = {
         1: 'Created',
@@ -123,10 +125,26 @@ export const statedById = (id: number) => {
     return status[id] || 'Not Started';
 };
 
+//! ME VA A VENIR DE LA API, es MOMENTANEO   */
+
+export const categoriesById = (categoryId: number) => {
+    const category: { [key: number]: string } = {
+        1: 'Technology',
+        2: 'Event',
+        3: 'Education',
+        4: 'Gaming',
+        5: 'Social',
+        6: 'Food',
+    };
+    return category[categoryId] || '';
+};
+
 interface ButtonConfig {
+    id: number;
     label: string;
-    action: () => void;
+    action?: (setModalOpen?: (modalId: string) => void) => void;
     link?: (id: number) => string;
+    classNameType: string;
 }
 
 interface StateConfig {
@@ -134,12 +152,80 @@ interface StateConfig {
     buttons: ButtonConfig[];
 }
 
-export const buttonTypes = [
-    { label: 'View Campaign', action: () => {}, link: (id: number) => `/campaign/${id}` },
-    { label: 'Send to Revision', action: () => console.log('Api enviando la campaña a revision') },
-    { label: 'View Report', action: () => {}, link: (id: number) => `/campaign/${id}/report` },
-    { label: "Your campaign is accepted, let's launch it", action: () => console.log('llamado a la api para lanzar la campaña') },
-    { label: 'Launch Campaign (TX)', action: () => console.log('llamado a la api, involucra blockchain') },
+export const buttonTypes: ButtonConfig[] = [
+    {
+        id: 1,
+        label: 'View Campaign',
+        action: () => {},
+        link: (id: number) => `/campaign/${id}`,
+        classNameType: 'outline-card',
+    },
+    {
+        id: 2,
+        label: 'Send to Revision',
+        action: () => console.log('Api enviando la campaña a revision'),
+        classNameType: 'fill',
+    },
+    {
+        id: 3,
+        label: 'View Report',
+        action: () => {},
+        link: (id: number) => `/campaign/${id}/report`,
+        classNameType: 'fill',
+    },
+    {
+        id: 4,
+        label: "Your campaign is accepted, let's launch it",
+        action: () => console.log('llamado a la api para lanzar la campaña'),
+        classNameType: 'outline-card',
+    },
+    {
+        id: 5,
+        label: 'Launch Campaign',
+        action: () => console.log('llamado a la api, involucra blockchain'),
+        classNameType: 'fill',
+    },
+    {
+        id: 6,
+        label: 'Manage Campaign',
+        action: (setModalOpen) => {
+            if (setModalOpen) setModalOpen('manageCampaign');
+        },
+        classNameType: 'fill',
+    },
+    {
+        id: 7,
+        label: 'Edit Campaign',
+        action: () => {},
+        link: (id: number) => `/campaign/edit?id=${id}`,
+        classNameType: 'fill',
+    },
+    {
+        id: 8,
+        label: 'Create Contract', //7
+        action: () => console.log('llamado a la api para crear contrato'),
+        classNameType: 'fill',
+    },
+    {
+        id: 9,
+        label: 'Publish Contract', //7
+        action: () => console.log('llamado a la api para publicar contrato'),
+        classNameType: 'fill',
+    },
+    {
+        id: 10,
+        label: 'Initialize Campaign',
+        action: (setModalOpen) => {
+            if (setModalOpen) setModalOpen('initializeCampaign');
+        },
+        classNameType: 'fill',
+    },
+    {
+        id: 11,
+        label: 'Launch Campaign',
+        action: () => console.log('llamado a la api para lanzar la campaña'),
+        classNameType: 'fill',
+    },
 ];
 
 export const cardInformationByState = (state_id: number): StateConfig => {
@@ -186,6 +272,67 @@ export const cardInformationByState = (state_id: number): StateConfig => {
             buttons: [
                 buttonTypes[0], // View Campaign
                 buttonTypes[4], // Launch Campaign (tx)
+            ],
+        },
+        8: {
+            label: 'Countdown', // Countdown
+            buttons: [
+                buttonTypes[0], // View Campaign
+            ],
+        },
+        9: {
+            label: 'Fundraising', // Fundraising
+            buttons: [
+                buttonTypes[0], // View Campaign
+            ],
+        },
+    };
+
+    return state[state_id] || { label: 'Not Started', buttons: [] };
+};
+
+export const cardInformationForProtocolTeam = (state_id: number): StateConfig => {
+    const state: { [key: number]: StateConfig } = {
+        2: {
+            label: 'Attempmt to Launch', // Submitted
+            buttons: [
+                buttonTypes[0], // View Campaign
+                buttonTypes[5], // Manage Campaign
+            ],
+        },
+        3: {
+            label: 'Rejected', // Rejected
+            buttons: [
+                buttonTypes[0], // View report
+                buttonTypes[6], // Edit Campaign
+            ],
+        },
+        4: {
+            label: 'Approved', // Approved
+            buttons: [
+                buttonTypes[0], // View Campaign
+                buttonTypes[7], // Create Contract
+            ],
+        },
+        5: {
+            label: 'Created', // Contract Created
+            buttons: [
+                buttonTypes[0], // View Campaign
+                buttonTypes[8], // Publish Contract
+            ],
+        },
+        6: {
+            label: 'Deploy', // Contract Published
+            buttons: [
+                buttonTypes[0], // View Campaign
+                buttonTypes[9], // Initialize Campaign
+            ],
+        },
+        7: {
+            label: 'Ready', // Contract Started
+            buttons: [
+                buttonTypes[0], // View Campaign
+                buttonTypes[10], // Launch Campaign
             ],
         },
         8: {

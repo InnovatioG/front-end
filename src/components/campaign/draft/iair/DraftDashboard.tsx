@@ -2,6 +2,7 @@ import React from 'react';
 import { useDashboardCard } from '@/hooks/useDashboardCard';
 import DraftFilters from '../draftFilters/DraftFilters';
 import DraftCard from './DraftCard';
+import styles from "../DraftDashboard.module.scss"
 
 
 interface NewDraftDashboardProps {
@@ -33,13 +34,14 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
         getStatusName,
         getCategoryName,
         loadMoreCampaigns,
-        screenSize
+        screenSize,
+        isProtocolTeam
     } = useDashboardCard(address);
 
     return (
 
 
-        <div>
+        <div className={styles.draftDashboard}>
             <DraftFilters
                 searchTerm={searchTerm}
                 statusContractsFilter={statusContractsFilter}
@@ -54,9 +56,11 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
                 onClickAdminView={handleClickAdminView}
                 isAdmin={isAdmin}
             />
-            {visibleCampaigns.map((campaign) => (
-                <DraftCard key={campaign.id} campaign={campaign} />
-            ))}
+            <div className={styles.draftGrid}>
+                {visibleCampaigns.map((campaign) => (
+                    <DraftCard key={campaign.id} campaign={campaign} isProtocolTeam={isProtocolTeam} />
+                ))}
+            </div>
 
         </div>
     );

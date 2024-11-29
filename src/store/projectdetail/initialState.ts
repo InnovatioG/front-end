@@ -6,30 +6,25 @@ export interface ProjectDetailState {
         id: number;
         title: string;
         description: string;
-        banner_image: string;
-        company_logo: string;
+        banner_url: string;
+        logoUrl: string;
         created_at: string;
         updated_at: string;
         investors: number;
         status: string;
-
         goal: number;
         min_request: number;
         cdRequestedMaxADA: number | null;
         cdCampaignToken_PriceADA: number | null;
         cdCampaignToken_TN: string;
-
         campaign_content: campaingContent[];
         tokenomics_description: string;
-
-        brand: {
-            website: string;
-            facebook: string;
-            instagram: string;
-            discord: string;
-            linkedin: string;
-            xs: string;
-        };
+        website: string;
+        facebook: string;
+        instagram: string;
+        discord: string;
+        linkedin: string;
+        xs: string;
         members_team: MembersTeam[];
         milestones: MilestoneF[];
         faqs: FAQ[];
@@ -49,21 +44,19 @@ export const initialState: ProjectDetailState = {
         title: '',
         description: '',
         investors: 0,
-        banner_image: '',
-        company_logo: '',
+        banner_url: '',
+        logoUrl: '',
         created_at: '',
         updated_at: '',
         status: '',
         goal: 0,
         min_request: 0,
-        brand: {
-            website: '',
-            facebook: '',
-            instagram: '',
-            linkedin: '',
-            discord: '',
-            xs: '',
-        },
+        website: '',
+        facebook: '',
+        instagram: '',
+        discord: '',
+        linkedin: '',
+        xs: '',
         cdRequestedMaxADA: null,
         cdCampaignToken_PriceADA: null,
         cdCampaignToken_TN: '',

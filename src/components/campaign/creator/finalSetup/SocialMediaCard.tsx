@@ -11,12 +11,12 @@ interface SocialMediaCardContainerProps {
     // Define props here
 }
 
-/* falta el handler confirm z */
-
+// Definir un tipo específico para las claves de redes sociales
+type SocialLinkKeys = "website" | "facebook" | "instagram" | "discord" | "linkedin" | "xs";
 
 const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props) => {
     const { project, setProject, editionMode } = useProjectDetailStore();
-    const [selectedLink, setSelectedLink] = useState<keyof typeof project.brand>("website");
+    const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>("website");
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const editLinkButton = () => {
@@ -24,7 +24,7 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
     }
 
     const getPlaceholder = () => {
-        const linkValue = project.brand[selectedLink];
+        const linkValue = project[selectedLink];
         return linkValue && linkValue !== "" ? linkValue : `Enter your ${selectedLink} link`;
     }
 
@@ -42,7 +42,7 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
                     <SocialButton
                         key={social.name}
                         icon={social.icon}
-                        name={social.name as "website" | "facebook" | "instagram" | "discord" | "linkedin" | "xs"}
+                        name={social.name as SocialLinkKeys}
                         setSocialLink={setSelectedLink}
                     />
                 ))}
@@ -54,14 +54,11 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
                     <div className={styles.inputContainer}>
                         <input
                             type="text"
-                            value={project.brand[selectedLink] || ""}
+                            value={project[selectedLink] || ""}
                             placeholder={getPlaceholder()}
                             onChange={(e) => setProject({
                                 ...project,
-                                brand: {
-                                    ...project.brand,
-                                    [selectedLink]: e.target.value
-                                }
+                                [selectedLink]: e.target.value
                             })}
                             className={styles.input}
                         />

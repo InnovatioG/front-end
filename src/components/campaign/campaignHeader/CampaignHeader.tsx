@@ -5,7 +5,7 @@ import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 
 interface CampaignHeaderProps {
     /*     title: string;
-        banner_image: string;
+        banner_url: string;
         company_logo: string; */
 
 }
@@ -20,7 +20,7 @@ const CampaignHeader: React.FC<CampaignHeaderProps> = () => {
     return (
         <div className={styles.headerCampaignContainer}>
             <Avatar big={true}>
-                <AvatarImage src={project.company_logo} alt={project.title} />
+                <AvatarImage src={project.logoUrl} alt={project.title} />
                 <AvatarFallback>{project.title[0]}</AvatarFallback>
             </Avatar>
             <h2 className={styles.title}>{project.title}</h2>

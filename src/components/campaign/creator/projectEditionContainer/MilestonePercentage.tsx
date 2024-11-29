@@ -16,12 +16,12 @@ const MilestonePercentage: React.FC<MilestonePercentageProps> = ({
     maxAvailablePercentage,
     onPercentageChange,
 }) => {
-    const [percentage, setPercentage] = useState<number>(milestone.percentage);
+    const [percentage, setPercentage] = useState<number>(milestone.cmPercentage);
     const { editionMode } = useProjectDetailStore();
 
     useEffect(() => {
-        setPercentage(milestone.percentage);
-    }, [milestone.percentage]);
+        setPercentage(milestone.cmPercentage);
+    }, [milestone.cmPercentage]);
 
     const handlePercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/[^0-9]/g, ''); // Remove non-digits

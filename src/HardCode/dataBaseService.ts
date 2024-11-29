@@ -1,5 +1,6 @@
 import database from './database.json';
 import { User } from './databaseType';
+import type { Campaign } from './databaseType';
 
 const LOCAL_STORAGE_KEY = 'campaignData';
 
@@ -94,14 +95,29 @@ export const dataBaseService = {
         }
         return null;
     },
-    getFilteredData: (filters: { userId: string | null; isAdmin: boolean; adminView: boolean; searchTerm: string; statusContractsFilter: string; categoryFilter: string }) => {
+
+    getFilteredData: (filters: {
+        userId: string | null;
+        isAdmin: boolean;
+        adminView: boolean;
+        searchTerm: string;
+        statusContractsFilter: string;
+        categoryFilter: string;
+        isProtocolTeam: boolean;
+    }) => {
         const data = dataBaseService.getData();
         if (!data) return { campaigns: [], contracts: [], categories: [] };
 
-        const { userId, isAdmin, adminView, searchTerm, statusContractsFilter, categoryFilter } = filters;
+        const { userId, isAdmin, adminView, searchTerm, statusContractsFilter, categoryFilter, isProtocolTeam } = filters;
 
         const filteredCampaigns = data.campaigns.filter((campaign: Campaign) => {
-            if (isAdmin && adminView) {
+            if (isProtocolTeam) {
+                return (
+                    campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                    (statusContractsFilter === '' || campaign.contract_id === parseInt(statusContractsFilter)) &&
+                    (categoryFilter === '' || campaign.category_id === parseInt(categoryFilter))
+                );
+            } else if (isAdmin && adminView) {
                 return (
                     campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
                     (statusContractsFilter === '' || campaign.contract_id === parseInt(statusContractsFilter)) &&

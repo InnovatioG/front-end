@@ -7,7 +7,9 @@
     width: 100%;
     /*     max-width: 400px;
  */
+    height: 100%;
     padding: 20px;
+    justify-content: space-between;
     background: colors.$light-color;
     border-radius: 20px;
     border: 1px, solid colors.$border-light-color;
@@ -100,7 +102,6 @@
         .headCard {
             .logoCard {
                 width: 58px;
-                height: auto;
             }
             .cardDetails {
                 height: 32px;
@@ -121,10 +122,8 @@
         }
         .cardTitle {
             font: fonts.$f600-medium;
-            height: 52px;
         }
         .cardDescription {
-            height: 75px;
         }
     }
 }
@@ -150,4 +149,26 @@
 .deploy,
 .ready {
     background: colors.$primary-yellow;
+}
+
+.countdown {
+    background: colors.$blue-dark-color;
+}
+
+.actionsTarget {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.outline-card {
+    color: colors.$primary-dark-color;
+}
+
+.fill {
+    color: colors.$white-background;
+}
+
+.attempmt-to-launch {
+    background-color: colors.$light-green;
 }

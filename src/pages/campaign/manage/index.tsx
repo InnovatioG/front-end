@@ -6,17 +6,27 @@ import BtnConnectWallet from "@/components/buttons/connectWallet/BtnConnectWalle
 import { useScreenSize } from "@/hooks/useScreenSize";
 import DraftDashboard from "@/components/campaign/draft/DraftDashboard";
 import NewDraftDashboard from "@/components/campaign/draft/iair/DraftDashboard";
+import { useDashboardCard } from "@/hooks/useDashboardCard";
+import LoadingPage from "@/components/LoadingPage/LoadingPage";
+
 export default function Home() {
   const { address } = useCardano();
   const { data: session } = useSession();
   const screenSize = useScreenSize();
 
+  const { isProtocolTeam, campaignsLoading } = useDashboardCard(address);
 
-  console.log("address", address)
-  console.log("session", session)
+  const title = () => (isProtocolTeam ? "PROTOCOL TEAM" : "CAMPAIGN MANAGERS");
+
+  console.log("loading", campaignsLoading);
+
+
 
   return (
+
+
     <>
+      {campaignsLoading && <LoadingPage />}
       {address === null && session === null ? (
         <div className={styles.campaignSection}>
           <div className={styles.mainSection}>
@@ -34,8 +44,7 @@ export default function Home() {
         </div>
       ) : (
         <div className={styles.draftSection}>
-          <h2 className={styles.title}>CAMPAIGN MANAGERS</h2>
-          <DraftDashboard address={address} />
+          <h2 className={styles.title}>{title()}</h2>
           <NewDraftDashboard address={address} />
         </div>
       )}
