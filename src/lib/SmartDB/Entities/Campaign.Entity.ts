@@ -2,28 +2,121 @@ import 'reflect-metadata';
 import { BaseEntity, Convertible, asEntity } from 'smart-db';
 
 @asEntity()
-export class Campaign extends BaseEntity {
-    protected static _apiRoute: string = 'campaign';
+export class CampaignEntity extends BaseEntity {
+    protected static _apiRoute: string = 'campaigns';
     protected static _className: string = 'Campaign';
 
-    // #region fields
+    @Convertible()
+    id!: number;
 
     @Convertible()
-    name!: string;
+    projectId!: number;
+
+    @Convertible()
+    campaignCategoryId!: number;
+
+    @Convertible()
+    campaignStatusId!: number;
+
+    @Convertible()
+    creatorWalletId!: number;
+
+    @Convertible()
+    cdCampaignVersion!: number;
+
+    @Convertible()
+    cdCampaignPolicy_CS!: string;
+
+    @Convertible()
+    cdCampaignFundsPolicyID_CS!: string;
+
+    @Convertible({ type: String })
+    cdAdmins!: string[];
+
+    @Convertible()
+    cdTokenAdminPolicy_CS!: string;
+
+    @Convertible()
+    cdMint_CampaignToken!: boolean;
+
+    @Convertible()
+    cdCampaignToken_CS!: string;
+
+    @Convertible()
+    cdCampaignToken_TN!: string;
+
+    @Convertible()
+    cdCampaignToken_PriceADA!: number;
+
+    @Convertible()
+    cdRequestedMaxADA!: number;
+
+    @Convertible()
+    cdRequestedMinADA!: number;
+
+    @Convertible()
+    cdFundedADA!: number;
+
+    @Convertible()
+    cdCollectedADA!: number;
+
+    @Convertible()
+    cdBeginAt!: Date;
+
+    @Convertible()
+    cdDeadline!: Date;
+
+    @Convertible()
+    cdStatus!: string;
+
+    @Convertible({ type: String })
+    cdMilestones!: string[];
+
+    @Convertible()
+    cdFundsCount!: number;
+
+    @Convertible()
+    cdFundsIndex!: number;
+
+    @Convertible()
+    cdMinADA!: number;
+
+    @Convertible()
+    description!: string;
+
+    @Convertible()
+    logoUrl!: string;
+
+    @Convertible()
+    bannerUrl!: string;
+
+    @Convertible()
+    website!: string;
+
+    @Convertible()
+    instagram!: string;
+
+    @Convertible()
+    twitter!: string;
+
+    @Convertible()
+    discord!: string;
+
+    @Convertible()
     facebook!: string;
 
-    // #endregion fields
+    @Convertible()
+    investors!: number;
 
-    // #region db
+    @Convertible()
+    featured!: boolean;
 
-    // When the field is not defined in the database, it will be set to the default value: {} means all fields
-    public static defaultFieldsWhenUndefined: Record<string, boolean> = {};
+    @Convertible()
+    archived!: boolean;
 
-    public static alwaysFieldsForSelect: Record<string, boolean> = {
-        ...BaseEntity.alwaysFieldsForSelect,
-        name: true,
-        facebook: true,
-    };
+    @Convertible()
+    createdAt!: Date;
 
-    // #endregion db
+    @Convertible()
+    updatedAt!: Date;
 }

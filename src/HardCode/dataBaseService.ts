@@ -1,108 +1,142 @@
-import database from "./database.json";
-import { User } from "./databaseType";
+import database from './database.json';
+import { User } from './databaseType';
 
-const LOCAL_STORAGE_KEY = "campaignData";
+const LOCAL_STORAGE_KEY = 'campaignData';
 
 export const dataBaseService = {
-  initializeData: () => {
-    if (!localStorage.getItem(LOCAL_STORAGE_KEY)) {
-      const newData = {
-        ...database,
-        version: {
-          ...database.version,
-          stored_at: new Date().toISOString(),
-        },
-      };
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
-    } else {
-      const data = dataBaseService.getData();
-      let shouldUpdate = false;
-      if (data.version.version !== database.version.version || !data.version) {
-        shouldUpdate = true;
-      } else {
-        const storedAt = new Date(data.version.stored_at);
-        const diffInMs = Date.now() - storedAt.getTime();
-        const oneDayInMs = 24 * 60 * 60 * 1000;
-        if (diffInMs > oneDayInMs) {
-          shouldUpdate = true;
+    initializeData: () => {
+        if (!localStorage.getItem(LOCAL_STORAGE_KEY)) {
+            const newData = {
+                ...database,
+                version: {
+                    ...database.version,
+                    stored_at: new Date().toISOString(),
+                },
+            };
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
+        } else {
+            const data = dataBaseService.getData();
+            let shouldUpdate = false;
+            if (data.version.version !== database.version.version || !data.version) {
+                shouldUpdate = true;
+            } else {
+                const storedAt = new Date(data.version.stored_at);
+                const diffInMs = Date.now() - storedAt.getTime();
+                const oneDayInMs = 24 * 60 * 60 * 1000;
+                if (diffInMs > oneDayInMs) {
+                    shouldUpdate = true;
+                }
+            }
+
+            if (shouldUpdate) {
+                const updatedData = {
+                    ...database,
+                    version: {
+                        ...database.version,
+                        stored_at: new Date().toISOString(),
+                    },
+                };
+                dataBaseService.updateData(updatedData);
+            }
         }
-      }
+    },
 
-      if (shouldUpdate) {
-        const updatedData = {
-          ...database,
-          version: {
-            ...database.version,
-            stored_at: new Date().toISOString(),
-          },
+    getData: () => {
+        const data = localStorage.getItem(LOCAL_STORAGE_KEY);
+        return data ? JSON.parse(data) : null;
+    },
+
+    getUsers: () => {
+        const data = dataBaseService.getData();
+        return data ? data.users : [];
+    },
+
+    getCategories: () => {
+        const data = dataBaseService.getData();
+        return data ? data.categories : [];
+    },
+
+    getUserByAddress: (userId: number): string | null => {
+        const users = dataBaseService.getUsers();
+        const user = users.find((user: User) => user.id === userId);
+        return user ? user.wallet_address : null;
+    },
+
+    updateData: (newData: any) => {
+        localStorage.removeItem(LOCAL_STORAGE_KEY);
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
+    },
+
+    createCampaign: (campaign: any) => {
+        const data = dataBaseService.getData();
+        const newCampaign = {
+            ...campaign,
+            id: data.campaigns.length + 1,
+            create_at: Date.now().toString(),
+            updated_at: Date.now().toString(),
         };
-        dataBaseService.updateData(updatedData);
-      }
-    }
-  },
+        data.campaigns.push(newCampaign);
+        dataBaseService.updateData(data);
+        return newCampaign;
+    },
 
-  getData: () => {
-    const data = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return data ? JSON.parse(data) : null;
-  },
+    updateCampaign: (id: number, updates: any) => {
+        const data = dataBaseService.getData();
+        const index = data.campaigns.findIndex((c: any) => c.id === id);
+        if (index !== -1) {
+            data.campaigns[index] = {
+                ...data.campaigns[index],
+                ...updates,
+                updated_at: Date.now().toString(),
+            };
+            dataBaseService.updateData(data);
+            return data.campaigns[index];
+        }
+        return null;
+    },
+    getFilteredData: (filters: { userId: string | null; isAdmin: boolean; adminView: boolean; searchTerm: string; statusContractsFilter: string; categoryFilter: string }) => {
+        const data = dataBaseService.getData();
+        if (!data) return { campaigns: [], contracts: [], categories: [] };
 
-  getUsers: () => {
-    const data = dataBaseService.getData();
-    return data ? data.users : [];
-  },
+        const { userId, isAdmin, adminView, searchTerm, statusContractsFilter, categoryFilter } = filters;
 
-  getCategories: () => {
-    const data = dataBaseService.getData();
-    return data ? data.categories : [];
-  },
+        const filteredCampaigns = data.campaigns.filter((campaign: Campaign) => {
+            if (isAdmin && adminView) {
+                return (
+                    campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                    (statusContractsFilter === '' || campaign.contract_id === parseInt(statusContractsFilter)) &&
+                    (categoryFilter === '' || campaign.category_id === parseInt(categoryFilter))
+                );
+            } else {
+                const userMatches = data.users.some((user: User) => user.id === campaign.user_id && user.wallet_address === userId);
 
-  getUserByAddress: (userId: number): string | null => {
-    const users = dataBaseService.getUsers();
-    const user = users.find((user: User) => user.id === userId);
-    return user ? user.wallet_address : null;
-  },
+                const isContractVisible = campaign.contract_id === 1 || campaign.contract_id === 2;
 
-  updateData: (newData: any) => {
-    localStorage.removeItem(LOCAL_STORAGE_KEY);
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
-  },
+                const isVisible =
+                    (statusContractsFilter === '' || campaign.contract_id === parseInt(statusContractsFilter)) &&
+                    isContractVisible &&
+                    (campaign.vizualization === 1 || campaign.vizualization === 2) &&
+                    userMatches;
 
-  createCampaign: (campaign: any) => {
-    const data = dataBaseService.getData();
-    const newCampaign = {
-      ...campaign,
-      id: data.campaigns.length + 1,
-      create_at: Date.now().toString(),
-      updated_at: Date.now().toString(),
-    };
-    data.campaigns.push(newCampaign);
-    dataBaseService.updateData(data);
-    return newCampaign;
-  },
+                return isVisible && campaign.title.toLowerCase().includes(searchTerm.toLowerCase()) && (categoryFilter === '' || campaign.category_id === parseInt(categoryFilter));
+            }
+        });
 
-  updateCampaign: (id: number, updates: any) => {
-    const data = dataBaseService.getData();
-    const index = data.campaigns.findIndex((c: any) => c.id === id);
-    if (index !== -1) {
-      data.campaigns[index] = {
-        ...data.campaigns[index],
-        ...updates,
-        updated_at: Date.now().toString(),
-      };
-      dataBaseService.updateData(data);
-      return data.campaigns[index];
-    }
-    return null;
-  },
+        return {
+            campaigns: filteredCampaigns,
+            contracts: data.contracts || [],
+            categories: data.categories || [],
+        };
+    },
 
-  deleteCampaign: (id: number) => {
-    const data = dataBaseService.getData();
-    const index = data.campaigns.findIndex((c: any) => c.id === id);
-    if (index !== -1) {
-      data.campaigns.splice(index, 1);
-      dataBaseService.updateData(data);
-      return true;
-    }
-    return false;
-  },
+    deleteCampaign: (id: number) => {
+        const data = dataBaseService.getData();
+        const index = data.campaigns.findIndex((c: any) => c.id === id);
+        if (index !== -1) {
+            data.campaigns.splice(index, 1);
+            dataBaseService.updateData(data);
+            return true;
+        }
+        return false;
+    },
 };

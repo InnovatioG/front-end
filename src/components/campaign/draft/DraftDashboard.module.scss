@@ -2,74 +2,105 @@
 @use '@/styles/settings/colors';
 
 .draftDashboard {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 100px;
-
-
-  .notFound {
+    width: 100%;
     display: flex;
-    font: fonts.$f900-bold;
-    height: 421px;
+    flex-direction: column;
     align-items: center;
-  }
+    margin-bottom: 100px;
 
-  .draftGrid {
-    display: grid;
-    gap: 32px;
-    margin-bottom: 60px;
-    grid-template-columns: 1fr;
-    padding: 0 10px;
-
-    .newCampaign {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      max-width: 400px;
-      padding: 20px;
-      border-radius: 20px;
-      border: 1px, solid colors.$border-light-color;
-      gap: 7px;
-      transition: all 0.5s ease-in-out;
-
-      &:hover {
-        transform: scale(1.05);
-        background: colors.$light-color;
-        border: 1px, solid colors.$secondary-background;
-
-      }
+    .notFound {
+        display: flex;
+        font: fonts.$f900-bold;
+        height: 421px;
+        align-items: center;
     }
-  }
+
+    .draftGrid {
+        padding: 0 2rem;
+        display: grid;
+        margin-bottom: 60px;
+        gap: 2rem;
+        width: 100%;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+
+        .newCampaign {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px, solid colors.$border-light-color;
+            gap: 7px;
+            transition: all 0.5s ease-in-out;
+
+            &:hover {
+                transform: scale(1.05);
+                background: colors.$light-color;
+                border: 1px, solid colors.$secondary-background;
+            }
+        }
+    }
 }
 
 /* LARGER SCREEN */
 
-@media (width >=942px) {
-
-  .draftDashboard {
-    .draftGrid {
-      margin-bottom: 90px;
-      grid-template-columns: repeat(2, 1fr);
+/* @media (width >=942px) {
+    .draftDashboard {
+        .draftGrid {
+            margin-bottom: 90px;
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
-  }
 }
 
 @media (width >=1570px) {
-  .draftDashboard {
-    .draftGrid {
-      grid-template-columns: repeat(3, 1fr);
-
+    .draftDashboard {
+        .draftGrid {
+            grid-template-columns: repeat(3, 1fr);
+        }
     }
-  }
 }
 
 @media (width >=1800px) {
-  .draftDashboard {
-    .draftGrid {
-      grid-template-columns: repeat(4, 1fr);
+    .draftDashboard {
+        .draftGrid {
+            grid-template-columns: repeat(4, 1fr);
+        }
     }
-  }
+} */
+
+@media screen and (max-width: 768px) {
+    .draftDashboard {
+        .draftGrid {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .draftDashboard {
+        .draftGrid {
+            padding: 0 2rem;
+            margin-bottom: 90px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            width: 100%;
+        }
+    }
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1570px) {
+    .draftDashboard {
+        .draftGrid {
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        }
+    }
+}
+
+@media screen and (min-width: 1571px) {
+    .draftDashboard {
+        .draftGrid {
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        }
+    }
 }

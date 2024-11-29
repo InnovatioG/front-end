@@ -9,13 +9,20 @@ import CommonsBtn from '@/components/buttons/CommonsBtn';
 import Link from 'next/link';
 import { PLUS_ICON } from '@/utils/images';
 import { ROUTES } from '@/utils/routes';
+import { arDZ } from 'date-fns/locale';
+import type { State } from '@/HardCode/databaseType';
 
 export default function DraftDashboard({ address }: { address: string | null }) {
+
+    console.log(address)
+
+
     const [campaigns, setCampaigns] = useState<Campaign[]>([]);
     const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
     const [visibleCampaigns, setVisibleCampaigns] = useState<Campaign[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusContractsFilter, setStatusContractsFilter] = useState('');
+    const [states, setStates] = useState<State[]>([]);
     const [categoryFilter, setCategoryFilter] = useState('');
     const [statesContracts, setStatesContracts] = useState<Contracts[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
@@ -25,14 +32,17 @@ export default function DraftDashboard({ address }: { address: string | null }) 
     const [loading, setLoading] = useState(true);
     const [campaignsLoading, setCampaignsLoading] = useState(true);
 
+
+    console.log("campaigns", campaigns)
+
     useEffect(() => {
         if (!address) {
             setIsAdmin(false);
             setLoading(false);
             return;
         }
-
         const users = dataBaseService.getUsers();
+        console.log("users", users)
         const user = users.find((user: User) => user.wallet_address === address);
         const isAdmin = user?.is_admin || false;
         setIsAdmin(isAdmin);
@@ -88,6 +98,15 @@ export default function DraftDashboard({ address }: { address: string | null }) 
         },
         [statesContracts]
     );
+
+    const getStatusName = useCallback(
+        (statusId: number): string => {
+            const status = states.find((s) => s.id === statusId);
+            return status ? status.name : "";
+        },
+        [states]
+    );
+
 
     const getCategoryName = useCallback(
         (categoryId: number): string => {
@@ -159,16 +178,16 @@ export default function DraftDashboard({ address }: { address: string | null }) 
                 <p className={styles.notFound}>No Campaigns Found</p>
             ) : (
                 <div className={styles.draftGrid}>
-                    <Link className={styles.newCampaign} href={ROUTES.new}>
-                        <>
+                    <Link href={ROUTES.new}>
+                        <div className={styles.newCampaign}>
                             <svg width="24" height="24" className={styles.icon}>
                                 <use href={PLUS_ICON}></use>
                             </svg>
                             <p className={styles.text}>Start new campaign</p>
-                        </>
+                        </div>
                     </Link>
                     {visibleCampaigns.map((campaign) => (
-                        <DraftCard key={campaign.id} campaign={campaign} getContractsName={getContractsName} getCategoryName={getCategoryName} adminView={adminView} />
+                        <DraftCard key={campaign.id} campaign={campaign} getContractsName={getContractsName} getCategoryName={getCategoryName} adminView={adminView} getStatusName={getStatusName} />
                     ))}
                 </div>
             )}
@@ -176,3 +195,6 @@ export default function DraftDashboard({ address }: { address: string | null }) 
         </div>
     );
 }
+
+
+

@@ -87,26 +87,26 @@ export default function BtnDraftActions(props: BtnActionsProps) {
 
 const PrimaryBtn = ({ url }: SubComponentProps) => {
     return (
-        <Link className={styles.primaryBtn} href={url}>
-            <>
+        <Link href={url}>
+            <div className={styles.primaryBtn}>
                 <p className={styles.text}>View Campaing</p>
                 <svg width="14" height="14" className={styles.icon}>
                     <use href={CHEVRON_RIGHT}></use>
                 </svg>
-            </>
+            </div>
         </Link>
     );
 };
 
 const PrimaryAdminBtn = ({ url, text }: SubComponentProps) => {
     return (
-        <Link className={styles.primaryBtn} href={url}>
-            <>
+        <Link href={url}>
+            <div className={styles.primaryBtn}>
                 <p className={styles.text}>{text}</p>
                 <svg width="14" height="14" className={styles.icon}>
                     <use href={CHEVRON_RIGHT}></use>
                 </svg>
-            </>
+            </div>
         </Link>
     );
 };
@@ -121,13 +121,13 @@ const SecondaryBtn = ({ url }: SubComponentProps) => {
 
 const SecondaryAdminBtn = ({ url, text }: SubComponentProps) => {
     return (
-        <Link className={styles.secondaryBtn} href={url}>
-            <>
+        <Link href={url}>
+            <div className={styles.secondaryBtn}>
                 <p className={styles.text}>{text}</p>
                 <svg width="14" height="14" className={styles.icon}>
                     <use href={CHEVRON_RIGHT}></use>
                 </svg>
-            </>
+            </div>
         </Link>
     );
 };

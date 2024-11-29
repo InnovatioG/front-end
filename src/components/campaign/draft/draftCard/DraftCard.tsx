@@ -9,15 +9,21 @@ import BtnDraftActions from "../../dashboard/campaignFilters/BtnDraftActions";
 interface DraftCardProps {
   campaign: Campaign;
   getContractsName: (contractId: number) => string;
+  getStatusName: (stateId: number) => string;
   getCategoryName: (categoryId: number) => string;
   adminView: boolean;
 }
 
 export type StatusContracts = "Active" | "TBL" | "Created" | "Signed" | "Ready" | "Deleted" | "Ended";
+export type StatusName = "Created" | "Submitted" | "Rejected" | "Approved" | "Contract Created" | "Contract Published" | "Contract Started" | "Countdown" | "Fundraising" | "Finishing" | "Active" | "Failed" | "Unreached" | "Success";
+
 
 export default function DraftCard(props: DraftCardProps) {
-  const { campaign, getContractsName, getCategoryName, adminView } = props;
+  const { campaign, getContractsName, getCategoryName, adminView, getStatusName } = props;
   const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(campaign.end_date));
+
+
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -36,12 +42,12 @@ export default function DraftCard(props: DraftCardProps) {
     if (timeRemaining.total <= 72 * 60 * 60 * 1000) {
       return `${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}:${formatTime(timeRemaining.seconds)}`;
     }
-
-    return getContractsName(campaign.contract_id);
+    return `${getContractsName(campaign.contract_id)} ${getStatusName(campaign.state_id)}`;
   };
 
+
   return (
-    <div className={`${styles.campaignCard} ${styles[getContractsName(campaign.contract_id).toLowerCase()]}`}>
+    <div className={`${styles.campaignCard} ${styles[getStatusName(campaign.contract_id).toLowerCase()]}`}>
       <div className={styles.headCard}>
         <Image
           width={58}
@@ -53,9 +59,8 @@ export default function DraftCard(props: DraftCardProps) {
         <div className={styles.cardDetails}>
           <div className={styles.statusContracts}>
             <div
-              className={`${styles.state} ${
-                styles[getContractsName(campaign.contract_id).toLowerCase()]
-              }`}
+              className={`${styles.state} ${styles[getStatusName(campaign.contract_id).toLowerCase()]
+                }`}
             >
               {renderStatus()}
             </div>
@@ -68,7 +73,7 @@ export default function DraftCard(props: DraftCardProps) {
       <h3 className={styles.cardTitle}>{campaign.title}</h3>
       <p className={styles.cardDescription}>{campaign.description}</p>
       <div className={styles.actionsTarget}>
-      <BtnDraftActions type={getContractsName(campaign.contract_id) as StatusContracts} url={ROUTES.home} url2={ROUTES.home} adminView={adminView}/>
+        <BtnDraftActions type={getContractsName(campaign.contract_id) as StatusContracts} url={ROUTES.home} url2={ROUTES.home} adminView={adminView} />
       </div>
     </div>
   );

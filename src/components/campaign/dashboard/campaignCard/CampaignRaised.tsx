@@ -54,9 +54,8 @@ function MilestoneRaised(props: MilestoneRaisedProps) {
     <>
       <div className={styles.milestoneRaised}>
         <div
-          className={`${styles.amount} ${
-            styles[getStatusName(campaign.state_id).toLowerCase()]
-          }`}
+          className={`${styles.amount} ${styles[getStatusName(campaign.state_id).toLowerCase()]
+            }`}
         >
           <p className={styles.value}>{formatMoney(campaign.raise_amount)}</p>
           <p className={styles.text}>Total Money Raised</p>
@@ -98,9 +97,8 @@ function TargetRaised(props: TargetRaisedProps) {
             </div>
             <div className={styles.targetInfo}>
               <div
-                className={`${styles.amount} ${
-                  styles[getStatusName(campaign.state_id).toLowerCase()]
-                }`}
+                className={`${styles.amount} ${styles[getStatusName(campaign.state_id).toLowerCase()]
+                  }`}
               >
                 <p className={styles.value}>
                   {formatMoney(campaign.raise_amount)}
@@ -157,7 +155,7 @@ function TargetRaised(props: TargetRaisedProps) {
         {getStatusName(campaign.state_id) === "Fundraising" && (
           <BtnActions type={"invest"} url={ROUTES.home} />
         )}
-        <BtnActions type={"primary"} url={ROUTES.home} />
+        <BtnActions type={"primary"} url={`/campaign/${campaign.id}`} />
       </div>
     </>
   );

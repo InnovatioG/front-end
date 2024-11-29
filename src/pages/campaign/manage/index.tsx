@@ -5,11 +5,15 @@ import { useSession } from "next-auth/react";
 import BtnConnectWallet from "@/components/buttons/connectWallet/BtnConnectWallet";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import DraftDashboard from "@/components/campaign/draft/DraftDashboard";
-
+import NewDraftDashboard from "@/components/campaign/draft/iair/DraftDashboard";
 export default function Home() {
   const { address } = useCardano();
   const { data: session } = useSession();
   const screenSize = useScreenSize();
+
+
+  console.log("address", address)
+  console.log("session", session)
 
   return (
     <>
@@ -30,8 +34,9 @@ export default function Home() {
         </div>
       ) : (
         <div className={styles.draftSection}>
-          <h2 className={styles.title}>Manage</h2>
+          <h2 className={styles.title}>CAMPAIGN MANAGERS</h2>
           <DraftDashboard address={address} />
+          <NewDraftDashboard address={address} />
         </div>
       )}
     </>
