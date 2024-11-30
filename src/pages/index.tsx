@@ -26,7 +26,6 @@ export default function Home() {
             fetch();
         }, []); */
 
-    console.log("error", error);
 
 
     const handleCreate = async () => {

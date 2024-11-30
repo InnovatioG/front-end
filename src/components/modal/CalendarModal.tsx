@@ -9,15 +9,15 @@ interface CalendarModalProps {
 
 const CalendarModal: React.FC<CalendarModalProps> = ({ isOpen, setIsOpen, }) => {
 
-    const [date, setDate] = React.useState<Date | undefined>(new Date())
+    const [dateRange, setDateRange] = React.useState<{ from: Date | undefined; to?: Date | undefined }>({ from: new Date() })
 
     return (
         <ModalTemplate isOpen={isOpen} setIsOpen={setIsOpen}>
             <div className={styles.layout}>
                 <Calendar
                     mode="range"
-                    selected={date}
-                    onSelect={setDate}
+                    selected={dateRange}
+                    onSelect={(range) => range && setDateRange(range)}
                     className="rounded-md border" />
             </div>
         </ModalTemplate>

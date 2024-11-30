@@ -3,9 +3,11 @@ import type { MilestoneF, FAQ, campaingContent } from '@/HardCode/databaseType';
 
 export interface ProjectDetailState {
     project: {
+        user_id: number | null;
         id: number;
         title: string;
         description: string;
+        state_id: number;
         banner_url: string;
         logoUrl: string;
         created_at: string;
@@ -40,9 +42,11 @@ export interface ProjectDetailState {
 
 export const initialState: ProjectDetailState = {
     project: {
+        user_id: null,
         id: 0,
         title: '',
         description: '',
+        state_id: 0,
         investors: 0,
         banner_url: '',
         logoUrl: '',

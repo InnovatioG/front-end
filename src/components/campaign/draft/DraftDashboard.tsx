@@ -13,10 +13,6 @@ import { arDZ } from 'date-fns/locale';
 import type { State } from '@/HardCode/databaseType';
 
 export default function DraftDashboard({ address }: { address: string | null }) {
-
-    console.log(address)
-
-
     const [campaigns, setCampaigns] = useState<Campaign[]>([]);
     const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
     const [visibleCampaigns, setVisibleCampaigns] = useState<Campaign[]>([]);
@@ -33,7 +29,6 @@ export default function DraftDashboard({ address }: { address: string | null }) 
     const [campaignsLoading, setCampaignsLoading] = useState(true);
 
 
-    console.log("campaigns", campaigns)
 
     useEffect(() => {
         if (!address) {
@@ -42,7 +37,6 @@ export default function DraftDashboard({ address }: { address: string | null }) 
             return;
         }
         const users = dataBaseService.getUsers();
-        console.log("users", users)
         const user = users.find((user: User) => user.wallet_address === address);
         const isAdmin = user?.is_admin || false;
         setIsAdmin(isAdmin);

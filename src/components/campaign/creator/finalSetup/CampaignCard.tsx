@@ -16,14 +16,19 @@ interface CampaignCardProps {
 const CampaignCard: React.FC<CampaignCardProps> = ({ status, goal, min_request, investors }) => {
 
 
+    console.log(status)
+
+
     const progressWidth = `${min_request}%`;
+
+    const stateClass = status.toLowerCase().replace(/\s+/g, '-');
 
 
     return (
         <section className={styles.campaignCard}>
             <div className={styles.campaignCardStatus}>
-                <div className={styles.statusContainer}>
-                    <span className={styles.status}>
+                <div className={`${styles.statusContainer} ${styles[stateClass]}`}>
+                    <span className={`${styles.status} ${styles[stateClass]}`}>
                         {status}
                     </span>
                 </div>

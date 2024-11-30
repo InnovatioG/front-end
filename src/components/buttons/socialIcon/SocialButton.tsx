@@ -8,7 +8,6 @@ interface SocialButtonProps {
 }
 
 const SocialButton: React.FC<SocialButtonProps> = ({ icon, name, setSocialLink }) => {
-    console.log(icon, name, setSocialLink);
 
     return (
         <div className={styles['icon-container']} onClick={() => name && setSocialLink && setSocialLink(name)}>

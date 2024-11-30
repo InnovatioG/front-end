@@ -1,323 +1,358 @@
-[
-    {
-        "id": 2,
-        "user_id": 1,
-        "state_id": 1,
-        "category_id": null,
-        "status": "Fundraising",
-        "logoUrl": "https://avatars.githubusercontent.com/u/93623817?v=4",
-        "banner_url": "/img/database/banner_logo_id1.png",
-        "cdCampaignToken_PriceADA": null,
-        "cdRequestedMaxADA ": null,
-        "cdCampaignToken_TN": null,
-        "Tokenomics-Description": "",
-        "faqs": [],
-        "investors": 0,
-        "milestones": [
-            {
-                "id": 1,
-                "campaign_id": 2,
-                "campaign_status_id": 1,
-                "percentage": 0,
-                "status": "pending",
-                "cmEstimatedDeliveryDate": "",
-                "milestone_status": {
+{
+    "states": [
+        { "id": 1, "name": "Created" },
+        { "id": 2, "name": "Submitted" },
+        { "id": 3, "name": "Rejected" },
+        { "id": 4, "name": "Approved" },
+        { "id": 5, "name": "Contract Created" },
+        { "id": 6, "name": "Contract Published" },
+        { "id": 7, "name": "Contract Started" },
+        { "id": 8, "name": "Countdown" },
+        { "id": 9, "name": "Fundraising" },
+        { "id": 10, "name": "Finishing" },
+        { "id": 11, "name": "Active" },
+        { "id": 12, "name": "Failed" },
+        { "id": 13, "name": "Unreached" },
+        { "id": 14, "name": "Success" }
+    ],
+
+    "users": [
+        {
+            "id": 1,
+            "email": "user1@example.com",
+            "wallet_address": "addr_test1qq9jp8n00kthuenvqkj58qwtf632s0kyrc94crs3j7j2zmkt3rrad76apr0nq7h8dann2p9nc6vhgvjdj2jrs94rnxrqd0meq4",
+            "is_admin": true,
+            "is_protocol_team": false
+        },
+        {
+            "id": 2,
+            "email": "user2@example.com",
+            "wallet_address": "addr_test1qz2fyvjvy9nqayp2kplpyeu25fx2kcejyvkdwugc90glmant5thgl8ucsstqc05exmcrhqxpwe4a22nltq7366qt69lsd0y5y3",
+            "is_admin": false,
+            "is_protocol_team": true
+        }
+    ],
+    "campaigns": [
+        {
+            "id": 2,
+            "user_id": 1,
+            "state_id": 1,
+            "category_id": null,
+            "logoUrl": "https://avatars.githubusercontent.com/u/93623817?v=4",
+            "banner_url": "/img/database/banner_logo_id1.png",
+            "cdCampaignToken_PriceADA": null,
+            "cdRequestedMaxADA ": null,
+            "cdCampaignToken_TN": null,
+            "tokenomics_description": "",
+            "campaign_content": [],
+            "faqs": [],
+            "investors": 0,
+            "milestones": [
+                {
                     "id": 1,
-                    "name": "pending",
-                    "description": "",
-                    "created_at": "",
-                    "updated_at": ""
-                }
-            },
-            {
-                "id": 2,
-                "campaign_id": 2,
-                "campaign_status_id": 1,
-                "percentage": 0,
-                "status": "pending",
-                "cmEstimatedDeliveryDate": "",
-                "milestone_status": {
+                    "campaign_id": 2,
+                    "campaign_status_id": 1,
+                    "percentage": 0,
+                    "status": "pending",
+                    "cmEstimatedDeliveryDate": "",
+                    "milestone_status": {
+                        "id": 1,
+                        "name": "pending",
+                        "description": "",
+                        "created_at": "",
+                        "updated_at": ""
+                    }
+                },
+                {
                     "id": 2,
-                    "name": "pending",
-                    "description": "",
-                    "created_at": "",
-                    "updated_at": ""
-                }
-            },
-            {
-                "id": 3,
-                "campaign_id": 2,
-                "campaign_status_id": 1,
-                "percentage": 0,
-                "status": "pending",
-                "cmEstimatedDeliveryDate": "",
-                "milestone_status": {
+                    "campaign_id": 2,
+                    "campaign_status_id": 1,
+                    "percentage": 0,
+                    "status": "pending",
+                    "cmEstimatedDeliveryDate": "",
+                    "milestone_status": {
+                        "id": 2,
+                        "name": "pending",
+                        "description": "",
+                        "created_at": "",
+                        "updated_at": ""
+                    }
+                },
+                {
                     "id": 3,
-                    "name": "pending",
-                    "description": "",
-                    "created_at": "",
-                    "updated_at": ""
+                    "campaign_id": 2,
+                    "campaign_status_id": 1,
+                    "percentage": 0,
+                    "status": "pending",
+                    "cmEstimatedDeliveryDate": "",
+                    "milestone_status": {
+                        "id": 3,
+                        "name": "pending",
+                        "description": "",
+                        "created_at": "",
+                        "updated_at": ""
+                    }
                 }
-            }
-        ],
+            ],
 
-        "min_request": 70,
+            "min_request": 70,
 
-        "title": "Representacion de la campaña creada",
-        "description": "Este card representa la campaign que fue creada, pero todavia no fue subida a la base de datos, por lo que no deberia renderizarse ni en el homepage, ni en la pagina de protocol managers. Solo en la de la campaña para que pueda editarlo",
-        "contract_id": 1,
-        "vizualization": 1,
-        "start_date": "",
-        "end_date": "",
-        "goal": 60000,
-        "balance": 0,
-        "created_at": "2024-04-01T00:35:24.725Z",
-        "updated_at": "2024-04-01T00:35:24.725Z",
-        "website": "www.iairkaplun.com.ar",
-        "linkedin": "www.linkedin.com/iairkap",
-        "facebook": "",
-        "instagram": "",
-        "discord": "",
-        "x": "",
-        "members_team": [
-            {
-                "id": 1731367675829,
-                "member_picture": "",
-                "member_name": "Iair",
-                "member_last_name": "Kaplun",
-                "member_role": "Director",
-                "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
-                "member_email": "iairkap@gmail.com",
-                "member_admin": true,
-                "member_social": {
-                    "facebook": "www.facebook.com/iairkap",
-                    "instagram": "www.instagram.com/iairkap",
-                    "discord": "",
-                    "xs": "x.com/iairkap"
+            "title": "Representacion de la campaña creada",
+            "description": "Este card representa la campaign que fue creada, pero todavia no fue subida a la base de datos, por lo que no deberia renderizarse ni en el homepage, ni en la pagina de protocol managers. Solo en la de la campaña para que pueda editarlo",
+            "contract_id": 1,
+            "vizualization": 1,
+            "start_date": "",
+            "end_date": "",
+            "goal": 60000,
+            "balance": 0,
+            "created_at": "2024-04-01T00:35:24.725Z",
+            "updated_at": "2024-04-01T00:35:24.725Z",
+            "website": "www.iairkaplun.com.ar",
+            "linkedin": "www.linkedin.com/iairkap",
+            "facebook": "",
+            "instagram": "",
+            "discord": "",
+            "x": "",
+            "members_team": [
+                {
+                    "id": 1731367675829,
+                    "member_picture": "",
+                    "member_name": "Iair",
+                    "member_last_name": "Kaplun",
+                    "member_role": "Director",
+                    "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
+                    "member_email": "iairkap@gmail.com",
+                    "member_admin": true,
+                    "member_social": {
+                        "facebook": "www.facebook.com/iairkap",
+                        "instagram": "www.instagram.com/iairkap",
+                        "discord": "",
+                        "xs": "x.com/iairkap"
+                    }
+                },
+                {
+                    "id": 1731367762665,
+                    "member_picture": "",
+
+                    "member_name": "Jorge",
+                    "member_last_name": "Drexler",
+                    "member_role": "Musician",
+                    "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
+                    "member_email": "jorge@drexler.com",
+                    "member_admin": false,
+                    "member_social": {
+                        "facebook": "",
+                        "instagram": "",
+                        "discord": "",
+                        "xs": ""
+                    }
+                },
+                {
+                    "id": 1731367762665,
+                    "member_picture": "",
+
+                    "member_name": "Alan",
+                    "member_last_name": "Varela",
+                    "member_role": "Electrician",
+                    "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
+                    "member_email": "jorge@drexler.com",
+                    "member_admin": false,
+                    "member_social": {
+                        "facebook": "www.facebook.com/iairkap",
+                        "instagram": "",
+                        "discord": "",
+                        "xs": "x.com/peter"
+                    }
                 }
-            },
-            {
-                "id": 1731367762665,
-                "member_picture": "",
+            ]
+        },
 
-                "member_name": "Jorge",
-                "member_last_name": "Drexler",
-                "member_role": "Musician",
-                "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
-                "member_email": "jorge@drexler.com",
-                "member_admin": false,
-                "member_social": {
-                    "facebook": "",
-                    "instagram": "",
-                    "discord": "",
-                    "xs": ""
-                }
-            },
-            {
-                "id": 1731367762665,
-                "member_picture": "",
-
-                "member_name": "Alan",
-                "member_last_name": "Varela",
-                "member_role": "Electrician",
-                "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
-                "member_email": "jorge@drexler.com",
-                "member_admin": false,
-                "member_social": {
-                    "facebook": "www.facebook.com/iairkap",
-                    "instagram": "",
-                    "discord": "",
-                    "xs": "x.com/peter"
-                }
-            }
-        ]
-    },
-
-    {
-        "id": 3,
-        "user_id": 1,
-        "state_id": 2,
-        "category_id": null,
-        "logoUrl": "https://avatars.githubusercontent.com/u/93623817?v=4",
-        "banner_url": "/img/database/banner_logo_id1.png",
-        "cdCampaignToken_PriceADA": null,
-        "cdRequestedMaxADA": 50000,
-        "cdCampaignToken_TN": "INNV",
-        "tokenomics_description": "<p>\"Innovatio Founder is based on a carefully designed tokenomics structure to ensure the sustainability and growth of the ecosystem. In this stage, we are offering a total of 100,000 tokens at a price of 2 ADAs each. Below is a detailed distribution and usage of these tokens:</p><p><br></p><ol start=\"1\"><li><strong>Public Sale:</strong> 70% of the tokens, i.e., 70,000 tokens, will be available for public sale. This sale phase will allow investors to acquire tokens at an accessible price and support the initial development of the platform.</li></ol><p><br></p><ol start=\"2\"><li><strong>Team Reserve</strong>: 15% of the tokens, i.e., 15,000 tokens, will be reserved for the founding team and early collaborators. This reserve will incentivize and reward the team working on the development and implementation of Innovatio Founder.</li></ol><p><br></p><ol start=\"3\"><li><strong>Development and Marketing</strong>: 10% of the tokens, i.e., 10,000 tokens, will be allocated to development and marketing initiatives. These funds will be used to enhance the platform, attract new users and projects, and ensure the visibility of Innovatio Founder in the market.</li></ol><p><br></p><ol start=\"4\"><li><strong>Liquidity Funds</strong>: 5% of the tokens, i.e., 5,000 tokens, will be allocated to liquidity funds to ensure smooth operations on exchanges and facilitate the trading of tokens.</li></ol><p></p><p><br></p><p><img src=\"/img/database/tokenomics.webp\" alt=\"\" width=\"100%\" height=\"100%\"><br></p><p><br></p><h3>Use of Funds Raised</h3><h3><br></h3><p>The sale of tokens at 2 ADAs each will raise a total of 200,000 ADAs, which will be used as follows:</p><p><br></p><ul><li><strong>Platform Development</strong>: 40% of the funds will be allocated to the continuous development of the platform, including technological and functional improvements.</li></ul><p><br></p><ul><li><strong>Marketing and Expansion</strong>: 30% of the funds will be invested in marketing strategies to increase the platform's visibility and attract new users and projects.</li></ul><p><br></p><ul><li><strong>Operations and Maintenance</strong>: 20% of the funds will be used to cover the operational and maintenance costs of the platform.</li></ul><p><br></p><ul><li><strong>Reserve Fund</strong>: 10% of the funds will be kept in reserve for contingencies and future investment opportunities.</li></ul><p><br></p><p><em>By participating in the Innovatio Founder token sale, investors not only support an innovative crowdfunding platform but also become an integral part of its growth and ongoing success.</em></p>",
-        "campaign_content": [
-            {
-                "id": 1,
-                "campaign_id": 2,
-                "name": "What's the product?",
-                "description": "<h1>The Innovatio Founder it's the first crowdfunding reward based platform on the Cardano's blockchain.</h1><p><br></p><p>Innovatio Founder is a dynamic B2C crowdfunding platform that empowers diverse products, communities, and projects to launch their own campaigns and secure the funding needed to bring their ideas to life. Currently, only projects seeking to raise funds in ADA, the native currency of the Cardano blockchain, will be accepted, as this DApp is executed on Cardano.</p><p>Therefore, any project, community, brand, or organization can contact the Innovatio team to develop their crowdfunding campaign alongside a professional team specializing in business, product, marketing, and development. The Innovatio team will assist with the drafting and strategy of your crowdfunding campaign to help you reach your funding goal. If you don't have your utility token developed yet, the Innovatio team can help you determine the tokenomics, mint it, and deploy it on the network to start your campaign. Thanks to this platform, launching crowdfunding campaigns on Cardano is just a step away. What are you waiting for?</p><p><br></p><p><br></p>",
-                "order": 10
-            },
-            {
-                "id": 2,
-                "campaign_id": 2,
-                "name": "What's your value?",
-                "description": "<h1>Crowdfunding Marketplace B2C with funds decentralized and desintermediated management.</h1><p><br></p><p><br></p><p>The distinguishing feature of Innovatio Founder lies in the disintermediation of fund management and the control over campaign development once the fundraising goal is achieved. While funds are securely stored in a fully decentralized smart contract, the Innovatio team of professionals will review campaign proposals to ensure they are well-developed before they are accepted into the marketplace for fundraising.</p><p>Additionally, the Innovatio team will monitor the progress of campaigns after they reach their funding goal to ensure that milestones are being met. If a campaign fails to meet its milestones, the team will deem the proposal unsuccessful and initiate the refund process for investors.</p><p><br></p><p><br></p>",
-                "order": 40
-            },
-            {
-                "id": 3,
-                "campaign_id": 2,
-                "name": "How it wokrs?",
-                "description": "<h1>Fundraising goal, milestones &amp; periodic results.</h1><h1><br></h1><p><br></p><p>To explain how the campaign flow works, we'll use an example where the campaign \"Cardano’s Workshops in LATAM\" launched a crowdfunding campaign aiming to raise $25,000 by selling 50 digital tickets to this workshop. This will allow 50 developers from the community to be trained by the best professionals in the ecosystem. To achieve this, the project developed a detailed explanation and determined that it could be delivered in 3 milestones of 1 month each.</p><p><br></p><p>Once they reach the funding goal, they will have 3 months to complete the project and deliver the 50 digital tickets (utility tokens) to the developers so they can attend the Digital Workshop. Following the example, the first milestone is focused on determining the date and confirming the mentors from Cardano, promising at least 3 top companies in smart-contract development on Cardano. The percentage of funds established in the first milestone is released, and the project will have to present the previously set objectives and deliverables.</p><p><img src=\"/img/database/banner_logo_id3.png\" alt=\"\" width=\"100%\" height=\"100%\"></><br></p><p>If the Innovatio team, upon reviewing these results, determines that the milestone is met, they will mark it as satisfied and activate the distribution for the second milestone, and so on. If this first milestone is not satisfactory, the Innovatio team will cancel the campaign, and the Re-fund protocol will be activated for the campaign investors, who will recover the proportional part of their investment and the pending funds for distribution.</p>",
-                "order": 0
-            }
-        ],
-        "faqs": [
-            {
-                "id": 1,
-                "campaign_id": 2,
-                "name": "What payment methods and currencies are accepted on the product?",
-                "order": 0,
-                "description": "The only means of payment and currencies accepted's \"ADA\" and through investors' wallets."
-            },
-            {
-                "id": 2,
-                "campaign_id": 2,
-
-                "name": "What are the limits of milestones per campaign?",
-                "order": 10,
-                "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
-            },
-            {
-                "id": 3,
-                "campaign_id": 2,
-                "name": "What are the campaign finance limits?",
-                "order": 20,
-                "description": "There is a defined limit for each campaign in which they can raise a minimum of $5,000 and a maximum of $250,000."
-            }
-        ],
-        "investors": 0,
-        "milestones": [
-            {
-                "id": 1,
-                "campaign_id": 2,
-                "campaign_status_id": 1,
-                "cmPercentage": 40,
-                "status": "Not Started",
-                "cmEstimatedDeliveryDate": "5 weeks",
-                "milestone_status": {
+        {
+            "id": 3,
+            "user_id": 1,
+            "state_id": 2,
+            "category_id": null,
+            "logoUrl": "https://avatars.githubusercontent.com/u/93623817?v=4",
+            "banner_url": "/img/database/banner_logo_id1.png",
+            "cdCampaignToken_PriceADA": null,
+            "cdRequestedMaxADA": 50000,
+            "cdCampaignToken_TN": "INNV",
+            "tokenomics_description": "<p>\"Innovatio Founder is based on a carefully designed tokenomics structure to ensure the sustainability and growth of the ecosystem. In this stage, we are offering a total of 100,000 tokens at a price of 2 ADAs each. Below is a detailed distribution and usage of these tokens:</p><p><br></p><ol start=\"1\"><li><strong>Public Sale:</strong> 70% of the tokens, i.e., 70,000 tokens, will be available for public sale. This sale phase will allow investors to acquire tokens at an accessible price and support the initial development of the platform.</li></ol><p><br></p><ol start=\"2\"><li><strong>Team Reserve</strong>: 15% of the tokens, i.e., 15,000 tokens, will be reserved for the founding team and early collaborators. This reserve will incentivize and reward the team working on the development and implementation of Innovatio Founder.</li></ol><p><br></p><ol start=\"3\"><li><strong>Development and Marketing</strong>: 10% of the tokens, i.e., 10,000 tokens, will be allocated to development and marketing initiatives. These funds will be used to enhance the platform, attract new users and projects, and ensure the visibility of Innovatio Founder in the market.</li></ol><p><br></p><ol start=\"4\"><li><strong>Liquidity Funds</strong>: 5% of the tokens, i.e., 5,000 tokens, will be allocated to liquidity funds to ensure smooth operations on exchanges and facilitate the trading of tokens.</li></ol><p></p><p><br></p><p><img src=\"/img/database/tokenomics.webp\" alt=\"\" width=\"100%\" height=\"100%\"><br></p><p><br></p><h3>Use of Funds Raised</h3><h3><br></h3><p>The sale of tokens at 2 ADAs each will raise a total of 200,000 ADAs, which will be used as follows:</p><p><br></p><ul><li><strong>Platform Development</strong>: 40% of the funds will be allocated to the continuous development of the platform, including technological and functional improvements.</li></ul><p><br></p><ul><li><strong>Marketing and Expansion</strong>: 30% of the funds will be invested in marketing strategies to increase the platform's visibility and attract new users and projects.</li></ul><p><br></p><ul><li><strong>Operations and Maintenance</strong>: 20% of the funds will be used to cover the operational and maintenance costs of the platform.</li></ul><p><br></p><ul><li><strong>Reserve Fund</strong>: 10% of the funds will be kept in reserve for contingencies and future investment opportunities.</li></ul><p><br></p><p><em>By participating in the Innovatio Founder token sale, investors not only support an innovative crowdfunding platform but also become an integral part of its growth and ongoing success.</em></p>",
+            "campaign_content": [
+                {
                     "id": 1,
-                    "name": "Milestone",
-                    "description": "<p>The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.</p><p><br></p><p>Deliverables: </p><ol><li>Figma Mockup in react, 100% functional in the UI with minimal complications with the backend </li><li>Comprehensive document outlining the tech, frameworks, and architectures used for MVP development. </li><li>Payment to all team members, fulfilling all salaries. </li></ol>",
-                    "created_at": "",
-                    "updated_at": ""
-                }
-            },
-            {
-                "id": 2,
-                "campaign_id": 2,
-                "campaign_status_id": 1,
-                "cmPercentage": 30,
-                "status": "Not Started",
-                "cmEstimatedDeliveryDate": "3 weeks",
-                "milestone_status": {
+                    "campaign_id": 2,
+                    "name": "What's the product?",
+                    "description": "<h1>The Innovatio Founder it's the first crowdfunding reward based platform on the Cardano's blockchain.</h1><p><br></p><p>Innovatio Founder is a dynamic B2C crowdfunding platform that empowers diverse products, communities, and projects to launch their own campaigns and secure the funding needed to bring their ideas to life. Currently, only projects seeking to raise funds in ADA, the native currency of the Cardano blockchain, will be accepted, as this DApp is executed on Cardano.</p><p>Therefore, any project, community, brand, or organization can contact the Innovatio team to develop their crowdfunding campaign alongside a professional team specializing in business, product, marketing, and development. The Innovatio team will assist with the drafting and strategy of your crowdfunding campaign to help you reach your funding goal. If you don't have your utility token developed yet, the Innovatio team can help you determine the tokenomics, mint it, and deploy it on the network to start your campaign. Thanks to this platform, launching crowdfunding campaigns on Cardano is just a step away. What are you waiting for?</p><p><br></p><p><br></p>",
+                    "order": 10
+                },
+                {
                     "id": 2,
-                    "name": "in_progress",
-                    "description": "<p>The second milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.</p><p><br></p><ol><li>Application architectures and its backend.</li><li>Operation and relationship of the smart contracts</li><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li></ol>",
-                    "created_at": "",
-                    "updated_at": ""
-                }
-            },
-            {
-                "id": 3,
-                "campaign_id": 2,
-                "campaign_status_id": 1,
-                "cmPercentage": 30,
-                "status": "Not Started",
-                "cmEstimatedDeliveryDate": "3 weeks",
-                "milestone_status": {
+                    "campaign_id": 2,
+                    "name": "What's your value?",
+                    "description": "<h1>Crowdfunding Marketplace B2C with funds decentralized and desintermediated management.</h1><p><br></p><p><br></p><p>The distinguishing feature of Innovatio Founder lies in the disintermediation of fund management and the control over campaign development once the fundraising goal is achieved. While funds are securely stored in a fully decentralized smart contract, the Innovatio team of professionals will review campaign proposals to ensure they are well-developed before they are accepted into the marketplace for fundraising.</p><p>Additionally, the Innovatio team will monitor the progress of campaigns after they reach their funding goal to ensure that milestones are being met. If a campaign fails to meet its milestones, the team will deem the proposal unsuccessful and initiate the refund process for investors.</p><p><br></p><p><br></p>",
+                    "order": 40
+                },
+                {
                     "id": 3,
-                    "name": "completed",
-                    "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
-                    "created_at": "",
-                    "updated_at": ""
+                    "campaign_id": 2,
+                    "name": "How it wokrs?",
+                    "description": "<h1>Fundraising goal, milestones &amp; periodic results.</h1><h1><br></h1><p><br></p><p>To explain how the campaign flow works, we'll use an example where the campaign \"Cardano’s Workshops in LATAM\" launched a crowdfunding campaign aiming to raise $25,000 by selling 50 digital tickets to this workshop. This will allow 50 developers from the community to be trained by the best professionals in the ecosystem. To achieve this, the project developed a detailed explanation and determined that it could be delivered in 3 milestones of 1 month each.</p><p><br></p><p>Once they reach the funding goal, they will have 3 months to complete the project and deliver the 50 digital tickets (utility tokens) to the developers so they can attend the Digital Workshop. Following the example, the first milestone is focused on determining the date and confirming the mentors from Cardano, promising at least 3 top companies in smart-contract development on Cardano. The percentage of funds established in the first milestone is released, and the project will have to present the previously set objectives and deliverables.</p><p><img src=\"/img/database/banner_logo_id3.png\" alt=\"\" width=\"100%\" height=\"100%\"></><br></p><p>If the Innovatio team, upon reviewing these results, determines that the milestone is met, they will mark it as satisfied and activate the distribution for the second milestone, and so on. If this first milestone is not satisfactory, the Innovatio team will cancel the campaign, and the Re-fund protocol will be activated for the campaign investors, who will recover the proportional part of their investment and the pending funds for distribution.</p>",
+                    "order": 0
                 }
-            }
-        ],
+            ],
+            "faqs": [
+                {
+                    "id": 1,
+                    "campaign_id": 2,
+                    "name": "What payment methods and currencies are accepted on the product?",
+                    "order": 0,
+                    "description": "The only means of payment and currencies accepted's \"ADA\" and through investors' wallets."
+                },
+                {
+                    "id": 2,
+                    "campaign_id": 2,
 
-        "min_request": 70,
-
-        "title": "Prueba ABC 123",
-        "description": "",
-        "contract_id": 1,
-        "vizualization": 1,
-        "start_date": "",
-        "end_date": "",
-        "goal": 100000,
-        "balance": 0,
-        "created_at": "",
-        "updated_at": "",
-        "website": "www.iairkaplun.com.ar",
-        "linkedin": "www.linkedin.com/iairkap",
-        "facebook": "",
-        "instagram": "",
-        "discord": "",
-        "x": "",
-
-        "members_team": [
-            {
-                "id": 1731367675829,
-                "member_picture": "",
-                "member_name": "Iair",
-                "member_last_name": "Kaplun",
-                "member_role": "Director",
-                "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
-                "member_email": "iairkap@gmail.com",
-                "member_admin": true,
-                "member_social": {
-                    "facebook": "www.facebook.com/iairkap",
-                    "instagram": "www.instagram.com/iairkap",
-                    "discord": "",
-                    "xs": "x.com/iairkap"
+                    "name": "What are the limits of milestones per campaign?",
+                    "order": 10,
+                    "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
+                },
+                {
+                    "id": 3,
+                    "campaign_id": 2,
+                    "name": "What are the campaign finance limits?",
+                    "order": 20,
+                    "description": "There is a defined limit for each campaign in which they can raise a minimum of $5,000 and a maximum of $250,000."
                 }
-            },
-            {
-                "id": 1731367762665,
-                "member_picture": "",
-
-                "member_name": "Jorge",
-                "member_last_name": "Drexler",
-                "member_role": "Musician",
-                "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
-                "member_email": "jorge@drexler.com",
-                "member_admin": false,
-                "member_social": {
-                    "facebook": "",
-                    "instagram": "",
-                    "discord": "",
-                    "xs": ""
+            ],
+            "investors": 0,
+            "milestones": [
+                {
+                    "id": 1,
+                    "campaign_id": 2,
+                    "campaign_status_id": 1,
+                    "cmPercentage": 40,
+                    "status": "Not Started",
+                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "milestone_status": {
+                        "id": 1,
+                        "name": "Bit",
+                        "description": "<p>The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.</p><p><br></p><p>Deliverables: </p><ol><li>Figma Mockup in react, 100% functional in the UI with minimal complications with the backend </li><li>Comprehensive document outlining the tech, frameworks, and architectures used for MVP development. </li><li>Payment to all team members, fulfilling all salaries. </li></ol>",
+                        "created_at": "",
+                        "updated_at": ""
+                    }
+                },
+                {
+                    "id": 2,
+                    "campaign_id": 2,
+                    "campaign_status_id": 1,
+                    "cmPercentage": 30,
+                    "status": "Not Started",
+                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "milestone_status": {
+                        "id": 2,
+                        "name": "in_progress",
+                        "description": "<p>The second milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.</p><p><br></p><ol><li>Application architectures and its backend.</li><li>Operation and relationship of the smart contracts</li><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li></ol>",
+                        "created_at": "",
+                        "updated_at": ""
+                    }
+                },
+                {
+                    "id": 3,
+                    "campaign_id": 2,
+                    "campaign_status_id": 1,
+                    "cmPercentage": 30,
+                    "status": "Not Started",
+                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "milestone_status": {
+                        "id": 3,
+                        "name": "completed",
+                        "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
+                        "created_at": "",
+                        "updated_at": ""
+                    }
                 }
-            },
-            {
-                "id": 1731367762665,
-                "member_picture": "",
+            ],
 
-                "member_name": "Alan",
-                "member_last_name": "Varela",
-                "member_role": "Electrician",
-                "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
-                "member_email": "jorge@drexler.com",
-                "member_admin": false,
-                "member_social": {
-                    "facebook": "www.facebook.com/iairkap",
-                    "instagram": "",
-                    "discord": "",
-                    "xs": "x.com/peter"
+            "min_request": 70,
+
+            "title": "Campaña que ya fue submitteada con la data",
+            "description": "Representacion de la campaña que fue ya actualizada y se empezaron a cargar la informacion del project detail, del roadmap, del team, del tokenomics y del FAQ --- Solo debe renderizarse en la pagina de managment de los usuarios que crearon la campaña (view campaign) y en la del protocol team donde se tiene que ver el boton de view campaign y de manage campain",
+            "contract_id": 1,
+            "vizualization": 1,
+            "start_date": "",
+            "end_date": "",
+            "goal": 100000,
+            "balance": 0,
+            "created_at": "",
+            "updated_at": "",
+            "website": "www.iairkaplun.com.ar",
+            "linkedin": "www.linkedin.com/iairkap",
+            "facebook": "",
+            "instagram": "",
+            "discord": "",
+            "x": "",
+
+            "members_team": [
+                {
+                    "id": 1731367675829,
+                    "member_picture": "",
+                    "member_name": "Iair",
+                    "member_last_name": "Kaplun",
+                    "member_role": "Director",
+                    "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
+                    "member_email": "iairkap@gmail.com",
+                    "member_admin": true,
+                    "member_social": {
+                        "facebook": "www.facebook.com/iairkap",
+                        "instagram": "www.instagram.com/iairkap",
+                        "discord": "",
+                        "xs": "x.com/iairkap"
+                    }
+                },
+                {
+                    "id": 1731367762665,
+                    "member_picture": "",
+
+                    "member_name": "Jorge",
+                    "member_last_name": "Drexler",
+                    "member_role": "Musician",
+                    "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
+                    "member_email": "jorge@drexler.com",
+                    "member_admin": false,
+                    "member_social": {
+                        "facebook": "",
+                        "instagram": "",
+                        "discord": "",
+                        "xs": ""
+                    }
+                },
+                {
+                    "id": 1731367762665,
+                    "member_picture": "",
+
+                    "member_name": "Alan",
+                    "member_last_name": "Varela",
+                    "member_role": "Electrician",
+                    "member_description": "Albert Bregman is a seasoned marketing professional with over 15 years of experience in the tech and consumer goods industries. He holds an MBA from Harvard Business School and has led successful campaigns for Fortune 500 companies. Known for his strategic vision and creative flair, John excels in driving brand growth and market expansion.ASDSADASDSADASDSADASDSADASDSADSADSADSADSADS",
+                    "member_email": "jorge@drexler.com",
+                    "member_admin": false,
+                    "member_social": {
+                        "facebook": "www.facebook.com/iairkap",
+                        "instagram": "",
+                        "discord": "",
+                        "xs": "x.com/peter"
+                    }
                 }
-            }
-        ]
-    },
+            ]
+        },
 
-    {
-        "id": 4,
-        "user_id": 2,
-        "state_id": 2,
-        "category_id": 1,
-        "logoUrl": "https://avatars.githubusercontent.com/u/93623817?v=4"
-    }
-]
+        {
+            "id": 4,
+            "user_id": 2,
+            "state_id": 2,
+            "category_id": 1,
+            "logoUrl": "https://avatars.githubusercontent.com/u/93623817?v=4"
+        }
+    ]
+}

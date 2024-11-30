@@ -14,7 +14,6 @@ export default function Header() {
   const screenSize = useScreenSize();
   const { data: session } = useSession();
 
-  console.log(session?.user)
   const [isOpen, setIsOpen] = useState(false);
 
 

@@ -18,7 +18,6 @@ export default function Home() {
 
   const title = () => (isProtocolTeam ? "PROTOCOL TEAM" : "CAMPAIGN MANAGERS");
 
-  console.log("loading", campaignsLoading);
 
 
 

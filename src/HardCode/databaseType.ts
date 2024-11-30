@@ -162,14 +162,12 @@ export interface Project {
     campaign_content: campaingContent[];
     tokenomics_description: string;
 
-    brand: {
-        website: string;
-        facebook: string;
-        instagram: string;
-        discord: string;
-        linkedin: string;
-        xs: string;
-    };
+    website: string;
+    facebook: string;
+    instagram: string;
+    discord: string;
+    linkedin: string;
+    xs: string;
     members_team: MembersTeam[];
     milestones: MilestoneF[];
     faqs: FAQ[];

@@ -12,16 +12,13 @@ const Tokenomics: React.FC<TokenomicsProps> = (props) => {
     const { project, fetchAdaPrice, price_ada, isLoadingPrice } = useProjectDetailStore();
     const goal = project.goal;
     const cdRequestedMaxADA = project.cdRequestedMaxADA;
-    console.log("cdRequestedMaxADA", cdRequestedMaxADA)
 
 
-    console.log(project)
 
     useEffect(() => {
         fetchAdaPrice();
     }, [fetchAdaPrice]);
 
-    console.log(price_ada)
 
     const valuePerToken = project.cdRequestedMaxADA === null || isNaN(project.cdRequestedMaxADA) || project.goal === null || isNaN(project.goal) || project.goal === 0
         ? "Price per token"

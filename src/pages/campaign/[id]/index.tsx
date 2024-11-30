@@ -9,6 +9,7 @@ import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import ProjectContainer from '@/components/projectContainer/ProjectContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 
+
 interface CampaignVisualizationProps {
     // Define props here
 }
@@ -19,7 +20,9 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
     const { id } = router.query;
     const { project, setProject, setEditionMode, editionMode, isLoading, setIsLoading } = useProjectDetailStore();
 
-    console.log(editionMode)
+
+
+    console.log(project.state_id)
 
     useEffect(() => {
         setIsLoading(true);
@@ -27,7 +30,7 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
 
         if (id) {
             const campaignId = Number(id);
-            const campaign = JSON.find((camp) => camp.id === campaignId);
+            const campaign = JSON.campaigns.find((camp) => camp.id === campaignId);
 
             if (campaign) {
                 setProject(campaign);
@@ -50,6 +53,8 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
 
     return (
         <main className={styles.layout}>
+            {
+            }
             {project.id !== 0 ? (
                 <div className={styles.campaignContainerCreator}>
                     <CampaignHeader />

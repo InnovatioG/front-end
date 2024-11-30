@@ -24,7 +24,7 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
 
         if (id) {
             const campaignId = Number(id);
-            const campaign = JSON.find((camp) => camp.id === campaignId);
+            const campaign = JSON.campaigns.find((camp) => camp.id === campaignId);
 
             if (campaign) {
                 setProject(campaign);

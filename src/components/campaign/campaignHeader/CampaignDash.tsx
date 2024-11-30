@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import CampaignCard from '../creator/finalSetup/CampaignCard';
 import SocialMediaCardContainer from '../creator/finalSetup/SocialMediaCard';
-
+import { cardInformationByState } from '@/utils/constants';
 
 
 /*  */
@@ -19,6 +19,9 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ styles }) =
     const { project, editionMode, setProject } = useProjectDetailStore();
 
 
+
+    const state = cardInformationByState(project.state_id);
+    const label = state.label.toLowerCase().replace(/\s+/g, '-');
 
     const handleChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return;
@@ -82,7 +85,7 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ styles }) =
                 <Image src={project.banner_url} alt="Banner" layout="fill" objectFit="cover" />
             </div>
             <div className={styles.cardContainer}>
-                <CampaignCard status={project.status} goal={project.goal} min_request={project.min_request} investors={project.investors} />
+                <CampaignCard status={label} goal={project.goal} min_request={project.min_request} investors={project.investors} />
                 <SocialMediaCardContainer />
             </div>
         </article>);

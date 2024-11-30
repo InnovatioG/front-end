@@ -17,7 +17,6 @@ interface TextEditorProps {
 export default function TextEditor({ title, content, onChange, styleOption = "quillEditor", menuOptions = 0 }: TextEditorProps) {
     const [editorContent, setEditorContent] = useState(content);
 
-    console.log(editorContent);
 
 
 

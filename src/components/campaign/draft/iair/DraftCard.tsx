@@ -19,7 +19,6 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
         : cardInformationByState(campaign.state_id);
 
     const labelClass = label.toLowerCase().replace(/\s+/g, '-');
-    console.log(labelClass)
     return (
         <div className={styles.campaignCard}>
             <div className={styles.headCard}>
@@ -59,7 +58,7 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
                         <GeneralButtonUI
                             key={index}
                             text={button.label}
-                            onClick={button.action}
+                            onClick={button.action || (() => { })}
                             classNameStyle={`${button.classNameType} ${buttons.length === 1 ? 'center' : ''}`}
                         >
                             {buttons.length > 1 && <span className={styles[button.classNameType]}>{'>'}</span>}

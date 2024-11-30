@@ -16,6 +16,7 @@
             "id": 2,
             "email": "user2@example.com",
             "wallet_address": "addr_test1qz2fyvjvy9nqayp2kplpyeu25fx2kcejyvkdwugc90glmant5thgl8ucsstqc05exmcrhqxpwe4a22nltq7366qt69lsd0y5y3",
+            "is_admin": false,
             "is_protocol_team": true
         }
     ],

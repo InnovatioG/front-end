@@ -22,7 +22,6 @@ export const useDashboardCard = (address: string | null) => {
     const [isProtocolTeam, setIsProtocolTeam] = useState(false);
     const router = useRouter();
     const pathName = router.pathname;
-    console.log(pathName);
 
     useEffect(() => {
         if (!address) {

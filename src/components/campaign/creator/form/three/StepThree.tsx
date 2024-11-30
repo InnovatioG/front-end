@@ -23,7 +23,6 @@ const StepThree: React.FC<StepThreeProps> = (props) => {
         return !newCampaign.website;
     }
 
-    console.log(newCampaign);
 
     return (
         <div className={styles.stepThreeLayout}>

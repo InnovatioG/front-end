@@ -3,7 +3,7 @@ import type { MilestoneF, Project } from "@/HardCode/databaseType";
 export const calculateTotalOtherPercentages = (milestones: MilestoneF[], milestoneId: number): number => {
     return milestones
         .filter(milestone => milestone.id !== milestoneId)
-        .reduce((sum, milestone) => sum + milestone.percentage, 0);
+        .reduce((sum, milestone) => sum + milestone.cmPercentage, 0);
 };
 
 export const handlePercentageChange = (

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import JSON from "@/HardCode/campaignId.json";
 import CampaignHeader from '@/components/campaign/campaignHeader/CampaignHeader';
@@ -7,32 +7,45 @@ import CampaignDashCreation from '@/components/campaign/campaignHeader/CampaignD
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import ProjectEditionContainer from '@/components/campaign/creator/projectEditionContainer/ProjectEditionContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
-
+import { useSession } from 'next-auth/react';
 import ButtonSaveDraftContainer from '@/components/campaign/creator/projectEditionContainer/GeneralbuttonContainer';
-//! TODO DO MIDDLEWARE CHECK IF IS ADMIN FOR EDITING CAMPAIGN
+import GeneralError from '@/components/errors/GeneralError';
 
 interface CampaignByIndexProps {
     // Define props aquí si es necesario
 }
 
+const errorMessages = {
+    notFound: "Campaign not found",
+    noPermission: "You do not have permission to edit this campaign.",
+};
+
 const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
     const router = useRouter();
+    const { data: session } = useSession();
     const { id, menuview } = router.query;
 
-    console.log(menuview)
+    const { setProject, project, setIsLoading, isLoading, setMenuView, fetchAdaPrice } = useProjectDetailStore();
+    const [error, setError] = useState<string | null>(null);
 
-    const { setProject, project, editionMode, setIsLoading, isLoading, setMenuView, price_ada, fetchAdaPrice } = useProjectDetailStore();
-
-    useEffect(() => {
+    const fetchCampaign = () => {
         setIsLoading(true);
-        fetchAdaPrice()
+        fetchAdaPrice();
 
         if (id) {
             const campaignId = Number(id);
-            const campaign = JSON.find((camp) => camp.id === campaignId);
+            const campaign = JSON.campaigns.find((camp) => camp.id === campaignId);
 
             if (campaign) {
-                setProject(campaign);
+                const user = JSON.users.find(user => user.wallet_address === session?.user?.address);
+                if (user && user.id === campaign.user_id) {
+                    setProject(campaign);
+                    setError(null);
+                } else {
+                    setError(errorMessages.noPermission);
+                }
+            } else {
+                setError(errorMessages.notFound);
             }
 
             if (menuview) {
@@ -45,26 +58,32 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
         }, 2000);
 
         return () => clearTimeout(timer);
-    }, [id, setProject, fetchAdaPrice]);
+    };
+
+    useEffect(() => {
+        fetchCampaign();
+    }, [id, setProject, fetchAdaPrice, setIsLoading, setMenuView, menuview, session]);
+
 
     if (isLoading) {
         return <LoadingPage />;
     }
 
+    if (error) {
+        return <GeneralError message={error} />;
+    }
+
     return (
         <main className={styles.layout}>
-            {project.id !== 0 ? (
-                <div className={styles.campaignContainerCreator}>
-                    <CampaignHeader />
-                    <CampaignDashCreation styles={styles} />
-                    <ProjectEditionContainer />
-                    <ButtonSaveDraftContainer />
-                </div>
-            ) : (
-                <p>Campaign not found</p>
-            )}
+            <div className={styles.campaignContainerCreator}>
+                <CampaignHeader />
+                <CampaignDashCreation styles={styles} />
+                <ProjectEditionContainer />
+                <ButtonSaveDraftContainer />
+            </div>
         </main>
     );
 }
 
 export default CampaignByIndex;
+
