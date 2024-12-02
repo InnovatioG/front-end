@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Campaign, Category, Contracts, User, State } from '@/HardCode/databaseType';
+import { Campaign, Category, State } from '@/HardCode/databaseType';
 import { useScreenSize } from '@/hooks/useScreenSize';
 import { dataBaseService } from '@/HardCode/dataBaseService';
 import { useRouter } from 'next/router';
@@ -9,10 +9,9 @@ export const useDashboardCard = (address: string | null) => {
     const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
     const [visibleCampaigns, setVisibleCampaigns] = useState<Campaign[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [statusContractsFilter, setStatusContractsFilter] = useState('');
+    const [stateFilter, setStateFilter] = useState('');
     const [states, setStates] = useState<State[]>([]);
     const [categoryFilter, setCategoryFilter] = useState('');
-    const [statesContracts, setStatesContracts] = useState<Contracts[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const screenSize = useScreenSize();
     const [adminView, setAdminView] = useState(false);
@@ -47,7 +46,7 @@ export const useDashboardCard = (address: string | null) => {
                     isAdmin,
                     adminView,
                     searchTerm,
-                    statusContractsFilter,
+                    stateFilter,
                     categoryFilter,
                     isProtocolTeam,
                 };
@@ -55,7 +54,7 @@ export const useDashboardCard = (address: string | null) => {
                 const data = await dataBaseService.getFilteredData(filters);
                 setCampaigns(data.campaigns);
                 setFilteredCampaigns(data.campaigns);
-                setStatesContracts(data.contracts || []);
+                setStates(data.states || []);
                 setCategories(data.categories || []);
                 setCampaignsLoading(false);
             } catch (error) {
@@ -67,15 +66,7 @@ export const useDashboardCard = (address: string | null) => {
         };
 
         fetchData();
-    }, [address, isAdmin, adminView, searchTerm, statusContractsFilter, categoryFilter, isProtocolTeam]);
-
-    const getContractsName = useCallback(
-        (contractId: number): string => {
-            const contract = statesContracts.find((s) => s.id === contractId);
-            return contract ? contract.name : '';
-        },
-        [statesContracts]
-    );
+    }, [address, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam]);
 
     const getStatusName = useCallback(
         (statusId: number): string => {
@@ -122,22 +113,21 @@ export const useDashboardCard = (address: string | null) => {
         filteredCampaigns,
         visibleCampaigns,
         searchTerm,
-        statusContractsFilter,
+        stateFilter,
         categoryFilter,
-        statesContracts,
+        states,
         categories,
         adminView,
         isAdmin,
         loading,
         campaignsLoading,
         setSearchTerm,
-        setStatusContractsFilter,
+        setStateFilter,
         setCategoryFilter,
         handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(event.target.value),
-        handleStatusContractsFilterChange: (value: string) => setStatusContractsFilter(value),
+        handleStateFilterChange: (value: string) => setStateFilter(value),
         handleCategoryFilterChange: (value: string) => setCategoryFilter(value),
         handleClickAdminView: () => isAdmin && setAdminView(!adminView),
-        getContractsName,
         getStatusName,
         getCategoryName,
         loadMoreCampaigns,

@@ -4,15 +4,15 @@ import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import CampaignCard from '../creator/finalSetup/CampaignCard';
 import SocialMediaCardContainer from '../creator/finalSetup/SocialMediaCard';
 import { cardInformationByState } from '@/utils/constants';
-
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/defaultAvatar/DefaultAvatar';
+import styles from "@/pages/campaign/[id]/campainPagelayout.module.scss"
 
 /*  */
 interface CampaignDashCreationProps {
-    styles: any;
 
 }
 
-const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ styles }) => {
+const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -40,12 +40,12 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ styles }) =
 
 
 
-
     return (
         <article className={styles.dashboardCampaignContainer}>
             <div className={styles.imagenContainer}>
                 <Image src={"/img/ui/cohete.webp"} alt="cohete" layout='fill' objectFit='cover' />
             </div>
+
             <div className={styles.imageBannerContainer}>
                 {editionMode &&
                     <div className={styles.fileContainer} style={{
@@ -84,8 +84,14 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ styles }) =
                     </div>}
                 <Image src={project.banner_url} alt="Banner" layout="fill" objectFit="cover" />
             </div>
+            <div className={styles.avatarContainer}>
+                <Avatar big={true} className={styles.pictureContainer}>
+                    <AvatarImage src={project.logoUrl} alt={project.title} />
+                    <AvatarFallback>{project.title[0]}</AvatarFallback>
+                </Avatar>
+            </div>
             <div className={styles.cardContainer}>
-                <CampaignCard status={label} goal={project.goal} min_request={project.min_request} investors={project.investors} />
+                <CampaignCard status={label} goal={project.goal} min_request={project.min_request} investors={project.investors} startDate={project.start_date} />
                 <SocialMediaCardContainer />
             </div>
         </article>);

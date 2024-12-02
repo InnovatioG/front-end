@@ -77,7 +77,7 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
         <main className={styles.layout}>
             <div className={styles.campaignContainerCreator}>
                 <CampaignHeader />
-                <CampaignDashCreation styles={styles} />
+                <CampaignDashCreation />
                 <ProjectEditionContainer />
                 <ButtonSaveDraftContainer />
             </div>

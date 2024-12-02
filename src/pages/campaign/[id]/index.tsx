@@ -19,10 +19,9 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
     const router = useRouter();
     const { id } = router.query;
     const { project, setProject, setEditionMode, editionMode, isLoading, setIsLoading } = useProjectDetailStore();
+    console.log(project)
 
 
-
-    console.log(project.state_id)
 
     useEffect(() => {
         setIsLoading(true);
@@ -59,7 +58,6 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
                 <div className={styles.campaignContainerCreator}>
                     <CampaignHeader />
                     <CampaignDashCreation
-                        styles={styles}
                     />
                     <ProjectContainer />
                 </div>

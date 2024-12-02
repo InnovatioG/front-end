@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from "../draftCard/DraftCard.module.scss";
 import { Campaign } from '@/HardCode/databaseType';
 import { cardInformationByState, cardInformationForProtocolTeam } from '@/utils/constants';
@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { categoriesById } from '@/utils/constants';
 import GeneralButtonUI from '@/components/buttons/UI/Button';
-
+import { formatTime, getTimeRemaining } from '@/utils/formats';
 interface DraftCardProps {
     campaign: Campaign;
     isProtocolTeam: boolean;
@@ -19,6 +19,26 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
         : cardInformationByState(campaign.state_id);
 
     const labelClass = label.toLowerCase().replace(/\s+/g, '-');
+
+    const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(campaign.start_date));
+
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setTimeRemaining(getTimeRemaining(campaign.start_date));
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [campaign.start_date])
+
+    const formatAllTime = (timeRemaining: any) => {
+        return `${timeRemaining.days}:${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}`;
+    }
+
+
+
+
+
     return (
         <div className={styles.campaignCard}>
             <div className={styles.headCard}>
@@ -32,7 +52,7 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
                 <div className={styles.cardDetails}>
                     <div className={styles.statusContracts}>
                         <div className={`${styles.state} ${styles[labelClass]}`}>
-                            {label}
+                            {campaign.state_id === 8 ? formatAllTime(timeRemaining) : label}
                         </div>
                         <div className={styles.category}>
                             {categoriesById(campaign.category_id)}

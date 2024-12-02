@@ -26,6 +26,7 @@ export interface ProjectDetailState {
         instagram: string;
         discord: string;
         linkedin: string;
+        start_date: string;
         xs: string;
         members_team: MembersTeam[];
         milestones: MilestoneF[];
@@ -65,6 +66,7 @@ export const initialState: ProjectDetailState = {
         cdCampaignToken_PriceADA: null,
         cdCampaignToken_TN: '',
         tokenomics_description: '',
+        start_date: '',
         members_team: [],
         milestones: [],
         faqs: [],

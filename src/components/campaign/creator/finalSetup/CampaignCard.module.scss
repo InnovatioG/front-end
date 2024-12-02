@@ -41,16 +41,18 @@
     gap: 5px;
     background: colors.$secondary-background;
     height: 100%;
-    padding: 0.35rem 1rem;
+    padding: 0.5rem 1rem;
     border-radius: 34px;
     justify-content: center;
     .span {
         color: colors.$white-font;
         font: fonts.$f50-medium;
-        height: 100%;
     }
     .icon {
         fill: colors.$light-font;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 
@@ -99,6 +101,12 @@
     }
 }
 
+.statusContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .draft {
     background-color: colors.$blue-color;
 }
@@ -132,4 +140,24 @@
 
 .attempmt-to-launch {
     background-color: colors.$light-green;
+}
+
+.status {
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tooltipContainer {
+    display: flex;
+    align-items: center;
+}
+
+.countdown {
+    color: white;
+}
+
+.failed {
+    background-color: #ff4949;
 }

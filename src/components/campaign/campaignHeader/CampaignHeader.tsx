@@ -19,7 +19,7 @@ const CampaignHeader: React.FC<CampaignHeaderProps> = () => {
 
     return (
         <div className={styles.headerCampaignContainer}>
-            <Avatar big={true}>
+            <Avatar big={true} className={styles.pictureContainer}>
                 <AvatarImage src={project.logoUrl} alt={project.title} />
                 <AvatarFallback>{project.title[0]}</AvatarFallback>
             </Avatar>

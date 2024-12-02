@@ -11,6 +11,10 @@ interface ProjectDetailProps {
 }
 
 const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
+
+
+
+
     const {
         textEditorOptions,
         selectedOption,
@@ -28,6 +32,8 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
         contentReorder,
         draggedIndex
     } = useProjectDetail();
+
+
 
     const [openModal, setIsOpenModal] = useState(false);
 

@@ -40,7 +40,7 @@ export default function DraftCard(props: DraftCardProps) {
     }
 
     if (timeRemaining.total <= 72 * 60 * 60 * 1000) {
-      return `${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}:${formatTime(timeRemaining.seconds)}`;
+      return `${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}}`;
     }
     return `${getContractsName(campaign.contract_id)} ${getStatusName(campaign.state_id)}`;
   };

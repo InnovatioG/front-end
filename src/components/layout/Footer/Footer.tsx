@@ -15,16 +15,19 @@ export default function Footer() {
     <>
       <div className={styles.footer}>
         <div className={styles.logoSection}>
-          <Link href={ROUTES.home}>
-            <Image
-              height={25}
-              width={150}
-              src={LOGO_FULL_LIGHT}
-              alt="logo-full"
-              className={styles.logo}
-              priority
-            />
-          </Link>
+          <div className={styles.pictureLogoContainer}>
+            <Link href={ROUTES.home}>
+              <Image
+                layout="fill"
+                objectPosition={"left"}
+                objectFit="contain"
+                src={LOGO_FULL_LIGHT}
+                alt="logo-full"
+                className={styles.logo}
+                priority
+              />
+            </Link>
+          </div>
           <p className={styles.textFooter}>
             Help different crowdfunding campaigns become a reality thanks to
             your contributions, invest in projects, fund purposes and get

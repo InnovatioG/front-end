@@ -1,4 +1,4 @@
-import { Category, Contracts } from "@/HardCode/databaseType";
+import { Category, State } from "@/HardCode/databaseType";
 import styles from "./DraftFilters.module.scss";
 import { ScreenSize } from "@/contexts/ResponsiveContext";
 import BtnDropdown from "@/components/buttons/dropdown/BtnDropdown";
@@ -7,13 +7,13 @@ import Toggle from "@/components/buttons/toggle/Toggle";
 
 interface DraftFiltersProps {
   searchTerm: string;
-  statusContractsFilter: string;
+  stateFilter: string;
   categoryFilter: string;
-  contracts: Contracts[];
   categories: Category[];
+  states: State[];
   viewAdmin: boolean;
   onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onStatusContractsFilterChange: (value: string) => void;
+  onStateFilterChange: (value: string) => void;
   onCategoryFilterChange: (value: string) => void;
   screenSize: ScreenSize;
   onClickAdminView: () => void;
@@ -23,24 +23,24 @@ interface DraftFiltersProps {
 export default function DraftFilters(props: DraftFiltersProps) {
   const {
     searchTerm,
-    statusContractsFilter,
+    stateFilter,
     categoryFilter,
-    contracts = [],
     categories = [],
+    states = [],
     viewAdmin,
     onSearchChange,
-    onStatusContractsFilterChange,
+    onStateFilterChange,
     onCategoryFilterChange,
     screenSize,
     onClickAdminView,
     isAdmin
   } = props;
 
-  const contractOptions = [
+  const stateOptions = [
     { value: "", label: "All" },
-    ...contracts.map((contract) => ({
-      value: contract.id.toString(),
-      label: contract.name,
+    ...states.map((state) => ({
+      value: state.id.toString(),
+      label: state.name,
     })),
   ];
 
@@ -58,10 +58,10 @@ export default function DraftFilters(props: DraftFiltersProps) {
         <div className={styles.sectionController}>
           <div className={styles.btnDrop}>
             <BtnDropdown
-              options={contractOptions}
-              value={statusContractsFilter}
-              onChange={onStatusContractsFilterChange}
-              placeholder="Status Project"
+              options={stateOptions}
+              value={stateFilter}
+              onChange={onStateFilterChange}
+              placeholder="Status"
               width={screenSize === "desktop" ? 180 : 160}
             />
             <BtnDropdown
@@ -72,7 +72,7 @@ export default function DraftFilters(props: DraftFiltersProps) {
               width={screenSize === "desktop" ? 180 : 150}
             />
           </div>
-          {/*   <div className={styles.toggleController}>
+          {/* <div className={styles.toggleController}>
             <Toggle isActive={viewAdmin} onClickToggle={onClickAdminView} disabled={!isAdmin} />
             <span
               className={`${styles.toggleText} ${viewAdmin ? styles.active : ""
@@ -80,8 +80,8 @@ export default function DraftFilters(props: DraftFiltersProps) {
             >
               {viewAdmin ? "Admin view active" : "Admin view inactive"}
             </span>
-          </div>
- */}        </div>
+          </div> */}
+        </div>
 
         <div className={styles.searchInput}>
           <SearchInput
@@ -92,7 +92,6 @@ export default function DraftFilters(props: DraftFiltersProps) {
           />
         </div>
       </div>
-
     </div>
   );
 }

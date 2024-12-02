@@ -18,25 +18,28 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
         filteredCampaigns,
         visibleCampaigns,
         searchTerm,
-        statusContractsFilter,
         categoryFilter,
-        statesContracts,
         categories,
         adminView,
         isAdmin,
         loading,
         campaignsLoading,
         handleSearchChange,
-        handleStatusContractsFilterChange,
+        handleStateFilterChange,
         handleCategoryFilterChange,
         handleClickAdminView,
-        getContractsName,
         getStatusName,
         getCategoryName,
         loadMoreCampaigns,
         screenSize,
-        isProtocolTeam
+        isProtocolTeam,
+        states,
+        stateFilter
     } = useDashboardCard(address);
+
+    console.log("states", states)
+
+
 
     return (
 
@@ -44,13 +47,13 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
         <div className={styles.draftDashboard}>
             <DraftFilters
                 searchTerm={searchTerm}
-                statusContractsFilter={statusContractsFilter}
+                stateFilter={stateFilter}
                 categoryFilter={categoryFilter}
-                contracts={statesContracts}
                 categories={categories}
+                states={states}
                 viewAdmin={adminView}
                 onSearchChange={handleSearchChange}
-                onStatusContractsFilterChange={handleStatusContractsFilterChange}
+                onStateFilterChange={handleStateFilterChange}
                 onCategoryFilterChange={handleCategoryFilterChange}
                 screenSize={screenSize}
                 onClickAdminView={handleClickAdminView}

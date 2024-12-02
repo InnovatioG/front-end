@@ -20,7 +20,7 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index,
 
     const handleDescriptionChange = (content: string) => {
         const updatedMilestones = project.milestones.map(m =>
-            m.id === milestone.id ? { ...m, description: content } : m
+            m.id === milestone.id ? { ...m, milestone_status: { ...m.milestone_status, description: content } } : m
         );
 
         setProject({
@@ -31,7 +31,6 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index,
 
     const totalGoal = project.goal;
 
-
     return (
         <section>
             <h4 className={styles.milestoneTitle}>{ordinalString} Milestone</h4>
@@ -40,7 +39,7 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index,
                     <TextEditor
                         styleOption='quillEditorB'
                         menuOptions={1}
-                        content={milestone.description}
+                        content={milestone.milestone_status?.description ?? ""}
                         onChange={handleDescriptionChange}
                     />
                 </div>
