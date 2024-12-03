@@ -2,16 +2,17 @@ import React from 'react';
 import { useDashboardCard } from '@/hooks/useDashboardCard';
 import DraftFilters from '../draftFilters/DraftFilters';
 import DraftCard from './DraftCard';
-import styles from "../DraftDashboard.module.scss"
-
+import styles from "../DraftDashboard.module.scss";
+import { useModalStore } from '@/store/modal/useModalStoreState';
+import ModalTemplate from '@/components/modal/Modal';
 
 interface NewDraftDashboardProps {
-
     address: string | null;
 }
 
 const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
-
+    const { openModal, closeModal, modalType } = useModalStore();
+    console.log("openModal", openModal);
 
     const {
         campaigns,
@@ -37,13 +38,9 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
         stateFilter
     } = useDashboardCard(address);
 
-    console.log("states", states)
-
-
+    console.log("states", states);
 
     return (
-
-
         <div className={styles.draftDashboard}>
             <DraftFilters
                 searchTerm={searchTerm}
@@ -65,6 +62,11 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
                 ))}
             </div>
 
+            {modalType && (
+                <ModalTemplate isOpen={modalType !== null} setIsOpen={closeModal}>
+                    <span>template</span>
+                </ModalTemplate>
+            )}
         </div>
     );
 }

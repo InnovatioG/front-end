@@ -42,7 +42,6 @@
                     padding-inline: 18px 30px;
                     font: fonts.$f50-medium;
                     &.active {
-                        background: colors.$light-green;
                     }
                     &.tbl,
                     &.created,
@@ -172,4 +171,11 @@
 
 .attempmt-to-launch {
     background-color: colors.$light-green;
+}
+
+.fundraising,
+.active,
+.collect,
+.reported {
+    background-color: colors.$intermediate-green;
 }

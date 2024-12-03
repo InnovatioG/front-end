@@ -1,7 +1,7 @@
 import { Category } from '@/types/ConstantTypes';
 
 import { DISCORD, FACEBOOK, INSTAGRAM, LOGO_FULL_LIGHT, XS, WEBSITE, LINKEDIN } from '@/utils/images';
-
+import { useModalStore } from '@/store/modal/useModalStoreState';
 export const categories: Category[] = ['Technology', 'Event', 'Education', 'Gaming', 'Social', 'Food'];
 
 export const socialIcons = [
@@ -125,6 +125,18 @@ export const statedById = (id: number) => {
     return status[id] || 'Not Started';
 };
 
+export const milestoneStatusByID = (id: number) => {
+    const milestone_status: { [key: number]: string } = {
+        1: 'Not Started',
+        2: 'Started',
+        3: 'Submited',
+        4: 'Rejected',
+        5: 'Finished',
+        6: 'Failed',
+    };
+    return milestone_status[id] || 'Not Started';
+};
+
 //! ME VA A VENIR DE LA API, es MOMENTANEO   */
 
 export const categoriesById = (categoryId: number) => {
@@ -138,8 +150,7 @@ export const categoriesById = (categoryId: number) => {
     };
     return category[categoryId] || '';
 };
-
-interface ButtonConfig {
+export interface ButtonConfig {
     id: number;
     label: string;
     action?: (setModalOpen?: (modalId: string) => void) => void;
@@ -147,9 +158,10 @@ interface ButtonConfig {
     classNameType: string;
 }
 
-interface StateConfig {
+export interface StateConfig {
     label: string;
     buttons: ButtonConfig[];
+    milestone_status_id?: number;
 }
 
 export const buttonTypes: ButtonConfig[] = [
@@ -170,7 +182,7 @@ export const buttonTypes: ButtonConfig[] = [
         id: 3,
         label: 'View Report',
         action: () => {},
-        link: (id: number) => `/campaign/${id}/report`,
+        link: (id: number) => `/campaign/${id}`,
         classNameType: 'fill',
     },
     {
@@ -226,14 +238,26 @@ export const buttonTypes: ButtonConfig[] = [
         action: () => console.log('llamado a la api para lanzar la campaña'),
         classNameType: 'fill',
     },
+    {
+        id: 12,
+        label: 'Validate Fundraising Status (TX)',
+        action: () => console.log('llamado a la api para validar el estado de la recaudacion'),
+        classNameType: 'fill',
+    },
 ];
 
-export const cardInformationByState = (state_id: number): StateConfig => {
+export const cardInformationByState = (state_id: number, milestone_status_id?: number): StateConfig => {
     const state: { [key: number]: StateConfig } = {
         1: {
-            label: 'Draft', //Created
+            label: 'Draft', // Created
             buttons: [
-                buttonTypes[0], // View Campaign
+                {
+                    id: 1,
+                    label: 'View Campaign',
+                    action: () => {},
+                    link: (id: number) => `/campaign/${id}`,
+                    classNameType: 'outline-card',
+                },
                 buttonTypes[1], // Publish
             ],
         },
@@ -286,6 +310,13 @@ export const cardInformationByState = (state_id: number): StateConfig => {
                 buttonTypes[0], // View Campaign
             ],
         },
+        10: {
+            label: 'Finishing',
+            buttons: [
+                buttonTypes[11], // Validate Fundraising Status (TX)
+            ],
+        },
+        11: milestone_status_id ? buttonsByMilestoneStatus(milestone_status_id) : { label: 'Active', buttons: [] },
     };
 
     return state[state_id] || { label: 'Not Started', buttons: [] };
@@ -296,7 +327,13 @@ export const cardInformationForProtocolTeam = (state_id: number): StateConfig =>
         2: {
             label: 'Attempmt to Launch', // Submitted
             buttons: [
-                buttonTypes[0], // View Campaign
+                {
+                    id: 1,
+                    label: 'View Campaign',
+                    action: () => {},
+                    link: (id: number) => `/campaign/${id}`,
+                    classNameType: 'outline-card',
+                },
                 buttonTypes[5], // Manage Campaign
             ],
         },
@@ -344,10 +381,78 @@ export const cardInformationForProtocolTeam = (state_id: number): StateConfig =>
         9: {
             label: 'Fundraising', // Fundraising
             buttons: [
-                buttonTypes[0], // View Campaign
+                buttonTypes[1], // View Campaign
+            ],
+        },
+        10: {
+            label: 'Finishing',
+            buttons: [
+                buttonTypes[11], // Validate Fundraising Status (TX)
             ],
         },
     };
 
     return state[state_id] || { label: 'Not Started', buttons: [] };
+};
+//? Paso 1: ver todas las milestones_status de un proyecto
+//? Paso 2: si el milestones_status_id = 2 (Started) debo mostrar un boton para mostrar la campaña y otro boton para send report milestone
+export const buttonsByMilestoneStatus = (milestone_status_id: number): StateConfig => {
+    const state: { [key: number]: StateConfig } = {
+        2: {
+            label: 'Active',
+            buttons: [
+                {
+                    id: 1,
+                    label: 'View Campaign',
+                    action: () => {},
+                    link: (id: number) => `/campaign/${id}`,
+                    classNameType: 'outline-card',
+                },
+                {
+                    id: 2,
+                    label: 'Send Report',
+                    action: () => console.log('Api enviando el reporte del milestone'),
+                    classNameType: 'fill',
+                },
+            ],
+        },
+        3: {
+            label: 'Reported',
+            buttons: [
+                {
+                    id: 3,
+                    label: 'View Report',
+                    action: (setModalOpen) => {
+                        if (setModalOpen) setModalOpen('viewReport');
+                    },
+                    classNameType: 'fill',
+                },
+            ],
+        },
+        4: {
+            label: 'Rejected',
+            buttons: [
+                buttonTypes[0],
+                {
+                    id: 4,
+                    label: 'Send Report',
+                    action: () => console.log('Api enviando la campaña a revision'),
+                    classNameType: 'fill',
+                },
+            ],
+        },
+        5: {
+            label: 'Collect',
+            buttons: [
+                {
+                    id: 5,
+                    label: 'Collect Milestones Founds',
+                    action: () => console.log('Collect Milestone Founds'),
+                    classNameType: 'fill',
+                },
+            ],
+        },
+    };
+
+    return state[milestone_status_id] || { label: 'Unknown', buttons: [] };
 };

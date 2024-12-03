@@ -7,21 +7,41 @@ import Image from 'next/image';
 import { categoriesById } from '@/utils/constants';
 import GeneralButtonUI from '@/components/buttons/UI/Button';
 import { formatTime, getTimeRemaining } from '@/utils/formats';
+import { useModalStore } from '@/store/modal/useModalStoreState';
+
 interface DraftCardProps {
     campaign: Campaign;
     isProtocolTeam: boolean;
 }
 
 const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
+    const { openModal, closeModal } = useModalStore();
+
+    const activeMilestone = campaign.milestones.find(milestone => milestone.milestone_status?.milestone_submission?.milestone_status_id === 2);
+    const reportedMilestone = campaign.milestones.find(milestone => milestone.milestone_status?.milestone_submission?.milestone_status_id === 3);
+    const rejectedMilestone = campaign.milestones.find(milestone => milestone.milestone_status?.milestone_submission?.milestone_status_id === 4);
+    const collectMilestone = campaign.milestones.find(milestone => milestone.milestone_status?.milestone_submission?.milestone_status_id === 5);
+
+    let milestoneStatusId;
+    if (activeMilestone) {
+        milestoneStatusId = 2;
+    } else if (reportedMilestone) {
+        milestoneStatusId = 3;
+    } else if (rejectedMilestone) {
+        milestoneStatusId = 4;
+    } else if (collectMilestone) {
+        milestoneStatusId = 5;
+    }
+
+    console.log(campaign)
 
     const { label, buttons } = isProtocolTeam
         ? cardInformationForProtocolTeam(campaign.state_id)
-        : cardInformationByState(campaign.state_id);
+        : cardInformationByState(campaign.state_id, milestoneStatusId);
 
     const labelClass = label.toLowerCase().replace(/\s+/g, '-');
 
     const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(campaign.start_date));
-
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -29,15 +49,13 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [campaign.start_date])
+    }, [campaign.start_date]);
 
     const formatAllTime = (timeRemaining: any) => {
         return `${timeRemaining.days}:${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}`;
     }
 
-
-
-
+    console.log("Buttons:", buttons);
 
     return (
         <div className={styles.campaignCard}>
@@ -63,31 +81,53 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
             <h3 className={styles.cardTitle}>{campaign.title}</h3>
             <h3 className={styles.cardDescription}>{campaign.description}</h3>
             <div className={styles.actionsTarget}>
-                {buttons.map((button, index) => (
-                    button.link ? (
-                        <Link key={index} href={button.link(campaign.id)}>
+                {buttons.map((button, index) => {
+                    console.log(`Button ${index}:`, button);
+                    if (button.link) {
+                        return (
+                            <Link key={index} href={button.link(campaign.id)}>
+                                <GeneralButtonUI
+                                    text={button.label}
+                                    onClick={() => button.action && button.action(openModal)}
+                                    classNameStyle={`${button.classNameType} ${buttons.length === 1 ? 'center' : ''}`}
+                                >
+                                    {buttons.length > 1 && <span className={styles[button.classNameType]}>{'>'}</span>}
+                                </GeneralButtonUI>
+                            </Link>
+                        );
+                    } else {
+                        return (
                             <GeneralButtonUI
+                                key={index}
                                 text={button.label}
-                                onClick={() => { }}
+                                onClick={() => button.action && button.action(openModal)}
                                 classNameStyle={`${button.classNameType} ${buttons.length === 1 ? 'center' : ''}`}
                             >
                                 {buttons.length > 1 && <span className={styles[button.classNameType]}>{'>'}</span>}
                             </GeneralButtonUI>
-                        </Link>
-                    ) : (
-                        <GeneralButtonUI
-                            key={index}
-                            text={button.label}
-                            onClick={button.action || (() => { })}
-                            classNameStyle={`${button.classNameType} ${buttons.length === 1 ? 'center' : ''}`}
-                        >
-                            {buttons.length > 1 && <span className={styles[button.classNameType]}>{'>'}</span>}
-                        </GeneralButtonUI>
-                    )
-                ))}
+                        );
+                    }
+                })}
             </div>
         </div>
     );
 }
 
 export default DraftCard;
+
+
+
+
+
+[
+    {
+        "id": 1,
+        "label": "View Campaign",
+        "classNameType": "outline-card"
+    },
+    {
+        "id": 6,
+        "label": "Manage Campaign",
+        "classNameType": "fill"
+    }
+]

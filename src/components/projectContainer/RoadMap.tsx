@@ -11,6 +11,7 @@ const RoadMap: React.FC<RoadMapProps> = (props) => {
 
     const { project } = useProjectDetailStore();
     const milestones = project.milestones;
+    console.log(milestones)
 
     return (
         <article>

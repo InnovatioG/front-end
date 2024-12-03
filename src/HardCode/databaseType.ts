@@ -45,7 +45,7 @@ export interface BaseCampaign {
     investors: number;
     title: string;
     description: string;
-    milestones: Milestone[];
+    milestones: MilestoneF[];
     raise_amount: number;
     start_date: string;
     end_date: string;
@@ -74,9 +74,18 @@ export interface DatabaseStructure {
     campaigns: Campaign[];
 }
 
+export interface Milestone_submission {
+    id_milestione_submission: number;
+    milestone_id: number;
+    milestone_status_id: number;
+    approved_justification: string;
+    rejected_justification: string;
+}
+
 export interface MilestoneStatus {
     id: number;
     name: string;
+    milestone_submission: Milestone_submission;
     description: string;
     created_at: string;
     updated_at: string;
@@ -152,16 +161,13 @@ export interface Project {
     updated_at: string;
     investors: number;
     status: string;
-
     goal: number;
     min_request: number;
     cdRequestedMaxADA: number | null;
     cdCampaignToken_PriceADA: number | null;
     cdCampaignToken_TN: string;
-
     campaign_content: campaingContent[];
     tokenomics_description: string;
-
     website: string;
     facebook: string;
     instagram: string;
