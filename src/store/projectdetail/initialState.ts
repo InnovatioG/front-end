@@ -38,6 +38,8 @@ export interface ProjectDetailState {
     milestone: MilestoneF | null; // Add this for active/selected milestone
     editionMode: boolean;
     isLoadingPrice: boolean;
+    isAdmin: boolean;
+    isProtocolTeam: boolean;
     price_ada: number;
 }
 
@@ -78,6 +80,8 @@ export const initialState: ProjectDetailState = {
     error: '',
     milestone: null,
     editionMode: true,
+    isAdmin: false,
+    isProtocolTeam: false,
     isLoadingPrice: false,
 };
 

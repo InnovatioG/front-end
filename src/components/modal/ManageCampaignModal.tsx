@@ -1,14 +1,65 @@
 import React from 'react';
-import ModalTemplate from './Modal';
+import styles from "./ManageCampaignModal.module.scss"
+import { useState } from 'react';
+import GeneralButtonUI from '../buttons/UI/Button';
+import { useModalStore } from '@/store/modal/useModalStoreState';
 interface ManageCampaignModalProps {
-    // Define props here
+    id: number | null;
 }
 
-const ManageCampaignModal: React.FC<ManageCampaignModalProps> = (props) => {
+
+
+/* MODAL PARA LOS PROTOCOL MANAGER PARA QUE PUEDAN ACEPTAR O RECHAZAR EL MILESTONE  */
+
+
+
+const ManageCampaignModal: React.FC<ManageCampaignModalProps> = ({ id }) => {
+
+    const { closeModal } = useModalStore();
+
+    const [status, setStatus] = useState<boolean | null>(null);
+    const [description, setDescription] = useState("");
+
+
     return (
-        <div>
-            <h1>Manage Campaign</h1>
-        </div>
+        <article className={styles.generalContainer}>
+            <header className={styles.titleSection}>
+                <h3>Approve or Reject</h3>
+                <h3>Project Submission</h3>
+            </header>
+            <div className={styles.buttonStatusContainer}>
+                <GeneralButtonUI
+                    classNameStyle={`outlineb ${status === true ? styles.selected : ''}`}
+                    onClick={() => { setStatus(true) }}
+                >
+                    <div className={styles.greenCircle}></div>
+                    <span>Approve Campaign</span>
+                </GeneralButtonUI>
+                <GeneralButtonUI
+                    classNameStyle={`outlineb ${status === false ? styles.selected : ''}`}
+                    onClick={() => { setStatus(false) }}
+                >
+                    <div className={styles.redCircle}></div>
+                    <span>Reject Campaign</span>
+                </GeneralButtonUI>
+            </div>
+            <div className={styles.text}>
+                <div className={styles.textContainer}>
+                    <label htmlFor="">Context and Description</label>
+                    <textarea
+                        className={styles.textarea}
+                        placeholder="Send message report about the approbation or rejection of the crowdfunding proposal."
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        maxLength={650}
+                    />
+                </div>
+                <div className={styles.buttonContainer}>
+                    <GeneralButtonUI classNameStyle='outlineb' text='Back' onClick={closeModal} />
+                    <GeneralButtonUI classNameStyle='fillb' text='Confirm' onClick={() => console.log("Back")} />
+                </div>
+            </div>
+        </article>
     );
 }
 

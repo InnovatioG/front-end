@@ -14,7 +14,7 @@ interface NewDraftDashboardProps {
 }
 
 const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
-    const { openModal, closeModal, modalType } = useModalStore();
+    const { openModal, closeModal, modalType, campaignId } = useModalStore();
     console.log("openModal", openModal);
 
     const {
@@ -68,7 +68,7 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
             {modalType && (
                 <ModalTemplate isOpen={modalType !== null} setIsOpen={closeModal}>
                     {modalType === "initializeCampaign" && <InitializeCampaignModal />}
-                    {modalType === "manageCampaign" && <ManageCampaignModal />}
+                    {modalType === "manageCampaign" && <ManageCampaignModal id={campaignId} />}
                     {modalType === "sendReportMilestone" && <SendReportMilestone />}
                 </ModalTemplate>
             )}

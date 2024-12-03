@@ -8,6 +8,8 @@ interface UseProjectDetailStore extends ProjectDetailState {
     setMenuView: /* (menuView: ProjectDetailState["menuView"]) => void */ any;
     setMilestone: (milestone: ProjectDetailState['milestone']) => void;
     setIsLoading: (isLoading: boolean) => void;
+    setIsAdmin: (isAdmin: boolean) => void;
+    setIsProtocolTeam: (isProtocolTeam: boolean) => void;
     setError: (error: string) => void;
     setEditionMode: (editionMode: boolean) => void;
     fetchAdaPrice: () => void;
@@ -24,6 +26,14 @@ export const useProjectDetailStore = create<UseProjectDetailStore>()(
         setIsLoading: (isLoading) =>
             set((state) => {
                 state.isLoading = isLoading;
+            }),
+        setIsAdmin: (isAdmin) =>
+            set((state) => {
+                state.isAdmin = isAdmin;
+            }),
+        setIsProtocolTeam: (isProtocolTeam) =>
+            set((state) => {
+                state.isProtocolTeam = isProtocolTeam;
             }),
         setMenuView: (menuView: ProjectDetailState['menuView']) =>
             set((state) => {

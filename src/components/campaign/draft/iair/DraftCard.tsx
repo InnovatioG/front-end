@@ -33,7 +33,6 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
         milestoneStatusId = 5;
     }
 
-
     const { label, buttons } = isProtocolTeam
         ? cardInformationForProtocolTeam(campaign.state_id)
         : cardInformationByState(campaign.state_id, milestoneStatusId);
@@ -53,7 +52,6 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
     const formatAllTime = (timeRemaining: any) => {
         return `${timeRemaining.days}:${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}`;
     }
-
 
     return (
         <div className={styles.campaignCard}>
@@ -85,7 +83,7 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
                             <Link key={index} href={button.link(campaign.id)}>
                                 <GeneralButtonUI
                                     text={button.label}
-                                    onClick={() => button.action && button.action(openModal)}
+                                    onClick={() => button.action && button.action((modalType) => openModal(modalType, campaign.id))}
                                     classNameStyle={`${button.classNameType} ${buttons.length === 1 ? 'center' : ''}`}
                                 >
                                     {buttons.length > 1 && <span className={styles[button.classNameType]}>{'>'}</span>}
@@ -97,7 +95,7 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
                             <GeneralButtonUI
                                 key={index}
                                 text={button.label}
-                                onClick={() => button.action && button.action(openModal)}
+                                onClick={() => button.action && button.action((modalType) => openModal(modalType, campaign.id))}
                                 classNameStyle={`${button.classNameType} ${buttons.length === 1 ? 'center' : ''}`}
                             >
                                 {buttons.length > 1 && <span className={styles[button.classNameType]}>{'>'}</span>}
@@ -111,20 +109,3 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
 }
 
 export default DraftCard;
-
-
-
-
-
-[
-    {
-        "id": 1,
-        "label": "View Campaign",
-        "classNameType": "outline-card"
-    },
-    {
-        "id": 6,
-        "label": "Manage Campaign",
-        "classNameType": "fill"
-    }
-]

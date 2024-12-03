@@ -1,7 +1,7 @@
 import { Category } from '@/types/ConstantTypes';
-
 import { DISCORD, FACEBOOK, INSTAGRAM, LOGO_FULL_LIGHT, XS, WEBSITE, LINKEDIN } from '@/utils/images';
-import { useModalStore } from '@/store/modal/useModalStoreState';
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+
 export const categories: Category[] = ['Technology', 'Event', 'Education', 'Gaming', 'Social', 'Food'];
 
 export const socialIcons = [
@@ -150,15 +150,15 @@ export const categoriesById = (categoryId: number) => {
     };
     return category[categoryId] || '';
 };
-export interface ButtonConfig {
+interface ButtonConfig {
     id: number;
     label: string;
-    action?: (setModalOpen?: (modalId: string) => void) => void;
+    action?: (setModalOpen?: (modalType: string) => void) => void;
     link?: (id: number) => string;
     classNameType: string;
 }
 
-export interface StateConfig {
+interface StateConfig {
     label: string;
     buttons: ButtonConfig[];
     milestone_status_id?: number;
@@ -327,13 +327,7 @@ export const cardInformationForProtocolTeam = (state_id: number): StateConfig =>
         2: {
             label: 'Attempmt to Launch', // Submitted
             buttons: [
-                {
-                    id: 1,
-                    label: 'View Campaign',
-                    action: () => {},
-                    link: (id: number) => `/campaign/${id}`,
-                    classNameType: 'outline-card',
-                },
+                buttonTypes[0], // View Campaign
                 buttonTypes[5], // Manage Campaign
             ],
         },
@@ -362,7 +356,7 @@ export const cardInformationForProtocolTeam = (state_id: number): StateConfig =>
             label: 'Deploy', // Contract Published
             buttons: [
                 buttonTypes[0], // View Campaign
-                buttonTypes[9], // Initialize Campaign
+                buttonTypes[9], // Initialize Campaign + modal
             ],
         },
         7: {
@@ -394,9 +388,9 @@ export const cardInformationForProtocolTeam = (state_id: number): StateConfig =>
 
     return state[state_id] || { label: 'Not Started', buttons: [] };
 };
-//? Paso 1: ver todas las milestones_status de un proyecto
-//? Paso 2: si el milestones_status_id = 2 (Started) debo mostrar un boton para mostrar la campaña y otro boton para send report milestone
+
 export const buttonsByMilestoneStatus = (milestone_status_id: number): StateConfig => {
+    const { setMenuView } = useProjectDetailStore();
     const state: { [key: number]: StateConfig } = {
         2: {
             label: 'Active',
@@ -422,9 +416,10 @@ export const buttonsByMilestoneStatus = (milestone_status_id: number): StateConf
                 {
                     id: 3,
                     label: 'View Report',
-                    action: (setModalOpen) => {
-                        if (setModalOpen) setModalOpen('viewReport');
+                    action: () => {
+                        setMenuView('Roadmap & Milestones');
                     },
+                    link: (id: number) => `/campaign/${id}`,
                     classNameType: 'fill',
                 },
             ],
