@@ -5,6 +5,9 @@ import DraftCard from './DraftCard';
 import styles from "../DraftDashboard.module.scss";
 import { useModalStore } from '@/store/modal/useModalStoreState';
 import ModalTemplate from '@/components/modal/Modal';
+import InitializeCampaignModal from '@/components/modal/InitializeCampaignModal';
+import ManageCampaignModal from '@/components/modal/ManageCampaignModal';
+import SendReportMilestone from '@/components/modal/SendReport';
 
 interface NewDraftDashboardProps {
     address: string | null;
@@ -64,7 +67,9 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
 
             {modalType && (
                 <ModalTemplate isOpen={modalType !== null} setIsOpen={closeModal}>
-                    <span>template</span>
+                    {modalType === "initializeCampaign" && <InitializeCampaignModal />}
+                    {modalType === "manageCampaign" && <ManageCampaignModal />}
+                    {modalType === "sendReportMilestone" && <SendReportMilestone />}
                 </ModalTemplate>
             )}
         </div>

@@ -33,7 +33,6 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
         milestoneStatusId = 5;
     }
 
-    console.log(campaign)
 
     const { label, buttons } = isProtocolTeam
         ? cardInformationForProtocolTeam(campaign.state_id)
@@ -55,7 +54,6 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
         return `${timeRemaining.days}:${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}`;
     }
 
-    console.log("Buttons:", buttons);
 
     return (
         <div className={styles.campaignCard}>
@@ -82,7 +80,6 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
             <h3 className={styles.cardDescription}>{campaign.description}</h3>
             <div className={styles.actionsTarget}>
                 {buttons.map((button, index) => {
-                    console.log(`Button ${index}:`, button);
                     if (button.link) {
                         return (
                             <Link key={index} href={button.link(campaign.id)}>

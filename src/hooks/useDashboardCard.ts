@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Campaign, Category, State } from '@/HardCode/databaseType';
+import { Campaign, Category, State, User } from '@/HardCode/databaseType';
 import { useScreenSize } from '@/hooks/useScreenSize';
 import { dataBaseService } from '@/HardCode/dataBaseService';
 import { useRouter } from 'next/router';
