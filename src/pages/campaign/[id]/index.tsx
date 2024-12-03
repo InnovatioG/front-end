@@ -21,8 +21,8 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
     const { project, setProject, setEditionMode, isLoading, setIsLoading, setIsAdmin, isAdmin } = useProjectDetailStore();
 
 
-    console.log("session", session);
 
+    /* MOMENTANEO */
 
     useEffect(() => {
         setIsLoading(true);

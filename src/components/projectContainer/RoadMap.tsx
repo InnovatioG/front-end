@@ -3,6 +3,7 @@ import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import RoadMapCard from './RoadMapCard';
 
 
+
 interface RoadMapProps {
     // Define props here
 }
@@ -15,7 +16,7 @@ const RoadMap: React.FC<RoadMapProps> = (props) => {
 
     return (
         <article>
-            <div>
+            <div id='roadmap'>
                 {milestones.map((milestone) => (
                     <RoadMapCard
                         key={milestone.id}

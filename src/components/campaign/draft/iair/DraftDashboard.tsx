@@ -65,13 +65,7 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
                 ))}
             </div>
 
-            {modalType && (
-                <ModalTemplate isOpen={modalType !== null} setIsOpen={closeModal}>
-                    {modalType === "initializeCampaign" && <InitializeCampaignModal />}
-                    {modalType === "manageCampaign" && <ManageCampaignModal id={campaignId} />}
-                    {modalType === "sendReportMilestone" && <SendReportMilestone />}
-                </ModalTemplate>
-            )}
+
         </div>
     );
 }

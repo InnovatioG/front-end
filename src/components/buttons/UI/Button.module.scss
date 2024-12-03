@@ -35,12 +35,14 @@
     background: transparent;
     color: colors.$primary-dark-color;
     border: 1px solid colors.$primary-dark-color;
-    padding: 0.8rem 0.5rem;
+    padding: 0.5rem 0.5rem;
     display: flex;
     flex-direction: row;
     gap: 0.5rem;
     flex-wrap: nowrap;
     transition: all 0.3s ease;
+    text-wrap: nowrap;
+    width: 100%;
 
     &:hover {
         scale: 1.05;
@@ -204,4 +206,8 @@
 
 .center {
     justify-content: center;
+}
+
+.selected {
+    background-color: colors.$primary-dark-color;
 }

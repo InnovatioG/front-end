@@ -28,7 +28,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = (props) => {
 
 
     return (
-        <section className={styles.generalContainer}>
+        <section className={styles.generalContainer} id={"nav-project"}>
             <NavBarProjectEdition />
             {menuComponents[menuView] || <ProjectDetail />}
         </section>

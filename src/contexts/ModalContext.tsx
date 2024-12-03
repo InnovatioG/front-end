@@ -1,4 +1,9 @@
 import { createContext, useContext, useState } from 'react';
+import { useModalStore } from '@/store/modal/useModalStoreState';
+import ModalTemplate from '@/components/modal/Modal';
+import InitializeCampaignModal from '@/components/modal/InitializeCampaignModal';
+import ManageCampaignModal from '@/components/modal/ManageCampaignModal';
+import SendReportMilestone from '@/components/modal/SendReport';
 
 type ModalType = 'walletSelector';
 
@@ -10,6 +15,8 @@ interface ModalContextType {
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
+
+
 export const useModal = () => {
   const context = useContext(ModalContext);
   if (context === undefined) {
@@ -19,13 +26,22 @@ export const useModal = () => {
 };
 
 export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const { openModal: openModalFromStore, closeModal: closeModalFromStore, modalType: modalTypeToStore, campaignId } = useModalStore();
   const [modalType, setModalType] = useState<ModalType | null>(null);
 
+  console.log(modalTypeToStore)
   const openModal = (type: ModalType) => setModalType(type);
   const closeModal = () => setModalType(null);
 
   return (
     <ModalContext.Provider value={{ openModal, closeModal, modalType }}>
+      {modalTypeToStore && (
+        <ModalTemplate isOpen={modalTypeToStore !== null} setIsOpen={closeModalFromStore}>
+          {modalTypeToStore === 'initializeCampaign' && <InitializeCampaignModal />}
+          {modalTypeToStore === "manageCampaign" && <ManageCampaignModal id={campaignId} />}
+          {modalTypeToStore === 'sendReport' && <SendReportMilestone />}
+        </ModalTemplate>
+      )}
       {children}
     </ModalContext.Provider>
   );

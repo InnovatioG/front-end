@@ -247,6 +247,8 @@ export const buttonTypes: ButtonConfig[] = [
 ];
 
 export const cardInformationByState = (state_id: number, milestone_status_id?: number): StateConfig => {
+    const { setMenuView } = useProjectDetailStore();
+
     const state: { [key: number]: StateConfig } = {
         1: {
             label: 'Draft', // Created
@@ -270,7 +272,15 @@ export const cardInformationByState = (state_id: number, milestone_status_id?: n
         3: {
             label: 'Rejected', // Rejected
             buttons: [
-                buttonTypes[2], // View report
+                {
+                    id: 3,
+                    label: 'View Report',
+                    action: () => {
+                        setMenuView('Roadmap & Milestones');
+                        document.getElementById('nav-project')?.scrollIntoView({ behavior: 'smooth' });
+                    },
+                    classNameType: 'fill',
+                },
             ],
         },
         4: {
