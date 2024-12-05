@@ -4,7 +4,7 @@ import ModalTemplate from '@/components/modal/Modal';
 import InitializeCampaignModal from '@/components/modal/InitializeCampaignModal';
 import ManageCampaignModal from '@/components/modal/ManageCampaignModal';
 import SendReportMilestone from '@/components/modal/SendReport';
-
+import ContactSupportModal from '@/components/modal/ContactSupportModal';
 type ModalType = 'walletSelector';
 
 interface ModalContextType {
@@ -40,6 +40,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
           {modalTypeToStore === 'initializeCampaign' && <InitializeCampaignModal />}
           {modalTypeToStore === "manageCampaign" && <ManageCampaignModal id={campaignId} />}
           {modalTypeToStore === 'sendReport' && <SendReportMilestone />}
+          {modalTypeToStore === 'contactSupport' && <ContactSupportModal />}
         </ModalTemplate>
       )}
       {children}

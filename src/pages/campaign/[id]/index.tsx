@@ -20,23 +20,36 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
     const { id } = router.query;
     const { project, setProject, setEditionMode, isLoading, setIsLoading, setIsAdmin, isAdmin } = useProjectDetailStore();
 
-
-
-    /* MOMENTANEO */
-
     useEffect(() => {
         setIsLoading(true);
         setEditionMode(false);
 
         if (id) {
             const campaignId = Number(id);
-            const campaign = JSON.campaigns.find((camp) => camp.id === campaignId);
+            const campaign: any = JSON.campaigns.find((camp: any) => camp.id === campaignId);
             console.log('campaign', campaign);
-            const user = JSON.users.find((user) => user.wallet_address === session?.user?.address);
+            const user: any = JSON.users.find((user: any) => user.wallet_address === session?.user?.address);
             console.log("user", user);
 
             if (campaign) {
-                setProject(campaign);
+                setProject({
+                    ...campaign,
+                    status: 'status' in campaign ? (campaign as { status: string }).status : 'default status',
+                    cdRequestedMaxADA: campaign.cdRequestedMaxADA ?? null,
+                    cdCampaignToken_TN: campaign.cdCampaignToken_TN ?? '',
+                    members_team: campaign.members_team.map((member: any) => ({
+                        ...member,
+                        member_manage_founds: member.member_manage_founds ?? false,
+                        member_wallet_address: member.member_wallet_address ?? '',
+                    })),
+                    milestones: campaign.milestones.map((milestone: any) => ({
+                        ...milestone,
+                        milestone_status: {
+                            ...milestone.milestone_status,
+                            id: milestone.milestone_status?.id ?? 0, // Asegurarse de que id no sea undefined
+                        },
+                    })),
+                });
                 setIsAdmin(campaign.user_id === user?.id);
             }
         }
@@ -70,4 +83,3 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
 }
 
 export default CampaignVisualization;
-

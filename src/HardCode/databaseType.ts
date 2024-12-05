@@ -85,9 +85,9 @@ export interface Milestone_submission {
 export interface MilestoneStatus {
     id: number;
     name: string;
-    milestone_submission: Milestone_submission;
     description: string;
     created_at: string;
+    milestone_submission: Milestone_submission;
     updated_at: string;
 }
 
@@ -98,7 +98,6 @@ export interface CampaignStatus {
     created_at: string;
     updated_at: string;
 }
-
 export interface MilestoneF {
     id: number;
     campaign_id: number;
@@ -112,7 +111,6 @@ export interface MilestoneF {
     milestone_status?: MilestoneStatus;
     campaign_status?: CampaignStatus;
 }
-
 /* 
 Campaign-Faqs
 Son los bloques de texto de Q&A de la campaña

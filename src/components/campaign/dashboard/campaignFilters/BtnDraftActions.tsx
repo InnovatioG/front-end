@@ -1,10 +1,9 @@
 import { CHEVRON_RIGHT } from '@/utils/images';
 import styles from './BtnDraftActions.module.scss';
 import Link from 'next/link';
-import { StatusContracts } from '../../draft/draftCard/DraftCard';
 
 interface BtnActionsProps {
-    type: StatusContracts;
+    type: any;
     url: string;
     adminView: boolean;
     url2: string;

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import type { MilestoneF } from "@/HardCode/databaseType";
 import styles from "./MilestonePercentage.module.scss";
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
+import { formatMoney } from '@/utils/formats';
 
 interface MilestonePercentageProps {
     milestone: MilestoneF;
@@ -18,6 +20,8 @@ const MilestonePercentage: React.FC<MilestonePercentageProps> = ({
 }) => {
     const [percentage, setPercentage] = useState<number>(milestone.cmPercentage);
     const { editionMode } = useProjectDetailStore();
+    const { priceAdaOrDollar } = usePriceStore();
+    const { price_ada } = useProjectDetailStore();
 
     useEffect(() => {
         setPercentage(milestone.cmPercentage);
@@ -34,11 +38,11 @@ const MilestonePercentage: React.FC<MilestonePercentageProps> = ({
         }
     };
 
-    const percentageGoal = (goal * percentage) / 100;
-    const formattedGoal = `$${percentageGoal.toLocaleString('en-US', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-    })}`;
+    const goalInCurrentCurrency = priceAdaOrDollar === 'dollar' ? goal : goal / price_ada;
+    const currencySymbol = priceAdaOrDollar === 'dollar' ? 'USD' : 'ADA';
+
+    const percentageGoal = (goalInCurrentCurrency * percentage) / 100;
+    const formattedGoal = formatMoney(percentageGoal, currencySymbol);
 
     return (
         <div className={styles.container}>

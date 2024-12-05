@@ -1,7 +1,7 @@
 import React from 'react';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import styles from "./campaignButtonContainer.module.scss";
-import { cardInformationByState } from '@/utils/constants';
+import { CardInformationByState } from '@/utils/constants';
 import GeneralButtonUI from '@/components/buttons/UI/Button';
 import Link from 'next/link';
 import { useModalStore } from '@/store/modal/useModalStoreState';
@@ -11,10 +11,16 @@ interface CampaignButtonContainerProps { }
 
 const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) => {
     const { project, isAdmin } = useProjectDetailStore();
-    const { buttons } = cardInformationByState(project.state_id);
+    const { buttons } = CardInformationByState(project.state_id);
     const { openModal } = useModalStore();
 
     const filteredButtons = buttons.filter(button => button.id !== 1);
+
+
+    const handleClick = () => {
+        localStorage.setItem('project', JSON.stringify(project));
+    }
+
 
     return (
         <div className={styles.buttonContainerLayout}>
@@ -55,8 +61,10 @@ const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) 
                 </div>
             ) : (
                 project.state_id === 9 && (
-                    <div className={styles.buttonContainer}>
-                        <GeneralButtonUI text='Invest' classNameStyle='fillb' onClick={() => openModal('invest', project.id)} />
+                    <div className={styles.buttonContainerInvest}>
+                        <Link href={"/invest"}>
+                            <GeneralButtonUI text='Invest' classNameStyle='invest' onClick={handleClick} />
+                        </Link>
                     </div>
                 )
             )}

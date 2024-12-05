@@ -34,7 +34,7 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
 
         if (id) {
             const campaignId = Number(id);
-            const campaign = JSON.campaigns.find((camp) => camp.id === campaignId);
+            const campaign: any = JSON.campaigns.find((camp) => camp.id === campaignId);
 
             if (campaign) {
                 const user = JSON.users.find(user => user.wallet_address === session?.user?.address);
@@ -49,7 +49,9 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
             }
 
             if (menuview) {
-                setMenuView(menuview);
+                if (typeof menuview === 'string' && ["Project Detail", "Resume of the team", "Roadmap & Milestones", "Tokenomics", "Q&A"].includes(menuview)) {
+                    setMenuView(menuview as "Project Detail" | "Resume of the team" | "Roadmap & Milestones" | "Tokenomics" | "Q&A");
+                }
             }
         }
 

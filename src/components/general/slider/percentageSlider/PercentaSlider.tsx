@@ -36,7 +36,7 @@ const PercentageSlider: React.FC<PercentageSliderProps> = ({ initialLabel, setVa
                 value={label}
                 onChange={handleSliderChange}
             />
-            <label className={styles.label}>{formatMoney(initialLabel)}</label>
+            <label className={styles.label}>{formatMoney(initialLabel, "USD")}</label>
         </div>
     );
 }

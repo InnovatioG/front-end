@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import BtnConnectWallet from "@/components/buttons/connectWallet/BtnConnectWallet";
 import { useScreenSize } from "@/hooks/useScreenSize";
 import DraftDashboard from "@/components/campaign/draft/DraftDashboard";
-import NewDraftDashboard from "@/components/campaign/draft/iair/DraftDashboard";
+import NewDraftDashboard from "@/components/campaign/draft/DraftDashboard";
 import { useDashboardCard } from "@/hooks/useDashboardCard";
 import LoadingPage from "@/components/LoadingPage/LoadingPage";
 

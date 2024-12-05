@@ -2,37 +2,64 @@
 @use '@/styles/settings/colors';
 
 .toggleController {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 8px;
-
-  .toggle {
-    width: 100px;
-    height: 50px;
-    border-radius: 100px;
-    background-color: colors.$white-color;
-    cursor: pointer;
-    position: relative;
     display: flex;
     align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
 
-    .point {
-      position: absolute;
-      width: 44px;
-      height: 44px;
-      border-radius: 22px;
-      background-color: colors.$secondary-color;
-      left: 4px;
-      transition: all 0.5s;
+    .toggle {
+        width: 50px;
+        height: 30px;
+        border-radius: 100px;
+        background-color: colors.$white-color;
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        align-items: center;
 
-      &.active {
-        left: 52px;
-        background-color: colors.$primary-green;
-      }
+        .point {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 22px;
+            background-color: colors.$primary-dark-color;
+            left: 5px;
+            transition: all 0.5s;
+
+            &.active {
+                left: 25px;
+                background-color: colors.$primary-dark-color;
+            }
+        }
+        &.disabled {
+            cursor: not-allowed;
+        }
     }
-    &.disabled {
-      cursor: not-allowed;
-    }
-  }
+}
+
+.toggleContainer {
+    position: relative;
+}
+
+.symbol,
+.symbolblack {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: white;
+    pointer-events: none;
+}
+
+.symbolAda,
+.symbolAdablack {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    color: white;
+    pointer-events: none;
+}
+
+.symbolAdablack,
+.symbolblack {
+    color: black;
 }

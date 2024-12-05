@@ -1,5 +1,4 @@
 import React from 'react';
-import ModalTemplate from "@/components/modal/Modal"
 import { useModalStore } from '@/store/modal/useModalStoreState';
 import styles from "./Modal.module.scss"
 import GeneralButtonUI from '../buttons/UI/Button';

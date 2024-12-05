@@ -1,0 +1,10 @@
+@use '../../components/campaign/creator/form/FormSteps.module.scss';
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
+.layout {
+    min-height: 90dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

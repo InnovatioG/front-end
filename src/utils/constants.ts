@@ -1,6 +1,7 @@
 import { Category } from '@/types/ConstantTypes';
 import { DISCORD, FACEBOOK, INSTAGRAM, LOGO_FULL_LIGHT, XS, WEBSITE, LINKEDIN } from '@/utils/images';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { set } from 'date-fns';
 
 export const categories: Category[] = ['Technology', 'Event', 'Education', 'Gaming', 'Social', 'Food'];
 
@@ -150,10 +151,11 @@ export const categoriesById = (categoryId: number) => {
     };
     return category[categoryId] || '';
 };
-interface ButtonConfig {
+export interface ButtonConfig {
     id: number;
     label: string;
-    action?: (setModalOpen?: (modalType: string) => void) => void;
+    action?: (setModalOpen?: (modalType: string) => void, project?: any) => void;
+
     link?: (id: number) => string;
     classNameType: string;
 }
@@ -162,6 +164,7 @@ interface StateConfig {
     label: string;
     buttons: ButtonConfig[];
     milestone_status_id?: number;
+    protocol_team?: boolean;
 }
 
 export const buttonTypes: ButtonConfig[] = [
@@ -244,9 +247,87 @@ export const buttonTypes: ButtonConfig[] = [
         action: () => console.log('llamado a la api para validar el estado de la recaudacion'),
         classNameType: 'fill',
     },
+    {
+        id: 13,
+        label: 'Contact Team Support',
+        action: (setModalOpen) => {
+            if (setModalOpen) setModalOpen('contactSupport');
+        },
+        classNameType: 'fill',
+    },
+    {
+        id: 14,
+        label: 'Invest',
+        action: (project) => {
+            localStorage.setItem('project', JSON.stringify(project));
+        },
+        link: (id: number) => '/invest',
+        classNameType: 'invest',
+    },
 ];
+export const ButtonsForCampaignPage = (state_id: number, isProtocolTeam: boolean, isAdmin: boolean): StateConfig => {
+    const state: { [key: number]: StateConfig } = {
+        1: {
+            label: 'Draft', // Created
+            buttons: [
+                buttonTypes[1], // Send to Revision
+            ],
+        },
+        2: {
+            label: 'Submitted', // Submitted
+            buttons: [
+                buttonTypes[12], // Contact Support Team
+            ],
+        },
+        3: {
+            label: 'Rejected', // Rejected
+            buttons: [
+                buttonTypes[3], // View Report
+            ],
+        },
+        4: {
+            label: 'Approved', // Approved
+            buttons: [
+                buttonTypes[4], // Launch Campaign
+            ],
+        },
+        5: {
+            label: 'Created', // Contract Created
+            buttons: [
+                buttonTypes[12], // Contact Support Team
+            ],
+        },
+        6: {
+            label: 'Deploy', // Contract Published
+            buttons: [
+                buttonTypes[12], // Contact Support Team
+            ],
+        },
+        7: {
+            label: 'Ready', // Contract Started
+            buttons: [
+                buttonTypes[4], // Contact Support Team
+            ],
+        },
+        8: {
+            label: 'Countdown', // Countdown
+            buttons: [
+                buttonTypes[12], // Contact Support Team
+            ],
+        },
+        9: {
+            label: 'Fundraising',
+            buttons: isAdmin
+                ? [buttonTypes[12]] // Contact Support Team
+                : isProtocolTeam
+                ? [buttonTypes[12]] // Protocol Team Button
+                : [buttonTypes[13]], // Default Button
+        },
+    };
+    return state[state_id] || { label: 'Not Started', buttons: [] };
+};
 
-export const cardInformationByState = (state_id: number, milestone_status_id?: number): StateConfig => {
+export const CardInformationByState = (state_id: number, milestone_status_id?: number): StateConfig => {
     const { setMenuView } = useProjectDetailStore();
 
     const state: { [key: number]: StateConfig } = {
@@ -326,7 +407,7 @@ export const cardInformationByState = (state_id: number, milestone_status_id?: n
                 buttonTypes[11], // Validate Fundraising Status (TX)
             ],
         },
-        11: milestone_status_id ? buttonsByMilestoneStatus(milestone_status_id) : { label: 'Active', buttons: [] },
+        11: milestone_status_id ? ButtonsByMilestoneStatus(milestone_status_id) : { label: 'Active', buttons: [] },
     };
 
     return state[state_id] || { label: 'Not Started', buttons: [] };
@@ -399,7 +480,7 @@ export const cardInformationForProtocolTeam = (state_id: number): StateConfig =>
     return state[state_id] || { label: 'Not Started', buttons: [] };
 };
 
-export const buttonsByMilestoneStatus = (milestone_status_id: number): StateConfig => {
+export const ButtonsByMilestoneStatus = (milestone_status_id: number): StateConfig => {
     const { setMenuView } = useProjectDetailStore();
     const state: { [key: number]: StateConfig } = {
         2: {

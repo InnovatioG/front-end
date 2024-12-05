@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import CampaignCard from '../creator/finalSetup/CampaignCard';
 import SocialMediaCardContainer from '../creator/finalSetup/SocialMediaCard';
-import { cardInformationByState } from '@/utils/constants';
+import { CardInformationByState } from '@/utils/constants';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/defaultAvatar/DefaultAvatar';
 import styles from "@/pages/campaign/[id]/campainPagelayout.module.scss"
 
@@ -20,8 +20,9 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
 
 
 
-    const state = cardInformationByState(project.state_id);
+    const state = CardInformationByState(project.state_id);
     const label = state.label.toLowerCase().replace(/\s+/g, '-');
+
 
     const handleChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return;

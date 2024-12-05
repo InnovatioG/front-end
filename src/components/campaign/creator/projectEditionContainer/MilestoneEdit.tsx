@@ -20,8 +20,11 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index,
 
     const handleDescriptionChange = (content: string) => {
         const updatedMilestones = project.milestones.map(m =>
-            m.id === milestone.id ? { ...m, milestone_status: { ...m.milestone_status, description: content } } : m
+            m.id === milestone.id && m.milestone_status ? { ...m, milestone_status: { ...m.milestone_status, description: content, id: m.milestone_status.id ?? 0 } } : m
         );
+
+
+
 
         setProject({
             ...project,

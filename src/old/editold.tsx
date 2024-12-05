@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+/* import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import JSON from "@/HardCode/campaignId.json";
 import CampaignHeader from '@/components/campaign/campaignHeader/CampaignHeader';
@@ -57,4 +57,4 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
     );
 }
 
-export default CampaignByIndex;
+export default CampaignByIndex; */

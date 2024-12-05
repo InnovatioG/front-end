@@ -9,12 +9,12 @@ import BtnActions from "./BtnActions";
 import { ROUTES } from "@/utils/routes";
 
 interface CampaignRaisedProps {
-  campaign: Campaign;
+  campaign: any;
   getStatusName: (statusId: number) => string;
 }
 
 interface MilestoneRaisedProps {
-  campaign: MilestoneCampaign;
+  campaign: any;
   getStatusName: (statusId: number) => string;
 }
 
@@ -57,7 +57,7 @@ function MilestoneRaised(props: MilestoneRaisedProps) {
           className={`${styles.amount} ${styles[getStatusName(campaign.state_id).toLowerCase()]
             }`}
         >
-          <p className={styles.value}>{formatMoney(campaign.raise_amount)}</p>
+          <p className={styles.value}>{formatMoney(campaign.raise_amount, "USD")}</p>
           <p className={styles.text}>Total Money Raised</p>
         </div>
         <div className={styles.milestone}>
@@ -84,7 +84,7 @@ function TargetRaised(props: TargetRaisedProps) {
           <div className={styles.targetUnreached}>
             <div className={styles.details}>
               <p className={styles.raise}>
-                Target Raise: {formatMoney(campaign.goal)}
+                Target Raise: {formatMoney(campaign.goal, "USD")}
               </p>
               <p className={styles.time}>
                 Active campaign time:{" "}
@@ -101,7 +101,7 @@ function TargetRaised(props: TargetRaisedProps) {
                   }`}
               >
                 <p className={styles.value}>
-                  {formatMoney(campaign.raise_amount)}
+                  {formatMoney(campaign.raise_amount, "USD")}
                 </p>
                 <p className={styles.text}>Total Money Raised</p>
               </div>
@@ -122,7 +122,7 @@ function TargetRaised(props: TargetRaisedProps) {
         <>
           <div className={styles.targetFundraising}>
             <p className={styles.amount}>
-              {formatMoney(campaign.raise_amount)}
+              {formatMoney(campaign.raise_amount, "USD")}
             </p>
             <div className={styles.bar}>
               <div
@@ -136,7 +136,7 @@ function TargetRaised(props: TargetRaisedProps) {
               ></div>
             </div>
             <p className={styles.raise}>
-              Target Raise: {formatMoney(campaign.goal)}
+              Target Raise: {formatMoney(campaign.goal, "USD")}
             </p>
           </div>
         </>
@@ -144,7 +144,7 @@ function TargetRaised(props: TargetRaisedProps) {
         <>
           <div className={styles.targetComplete}>
             <p className={styles.amount}>
-              {formatMoney(campaign.raise_amount)}
+              {formatMoney(campaign.raise_amount, "USD")}
             </p>
             <p className={styles.raise}>Target Raise</p>
           </div>

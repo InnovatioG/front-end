@@ -2,67 +2,67 @@
 @use '@/styles/settings/fonts';
 
 .headerDesktop {
-  width: calc(100% - 160px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  @media (width >= 1140px) {
-    width: calc(100% - 200px);
-  }
-  @media (width >= 1368px) {
-    width: calc(100% - 330px);
-  }
-  .navSection {
+    width: calc(100% - 160px);
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: space-between;
     @media (width >= 1140px) {
-      gap: 40px;
+        width: calc(100% - 200px);
     }
-  }
-  .btnSection {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    .btnCalendar {
-      position: relative;
-      transition: all 0.5s;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      .icon {
-        fill: colors.$primary-font;
-        transition: all 0.5s;
-        z-index: 1;
-      }
-      &:hover {
-        .icon {
-          fill: colors.$white-color;
+    @media (width >= 1368px) {
+        width: calc(100% - 330px);
+    }
+    .navSection {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        @media (width >= 1140px) {
+            gap: 40px;
         }
-      }
-      &::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 0;
-        height: 0;
-        background-color: colors.$primary-dark-color;
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-        transition: width 0.5s ease, height 0.5s ease;
-      }
-      &:hover::before {
-        width: 50px;
-        height: 50px;
-      }
     }
-  }
+    .btnSection {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        .btnCalendar {
+            position: relative;
+            transition: all 0.5s;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            .icon {
+                fill: colors.$primary-font;
+                transition: all 0.5s;
+                z-index: 1;
+            }
+            &:hover {
+                .icon {
+                    fill: colors.$white-color;
+                }
+            }
+            &::before {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                background-color: colors.$primary-dark-color;
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                transition: width 0.5s ease, height 0.5s ease;
+            }
+            &:hover::before {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    }
+}
 
-
-
+.togglePriceContainer {
 }

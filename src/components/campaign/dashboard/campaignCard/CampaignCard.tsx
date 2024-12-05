@@ -32,7 +32,7 @@ export default function CampaignCard(props: CampaignCardProps) {
     }
 
     if (timeRemaining.total <= 72 * 60 * 60 * 1000) {
-      return `${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}:${formatTime(timeRemaining.seconds)}`;
+      return `${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}}`;
     }
 
     return getStatusName(campaign.state_id);
@@ -51,9 +51,8 @@ export default function CampaignCard(props: CampaignCardProps) {
         <div className={styles.cardDetails}>
           <div className={styles.status}>
             <div
-              className={`${styles.state} ${
-                styles[getStatusName(campaign.state_id).toLowerCase()]
-              }`}
+              className={`${styles.state} ${styles[getStatusName(campaign.state_id).toLowerCase()]
+                }`}
             >
               {renderStatus()}
             </div>
@@ -71,7 +70,7 @@ export default function CampaignCard(props: CampaignCardProps) {
       </div>
       <h3 className={styles.cardTitle}>{campaign.title}</h3>
       <p className={styles.cardDescription}>{campaign.description}</p>
-      <CampaignRaised campaign={campaign} getStatusName={getStatusName}/>
+      <CampaignRaised campaign={campaign} getStatusName={getStatusName} />
     </div>
   );
 }

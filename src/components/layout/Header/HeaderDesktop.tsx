@@ -4,6 +4,7 @@ import BtnCampaign from '@/components/buttons/campaign/BtnCampaign';
 import BtnConnectWallet from '@/components/buttons/connectWallet/BtnConnectWallet';
 import { CALENDAR } from '@/utils/images';
 import { Session } from 'next-auth';
+import TogglePrice from '@/components/buttons/toggle/TogglePrice';
 
 export default function HeaderDesktop({ session, setIsOpen, isOpen }: { session: Session | null; setIsOpen: (isOpen: boolean) => void; isOpen: boolean }) {
     return (
@@ -20,7 +21,7 @@ export default function HeaderDesktop({ session, setIsOpen, isOpen }: { session:
                 </Link>
             </nav>
             <div className={styles.btnSection}>
-                <div className={styles.btnCalendar}>
+                {/*           <div className={styles.btnCalendar}>
                     <svg
                         width="29"
                         height="29"
@@ -31,6 +32,9 @@ export default function HeaderDesktop({ session, setIsOpen, isOpen }: { session:
                     >
                         <use href={CALENDAR}></use>
                     </svg>
+                </div> */}
+                <div className={styles.togglePriceContainer}>
+                    <TogglePrice />
                 </div>
                 <BtnCampaign type="primary" width={210} />
                 <BtnConnectWallet type="primary" width={166} />

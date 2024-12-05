@@ -1,11 +1,11 @@
-import Reac, { useEffect } from 'react';
-import styles from "./CampaignCard.module.scss"
+import React, { useEffect, useState } from 'react';
+import styles from "./CampaignCard.module.scss";
 import { TWO_USERS } from '@/utils/images';
 import { calculatePorcentage, formatMoney } from '@/utils/formats';
 import ToolTipInformation from '@/components/general/tooltipInformation/tooltipInformation';
-import { useState } from 'react';
 import { getTimeRemaining, formatTime } from '@/utils/formats';
-
+import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 
 interface CampaignCardProps {
     status: string;
@@ -16,31 +16,29 @@ interface CampaignCardProps {
 }
 
 const CampaignCard: React.FC<CampaignCardProps> = ({ status, goal, min_request, investors, startDate }) => {
-
-
     const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(startDate));
-
+    const { priceAdaOrDollar } = usePriceStore();
+    const { price_ada, fetchAdaPrice } = useProjectDetailStore();
 
     useEffect(() => {
+        fetchAdaPrice();
+
         const timer = setInterval(() => {
             setTimeRemaining(getTimeRemaining(startDate));
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [startDate])
+    }, [startDate, fetchAdaPrice]);
 
     const formatAllTime = (timeRemaining: any) => {
         return `${timeRemaining.days}:${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}`;
-    }
-
-
-
-
+    };
 
     const progressWidth = `${min_request}%`;
-
     const stateClass = status.toLowerCase().replace(/\s+/g, '-');
 
+    const goalInCurrentCurrency = priceAdaOrDollar === 'dollar' ? goal : goal / price_ada;
+    const currencySymbol = priceAdaOrDollar === 'dollar' ? 'USD' : 'ADA';
 
     return (
         <section className={styles.campaignCard}>
@@ -52,7 +50,6 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ status, goal, min_request, 
                     <div className={styles.tooltipContainer}>
                         <ToolTipInformation content="We need to write the explination status by status " />
                     </div>
-
                 </div>
                 <div className={styles.investors}>
                     <svg width="15" height="10" className={styles.icon}>
@@ -63,16 +60,13 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ status, goal, min_request, 
             </div>
             <div className={styles.campaignCardGoal}>
                 <p>Fundraise goal</p>
-                <span className={styles.goal}>{formatMoney(goal)}</span>
+                <span className={styles.goal}>{formatMoney(goalInCurrentCurrency, currencySymbol)}</span>
             </div>
-
-            {/* EL P CAMBIA ACORDE AL STATUS --- CHEQUEAR OPCIONES EN DOC */}
             <div className={styles.campaignCardMinRequest}>
                 <div className={styles.medidor}>
                     <div className={styles.progress} style={{ width: progressWidth }}></div>
-
                 </div>
-                <p>Minimum collection to activate the campaign {min_request}%: {formatMoney(calculatePorcentage(goal, min_request))}</p>
+                <p>Minimum collection to activate the campaign {min_request}%: {formatMoney(calculatePorcentage(goalInCurrentCurrency, min_request), currencySymbol)}</p>
             </div>
         </section>
     );

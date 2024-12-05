@@ -1,5 +1,6 @@
 @use '@/styles/settings/colors';
 @use '@/styles/settings/fonts';
+@use '@/components/campaign/creator/form/FormSteps.module.scss';
 
 .overlay {
     position: fixed;
@@ -56,11 +57,30 @@
         max-width: 27rem;
     }
 
-    .buttonContainer {
+    .textAreaContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .textArea {
+        @include FormSteps.inputStyles;
+        padding: 1rem 1rem;
+        background-color: white;
+        /* quiero que sea 10 rengoles la altura minima */
+        min-height: 15rem;
+        line-height: 1.5rem; /* Ajusta esto según tu diseño */
+    }
+
+    .buttonContainer,
+    .buttonContainerContact {
         display: flex;
         flex-direction: row;
         gap: 0.5rem;
         width: 50%;
         align-self: center;
+    }
+    .buttonContainerContact {
+        width: 100%;
+        min-height: 60px;
     }
 }

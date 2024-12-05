@@ -4,6 +4,7 @@ import styles from "./StepTwo.module.scss";
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import SelectButton from '@/components/buttons/selectButton/SelectButton';
 import Toggle from '@/components/buttons/toggle/Toggle';
+import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 interface FundrasingSliderProps {
     // Define props here
 }
@@ -13,6 +14,7 @@ interface FundrasingSliderProps {
 
 const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
     const { newCampaign, setGoal, setMilestones } = useCampaignStore();
+    const { priceAdaOrDollar } = usePriceStore();
     const [isActive, setIsActive] = useState(false);
 
     const goal = newCampaign.goal;
@@ -26,6 +28,8 @@ const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
         }));
         setMilestones(milestones);
     };
+
+
 
     return (
         <div className={styles.layout}>

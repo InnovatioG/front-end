@@ -2,10 +2,11 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import axios from 'axios';
 import { ProjectDetailState, initialState } from '@/store/projectdetail/initialState';
+import { usePriceStore } from '../price/usepriceAdaOrDollar';
 
 interface UseProjectDetailStore extends ProjectDetailState {
-    setProject: /* (project: ProjectDetailState["project"]) => void; */ any;
-    setMenuView: /* (menuView: ProjectDetailState["menuView"]) => void */ any;
+    setProject: (project: ProjectDetailState['project']) => void;
+    setMenuView: (menuView: ProjectDetailState['menuView']) => void;
     setMilestone: (milestone: ProjectDetailState['milestone']) => void;
     setIsLoading: (isLoading: boolean) => void;
     setIsAdmin: (isAdmin: boolean) => void;
@@ -13,13 +14,14 @@ interface UseProjectDetailStore extends ProjectDetailState {
     setError: (error: string) => void;
     setEditionMode: (editionMode: boolean) => void;
     fetchAdaPrice: () => void;
+    getGoalInCurrentCurrency: () => number;
 }
 
 export const useProjectDetailStore = create<UseProjectDetailStore>()(
-    immer<UseProjectDetailStore>((set) => ({
+    immer<UseProjectDetailStore>((set, get) => ({
         ...initialState,
 
-        setProject: (project: ProjectDetailState['project']) =>
+        setProject: (project) =>
             set((state) => {
                 state.project = project;
             }),
@@ -35,7 +37,7 @@ export const useProjectDetailStore = create<UseProjectDetailStore>()(
             set((state) => {
                 state.isProtocolTeam = isProtocolTeam;
             }),
-        setMenuView: (menuView: ProjectDetailState['menuView']) =>
+        setMenuView: (menuView) =>
             set((state) => {
                 state.menuView = menuView;
             }),
@@ -67,6 +69,12 @@ export const useProjectDetailStore = create<UseProjectDetailStore>()(
                     state.isLoadingPrice = false;
                 });
             }
+        },
+        getGoalInCurrentCurrency: () => {
+            const { priceAdaOrDollar } = usePriceStore.getState();
+            const { project, price_ada } = get();
+            console.log('priceAdaOrDollar', priceAdaOrDollar);
+            return priceAdaOrDollar === 'dollar' ? project.goal : project.goal / price_ada;
         },
     }))
 );

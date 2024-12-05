@@ -33,7 +33,9 @@ const GeneralButtonUI: React.FC<GeneralButtonUIProps> = ({
             onClick={onClick}
             disabled={disabled || loading}
         >
-            {text}
+            <span className={styles.span}>
+                {text}
+            </span>
             {children}
         </button>
     );

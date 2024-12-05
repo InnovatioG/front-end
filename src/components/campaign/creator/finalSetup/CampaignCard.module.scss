@@ -70,6 +70,8 @@
 .goal {
     font: fonts.$goal;
     color: colors.$primary-font;
+    min-width: 7ch;
+    text-align: right;
 }
 
 .medidor {

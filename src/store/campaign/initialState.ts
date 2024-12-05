@@ -2,21 +2,21 @@ import type { User, Milestone } from '@/HardCode/databaseType';
 
 export interface MembersTeam {
     id: number;
-    member_picture: string;
     member_name: string;
     member_last_name: string;
+    member_email: string;
     member_role: string;
     member_description: string;
-    member_email: string;
-    member_admin: boolean;
-    member_manage_funds: boolean;
-    member_wallet_address: string;
+    member_picture: string;
     member_social: {
         facebook: string;
         instagram: string;
-        discord: string;
         x: string;
+        discord: string;
     };
+    member_admin: boolean;
+    member_manage_funds: boolean;
+    member_wallet_address: string;
 }
 
 export interface CampaignState {
