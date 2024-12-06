@@ -596,7 +596,7 @@
                         "milestone_submission": {
                             "id_milestone_submission": 1,
                             "milestone_id": 1,
-                            "milestone_status_id": 1,
+                            "milestone_status_id": 2,
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
@@ -640,31 +640,32 @@
             "created_at": "",
             "updated_at": ""
         },
+
         {
-            "id": 14,
-            "user_id": 2,
-            "state_id": 12,
+            "id": 15,
+            "user_id": 1,
+            "state_id": 11,
             "category_id": 6,
             "contract_id": 2,
             "vizualization": 2,
             "investors": 0,
             "title": "Campaña activa --- estamos en el medio de los milestones asi que la config depende de los estados de los milestones",
-            "description": "Campaña activa --- estamos en el medio de los milestones asi que la config depende de los estados de los milestones --- en este caso se aprobo el reporte.",
+            "description": "Dos milestone Finished y el otro ya arranco",
             "campaign_type": "Milestone",
             "milestones": [
                 {
                     "id": 1,
                     "campaign_id": 11,
-                    "campaign_status_id": 1,
+                    "campaign_status_id": 4,
                     "cmPercentage": 40,
                     "cmEstimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
                             "milestone_id": 1,
-                            "milestone_status_id": 6,
+                            "milestone_status_id": 5,
                             "approved_justification": "",
-                            "rejected_justification": "Aca va la justificacion que manda el protocol tema explicando porque se rechazo el reporte, o porque se decidio pasar el milestone como un failed"
+                            "rejected_justification": ""
                         },
                         "id": 1,
                         "name": "Bit",
@@ -684,7 +685,7 @@
                         "milestone_submission": {
                             "id_milestone_submission": 1,
                             "milestone_id": 1,
-                            "milestone_status_id": 1,
+                            "milestone_status_id": 5,
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
@@ -706,7 +707,7 @@
                         "milestone_submission": {
                             "id_milestone_submission": 1,
                             "milestone_id": 1,
-                            "milestone_status_id": 1,
+                            "milestone_status_id": 4,
                             "approved_justification": "",
                             "rejected_justification": ""
                         },

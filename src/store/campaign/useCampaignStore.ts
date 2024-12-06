@@ -148,6 +148,7 @@ export const useCampaignStore = create<UseCampaignStore>()(
                 }
                 state.selectedMember = member;
             }),
+
         resetNewMember: () =>
             set((state) => {
                 state.newMember = {

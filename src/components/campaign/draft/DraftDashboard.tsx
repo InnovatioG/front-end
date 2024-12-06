@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDashboardCard } from '@/hooks/useDashboardCard';
 import DraftFilters from './draftFilters/DraftFilters';
 import DraftCard from './draftCard/DraftCard';
@@ -41,7 +41,7 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
         stateFilter
     } = useDashboardCard(address);
 
-    console.log("states", states);
+
 
     return (
         <div className={styles.draftDashboard}>
