@@ -4,7 +4,7 @@ import TextEditor from '@/components/general/textEditor/TextEditor';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import { inputFieldsToken } from '@/utils/constants';
 import { ADAIC, FACEBOOK } from '@/utils/images';
-
+import EmptyState from '@/components/emptyStates/EmptyState';
 const Tokenomics: React.FC = () => {
     const { project, setProject, price_ada } = useProjectDetailStore();
 

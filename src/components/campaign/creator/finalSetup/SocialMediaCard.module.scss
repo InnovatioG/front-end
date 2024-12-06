@@ -16,6 +16,14 @@
     width: 100%;
 }
 
+.socialMediaCardContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .buttonSelected {
     background-color: colors.$secondary-background;
     border-radius: 2.375rem;
@@ -24,7 +32,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 50%;
+    width: 340px;
     span {
         color: colors.$white-background;
     }

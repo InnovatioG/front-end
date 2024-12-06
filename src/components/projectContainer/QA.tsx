@@ -2,6 +2,8 @@ import React from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/accordion/Accordion"
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import styles from "@/components/campaign/creator/projectEditionContainer/Qa.module.scss"
+import EmptyState from '../emptyStates/EmptyState';
+
 interface QAProps {
     // Define props here
 }
@@ -11,6 +13,10 @@ const QA: React.FC<QAProps> = (props) => {
     const { project } = useProjectDetailStore();
 
     const faqs = project.faqs || [];
+
+    if (faqs.length === 0) {
+        return <EmptyState />;
+    }
 
 
     return (

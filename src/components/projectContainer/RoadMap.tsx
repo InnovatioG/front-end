@@ -1,7 +1,7 @@
 import React from 'react';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import RoadMapCard from './RoadMapCard';
-
+import EmptyState from '../emptyStates/EmptyState';
 
 
 interface RoadMapProps {
@@ -12,8 +12,9 @@ const RoadMap: React.FC<RoadMapProps> = (props) => {
 
     const { project } = useProjectDetailStore();
     const milestones = project.milestones;
-    console.log(milestones)
-
+    if (milestones.every((milestone) => milestone.milestone_status && milestone.milestone_status.description === "")) {
+        return <EmptyState />;
+    }
     return (
         <article>
             <div id='roadmap'>

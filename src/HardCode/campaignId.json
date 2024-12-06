@@ -52,7 +52,7 @@
                     "id": 1,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "percentage": 0,
+                    "cmPercentage": 0,
                     "status": "pending",
                     "cmEstimatedDeliveryDate": "",
                     "milestone_status": {
@@ -67,7 +67,7 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "percentage": 0,
+                    "cmPercentage": 0,
                     "status": "pending",
                     "cmEstimatedDeliveryDate": "",
                     "milestone_status": {
@@ -82,7 +82,7 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "percentage": 0,
+                    "cmPercentage": 0,
                     "status": "pending",
                     "cmEstimatedDeliveryDate": "",
                     "milestone_status": {

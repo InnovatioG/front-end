@@ -20,7 +20,7 @@ export const handlePercentageChange = (
     }
 
     const updatedMilestones = milestones.map(milestone =>
-        milestone.id === milestoneId ? { ...milestone, percentage: newPercentage } : milestone
+        milestone.id === milestoneId ? { ...milestone, cmPercentage: newPercentage } : milestone
     );
 
     setProject({

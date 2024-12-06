@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import styles from "./ProjectDetail.module.scss";
+import EmptyState from '../emptyStates/EmptyState';
 
 const ProjectDetail: React.FC = () => {
     const { project } = useProjectDetailStore();
@@ -10,6 +11,8 @@ const ProjectDetail: React.FC = () => {
     const sectionRefs = useRef<HTMLDivElement[]>([]);
 
     useEffect(() => {
+        if (campaignContentSorted.length === 0) return;
+
         const handleScroll = () => {
             const sections = sectionRefs.current;
             const scrollPosition = window.scrollY + window.innerHeight / 2;
@@ -50,6 +53,10 @@ const ProjectDetail: React.FC = () => {
             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     };
+
+    if (campaignContentSorted.length === 0) {
+        return <EmptyState />;
+    }
 
     return (
         <main className={styles.projectLayout}>

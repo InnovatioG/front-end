@@ -3,6 +3,7 @@ import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import axios from 'axios';
 import LoadingPage from '../LoadingPage/LoadingPage';
 import styles from "./Tokenomics.module.scss";
+import EmptyState from '../emptyStates/EmptyState';
 interface TokenomicsProps {
     // Define props here
 }
@@ -34,6 +35,10 @@ const Tokenomics: React.FC<TokenomicsProps> = (props) => {
 
     if (isLoadingPrice) {
         return <LoadingPage />;
+    }
+
+    if (project.tokenomics_description === "") {
+        return <EmptyState />;
     }
 
 

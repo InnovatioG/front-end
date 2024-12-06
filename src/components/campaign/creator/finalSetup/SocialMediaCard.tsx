@@ -21,6 +21,8 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
     const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>("website");
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
+    console.log("modalOpen", modalOpen)
+
     const { openModal } = useModalStore();
     const { buttons } = ButtonsForCampaignPage(project.state_id, isProtocolTeam, isAdmin);
 
@@ -40,13 +42,31 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
         return link;
     }
 
+    console.log("editionMode", editionMode);
+
     return (
         <section className={styles.socialMediaCard}>
             {editionMode ? (
-                <button className={styles.buttonSelected} onClick={editLinkButton}>
-                    <span>Edit {selectedLink}</span>
-                    <Image src={"/img/icons/right-arrow.svg"} alt="next" width={10} height={10} />
-                </button>
+                <div className={styles.socialMediaCardContainer}>
+                    <button className={styles.buttonSelected} onClick={editLinkButton}>
+                        <span>Edit {selectedLink}</span>
+                        <Image src={"/img/icons/right-arrow.svg"} alt="next" width={10} height={10} />
+                    </button>
+                    <article className={styles.socialContainer}>
+                        {socialIcons.map(social => {
+                            return (
+                                <SocialButton
+                                    key={social.name}
+                                    icon={social.icon}
+                                    name={social.name as SocialLinkKeys}
+                                    setSocialLink={setSelectedLink}
+                                />
+                            );
+                        })}
+                    </article>
+                </div>
+
+
             ) : (
                 <>
                     {buttons.map((button: ButtonConfig, index: number) => (
@@ -72,7 +92,7 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
                     <article className={styles.socialContainer}>
                         {socialIcons.map(social => {
                             const socialLink = project[social.name as SocialLinkKeys];
-                            if (!socialLink || socialLink.trim() === "") return null; // No renderizar si el enlace está vacío
+                            if (!editionMode && (!socialLink || socialLink.trim() === "")) return null; // No renderizar si el enlace está vacío y no está en modo edición
                             return (
                                 <a
                                     key={social.name}
@@ -90,26 +110,27 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
                         })}
                     </article>
 
-                    <ModalTemplate isOpen={modalOpen} setIsOpen={setModalOpen}>
-                        <div className={styles.modalContainer}>
-                            <h2 className={styles.modalTitle}>Edit {selectedLink}</h2>
-                            <div className={styles.inputContainer}>
-                                <input
-                                    type="text"
-                                    value={project[selectedLink] || ""}
-                                    placeholder={getPlaceholder()}
-                                    onChange={(e) => setProject({
-                                        ...project,
-                                        [selectedLink]: e.target.value
-                                    })}
-                                    className={styles.input}
-                                />
-                                <GeneralButtonUI text="Confirm" onClick={() => setModalOpen(false)} />
-                            </div>
-                        </div>
-                    </ModalTemplate>
                 </>
             )}
+
+            <ModalTemplate isOpen={modalOpen} setIsOpen={setModalOpen}>
+                <div className={styles.modalContainer}>
+                    <h2 className={styles.modalTitle}>Edit {selectedLink}</h2>
+                    <div className={styles.inputContainer}>
+                        <input
+                            type="text"
+                            value={project[selectedLink] || ""}
+                            placeholder={getPlaceholder()}
+                            onChange={(e) => setProject({
+                                ...project,
+                                [selectedLink]: e.target.value
+                            })}
+                            className={styles.input}
+                        />
+                        <GeneralButtonUI text="Confirm" onClick={() => setModalOpen(false)} />
+                    </div>
+                </div>
+            </ModalTemplate>
         </section>
     );
 }
