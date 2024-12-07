@@ -4,22 +4,30 @@ interface ToggleProps {
   isActive: boolean;
   onClickToggle: () => void;
   disabled: boolean;
+  transparent?: boolean;
 }
 
 export default function Toggle(props: ToggleProps) {
-  const { isActive, onClickToggle, disabled } = props;
+  const { isActive, onClickToggle, disabled, transparent } = props;
 
   const handleClickToggle = () => {
-    onClickToggle();
+    if (!disabled) {
+      onClickToggle();
+    }
   };
+
+  console.log(transparent)
+
   return (
     <div className={styles.toggleController}>
-      <div className={`${styles.toggle} ${disabled ? styles.disabled : ""}`} onClick={handleClickToggle}>
+      <div
+        className={`${styles.toggle} ${disabled ? styles.disabled : ""} ${transparent ? styles.transparent : ""}`}
+        onClick={handleClickToggle}
+      >
         <span
           className={`${styles.point} ${isActive ? styles.active : ""}`}
         ></span>
       </div>
-
     </div>
   );
 }

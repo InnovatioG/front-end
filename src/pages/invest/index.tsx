@@ -16,7 +16,6 @@ const InvestPage: React.FC<InvestPageProps> = (props) => {
     const { cdCampaignToken_TN, cdRequestedMaxADA, cdCampaignToken_PriceADA, goal, id, start_date, title, logoUrl } = project;
 
 
-    console.log("project", project.logoUrl)
 
     useEffect(() => {
         fetchAdaPrice();

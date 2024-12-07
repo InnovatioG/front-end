@@ -34,6 +34,9 @@ export const GOOGLE = '/img/icons/google.png';
 export const AVATAR = '/img/icons/defaultavatar.png';
 export const ADAIC = '/img/icons/ADA.svg#icon';
 export const LINKEDIN = '/img/icons/linkedin.svg#icon';
+export const REFRESH = '/img/icons/modal/refresh.svg#icon';
+export const HIDE = '/img/icons/modal/hide.svg#icon';
+export const COPY = '/img/icons/modal/copy.svg#icon';
 
 //ASSETS
 
@@ -57,4 +60,7 @@ export type IconType =
     | '/img/icons/website.svg#icon'
     | '/img/icons/linkedin.svg#icon'
     | 'img/icons/ADA.svg#icon'
+    | 'img/icons/modal/refresh.svg#icon'
+    | 'img/icons/modal/hide.svg#icon'
+    | 'img/icons/modal/copy.svg#icon'
     | '/img/icons/ig.svg#icon';

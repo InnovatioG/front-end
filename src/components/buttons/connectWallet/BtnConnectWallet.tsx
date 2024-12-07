@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import styles from './BtnConnectWallet.module.scss';
 import { useWalletStore } from 'smart-db';
+import { useModalStore } from '@/store/modal/useModalStoreState';
 
 interface BtnConnectProps {
     type: 'mobile' | 'primary' | 'secondary';
@@ -54,6 +55,8 @@ const BtnConnectMobile: React.FC<SubComponentProps> = ({ openModal, address, dis
 
 const BtnConnectPrimary: React.FC<SubComponentProps> = ({ openModal, address, disconnect, width }) => {
     const walletStore = useWalletStore();
+    const openModalStore = useModalStore().openModal;
+
 
     const [showDisconnect, setShowDisconnect] = useState<boolean>(false);
 
@@ -75,9 +78,14 @@ const BtnConnectPrimary: React.FC<SubComponentProps> = ({ openModal, address, di
                 </>
             )}
             {showDisconnect && address !== null && (
-                <p className={styles.btnDisconnect} onClick={disconnect} style={width ? { width: `${width}px` } : undefined}>
-                    Disconnect
-                </p>
+                <div>
+                    <p className={styles.btnDisconnect} onClick={disconnect} style={width ? { width: `${width}px` } : undefined}>
+                        Disconnect
+                    </p>
+                    <p className={styles.btnDisconnect} onClick={() => { openModalStore("walletInformation", 0) }} style={width ? { width: `${width}px` } : undefined}>
+                        Wallet Information
+                    </p>
+                </div>
             )}
         </button>
     );

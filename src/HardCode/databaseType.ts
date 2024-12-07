@@ -82,6 +82,22 @@ export interface Milestone_submission {
     rejected_justification: string;
 }
 
+export interface Campaign_Submission {
+    id_campaign_submission: number;
+    campaign_id: number;
+    submission_status_id?: number;
+    submittedby_wallet_id?: number;
+    campaign_status_id: number;
+    approved_justification: string;
+    rejected_justification: string;
+}
+
+export interface Submission_Status {
+    id_submission_status: number;
+    name: string;
+    description: string;
+}
+
 export interface MilestoneStatus {
     id: number;
     name: string;
@@ -94,6 +110,7 @@ export interface MilestoneStatus {
 export interface CampaignStatus {
     id: number;
     name: string;
+    campaign_submission?: Campaign_Submission;
     description: string;
     created_at: string;
     updated_at: string;

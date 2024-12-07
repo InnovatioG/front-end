@@ -68,6 +68,23 @@
         { "id": 6, "name": "Failed" }
     ],
 
+    "submission_status": [
+        { "id_submission_status": 1, "name": "Submitted" },
+        { "id_submission_status": 2, "name": "Approved" },
+        { "id_submission_status": 3, "name": "Rejected" },
+        { "id_submission_status": 4, "name": "Failed" }
+    ],
+
+    "campaign_submissions": [
+        {
+            "id": 1,
+            "campaign_id": 3,
+            "submission_status_id": 3,
+            "approved_justification": "",
+            "rejected_justification": "Aca va la justificacion de porque se decidio reporbar el reporte"
+        }
+    ],
+
     "campaigns": [
         {
             "id": 1,

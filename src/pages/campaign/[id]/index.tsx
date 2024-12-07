@@ -27,9 +27,7 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
         if (id) {
             const campaignId = Number(id);
             const campaign: any = JSON.campaigns.find((camp: any) => camp.id === campaignId);
-            console.log('campaign', campaign);
             const user: any = JSON.users.find((user: any) => user.wallet_address === session?.user?.address);
-            console.log("user", user);
 
             if (campaign) {
                 setProject({
@@ -60,6 +58,7 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
 
         return () => clearTimeout(timer);
     }, [id, setProject, setIsAdmin, session?.user?.address]);
+
 
     if (isLoading) {
         return <LoadingPage />;

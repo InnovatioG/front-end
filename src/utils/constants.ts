@@ -184,8 +184,9 @@ export const buttonTypes: ButtonConfig[] = [
     {
         id: 3,
         label: 'View Report',
-        action: () => {},
-        link: (id: number) => `/campaign/${id}`,
+        action: (setModalOpen) => {
+            if (setModalOpen) setModalOpen('viewReport');
+        },
         classNameType: 'fill',
     },
     {
@@ -353,15 +354,7 @@ export const CardInformationByState = (state_id: number, milestone_status_id?: n
         3: {
             label: 'Rejected', // Rejected
             buttons: [
-                {
-                    id: 3,
-                    label: 'View Report',
-                    action: () => {
-                        setMenuView('Roadmap & Milestones');
-                        document.getElementById('nav-project')?.scrollIntoView({ behavior: 'smooth' });
-                    },
-                    classNameType: 'fill',
-                },
+                buttonTypes[2], // View report
             ],
         },
         4: {

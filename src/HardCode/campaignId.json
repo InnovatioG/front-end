@@ -16,6 +16,23 @@
         { "id": 14, "name": "Success" }
     ],
 
+    "submission_status": [
+        { "id_submission_status": 1, "name": "Submitted" },
+        { "id_submission_status": 2, "name": "Approved" },
+        { "id_submission_status": 3, "name": "Rejected" },
+        { "id_submission_status": 4, "name": "Failed" }
+    ],
+
+    "campaign_submissions": [
+        {
+            "id": 1,
+            "campaign_id": 3,
+            "submission_status_id": 3,
+            "approved_justification": "",
+            "rejected_justification": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad et porro molestias consectetur incidunt, in nesciunt sint vero vel placeat architecto, neque, adipisci veritatis amet nihil repellat nulla ipsa magni! Fugit, ratione sed! Delectus, ipsum laudantium molestiae quibusdam sequi dolores eius quaerat debitis a odio? Pariatur, impedit aliquam! Voluptas rem nostrum perspiciatis tempore quia delectus harum earum magnam illo aliquam?"
+        }
+    ],
+
     "users": [
         {
             "id": 1,

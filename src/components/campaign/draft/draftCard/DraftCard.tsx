@@ -19,14 +19,6 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
 
 
 
-    useEffect(() => {
-        if (campaign.id > 9) {
-            console.log(campaign.id, campaign.milestones);
-        }
-    }, [campaign]);
-
-
-
 
 
 
@@ -56,7 +48,6 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
             </div>
             <h3 className={styles.cardTitle}>{campaign.title}</h3>
             <h3 className={styles.cardDescription}>{campaign.description}</h3>
-            <span>{campaign.id}</span>
             <div className={styles.actionsTarget}>
                 {buttons.map((button, index) => {
                     if (button.link) {

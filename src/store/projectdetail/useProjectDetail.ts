@@ -73,7 +73,6 @@ export const useProjectDetailStore = create<UseProjectDetailStore>()(
         getGoalInCurrentCurrency: () => {
             const { priceAdaOrDollar } = usePriceStore.getState();
             const { project, price_ada } = get();
-            console.log('priceAdaOrDollar', priceAdaOrDollar);
             return priceAdaOrDollar === 'dollar' ? project.goal : project.goal / price_ada;
         },
     }))

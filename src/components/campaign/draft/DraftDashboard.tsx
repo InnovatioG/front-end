@@ -15,7 +15,6 @@ interface NewDraftDashboardProps {
 
 const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
     const { openModal, closeModal, modalType, campaignId } = useModalStore();
-    console.log("openModal", openModal);
 
     const {
         campaigns,

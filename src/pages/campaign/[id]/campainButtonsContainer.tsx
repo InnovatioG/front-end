@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useModalStore } from '@/store/modal/useModalStoreState';
 
 
+
 interface CampaignButtonContainerProps { }
 
 const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) => {
@@ -26,7 +27,7 @@ const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) 
         <div className={styles.buttonContainerLayout}>
             {isAdmin ? (
                 <div className={styles.buttonContainer}>
-                    <GeneralButtonUI text={"Contact Support Team"} classNameStyle={"outlineb"} onClick={() => { console.log("contact support team") }} />
+                    <GeneralButtonUI text={"Contact Support Team"} classNameStyle={"outlineb"} onClick={() => { openModal("contactSupport", project.id) }} />
                     {project.state_id <= 3 && (
                         <Link href={`/campaign/edit?id=${project.id}`}>
                             <GeneralButtonUI text={"Edit Campaign"} classNameStyle={"outlineb"} onClick={() => { }} />
