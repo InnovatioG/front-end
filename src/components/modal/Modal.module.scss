@@ -26,6 +26,10 @@
     padding: 2rem;
 }
 
+.drawerContent {
+    background: colors.$primary-background;
+}
+
 .modalContent {
     display: flex;
     flex-direction: column;

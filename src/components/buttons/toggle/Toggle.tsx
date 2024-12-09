@@ -16,7 +16,6 @@ export default function Toggle(props: ToggleProps) {
     }
   };
 
-  console.log(transparent)
 
   return (
     <div className={styles.toggleController}>

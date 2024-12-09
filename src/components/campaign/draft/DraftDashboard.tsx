@@ -8,6 +8,8 @@ import ModalTemplate from '@/components/modal/Modal';
 import InitializeCampaignModal from '@/components/modal/InitializeCampaignModal';
 import ManageCampaignModal from '@/components/modal/ManageCampaignModal';
 import SendReportMilestone from '@/components/modal/SendReport';
+import { PLUS_ICON } from '@/utils/images';
+import Link from 'next/link';
 
 interface NewDraftDashboardProps {
     address: string | null;
@@ -59,6 +61,14 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
                 isAdmin={isAdmin}
             />
             <div className={styles.draftGrid}>
+                <Link href={"./new"}>
+                    <div className={styles.newCampaign}>
+                        <svg width="24" height="24" className={styles.icon}>
+                            <use href={PLUS_ICON}></use>
+                        </svg>
+                        <p className={styles.text}>Start new campaign</p>
+                    </div>
+                </Link>
                 {visibleCampaigns.map((campaign) => (
                     <DraftCard key={campaign.id} campaign={campaign} isProtocolTeam={isProtocolTeam} />
                 ))}
@@ -67,6 +77,9 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
 
         </div>
     );
+
+
+    /*  */
 }
 
 export default NewDraftDashboard;

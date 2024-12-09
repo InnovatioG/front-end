@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from "./WalletInformation.module.scss"
 import { useSession, signOut } from 'next-auth/react';
-import { REFRESH, HIDE, COPY } from '@/utils/images';
+import { REFRESH, HIDE, SHOW } from '@/utils/images';
 import Image from 'next/image';
 import { CARDANO_WALLETS } from 'smart-db';
 import Toggle from '../buttons/toggle/Toggle';
@@ -15,8 +15,10 @@ interface WalletInformationModalProps {
 const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) => {
 
     const { data: session } = useSession();
+
     const [copySuccess, setCopySuccess] = useState<boolean>(false);
     const [isAdmin, setIsAdmin] = useState<boolean>(false);
+    const [show, setShow] = useState<boolean>(true)
     const walletNameOrSeedOrKey = session?.user?.walletNameOrSeedOrKey;
     console.log("walletNameOrSeedOrKey", walletNameOrSeedOrKey);
     const icon = CARDANO_WALLETS.find(wallet => wallet.wallet === walletNameOrSeedOrKey)?.icon;
@@ -52,11 +54,12 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                         </svg>
                         <span>Refresh</span>
                     </div>
-                    <div className={styles.headerIcon}>
+                    <div className={styles.headerIcon} onClick={() => { setShow(!show) }}>
                         <svg width="24" height="24" className={styles.icon}>
-                            <use href={HIDE}></use>
+
+                            <use href={show ? HIDE : SHOW}></use>
                         </svg>
-                        <span>Hide</span>
+                        <span>{show ? "Hide Balance" : "Show Balance"}</span>
                     </div>
                     <div className={styles.headerIcon}>
                         <Toggle isActive={isAdmin} onClickToggle={() => { setIsAdmin(!isAdmin) }} disabled={false} transparent={true} />
@@ -82,7 +85,7 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                     </div>
                 </div>
                 <div className={styles.buttonDisconectContainer}>
-                    <GeneralButtonUI text='Disconect' classNameStyle='fillb' onClick={signOut} />
+                    <GeneralButtonUI text='Disconect Wallet' classNameStyle='fillb' onClick={signOut} />
                 </div>
             </div>
         </article>

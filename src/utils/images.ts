@@ -36,6 +36,7 @@ export const ADAIC = '/img/icons/ADA.svg#icon';
 export const LINKEDIN = '/img/icons/linkedin.svg#icon';
 export const REFRESH = '/img/icons/modal/refresh.svg#icon';
 export const HIDE = '/img/icons/modal/hide.svg#icon';
+export const SHOW = '/img/icons/modal/show.svg#icon';
 export const COPY = '/img/icons/modal/copy.svg#icon';
 
 //ASSETS
@@ -62,5 +63,6 @@ export type IconType =
     | 'img/icons/ADA.svg#icon'
     | 'img/icons/modal/refresh.svg#icon'
     | 'img/icons/modal/hide.svg#icon'
+    | 'img/icons/modal/show.svg#icon'
     | 'img/icons/modal/copy.svg#icon'
     | '/img/icons/ig.svg#icon';

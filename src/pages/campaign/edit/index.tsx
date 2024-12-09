@@ -25,11 +25,12 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
     const { data: session } = useSession();
     const { id, menuview } = router.query;
 
-    const { setProject, project, setIsLoading, isLoading, setMenuView, fetchAdaPrice } = useProjectDetailStore();
+    const { setProject, project, setIsLoading, isLoading, setMenuView, fetchAdaPrice, setEditionMode } = useProjectDetailStore();
     const [error, setError] = useState<string | null>(null);
 
     const fetchCampaign = () => {
         setIsLoading(true);
+        setEditionMode(true);
         fetchAdaPrice();
 
         if (id) {

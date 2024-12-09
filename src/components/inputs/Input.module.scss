@@ -68,3 +68,11 @@
     top: 13px;
     left: 10px;
 }
+
+@media screen and (max-width: 768px) {
+    .searchActions {
+        height: 55px;
+        background-color: #e3e9f5;
+        border: transparent;
+    }
+}

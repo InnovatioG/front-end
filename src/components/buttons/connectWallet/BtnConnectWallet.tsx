@@ -29,6 +29,7 @@ interface SecondarySubComponentProps {
 const BtnConnectMobile: React.FC<SubComponentProps> = ({ openModal, address, disconnect }) => {
     const walletStore = useWalletStore();
 
+
     const [showDisconnect, setShowDisconnect] = useState<boolean>(false);
 
     const handleClick = () => {
@@ -64,7 +65,9 @@ const BtnConnectPrimary: React.FC<SubComponentProps> = ({ openModal, address, di
         if (walletStore.isConnected !== true) {
             openModal();
         } else {
-            setShowDisconnect(!showDisconnect);
+            openModalStore("walletInformation", 0);
+            /*             setShowDisconnect(!showDisconnect);
+             */
         }
     };
     return (

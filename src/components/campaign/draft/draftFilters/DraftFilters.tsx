@@ -72,15 +72,7 @@ export default function DraftFilters(props: DraftFiltersProps) {
               width={screenSize === "desktop" ? 180 : 150}
             />
           </div>
-          {/* <div className={styles.toggleController}>
-            <Toggle isActive={viewAdmin} onClickToggle={onClickAdminView} disabled={!isAdmin} />
-            <span
-              className={`${styles.toggleText} ${viewAdmin ? styles.active : ""
-                }`}
-            >
-              {viewAdmin ? "Admin view active" : "Admin view inactive"}
-            </span>
-          </div> */}
+
         </div>
 
         <div className={styles.searchInput}>

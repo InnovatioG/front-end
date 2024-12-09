@@ -26,6 +26,9 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
     const { openModal } = useModalStore();
     const { buttons } = ButtonsForCampaignPage(project.state_id, isProtocolTeam, isAdmin);
 
+
+    console.log("editionMode", editionMode)
+
     const editLinkButton = () => {
         setModalOpen(true);
     }
@@ -42,7 +45,6 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
         return link;
     }
 
-    console.log("editionMode", editionMode);
 
     return (
         <section className={styles.socialMediaCard}>

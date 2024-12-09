@@ -1,9 +1,17 @@
 import React from 'react';
 import Modal from "react-modal";
-import styles from "./Modal.module.scss"
-
-
-
+import styles from "./Modal.module.scss";
+import { useResponsiveContext } from "@/contexts/ResponsiveContext";
+import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+} from "@/components/ui/drawer";
 
 interface ModalProps {
     isOpen: boolean;
@@ -12,8 +20,22 @@ interface ModalProps {
 }
 
 const ModalTemplate: React.FC<ModalProps> = ({ isOpen, setIsOpen, children }) => {
+    const { screenSize } = useResponsiveContext();
 
-
+    if (screenSize === 'mobile' || screenSize === 'tablet' || screenSize === 'tablet-large') {
+        return (
+            <Drawer open={isOpen} onClose={() => setIsOpen(false)}>
+                <DrawerContent >
+                    <div className={styles.drawerContent}>
+                        <button className={styles.closeButton} onClick={() => setIsOpen(false)}>
+                            <span>x</span>
+                        </button>
+                    </div>
+                    {children}
+                </DrawerContent>
+            </Drawer>
+        );
+    }
 
     return (
         <Modal
@@ -26,13 +48,10 @@ const ModalTemplate: React.FC<ModalProps> = ({ isOpen, setIsOpen, children }) =>
                 <button className={styles.closeButton} onClick={() => setIsOpen(false)}>
                     <span>x</span>
                 </button>
-
-
                 {children}
-
             </div>
         </Modal>
     );
-}
+};
 
 export default ModalTemplate;

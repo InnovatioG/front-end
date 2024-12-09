@@ -2,70 +2,70 @@
 @use '@/styles/settings/colors';
 
 .campaignSection {
-  display: flex;
-  width: 100%;
-  min-height: calc(100vh - 90px);
-  align-items: center;
-  justify-content: center;
-  .mainSection {
-    margin-bottom: 90px;
-    height: 100%;
-    width: 100%;
     display: flex;
-    flex-direction: column;
+    width: 100%;
+    min-height: calc(100vh - 90px);
     align-items: center;
     justify-content: center;
-    padding: 20px;
-    max-width: 400px;
-    gap: 36px;
-    .title {
-      font: fonts.$f800-bold;
-      text-align: center;
+    .mainSection {
+        margin-bottom: 90px;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        max-width: 400px;
+        gap: 36px;
+        .title {
+            font: fonts.$f800-bold;
+            text-align: center;
+        }
+        .btns {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 300px;
+        }
     }
-    .btns {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      width: 100%;
-      max-width: 300px;
-    }
-  }
 }
 
 .draftSection {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  justify-content: center;
-  .title {
-    font: fonts.$f1000-bold;
-    text-align: center;
-    margin: 26px 0;
-  }
-}
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    .title {
+        font: fonts.$f1000-bold;
+        margin-top: 12.5dvh;
+        margin-bottom: 6.75dvh;
 
+        text-align: center;
+    }
+}
 
 /* MEDIUM AND LARGER SCREEN */
 
 @media (width >= 1024px) {
-  .campaignSection {
-    .mainSection {
-      max-width: 840px;
-      .title {
-        font: fonts.$f1100-bold;
-        margin: 100px 0;
-      }
-      .btns {
-        flex-direction: row;
-        max-width: 530px;
-        justify-content: center;
-      }
+    .campaignSection {
+        .mainSection {
+            max-width: 840px;
+            .title {
+                font: fonts.$f1100-bold;
+            }
+            .btns {
+                flex-direction: row;
+                max-width: 530px;
+                justify-content: center;
+            }
+        }
     }
-  }
 
-  .draftSection {
-    .title {
-      font: fonts.$f1400-bold;
+    .draftSection {
+        .title {
+            font: fonts.$f1400-bold;
+        }
     }
-  }
- }
+}

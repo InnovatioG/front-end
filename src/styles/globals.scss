@@ -17,12 +17,19 @@
 }
 body {
     min-height: 100vh;
+    padding: 0 2rem;
 
     @media (width >= 1728px) {
         max-width: 1728px;
         display: flex;
         flex-direction: column;
         margin-left: calc((100% - 1728px) / 2);
+    }
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        padding: 0rem;
     }
 }
 

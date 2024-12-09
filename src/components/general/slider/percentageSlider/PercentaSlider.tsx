@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from "./PercentaSlider.module.scss";
 import { formatMoney } from '@/utils/formats';
+import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 
 interface PercentageSliderProps {
     initialLabel: number; // Assuming you want to pass an initial value
@@ -9,6 +10,8 @@ interface PercentageSliderProps {
 
 const PercentageSlider: React.FC<PercentageSliderProps> = ({ initialLabel, setValue }) => {
     const [label, setLabel] = useState(initialLabel);
+    const { priceAdaOrDollar } = usePriceStore()
+
 
     const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = parseInt(event.target.value);
@@ -26,6 +29,8 @@ const PercentageSlider: React.FC<PercentageSliderProps> = ({ initialLabel, setVa
         }
     }, [label]);
 
+
+
     return (
         <div className={styles.labelContainer}>
             <input
@@ -36,7 +41,7 @@ const PercentageSlider: React.FC<PercentageSliderProps> = ({ initialLabel, setVa
                 value={label}
                 onChange={handleSliderChange}
             />
-            <label className={styles.label}>{formatMoney(initialLabel, "USD")}</label>
+            <label className={styles.label}>{formatMoney(initialLabel, priceAdaOrDollar == "ada" ? "ADA" : "USD")}</label>
         </div>
     );
 }

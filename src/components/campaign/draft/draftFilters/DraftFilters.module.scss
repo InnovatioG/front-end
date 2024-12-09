@@ -2,88 +2,62 @@
 @use '@/styles/settings/colors';
 
 .filters {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding-inline: 20px;
-  margin-bottom: 30px;
-  .btnActions{
     display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
-    max-width: 400px;
-    gap: 16px;
-    flex-direction: column;
-    .sectionController {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      .btnDrop {
-        display: flex;
-        align-items: center;
-        gap: 16px;
-      }
-      .toggleController {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        order: -1;
-        .toggleText {
-          color: colors.$secondary-color;
-          &.active {
-            color: colors.$black-color;
-          }
-        }
-      }
-    }
-    .searchInput {
-      width: 100%;
-    }
-  }
-}
-
-@media (width >= 940px) {
-  .filters {
-    justify-content: space-between;
+    padding-inline: 20px;
+    margin-bottom: 30px;
     .btnActions {
-      max-width: none;
-      flex-direction: row;
-      justify-content: space-between;
-      .sectionController {
-        width: 50%;
-        .toggleController {
-          order: 0;
-        }
-      }
-      .searchInput {
-        width: 50%;
-      }
-    }
-  }
- }
-
-
-@media (width >= 1024px) { 
-
-  .filters {
-  padding-inline: 50px;
-  margin-bottom: 40px;
-  }
-}
-
-@media (width >= 1050px) { 
-
-  .filters {
-    .btnActions {
-      .sectionController {
+        display: flex;
+        width: 100%;
+        width: 100%;
+        justify-content: space-between;
         flex-direction: row;
-        width: 72%;
-      }
-      .searchInput {
-        width: 28%;
-        max-width: 380px;
-      }
+        .sectionController {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            .btnDrop {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+            }
+            .toggleController {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                order: -1;
+                .toggleText {
+                    color: colors.$secondary-color;
+                    &.active {
+                        color: colors.$black-color;
+                    }
+                }
+            }
+        }
+        .searchInput {
+            width: 30%;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .filters {
+        padding: 1rem;
+        .btnActions {
+            min-width: 100%;
+            flex-direction: column;
+            gap: 1rem;
+            .searchInput {
+                min-height: 55px;
+                width: 100%;
+            }
+        }
     }
 
-  }
+    .btnDrop {
+        min-height: 55px;
+        display: flex;
+    }
 }
