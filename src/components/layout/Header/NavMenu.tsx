@@ -57,8 +57,10 @@ export default function NavMenu() {
             </Link>
           </div>
           <div className={styles.btnActions}>
-            <BtnConnectWallet type="secondary" width={230}/>
-            <BtnCampaign type="secondary" width={230} closeMenu={() => setIsOpenMenu(false)}/>
+            <div onClick={() => setIsOpenMenu(false)}>
+              <BtnConnectWallet type="secondary" width={230} />
+            </div>
+            <BtnCampaign type="secondary" width={230} closeMenu={() => setIsOpenMenu(false)} />
           </div>
         </div>
       </div>

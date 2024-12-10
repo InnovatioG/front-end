@@ -96,6 +96,7 @@ const BtnConnectPrimary: React.FC<SubComponentProps> = ({ openModal, address, di
 
 const BtnConnectSecondary: React.FC<SecondarySubComponentProps> = ({ openModal, address, width }) => {
     const walletStore = useWalletStore();
+    const openModalStore = useModalStore().openModal;
 
     const [showDisconnect, setShowDisconnect] = useState<boolean>(false);
 
@@ -103,6 +104,7 @@ const BtnConnectSecondary: React.FC<SecondarySubComponentProps> = ({ openModal, 
         if (walletStore.isConnected !== true) {
             openModal();
         } else {
+            openModalStore("walletInformation", 0);
             setShowDisconnect(!showDisconnect);
         }
 
