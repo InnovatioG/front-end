@@ -15,28 +15,28 @@ type Protocol @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, t
  pdMinADA: String @convertible(params:["isForDatum: true"])
  contracts: [String]
  createAt: String @specialType(typeName:"Date")
- updateAt: String @specialType(typeName:"Date") @nullable
+ updateAt: String @nullable @specialType(typeName:"Date")
 }
 
 type ProtocolAdminWallet @entity {
  protocolId: ID
  walletId: ID
  createAt: String @specialType(typeName:"Date")
- updateAt: String @specialType(typeName:"Date") @nullable
+ updateAt: String @nullable @specialType(typeName:"Date")
 }
 
 type CampaignCategory @entity {
  name: String
  description: String @nullable
  createAt: String @specialType(typeName:"Date")
- updateAt: String @specialType(typeName:"Date") @nullable
+ updateAt: String @nullable @specialType(typeName:"Date")
 }
 
 type CampaignStatus @entity {
  name: String
  description: String @nullable
  createAt: String @specialType(typeName:"Date")
- updateAt: String @specialType(typeName:"Date") @nullable
+ updateAt: String @nullable @specialType(typeName:"Date")
 }
 
 type CampaignContent @entity {
@@ -45,7 +45,7 @@ type CampaignContent @entity {
  description: String @nullable
  order: String
  createAt: String @specialType(typeName:"Date")
- updateAt: String @specialType(typeName:"Date") @nullable
+ updateAt: String @nullable @specialType(typeName:"Date")
 }
 
 type CampaignFaqs @entity {
@@ -61,7 +61,7 @@ type MilestoneStatus @entity {
  name: String
  description: String @nullable
  createAt: String @specialType(typeName:"Date")
- updateAt: String @specialType(typeName:"Date") @nullable
+ updateAt: String @nullable @specialType(typeName:"Date")
 }
 
 type Campaign @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, tokenName: "CampaignID")  @specialImports(fromLucid_cardano:["UnixTime"]){
@@ -103,7 +103,7 @@ type Campaign @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, t
  featured: Boolean
  archived: Boolean
  createAt: String @specialType(typeName:"Date")
- updateAt: String @specialType(typeName:"Date") @nullable
+ updateAt: String @nullable @specialType(typeName:"Date")
 }
 
 type Milestone @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, tokenName: "MilestoneID") {
@@ -128,7 +128,7 @@ type CustomWallet @entity  @specialImports(fromLucid_cardano:["PaymentKeyHash", 
  testnetAddress: String @specialType(typeName:"Address")
  mainnetAddress: String @specialType(typeName:"Address")
  createAt: String @specialType(typeName:"Date")
- updateAt: String @specialType(typeName:"Date") @nullable
+ updateAt: String @nullable @specialType(typeName:"Date")
 }
 
 type CampaignMember @entity {
@@ -143,7 +143,7 @@ type CampaignMember @entity {
  discord: String @nullable
  facebook: String @nullable
  createAt: String @specialType(typeName:"Date")
- updateAt: String @specialType(typeName:"Date") @nullable
+ updateAt: String @nullable @specialType(typeName:"Date")
 }
 
 type SubmissionStatus @entity {
@@ -161,7 +161,7 @@ type CampaignSubmission @entity {
  approvedJustification: String @nullable
  rejectedJustification: String @nullable
  createAt: String @specialType(typeName:"Date")
- updateAt: String @specialType(typeName:"Date") @nullable
+ updateAt: String @nullable @specialType(typeName:"Date")
 }
 
 type MilestoneSubmission @entity {
@@ -173,7 +173,7 @@ type MilestoneSubmission @entity {
  approvedJustification: String @nullable
  rejectedJustification: String @nullable
  createAt: String @specialType(typeName:"Date")
- updateAt: String @specialType(typeName:"Date") @nullable
+ updateAt: String @nullable @specialType(typeName:"Date")
 }
 
 

@@ -1,7 +1,7 @@
-import { BaseFrontEndApiCalls } from 'smart-db';
-import { CampaignEntity } from '../Entities';
+import {  BaseSmartDBFrontEndTxApiCalls   } from 'smart-db';
+import { CampaignEntity } from '../Entities/Campaign.Entity';
 
-export class CampaignFrontEndApiCalls extends BaseFrontEndApiCalls {
+export class CampaignApi extends   BaseSmartDBFrontEndTxApiCalls   {
     protected static _Entity = CampaignEntity;
 
     // #region api
