@@ -1,0 +1,188 @@
+
+directive @entity on OBJECT
+directive @smartDBEntity(plutusDataIsSubType: Boolean!, plutusDataIndex: Int, isNETIdUnique: Boolean!, tokenName: String!) on OBJECT
+directive @specialImports(fromSmart_db: [String], fromLucid_cardano: [String], rawImport: String) on OBJECT
+directive @index(indexName:[String]) on OBJECT
+directive @nullable on FIELD
+directive @specialType(typeName:String!) on FIELD
+directive @default(defaultValue:String!) on FIELD
+directive @convertible(params: [String]) on FIELD
+
+type Protocol @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, tokenName: "ProtocolID") {
+ pdProtocolVersion: String @convertible(params:["isForDatum: true"])
+ pdAdmins: [Strings] @convertible(params:["isForDatum: true"])
+ pdTokenAdminPolicy_CS: [String] @convertible(params:["isForDatum: true"])
+ pdMinADA: String @convertible(params:["isForDatum: true"])
+ contracts: [String]
+ createAt: Date
+ updateAt: Date
+}
+
+type ProtocolAdminWallet @entity {
+ ProtocolId: ID
+ WalletId: ID
+ CreateAt: String
+ UpdateAt: Date
+}
+
+type CampaignCategory @entity {
+ Name: String
+ Description: String @nullable
+ CreateAt: Date
+ UpdateAt: Date
+}
+
+type CampaignStatus @entity {
+ Name: String
+ Description: String @nullable
+ CreateAt: Date
+ UpdateAt: Date
+}
+
+type CampaignContent @entity {
+ CampaignId: ID
+ Name: String
+ description: String @nullable
+ order: String
+ createAt: Date
+ updateAt: Date
+}
+
+type CampaignFaqs @entity {
+ campaignId: ID
+ name: String
+ description: String @nullable
+ order: String
+ createAt: Date
+ updateAt: String
+}
+
+type MilestoneStatus @entity {
+ name: String
+ description: String @nullable
+ createAt: Date
+ updateAt: Date
+}
+
+type Campaign @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, tokenName: "CampaignID")  @specialImports(fromLucid_cardano:["UnixTime"]){
+ projectId: ID
+ campaingCategoryId: ID
+ campaignStatusId: ID
+ creatorWalletId: ID
+ cdCampaignVersion: String @convertible(params:["isForDatum: true"])
+ cdCampaignPolicy_CS: String
+ cdCampaignFundsPolicyID_CS: String @convertible(params:["isForDatum: true"])
+ cdAdmins: [String] @convertible(params:["isForDatum: true"])
+ cdTokenAdminPolicy_CS: String @convertible(params:["isForDatum: true"])
+ cdMint_CampaignToken: Boolean @convertible(params:["isForDatum: true"])
+ cdCampaignToken_CS: String @convertible(params:["isForDatum: true"])
+ cdCampaignToken_TN: String @convertible(params:["isForDatum: true"])
+ cdCampaignToken_PriceADA: String @convertible(params:["isForDatum: true"])
+ cdRequestedMaxADA: String @convertible(params:["isForDatum: true"])
+ cdRequestedMinADA: String @convertible(params:["isForDatum: true"])
+ cdFundedADA: String @convertible(params:["isForDatum: true"])
+ cdCollectedADA: String @convertible(params:["isForDatum: true"])
+ cdBeginAt: String @specialType(typeName:"UnixTime") @convertible(params:["isForDatum: true"])
+ cdStatus: String @convertible(params:["isForDatum: true"])
+ cdMilestones: String @convertible(params:["isForDatum: true"])
+ cdFundsCount: String @convertible(params:["isForDatum: true"])
+ cdFundsIndex: ID @convertible(params:["isForDatum: true"])
+ cdMinADA: String @convertible(params:["isForDatum: true"])
+ description: String @nullable
+ logoUrl: String @nullable
+ bannerUrl: String @nullable
+ website: String @nullable
+ instagram: String @nullable
+ twitter: String @nullable
+ discord: String @nullable
+ facebook: String @nullable
+ investors: String
+ tokenomicsMaxSupply: String
+ tokenomicsDescription: String
+ featured: Boolean
+ archived: Boolean
+ createAt: Date
+ updateAt: Date
+}
+
+type Milestone @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, tokenName: "MilestoneID") {
+ campaignId: ID
+ campaignId: ID
+ cmEstimateDeliveryDate: Date @convertible(params:["isForDatum: true"])
+ cmPercentage: Int @convertible(params:["isForDatum: true"])
+ cmStatus: MilestoneStatus @convertible(params:["isForDatum: true"])
+ description: String
+}
+
+type Wallet @entity  @specialImports(fromLucid_cardano:["PaymentKeyHash", "StakeKeyHash", "Address"]){
+ createdBy: String
+ lastConnection: Date
+ walletUsed: String
+ walletValidatedWithSignedToken: Boolean
+ paymentPkh: String @specialType(typeName:"PaymentKeyHash")
+ stakePkh: String @specialType(typeName:"StakeKeyHash")
+ name: String
+ email: String @nullable
+ validatedEmail: String @nullable
+ testnetAddress: String @specialType(typeName:"Address")
+ mainnetAddress: String @specialType(typeName:"Address")
+ createAt: Date
+ UpdateAt: Date @nullable
+ das: String
+}
+
+type CampaignMember @entity {
+ campaignId: ID
+ editor: Boolean
+ walletId: ID
+ rol: String @nullable
+ description: String @nullable
+ website: String
+ instagram: String @nullable
+ twitter: String @nullable
+ discord: String @nullable
+ facebook: String @nullable
+ investors: String
+ featured: Boolean
+ archived: Boolean
+ createAt: Date
+ updateAt: Date
+}
+
+type SubmissionStatus @entity {
+ name: String
+ description: String @nullable
+ createAt: String @specialType(typeName:"Date")
+ updateAt: String @specialType(typeName:"Date")
+}
+
+type campaignSubmission @entity {
+ campaignId: ID
+ submissionStatusId: ID
+ submittedByWalletId: ID
+ revisedByUserId: ID
+ approvedJustification: String @nullable
+ rejectedJustification: String @nullable
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @nullable @specialType(typeName:"Date")
+}
+
+type MilestoneSubmission @entity {
+ milestoneId: ID
+ submissionStatusId: ID
+ submittedByWalletId: ID
+ reportProofOfFinalization: String @nullable
+ approvedJustification: String @nullable
+ rejectedJustification: String @nullable
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @nullable @specialType(typeName:"Date")
+}
+
+
+type Query @resolvers {
+    not_used: String
+}
+
+schema {
+    query: Query
+}
