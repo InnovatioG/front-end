@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 
 import styles from "./StepFour.module.scss";
@@ -9,12 +9,20 @@ import { memberFields, socialIcons } from '@/utils/constants';
 import Checkbox from '@/components/buttons/checkbox/Checkbox';
 import GeneralButtonUI from '@/components/buttons/UI/Button';
 
+
+
+type SocialLinkKeys = "website" | "facebook" | "instagram" | "discord" | "linkedin" | "xs";
+
+
+//! TODO: Finish 
+
+
 interface StepFourProps {
     // Define props here
 }
 
 interface MembersTeam {
-    id: string;
+    id: number;
     member_name: string;
     member_description: string;
     member_last_name: string;
@@ -22,11 +30,26 @@ interface MembersTeam {
     member_email: string;
     member_picture: string;
     member_admin: boolean;
+    member_wallet_address: string;
+    member_manage_funds: boolean;
+    website: string;
+    facebook: string;
+    instagram: string;
+    discord: string;
+    linkedin: string;
+    xs: string;
+
 }
 
-const StepFour: React.FC<StepFourProps> = (props) => {
-    const { newCampaign, newMember, addMemberToTeam, resetNewMember, setNewMemberField, updateMemberField } = useCampaignStore();
 
+
+const StepFour: React.FC<StepFourProps> = (props) => {
+    const { newCampaign, newMember, addMemberToTeam, resetNewMember, setNewMemberField, updateMemberField, } = useCampaignStore();
+
+
+
+    const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>("website");
+    console.log("selectedLink", selectedLink);
     const isEditing = newMember.id && newCampaign.members_team.some(m => m.id === newMember.id);
 
 
@@ -79,9 +102,24 @@ const StepFour: React.FC<StepFourProps> = (props) => {
 
             <article className={styles.socialContainer}>
                 {socialIcons.map(social => (
-                    <SocialButton key={social.name} icon={social.icon} />
-                ))}
+                    <SocialButton
+                        key={social.name}
+                        icon={social.icon}
+                        name={social.name as SocialLinkKeys}
+                        setSocialLink={setSelectedLink}
+                    />))}
             </article>
+
+            <input
+                type="text"
+                className={styles.input}
+                name={selectedLink}
+                placeholder={selectedLink}
+                value={newMember[selectedLink]}
+                onChange={(e) => {
+                    setNewMemberField(selectedLink, e.target.value);
+                }}
+            />
 
             <article className={styles.permissionContainer}>
                 <div className={styles.input}>
@@ -92,13 +130,25 @@ const StepFour: React.FC<StepFourProps> = (props) => {
                     />
                 </div>
                 <input type="text" className={styles.input} placeholder="Email" value={newMember.member_email} onChange={(e) => { setNewMemberField("member_email", e.target.value) }} />
+
+            </article>
+            <article className={styles.permissionContainer}>
+                <div className={styles.input}>
+                    <Checkbox
+                        checked={newMember.member_manage_funds}
+                        onChange={(e) => setNewMemberField('member_manage_funds', e)}
+                        label='Manage Funds'
+                    />
+                </div>
+                <input type="text" className={styles.input} placeholder="Wallet Address" value={newMember.member_wallet_address} onChange={(e) => { setNewMemberField("member_wallet_address", e.target.value) }} />
             </article>
             <div className={styles.buttonContainer}>
-                <GeneralButtonUI onClick={resetNewMember} classNameStyle='outline'>
-                    Cancel
+
+                <GeneralButtonUI onClick={handleSaveMember} disabled={disabledSaveMember} classNameStyle='outlineb'>
+                    {isEditing ? 'Update member' : 'Add new member'}
                 </GeneralButtonUI>
-                <GeneralButtonUI onClick={handleSaveMember} disabled={disabledSaveMember}>
-                    {isEditing ? 'Update member' : 'Add member'}
+                <GeneralButtonUI onClick={() => { }} classNameStyle='fillb' disabled={disabledSaveMember}>
+                    Create Project
                 </GeneralButtonUI>
             </div>
         </section >

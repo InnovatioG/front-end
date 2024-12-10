@@ -27,6 +27,8 @@ export default function Home() {
 
 
 
+  console.log(newCampaign)
+
 
   const handleClickBack = () => {
     if (step === 1) {
@@ -90,8 +92,8 @@ export default function Home() {
         <div className={styles.stepContent}>
           <div className={styles.backContainer}>
             <svg
-              width="28"
-              height="28"
+              width="18"
+              height="18"
               className={styles.icon}
               onClick={handleClickBack}
             >

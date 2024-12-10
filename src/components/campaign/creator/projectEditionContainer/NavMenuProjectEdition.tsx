@@ -6,15 +6,16 @@ import GeneralButtonUI from '@/components/buttons/UI/Button';
 import { useScreenSize } from '@/hooks/useScreenSize';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface NavBarProjectEditionProps {
     // Define props here
 }
 
 const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
-    const { menuView, setMenuView, editionMode } = useProjectDetailStore();
+    const { menuView, setMenuView, editionMode, project } = useProjectDetailStore();
+    const { id } = project
     const screenSize = useScreenSize();
-    const router = useRouter();
 
 
 
@@ -49,13 +50,15 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
                         ))}
                     </ul>
                     {editionMode && (
-                        <div>
-                            <GeneralButtonUI
-                                text="Overview"
-                                classNameStyle="overview"
-                                onClick={() => { }}
-                            />
-                        </div>
+                        <Link href={`./${id}`}>
+                            <div>
+                                <GeneralButtonUI
+                                    text="Overview"
+                                    classNameStyle="overview"
+                                    onClick={() => { }}
+                                />
+                            </div>
+                        </Link>
                     )}
                 </div>
             </div>
@@ -76,13 +79,15 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
                 ))}
             </ul>
             {editionMode && (
-                <div>
-                    <GeneralButtonUI
-                        text="Overview"
-                        classNameStyle="overview"
-                        onClick={() => { }}
-                    />
-                </div>
+                <Link href={`./${id}`}>
+                    <div>
+                        <GeneralButtonUI
+                            text="Overview"
+                            classNameStyle="overview"
+                            onClick={() => { }}
+                        />
+                    </div>
+                </Link>
             )}
         </div>
     );

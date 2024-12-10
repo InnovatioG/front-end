@@ -21,7 +21,7 @@ const DropArchive: React.FC<DropArchiveProps> = ({ file, setFile }) => {
 
     const { getRootProps, getInputProps, isDragActive, open } = useDropzone({
         onDrop,
-        noClick: true, // Evita que el clic en el contenedor abra el explorador de archivos
+        noClick: true,
     });
 
     return (

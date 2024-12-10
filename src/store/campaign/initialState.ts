@@ -3,20 +3,20 @@ import type { User, Milestone } from '@/HardCode/databaseType';
 export interface MembersTeam {
     id: number;
     member_name: string;
-    member_last_name: string;
-    member_email: string;
-    member_role: string;
     member_description: string;
+    member_last_name: string;
+    member_role: string;
+    member_email: string;
     member_picture: string;
-    member_social: {
-        facebook: string;
-        instagram: string;
-        x: string;
-        discord: string;
-    };
     member_admin: boolean;
-    member_manage_funds: boolean;
     member_wallet_address: string;
+    member_manage_funds: boolean;
+    website: string;
+    facebook: string;
+    instagram: string;
+    discord: string;
+    linkedin: string;
+    xs: string;
 }
 
 export interface CampaignState {
