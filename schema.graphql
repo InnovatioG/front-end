@@ -10,42 +10,42 @@ directive @convertible(params: [String]) on FIELD
 
 type Protocol @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, tokenName: "ProtocolID") {
  pdProtocolVersion: String @convertible(params:["isForDatum: true"])
- pdAdmins: [Strings] @convertible(params:["isForDatum: true"])
- pdTokenAdminPolicy_CS: [String] @convertible(params:["isForDatum: true"])
+ pdAdmins: [String] @convertible(params:["isForDatum: true"])
+ pdTokenAdminPolicy_CS: String @convertible(params:["isForDatum: true"])
  pdMinADA: String @convertible(params:["isForDatum: true"])
  contracts: [String]
- createAt: Date
- updateAt: Date
+ createAt: String @specialType(typeName:"Date")
+ updateAt: String @specialType(typeName:"Date") @nullable
 }
 
 type ProtocolAdminWallet @entity {
- ProtocolId: ID
- WalletId: ID
- CreateAt: String
- UpdateAt: Date
+ protocolId: ID
+ walletId: ID
+ createAt: String @specialType(typeName:"Date")
+ updateAt: String @specialType(typeName:"Date") @nullable
 }
 
 type CampaignCategory @entity {
- Name: String
- Description: String @nullable
- CreateAt: Date
- UpdateAt: Date
+ name: String
+ description: String @nullable
+ createAt: String @specialType(typeName:"Date")
+ updateAt: String @specialType(typeName:"Date") @nullable
 }
 
 type CampaignStatus @entity {
- Name: String
- Description: String @nullable
- CreateAt: Date
- UpdateAt: Date
+ name: String
+ description: String @nullable
+ createAt: String @specialType(typeName:"Date")
+ updateAt: String @specialType(typeName:"Date") @nullable
 }
 
 type CampaignContent @entity {
- CampaignId: ID
- Name: String
+ campaignId: ID
+ name: String
  description: String @nullable
  order: String
- createAt: Date
- updateAt: Date
+ createAt: String @specialType(typeName:"Date")
+ updateAt: String @specialType(typeName:"Date") @nullable
 }
 
 type CampaignFaqs @entity {
@@ -53,15 +53,15 @@ type CampaignFaqs @entity {
  name: String
  description: String @nullable
  order: String
- createAt: Date
+ createAt: String @specialType(typeName:"Date")
  updateAt: String
 }
 
 type MilestoneStatus @entity {
  name: String
  description: String @nullable
- createAt: Date
- updateAt: Date
+ createAt: String @specialType(typeName:"Date")
+ updateAt: String @specialType(typeName:"Date") @nullable
 }
 
 type Campaign @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, tokenName: "CampaignID")  @specialImports(fromLucid_cardano:["UnixTime"]){
@@ -82,11 +82,12 @@ type Campaign @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, t
  cdRequestedMinADA: String @convertible(params:["isForDatum: true"])
  cdFundedADA: String @convertible(params:["isForDatum: true"])
  cdCollectedADA: String @convertible(params:["isForDatum: true"])
- cdBeginAt: String @specialType(typeName:"UnixTime") @convertible(params:["isForDatum: true"])
- cdStatus: String @convertible(params:["isForDatum: true"])
+ cdBeginAt: String @specialType(typeName:"Date") @convertible(params:["isForDatum: true"])
+ cdDeadline: String @specialType(typeName:"Date") @convertible(params:["isForDatum: true"])
+ cdStatus: Int @convertible(params:["isForDatum: true"])
  cdMilestones: String @convertible(params:["isForDatum: true"])
- cdFundsCount: String @convertible(params:["isForDatum: true"])
- cdFundsIndex: ID @convertible(params:["isForDatum: true"])
+ cdFundsCount: Int @convertible(params:["isForDatum: true"])
+ cdFundsIndex: Int @convertible(params:["isForDatum: true"])
  cdMinADA: String @convertible(params:["isForDatum: true"])
  description: String @nullable
  logoUrl: String @nullable
@@ -96,27 +97,27 @@ type Campaign @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, t
  twitter: String @nullable
  discord: String @nullable
  facebook: String @nullable
- investors: String
+ investors: Int 
  tokenomicsMaxSupply: String
  tokenomicsDescription: String
  featured: Boolean
  archived: Boolean
- createAt: Date
- updateAt: Date
+ createAt: String @specialType(typeName:"Date")
+ updateAt: String @specialType(typeName:"Date") @nullable
 }
 
 type Milestone @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, tokenName: "MilestoneID") {
  campaignId: ID
- campaignId: ID
- cmEstimateDeliveryDate: Date @convertible(params:["isForDatum: true"])
+ campaignStatusId: ID
+ cmEstimateDeliveryDate: Int @convertible(params:["isForDatum: true"])
  cmPercentage: Int @convertible(params:["isForDatum: true"])
- cmStatus: MilestoneStatus @convertible(params:["isForDatum: true"])
+ cmStatus: Int @convertible(params:["isForDatum: true"])
  description: String
 }
 
-type Wallet @entity  @specialImports(fromLucid_cardano:["PaymentKeyHash", "StakeKeyHash", "Address"]){
+type CustomWallet @entity  @specialImports(fromLucid_cardano:["PaymentKeyHash", "StakeKeyHash", "Address"]){
  createdBy: String
- lastConnection: Date
+ lastConnection: String @specialType(typeName:"Date")
  walletUsed: String
  walletValidatedWithSignedToken: Boolean
  paymentPkh: String @specialType(typeName:"PaymentKeyHash")
@@ -126,9 +127,8 @@ type Wallet @entity  @specialImports(fromLucid_cardano:["PaymentKeyHash", "Stake
  validatedEmail: String @nullable
  testnetAddress: String @specialType(typeName:"Address")
  mainnetAddress: String @specialType(typeName:"Address")
- createAt: Date
- UpdateAt: Date @nullable
- das: String
+ createAt: String @specialType(typeName:"Date")
+ updateAt: String @specialType(typeName:"Date") @nullable
 }
 
 type CampaignMember @entity {
@@ -142,11 +142,8 @@ type CampaignMember @entity {
  twitter: String @nullable
  discord: String @nullable
  facebook: String @nullable
- investors: String
- featured: Boolean
- archived: Boolean
- createAt: Date
- updateAt: Date
+ createAt: String @specialType(typeName:"Date")
+ updateAt: String @specialType(typeName:"Date") @nullable
 }
 
 type SubmissionStatus @entity {
@@ -156,26 +153,27 @@ type SubmissionStatus @entity {
  updateAt: String @specialType(typeName:"Date")
 }
 
-type campaignSubmission @entity {
+type CampaignSubmission @entity {
  campaignId: ID
  submissionStatusId: ID
  submittedByWalletId: ID
- revisedByUserId: ID
+ revisedByWalletId: ID
  approvedJustification: String @nullable
  rejectedJustification: String @nullable
- createdAt: String @specialType(typeName:"Date")
- updatedAt: String @nullable @specialType(typeName:"Date")
+ createAt: String @specialType(typeName:"Date")
+ updateAt: String @specialType(typeName:"Date") @nullable
 }
 
 type MilestoneSubmission @entity {
  milestoneId: ID
  submissionStatusId: ID
  submittedByWalletId: ID
+ revisedByWalletId: ID
  reportProofOfFinalization: String @nullable
  approvedJustification: String @nullable
  rejectedJustification: String @nullable
- createdAt: String @specialType(typeName:"Date")
- updatedAt: String @nullable @specialType(typeName:"Date")
+ createAt: String @specialType(typeName:"Date")
+ updateAt: String @specialType(typeName:"Date") @nullable
 }
 
 
