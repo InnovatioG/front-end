@@ -8,6 +8,7 @@ import DraftDashboard from "@/components/campaign/draft/DraftDashboard";
 import NewDraftDashboard from "@/components/campaign/draft/DraftDashboard";
 import { useDashboardCard } from "@/hooks/useDashboardCard";
 import LoadingPage from "@/components/LoadingPage/LoadingPage";
+import GoogleConnect from "@/components/buttons/googleConnect/GoogleConnect";
 
 export default function Home() {
   const { address } = useCardano();
@@ -34,6 +35,9 @@ export default function Home() {
               with your Google account or connect wallet
             </h2>
             <div className={styles.btns}>
+              <GoogleConnect
+                width={screenSize === "desktop" ? 225 : undefined}
+              />
               <BtnConnectWallet
                 type="primary"
                 width={screenSize === "desktop" ? 225 : undefined}

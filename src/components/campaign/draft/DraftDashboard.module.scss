@@ -70,7 +70,7 @@
 @media screen and (min-width: 1025px) and (max-width: 1570px) {
     .draftDashboard {
         .draftGrid {
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         }
     }
 }
