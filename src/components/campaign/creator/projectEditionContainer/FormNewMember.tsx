@@ -8,20 +8,20 @@ import GeneralButtonUI from '@/components/buttons/UI/Button';
 interface FormNewMemberProps {
     newMember: {
         member_name: string;
-        member_last_name: string;
-        member_email: string;
-        member_role: string;
         member_description: string;
+        member_last_name: string;
+        member_role: string;
+        member_email: string;
         member_picture: string;
-        member_social: {
-            facebook: string;
-            instagram: string;
-            x: string;
-            discord: string;
-        };
         member_admin: boolean;
-        member_manage_funds: boolean;
         member_wallet_address: string;
+        member_manage_funds: boolean;
+        website: string;
+        facebook: string;
+        instagram: string;
+        discord: string;
+        linkedin: string;
+        xs: string;
     };
     setNewMember: React.Dispatch<React.SetStateAction<{
         member_name: string;
@@ -30,12 +30,12 @@ interface FormNewMemberProps {
         member_role: string;
         member_description: string;
         member_picture: string;
-        member_social: {
-            facebook: string;
-            instagram: string;
-            x: string;
-            discord: string;
-        };
+        website: string;
+        facebook: string;
+        instagram: string;
+        discord: string;
+        linkedin: string;
+        xs: string;
         member_admin: boolean;
         member_manage_funds: boolean;
         member_wallet_address: string;
@@ -44,6 +44,16 @@ interface FormNewMemberProps {
 }
 
 const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, setNewMemberField }) => {
+    const socialMedia: Record<Extract<keyof FormNewMemberProps['newMember'], 'website' | 'facebook' | 'instagram' | 'discord' | 'linkedin' | 'xs'>, string> = {
+        website: 'Website',
+        facebook: 'Facebook',
+        instagram: 'Instagram',
+        discord: 'Discord',
+        linkedin: 'Linkedin',
+        xs: 'XS',
+    };
+
+
     return (
         <section className={styles.formLayout}>
             <div className={styles.inputContainer}>
@@ -107,13 +117,13 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
                     <label htmlFor="">Social Media</label>
                 </div>
                 <div className={styles.socialContainer}>
-                    {Object.entries(newMember.member_social).map(([name, link], index) => (
+                    {Object.entries(socialMedia).map(([key, label]) => (
                         <input
-                            key={index}
+                            key={key}
                             type="text"
-                            placeholder={name}
-                            value={link}
-                            onChange={(e) => setNewMemberField('member_social', { ...newMember.member_social, [name]: e.target.value })}
+                            placeholder={label}
+                            value={newMember[key as keyof typeof socialMedia]} // Indicamos que es un índice válido
+                            onChange={(e) => setNewMemberField(key as keyof typeof socialMedia, e.target.value)}
                             className={styles.input}
                         />
                     ))}

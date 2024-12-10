@@ -10,6 +10,24 @@ interface ResumeOfTheTeamProps {
     // Define props here
 }
 
+
+/* 
+id: number;
+member_name: string;
+member_description: string;
+member_last_name: string;
+member_role: string;
+member_email: string;
+member_picture: string;
+member_admin: boolean;
+member_wallet_address: string;
+member_manage_funds: boolean;
+website: string;
+facebook: string;
+instagram: string;
+discord: string;
+linkedin: string;
+xs: string; */
 const ResumeOfTheTeam: React.FC<ResumeOfTheTeamProps> = (props) => {
     const [addNewMember, setAddNewMember] = useState(false);
     const [newMember, setNewMember] = useState({
@@ -19,12 +37,13 @@ const ResumeOfTheTeam: React.FC<ResumeOfTheTeamProps> = (props) => {
         member_role: '',
         member_description: '',
         member_picture: '',
-        member_social: {
-            facebook: '',
-            instagram: '',
-            x: '',
-            discord: '',
-        },
+        website: '',
+        facebook: '',
+        instagram: '',
+        discord: '',
+        linkedin: '',
+        xs: '',
+
         member_admin: false,
         member_manage_funds: false,
         member_wallet_address: '',
