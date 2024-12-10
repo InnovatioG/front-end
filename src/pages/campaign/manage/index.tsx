@@ -26,7 +26,6 @@ export default function Home() {
 
 
     <>
-      {campaignsLoading && <LoadingPage />}
       {address === null && session === null ? (
         <div className={styles.campaignSection}>
           <div className={styles.mainSection}>
@@ -44,6 +43,7 @@ export default function Home() {
         </div>
       ) : (
         <div className={styles.draftSection}>
+          {campaignsLoading && <LoadingPage />}
           <h2 className={styles.title}>{title()}</h2>
           <NewDraftDashboard address={address} />
         </div>
