@@ -1,12 +1,11 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CampaignFaqsEntity } from './CampaignFaqs.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseEntityPostgreSQL  } from 'smart-db/backEnd';
+import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
 
 @PostgreSQLAppliedFor([CampaignFaqsEntity])
 @Entity({ name: getPostgreSQLTableName(CampaignFaqsEntity.className()) })
-
-export class CampaignFaqsEntityPostgreSQL extends BaseEntityPostgreSQL  {
+export class CampaignFaqsEntityPostgreSQL extends BaseEntityPostgreSQL {
     protected static Entity = CampaignFaqsEntity;
 
     // #region fields
@@ -14,18 +13,18 @@ export class CampaignFaqsEntityPostgreSQL extends BaseEntityPostgreSQL  {
     @PrimaryGeneratedColumn()
     _id!: number; // Auto-generated primary key
 
-    @Column({ type: "varchar", length: 255  })
-    campaignId!:string;
-    @Column({ type: "varchar", length: 255  })
-    name!:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    description?:string;
-    @Column({ type: "varchar", length: 255  })
-    order!:string;
-    @Column({ type: "varchar", length: 255  })
-    createAt!: Date ;
-    @Column({ type: "varchar", length: 255  })
-    updateAt!:string;
+    @Column({ type: 'varchar', length: 255 })
+    campaignId!: string;
+    @Column({ type: 'varchar', length: 255 })
+    name!: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    description?: string;
+    @Column({ type: 'varchar', length: 255 })
+    order!: string;
+    @CreateDateColumn()
+    createdAt!: Date;
+    @UpdateDateColumn()
+    updatedAt!: Date;
 
     // #endregion fields
 

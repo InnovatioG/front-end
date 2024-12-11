@@ -1,12 +1,11 @@
-
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
-import { MongoAppliedFor  } from 'smart-db';
-import { BaseEntityMongo  } from 'smart-db/backEnd';
+import { MongoAppliedFor } from 'smart-db';
+import { BaseEntityMongo } from 'smart-db/backEnd';
 import { MilestoneStatusEntity } from './MilestoneStatus.Entity';
 
 @MongoAppliedFor([MilestoneStatusEntity])
-export class MilestoneStatusEntityMongo extends BaseEntityMongo  {
+export class MilestoneStatusEntityMongo extends BaseEntityMongo {
     protected static Entity = MilestoneStatusEntity;
     protected static _mongoTableName: string = MilestoneStatusEntity.className();
 
@@ -14,8 +13,8 @@ export class MilestoneStatusEntityMongo extends BaseEntityMongo  {
 
     // name:String
     // description:String
-    // createAt: Date 
-    // updateAt: Date 
+    // createdAt: Date
+    // updatedAt: Date
 
     // #endregion fields
 
@@ -53,16 +52,15 @@ export class MilestoneStatusEntityMongo extends BaseEntityMongo  {
         interface Interface {
             name: string;
             description: string;
-            createAt:  Date ;
-            updateAt:  Date ;
         }
 
-        const schema = new Schema<Interface>({
-            name: { type: String, required: true },
-            description: { type: String, required: false },
-            createAt: { type: Date, required: true },
-            updateAt: { type: Date, required: false },
-        });
+        const schema = new Schema<Interface>(
+            {
+                name: { type: String, required: true },
+                description: { type: String, required: false },
+            },
+            { timestamps: true }
+        );
 
         const ModelDB = models[this._mongoTableName] || model<Interface>(this._mongoTableName, schema);
         return ModelDB;
@@ -70,4 +68,3 @@ export class MilestoneStatusEntityMongo extends BaseEntityMongo  {
 
     // #endregion mongo db
 }
-

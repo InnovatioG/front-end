@@ -1,4 +1,4 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CampaignEntity } from './Campaign.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
 import {  BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
@@ -30,7 +30,7 @@ export class CampaignEntityPostgreSQL extends  BaseSmartDBEntityPostgreSQL {
     @Column({ type: "varchar", length: 255  })
     cdCampaignFundsPolicyID_CS!:string;
     @Column({ type: "varchar", length: 255  })
-    cdAdmins!:[String];
+    cdAdmins!:String [];
     @Column({ type: "varchar", length: 255  })
     cdTokenAdminPolicy_CS!:string;
     @Column({ type: "varchar", length: 255  })
@@ -89,10 +89,10 @@ export class CampaignEntityPostgreSQL extends  BaseSmartDBEntityPostgreSQL {
     featured!:boolean;
     @Column({ type: "varchar", length: 255  })
     archived!:boolean;
-    @Column({ type: "varchar", length: 255  })
-    createAt!: Date ;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    updateAt?: Date ;
+    @CreateDateColumn()
+    createdAt!: Date;
+    @UpdateDateColumn()
+    updatedAt!: Date;
 
     // #endregion fields
 

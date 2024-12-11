@@ -1,12 +1,11 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { MilestoneStatusEntity } from './MilestoneStatus.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseEntityPostgreSQL  } from 'smart-db/backEnd';
+import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
 
 @PostgreSQLAppliedFor([MilestoneStatusEntity])
 @Entity({ name: getPostgreSQLTableName(MilestoneStatusEntity.className()) })
-
-export class MilestoneStatusEntityPostgreSQL extends BaseEntityPostgreSQL  {
+export class MilestoneStatusEntityPostgreSQL extends BaseEntityPostgreSQL {
     protected static Entity = MilestoneStatusEntity;
 
     // #region fields
@@ -14,14 +13,14 @@ export class MilestoneStatusEntityPostgreSQL extends BaseEntityPostgreSQL  {
     @PrimaryGeneratedColumn()
     _id!: number; // Auto-generated primary key
 
-    @Column({ type: "varchar", length: 255  })
-    name!:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    description?:string;
-    @Column({ type: "varchar", length: 255  })
-    createAt!: Date ;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    updateAt?: Date ;
+    @Column({ type: 'varchar', length: 255 })
+    name!: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    description?: string;
+    @CreateDateColumn()
+    createdAt!: Date;
+    @UpdateDateColumn()
+    updatedAt!: Date;
 
     // #endregion fields
 

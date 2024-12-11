@@ -1,12 +1,11 @@
-
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
-import { MongoAppliedFor  } from 'smart-db';
-import { BaseEntityMongo  } from 'smart-db/backEnd';
+import { MongoAppliedFor } from 'smart-db';
+import { BaseEntityMongo } from 'smart-db/backEnd';
 import { MilestoneSubmissionEntity } from './MilestoneSubmission.Entity';
 
 @MongoAppliedFor([MilestoneSubmissionEntity])
-export class MilestoneSubmissionEntityMongo extends BaseEntityMongo  {
+export class MilestoneSubmissionEntityMongo extends BaseEntityMongo {
     protected static Entity = MilestoneSubmissionEntity;
     protected static _mongoTableName: string = MilestoneSubmissionEntity.className();
 
@@ -19,8 +18,8 @@ export class MilestoneSubmissionEntityMongo extends BaseEntityMongo  {
     // reportProofOfFinalization:String
     // approvedJustification:String
     // rejectedJustification:String
-    // createAt: Date 
-    // updateAt: Date 
+    // createdAt: Date
+    // updatedAt: Date
 
     // #endregion fields
 
@@ -63,21 +62,20 @@ export class MilestoneSubmissionEntityMongo extends BaseEntityMongo  {
             reportProofOfFinalization: string;
             approvedJustification: string;
             rejectedJustification: string;
-            createAt:  Date ;
-            updateAt:  Date ;
         }
 
-        const schema = new Schema<Interface>({
-            milestoneId: { type: String, required: true },
-            submissionStatusId: { type: String, required: true },
-            submittedByWalletId: { type: String, required: true },
-            revisedByWalletId: { type: String, required: true },
-            reportProofOfFinalization: { type: String, required: false },
-            approvedJustification: { type: String, required: false },
-            rejectedJustification: { type: String, required: false },
-            createAt: { type: Date, required: true },
-            updateAt: { type: Date, required: false },
-        });
+        const schema = new Schema<Interface>(
+            {
+                milestoneId: { type: String, required: true },
+                submissionStatusId: { type: String, required: true },
+                submittedByWalletId: { type: String, required: true },
+                revisedByWalletId: { type: String, required: true },
+                reportProofOfFinalization: { type: String, required: false },
+                approvedJustification: { type: String, required: false },
+                rejectedJustification: { type: String, required: false },
+            },
+            { timestamps: true }
+        );
 
         const ModelDB = models[this._mongoTableName] || model<Interface>(this._mongoTableName, schema);
         return ModelDB;
@@ -85,4 +83,3 @@ export class MilestoneSubmissionEntityMongo extends BaseEntityMongo  {
 
     // #endregion mongo db
 }
-

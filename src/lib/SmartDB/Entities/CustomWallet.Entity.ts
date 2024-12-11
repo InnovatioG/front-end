@@ -32,9 +32,9 @@ export class CustomWalletEntity extends BaseEntity {
     @Convertible()
     mainnetAddress!:  Address ;
     @Convertible()
-    createAt!:  Date ;
+    createdAt!:  Date ;
     @Convertible()
-    updateAt?:  Date ;
+    updatedAt?:  Date ;
 
     // #endregion fields
 
@@ -55,11 +55,12 @@ export class CustomWalletEntity extends BaseEntity {
           validatedEmail: true,
           testnetAddress: true,
           mainnetAddress: true,
-          createAt: true,
-          updateAt: true,
+          createdAt: true,
+          updatedAt: true,
     };
 
     // #endregion db
 }
+
 
 

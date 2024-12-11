@@ -24,9 +24,9 @@ export class MilestoneSubmissionEntity extends BaseEntity {
     @Convertible()
     rejectedJustification?: string;
     @Convertible()
-    createAt!:  Date ;
+    createdAt!:  Date ;
     @Convertible()
-    updateAt?:  Date ;
+    updatedAt?:  Date ;
 
     // #endregion fields
 
@@ -43,8 +43,8 @@ export class MilestoneSubmissionEntity extends BaseEntity {
           reportProofOfFinalization: true,
           approvedJustification: true,
           rejectedJustification: true,
-          createAt: true,
-          updateAt: true,
+          createdAt: true,
+          updatedAt: true,
     };
 
     // #endregion db

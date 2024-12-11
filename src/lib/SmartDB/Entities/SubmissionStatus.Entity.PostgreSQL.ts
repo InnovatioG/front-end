@@ -1,12 +1,11 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { SubmissionStatusEntity } from './SubmissionStatus.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseEntityPostgreSQL  } from 'smart-db/backEnd';
+import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
 
 @PostgreSQLAppliedFor([SubmissionStatusEntity])
 @Entity({ name: getPostgreSQLTableName(SubmissionStatusEntity.className()) })
-
-export class SubmissionStatusEntityPostgreSQL extends BaseEntityPostgreSQL  {
+export class SubmissionStatusEntityPostgreSQL extends BaseEntityPostgreSQL {
     protected static Entity = SubmissionStatusEntity;
 
     // #region fields
@@ -14,14 +13,14 @@ export class SubmissionStatusEntityPostgreSQL extends BaseEntityPostgreSQL  {
     @PrimaryGeneratedColumn()
     _id!: number; // Auto-generated primary key
 
-    @Column({ type: "varchar", length: 255  })
-    name!:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    description?:string;
-    @Column({ type: "varchar", length: 255  })
-    createAt!: Date ;
-    @Column({ type: "varchar", length: 255  })
-    updateAt!: Date ;
+    @Column({ type: 'varchar', length: 255 })
+    name!: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    description?: string;
+    @Column({ type: 'varchar', length: 255 })
+    createdAt!: Date;
+    @Column({ type: 'varchar', length: 255 })
+    updatedAt!: Date;
 
     // #endregion fields
 

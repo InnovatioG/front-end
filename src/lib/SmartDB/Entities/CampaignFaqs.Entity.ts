@@ -18,9 +18,9 @@ export class CampaignFaqsEntity extends BaseEntity {
     @Convertible()
     order!: string;
     @Convertible()
-    createAt!:  Date ;
+    createdAt!:  Date ;
     @Convertible()
-    updateAt!: string;
+    updatedAt?:  Date ;
 
     // #endregion fields
 
@@ -34,8 +34,8 @@ export class CampaignFaqsEntity extends BaseEntity {
           name: true,
           description: true,
           order: true,
-          createAt: true,
-          updateAt: true,
+          createdAt: true,
+          updatedAt: true,
     };
 
     // #endregion db

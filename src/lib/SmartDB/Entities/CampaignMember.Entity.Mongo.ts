@@ -1,12 +1,11 @@
-
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
-import { MongoAppliedFor  } from 'smart-db';
-import { BaseEntityMongo  } from 'smart-db/backEnd';
+import { MongoAppliedFor } from 'smart-db';
+import { BaseEntityMongo } from 'smart-db/backEnd';
 import { CampaignMemberEntity } from './CampaignMember.Entity';
 
 @MongoAppliedFor([CampaignMemberEntity])
-export class CampaignMemberEntityMongo extends BaseEntityMongo  {
+export class CampaignMemberEntityMongo extends BaseEntityMongo {
     protected static Entity = CampaignMemberEntity;
     protected static _mongoTableName: string = CampaignMemberEntity.className();
 
@@ -22,8 +21,8 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo  {
     // twitter:String
     // discord:String
     // facebook:String
-    // createAt: Date 
-    // updateAt: Date 
+    // createdAt: Date
+    // updatedAt: Date
 
     // #endregion fields
 
@@ -69,24 +68,23 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo  {
             twitter: string;
             discord: string;
             facebook: string;
-            createAt:  Date ;
-            updateAt:  Date ;
         }
 
-        const schema = new Schema<Interface>({
-            campaignId: { type: String, required: true },
-            editor: { type: Boolean, required: true },
-            walletId: { type: String, required: true },
-            rol: { type: String, required: false },
-            description: { type: String, required: false },
-            website: { type: String, required: true },
-            instagram: { type: String, required: false },
-            twitter: { type: String, required: false },
-            discord: { type: String, required: false },
-            facebook: { type: String, required: false },
-            createAt: { type: Date, required: true },
-            updateAt: { type: Date, required: false },
-        });
+        const schema = new Schema<Interface>(
+            {
+                campaignId: { type: String, required: true },
+                editor: { type: Boolean, required: true },
+                walletId: { type: String, required: true },
+                rol: { type: String, required: false },
+                description: { type: String, required: false },
+                website: { type: String, required: true },
+                instagram: { type: String, required: false },
+                twitter: { type: String, required: false },
+                discord: { type: String, required: false },
+                facebook: { type: String, required: false },
+            },
+            { timestamps: true }
+        );
 
         const ModelDB = models[this._mongoTableName] || model<Interface>(this._mongoTableName, schema);
         return ModelDB;
@@ -94,4 +92,3 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo  {
 
     // #endregion mongo db
 }
-

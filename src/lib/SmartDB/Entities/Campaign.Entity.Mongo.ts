@@ -1,13 +1,12 @@
-
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
-import { MongoAppliedFor  } from 'smart-db';
-import {  BaseSmartDBEntityMongo, IBaseSmartDBEntity } from 'smart-db/backEnd';
+import { MongoAppliedFor } from 'smart-db';
+import { BaseSmartDBEntityMongo, IBaseSmartDBEntity } from 'smart-db/backEnd';
 import { CampaignEntity } from './Campaign.Entity';
-import { UnixTime,  } from 'lucid-cardano';
+import { UnixTime } from 'lucid-cardano';
 
 @MongoAppliedFor([CampaignEntity])
-export class CampaignEntityMongo extends  BaseSmartDBEntityMongo {
+export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
     protected static Entity = CampaignEntity;
     protected static _mongoTableName: string = CampaignEntity.className();
 
@@ -20,7 +19,7 @@ export class CampaignEntityMongo extends  BaseSmartDBEntityMongo {
     // cdCampaignVersion:String
     // cdCampaignPolicy_CS:String
     // cdCampaignFundsPolicyID_CS:String
-    // cdAdmins:[String]
+    // cdAdmins:String []
     // cdTokenAdminPolicy_CS:String
     // cdMint_CampaignToken:Boolean
     // cdCampaignToken_CS:String
@@ -30,8 +29,8 @@ export class CampaignEntityMongo extends  BaseSmartDBEntityMongo {
     // cdRequestedMinADA:String
     // cdFundedADA:String
     // cdCollectedADA:String
-    // cdBeginAt: Date 
-    // cdDeadline: Date 
+    // cdBeginAt: Date
+    // cdDeadline: Date
     // cdStatus:Int
     // cdMilestones:String
     // cdFundsCount:Int
@@ -50,8 +49,8 @@ export class CampaignEntityMongo extends  BaseSmartDBEntityMongo {
     // tokenomicsDescription:String
     // featured:Boolean
     // archived:Boolean
-    // createAt: Date 
-    // updateAt: Date 
+    // createdAt: Date
+    // updatedAt: Date
 
     // #endregion fields
 
@@ -94,7 +93,7 @@ export class CampaignEntityMongo extends  BaseSmartDBEntityMongo {
             cdCampaignVersion: string;
             cdCampaignPolicy_CS: string;
             cdCampaignFundsPolicyID_CS: string;
-            cdAdmins: [String];
+            cdAdmins: string[];
             cdTokenAdminPolicy_CS: string;
             cdMint_CampaignToken: boolean;
             cdCampaignToken_CS: string;
@@ -104,8 +103,8 @@ export class CampaignEntityMongo extends  BaseSmartDBEntityMongo {
             cdRequestedMinADA: string;
             cdFundedADA: string;
             cdCollectedADA: string;
-            cdBeginAt:  Date ;
-            cdDeadline:  Date ;
+            cdBeginAt: Date;
+            cdDeadline: Date;
             cdStatus: number;
             cdMilestones: string;
             cdFundsCount: number;
@@ -124,51 +123,50 @@ export class CampaignEntityMongo extends  BaseSmartDBEntityMongo {
             tokenomicsDescription: string;
             featured: boolean;
             archived: boolean;
-            createAt:  Date ;
-            updateAt:  Date ;
         }
 
-        const schema = new Schema<Interface>({
-            projectId: { type: String, required: true },
-            campaingCategoryId: { type: String, required: true },
-            campaignStatusId: { type: String, required: true },
-            creatorWalletId: { type: String, required: true },
-            cdCampaignVersion: { type: String, required: true },
-            cdCampaignPolicy_CS: { type: String, required: true },
-            cdCampaignFundsPolicyID_CS: { type: String, required: true },
-            cdAdmins: { type: [String], required: true },
-            cdTokenAdminPolicy_CS: { type: String, required: true },
-            cdMint_CampaignToken: { type: Boolean, required: true },
-            cdCampaignToken_CS: { type: String, required: true },
-            cdCampaignToken_TN: { type: String, required: true },
-            cdCampaignToken_PriceADA: { type: String, required: true },
-            cdRequestedMaxADA: { type: String, required: true },
-            cdRequestedMinADA: { type: String, required: true },
-            cdFundedADA: { type: String, required: true },
-            cdCollectedADA: { type: String, required: true },
-            cdBeginAt: { type: Date, required: true },
-            cdDeadline: { type: Date, required: true },
-            cdStatus: { type: Number, required: true },
-            cdMilestones: { type: String, required: true },
-            cdFundsCount: { type: Number, required: true },
-            cdFundsIndex: { type: Number, required: true },
-            cdMinADA: { type: String, required: true },
-            description: { type: String, required: false },
-            logoUrl: { type: String, required: false },
-            bannerUrl: { type: String, required: false },
-            website: { type: String, required: false },
-            instagram: { type: String, required: false },
-            twitter: { type: String, required: false },
-            discord: { type: String, required: false },
-            facebook: { type: String, required: false },
-            investors: { type: Number, required: true },
-            tokenomicsMaxSupply: { type: String, required: true },
-            tokenomicsDescription: { type: String, required: true },
-            featured: { type: Boolean, required: true },
-            archived: { type: Boolean, required: true },
-            createAt: { type: Date, required: true },
-            updateAt: { type: Date, required: false },
-        });
+        const schema = new Schema<Interface>(
+            {
+                projectId: { type: String, required: true },
+                campaingCategoryId: { type: String, required: true },
+                campaignStatusId: { type: String, required: true },
+                creatorWalletId: { type: String, required: true },
+                cdCampaignVersion: { type: String, required: true },
+                cdCampaignPolicy_CS: { type: String, required: true },
+                cdCampaignFundsPolicyID_CS: { type: String, required: true },
+                cdAdmins: { type: [String], required: true },
+                cdTokenAdminPolicy_CS: { type: String, required: true },
+                cdMint_CampaignToken: { type: Boolean, required: true },
+                cdCampaignToken_CS: { type: String, required: true },
+                cdCampaignToken_TN: { type: String, required: true },
+                cdCampaignToken_PriceADA: { type: String, required: true },
+                cdRequestedMaxADA: { type: String, required: true },
+                cdRequestedMinADA: { type: String, required: true },
+                cdFundedADA: { type: String, required: true },
+                cdCollectedADA: { type: String, required: true },
+                cdBeginAt: { type: Date, required: true },
+                cdDeadline: { type: Date, required: true },
+                cdStatus: { type: Number, required: true },
+                cdMilestones: { type: String, required: true },
+                cdFundsCount: { type: Number, required: true },
+                cdFundsIndex: { type: Number, required: true },
+                cdMinADA: { type: String, required: true },
+                description: { type: String, required: false },
+                logoUrl: { type: String, required: false },
+                bannerUrl: { type: String, required: false },
+                website: { type: String, required: false },
+                instagram: { type: String, required: false },
+                twitter: { type: String, required: false },
+                discord: { type: String, required: false },
+                facebook: { type: String, required: false },
+                investors: { type: Number, required: true },
+                tokenomicsMaxSupply: { type: String, required: true },
+                tokenomicsDescription: { type: String, required: true },
+                featured: { type: Boolean, required: true },
+                archived: { type: Boolean, required: true },
+            },
+            { timestamps: true }
+        );
 
         const ModelDB = models[this._mongoTableName] || model<Interface>(this._mongoTableName, schema);
         return ModelDB;
@@ -176,4 +174,3 @@ export class CampaignEntityMongo extends  BaseSmartDBEntityMongo {
 
     // #endregion mongo db
 }
-

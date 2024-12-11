@@ -14,9 +14,9 @@ export class SubmissionStatusEntity extends BaseEntity {
     @Convertible()
     description?: string;
     @Convertible()
-    createAt!:  Date ;
+    createdAt!:  Date ;
     @Convertible()
-    updateAt!:  Date ;
+    updatedAt!:  Date ;
 
     // #endregion fields
 
@@ -28,8 +28,8 @@ export class SubmissionStatusEntity extends BaseEntity {
         ...super.alwaysFieldsForSelect,
           name: true,
           description: true,
-          createAt: true,
-          updateAt: true,
+          createdAt: true,
+          updatedAt: true,
     };
 
     // #endregion db

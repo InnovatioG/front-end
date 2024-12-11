@@ -14,18 +14,18 @@ export class ProtocolEntity extends BaseSmartDBEntity {
     // #region fields
     @Convertible( { isForDatum: true,  } )
     pdProtocolVersion!: string;
-    @Convertible( { isForDatum: true,  } )
-    pdAdmins!: [String];
+    @Convertible( { isForDatum: true, type: String } )
+    pdAdmins!: string [];
     @Convertible( { isForDatum: true,  } )
     pdTokenAdminPolicy_CS!: string;
     @Convertible( { isForDatum: true,  } )
     pdMinADA!: string;
+    @Convertible({type: String})
+    contracts!: string [];
     @Convertible()
-    contracts!: [String];
+    createdAt!:  Date ;
     @Convertible()
-    createAt!:  Date ;
-    @Convertible()
-    updateAt?:  Date ;
+    updatedAt?:  Date ;
 
     // #endregion fields
 
@@ -40,8 +40,8 @@ export class ProtocolEntity extends BaseSmartDBEntity {
           pdTokenAdminPolicy_CS: true,
           pdMinADA: true,
           contracts: true,
-          createAt: true,
-          updateAt: true,
+          createdAt: true,
+          updatedAt: true,
     };
 
     // #endregion db

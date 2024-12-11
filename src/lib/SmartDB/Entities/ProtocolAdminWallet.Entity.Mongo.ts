@@ -1,12 +1,11 @@
-
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
-import { MongoAppliedFor  } from 'smart-db';
-import { BaseEntityMongo  } from 'smart-db/backEnd';
+import { MongoAppliedFor } from 'smart-db';
+import { BaseEntityMongo } from 'smart-db/backEnd';
 import { ProtocolAdminWalletEntity } from './ProtocolAdminWallet.Entity';
 
 @MongoAppliedFor([ProtocolAdminWalletEntity])
-export class ProtocolAdminWalletEntityMongo extends BaseEntityMongo  {
+export class ProtocolAdminWalletEntityMongo extends BaseEntityMongo {
     protected static Entity = ProtocolAdminWalletEntity;
     protected static _mongoTableName: string = ProtocolAdminWalletEntity.className();
 
@@ -14,8 +13,8 @@ export class ProtocolAdminWalletEntityMongo extends BaseEntityMongo  {
 
     // protocolId:ID
     // walletId:ID
-    // createAt: Date 
-    // updateAt: Date 
+    // createdAt: Date
+    // updatedAt: Date
 
     // #endregion fields
 
@@ -53,16 +52,15 @@ export class ProtocolAdminWalletEntityMongo extends BaseEntityMongo  {
         interface Interface {
             protocolId: string;
             walletId: string;
-            createAt:  Date ;
-            updateAt:  Date ;
         }
 
-        const schema = new Schema<Interface>({
-            protocolId: { type: String, required: true },
-            walletId: { type: String, required: true },
-            createAt: { type: Date, required: true },
-            updateAt: { type: Date, required: false },
-        });
+        const schema = new Schema<Interface>(
+            {
+                protocolId: { type: String, required: true },
+                walletId: { type: String, required: true },
+            },
+            { timestamps: true }
+        );
 
         const ModelDB = models[this._mongoTableName] || model<Interface>(this._mongoTableName, schema);
         return ModelDB;
@@ -70,4 +68,3 @@ export class ProtocolAdminWalletEntityMongo extends BaseEntityMongo  {
 
     // #endregion mongo db
 }
-

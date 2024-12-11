@@ -1,12 +1,11 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ProtocolEntity } from './Protocol.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import {  BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
+import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
 
 @PostgreSQLAppliedFor([ProtocolEntity])
 @Entity({ name: getPostgreSQLTableName(ProtocolEntity.className()) })
-
-export class ProtocolEntityPostgreSQL extends  BaseSmartDBEntityPostgreSQL {
+export class ProtocolEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     protected static Entity = ProtocolEntity;
 
     // #region fields
@@ -14,20 +13,20 @@ export class ProtocolEntityPostgreSQL extends  BaseSmartDBEntityPostgreSQL {
     @PrimaryGeneratedColumn()
     _id!: number; // Auto-generated primary key
 
-    @Column({ type: "varchar", length: 255  })
-    pdProtocolVersion!:string;
-    @Column({ type: "varchar", length: 255  })
-    pdAdmins!:[String];
-    @Column({ type: "varchar", length: 255  })
-    pdTokenAdminPolicy_CS!:string;
-    @Column({ type: "varchar", length: 255  })
-    pdMinADA!:string;
-    @Column({ type: "varchar", length: 255  })
-    contracts!:[String];
-    @Column({ type: "varchar", length: 255  })
-    createAt!: Date ;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    updateAt?: Date ;
+    @Column({ type: 'varchar', length: 255 })
+    pdProtocolVersion!: string;
+    @Column({ type: 'varchar', length: 255 })
+    pdAdmins!: String[];
+    @Column({ type: 'varchar', length: 255 })
+    pdTokenAdminPolicy_CS!: string;
+    @Column({ type: 'varchar', length: 255 })
+    pdMinADA!: string;
+    @Column({ type: 'varchar', length: 255 })
+    contracts!: String[];
+    @CreateDateColumn()
+    createdAt!: Date;
+    @UpdateDateColumn()
+    updatedAt!: Date;
 
     // #endregion fields
 

@@ -1,13 +1,12 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CustomWalletEntity } from './CustomWallet.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseEntityPostgreSQL  } from 'smart-db/backEnd';
-import {type PaymentKeyHash, type StakeKeyHash,type  Address,  } from 'lucid-cardano';
+import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
+import { type PaymentKeyHash, type StakeKeyHash, type Address } from 'lucid-cardano';
 
 @PostgreSQLAppliedFor([CustomWalletEntity])
 @Entity({ name: getPostgreSQLTableName(CustomWalletEntity.className()) })
-
-export class CustomWalletEntityPostgreSQL extends BaseEntityPostgreSQL  {
+export class CustomWalletEntityPostgreSQL extends BaseEntityPostgreSQL {
     protected static Entity = CustomWalletEntity;
 
     // #region fields
@@ -15,32 +14,32 @@ export class CustomWalletEntityPostgreSQL extends BaseEntityPostgreSQL  {
     @PrimaryGeneratedColumn()
     _id!: number; // Auto-generated primary key
 
-    @Column({ type: "varchar", length: 255  })
-    createdBy!:string;
-    @Column({ type: "varchar", length: 255  })
-    lastConnection!: Date ;
-    @Column({ type: "varchar", length: 255  })
-    walletUsed!:string;
-    @Column({ type: "varchar", length: 255  })
-    walletValidatedWithSignedToken!:boolean;
-    @Column({ type: "varchar", length: 255  })
-    paymentPkh!: PaymentKeyHash ;
-    @Column({ type: "varchar", length: 255  })
-    stakePkh!: StakeKeyHash ;
-    @Column({ type: "varchar", length: 255  })
-    name!:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    email?:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    validatedEmail?:string;
-    @Column({ type: "varchar", length: 255  })
-    testnetAddress!: Address ;
-    @Column({ type: "varchar", length: 255  })
-    mainnetAddress!: Address ;
-    @Column({ type: "varchar", length: 255  })
-    createAt!: Date ;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    updateAt?: Date ;
+    @Column({ type: 'varchar', length: 255 })
+    createdBy!: string;
+    @Column({ type: 'varchar', length: 255 })
+    lastConnection!: Date;
+    @Column({ type: 'varchar', length: 255 })
+    walletUsed!: string;
+    @Column({ type: 'varchar', length: 255 })
+    walletValidatedWithSignedToken!: boolean;
+    @Column({ type: 'varchar', length: 255 })
+    paymentPkh!: PaymentKeyHash;
+    @Column({ type: 'varchar', length: 255 })
+    stakePkh!: StakeKeyHash;
+    @Column({ type: 'varchar', length: 255 })
+    name!: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    email?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    validatedEmail?: string;
+    @Column({ type: 'varchar', length: 255 })
+    testnetAddress!: Address;
+    @Column({ type: 'varchar', length: 255 })
+    mainnetAddress!: Address;
+    @CreateDateColumn()
+    createdAt!: Date;
+    @UpdateDateColumn()
+    updatedAt!: Date;
 
     // #endregion fields
 

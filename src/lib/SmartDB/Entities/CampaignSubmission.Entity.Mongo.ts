@@ -1,12 +1,11 @@
-
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
-import { MongoAppliedFor  } from 'smart-db';
-import { BaseEntityMongo  } from 'smart-db/backEnd';
+import { MongoAppliedFor } from 'smart-db';
+import { BaseEntityMongo } from 'smart-db/backEnd';
 import { CampaignSubmissionEntity } from './CampaignSubmission.Entity';
 
 @MongoAppliedFor([CampaignSubmissionEntity])
-export class CampaignSubmissionEntityMongo extends BaseEntityMongo  {
+export class CampaignSubmissionEntityMongo extends BaseEntityMongo {
     protected static Entity = CampaignSubmissionEntity;
     protected static _mongoTableName: string = CampaignSubmissionEntity.className();
 
@@ -18,8 +17,8 @@ export class CampaignSubmissionEntityMongo extends BaseEntityMongo  {
     // revisedByWalletId:ID
     // approvedJustification:String
     // rejectedJustification:String
-    // createAt: Date 
-    // updateAt: Date 
+    // createdAt: Date
+    // updatedAt: Date
 
     // #endregion fields
 
@@ -61,20 +60,19 @@ export class CampaignSubmissionEntityMongo extends BaseEntityMongo  {
             revisedByWalletId: string;
             approvedJustification: string;
             rejectedJustification: string;
-            createAt:  Date ;
-            updateAt:  Date ;
         }
 
-        const schema = new Schema<Interface>({
-            campaignId: { type: String, required: true },
-            submissionStatusId: { type: String, required: true },
-            submittedByWalletId: { type: String, required: true },
-            revisedByWalletId: { type: String, required: true },
-            approvedJustification: { type: String, required: false },
-            rejectedJustification: { type: String, required: false },
-            createAt: { type: Date, required: true },
-            updateAt: { type: Date, required: false },
-        });
+        const schema = new Schema<Interface>(
+            {
+                campaignId: { type: String, required: true },
+                submissionStatusId: { type: String, required: true },
+                submittedByWalletId: { type: String, required: true },
+                revisedByWalletId: { type: String, required: true },
+                approvedJustification: { type: String, required: false },
+                rejectedJustification: { type: String, required: false },
+            },
+            { timestamps: true }
+        );
 
         const ModelDB = models[this._mongoTableName] || model<Interface>(this._mongoTableName, schema);
         return ModelDB;
@@ -82,4 +80,3 @@ export class CampaignSubmissionEntityMongo extends BaseEntityMongo  {
 
     // #endregion mongo db
 }
-

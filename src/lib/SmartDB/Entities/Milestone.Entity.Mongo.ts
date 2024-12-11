@@ -1,12 +1,11 @@
-
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
-import { MongoAppliedFor  } from 'smart-db';
-import {  BaseSmartDBEntityMongo, IBaseSmartDBEntity } from 'smart-db/backEnd';
+import { MongoAppliedFor } from 'smart-db';
+import { BaseSmartDBEntityMongo, IBaseSmartDBEntity } from 'smart-db/backEnd';
 import { MilestoneEntity } from './Milestone.Entity';
 
 @MongoAppliedFor([MilestoneEntity])
-export class MilestoneEntityMongo extends  BaseSmartDBEntityMongo {
+export class MilestoneEntityMongo extends BaseSmartDBEntityMongo {
     protected static Entity = MilestoneEntity;
     protected static _mongoTableName: string = MilestoneEntity.className();
 
@@ -61,14 +60,17 @@ export class MilestoneEntityMongo extends  BaseSmartDBEntityMongo {
             description: string;
         }
 
-        const schema = new Schema<Interface>({
-            campaignId: { type: String, required: true },
-            campaignStatusId: { type: String, required: true },
-            cmEstimateDeliveryDate: { type: Number, required: true },
-            cmPercentage: { type: Number, required: true },
-            cmStatus: { type: Number, required: true },
-            description: { type: String, required: true },
-        });
+        const schema = new Schema<Interface>(
+            {
+                campaignId: { type: String, required: true },
+                campaignStatusId: { type: String, required: true },
+                cmEstimateDeliveryDate: { type: Number, required: true },
+                cmPercentage: { type: Number, required: true },
+                cmStatus: { type: Number, required: true },
+                description: { type: String, required: true },
+            },
+            { timestamps: true }
+        );
 
         const ModelDB = models[this._mongoTableName] || model<Interface>(this._mongoTableName, schema);
         return ModelDB;
@@ -76,4 +78,3 @@ export class MilestoneEntityMongo extends  BaseSmartDBEntityMongo {
 
     // #endregion mongo db
 }
-

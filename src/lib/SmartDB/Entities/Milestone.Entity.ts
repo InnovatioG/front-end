@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Convertible, BaseSmartDBEntity, asSmartDBEntity } from 'smart-db';
-import {  } from 'lucid-cardano';
+import {} from 'lucid-cardano';
 
 @asSmartDBEntity()
 export class MilestoneEntity extends BaseSmartDBEntity {
@@ -16,14 +16,18 @@ export class MilestoneEntity extends BaseSmartDBEntity {
     campaignId!: string;
     @Convertible()
     campaignStatusId!: string;
-    @Convertible( { isForDatum: true,  } )
+    @Convertible({ isForDatum: true })
     cmEstimateDeliveryDate!: number;
-    @Convertible( { isForDatum: true,  } )
+    @Convertible({ isForDatum: true })
     cmPercentage!: number;
-    @Convertible( { isForDatum: true,  } )
+    @Convertible({ isForDatum: true })
     cmStatus!: number;
     @Convertible()
     description!: string;
+    @Convertible()
+    createdAt!: Date;
+    @Convertible()
+    updatedAt?: Date;
 
     // #endregion fields
 
@@ -33,15 +37,15 @@ export class MilestoneEntity extends BaseSmartDBEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-          campaignId: true,
-          campaignStatusId: true,
-          cmEstimateDeliveryDate: true,
-          cmPercentage: true,
-          cmStatus: true,
-          description: true,
+        campaignId: true,
+        campaignStatusId: true,
+        cmEstimateDeliveryDate: true,
+        cmPercentage: true,
+        cmStatus: true,
+        description: true,
+        createdAt: true,
+        updatedAt: true,
     };
 
     // #endregion db
 }
-
-

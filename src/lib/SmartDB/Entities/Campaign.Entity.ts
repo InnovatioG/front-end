@@ -26,8 +26,8 @@ export class CampaignEntity extends BaseSmartDBEntity {
     cdCampaignPolicy_CS!: string;
     @Convertible( { isForDatum: true,  } )
     cdCampaignFundsPolicyID_CS!: string;
-    @Convertible( { isForDatum: true,  } )
-    cdAdmins!: [String];
+    @Convertible( { isForDatum: true, type: String  } )
+    cdAdmins!: string [];
     @Convertible( { isForDatum: true,  } )
     cdTokenAdminPolicy_CS!: string;
     @Convertible( { isForDatum: true,  } )
@@ -87,9 +87,9 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible()
     archived!: boolean;
     @Convertible()
-    createAt!:  Date ;
+    createdAt!:  Date ;
     @Convertible()
-    updateAt?:  Date ;
+    updatedAt?:  Date ;
 
     // #endregion fields
 
@@ -136,8 +136,8 @@ export class CampaignEntity extends BaseSmartDBEntity {
           tokenomicsDescription: true,
           featured: true,
           archived: true,
-          createAt: true,
-          updateAt: true,
+          createdAt: true,
+          updatedAt: true,
     };
 
     // #endregion db

@@ -1,12 +1,11 @@
-
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
-import { MongoAppliedFor  } from 'smart-db';
-import { BaseEntityMongo  } from 'smart-db/backEnd';
+import { MongoAppliedFor } from 'smart-db';
+import { BaseEntityMongo } from 'smart-db/backEnd';
 import { CampaignFaqsEntity } from './CampaignFaqs.Entity';
 
 @MongoAppliedFor([CampaignFaqsEntity])
-export class CampaignFaqsEntityMongo extends BaseEntityMongo  {
+export class CampaignFaqsEntityMongo extends BaseEntityMongo {
     protected static Entity = CampaignFaqsEntity;
     protected static _mongoTableName: string = CampaignFaqsEntity.className();
 
@@ -16,8 +15,8 @@ export class CampaignFaqsEntityMongo extends BaseEntityMongo  {
     // name:String
     // description:String
     // order:String
-    // createAt: Date 
-    // updateAt:String
+    // createdAt: Date
+    // updatedAt:String
 
     // #endregion fields
 
@@ -57,18 +56,17 @@ export class CampaignFaqsEntityMongo extends BaseEntityMongo  {
             name: string;
             description: string;
             order: string;
-            createAt:  Date ;
-            updateAt: Date;
         }
 
-        const schema = new Schema<Interface>({
-            campaignId: { type: String, required: true },
-            name: { type: String, required: true },
-            description: { type: String, required: false },
-            order: { type: String, required: true },
-            createAt: { type: Date, required: true },
-            updateAt: { type: Date, required: false },
-        });
+        const schema = new Schema<Interface>(
+            {
+                campaignId: { type: String, required: true },
+                name: { type: String, required: true },
+                description: { type: String, required: false },
+                order: { type: String, required: true },
+            },
+            { timestamps: true }
+        );
 
         const ModelDB = models[this._mongoTableName] || model<Interface>(this._mongoTableName, schema);
         return ModelDB;
@@ -76,4 +74,3 @@ export class CampaignFaqsEntityMongo extends BaseEntityMongo  {
 
     // #endregion mongo db
 }
-

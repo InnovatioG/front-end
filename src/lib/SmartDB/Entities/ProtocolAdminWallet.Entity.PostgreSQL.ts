@@ -1,12 +1,11 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ProtocolAdminWalletEntity } from './ProtocolAdminWallet.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseEntityPostgreSQL  } from 'smart-db/backEnd';
+import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
 
 @PostgreSQLAppliedFor([ProtocolAdminWalletEntity])
 @Entity({ name: getPostgreSQLTableName(ProtocolAdminWalletEntity.className()) })
-
-export class ProtocolAdminWalletEntityPostgreSQL extends BaseEntityPostgreSQL  {
+export class ProtocolAdminWalletEntityPostgreSQL extends BaseEntityPostgreSQL {
     protected static Entity = ProtocolAdminWalletEntity;
 
     // #region fields
@@ -14,14 +13,14 @@ export class ProtocolAdminWalletEntityPostgreSQL extends BaseEntityPostgreSQL  {
     @PrimaryGeneratedColumn()
     _id!: number; // Auto-generated primary key
 
-    @Column({ type: "varchar", length: 255  })
-    protocolId!:string;
-    @Column({ type: "varchar", length: 255  })
-    walletId!:string;
-    @Column({ type: "varchar", length: 255  })
-    createAt!: Date ;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    updateAt?: Date ;
+    @Column({ type: 'varchar', length: 255 })
+    protocolId!: string;
+    @Column({ type: 'varchar', length: 255 })
+    walletId!: string;
+    @CreateDateColumn()
+    createdAt!: Date;
+    @UpdateDateColumn()
+    updatedAt!: Date;
 
     // #endregion fields
 

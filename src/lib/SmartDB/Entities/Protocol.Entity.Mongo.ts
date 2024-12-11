@@ -1,24 +1,23 @@
-
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
-import { MongoAppliedFor  } from 'smart-db';
-import {  BaseSmartDBEntityMongo, IBaseSmartDBEntity } from 'smart-db/backEnd';
+import { MongoAppliedFor } from 'smart-db';
+import { BaseSmartDBEntityMongo, IBaseSmartDBEntity } from 'smart-db/backEnd';
 import { ProtocolEntity } from './Protocol.Entity';
 
 @MongoAppliedFor([ProtocolEntity])
-export class ProtocolEntityMongo extends  BaseSmartDBEntityMongo {
+export class ProtocolEntityMongo extends BaseSmartDBEntityMongo {
     protected static Entity = ProtocolEntity;
     protected static _mongoTableName: string = ProtocolEntity.className();
 
     // #region fields
 
     // pdProtocolVersion:String
-    // pdAdmins:[String]
+    // pdAdmins:String []
     // pdTokenAdminPolicy_CS:String
     // pdMinADA:String
-    // contracts:[String]
-    // createAt: Date 
-    // updateAt: Date 
+    // contracts:String []
+    // createdAt: Date
+    // updatedAt: Date
 
     // #endregion fields
 
@@ -55,23 +54,22 @@ export class ProtocolEntityMongo extends  BaseSmartDBEntityMongo {
     public static MongoModel() {
         interface Interface {
             pdProtocolVersion: string;
-            pdAdmins: [String];
+            pdAdmins: string[];
             pdTokenAdminPolicy_CS: string;
             pdMinADA: string;
-            contracts: [String];
-            createAt:  Date ;
-            updateAt:  Date ;
+            contracts: string[];
         }
 
-        const schema = new Schema<Interface>({
-            pdProtocolVersion: { type: String, required: true },
-            pdAdmins: { type: [String], required: true },
-            pdTokenAdminPolicy_CS: { type: String, required: true },
-            pdMinADA: { type: String, required: true },
-            contracts: { type: [String], required: true },
-            createAt: { type: Date, required: true },
-            updateAt: { type: Date, required: false },
-        });
+        const schema = new Schema<Interface>(
+            {
+                pdProtocolVersion: { type: String, required: true },
+                pdAdmins: { type: [String], required: true },
+                pdTokenAdminPolicy_CS: { type: String, required: true },
+                pdMinADA: { type: String, required: true },
+                contracts: { type: [String], required: true },
+            },
+            { timestamps: true }
+        );
 
         const ModelDB = models[this._mongoTableName] || model<Interface>(this._mongoTableName, schema);
         return ModelDB;
@@ -79,4 +77,3 @@ export class ProtocolEntityMongo extends  BaseSmartDBEntityMongo {
 
     // #endregion mongo db
 }
-

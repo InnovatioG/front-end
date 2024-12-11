@@ -1,12 +1,11 @@
-import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CampaignSubmissionEntity } from './CampaignSubmission.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseEntityPostgreSQL  } from 'smart-db/backEnd';
+import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
 
 @PostgreSQLAppliedFor([CampaignSubmissionEntity])
 @Entity({ name: getPostgreSQLTableName(CampaignSubmissionEntity.className()) })
-
-export class CampaignSubmissionEntityPostgreSQL extends BaseEntityPostgreSQL  {
+export class CampaignSubmissionEntityPostgreSQL extends BaseEntityPostgreSQL {
     protected static Entity = CampaignSubmissionEntity;
 
     // #region fields
@@ -14,22 +13,22 @@ export class CampaignSubmissionEntityPostgreSQL extends BaseEntityPostgreSQL  {
     @PrimaryGeneratedColumn()
     _id!: number; // Auto-generated primary key
 
-    @Column({ type: "varchar", length: 255  })
-    campaignId!:string;
-    @Column({ type: "varchar", length: 255  })
-    submissionStatusId!:string;
-    @Column({ type: "varchar", length: 255  })
-    submittedByWalletId!:string;
-    @Column({ type: "varchar", length: 255  })
-    revisedByWalletId!:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    approvedJustification?:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    rejectedJustification?:string;
-    @Column({ type: "varchar", length: 255  })
-    createAt!: Date ;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    updateAt?: Date ;
+    @Column({ type: 'varchar', length: 255 })
+    campaignId!: string;
+    @Column({ type: 'varchar', length: 255 })
+    submissionStatusId!: string;
+    @Column({ type: 'varchar', length: 255 })
+    submittedByWalletId!: string;
+    @Column({ type: 'varchar', length: 255 })
+    revisedByWalletId!: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    approvedJustification?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    rejectedJustification?: string;
+    @CreateDateColumn()
+    createdAt!: Date;
+    @UpdateDateColumn()
+    updatedAt!: Date;
 
     // #endregion fields
 

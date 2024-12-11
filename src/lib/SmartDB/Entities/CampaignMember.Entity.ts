@@ -30,9 +30,9 @@ export class CampaignMemberEntity extends BaseEntity {
     @Convertible()
     facebook?: string;
     @Convertible()
-    createAt!:  Date ;
+    createdAt!:  Date ;
     @Convertible()
-    updateAt?:  Date ;
+    updatedAt?:  Date ;
 
     // #endregion fields
 
@@ -52,8 +52,8 @@ export class CampaignMemberEntity extends BaseEntity {
           twitter: true,
           discord: true,
           facebook: true,
-          createAt: true,
-          updateAt: true,
+          createdAt: true,
+          updatedAt: true,
     };
 
     // #endregion db
