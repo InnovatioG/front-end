@@ -158,12 +158,10 @@ export interface MembersTeam {
     member_admin: boolean;
     member_manage_funds: boolean;
     member_wallet_address: string;
-    member_social: {
-        facebook: string;
-        instagram: string;
-        discord: string;
-        x: string;
-    };
+    facebook: string;
+    instagram: string;
+    discord: string;
+    xs: string;
 }
 
 export interface Project {

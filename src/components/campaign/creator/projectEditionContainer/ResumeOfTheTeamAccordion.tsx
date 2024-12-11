@@ -15,11 +15,31 @@ interface ResumeOfTheTeamAccordionProps {
     onEditMember?: (member: MembersTeam) => void;
 }
 
+type SocialMediaKeys = Extract<{
+    [K in keyof MembersTeam]: MembersTeam[K] extends string ? K : never
+}[keyof MembersTeam], string>;
+
 const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onEditMember }) => {
     const { project, editionMode } = useProjectDetailStore();
     const { setSelectedMember, setStep } = useCampaignStore();
     const router = useRouter();
 
+    const socialMedia = {
+        website: 'Website',
+        facebook: 'Facebook',
+        instagram: 'Instagram',
+        discord: 'Discord',
+        linkedin: 'Linkedin',
+        xs: 'XS',
+    };
+
+
+    /*************  ✨ Codeium Command ⭐  *************/
+    /**
+     * If onEditMember prop is provided, call it with the member object as argument.
+     * @param {MembersTeam} member - The member to be edited.
+     */
+    /******  6b1938ec-983b-425c-b6cc-6c7b12b664bf  *******/
     const handleClickEditButton = (member: MembersTeam) => {
         if (onEditMember) {
             onEditMember(member);
@@ -54,20 +74,26 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
                                         <span className={styles.spanTitle}>
                                             Social Media:
                                         </span>
-                                        <div className={styles.socialMediaContainer}>
-                                            {Object.entries(member.member_social).map(([name, link], index) => {
-                                                const socialIcon = socialIcons.find(icon => icon.name === name);
-                                                return (
-                                                    link && socialIcon && (
-                                                        <a href={formatLink(link)} key={index} target="_blank" rel="noopener noreferrer">
-                                                            <SocialButton
-                                                                icon={socialIcon.icon}
-                                                                name={name as "website" | "facebook" | "instagram" | "discord" | "linkedin" | "xs"}
-                                                            />
-                                                        </a>
-                                                    )
-                                                );
-                                            })}
+                                        <div className={styles.subContentHeader}>
+                                            <span className={styles.spanTitle}>
+                                                Social Media:
+                                            </span>
+                                            <div className={styles.socialMediaContainer}>
+                                                {Object.entries(socialMedia).map(([key, label]) => {
+                                                    const link = member[key as keyof MembersTeam]; // Acceso directo
+                                                    const socialIcon = socialIcons.find(icon => icon.name === key);
+                                                    return (
+                                                        link && socialIcon && (
+                                                            <a href={formatLink(link as string)} key={key} target="_blank" rel="noopener noreferrer">
+                                                                <SocialButton
+                                                                    icon={socialIcon.icon}
+                                                                    name={key as "website" | "facebook" | "instagram" | "discord" | "linkedin" | "xs"}
+                                                                />
+                                                            </a>
+                                                        )
+                                                    );
+                                                })}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
