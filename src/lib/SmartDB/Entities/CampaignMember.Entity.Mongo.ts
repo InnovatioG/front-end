@@ -77,7 +77,7 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo {
                 walletId: { type: String, required: true },
                 rol: { type: String, required: false },
                 description: { type: String, required: false },
-                website: { type: String, required: true },
+                website: { type: String, required: false },
                 instagram: { type: String, required: false },
                 twitter: { type: String, required: false },
                 discord: { type: String, required: false },

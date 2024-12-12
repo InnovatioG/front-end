@@ -54,7 +54,7 @@ export class MilestoneEntityMongo extends BaseSmartDBEntityMongo {
         interface Interface {
             campaignId: string;
             campaignStatusId: string;
-            cmEstimateDeliveryDate: number;
+            cmEstimateDeliveryDate: Date;
             cmPercentage: number;
             cmStatus: number;
             description: string;
@@ -64,7 +64,7 @@ export class MilestoneEntityMongo extends BaseSmartDBEntityMongo {
             {
                 campaignId: { type: String, required: true },
                 campaignStatusId: { type: String, required: true },
-                cmEstimateDeliveryDate: { type: Number, required: true },
+                cmEstimateDeliveryDate: { type: Date, required: true },
                 cmPercentage: { type: Number, required: true },
                 cmStatus: { type: Number, required: true },
                 description: { type: String, required: true },

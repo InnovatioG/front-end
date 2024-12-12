@@ -1,216 +1,225 @@
-import { CustomWalletEntity } from '../../../lib/SmartDB/Entities/CustomWallet.Entity';
-import { CustomWalletApi } from '../../../lib/SmartDB/FrontEnd/CustomWallet.FrontEnd.Api.Calls';
-import { useEffect, useState } from 'react';
-import Modal from 'react-modal';
+import { useCustomWallet } from './useCustomWallet';
 import styles from './CustomWallet.module.scss';
 
 export default function CustomWallet() {
-    //--------------------------------------
-    const [isRefreshing, setIsRefreshing] = useState(true);
-    useEffect(() => {
-        setIsRefreshing(false);
-    }, []);
-    //----------------------------
-    const [list, setList] = useState<CustomWalletEntity[]>();
-    const [newItem, setNewItem] = useState<Partial<CustomWalletEntity>>({}); // Estado para el nuevo entidad
-    //----------------------------
-    const fetch = async () => {
-            try {
-                const list: CustomWalletEntity[] = await CustomWalletApi.getAllApi_();
-                setList(list);
-            } catch (e) {
-                console.error(e);
-            }
-        };
-    useEffect(() => {fetch();}, []);
-    //----------------------------
-    const handleBtnCreate = async () => {
-        try {
-          // Crear un nuevo entidad a partir de los datos de newItem
-          const entity = new CustomWalletEntity(newItem);
+  const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCustomWallet();
 
-          // Llamada al API para crear el entidad en la base de datos
-          const createdCustomWallet = await CustomWalletApi.createApi(entity);
+  const renderList = () => (
+    <div>
+      <div className={styles.listHeader}>
+        <button onClick={() => setView('create')}>Create New Item</button>
+      </div>
+      {list.length === 0 ? (
+        <p>No CampaignWallet found.</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Created By</th>
+              <th>Last Connection</th>
+              <th>Wallet Used</th>
+              <th>Wallet Validated With Signed Token</th>
+              <th>Payment Pkh</th>
+              <th>Stake Pkh</th>
+              <th>Testnet Address</th>
+              <th>Mainnet Address</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {list.map((item) => (
+              <tr key={item._DB_id}>
+                <td>{item.name}</td>
+                <td>{item.email || 'N/A'}</td>
+                <td>{item.createdBy}</td>
+                <td>{item.lastConnection?.toISOString()}</td>
+                <td>{item.walletUsed}</td>
+                <td>{(item.walletValidatedWithSignedToken == "true") ? 'Yes' : 'No'}</td>
+                <td>{item.paymentPkh}</td>
+                <td>{item.stakePkh}</td>
+                <td>{item.testnetAddress}</td>
+                <td>{item.mainnetAddress}</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      setEditItem(item);
+                      setView('edit');
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDeleteItem(item);
+                      setView('confirmDelete');
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 
-          // Limpiar los campos después de crear
-          setNewItem({});
+  const renderCreateForm = () => (
+    <form className={styles.form}>
+      <div>
+        <label>Name:</label>
+        <input type="text" value={newItem.name || ''} onChange={(e) => setNewItem({ ...newItem, name: e.target.value })} />
+      </div>
+      <div>
+        <label>Email:</label>
+        <input type="text" value={newItem.email || ''} onChange={(e) => setNewItem({ ...newItem, email: e.target.value })} />
+      </div>
+      <div>
+        <label>Created By:</label>
+        <input type="text" value={newItem.createdBy || ''} onChange={(e) => setNewItem({ ...newItem, createdBy: e.target.value })} />
+      </div>
+      <div>
+        <label>Last Connection:</label>
+        <input
+          type="date"
+          value={newItem.lastConnection ? newItem.lastConnection.toISOString().split('T')[0] : ''}
+          onChange={(e) =>
+            setNewItem({
+              ...newItem,
+              lastConnection: new Date(e.target.value),
+            })
+          }
+        />
+      </div>
+      <div>
+        <label>Wallet Used:</label>
+        <input type="text" value={newItem.walletUsed || ''} onChange={(e) => setNewItem({ ...newItem, walletUsed: e.target.value })} />
+      </div>
+      <div>
+        <label>Wallet Validated With Signed Token:</label>
+        <input
+          type="checkbox"
+          checked={newItem.walletValidatedWithSignedToken || false}
+          onChange={(e) =>
+            setNewItem({
+              ...newItem,
+              walletValidatedWithSignedToken: e.target.checked,
+            })
+          }
+        />
+      </div>
+      <div>
+        <label>Payment Pkh:</label>
+        <input type="text" value={newItem.paymentPkh || ''} onChange={(e) => setNewItem({ ...newItem, paymentPkh: e.target.value })} />
+      </div>
+      <div>
+        <label>Stake Pkh:</label>
+        <input type="text" value={newItem.stakePkh || ''} onChange={(e) => setNewItem({ ...newItem, stakePkh: e.target.value })} />
+      </div>
+      <div>
+        <label>Testnet Address:</label>
+        <input type="text" value={newItem.testnetAddress || ''} onChange={(e) => setNewItem({ ...newItem, testnetAddress: e.target.value })} />
+      </div>
+      <div>
+        <label>Mainnet Address:</label>
+        <input type="text" value={newItem.mainnetAddress || ''} onChange={(e) => setNewItem({ ...newItem, mainnetAddress: e.target.value })} />
+      </div>
+      <button type="button" onClick={create}>
+        Create
+      </button>
+      <button type="button" onClick={() => setView('list')}>
+        Cancel
+      </button>
+    </form>
+  );
 
-          fetch();
-        } catch (e) {
-            console.error(e);
-        }
-    };
-    //----------------------------
-    const handleDelete = async (id: string) => {
-        try {
-            await CustomWalletApi.deleteByIdApi(CustomWalletEntity, id); // Llama a la API para eliminar el elemento
-            fetch();
-        } catch (e) {
-            console.error(e);
-        }
-    };
-    //----------------------------
-    const handleInputChange = (field: keyof CustomWalletEntity, value: any) => {
-        setNewItem({
-            ...newItem,
-            [field]: value,
-        });
-    };
-    //----------------------------
-    return (
-        <div className={styles.content}>
-            <div>
-                <div className={styles.subTitle}>CREATE</div>
-                <form>
-                    <div>
-                        <label>createdBy: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.createdBy || ''} 
-                            onChange={(e) => handleInputChange('createdBy', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>lastConnection: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.lastConnection ? new Date(newItem.lastConnection).toISOString() : ''}
-                            onChange={(e) => handleInputChange('lastConnection', new Date(e.target.value))} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>walletUsed: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.walletUsed || ''} 
-                            onChange={(e) => handleInputChange('walletUsed', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>walletValidatedWithSignedToken: </label>
-                        <input 
-                            type="checked" 
-                            checked={newItem.walletValidatedWithSignedToken || false} 
-                            onChange={(e) => handleInputChange('walletValidatedWithSignedToken', e.target.checked)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>paymentPkh: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.paymentPkh || ''} 
-                            onChange={(e) => handleInputChange('paymentPkh', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>stakePkh: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.stakePkh || ''} 
-                            onChange={(e) => handleInputChange('stakePkh', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>name: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.name || ''} 
-                            onChange={(e) => handleInputChange('name', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>email: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.email || ''} 
-                            onChange={(e) => handleInputChange('email', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>validatedEmail: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.validatedEmail || ''} 
-                            onChange={(e) => handleInputChange('validatedEmail', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>testnetAddress: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.testnetAddress || ''} 
-                            onChange={(e) => handleInputChange('testnetAddress', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>mainnetAddress: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.mainnetAddress || ''} 
-                            onChange={(e) => handleInputChange('mainnetAddress', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>createdAt: </label>
-                        <input type="text" value={newItem.createdAt ? new Date(newItem.createdAt).toISOString() : ''}
-                        onChange={(e) => handleInputChange('createdAt', new Date(e.target.value))} />
-                    </div>
-                    <div></div>
-                    <div>
-                        <label>updatedAt: </label>
-                        <input type="text" value={newItem.updatedAt ? new Date(newItem.updatedAt).toISOString() : ''}
-                        onChange={(e) => handleInputChange('updatedAt', new Date(e.target.value))} />
-                    </div>
-                    <div>
-                    </div>
-                    <button type="button" onClick={handleBtnCreate}>Create</button>
-                </form>
-            </div>
-            <div>
-                <div>List of CustomWallet</div>
-                <div className={styles.listContainer}>
-                    <table>
-                        <thead>
-                          <tr>
-                            <th key="0">createdBy</th><th key="1">lastConnection</th><th key="2">walletUsed</th><th key="3">walletValidatedWithSignedToken</th><th key="4">paymentPkh</th><th key="5">stakePkh</th><th key="6">name</th><th key="7">email</th><th key="8">validatedEmail</th><th key="9">testnetAddress</th><th key="10">mainnetAddress</th><th key="11">createdAt</th><th key="12">updatedAt</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            {list?.map((item, index) => (
-                              <tr key={index}>
-                                <td key="0">{item.createdBy }</td><td key="1">{item.lastConnection.toISOString() }</td><td key="2">{item.walletUsed }</td><td key="3">{item.walletValidatedWithSignedToken }</td><td key="4">{item.paymentPkh }</td><td key="5">{item.stakePkh }</td><td key="6">{item.name }</td><td key="7">{item.email }</td><td key="8">{item.validatedEmail }</td><td key="9">{item.testnetAddress }</td><td key="10">{item.mainnetAddress }</td><td key="11">{item.createdAt.toISOString() }</td><td key="12">{item.updatedAt?.toISOString() }</td>
-                                <td>
-                                  <button onClick={() => handleDelete(item._DB_id)}>Delete</button>
-                                </td>
-                              </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    );
+  const renderEditForm = () => (
+    <form className={styles.form}>
+      <div>
+        <label>Name:</label>
+        <input type="text" value={editItem?.name || ''} onChange={(e) => setEditItem({ ...editItem, name: e.target.value })} />
+      </div>
+      <div>
+        <label>Email:</label>
+        <input type="text" value={editItem?.email || ''} onChange={(e) => setEditItem({ ...editItem, email: e.target.value })} />
+      </div>
+      <div>
+        <label>Created By:</label>
+        <input type="text" value={editItem?.createdBy || ''} onChange={(e) => setEditItem({ ...editItem, createdBy: e.target.value })} />
+      </div>
+      <div>
+        <label>Last Connection:</label>
+        <input
+          type="date"
+          value={editItem?.lastConnection ? editItem.lastConnection.toISOString().split('T')[0] : ''}
+          onChange={(e) =>
+            setEditItem({
+              ...editItem,
+              lastConnection: new Date(e.target.value),
+            })
+          }
+        />
+      </div>
+      <div>
+        <label>Wallet Used:</label>
+        <input type="text" value={editItem?.walletUsed || ''} onChange={(e) => setEditItem({ ...editItem, walletUsed: e.target.value })} />
+      </div>
+      <div>
+        <label>Wallet Validated With Signed Token:</label>
+        <input
+          type="checkbox"
+          checked={editItem?.walletValidatedWithSignedToken || false}
+          onChange={(e) =>
+            setEditItem({
+              ...editItem,
+              walletValidatedWithSignedToken: e.target.checked,
+            })
+          }
+        />
+      </div>
+      <div>
+        <label>Payment Pkh:</label>
+        <input type="text" value={editItem?.paymentPkh || ''} onChange={(e) => setEditItem({ ...editItem, paymentPkh: e.target.value })} />
+      </div>
+      <div>
+        <label>Stake Pkh:</label>
+        <input type="text" value={editItem?.stakePkh || ''} onChange={(e) => setEditItem({ ...editItem, stakePkh: e.target.value })} />
+      </div>
+      <div>
+        <label>Testnet Address:</label>
+        <input type="text" value={editItem?.testnetAddress || ''} onChange={(e) => setEditItem({ ...editItem, testnetAddress: e.target.value })} />
+      </div>
+      <div>
+        <label>Mainnet Address:</label>
+        <input type="text" value={editItem?.mainnetAddress || ''} onChange={(e) => setEditItem({ ...editItem, mainnetAddress: e.target.value })} />
+      </div>
+      <button type="button" onClick={update}>
+        Update
+      </button>
+      <button type="button" onClick={() => setView('list')}>
+        Cancel
+      </button>
+    </form>
+  );
+
+  const renderConfirmDelete = () => (
+    <div className={styles.confirmDelete}>
+      <p>Are you sure you want to delete this item?</p>
+      {deleteItem && <pre>{deleteItem.show()}</pre>}
+      <button onClick={remove}>Confirm</button>
+      <button onClick={() => setView('list')}>Cancel</button>
+    </div>
+  );
+
+  return (
+    <div className={styles.content}>
+      {view === 'list' && renderList()}
+      {view === 'create' && renderCreateForm()}
+      {view === 'edit' && renderEditForm()}
+      {view === 'confirmDelete' && renderConfirmDelete()}
+    </div>
+  );
 }
-Modal.setAppElement('#__next');
