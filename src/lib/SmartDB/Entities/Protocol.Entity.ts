@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Convertible, BaseSmartDBEntity, asSmartDBEntity } from 'smart-db';
-import {  } from 'lucid-cardano';
+import {} from 'lucid-cardano';
 
 @asSmartDBEntity()
 export class ProtocolEntity extends BaseSmartDBEntity {
@@ -12,20 +12,20 @@ export class ProtocolEntity extends BaseSmartDBEntity {
     _NET_id_TN: string = 'ProtocolID';
 
     // #region fields
-    @Convertible( { isForDatum: true,  } )
+    @Convertible({ isForDatum: true })
     pdProtocolVersion!: string;
-    @Convertible( { isForDatum: true, type: String } )
-    pdAdmins!: string [];
-    @Convertible( { isForDatum: true,  } )
+    @Convertible({ isForDatum: true, type: String })
+    pdAdmins!: string[];
+    @Convertible({ isForDatum: true })
     pdTokenAdminPolicy_CS!: string;
-    @Convertible( { isForDatum: true,  } )
+    @Convertible({ isForDatum: true })
     pdMinADA!: string;
-    @Convertible({type: String})
-    contracts!: string [];
-    @Convertible()
-    createdAt!:  Date ;
-    @Convertible()
-    updatedAt?:  Date ;
+    @Convertible({ type: String })
+    contracts!: string[];
+    @Convertible({ isCreatedAt: true })
+    createdAt!: Date;
+    @Convertible({ isUpdatedAt: true })
+    updatedAt?: Date;
 
     // #endregion fields
 
@@ -35,16 +35,14 @@ export class ProtocolEntity extends BaseSmartDBEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-          pdProtocolVersion: true,
-          pdAdmins: true,
-          pdTokenAdminPolicy_CS: true,
-          pdMinADA: true,
-          contracts: true,
-          createdAt: true,
-          updatedAt: true,
+        pdProtocolVersion: true,
+        pdAdmins: true,
+        pdTokenAdminPolicy_CS: true,
+        pdMinADA: true,
+        contracts: true,
+        createdAt: true,
+        updatedAt: true,
     };
 
     // #endregion db
 }
-
-

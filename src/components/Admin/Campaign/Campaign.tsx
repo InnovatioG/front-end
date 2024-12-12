@@ -3,6 +3,7 @@ import { CampaignApi } from '../../../lib/SmartDB/FrontEnd/Campaign.FrontEnd.Api
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import styles from './Campaign.module.scss';
+import { pushWarningNotification } from 'smart-db';
 
 export default function Campaign() {
     //--------------------------------------
@@ -40,6 +41,7 @@ export default function Campaign() {
             fetch();
         } catch (e) {
             console.error(e);
+            pushWarningNotification('Error', `Error creating Campaign: ${e}`);
         }
     };
     //----------------------------
@@ -49,6 +51,7 @@ export default function Campaign() {
             fetch();
         } catch (e) {
             console.error(e);
+            pushWarningNotification('Error', `Error deleting Campaign: ${e}`);
         }
     };
     //----------------------------

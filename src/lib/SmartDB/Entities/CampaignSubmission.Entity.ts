@@ -1,12 +1,11 @@
 import 'reflect-metadata';
 import { Convertible, BaseEntity, asEntity } from 'smart-db';
-import {  } from 'lucid-cardano';
+import {} from 'lucid-cardano';
 
 @asEntity()
 export class CampaignSubmissionEntity extends BaseEntity {
     protected static _apiRoute: string = 'campaignsubmission';
     protected static _className: string = 'CampaignSubmission';
-
 
     // #region fields
     @Convertible()
@@ -21,10 +20,10 @@ export class CampaignSubmissionEntity extends BaseEntity {
     approvedJustification?: string;
     @Convertible()
     rejectedJustification?: string;
-    @Convertible()
-    createdAt!:  Date ;
-    @Convertible()
-    updatedAt?:  Date ;
+    @Convertible({ isCreatedAt: true })
+    createdAt!: Date;
+    @Convertible({ isUpdatedAt: true })
+    updatedAt?: Date;
 
     // #endregion fields
 
@@ -34,17 +33,15 @@ export class CampaignSubmissionEntity extends BaseEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-          campaignId: true,
-          submissionStatusId: true,
-          submittedByWalletId: true,
-          revisedByWalletId: true,
-          approvedJustification: true,
-          rejectedJustification: true,
-          createdAt: true,
-          updatedAt: true,
+        campaignId: true,
+        submissionStatusId: true,
+        submittedByWalletId: true,
+        revisedByWalletId: true,
+        approvedJustification: true,
+        rejectedJustification: true,
+        createdAt: true,
+        updatedAt: true,
     };
 
     // #endregion db
 }
-
-

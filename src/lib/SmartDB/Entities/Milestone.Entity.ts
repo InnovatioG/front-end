@@ -24,9 +24,9 @@ export class MilestoneEntity extends BaseSmartDBEntity {
     cmStatus!: number;
     @Convertible()
     description!: string;
-    @Convertible()
+    @Convertible({ isCreatedAt: true })
     createdAt!: Date;
-    @Convertible()
+    @Convertible({ isUpdatedAt: true })
     updatedAt?: Date;
 
     // #endregion fields

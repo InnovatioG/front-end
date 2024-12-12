@@ -1,12 +1,11 @@
 import 'reflect-metadata';
 import { Convertible, BaseEntity, asEntity } from 'smart-db';
-import {  } from 'lucid-cardano';
+import {} from 'lucid-cardano';
 
 @asEntity()
 export class CampaignMemberEntity extends BaseEntity {
     protected static _apiRoute: string = 'campaignmember';
     protected static _className: string = 'CampaignMember';
-
 
     // #region fields
     @Convertible()
@@ -29,10 +28,10 @@ export class CampaignMemberEntity extends BaseEntity {
     discord?: string;
     @Convertible()
     facebook?: string;
-    @Convertible()
-    createdAt!:  Date ;
-    @Convertible()
-    updatedAt?:  Date ;
+    @Convertible({ isCreatedAt: true })
+    createdAt!: Date;
+    @Convertible({ isUpdatedAt: true })
+    updatedAt?: Date;
 
     // #endregion fields
 
@@ -42,21 +41,19 @@ export class CampaignMemberEntity extends BaseEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-          campaignId: true,
-          editor: true,
-          walletId: true,
-          rol: true,
-          description: true,
-          website: true,
-          instagram: true,
-          twitter: true,
-          discord: true,
-          facebook: true,
-          createdAt: true,
-          updatedAt: true,
+        campaignId: true,
+        editor: true,
+        walletId: true,
+        rol: true,
+        description: true,
+        website: true,
+        instagram: true,
+        twitter: true,
+        discord: true,
+        facebook: true,
+        createdAt: true,
+        updatedAt: true,
     };
 
     // #endregion db
 }
-
-
