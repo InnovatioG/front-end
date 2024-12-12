@@ -1,122 +1,144 @@
 import 'reflect-metadata';
-import { BaseEntity, Convertible, asEntity } from 'smart-db';
+import { Convertible, BaseSmartDBEntity, asSmartDBEntity } from 'smart-db';
+import { UnixTime } from 'lucid-cardano';
 
-@asEntity()
-export class CampaignEntity extends BaseEntity {
-    protected static _apiRoute: string = 'campaigns';
+@asSmartDBEntity()
+export class CampaignEntity extends BaseSmartDBEntity {
+    protected static _apiRoute: string = 'campaign';
     protected static _className: string = 'Campaign';
 
-    @Convertible()
-    id!: number;
+    protected static _plutusDataIsSubType = false;
+    protected static _is_NET_id_Unique = false;
+    _NET_id_TN: string = 'CampaignID';
 
+    // #region fields
     @Convertible()
-    projectId!: number;
-
+    projectId!: string;
     @Convertible()
-    campaignCategoryId!: number;
-
+    campaingCategoryId!: string;
     @Convertible()
-    campaignStatusId!: number;
-
+    campaignStatusId!: string;
     @Convertible()
-    creatorWalletId!: number;
-
-    @Convertible()
-    cdCampaignVersion!: number;
-
+    creatorWalletId!: string;
+    @Convertible({ isForDatum: true })
+    cdCampaignVersion!: string;
     @Convertible()
     cdCampaignPolicy_CS!: string;
-
-    @Convertible()
+    @Convertible({ isForDatum: true })
     cdCampaignFundsPolicyID_CS!: string;
-
-    @Convertible({ type: String })
+    @Convertible({ isForDatum: true, type: String })
     cdAdmins!: string[];
-
-    @Convertible()
+    @Convertible({ isForDatum: true })
     cdTokenAdminPolicy_CS!: string;
-
-    @Convertible()
+    @Convertible({ isForDatum: true })
     cdMint_CampaignToken!: boolean;
-
-    @Convertible()
+    @Convertible({ isForDatum: true })
     cdCampaignToken_CS!: string;
-
-    @Convertible()
+    @Convertible({ isForDatum: true })
     cdCampaignToken_TN!: string;
-
-    @Convertible()
-    cdCampaignToken_PriceADA!: number;
-
-    @Convertible()
-    cdRequestedMaxADA!: number;
-
-    @Convertible()
-    cdRequestedMinADA!: number;
-
-    @Convertible()
-    cdFundedADA!: number;
-
-    @Convertible()
-    cdCollectedADA!: number;
-
-    @Convertible()
+    @Convertible({ isForDatum: true })
+    cdCampaignToken_PriceADA!: string;
+    @Convertible({ isForDatum: true })
+    cdRequestedMaxADA!: string;
+    @Convertible({ isForDatum: true })
+    cdRequestedMinADA!: string;
+    @Convertible({ isForDatum: true })
+    cdFundedADA!: string;
+    @Convertible({ isForDatum: true })
+    cdCollectedADA!: string;
+    @Convertible({ isForDatum: true })
     cdBeginAt!: Date;
-
-    @Convertible()
+    @Convertible({ isForDatum: true })
     cdDeadline!: Date;
-
-    @Convertible()
-    cdStatus!: string;
-
-    @Convertible({ type: String })
-    cdMilestones!: string[];
-
-    @Convertible()
+    @Convertible({ isForDatum: true })
+    cdStatus!: number;
+    @Convertible({ isForDatum: true })
+    cdMilestones!: string;
+    @Convertible({ isForDatum: true })
     cdFundsCount!: number;
-
-    @Convertible()
+    @Convertible({ isForDatum: true })
     cdFundsIndex!: number;
-
+    @Convertible({ isForDatum: true })
+    cdMinADA!: string;
     @Convertible()
-    cdMinADA!: number;
-
+    description?: string;
     @Convertible()
-    description!: string;
-
+    logoUrl?: string;
     @Convertible()
-    logoUrl!: string;
-
+    bannerUrl?: string;
     @Convertible()
-    bannerUrl!: string;
-
+    website?: string;
     @Convertible()
-    website!: string;
-
+    instagram?: string;
     @Convertible()
-    instagram!: string;
-
+    twitter?: string;
     @Convertible()
-    twitter!: string;
-
+    discord?: string;
     @Convertible()
-    discord!: string;
-
-    @Convertible()
-    facebook!: string;
-
+    facebook?: string;
     @Convertible()
     investors!: number;
-
+    @Convertible()
+    tokenomicsMaxSupply!: string;
+    @Convertible()
+    tokenomicsDescription!: string;
     @Convertible()
     featured!: boolean;
-
     @Convertible()
     archived!: boolean;
-
-    @Convertible()
+    @Convertible({ isCreatedAt: true })
     createdAt!: Date;
+    @Convertible({ isUpdatedAt: true })
+    updatedAt?: Date;
 
-    @Convertible()
-    updatedAt!: Date;
+    // #endregion fields
+
+    // #region db
+
+    public static defaultFieldsWhenUndefined: Record<string, boolean> = {};
+
+    public static alwaysFieldsForSelect: Record<string, boolean> = {
+        ...super.alwaysFieldsForSelect,
+        projectId: true,
+        campaingCategoryId: true,
+        campaignStatusId: true,
+        creatorWalletId: true,
+        cdCampaignVersion: true,
+        cdCampaignPolicy_CS: true,
+        cdCampaignFundsPolicyID_CS: true,
+        cdAdmins: true,
+        cdTokenAdminPolicy_CS: true,
+        cdMint_CampaignToken: true,
+        cdCampaignToken_CS: true,
+        cdCampaignToken_TN: true,
+        cdCampaignToken_PriceADA: true,
+        cdRequestedMaxADA: true,
+        cdRequestedMinADA: true,
+        cdFundedADA: true,
+        cdCollectedADA: true,
+        cdBeginAt: true,
+        cdDeadline: true,
+        cdStatus: true,
+        cdMilestones: true,
+        cdFundsCount: true,
+        cdFundsIndex: true,
+        cdMinADA: true,
+        description: true,
+        logoUrl: true,
+        bannerUrl: true,
+        website: true,
+        instagram: true,
+        twitter: true,
+        discord: true,
+        facebook: true,
+        investors: true,
+        tokenomicsMaxSupply: true,
+        tokenomicsDescription: true,
+        featured: true,
+        archived: true,
+        createdAt: true,
+        updatedAt: true,
+    };
+
+    // #endregion db
 }

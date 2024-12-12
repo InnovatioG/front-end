@@ -1,0 +1,186 @@
+
+directive @entity on OBJECT
+directive @smartDBEntity(plutusDataIsSubType: Boolean!, plutusDataIndex: Int, isNETIdUnique: Boolean!, tokenName: String!) on OBJECT
+directive @specialImports(fromSmart_db: [String], fromLucid_cardano: [String], rawImport: String) on OBJECT
+directive @index(indexName:[String]) on OBJECT
+directive @nullable on FIELD
+directive @specialType(typeName:String!) on FIELD
+directive @default(defaultValue:String!) on FIELD
+directive @convertible(params: [String]) on FIELD
+
+type Protocol @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, tokenName: "ProtocolID") {
+ pdProtocolVersion: String @convertible(params:["isForDatum: true"])
+ pdAdmins: [String] @convertible(params:["isForDatum: true"])
+ pdTokenAdminPolicy_CS: String @convertible(params:["isForDatum: true"])
+ pdMinADA: String @convertible(params:["isForDatum: true"])
+ contracts: [String]
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @nullable @specialType(typeName:"Date")
+}
+
+type ProtocolAdminWallet @entity {
+ protocolId: ID
+ walletId: ID
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @nullable @specialType(typeName:"Date")
+}
+
+type CampaignCategory @entity {
+ name: String
+ description: String @nullable
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @nullable @specialType(typeName:"Date")
+}
+
+type CampaignStatus @entity {
+ name: String
+ description: String @nullable
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @nullable @specialType(typeName:"Date")
+}
+
+type CampaignContent @entity {
+ campaignId: ID
+ name: String
+ description: String @nullable
+ order: String
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @nullable @specialType(typeName:"Date")
+}
+
+type CampaignFaqs @entity {
+ campaignId: ID
+ name: String
+ description: String @nullable
+ order: String
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String
+}
+
+type MilestoneStatus @entity {
+ name: String
+ description: String @nullable
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @nullable @specialType(typeName:"Date")
+}
+
+type Campaign @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, tokenName: "CampaignID")  @specialImports(fromLucid_cardano:["UnixTime"]){
+ projectId: ID
+ campaingCategoryId: ID
+ campaignStatusId: ID
+ creatorWalletId: ID
+ cdCampaignVersion: String @convertible(params:["isForDatum: true"])
+ cdCampaignPolicy_CS: String
+ cdCampaignFundsPolicyID_CS: String @convertible(params:["isForDatum: true"])
+ cdAdmins: [String] @convertible(params:["isForDatum: true"])
+ cdTokenAdminPolicy_CS: String @convertible(params:["isForDatum: true"])
+ cdMint_CampaignToken: Boolean @convertible(params:["isForDatum: true"])
+ cdCampaignToken_CS: String @convertible(params:["isForDatum: true"])
+ cdCampaignToken_TN: String @convertible(params:["isForDatum: true"])
+ cdCampaignToken_PriceADA: String @convertible(params:["isForDatum: true"])
+ cdRequestedMaxADA: String @convertible(params:["isForDatum: true"])
+ cdRequestedMinADA: String @convertible(params:["isForDatum: true"])
+ cdFundedADA: String @convertible(params:["isForDatum: true"])
+ cdCollectedADA: String @convertible(params:["isForDatum: true"])
+ cdBeginAt: String @specialType(typeName:"Date") @convertible(params:["isForDatum: true"])
+ cdDeadline: String @specialType(typeName:"Date") @convertible(params:["isForDatum: true"])
+ cdStatus: Int @convertible(params:["isForDatum: true"])
+ cdMilestones: String @convertible(params:["isForDatum: true"])
+ cdFundsCount: Int @convertible(params:["isForDatum: true"])
+ cdFundsIndex: Int @convertible(params:["isForDatum: true"])
+ cdMinADA: String @convertible(params:["isForDatum: true"])
+ description: String @nullable
+ logoUrl: String @nullable
+ bannerUrl: String @nullable
+ website: String @nullable
+ instagram: String @nullable
+ twitter: String @nullable
+ discord: String @nullable
+ facebook: String @nullable
+ investors: Int 
+ tokenomicsMaxSupply: String
+ tokenomicsDescription: String
+ featured: Boolean
+ archived: Boolean
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @nullable @specialType(typeName:"Date")
+}
+
+type Milestone @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, tokenName: "MilestoneID") {
+ campaignId: ID
+ campaignStatusId: ID
+ cmEstimateDeliveryDate: Int @convertible(params:["isForDatum: true"])
+ cmPercentage: Int @convertible(params:["isForDatum: true"])
+ cmStatus: Int @convertible(params:["isForDatum: true"])
+ description: String
+}
+
+type CustomWallet @entity  @specialImports(fromLucid_cardano:["PaymentKeyHash", "StakeKeyHash", "Address"]){
+ createdBy: String
+ lastConnection: String @specialType(typeName:"Date")
+ walletUsed: String
+ walletValidatedWithSignedToken: Boolean
+ paymentPkh: String @specialType(typeName:"PaymentKeyHash")
+ stakePkh: String @specialType(typeName:"StakeKeyHash")
+ name: String
+ email: String @nullable
+ validatedEmail: String @nullable
+ testnetAddress: String @specialType(typeName:"Address")
+ mainnetAddress: String @specialType(typeName:"Address")
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @nullable @specialType(typeName:"Date")
+}
+
+type CampaignMember @entity {
+ campaignId: ID
+ editor: Boolean
+ walletId: ID
+ rol: String @nullable
+ description: String @nullable
+ website: String
+ instagram: String @nullable
+ twitter: String @nullable
+ discord: String @nullable
+ facebook: String @nullable
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @nullable @specialType(typeName:"Date")
+}
+
+type SubmissionStatus @entity {
+ name: String
+ description: String @nullable
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @specialType(typeName:"Date")
+}
+
+type CampaignSubmission @entity {
+ campaignId: ID
+ submissionStatusId: ID
+ submittedByWalletId: ID
+ revisedByWalletId: ID
+ approvedJustification: String @nullable
+ rejectedJustification: String @nullable
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @nullable @specialType(typeName:"Date")
+}
+
+type MilestoneSubmission @entity {
+ milestoneId: ID
+ submissionStatusId: ID
+ submittedByWalletId: ID
+ revisedByWalletId: ID
+ reportProofOfFinalization: String @nullable
+ approvedJustification: String @nullable
+ rejectedJustification: String @nullable
+ createdAt: String @specialType(typeName:"Date")
+ updatedAt: String @nullable @specialType(typeName:"Date")
+}
+
+
+type Query @resolvers {
+    not_used: String
+}
+
+schema {
+    query: Query
+}

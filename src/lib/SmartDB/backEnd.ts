@@ -34,6 +34,9 @@ export function initBackEnd() {
 
     endpointsManager.setPublicEndPointsInternet([/^\/api\/transactions\/.+/]);
     // Allowing public access to endpoints matching the `/api/transactions/` pattern.
+
+    endpointsManager.setPublicEndPointsInternet([/^\/api\/*\/.+/]);
+
 }
 
 /* 
