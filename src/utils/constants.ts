@@ -178,7 +178,7 @@ export const buttonTypes: ButtonConfig[] = [
     {
         id: 2,
         label: 'Send to Revision',
-        action: () => console.log('Api enviando la campaña a revision'),
+        action: () => alert('Api enviando la campaña a revision'),
         classNameType: 'fill',
     },
     {
@@ -198,7 +198,9 @@ export const buttonTypes: ButtonConfig[] = [
     {
         id: 5,
         label: 'Launch Campaign',
-        action: () => console.log('llamado a la api, involucra blockchain'),
+        action: (setModalOpen) => {
+            if (setModalOpen) setModalOpen('launchCampaign');
+        },
         classNameType: 'fill',
     },
     {
@@ -219,13 +221,17 @@ export const buttonTypes: ButtonConfig[] = [
     {
         id: 8,
         label: 'Create Contract', //7
-        action: () => console.log('llamado a la api para crear contrato'),
+        action: (setModalOpen) => {
+            if (setModalOpen) setModalOpen('createSmartContract');
+        },
         classNameType: 'fill',
     },
     {
         id: 9,
         label: 'Publish Contract', //7
-        action: () => console.log('llamado a la api para publicar contrato'),
+        action: (setModalOpen) => {
+            if (setModalOpen) setModalOpen('publishSmartContract');
+        },
         classNameType: 'fill',
     },
     {
@@ -239,13 +245,18 @@ export const buttonTypes: ButtonConfig[] = [
     {
         id: 11,
         label: 'Launch Campaign',
-        action: () => console.log('llamado a la api para lanzar la campaña'),
+        action: (setModalOpen) => {
+            if (setModalOpen) setModalOpen('launchCampaign');
+        },
+
         classNameType: 'fill',
     },
     {
         id: 12,
         label: 'Validate Fundraising Status (TX)',
-        action: () => console.log('llamado a la api para validar el estado de la recaudacion'),
+        action: (setModalOpen) => {
+            if (setModalOpen) setModalOpen('validateFundraisingStatus');
+        },
         classNameType: 'fill',
     },
     {
@@ -360,7 +371,7 @@ export const CardInformationByState = (state_id: number, milestone_status_id?: n
         4: {
             label: 'Approved', // Approved
             buttons: [
-                buttonTypes[3], // Api Call
+                buttonTypes[0], // View Campaign
             ],
         },
         5: {
@@ -459,7 +470,7 @@ export const cardInformationForProtocolTeam = (state_id: number): StateConfig =>
         9: {
             label: 'Fundraising', // Fundraising
             buttons: [
-                buttonTypes[1], // View Campaign
+                buttonTypes[0], // View Campaign
             ],
         },
         10: {
@@ -489,7 +500,9 @@ export const ButtonsByMilestoneStatus = (milestone_status_id: number): StateConf
                 {
                     id: 2,
                     label: 'Send Report',
-                    action: () => console.log('Api enviando el reporte del milestone'),
+                    action: (setModalOpen) => {
+                        if (setModalOpen) setModalOpen('sendReport');
+                    },
                     classNameType: 'fill',
                 },
             ],
@@ -515,7 +528,9 @@ export const ButtonsByMilestoneStatus = (milestone_status_id: number): StateConf
                 {
                     id: 4,
                     label: 'Send Report',
-                    action: () => console.log('Api enviando la campaña a revision'),
+                    action: (setModalOpen) => {
+                        if (setModalOpen) setModalOpen('sendReport');
+                    },
                     classNameType: 'fill',
                 },
             ],

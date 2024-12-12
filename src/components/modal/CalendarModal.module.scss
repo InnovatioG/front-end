@@ -1,3 +1,66 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
 .layout {
-    padding: 2rem 1rem;
+    padding: 4rem 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    min-width: 15dvw;
+    h1 {
+        text-align: center;
+        font: fonts.$f900-medium;
+    }
+}
+
+.buttonContainer {
+    width: 50%;
+    align-self: flex-end;
+}
+.hourMinutContainer {
+    input[type='time']::-webkit-calendar-picker-indicator {
+        display: none;
+    }
+    input[type='time']::-webkit-datetime-edit-text {
+        color: transparent;
+    }
+
+    position: relative;
+    input[type='time'] {
+        padding: 1rem;
+        width: 100%;
+        text-align: center;
+        position: relative;
+        z-index: 1;
+        background-color: transparent;
+    }
+
+    input[type='time']::placeholder {
+        color: transparent; /* Oculta el placeholder nativo */
+    }
+
+    input[type='time']::before {
+        content: attr(placeholder); /* Placeholder simulado */
+        color: #ccc; /* Color del texto simulado */
+        position: absolute;
+        left: 0;
+        right: 0;
+        text-align: center;
+        pointer-events: none;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 0; /* Detrás del texto ingresado */
+    }
+
+    input[type='time']:focus::before {
+        content: ''; /* Borra el contenido simulado al enfocar */
+    }
+
+    input[type='time']:not(:placeholder-shown)::before {
+        content: ''; /* Borra el placeholder si hay texto ingresado */
+    }
+
+    input[type='time']:focus {
+        color: #000; /* Texto visible cuando se escribe */
+    }
 }

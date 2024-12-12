@@ -5,14 +5,25 @@ import { CardInformationByState } from '@/utils/constants';
 import GeneralButtonUI from '@/components/buttons/UI/Button';
 import Link from 'next/link';
 import { useModalStore } from '@/store/modal/useModalStoreState';
-
+import useDraftCard from '@/hooks/useDraftCard';
 
 
 interface CampaignButtonContainerProps { }
 
 const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) => {
-    const { project, isAdmin } = useProjectDetailStore();
-    const { buttons } = CardInformationByState(project.state_id);
+
+
+
+    const { project, isAdmin, isProtocolTeam } = useProjectDetailStore();
+
+
+
+    const campaign = {
+        ...project,
+        campaign_type: "Target" as const, // Garantiza el valor correcto
+    }
+    const { buttons } = useDraftCard(campaign, isProtocolTeam);
+
     const { openModal } = useModalStore();
 
     const filteredButtons = buttons.filter(button => button.id !== 1);
@@ -51,8 +62,8 @@ const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) 
                                 <GeneralButtonUI
                                     key={index}
                                     text={button.label}
-                                    onClick={() => button.action && button.action((modalType) => openModal(modalType, project.id))}
-                                    classNameStyle={`fillb ${buttons.length === 1 ? 'center' : ''}`}
+                                    onClick={() => button.action && button.action((modalType) => openModal(modalType, campaign.id, campaign))}
+                                    classNameStyle={`${button.classNameType} ${buttons.length === 1 ? 'center' : ''}`}
                                 >
                                     {buttons.length > 1 && <span className={styles[button.classNameType]}>{'>'}</span>}
                                 </GeneralButtonUI>

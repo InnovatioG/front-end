@@ -6,7 +6,7 @@ import SocialMediaCardContainer from '../creator/finalSetup/SocialMediaCard';
 import { CardInformationByState } from '@/utils/constants';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/defaultAvatar/DefaultAvatar';
 import styles from "@/pages/campaign/[id]/campainPagelayout.module.scss"
-
+import useDraftCard from "@/hooks/useDraftCard";
 /*  */
 interface CampaignDashCreationProps {
 
@@ -16,13 +16,18 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const { project, editionMode, setProject } = useProjectDetailStore();
+    const { project, editionMode, setProject, isProtocolTeam } = useProjectDetailStore();
 
+    const campaign = {
+        ...project,
+        campaign_type: "Target" as const, // Garantiza el valor correcto
+    }
 
+    const { label } = useDraftCard(campaign, isProtocolTeam);
 
     const state = CardInformationByState(project.state_id);
-    const label = state.label.toLowerCase().replace(/\s+/g, '-');
-
+    /*     const label = state.label.toLowerCase().replace(/\s+/g, '-');
+     */
 
     const handleChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return;

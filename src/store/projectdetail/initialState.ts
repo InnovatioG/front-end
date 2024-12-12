@@ -3,8 +3,8 @@ import type { MilestoneF, FAQ, campaingContent } from '@/HardCode/databaseType';
 
 export interface ProjectDetailState {
     project: {
-        user_id: number | null;
         id: number;
+        user_id: number | null;
         title: string;
         description: string;
         state_id: number;
@@ -21,6 +21,7 @@ export interface ProjectDetailState {
         cdCampaignToken_TN: string;
         campaign_content: campaingContent[];
         tokenomics_description: string;
+        vizualization?: number;
         website: string;
         facebook: string;
         instagram: string;
@@ -28,9 +29,14 @@ export interface ProjectDetailState {
         linkedin: string;
         start_date: string;
         xs: string;
+        category_id: number;
+        contract_id?: number;
+        raise_amount: number;
         members_team: MembersTeam[];
         milestones: MilestoneF[];
         faqs: FAQ[];
+        campaign_type: 'Target' | 'Milestone';
+        end_date: string;
     };
     isLoading: boolean;
     menuView: 'Project Detail' | 'Resume of the team' | 'Roadmap & Milestones' | 'Tokenomics' | 'Q&A';
@@ -69,10 +75,16 @@ export const initialState: ProjectDetailState = {
         cdCampaignToken_TN: '',
         tokenomics_description: '',
         start_date: '',
+        end_date: '',
         members_team: [],
         milestones: [],
         faqs: [],
         campaign_content: [],
+        vizualization: 0,
+        category_id: 0,
+        contract_id: 0,
+        raise_amount: 0,
+        campaign_type: 'Target',
     },
     price_ada: 0,
     menuView: 'Project Detail',

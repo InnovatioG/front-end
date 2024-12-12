@@ -9,6 +9,8 @@ import ProjectContainer from '@/components/projectContainer/ProjectContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import { useSession } from 'next-auth/react';
 import CampaignButtonContainer from './campainButtonsContainer';
+import GeneralError from '@/components/errors/GeneralError';
+
 
 interface CampaignVisualizationProps {
     // Define props here
@@ -73,7 +75,7 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
                     <ProjectContainer />
                 </div>
             ) : (
-                <p>Campaign not found</p>
+                <GeneralError message='Project not found' />
             )}
 
             <CampaignButtonContainer />

@@ -38,8 +38,9 @@ export default function CampaignDashboard() {
       const matchesStatus = statusFilter === "" || campaign.state_id === parseInt(statusFilter);
       const matchesCategory = categoryFilter === "" || campaign.category_id === parseInt(categoryFilter);
 
-      const campaignOwnerAddress = dataBaseService.getUserByAddress(campaign.user_id);
-      const matchesProposal = !myProposal || campaignOwnerAddress === address;
+      const campaignOwnerAddress = campaign.user_id
+        ? dataBaseService.getUserByAddress(campaign.user_id)
+        : null; const matchesProposal = !myProposal || campaignOwnerAddress === address;
 
       return campaign.vizualization === 1 && matchesSearch && matchesStatus && matchesCategory && matchesProposal;
     });

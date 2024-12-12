@@ -52,7 +52,7 @@ export default function DraftCard(props: DraftCardProps) {
         <Image
           width={58}
           height={58}
-          src={campaign.logo_url}
+          src={campaign.logoUrl}
           alt="logo-company"
           className={styles.logoCard}
         />

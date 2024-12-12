@@ -53,7 +53,11 @@ const useDraftCard = (campaign: Campaign, isProtocolTeam: boolean) => {
     }, [campaign.start_date]);
 
     const formatAllTime = (timeRemaining: any) => {
-        return `${timeRemaining.days}:${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}`;
+        if (timeRemaining.days >= 4) {
+            return `${timeRemaining.days} days`;
+        } else {
+            return `${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}: ${formatTime(timeRemaining.seconds)}`;
+        }
     };
 
     return {

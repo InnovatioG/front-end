@@ -101,7 +101,7 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logo_url": "/img/database/company_logo_id1.png",
+            "logoUrl": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -126,7 +126,7 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logo_url": "/img/database/company_logo_id2.png",
+            "logoUrl": "/img/database/company_logo_id2.png",
             "banner_url": "/img/database/banner_logo_id2.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -151,7 +151,7 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logo_url": "/img/database/company_logo_id3.png",
+            "logoUrl": "/img/database/company_logo_id3.png",
             "banner_url": "/img/database/banner_logo_id3.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -176,7 +176,7 @@
             "raise_amount": 0.0,
             "start_date": "",
             "end_date": "",
-            "logo_url": "/img/database/company_logo_id2.png",
+            "logoUrl": "/img/database/company_logo_id2.png",
             "banner_url": "/img/database/banner_logo_id2.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -201,7 +201,7 @@
             "raise_amount": 0.0,
             "start_date": "",
             "end_date": "",
-            "logo_url": "/img/database/company_logo_id2.png",
+            "logoUrl": "/img/database/company_logo_id2.png",
             "banner_url": "/img/database/banner_logo_id2.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -226,7 +226,7 @@
             "raise_amount": 0.0,
             "start_date": "",
             "end_date": "",
-            "logo_url": "/img/database/company_logo_id2.png",
+            "logoUrl": "/img/database/company_logo_id2.png",
             "banner_url": "/img/database/banner_logo_id2.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -251,7 +251,7 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logo_url": "/img/database/company_logo_id1.png",
+            "logoUrl": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -274,9 +274,9 @@
             ],
             "goal": 500000.0,
             "raise_amount": 0,
-            "start_date": "2024-12-20T00:35:24.725Z",
+            "start_date": "2024-12-13T00:35:24.725Z",
             "end_date": "2024-12-31T00:35:24.725Z",
-            "logo_url": "/img/database/company_logo_id1.png",
+            "logoUrl": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "2024-11-01T00:35:24.725Z",
             "updated_at": "2024-12-01T00:35:24.725Z"
@@ -301,13 +301,77 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logo_url": "/img/database/company_logo_id1.png",
+            "logoUrl": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
         },
         {
             "id": 10,
+            "user_id": 1,
+            "state_id": 10,
+            "category_id": 6,
+            "contract_id": 4,
+            "vizualization": 2,
+            "investors": 0,
+            "title": "Campaña activa --- todavia no vencio la fecha para enviar reportes para los managers",
+            "description": "El primer status del milestone tiene que ser de started y el resto de not started",
+            "campaign_type": "Milestone",
+            "milestones": [
+                {
+                    "id": 1,
+                    "campaign_id": 10,
+                    "campaign_status_id": 2,
+                    "cmPercentage": 40,
+                    "cmEstimatedDeliveryDate": "2024-12-03T00:35:24.725Z",
+                    "milestone_status": {
+                        "milestone_submission": {
+                            "id_milestone_submission": 1,
+                            "milestone_id": 1,
+                            "milestone_status_id": 2,
+                            "approved_justification": "",
+                            "rejected_justification": ""
+                        },
+                        "id": 1,
+                        "name": "Bit",
+                        "description": "The first milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.",
+                        "created_at": "",
+                        "updated_at": ""
+                    }
+                },
+                {
+                    "id": 2,
+                    "campaign_id": 10,
+                    "campaign_status_id": 2,
+                    "cmPercentage": 40,
+                    "cmEstimatedDeliveryDate": "2024-12-03T00:35:24.725Z",
+                    "milestone_status": {
+                        "milestone_submission": {
+                            "id_milestone_submission": 1,
+                            "milestone_id": 1,
+                            "milestone_status_id": 2,
+                            "approved_justification": "",
+                            "rejected_justification": ""
+                        },
+                        "id": 2,
+                        "name": "in_progress",
+                        "description": "The second milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.",
+                        "created_at": "",
+                        "updated_at": ""
+                    }
+                }
+            ],
+            "goal": 500000.0,
+            "raise_amount": 0,
+            "start_date": "2024-12-20T00:35:24.725Z",
+            "end_date": "2024-12-31T00:35:24.725Z",
+            "logoUrl": "/img/database/company_logo_id1.png",
+            "banner_url": "/img/database/banner_logo_id1.png",
+            "created_at": "2024-11-01T00:35:24.725Z",
+            "updated_at": "2024-12-01T00:35:24.725Z"
+        },
+        {
+            "id": 11,
             "user_id": 1,
             "state_id": 11,
             "category_id": 6,
@@ -388,13 +452,13 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logo_url": "/img/database/company_logo_id1.png",
+            "logoUrl": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
         },
         {
-            "id": 11,
+            "id": 12,
             "user_id": 2,
             "state_id": 11,
             "category_id": 6,
@@ -476,13 +540,13 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logo_url": "/img/database/company_logo_id1.png",
+            "logoUrl": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
         },
         {
-            "id": 12,
+            "id": 13,
             "user_id": 2,
             "state_id": 11,
             "category_id": 6,
@@ -564,13 +628,13 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logo_url": "/img/database/company_logo_id1.png",
+            "logoUrl": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
         },
         {
-            "id": 13,
+            "id": 14,
             "user_id": 2,
             "state_id": 11,
             "category_id": 6,
@@ -652,7 +716,7 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logo_url": "/img/database/company_logo_id1.png",
+            "logoUrl": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
@@ -741,7 +805,7 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logo_url": "/img/database/company_logo_id1.png",
+            "logoUrl": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""

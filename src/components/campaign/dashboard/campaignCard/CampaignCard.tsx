@@ -15,11 +15,14 @@ interface CampaignCardProps {
 
 export default function CampaignCard(props: CampaignCardProps) {
   const { campaign, getStatusName, getCategoryName } = props;
-  const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(campaign.end_date));
-
+  const [timeRemaining, setTimeRemaining] = useState(
+    campaign.end_date ? getTimeRemaining(campaign.end_date) : { total: 0, days: 0, totalHours: 0, minutes: 0 }
+  );
   useEffect(() => {
     const timer = setInterval(() => {
-      setTimeRemaining(getTimeRemaining(campaign.end_date));
+      if (campaign.end_date) {
+        setTimeRemaining(getTimeRemaining(campaign.end_date));
+      }
     }, 1000);
 
     return () => clearInterval(timer);
@@ -44,7 +47,7 @@ export default function CampaignCard(props: CampaignCardProps) {
         <Image
           width={58}
           height={58}
-          src={campaign.logo_url}
+          src={campaign.logoUrl}
           alt="logo-company"
           className={styles.logoCard}
         />

@@ -22,7 +22,7 @@ interface ModalProps {
 const ModalTemplate: React.FC<ModalProps> = ({ isOpen, setIsOpen, children }) => {
     const { screenSize } = useResponsiveContext();
 
-    if (screenSize === 'mobile' || screenSize === 'tablet' || screenSize === 'tablet-large') {
+    if (screenSize === 'mobile' || screenSize === 'tablet') {
         return (
             <Drawer open={isOpen} onClose={() => setIsOpen(false)}>
                 <DrawerContent >
@@ -30,8 +30,8 @@ const ModalTemplate: React.FC<ModalProps> = ({ isOpen, setIsOpen, children }) =>
                         <button className={styles.closeButton} onClick={() => setIsOpen(false)}>
                             <span>x</span>
                         </button>
+                        {children}
                     </div>
-                    {children}
                 </DrawerContent>
             </Drawer>
         );

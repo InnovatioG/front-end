@@ -18,13 +18,18 @@ export function formatMoney(amount: number, currency: string): string {
         maximumFractionDigits: 0,
     }).format(amount);
 }
-export function getTimeRemaining(endDate: string) {
-    const total = Date.parse(endDate) - Date.parse(new Date().toISOString());
-    const days = Math.floor(total / (1000 * 60 * 60 * 24));
-    const totalHours = Math.floor((total / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((total / 1000 / 60) % 60);
+export function getTimeRemaining(date: string) {
+    const dat = new Date(date);
+    const now = new Date();
 
-    return { total, days, totalHours, minutes };
+    const total = dat.getTime() - now.getTime();
+
+    const days = Math.floor(total / (1000 * 60 * 60 * 24));
+    const totalHours = Math.floor(total / (1000 * 60 * 60));
+    const minutes = Math.floor((total / 1000 / 60) % 60);
+    const seconds = Math.floor((total / 1000) % 60);
+
+    return { total, days, totalHours, minutes, seconds };
 }
 
 export const formatTime = (time: number) => time.toString().padStart(2, '0');
@@ -68,4 +73,13 @@ export const formatWeekOfMonth = (date: string): string => {
     const week = getWeekOfMonth(date);
     const month = getMonthName(date);
     return `${getOrdinalString(week)} week of ${month}`;
+};
+
+export const formatDateFromString = (date: string) => {
+    if (date.includes('weeks')) {
+        return date;
+    } else {
+        const dateFormatted = parseISO(date);
+        return format(dateFormatted, 'MM/dd/yy');
+    }
 };

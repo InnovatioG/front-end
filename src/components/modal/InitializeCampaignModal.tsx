@@ -2,20 +2,60 @@ import React from 'react';
 import { useModalStore } from '@/store/modal/useModalStoreState';
 import styles from "./Modal.module.scss"
 import GeneralButtonUI from '../buttons/UI/Button';
+import { title } from 'process';
 
 
 
 /* !! COMPONENTE QUE SE PUEDE REPETIR */
 interface InitializeCampaignModalProps {
-    // Define props here
+    modalType: "initializeCampaign" | "createSmartContract" | "publishSmartContract" | "validateFundraisingStatus"
 }
 
-const InitializeCampaignModal: React.FC<InitializeCampaignModalProps> = (props) => {
+const SingleQuestionModal: React.FC<InitializeCampaignModalProps> = ({ modalType }) => {
+
+
+    const informationByType = {
+        initializeCampaign: {
+            title: "Initialize Campaign",
+            subtitle: "Are you sure that you want to initialize this campaign?",
+            button: {
+                no: "No",
+                yes: "Yes"
+            }
+        },
+        createSmartContract: {
+            title: "Create Smart Contract",
+            subtitle: "Are you sure that you want to create the Smart Contract for this proposal?",
+            button: {
+                no: "No",
+                yes: "Yes"
+            }
+        },
+        publishSmartContract: {
+            title: "Publish Smart Contract",
+            subtitle: "Are you sure that you want to publish the Smart Contract for this proposal?",
+            button: {
+                no: "No",
+                yes: "Yes"
+            }
+        },
+        validateFundraisingStatus: {
+            title: "Validate Fundraising Status",
+            subtitle: "Are you sure that you want to validate the fundraising status for this proposal?",
+            button: {
+                no: "No",
+                yes: "Yes"
+            }
+        }
+    }
+
 
     const { closeModal } = useModalStore();
     return (
         <div className={styles.modalQuestionLayout}>
-            <h2>Are you sure that you want to create the Smart Contract for this proposal?</h2>
+            <h2>{/* Are you sure that you want to create the Smart Contract for this proposal? */}
+                {informationByType[modalType].subtitle}
+            </h2>
             <div className={styles.buttonContainer}>
                 <GeneralButtonUI
                     text='No'
@@ -32,4 +72,4 @@ const InitializeCampaignModal: React.FC<InitializeCampaignModalProps> = (props) 
     );
 }
 
-export default InitializeCampaignModal;
+export default SingleQuestionModal;

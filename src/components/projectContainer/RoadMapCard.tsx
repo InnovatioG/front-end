@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from "./RoadMapCard.module.scss";
 import { getOrdinalString } from '@/utils/formats';
 import type { MilestoneF } from '@/HardCode/databaseType';
 import MilestoneTime from '@/components/campaign/creator/projectEditionContainer/MilestoneTimeEdit';
 import MilestonePercentage from '../campaign/creator/projectEditionContainer/MilestonePercentage';
 import { stylesByStatus, imageByStatus } from '@/utils/constants';
+import MilestoneMessage from './MilestoneMessage';
+
 
 
 interface RoadMapCardProps {
@@ -15,6 +17,12 @@ interface RoadMapCardProps {
 
 const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => {
     const ordinalString = getOrdinalString(index + 1);
+
+
+
+
+
+
 
 
     return (
@@ -43,6 +51,7 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
                     onPercentageChange={() => true}
                 />
             </div>
+            <MilestoneMessage milestone={milestone} />
         </article>
     );
 };
