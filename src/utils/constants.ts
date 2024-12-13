@@ -79,7 +79,7 @@ export const inputFieldsToken = (project: any) => [
     transform: (value: string) => (value ? Number(value) : null),
   }, */
 ];
-export const stylesByStatus = (status: string, styles: { [key: string]: string }) => {
+export const stylesByStatus = (status: number, styles: { [key: string]: string }) => {
     const statusStyles: { [key: string]: string } = {
         'Not Started': styles.notStarted,
         Started: styles.started,
@@ -87,12 +87,16 @@ export const stylesByStatus = (status: string, styles: { [key: string]: string }
         Rejected: styles.rejected,
         Finished: styles.finished,
         Failed: styles.failed,
+        3: styles.submited,
+        4: styles.rejected,
+        5: styles.finished,
+        2: styles.submited,
     };
 
     return statusStyles[status] || styles.pending;
 };
 
-export const imageByStatus = (status: string) => {
+export const imageByStatus = (status: number) => {
     const statusImages: { [key: string]: string } = {
         'Not Started': '/img/icons/status/yellow.svg',
         Started: '/img/icons/status/green.svg',
@@ -100,8 +104,12 @@ export const imageByStatus = (status: string) => {
         Rejected: '/img/icons/status/red.svg',
         Finished: '/img/icons/status/green.svg',
         Failed: '/img/icons/status/red.svg',
+        2: '/img/icons/status/yellow.svg',
+        3: '/img/icons/status/yellow.svg',
+        4: '/img/icons/status/red.svg',
+        5: '/img/icons/status/green.svg',
     };
-    return statusImages[status] || '/img/icons/status/yellow.svg';
+    return statusImages[status] || '';
 };
 
 //! ME VA A VENIR DE LA API, es MOMENTANEO   */
@@ -276,6 +284,14 @@ export const buttonTypes: ButtonConfig[] = [
         link: (id: number) => '/invest',
         classNameType: 'invest',
     },
+    {
+        id: 15,
+        label: 'Withdraw Tokens',
+        action: (setModalOpen) => {
+            if (setModalOpen) setModalOpen('withdrawTokens');
+        },
+        classNameType: 'fill',
+    },
 ];
 export const ButtonsForCampaignPage = (state_id: number, isProtocolTeam: boolean, isAdmin: boolean): StateConfig => {
     const state: { [key: number]: StateConfig } = {
@@ -339,7 +355,7 @@ export const ButtonsForCampaignPage = (state_id: number, isProtocolTeam: boolean
     return state[state_id] || { label: 'Not Started', buttons: [] };
 };
 
-export const CardInformationByState = (state_id: number, milestone_status_id?: number): StateConfig => {
+export const CardInformationByState = (state_id: number, milestone_status_id?: number, isAdmin?: boolean): StateConfig => {
     const { setMenuView } = useProjectDetailStore();
 
     const state: { [key: number]: StateConfig } = {
@@ -411,7 +427,21 @@ export const CardInformationByState = (state_id: number, milestone_status_id?: n
                 buttonTypes[11], // Validate Fundraising Status (TX)
             ],
         },
-        11: milestone_status_id ? ButtonsByMilestoneStatus(milestone_status_id) : { label: 'Active', buttons: [] },
+        11: isAdmin ? (milestone_status_id ? ButtonsByMilestoneStatus(milestone_status_id) : { label: 'Active', buttons: [] }) : { label: 'Active', buttons: [] },
+        12: {
+            label: 'Failed',
+            buttons: [buttonTypes[14]],
+        },
+        13: {
+            label: 'Unreached',
+            buttons: [buttonTypes[14]],
+        },
+        14: {
+            label: 'Succesfull',
+            buttons: [
+                buttonTypes[0], // View Campaign
+            ],
+        },
     };
 
     return state[state_id] || { label: 'Not Started', buttons: [] };
@@ -538,10 +568,14 @@ export const ButtonsByMilestoneStatus = (milestone_status_id: number): StateConf
         5: {
             label: 'Collect',
             buttons: [
+                buttonTypes[0],
+
                 {
                     id: 5,
                     label: 'Collect Milestones Founds',
-                    action: () => console.log('Collect Milestone Founds'),
+                    action: (setModalOpen) => {
+                        if (setModalOpen) setModalOpen('collect');
+                    },
                     classNameType: 'fill',
                 },
             ],

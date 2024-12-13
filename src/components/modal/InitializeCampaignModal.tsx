@@ -8,7 +8,7 @@ import { title } from 'process';
 
 /* !! COMPONENTE QUE SE PUEDE REPETIR */
 interface InitializeCampaignModalProps {
-    modalType: "initializeCampaign" | "createSmartContract" | "publishSmartContract" | "validateFundraisingStatus"
+    modalType: "initializeCampaign" | "createSmartContract" | "publishSmartContract" | "validateFundraisingStatus" | "collect";
 }
 
 const SingleQuestionModal: React.FC<InitializeCampaignModalProps> = ({ modalType }) => {
@@ -26,6 +26,14 @@ const SingleQuestionModal: React.FC<InitializeCampaignModalProps> = ({ modalType
         createSmartContract: {
             title: "Create Smart Contract",
             subtitle: "Are you sure that you want to create the Smart Contract for this proposal?",
+            button: {
+                no: "No",
+                yes: "Yes"
+            }
+        },
+        collect: {
+            title: "Collect Funds",
+            subtitle: "Are you sure that you want to collect the funds of this milestone?",
             button: {
                 no: "No",
                 yes: "Yes"

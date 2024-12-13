@@ -1,5 +1,70 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
 .container {
     display: flex;
     flex-direction: row;
     width: 100%;
+    background-color: colors.$light-color;
+    padding: 1rem 2rem;
+    gap: 1rem;
+    border-radius: 1.3125rem;
+    align-items: flex-start;
+}
+
+.expire {
+    border: 1px solid colors.$yellow-color;
+}
+.icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    padding-top: 4px;
+}
+
+.text {
+    font: fonts.$f400-medium;
+    color: colors.$primary-font;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+/* .content {
+    display: flex;
+    flex-direction: column;
+}
+ */
+.buttonContainer {
+    display: flex;
+    max-width: 150px;
+    justify-self: flex-end;
+}
+
+.content {
+    position: relative;
+}
+
+.text {
+    margin: 0;
+}
+
+.button {
+    float: right; /* Posiciona el botón a la derecha */
+    margin-left: 0.6rem; /* Añade espacio entre el texto y el botón */
+    background-color: colors.$primary-dark-color;
+    padding: 0.5rem;
+    border-radius: 1.3rem;
+    color: white;
+    cursor: pointer;
+    min-width: 120px;
+    width: fit-content;
+    font: fonts.$f200-medium;
+}
+
+.rejected {
+    border: 1px solid colors.$red-color;
+}
+
+.approved {
+    border: 1px solid colors.$green-color;
 }

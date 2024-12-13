@@ -40,6 +40,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     initializeCampaign: <SingleQuestionModal modalType="initializeCampaign" />,
     createSmartContract: <SingleQuestionModal modalType="createSmartContract" />,
     publishSmartContract: <SingleQuestionModal modalType="publishSmartContract" />,
+    collect: <SingleQuestionModal modalType="collect" />,
     validateFundraisingStatus: <SingleQuestionModal modalType="validateFundraisingStatus" />,
     manageCampaign: <ManageCampaignModal id={campaignId} />,
     sendReport: <SendReport campaign={campaign} />,

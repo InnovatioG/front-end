@@ -22,7 +22,7 @@ const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) 
         ...project,
         campaign_type: "Target" as const, // Garantiza el valor correcto
     }
-    const { buttons } = useDraftCard(campaign, isProtocolTeam);
+    const { buttons } = useDraftCard(campaign, isProtocolTeam, isAdmin);
 
     const { openModal } = useModalStore();
 

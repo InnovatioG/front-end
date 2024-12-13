@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { useDashboardCard } from '@/hooks/useDashboardCard';
 import DraftFilters from './draftFilters/DraftFilters';
@@ -70,8 +71,9 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
                     </div>
                 </Link>
                 {visibleCampaigns.map((campaign) => (
-                    <DraftCard key={campaign.id} campaign={campaign} isProtocolTeam={isProtocolTeam} />
+                    <DraftCard key={campaign.id} campaign={campaign} isProtocolTeam={isProtocolTeam} isAdmin={isAdmin} />
                 ))}
+                <button onClick={loadMoreCampaigns}>Load more</button>
             </div>
 
 

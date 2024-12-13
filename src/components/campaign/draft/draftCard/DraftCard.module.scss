@@ -183,3 +183,13 @@
 .reported {
     background-color: colors.$intermediate-green;
 }
+
+.failed {
+    background-color: colors.$red-color;
+    color: white;
+}
+
+.unreached {
+    background-color: colors.$secondary-red;
+    color: white;
+}

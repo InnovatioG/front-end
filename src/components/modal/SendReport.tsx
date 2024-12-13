@@ -23,7 +23,7 @@ const SendReportMilestone: React.FC<SendReportMilestoneProps> = ({ campaign }) =
         timeRemaining,
         formatAllTime,
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        currentMilestone, } = useDraftCard(campaign, false);
+        currentMilestone, } = useDraftCard(campaign, false, true);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { closeModal } = useModalStore();

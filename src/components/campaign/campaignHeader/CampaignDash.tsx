@@ -16,14 +16,14 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const { project, editionMode, setProject, isProtocolTeam } = useProjectDetailStore();
+    const { project, editionMode, setProject, isProtocolTeam, isAdmin } = useProjectDetailStore();
 
     const campaign = {
         ...project,
         campaign_type: "Target" as const, // Garantiza el valor correcto
     }
 
-    const { label } = useDraftCard(campaign, isProtocolTeam);
+    const { label } = useDraftCard(campaign, isProtocolTeam, isAdmin);
 
     const state = CardInformationByState(project.state_id);
     /*     const label = state.label.toLowerCase().replace(/\s+/g, '-');

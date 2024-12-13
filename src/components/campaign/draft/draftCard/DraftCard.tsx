@@ -11,11 +11,12 @@ import useDraftCard from '@/hooks/useDraftCard';
 interface DraftCardProps {
     campaign: Campaign;
     isProtocolTeam: boolean;
+    isAdmin: boolean;
 }
 
-const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
+const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin }) => {
     const { openModal } = useModalStore();
-    const { label, labelClass, buttons, timeRemaining, formatAllTime, currentMilestone } = useDraftCard(campaign, isProtocolTeam);
+    const { label, labelClass, buttons, timeRemaining, formatAllTime, currentMilestone } = useDraftCard(campaign, isProtocolTeam, isAdmin);
 
     return (
         <div className={styles.campaignCard}>
@@ -33,7 +34,7 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam }) => {
                         <div className={`${styles.state} ${styles[labelClass]}`}>
 
                             {campaign.state_id === 8 ? formatAllTime(timeRemaining) : label}
-                            {campaign.state_id > 9 && ` ${currentMilestone}`}
+                            {campaign.state_id > 9 && campaign.state_id < 12 && ` ${currentMilestone}`}
                         </div>
                         <div className={styles.category}>
                             {categoriesById(campaign.category_id)}
