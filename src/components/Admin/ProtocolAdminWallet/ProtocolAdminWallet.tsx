@@ -1,126 +1,125 @@
-import { ProtocolAdminWalletEntity } from '../../../lib/SmartDB/Entities/ProtocolAdminWallet.Entity';
-import { ProtocolAdminWalletApi } from '../../../lib/SmartDB/FrontEnd/ProtocolAdminWallet.FrontEnd.Api.Calls';
-import { useEffect, useState } from 'react';
-import Modal from 'react-modal';
+import { useProtocolAdminWallet } from './useProtocolAdminWallet';
 import styles from './ProtocolAdminWallet.module.scss';
 
 export default function ProtocolAdminWallet() {
-    //--------------------------------------
-    const [isRefreshing, setIsRefreshing] = useState(true);
-    useEffect(() => {
-        setIsRefreshing(false);
-    }, []);
-    //----------------------------
-    const [list, setList] = useState<ProtocolAdminWalletEntity[]>();
-    const [newItem, setNewItem] = useState<Partial<ProtocolAdminWalletEntity>>({}); // Estado para el nuevo entidad
-    //----------------------------
-    const fetch = async () => {
-            try {
-                const list: ProtocolAdminWalletEntity[] = await ProtocolAdminWalletApi.getAllApi_();
-                setList(list);
-            } catch (e) {
-                console.error(e);
-            }
-        };
-    useEffect(() => {fetch();}, []);
-    //----------------------------
-    const handleBtnCreate = async () => {
-        try {
-          // Crear un nuevo entidad a partir de los datos de newItem
-          const entity = new ProtocolAdminWalletEntity(newItem);
+    const {
+        list,
+        newItem,
+        editItem,
+        deleteItem,
+        view,
+        setNewItem,
+        setEditItem,
+        setDeleteItem,
+        setView,
+        create,
+        update,
+        remove,
+    } = useProtocolAdminWallet();
+  const renderList = () => (
+    <div>
+      <div className={styles.listHeader}>
+        <button onClick={() => setView('create')}>Create New Item</button>
+      </div>
+      {list.length === 0 ? (
+        <p>No MilestoneSubmission found.</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Protocol ID</th>
+              <th>Wallet ID</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {list.map((item) => (
+              <tr key={item._DB_id}>
+                <td>{item.protocolId}</td>
+                <td>{item.walletId}</td>
+                <td>{item.createdAt.toISOString()}</td>
+                <td>{item.updatedAt ? item.updatedAt.toISOString() : 'N/A'}</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      setEditItem(item);
+                      setView('edit');
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDeleteItem(item);
+                      setView('confirmDelete');
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 
-          // Llamada al API para crear el entidad en la base de datos
-          const createdProtocolAdminWallet = await ProtocolAdminWalletApi.createApi(entity);
+  const renderCreateForm = () => (
+    <form className={styles.form}>
+      <div>
+        <label>Protocol ID:</label>
+        <input type="number" value={newItem.protocolId || ''} onChange={(e) => setNewItem({ ...newItem, protocolId: e.target.value })} />
+      </div>
+      <div>
+        <label>Wallet ID:</label>
+        <input type="number" value={newItem.walletId || ''} onChange={(e) => setNewItem({ ...newItem, walletId: e.target.value })} />
+      </div>
+      <button type="button" onClick={create}>
+        Create
+      </button>
+      <button type="button" onClick={() => setView('list')}>
+        Cancel
+      </button>
+    </form>
+  );
 
-          // Limpiar los campos después de crear
-          setNewItem({});
+  const renderEditForm = () => (
+    <form className={styles.form}>
+      <div>
+        <label>Protocol ID:</label>
+        <input type="number" value={editItem?.protocolId || ''} onChange={(e) => setEditItem({ ...editItem, protocolId: e.target.value })} />
+      </div>
+      <div>
+        <label>Wallet ID:</label>
+        <input type="number" value={editItem?.walletId || ''} onChange={(e) => setEditItem({ ...editItem, walletId: e.target.value })} />
+      </div>
+      <button type="button" onClick={update}>
+        Update
+      </button>
+      <button type="button" onClick={() => setView('list')}>
+        Cancel
+      </button>
+    </form>
+  );
 
-          fetch();
-        } catch (e) {
-            console.error(e);
-        }
-    };
-    //----------------------------
-    const handleDelete = async (id: string) => {
-        try {
-            await ProtocolAdminWalletApi.deleteByIdApi(ProtocolAdminWalletEntity, id); // Llama a la API para eliminar el elemento
-            fetch();
-        } catch (e) {
-            console.error(e);
-        }
-    };
-    //----------------------------
-    const handleInputChange = (field: keyof ProtocolAdminWalletEntity, value: any) => {
-        setNewItem({
-            ...newItem,
-            [field]: value,
-        });
-    };
-    //----------------------------
+    const renderConfirmDelete = () => (
+        <div className={styles.confirmDelete}>
+            <p>Are you sure you want to delete this item?</p>
+            {deleteItem && <pre>{deleteItem.show()}</pre>}
+            <button onClick={remove}>Confirm</button>
+            <button onClick={() => setView('list')}>Cancel</button>
+        </div>
+    );
+
     return (
         <div className={styles.content}>
-            <div>
-                <div className={styles.subTitle}>CREATE</div>
-                <form>
-                    <div>
-                        <label>protocolId: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.protocolId || ''} 
-                            onChange={(e) => handleInputChange('protocolId', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>walletId: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.walletId || ''} 
-                            onChange={(e) => handleInputChange('walletId', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>createdAt: </label>
-                        <input type="text" value={newItem.createdAt ? new Date(newItem.createdAt).toISOString() : ''}
-                        onChange={(e) => handleInputChange('createdAt', new Date(e.target.value))} />
-                    </div>
-                    <div></div>
-                    <div>
-                        <label>updatedAt: </label>
-                        <input type="text" value={newItem.updatedAt ? new Date(newItem.updatedAt).toISOString() : ''}
-                        onChange={(e) => handleInputChange('updatedAt', new Date(e.target.value))} />
-                    </div>
-                    <div>
-                    </div>
-                    <button type="button" onClick={handleBtnCreate}>Create</button>
-                </form>
-            </div>
-            <div>
-                <div>List of ProtocolAdminWallet</div>
-                <div className={styles.listContainer}>
-                    <table>
-                        <thead>
-                          <tr>
-                            <th key="0">protocolId</th><th key="1">walletId</th><th key="2">createdAt</th><th key="3">updatedAt</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            {list?.map((item, index) => (
-                              <tr key={index}>
-                                <td key="0">{item.protocolId }</td><td key="1">{item.walletId }</td><td key="2">{item.createdAt.toISOString()  }</td><td key="3">{item.updatedAt?.toISOString()  }</td>
-                                <td>
-                                  <button onClick={() => handleDelete(item._DB_id)}>Delete</button>
-                                </td>
-                              </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            {view === 'list' && renderList()}
+            {view === 'create' && renderCreateForm()}
+            {view === 'edit' && renderEditForm()}
+            {view === 'confirmDelete' && renderConfirmDelete()}
         </div>
     );
 }
-Modal.setAppElement('#__next');

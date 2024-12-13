@@ -17,9 +17,9 @@ export class SubmissionStatusEntityPostgreSQL extends BaseEntityPostgreSQL {
     name!: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     description?: string;
-    @Column({ type: 'varchar', length: 255 })
+    @CreateDateColumn()
     createdAt!: Date;
-    @Column({ type: 'varchar', length: 255 })
+    @UpdateDateColumn()
     updatedAt!: Date;
 
     // #endregion fields
