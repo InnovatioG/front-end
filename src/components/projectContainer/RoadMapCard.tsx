@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from "./RoadMapCard.module.scss";
 import { getOrdinalString } from '@/utils/formats';
 import type { MilestoneF } from '@/HardCode/databaseType';
@@ -7,6 +7,9 @@ import MilestonePercentage from '../campaign/creator/projectEditionContainer/Mil
 import { stylesByStatus, imageByStatus } from '@/utils/constants';
 import MilestoneMessage from './MilestoneMessage';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import GeneralButtonUI from '../buttons/UI/Button';
+import { useModalStore } from '@/store/modal/useModalStoreState';
+import { sub } from 'date-fns';
 
 interface RoadMapCardProps {
     milestone: MilestoneF;
@@ -18,9 +21,16 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
     const ordinalString = getOrdinalString(index + 1);
     const { isAdmin } = useProjectDetailStore();
 
-    // Calcula el ícono y el estilo basado en milestone_status_id
+    const { openModal } = useModalStore();
+
+
+    useEffect(() => {
+        console.log(milestone)
+    }, [milestone]);
+
     const milestoneStatusId = milestone.milestone_status?.milestone_submission?.milestone_status_id || 0;
-    console.log(milestoneStatusId)
+
+    const reportProofOfFinalization = milestone.milestone_status?.milestone_submission?.report_proof_of_finalization;
 
     const icon = milestoneStatusId ? imageByStatus(milestoneStatusId) : '';
     const milestoneStyle = stylesByStatus(milestoneStatusId, styles);
@@ -56,6 +66,19 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
             {isAdmin && (
                 <section className={styles.milestoneMessage}>
                     <MilestoneMessage milestone={milestone} icon={icon} />
+
+                </section>
+            )}
+            {reportProofOfFinalization && (
+                <section className={styles.buttonView}>
+                    <GeneralButtonUI
+                        classNameStyle="fillb"
+                        onClick={() => {
+                            openModal("viewReportMilestone", 0, undefined, reportProofOfFinalization);
+                        }}
+                    >
+                        View Reprt Submitted
+                    </GeneralButtonUI>
                 </section>
             )}
         </article>

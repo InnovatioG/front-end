@@ -8,7 +8,7 @@ import ContactSupportModal from '@/components/modal/ContactSupportModal';
 import ViewReportModal from '@/components/modal/ViewReportModal';
 import WalletInformationModal from '@/components/modal/WalletInformation';
 import CalendarModal from '@/components/modal/CalendarModal';
-
+import ViewReportMilestone from '@/components/modal/ViewReportMilestone';
 type ModalType = 'walletSelector';
 
 interface ModalContextType {
@@ -28,7 +28,7 @@ export const useModal = () => {
 };
 
 export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { openModal: openModalFromStore, closeModal: closeModalFromStore, modalType: modalTypeToStore, campaignId, campaign } = useModalStore();
+  const { openModal: openModalFromStore, closeModal: closeModalFromStore, modalType: modalTypeToStore, campaignId, campaign, submission } = useModalStore();
   const [modalType, setModalType] = useState<ModalType | null>(null);
 
   const openModal = (type: ModalType) => setModalType(type);
@@ -40,12 +40,15 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     initializeCampaign: <SingleQuestionModal modalType="initializeCampaign" />,
     createSmartContract: <SingleQuestionModal modalType="createSmartContract" />,
     publishSmartContract: <SingleQuestionModal modalType="publishSmartContract" />,
+    withdrawTokens: <SingleQuestionModal modalType="withdrawTokens" />,
     collect: <SingleQuestionModal modalType="collect" />,
     validateFundraisingStatus: <SingleQuestionModal modalType="validateFundraisingStatus" />,
     manageCampaign: <ManageCampaignModal id={campaignId} />,
     sendReport: <SendReport campaign={campaign} />,
     viewReport: <ViewReportModal id={campaignId} />,
+    viewReportMilestone: <ViewReportMilestone submission={submission} />,
     contactSupport: <ContactSupportModal />,
+
     walletInformation: <WalletInformationModal />,
 
   };

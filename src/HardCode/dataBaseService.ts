@@ -95,8 +95,8 @@ export const dataBaseService = {
         }
         return null;
     },
-
     getFilteredData: (filters: {
+        isHomePage: boolean;
         userId: string | null;
         isAdmin: boolean;
         adminView: boolean;
@@ -104,16 +104,35 @@ export const dataBaseService = {
         stateFilter: string;
         categoryFilter: string;
         isProtocolTeam: boolean;
+        myProposal: boolean;
     }) => {
         const data = dataBaseService.getData();
         if (!data) return { campaigns: [], contracts: [], categories: [], states: [] };
 
-        const { userId, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam } = filters;
+        const { userId, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam, myProposal, isHomePage } = filters;
 
+        console.log(isHomePage);
+        console.log();
+
+        // Si `isHomePage` es verdadero, devuelve todas las campañas sin filtrar
+        if (isHomePage) {
+            return {
+                campaigns: data.campaigns.filter((campaign: Campaign) => campaign.state_id >= 8 && campaign.state_id !== 10),
+                contracts: data.contracts || [],
+                states: data.states || [],
+                categories: data.categories || [],
+            };
+        }
+
+        // Lógica de filtrado para otros casos
         const filteredCampaigns = data.campaigns.filter((campaign: Campaign) => {
             const stateMatches = stateFilter === '' || campaign.state_id === parseInt(stateFilter);
             const categoryMatches = categoryFilter === '' || campaign.category_id === parseInt(categoryFilter);
             const searchTermMatches = campaign.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+            if (myProposal) {
+                return campaign.user_id === parseInt(userId as string);
+            }
 
             if (isProtocolTeam) {
                 return searchTermMatches && stateMatches && categoryMatches;
@@ -121,6 +140,7 @@ export const dataBaseService = {
                 return searchTermMatches && stateMatches && categoryMatches;
             } else {
                 const userMatches = data.users.some((user: User) => user.id === campaign.user_id && user.wallet_address === userId);
+
                 const isContractVisible = campaign.contract_id === 1 || campaign.contract_id === 2;
                 const isVisible = isContractVisible && (campaign.vizualization === 1 || campaign.vizualization === 2) && userMatches;
 
@@ -135,7 +155,6 @@ export const dataBaseService = {
             categories: data.categories || [],
         };
     },
-
     deleteCampaign: (id: number) => {
         const data = dataBaseService.getData();
         const index = data.campaigns.findIndex((c: any) => c.id === id);

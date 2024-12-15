@@ -16,23 +16,11 @@ export default function HeaderDesktop({ session, setIsOpen, isOpen }: { session:
                 <Link href={''} className={styles.infoLink}>
                     About us
                 </Link>
-                <Link href={''} className={styles.infoLink}>
-                    Help with the Campaign
+                <Link href={'/campaigns'} className={styles.infoLink}>
+                    Campaigns
                 </Link>
             </nav>
             <div className={styles.btnSection}>
-                {/*           <div className={styles.btnCalendar}>
-                    <svg
-                        width="29"
-                        height="29"
-                        className={styles.icon}
-                        onClick={() => {
-                            setIsOpen(true);
-                        }}
-                    >
-                        <use href={CALENDAR}></use>
-                    </svg>
-                </div> */}
                 <div className={styles.togglePriceContainer}>
                     <TogglePrice />
                 </div>

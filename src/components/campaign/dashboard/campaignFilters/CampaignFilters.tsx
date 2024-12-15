@@ -41,19 +41,19 @@ export default function CampaignFilters(props: CampaignFiltersProps) {
     { value: "", label: "All" },
     ...states.map(state => ({ value: state.id.toString(), label: state.name }))
   ];
-  
+
   const categoryOptions = [
     { value: "", label: "All" },
     ...categories.map(category => ({ value: category.id.toString(), label: category.name }))
   ];
 
-  
+
 
   return (
     <div className={styles.filters}>
       <div className={styles.btnActions}>
-        <BtnDropdown options={stateOptions} value={statusFilter} onChange={onStatusFilterChange} placeholder="Status Project" width={screenSize === 'desktop' ? 180 : 160}/>
-        <BtnDropdown options={categoryOptions} value={categoryFilter} onChange={onCategoryFilterChange} placeholder="Category" width={screenSize === 'desktop' ? 180 : 150}/>
+        <BtnDropdown options={stateOptions} value={statusFilter} onChange={onStatusFilterChange} placeholder="Status Project" width={screenSize === 'desktop' ? 180 : 160} />
+        <BtnDropdown options={categoryOptions} value={categoryFilter} onChange={onCategoryFilterChange} placeholder="Category" width={screenSize === 'desktop' ? 180 : 150} />
         {isConnected && (
           <div className={styles.checkboxContainer}>
             <Checkbox
@@ -65,9 +65,9 @@ export default function CampaignFilters(props: CampaignFiltersProps) {
         )}
       </div>
       {
-        screenSize === 'desktop' && <SearchInput searchTerm={searchTerm} onSearchChange={onSearchChange} placeholder="Search Project" width={380}/>
+        screenSize === 'desktop' && <SearchInput searchTerm={searchTerm} onSearchChange={onSearchChange} placeholder="Search Project" width={380} />
       }
-      
+
     </div>
   );
 }

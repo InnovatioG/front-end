@@ -290,7 +290,7 @@ export const buttonTypes: ButtonConfig[] = [
         action: (setModalOpen) => {
             if (setModalOpen) setModalOpen('withdrawTokens');
         },
-        classNameType: 'fill',
+        classNameType: 'fillb',
     },
 ];
 export const ButtonsForCampaignPage = (state_id: number, isProtocolTeam: boolean, isAdmin: boolean): StateConfig => {

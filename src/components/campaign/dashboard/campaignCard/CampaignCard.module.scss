@@ -9,6 +9,8 @@
     border-radius: 20px;
     border: 1px, solid colors.$border-light-color;
     gap: 14px;
+    height: 100%;
+    justify-content: space-between;
     .headCard {
         display: flex;
         justify-content: space-between;
@@ -94,41 +96,5 @@
         width: 100%;
         font: fonts.$f50-regular;
         color: colors.$secondary-font;
-    }
-}
-
-/* LARGER SCREEN */
-
-@media (width >= 942px) {
-    .campaignCard {
-        .headCard {
-            .logoCard {
-                width: 58px;
-                height: auto;
-            }
-            .cardDetails {
-                height: 32px;
-                .status {
-                    .state {
-                        font: fonts.$f200-medium;
-                    }
-                    .category {
-                        font: fonts.$f200-medium;
-                    }
-                }
-                .investors {
-                    .cant {
-                        font: fonts.$f200-medium;
-                    }
-                }
-            }
-        }
-        .cardTitle {
-            font: fonts.$f600-medium;
-            height: 52px;
-        }
-        .cardDescription {
-            height: 75px;
-        }
     }
 }

@@ -3,6 +3,7 @@ import styles from './BtnCampaign.module.scss';
 import { PLUS_ICON } from '@/utils/images';
 import { ROUTES } from '@/utils/routes';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
 
 interface BtnCampaignProps {
     type: 'mobile' | 'primary' | 'secondary';
@@ -27,6 +28,8 @@ const BtnCampaignMobile: React.FC<SubComponentProps> = ({ dir }) => {
 };
 
 const BtnCampaignPrimary: React.FC<SubComponentProps> = ({ width, dir }) => {
+    //! TODO: Cambiar el nombre del boton segun si hay campañas creadas o no. 
+
     return (
         <Link href={dir} >
             <div className={styles.BtnCampaignPrimary} style={width ? { width: `${width}px` } : undefined}>

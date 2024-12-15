@@ -2,9 +2,10 @@ import styles from "./CampaignCard.module.scss";
 import Image from "next/image";
 import { Campaign } from "@/HardCode/databaseType";
 import { TWO_USERS } from "@/utils/images";
-import CampaignRaised from "./CampaignRaised";
 import { useEffect, useState } from "react";
 import { formatTime, getTimeRemaining } from "@/utils/formats";
+import useDraftCard from "@/hooks/useDraftCard";
+import CardFooter from "@/components/campaign/dashboard/campaignCard/CardFooter";
 
 interface CampaignCardProps {
   campaign: Campaign;
@@ -15,9 +16,12 @@ interface CampaignCardProps {
 
 export default function CampaignCard(props: CampaignCardProps) {
   const { campaign, getStatusName, getCategoryName } = props;
-  const [timeRemaining, setTimeRemaining] = useState(
+  const [timeRemaining, setTimeRemaining,] = useState(
     campaign.end_date ? getTimeRemaining(campaign.end_date) : { total: 0, days: 0, totalHours: 0, minutes: 0 }
   );
+
+  const { label, labelClass, currentMilestone, formatAllTime } = useDraftCard(campaign, false, false);
+
   useEffect(() => {
     const timer = setInterval(() => {
       if (campaign.end_date) {
@@ -28,18 +32,6 @@ export default function CampaignCard(props: CampaignCardProps) {
     return () => clearInterval(timer);
   }, [campaign.end_date]);
 
-
-  const renderStatus = () => {
-    if (timeRemaining.total <= 0) {
-      return getStatusName(campaign.state_id);
-    }
-
-    if (timeRemaining.total <= 72 * 60 * 60 * 1000) {
-      return `${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}}`;
-    }
-
-    return getStatusName(campaign.state_id);
-  };
 
   return (
     <div className={styles.campaignCard}>
@@ -53,11 +45,9 @@ export default function CampaignCard(props: CampaignCardProps) {
         />
         <div className={styles.cardDetails}>
           <div className={styles.status}>
-            <div
-              className={`${styles.state} ${styles[getStatusName(campaign.state_id).toLowerCase()]
-                }`}
-            >
-              {renderStatus()}
+            <div className={`${styles.state} ${styles[labelClass]}`}>
+
+              {campaign.state_id === 8 ? formatAllTime(timeRemaining) : label}
             </div>
             <div className={styles.category}>
               {getCategoryName(campaign.category_id)}
@@ -73,7 +63,7 @@ export default function CampaignCard(props: CampaignCardProps) {
       </div>
       <h3 className={styles.cardTitle}>{campaign.title}</h3>
       <p className={styles.cardDescription}>{campaign.description}</p>
-      <CampaignRaised campaign={campaign} getStatusName={getStatusName} />
+      <CardFooter campaign={campaign} />
     </div>
   );
 }

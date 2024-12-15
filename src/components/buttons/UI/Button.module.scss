@@ -259,3 +259,15 @@
     z-index: 2;
     color: inherit; // Hereda el color del botón
 }
+
+.buttonFailed {
+    background-color: colors.$primary-red;
+    border: none;
+    color: white;
+}
+
+.buttonUnreached {
+    background-color: colors.$secondary-red;
+    border: none;
+    color: white;
+}

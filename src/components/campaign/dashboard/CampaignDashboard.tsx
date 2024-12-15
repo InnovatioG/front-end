@@ -7,65 +7,43 @@ import { useScreenSize } from "@/hooks/useScreenSize";
 import CommonsBtn from "@/components/buttons/CommonsBtn";
 import CampaignFilters from "./campaignFilters/CampaignFilters";
 import { useCardano } from "@/contexts/CardanoContext";
-
+import { useDashboardCard } from "@/hooks/useDashboardCard";
 export default function CampaignDashboard() {
   const { address } = useCardano();
-  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-  const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
-  const [visibleCampaigns, setVisibleCampaigns] = useState<Campaign[]>([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState("");
-  const [states, setStates] = useState<State[]>([]);
-  const [categories, setCategories] = useState<Category[]>([]);
-  const screenSize = useScreenSize();
-  const [myProposal, setMyProposal] = useState(false);
-
-  useEffect(() => {
-    const data = dataBaseService.getData();
-    if (data) {
-      setCampaigns(data.campaigns);
-      setFilteredCampaigns(data.campaigns);
-      setStates(data.states);
-      setCategories(data.categories);
-    }
-  }, []);
 
 
-  useEffect(() => {
-    const results = campaigns.filter((campaign) => {
-      const matchesSearch = campaign.title.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesStatus = statusFilter === "" || campaign.state_id === parseInt(statusFilter);
-      const matchesCategory = categoryFilter === "" || campaign.category_id === parseInt(categoryFilter);
-
-      const campaignOwnerAddress = campaign.user_id
-        ? dataBaseService.getUserByAddress(campaign.user_id)
-        : null; const matchesProposal = !myProposal || campaignOwnerAddress === address;
-
-      return campaign.vizualization === 1 && matchesSearch && matchesStatus && matchesCategory && matchesProposal;
-    });
-
-    setFilteredCampaigns(results);
-    setVisibleCampaigns([]);
-  }, [searchTerm, statusFilter, categoryFilter, myProposal, campaigns, address]);
+  const {
+    campaigns,
+    filteredCampaigns,
+    visibleCampaigns,
+    searchTerm,
+    categoryFilter,
+    categories,
+    adminView,
+    isAdmin,
+    loading,
+    campaignsLoading,
+    handleSearchChange,
+    handleStateFilterChange,
+    handleCategoryFilterChange,
+    handleClickAdminView,
+    getStatusName,
+    getCategoryName,
+    loadMoreCampaigns,
+    screenSize,
+    isProtocolTeam,
+    states,
+    stateFilter,
+    myProposal,
+    setMyProposal,
+    isHomePage,
+    setIsHomePage
+  } = useDashboardCard(address);
 
 
 
-  const getStatusName = useCallback(
-    (statusId: number): string => {
-      const status = states.find((s) => s.id === statusId);
-      return status ? status.name : "";
-    },
-    [states]
-  );
+  //! TODO my proposal filter */
 
-  const getCategoryName = useCallback(
-    (categoryId: number): string => {
-      const category = categories.find((c) => c.id === categoryId);
-      return category ? category.name : "";
-    },
-    [categories]
-  );
 
   const getInitialLoadCount = useCallback(() => {
     if (screenSize === "mobile") return 3;
@@ -79,32 +57,6 @@ export default function CampaignDashboard() {
     return 8;
   }, [screenSize]);
 
-  const loadMoreCampaigns = useCallback(() => {
-    setVisibleCampaigns((prevVisible) => {
-      const currentCount = prevVisible.length;
-      const newCount =
-        currentCount === 0
-          ? getInitialLoadCount()
-          : currentCount + getLoadMoreCount();
-      return filteredCampaigns.slice(0, newCount);
-    });
-  }, [filteredCampaigns, getInitialLoadCount, getLoadMoreCount]);
-
-  useEffect(() => {
-    loadMoreCampaigns();
-  }, [filteredCampaigns, screenSize, loadMoreCampaigns]);
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const handleStatusFilterChange = (value: string) => {
-    setStatusFilter(value);
-  };
-
-  const handleCategoryFilterChange = (value: string) => {
-    setCategoryFilter(value);
-  };
 
   const handleMyProposalChange = (checked: boolean) => {
     setMyProposal(checked);
@@ -114,12 +66,12 @@ export default function CampaignDashboard() {
     <div className={styles.campaignDashboard}>
       <CampaignFilters
         searchTerm={searchTerm}
-        statusFilter={statusFilter}
+        statusFilter={stateFilter}
         categoryFilter={categoryFilter}
         states={states}
         categories={categories}
         onSearchChange={handleSearchChange}
-        onStatusFilterChange={handleStatusFilterChange}
+        onStatusFilterChange={handleStateFilterChange}
         onCategoryFilterChange={handleCategoryFilterChange}
         screenSize={screenSize}
         isConnected={!!address}

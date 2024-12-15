@@ -94,6 +94,7 @@ export interface Milestone_submission {
     id_milestione_submission: number;
     milestone_id: number;
     milestone_status_id: number;
+    report_proof_of_finalization: string;
     approved_justification: string;
     rejected_justification: string;
 }

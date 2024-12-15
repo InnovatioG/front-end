@@ -59,6 +59,7 @@ export const formatDate = (date: string) => {
 };
 
 export const getMonthName = (date: string): string => {
+    if (!date) return '';
     const dateFormatted = parseISO(date);
     return format(dateFormatted, 'MMMM');
 };

@@ -19,6 +19,8 @@ export const useDashboardCard = (address: string | null) => {
     const [loading, setLoading] = useState(true);
     const [campaignsLoading, setCampaignsLoading] = useState(true);
     const [isProtocolTeam, setIsProtocolTeam] = useState(false);
+    const [myProposal, setMyProposal] = useState(false);
+    const [isHomePage, setIsHomePage] = useState(false);
     const router = useRouter();
     const pathName = router.pathname;
 
@@ -37,11 +39,15 @@ export const useDashboardCard = (address: string | null) => {
     }, [address]);
 
     useEffect(() => {
-        if (!address) return;
-        setLoading(true);
+        pathName === '/' ? setIsHomePage(true) : setIsHomePage(false);
+        console.log(isHomePage);
+
+        /*         if (!address || !isHomePage) return;
+         */ setLoading(true);
         const fetchData = async () => {
             try {
                 const filters = {
+                    isHomePage,
                     userId: address,
                     isAdmin,
                     adminView,
@@ -49,13 +55,16 @@ export const useDashboardCard = (address: string | null) => {
                     stateFilter,
                     categoryFilter,
                     isProtocolTeam,
+                    myProposal,
                 };
 
                 const data = await dataBaseService.getFilteredData(filters);
                 setCampaigns(data.campaigns);
                 setFilteredCampaigns(data.campaigns);
+
                 setStates(data.states || []);
                 setCategories(data.categories || []);
+
                 setCampaignsLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -66,7 +75,7 @@ export const useDashboardCard = (address: string | null) => {
         };
 
         fetchData();
-    }, [address, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam]);
+    }, [address, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam, myProposal, isHomePage, pathName]);
 
     const getStatusName = useCallback(
         (statusId: number): string => {
@@ -134,5 +143,9 @@ export const useDashboardCard = (address: string | null) => {
         screenSize,
         isProtocolTeam,
         setLoading,
+        myProposal,
+        setMyProposal,
+        isHomePage,
+        setIsHomePage,
     };
 };

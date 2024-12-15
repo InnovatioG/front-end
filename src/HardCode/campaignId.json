@@ -2130,7 +2130,7 @@
                             "id_milestone_submission": 3,
                             "milestone_id": 1,
                             "milestone_status_id": 3,
-                            "Report_Proof_of_Finalization": "The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.",
+                            "report_proof_of_finalization": "lorem ipsum ",
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
@@ -2336,7 +2336,7 @@
                             "id_milestone_submission": 3,
                             "milestone_id": 1,
                             "milestone_status_id": 4,
-                            "Report_Proof_of_Finalization": "The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.",
+                            "report_proof_of_finalization": "The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.",
                             "approved_justification": "",
                             "rejected_justification": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboriss"
                         },
@@ -2542,7 +2542,7 @@
                             "id_milestone_submission": 3,
                             "milestone_id": 1,
                             "milestone_status_id": 5,
-                            "Report_Proof_of_Finalization": "The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.",
+                            "report_proof_of_finalization": "The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.",
                             "approved_justification": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboriss",
                             "rejected_justification": ""
                         },

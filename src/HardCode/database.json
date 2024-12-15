@@ -64,7 +64,6 @@
         { "id": 2, "name": "Started" },
         { "id": 3, "name": "Submitted" },
         { "id": 4, "name": "Rejected" },
-
         { "id": 5, "name": "Finished" },
         { "id": 6, "name": "Failed" }
     ],
@@ -298,8 +297,8 @@
                 { "order": 2, "goal": 80000.0 },
                 { "order": 3, "goal": 90000.0 }
             ],
-            "goal": 500000.0,
-            "raise_amount": 0,
+            "goal": 50000.0,
+            "raise_amount": 30000.0,
             "start_date": "",
             "end_date": "",
             "logoUrl": "/img/database/company_logo_id1.png",
@@ -449,8 +448,8 @@
                     }
                 }
             ],
-            "goal": 500000.0,
-            "raise_amount": 0,
+            "goal": 300000.0,
+            "raise_amount": 300000,
             "start_date": "",
             "end_date": "",
             "logoUrl": "/img/database/company_logo_id1.png",
@@ -537,8 +536,8 @@
                     }
                 }
             ],
-            "goal": 500000.0,
-            "raise_amount": 0,
+            "goal": 340000.0,
+            "raise_amount": 340000,
             "start_date": "",
             "end_date": "",
             "logoUrl": "/img/database/company_logo_id1.png",
@@ -625,8 +624,8 @@
                     }
                 }
             ],
-            "goal": 500000.0,
-            "raise_amount": 0,
+            "goal": 340000.0,
+            "raise_amount": 340000,
             "start_date": "",
             "end_date": "",
             "logoUrl": "/img/database/company_logo_id1.png",
@@ -979,7 +978,7 @@
                 }
             ],
             "goal": 500000.0,
-            "raise_amount": 0,
+            "raise_amount": 300000.0,
             "start_date": "",
             "end_date": "",
             "logoUrl": "/img/database/company_logo_id1.png",
@@ -1024,7 +1023,7 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-                    "campaign_status_id": 1,
+                    "campaign_status_id": 6,
                     "cmPercentage": 30,
                     "status": "Not Started",
                     "cmEstimatedDeliveryDate": "3 weeks",
@@ -1032,7 +1031,7 @@
                         "milestone_submission": {
                             "id_milestone_submission": 1,
                             "milestone_id": 1,
-                            "milestone_status_id": 1,
+                            "milestone_status_id": 5,
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
@@ -1067,8 +1066,8 @@
                     }
                 }
             ],
-            "goal": 500000.0,
-            "raise_amount": 0,
+            "goal": 100000.0,
+            "raise_amount": 100000,
             "start_date": "",
             "end_date": "",
             "logoUrl": "/img/database/company_logo_id1.png",
@@ -1156,7 +1155,7 @@
                 }
             ],
             "goal": 500000.0,
-            "raise_amount": 0,
+            "raise_amount": 250000,
             "start_date": "",
             "end_date": "",
             "logoUrl": "/img/database/company_logo_id1.png",
