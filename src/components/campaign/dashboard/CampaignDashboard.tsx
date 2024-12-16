@@ -1,13 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import styles from "./CampaignDashboard.module.scss";
-import { dataBaseService } from "@/HardCode/dataBaseService";
-import { Campaign, State, Category, User } from "@/HardCode/databaseType";
+import GeneralButtonUI from "@/components/buttons/UI/Button";
 import CampaignCard from "./campaignCard/CampaignCard";
-import { useScreenSize } from "@/hooks/useScreenSize";
-import CommonsBtn from "@/components/buttons/CommonsBtn";
 import CampaignFilters from "./campaignFilters/CampaignFilters";
 import { useCardano } from "@/contexts/CardanoContext";
 import { useDashboardCard } from "@/hooks/useDashboardCard";
+import Link from "next/link";
 export default function CampaignDashboard() {
   const { address } = useCardano();
 
@@ -37,7 +35,8 @@ export default function CampaignDashboard() {
     myProposal,
     setMyProposal,
     isHomePage,
-    setIsHomePage
+    setIsHomePage,
+    pathName
   } = useDashboardCard(address);
 
 
@@ -94,13 +93,30 @@ export default function CampaignDashboard() {
       )}
 
       {visibleCampaigns.length < filteredCampaigns.length && (
-        <CommonsBtn
-          type="secondary"
-          action={loadMoreCampaigns}
-          content="Explore more campaigns"
-          width={260}
-        />
-      )}
-    </div>
+        pathName === "/" ? (
+          <Link href={"/campaigns"}>
+            <div className={styles.buttonContainer}>
+              <GeneralButtonUI
+                onClick={() => { }}
+                classNameStyle="outlineb"
+                text="Explore more campaings"
+              />
+            </div>
+          </Link>
+        ) : (
+          <div className={styles.buttonContainer}>
+            <GeneralButtonUI
+              onClick={loadMoreCampaigns}
+              classNameStyle="outlineb"
+              text="Explore more campaings"
+            />
+          </div>
+        )
+
+
+
+      )
+      }
+    </div >
   );
 }

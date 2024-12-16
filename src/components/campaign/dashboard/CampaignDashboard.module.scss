@@ -23,6 +23,12 @@
     }
 }
 
+.buttonContainer {
+    min-height: 53px;
+    width: 257px;
+    display: flex;
+}
+
 /* LARGER SCREEN */
 @media screen and (max-width: 768px) {
     .campaignDashboard {

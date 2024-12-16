@@ -39,7 +39,7 @@ export const useDashboardCard = (address: string | null) => {
     }, [address]);
 
     useEffect(() => {
-        pathName === '/' ? setIsHomePage(true) : setIsHomePage(false);
+        pathName === '/' || pathName === '/campaigns' ? setIsHomePage(true) : setIsHomePage(false);
         console.log(isHomePage);
 
         /*         if (!address || !isHomePage) return;
@@ -147,5 +147,6 @@ export const useDashboardCard = (address: string | null) => {
         setMyProposal,
         isHomePage,
         setIsHomePage,
+        pathName,
     };
 };
