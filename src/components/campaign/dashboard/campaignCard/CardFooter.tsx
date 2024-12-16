@@ -6,6 +6,7 @@ import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 import GeneralButtonUI from '@/components/buttons/UI/Button';
 import Link from 'next/link';
+import { set } from 'date-fns';
 
 interface CardFooterProps {
     campaign: any;
@@ -39,30 +40,7 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
         </div>
     );
 
-    const FooterButtons = ({ primaryText, secondaryText, classNameStyle, classNameA }: { primaryText: string; secondaryText: string, classNameStyle?: string, classNameA?: string }) =>
 
-
-
-    (
-
-
-        < div className={styles.footer} >
-            <Link href={`/campaign/${campaign.id}`}>
-                <GeneralButtonUI text={secondaryText} classNameStyle={"fillb"} onClick={() => { }} />
-            </Link>
-            {
-                primaryText && (
-                    <Link href={`/invest?id=${campaign.id}`}>
-                        <GeneralButtonUI
-                            text={primaryText}
-                            classNameStyle={classNameStyle}
-                            onClick={() => localStorage.setItem('project', JSON.stringify(campaign))}
-                        />
-                    </Link>
-                )
-            }
-        </ div>
-    );
 
     return (
         <div>
@@ -91,7 +69,22 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
                             Target Raise:  {formatMoneyByAdaOrDollar(goal)}
                         </span>
                     </div>
-                    <FooterButtons primaryText="Invest" secondaryText="Learn more" classNameStyle='invest' />
+                    < div className={styles.footer} >
+                        <Link href={`/campaign/${campaign.id}`}>
+                            <GeneralButtonUI text={"Learn more"} classNameStyle={"fillb"} onClick={() => { setMenuView("Roadmap & Milestones") }} />
+                        </Link>
+
+
+                        <Link href={`/invest?id=${campaign.id}`}>
+                            <GeneralButtonUI
+                                text={"Invest"}
+                                classNameStyle={"invest"}
+                                onClick={() => { }}
+                            />
+                        </Link>
+
+
+                    </ div>
                 </div>
             )}
 
@@ -106,7 +99,23 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
                             </span>
                         </div>
                     </div>
-                    <FooterButtons primaryText="" secondaryText="View Roadmap" />
+
+                    < div className={styles.footer} >
+                        <Link href={`/campaign/${campaign.id}`}>
+                            <GeneralButtonUI text={"View Roadmap"} classNameStyle={"fillb"} onClick={() => { setMenuView("Roadmap & Milestones") }} />
+                        </Link>
+
+
+                        <Link href={`/campaign/${campaign.id}`}>
+                            <GeneralButtonUI
+                                text={"Learn More"}
+                                classNameStyle={"Learn More"}
+                                onClick={() => { }}
+                            />
+                        </Link>
+
+
+                    </ div>
                 </div>
             )}
 
@@ -134,7 +143,13 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
                             </div>
                         )}
                     </div>
-                    <FooterButtons primaryText="Get back" secondaryText="Learn more" classNameStyle={`button${label}`} />
+
+                    < div className={styles.footer} >
+                        <Link href={`/campaign/${campaign.id}`}>
+                            <GeneralButtonUI text={"Learn more"} classNameStyle={"fillb"} onClick={() => { setMenuView("Roadmap & Milestones") }} />
+                        </Link>
+                        <GeneralButtonUI text={"Get Back"} classNameStyle={label} onClick={() => { }} />
+                    </ div>
                 </div>
             )}
         </div>

@@ -10,6 +10,7 @@
     border: 1px, solid colors.$border-light-color;
     gap: 14px;
     height: 100%;
+    min-height: 422px;
     justify-content: space-between;
     .headCard {
         display: flex;
@@ -53,6 +54,10 @@
                         background: colors.$intermediate-green;
                     }
                     &.complete {
+                        background: colors.$primary-blue;
+                        color: colors.$light-font;
+                    }
+                    &.countdown {
                         background: colors.$primary-blue;
                         color: colors.$light-font;
                     }
