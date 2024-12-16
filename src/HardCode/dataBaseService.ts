@@ -111,43 +111,46 @@ export const dataBaseService = {
 
         const { userId, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam, myProposal, isHomePage } = filters;
 
-        console.log(isHomePage);
+        console.log(stateFilter);
         console.log();
 
         // Si `isHomePage` es verdadero, devuelve todas las campañas sin filtrar
         if (isHomePage) {
+            const filteredCampaigns = data.campaigns.filter((campaign: Campaign) => {
+                const stateMatches = !stateFilter || campaign.state_id === Number(stateFilter);
+                const categoryMatches = !categoryFilter || campaign.category_id === Number(categoryFilter);
+                const searchTermMatches = campaign.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+                return campaign.state_id >= 8 && campaign.state_id !== 10 && stateMatches && categoryMatches && searchTermMatches;
+            });
+
             return {
-                campaigns: data.campaigns.filter((campaign: Campaign) => campaign.state_id >= 8 && campaign.state_id !== 10),
+                campaigns: filteredCampaigns,
                 contracts: data.contracts || [],
                 states: data.states || [],
                 categories: data.categories || [],
             };
         }
-
         // Lógica de filtrado para otros casos
         const filteredCampaigns = data.campaigns.filter((campaign: Campaign) => {
-            const stateMatches = stateFilter === '' || campaign.state_id === parseInt(stateFilter);
-            const categoryMatches = categoryFilter === '' || campaign.category_id === parseInt(categoryFilter);
+            const stateMatches = !stateFilter || campaign.state_id === Number(stateFilter);
+            const categoryMatches = !categoryFilter || campaign.category_id === Number(categoryFilter);
             const searchTermMatches = campaign.title.toLowerCase().includes(searchTerm.toLowerCase());
 
             if (myProposal) {
                 return campaign.user_id === parseInt(userId as string);
             }
 
-            if (isProtocolTeam) {
-                return searchTermMatches && stateMatches && categoryMatches;
-            } else if (isAdmin && adminView) {
+            if (isProtocolTeam || (isAdmin && adminView)) {
                 return searchTermMatches && stateMatches && categoryMatches;
             } else {
                 const userMatches = data.users.some((user: User) => user.id === campaign.user_id && user.wallet_address === userId);
-
                 const isContractVisible = campaign.contract_id === 1 || campaign.contract_id === 2;
                 const isVisible = isContractVisible && (campaign.vizualization === 1 || campaign.vizualization === 2) && userMatches;
 
                 return isVisible && searchTermMatches && stateMatches && categoryMatches;
             }
         });
-
         return {
             campaigns: filteredCampaigns,
             contracts: data.contracts || [],

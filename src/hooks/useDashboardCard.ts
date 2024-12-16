@@ -22,6 +22,8 @@ export const useDashboardCard = (address: string | null) => {
     const [myProposal, setMyProposal] = useState(false);
     const [isHomePage, setIsHomePage] = useState(false);
     const router = useRouter();
+    const [loadMoreEnabled, setLoadMoreEnabled] = useState(true);
+
     const pathName = router.pathname;
 
     useEffect(() => {
@@ -52,7 +54,7 @@ export const useDashboardCard = (address: string | null) => {
                     isAdmin,
                     adminView,
                     searchTerm,
-                    stateFilter,
+                    stateFilter: stateFilter || '', // Asegura que no sea null/undefined
                     categoryFilter,
                     isProtocolTeam,
                     myProposal,
@@ -61,7 +63,6 @@ export const useDashboardCard = (address: string | null) => {
                 const data = await dataBaseService.getFilteredData(filters);
                 setCampaigns(data.campaigns);
                 setFilteredCampaigns(data.campaigns);
-
                 setStates(data.states || []);
                 setCategories(data.categories || []);
 
@@ -107,15 +108,26 @@ export const useDashboardCard = (address: string | null) => {
 
     const loadMoreCampaigns = useCallback(() => {
         setVisibleCampaigns((prevVisible) => {
+            console.log(prevVisible);
             const currentCount = prevVisible.length;
+
             const newCount = currentCount === 0 ? getInitialLoadCount() : currentCount + getLoadMoreCount();
             return filteredCampaigns.slice(0, newCount);
         });
     }, [filteredCampaigns, getInitialLoadCount, getLoadMoreCount]);
 
     useEffect(() => {
-        loadMoreCampaigns();
-    }, [filteredCampaigns, screenSize, loadMoreCampaigns]);
+        if (pathName === '/campaigns' || pathName === '/campaign/manage') {
+            loadMoreCampaigns(); // Carga inicial y permite cargar más.
+        } else if (isHomePage) {
+            setVisibleCampaigns(filteredCampaigns.slice(0, getInitialLoadCount())); // Solo carga initialLoadCount.
+        }
+    }, [filteredCampaigns, screenSize, loadMoreCampaigns, pathName, isHomePage]);
+
+    const handleMyProposalChange = useEffect(() => {
+        if (myProposal) {
+        }
+    }, [myProposal]);
 
     return {
         campaigns,

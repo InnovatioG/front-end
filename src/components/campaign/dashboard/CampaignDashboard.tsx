@@ -41,11 +41,14 @@ export default function CampaignDashboard() {
 
 
 
+
+
+  console.log(visibleCampaigns)
   //! TODO my proposal filter */
 
 
   const getInitialLoadCount = useCallback(() => {
-    if (screenSize === "mobile") return 3;
+    if (screenSize === "mobile") return 3; ``
     if (screenSize === "tablet") return 4;
     return 8;
   }, [screenSize]);
