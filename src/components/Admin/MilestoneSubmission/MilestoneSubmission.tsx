@@ -1,176 +1,161 @@
-import { MilestoneSubmissionEntity } from '../../../lib/SmartDB/Entities/MilestoneSubmission.Entity';
-import { MilestoneSubmissionApi } from '../../../lib/SmartDB/FrontEnd/MilestoneSubmission.FrontEnd.Api.Calls';
-import { useEffect, useState } from 'react';
-import Modal from 'react-modal';
+import { useMilestoneSubmission } from './useMilestoneSubmission';
 import styles from './MilestoneSubmission.module.scss';
 
 export default function MilestoneSubmission() {
-    //--------------------------------------
-    const [isRefreshing, setIsRefreshing] = useState(true);
-    useEffect(() => {
-        setIsRefreshing(false);
-    }, []);
-    //----------------------------
-    const [list, setList] = useState<MilestoneSubmissionEntity[]>();
-    const [newItem, setNewItem] = useState<Partial<MilestoneSubmissionEntity>>({}); // Estado para el nuevo entidad
-    //----------------------------
-    const fetch = async () => {
-            try {
-                const list: MilestoneSubmissionEntity[] = await MilestoneSubmissionApi.getAllApi_();
-                setList(list);
-            } catch (e) {
-                console.error(e);
-            }
-        };
-    useEffect(() => {fetch();}, []);
-    //----------------------------
-    const handleBtnCreate = async () => {
-        try {
-          // Crear un nuevo entidad a partir de los datos de newItem
-          const entity = new MilestoneSubmissionEntity(newItem);
+  const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useMilestoneSubmission();
 
-          // Llamada al API para crear el entidad en la base de datos
-          const createdMilestoneSubmission = await MilestoneSubmissionApi.createApi(entity);
+  const renderList = () => (
+    <div>
+      <div className={styles.listHeader}>
+        <button onClick={() => setView('create')}>Create New Item</button>
+      </div>
+      {list.length === 0 ? (
+        <p>No MilestoneSubmission found.</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Campaign ID</th>
+              <th>Submission Status ID</th>
+              <th>Submitted By Wallet ID</th>
+              <th>Revised By Wallet ID</th>
+              <th>Approved Justification</th>
+              <th>Rejected Justification</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {list.map((item) => (
+              <tr key={item._DB_id}>
+                <td>{item.milestoneId}</td>
+                <td>{item.submissionStatusId}</td>
+                <td>{item.submittedByWalletId}</td>
+                <td>{item.revisedByWalletId}</td>
+                <td>{item.approvedJustification}</td>
+                <td>{item.rejectedJustification}</td>
+                <td>{item.createdAt.toISOString()}</td>
+                <td>{item.updatedAt ? item.updatedAt.toISOString() : 'N/A'}</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      setEditItem(item);
+                      setView('edit');
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDeleteItem(item);
+                      setView('confirmDelete');
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 
-          // Limpiar los campos después de crear
-          setNewItem({});
+  const renderCreateForm = () => (
+    <form className={styles.form}>
+      <div>
+        <label>Milestone ID:</label>
+        <input type="number" value={newItem.milestoneId || ''} onChange={(e) => setNewItem({ ...newItem, milestoneId: e.target.value })} />
+      </div>
+      <div>
+        <label>Submission Status ID:</label>
+        <input type="number" value={newItem.submissionStatusId || ''} onChange={(e) => setNewItem({ ...newItem, submissionStatusId: e.target.value })} />
+      </div>
+      <div>
+        <label>Submitted By Wallet ID:</label>
+        <input type="number" value={newItem.submittedByWalletId || ''} onChange={(e) => setNewItem({ ...newItem, submittedByWalletId: e.target.value })} />
+      </div>
+      <div>
+        <label>Revised By Wallet ID:</label>
+        <input type="number" value={newItem.revisedByWalletId || ''} onChange={(e) => setNewItem({ ...newItem, revisedByWalletId: e.target.value })} />
+      </div>
+      <div>
+        <label>Report Proof Of Finalization:</label>
+        <input type="text" value={newItem.reportProofOfFinalization || ''} onChange={(e) => setNewItem({ ...newItem, reportProofOfFinalization: e.target.value })} />
+      </div>
+      <div>
+        <label>Approved Justification:</label>
+        <input type="text" value={newItem.approvedJustification || ''} onChange={(e) => setNewItem({ ...newItem, approvedJustification: e.target.value })} />
+      </div>
+      <div>
+        <label>Rejected Justification:</label>
+        <input type="text" value={newItem.rejectedJustification || ''} onChange={(e) => setNewItem({ ...newItem, rejectedJustification: e.target.value })} />
+      </div>
+      <button type="button" onClick={create}>
+        Create
+      </button>
+      <button type="button" onClick={() => setView('list')}>
+        Cancel
+      </button>
+    </form>
+  );
 
-          fetch();
-        } catch (e) {
-            console.error(e);
-        }
-    };
-    //----------------------------
-    const handleDelete = async (id: string) => {
-        try {
-            await MilestoneSubmissionApi.deleteByIdApi(MilestoneSubmissionEntity, id); // Llama a la API para eliminar el elemento
-            fetch();
-        } catch (e) {
-            console.error(e);
-        }
-    };
-    //----------------------------
-    const handleInputChange = (field: keyof MilestoneSubmissionEntity, value: any) => {
-        setNewItem({
-            ...newItem,
-            [field]: value,
-        });
-    };
-    //----------------------------
-    return (
-        <div className={styles.content}>
-            <div>
-                <div className={styles.subTitle}>CREATE</div>
-                <form>
-                    <div>
-                        <label>milestoneId: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.milestoneId || ''} 
-                            onChange={(e) => handleInputChange('milestoneId', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>submissionStatusId: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.submissionStatusId || ''} 
-                            onChange={(e) => handleInputChange('submissionStatusId', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>submittedByWalletId: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.submittedByWalletId || ''} 
-                            onChange={(e) => handleInputChange('submittedByWalletId', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>revisedByWalletId: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.revisedByWalletId || ''} 
-                            onChange={(e) => handleInputChange('revisedByWalletId', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>reportProofOfFinalization: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.reportProofOfFinalization || ''} 
-                            onChange={(e) => handleInputChange('reportProofOfFinalization', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>approvedJustification: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.approvedJustification || ''} 
-                            onChange={(e) => handleInputChange('approvedJustification', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>rejectedJustification: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.rejectedJustification || ''} 
-                            onChange={(e) => handleInputChange('rejectedJustification', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>createdAt: </label>
-                        <input type="text" value={newItem.createdAt ? new Date(newItem.createdAt).toISOString() : ''}
-                        onChange={(e) => handleInputChange('createdAt', new Date(e.target.value))} />
-                    </div>
-                    <div></div>
-                    <div>
-                        <label>updatedAt: </label>
-                        <input type="text" value={newItem.updatedAt ? new Date(newItem.updatedAt).toISOString() : ''}
-                        onChange={(e) => handleInputChange('updatedAt', new Date(e.target.value))} />
-                    </div>
-                    <div>
-                    </div>
-                    <button type="button" onClick={handleBtnCreate}>Create</button>
-                </form>
-            </div>
-            <div>
-                <div>List of MilestoneSubmission</div>
-                <div className={styles.listContainer}>
-                    <table>
-                        <thead>
-                          <tr>
-                            <th key="0">milestoneId</th><th key="1">submissionStatusId</th><th key="2">submittedByWalletId</th><th key="3">revisedByWalletId</th><th key="4">reportProofOfFinalization</th><th key="5">approvedJustification</th><th key="6">rejectedJustification</th><th key="7">createdAt</th><th key="8">updatedAt</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            {list?.map((item, index) => (
-                              <tr key={index}>
-                                <td key="0">{item.milestoneId }</td><td key="1">{item.submissionStatusId }</td><td key="2">{item.submittedByWalletId }</td><td key="3">{item.revisedByWalletId }</td><td key="4">{item.reportProofOfFinalization }</td><td key="5">{item.approvedJustification }</td><td key="6">{item.rejectedJustification }</td><td key="7">{item.createdAt.toISOString() }</td><td key="8">{item.updatedAt?.toISOString()  }</td>
-                                <td>
-                                  <button onClick={() => handleDelete(item._DB_id)}>Delete</button>
-                                </td>
-                              </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    );
+  const renderEditForm = () => (
+    <form className={styles.form}>
+      <div>
+        <label>Milestone ID:</label>
+        <input type="number" value={editItem?.milestoneId || ''} onChange={(e) => setEditItem({ ...editItem, milestoneId: e.target.value })} />
+      </div>
+      <div>
+        <label>Submission Status ID:</label>
+        <input type="number" value={editItem?.submissionStatusId || ''} onChange={(e) => setEditItem({ ...editItem, submissionStatusId: e.target.value })} />
+      </div>
+      <div>
+        <label>Submitted By Wallet ID:</label>
+        <input type="number" value={editItem?.submittedByWalletId || ''} onChange={(e) => setEditItem({ ...editItem, submittedByWalletId: e.target.value })} />
+      </div>
+      <div>
+        <label>Revised By Wallet ID:</label>
+        <input type="number" value={editItem?.revisedByWalletId || ''} onChange={(e) => setEditItem({ ...editItem, revisedByWalletId: e.target.value })} />
+      </div>
+      <div>
+        <label>Report Proof Of Finalization:</label>
+        <input type="text" value={editItem?.reportProofOfFinalization || ''} onChange={(e) => setEditItem({ ...editItem, reportProofOfFinalization: e.target.value })} />
+      </div>
+      <div>
+        <label>Approved Justification:</label>
+        <input type="text" value={editItem?.approvedJustification || ''} onChange={(e) => setEditItem({ ...editItem, approvedJustification: e.target.value })} />
+      </div>
+      <div>
+        <label>Rejected Justification:</label>
+        <input type="text" value={editItem?.rejectedJustification || ''} onChange={(e) => setEditItem({ ...editItem, rejectedJustification: e.target.value })} />
+      </div>
+      <button type="button" onClick={update}>
+        Update
+      </button>
+      <button type="button" onClick={() => setView('list')}>
+        Cancel
+      </button>
+    </form>
+  );
+
+  const renderConfirmDelete = () => (
+    <div className={styles.confirmDelete}>
+      <p>Are you sure you want to delete this item?</p>
+      {deleteItem && <pre>{deleteItem.show()}</pre>}
+      <button onClick={remove}>Confirm</button>
+      <button onClick={() => setView('list')}>Cancel</button>
+    </div>
+  );
+
+  return (
+    <div className={styles.content}>
+      {view === 'list' && renderList()}
+      {view === 'create' && renderCreateForm()}
+      {view === 'edit' && renderEditForm()}
+      {view === 'confirmDelete' && renderConfirmDelete()}
+    </div>
+  );
 }
-Modal.setAppElement('#__next');

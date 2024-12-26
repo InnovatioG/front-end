@@ -17,7 +17,7 @@ export class MilestoneEntity extends BaseSmartDBEntity {
     @Convertible()
     campaignStatusId!: string;
     @Convertible({ isForDatum: true })
-    cmEstimateDeliveryDate!: number;
+    cmEstimateDeliveryDate!: Date;
     @Convertible({ isForDatum: true })
     cmPercentage!: number;
     @Convertible({ isForDatum: true })

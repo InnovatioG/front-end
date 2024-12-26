@@ -1,126 +1,126 @@
-import { SubmissionStatusEntity } from '../../../lib/SmartDB/Entities/SubmissionStatus.Entity';
-import { SubmissionStatusApi } from '../../../lib/SmartDB/FrontEnd/SubmissionStatus.FrontEnd.Api.Calls';
-import { useEffect, useState } from 'react';
-import Modal from 'react-modal';
+import { useSubmissionStatus } from './useSubmissionStatus';
 import styles from './SubmissionStatus.module.scss';
 
 export default function SubmissionStatus() {
-    //--------------------------------------
-    const [isRefreshing, setIsRefreshing] = useState(true);
-    useEffect(() => {
-        setIsRefreshing(false);
-    }, []);
-    //----------------------------
-    const [list, setList] = useState<SubmissionStatusEntity[]>();
-    const [newItem, setNewItem] = useState<Partial<SubmissionStatusEntity>>({}); // Estado para el nuevo entidad
-    //----------------------------
-    const fetch = async () => {
-            try {
-                const list: SubmissionStatusEntity[] = await SubmissionStatusApi.getAllApi_();
-                setList(list);
-            } catch (e) {
-                console.error(e);
-            }
-        };
-    useEffect(() => {fetch();}, []);
-    //----------------------------
-    const handleBtnCreate = async () => {
-        try {
-          // Crear un nuevo entidad a partir de los datos de newItem
-          const entity = new SubmissionStatusEntity(newItem);
+    const {
+        list,
+        newItem,
+        editItem,
+        deleteItem,
+        view,
+        setNewItem,
+        setEditItem,
+        setDeleteItem,
+        setView,
+        create,
+        update,
+        remove,
+    } = useSubmissionStatus();
 
-          // Llamada al API para crear el entidad en la base de datos
-          const createdSubmissionStatus = await SubmissionStatusApi.createApi(entity);
+    const renderList = () => (
+        <div>
+            <div className={styles.listHeader}>
+                <button onClick={() => setView('create')}>Create New Item</button>
+            </div>
+            {list.length === 0 ? (
+                <p>No SubmissionStatus found.</p>
+            ) : (
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {list.map((item) => (
+                            <tr key={item._DB_id}>
+                                <td>{item.name}</td>
+                                <td>{item.description}</td>
+                                <td>{item.createdAt.toISOString()}</td>
+                                <td>{item.updatedAt?.toISOString()}</td>
+                                <td>
+                                    <button onClick={() => {
+                                        setEditItem(item);
+                                        setView('edit');
+                                    }}>Edit</button>
+                                    <button onClick={() => {
+                                        setDeleteItem(item);
+                                        setView('confirmDelete');
+                                    }}>Delete</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+        </div>
+    );
 
-          // Limpiar los campos después de crear
-          setNewItem({});
+    const renderCreateForm = () => (
+        <form className={styles.form}>
+            <div>
+                <label>Name:</label>
+                <input
+                    type="text"
+                    value={newItem.name || ''}
+                    onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
+                />
+            </div>
+            <div>
+                <label>Description:</label>
+                <input
+                    type="text"
+                    value={newItem.description || ''}
+                    onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
+                />
+            </div>
+            <button type="button" onClick={create}>Create</button>
+            <button type="button" onClick={() => setView('list')}>Cancel</button>
+        </form>
+    );
 
-          fetch();
-        } catch (e) {
-            console.error(e);
-        }
-    };
-    //----------------------------
-    const handleDelete = async (id: string) => {
-        try {
-            await SubmissionStatusApi.deleteByIdApi(SubmissionStatusEntity, id); // Llama a la API para eliminar el elemento
-            fetch();
-        } catch (e) {
-            console.error(e);
-        }
-    };
-    //----------------------------
-    const handleInputChange = (field: keyof SubmissionStatusEntity, value: any) => {
-        setNewItem({
-            ...newItem,
-            [field]: value,
-        });
-    };
-    //----------------------------
+    const renderEditForm = () => (
+        <form className={styles.form}>
+            <div>
+                <label>Name:</label>
+                <input
+                    type="text"
+                    value={editItem?.name || ''}
+                    onChange={(e) => setEditItem({ ...editItem, name: e.target.value })}
+                />
+            </div>
+            <div>
+                <label>Description:</label>
+                <input
+                    type="text"
+                    value={editItem?.description || ''}
+                    onChange={(e) => setEditItem({ ...editItem, description: e.target.value })}
+                />
+            </div>
+            <button type="button" onClick={update}>Update</button>
+            <button type="button" onClick={() => setView('list')}>Cancel</button>
+        </form>
+    );
+
+    const renderConfirmDelete = () => (
+        <div className={styles.confirmDelete}>
+            <p>Are you sure you want to delete this item?</p>
+            {deleteItem && <pre>{deleteItem.show()}</pre>}
+            <button onClick={remove}>Confirm</button>
+            <button onClick={() => setView('list')}>Cancel</button>
+        </div>
+    );
+
     return (
         <div className={styles.content}>
-            <div>
-                <div className={styles.subTitle}>CREATE</div>
-                <form>
-                    <div>
-                        <label>name: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.name || ''} 
-                            onChange={(e) => handleInputChange('name', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>description: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.description || ''} 
-                            onChange={(e) => handleInputChange('description', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>createdAt: </label>
-                        <input type="text" value={newItem.createdAt ? new Date(newItem.createdAt).toISOString() : ''}
-                        onChange={(e) => handleInputChange('createdAt', new Date(e.target.value))} />
-                    </div>
-                    <div></div>
-                    <div>
-                        <label>updatedAt: </label>
-                        <input type="text" value={newItem.updatedAt ? new Date(newItem.updatedAt).toISOString() : ''}
-                        onChange={(e) => handleInputChange('updatedAt', new Date(e.target.value))} />
-                    </div>
-                    <div>
-                    </div>
-                    <button type="button" onClick={handleBtnCreate}>Create</button>
-                </form>
-            </div>
-            <div>
-                <div>List of SubmissionStatus</div>
-                <div className={styles.listContainer}>
-                    <table>
-                        <thead>
-                          <tr>
-                            <th key="0">name</th><th key="1">description</th><th key="2">createdAt</th><th key="3">updatedAt</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            {list?.map((item, index) => (
-                              <tr key={index}>
-                                <td key="0">{item.name }</td><td key="1">{item.description }</td><td key="2">{item.createdAt.toISOString()  }</td><td key="3">{item.updatedAt?.toISOString() }</td>
-                                <td>
-                                  <button onClick={() => handleDelete(item._DB_id)}>Delete</button>
-                                </td>
-                              </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            {view === 'list' && renderList()}
+            {view === 'create' && renderCreateForm()}
+            {view === 'edit' && renderEditForm()}
+            {view === 'confirmDelete' && renderConfirmDelete()}
         </div>
     );
 }
-Modal.setAppElement('#__next');

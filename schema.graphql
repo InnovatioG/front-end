@@ -137,7 +137,7 @@ type CampaignMember @entity {
  walletId: ID
  rol: String @nullable
  description: String @nullable
- website: String
+ website: String @nullable
  instagram: String @nullable
  twitter: String @nullable
  discord: String @nullable

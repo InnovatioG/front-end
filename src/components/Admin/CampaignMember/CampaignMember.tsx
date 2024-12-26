@@ -1,206 +1,193 @@
-import { CampaignMemberEntity } from '../../../lib/SmartDB/Entities/CampaignMember.Entity';
-import { CampaignMemberApi } from '../../../lib/SmartDB/FrontEnd/CampaignMember.FrontEnd.Api.Calls';
-import { useEffect, useState } from 'react';
-import Modal from 'react-modal';
+import { useCampaignMember } from './useCampaignMember';
 import styles from './CampaignMember.module.scss';
 
 export default function CampaignMember() {
-    //--------------------------------------
-    const [isRefreshing, setIsRefreshing] = useState(true);
-    useEffect(() => {
-        setIsRefreshing(false);
-    }, []);
-    //----------------------------
-    const [list, setList] = useState<CampaignMemberEntity[]>();
-    const [newItem, setNewItem] = useState<Partial<CampaignMemberEntity>>({}); // Estado para el nuevo entidad
-    //----------------------------
-    const fetch = async () => {
-            try {
-                const list: CampaignMemberEntity[] = await CampaignMemberApi.getAllApi_();
-                setList(list);
-            } catch (e) {
-                console.error(e);
-            }
-        };
-    useEffect(() => {fetch();}, []);
-    //----------------------------
-    const handleBtnCreate = async () => {
-        try {
-          // Crear un nuevo entidad a partir de los datos de newItem
-          const entity = new CampaignMemberEntity(newItem);
+  const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaignMember();
 
-          // Llamada al API para crear el entidad en la base de datos
-          const createdCampaignMember = await CampaignMemberApi.createApi(entity);
+  const renderList = () => (
+    <div>
+      <div className={styles.listHeader}>
+        <button onClick={() => setView('create')}>Create New Item</button>
+      </div>
+      {list.length === 0 ? (
+        <p>No CampaignMember found.</p>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Campaign ID</th>
+              <th>Wallet ID</th>
+              <th>Role</th>
+              <th>Description</th>
+              <th>Website</th>
+              <th>Instagram</th>
+              <th>Twitter</th>
+              <th>Discord</th>
+              <th>Facebook</th>
+              <th>Editor</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {list.map((item) => (
+              <tr key={item._DB_id}>
+                <td>{item.campaignId}</td>
+                <td>{item.walletId}</td>
+                <td>{item.rol}</td>
+                <td>{item.description}</td>
+                <td>{item.website}</td>
+                <td>{item.instagram}</td>
+                <td>{item.twitter}</td>
+                <td>{item.discord}</td>
+                <td>{item.facebook}</td>
+                <td>{(item.editor == true) ? 'Yes' : 'No'}</td>
+                <td>{item.createdAt ? new Date(item.createdAt).toISOString() : ''}</td>
+                <td>{item.updatedAt ? new Date(item.updatedAt).toISOString() : ''}</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      setEditItem(item);
+                      setView('edit');
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDeleteItem(item);
+                      setView('confirmDelete');
+                    }}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 
-          // Limpiar los campos después de crear
-          setNewItem({});
+  const renderCreateForm = () => (
+    <form className={styles.form}>
+      <div>
+        <label>Campaign ID:</label>
+        <input type="number" value={newItem.campaignId || ''} onChange={(e) => setNewItem({ ...newItem, campaignId: e.target.value })} />
+      </div>
+      <div>
+        <label>Wallet ID:</label>
+        <input type="number" value={newItem.walletId || ''} onChange={(e) => setNewItem({ ...newItem, walletId: e.target.value })} />
+      </div>
+      <div>
+        <label>Role:</label>
+        <input type="text" value={newItem.rol || ''} onChange={(e) => setNewItem({ ...newItem, rol: e.target.value })} />
+      </div>
+      <div>
+        <label>Description:</label>
+        <input type="text" value={newItem.description || ''} onChange={(e) => setNewItem({ ...newItem, description: e.target.value })} />
+      </div>
+      <div>
+        <label>Website:</label>
+        <input type="text" value={newItem.website || ''} onChange={(e) => setNewItem({ ...newItem, website: e.target.value })} />
+      </div>
+      <div>
+        <label>Instagram:</label>
+        <input type="text" value={newItem.instagram || ''} onChange={(e) => setNewItem({ ...newItem, instagram: e.target.value })} />
+      </div>
+      <div>
+        <label>Twitter:</label>
+        <input type="text" value={newItem.twitter || ''} onChange={(e) => setNewItem({ ...newItem, twitter: e.target.value })} />
+      </div>
+      <div>
+        <label>Discord:</label>
+        <input type="text" value={newItem.discord || ''} onChange={(e) => setNewItem({ ...newItem, discord: e.target.value })} />
+      </div>
+      <div>
+        <label>Facebook:</label>
+        <input type="text" value={newItem.facebook || ''} onChange={(e) => setNewItem({ ...newItem, facebook: e.target.value })} />
+      </div>
+      <div>
+        <label>Editor:</label>
+        <input type="checkbox" checked={newItem.editor || false} onChange={(e) => setNewItem({ ...newItem, editor: e.target.checked })} />
+      </div>
+      <button type="button" onClick={create}>
+        Create
+      </button>
+      <button type="button" onClick={() => setView('list')}>
+        Cancel
+      </button>
+    </form>
+  );
 
-          fetch();
-        } catch (e) {
-            console.error(e);
-        }
-    };
-    //----------------------------
-    const handleDelete = async (id: string) => {
-        try {
-            await CampaignMemberApi.deleteByIdApi(CampaignMemberEntity, id); // Llama a la API para eliminar el elemento
-            fetch();
-        } catch (e) {
-            console.error(e);
-        }
-    };
-    //----------------------------
-    const handleInputChange = (field: keyof CampaignMemberEntity, value: any) => {
-        setNewItem({
-            ...newItem,
-            [field]: value,
-        });
-    };
-    //----------------------------
-    return (
-        <div className={styles.content}>
-            <div>
-                <div className={styles.subTitle}>CREATE</div>
-                <form>
-                    <div>
-                        <label>campaignId: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.campaignId || ''} 
-                            onChange={(e) => handleInputChange('campaignId', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>editor: </label>
-                        <input 
-                            type="checked" 
-                            checked={newItem.editor || false} 
-                            onChange={(e) => handleInputChange('editor', e.target.checked)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>walletId: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.walletId || ''} 
-                            onChange={(e) => handleInputChange('walletId', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>rol: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.rol || ''} 
-                            onChange={(e) => handleInputChange('rol', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>description: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.description || ''} 
-                            onChange={(e) => handleInputChange('description', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>website: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.website || ''} 
-                            onChange={(e) => handleInputChange('website', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>instagram: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.instagram || ''} 
-                            onChange={(e) => handleInputChange('instagram', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>twitter: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.twitter || ''} 
-                            onChange={(e) => handleInputChange('twitter', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>discord: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.discord || ''} 
-                            onChange={(e) => handleInputChange('discord', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>facebook: </label>
-                        <input 
-                            type="text" 
-                            value={newItem.facebook || ''} 
-                            onChange={(e) => handleInputChange('facebook', e.target.value)} 
-                        />
-                    </div>
-                    <div>
-                    </div>
-                    <div>
-                        <label>createdAt: </label>
-                        <input type="text" value={newItem.createdAt ? new Date(newItem.createdAt).toISOString() : ''}
-                        onChange={(e) => handleInputChange('createdAt', new Date(e.target.value))} />
-                    </div>
-                    <div></div>
-                    <div>
-                        <label>updatedAt: </label>
-                        <input type="text" value={newItem.updatedAt ? new Date(newItem.updatedAt).toISOString() : ''}
-                        onChange={(e) => handleInputChange('updatedAt', new Date(e.target.value))} />
-                    </div>
-                    <div>
-                    </div>
-                    <button type="button" onClick={handleBtnCreate}>Create</button>
-                </form>
-            </div>
-            <div>
-                <div>List of CampaignMember</div>
-                <div className={styles.listContainer}>
-                    <table>
-                        <thead>
-                          <tr>
-                            <th key="0">campaignId</th><th key="1">editor</th><th key="2">walletId</th><th key="3">rol</th><th key="4">description</th><th key="5">website</th><th key="6">instagram</th><th key="7">twitter</th><th key="8">discord</th><th key="9">facebook</th><th key="10">createdAt</th><th key="11">updatedAt</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            {list?.map((item, index) => (
-                              <tr key={index}>
-                                <td key="0">{item.campaignId }</td><td key="1">{item.editor }</td><td key="2">{item.walletId }</td><td key="3">{item.rol }</td><td key="4">{item.description }</td><td key="5">{item.website }</td><td key="6">{item.instagram }</td><td key="7">{item.twitter }</td><td key="8">{item.discord }</td><td key="9">{item.facebook }</td><td key="10">{item.createdAt.toISOString() }</td><td key="11">{item.updatedAt?.toISOString() }</td>
-                                <td>
-                                  <button onClick={() => handleDelete(item._DB_id)}>Delete</button>
-                                </td>
-                              </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    );
+  const renderEditForm = () => (
+    <form className={styles.form}>
+      <div>
+        <label>Campaign ID:</label>
+        <input type="number" value={editItem?.campaignId || ''} onChange={(e) => setEditItem({ ...editItem, campaignId: e.target.value })} />
+      </div>
+      <div>
+        <label>Wallet ID:</label>
+        <input type="number" value={editItem?.walletId || ''} onChange={(e) => setEditItem({ ...editItem, walletId: e.target.value })} />
+      </div>
+      <div>
+        <label>Role:</label>
+        <input type="text" value={editItem?.rol || ''} onChange={(e) => setEditItem({ ...editItem, rol: e.target.value })} />
+      </div>
+      <div>
+        <label>Description:</label>
+        <input type="text" value={editItem?.description || ''} onChange={(e) => setEditItem({ ...editItem, description: e.target.value })} />
+      </div>
+      <div>
+        <label>Website:</label>
+        <input type="text" value={editItem?.website || ''} onChange={(e) => setEditItem({ ...editItem, website: e.target.value })} />
+      </div>
+      <div>
+        <label>Instagram:</label>
+        <input type="text" value={editItem?.instagram || ''} onChange={(e) => setEditItem({ ...editItem, instagram: e.target.value })} />
+      </div>
+      <div>
+        <label>Twitter:</label>
+        <input type="text" value={editItem?.twitter || ''} onChange={(e) => setEditItem({ ...editItem, twitter: e.target.value })} />
+      </div>
+      <div>
+        <label>Discord:</label>
+        <input type="text" value={editItem?.discord || ''} onChange={(e) => setEditItem({ ...editItem, discord: e.target.value })} />
+      </div>
+      <div>
+        <label>Facebook:</label>
+        <input type="text" value={editItem?.facebook || ''} onChange={(e) => setEditItem({ ...editItem, facebook: e.target.value })} />
+      </div>
+      <div>
+        <label>Editor:</label>
+        <input type="checkbox" checked={editItem?.editor || false} onChange={(e) => setEditItem({ ...editItem, editor: e.target.checked })} />
+      </div>
+      <button type="button" onClick={update}>
+        Update
+      </button>
+      <button type="button" onClick={() => setView('list')}>
+        Cancel
+      </button>
+    </form>
+  );
+
+  const renderConfirmDelete = () => (
+    <div className={styles.confirmDelete}>
+      <p>Are you sure you want to delete this item?</p>
+      {deleteItem && <pre>{deleteItem.show()}</pre>}
+      <button onClick={remove}>Confirm</button>
+      <button onClick={() => setView('list')}>Cancel</button>
+    </div>
+  );
+
+  return (
+    <div className={styles.content}>
+      {view === 'list' && renderList()}
+      {view === 'create' && renderCreateForm()}
+      {view === 'edit' && renderEditForm()}
+      {view === 'confirmDelete' && renderConfirmDelete()}
+    </div>
+  );
 }
-Modal.setAppElement('#__next');

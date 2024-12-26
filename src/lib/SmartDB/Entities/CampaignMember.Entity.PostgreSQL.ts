@@ -23,8 +23,8 @@ export class CampaignMemberEntityPostgreSQL extends BaseEntityPostgreSQL {
     rol?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     description?: string;
-    @Column({ type: 'varchar', length: 255 })
-    website!: string;
+    @Column({ type: 'varchar', length: 255 , nullable: true })
+    website?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     instagram?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })

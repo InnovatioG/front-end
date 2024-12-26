@@ -19,7 +19,7 @@ export class CampaignMemberEntity extends BaseEntity {
     @Convertible()
     description?: string;
     @Convertible()
-    website!: string;
+    website?: string;
     @Convertible()
     instagram?: string;
     @Convertible()

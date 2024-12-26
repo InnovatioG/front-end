@@ -17,8 +17,8 @@ export class MilestoneEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     campaignId!: string;
     @Column({ type: 'varchar', length: 255 })
     campaignStatusId!: string;
-    @Column({ type: 'int' })
-    cmEstimateDeliveryDate!: number;
+    @Column({ type: 'date' })
+    cmEstimateDeliveryDate!: Date;
     @Column({ type: 'int' })
     cmPercentage!: number;
     @Column({ type: 'int' })
