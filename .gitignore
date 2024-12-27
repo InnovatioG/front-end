@@ -40,5 +40,8 @@ src/HardCode/DBSchema.prisma
 **/_OLD
 
 .env
-.env
-.env
+
+files-contents.txt
+files-contents-config.*.json
+
+
