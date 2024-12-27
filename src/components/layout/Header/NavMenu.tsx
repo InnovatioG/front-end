@@ -37,23 +37,29 @@ export default function NavMenu() {
             <Link
               href={""}
               className={styles.infoLink}
-              onClick={() => setIsOpenMenu(false)}
             >
-              How it works
+              <button
+                onClick={() => setIsOpenMenu(false)} >
+
+                How it works
+              </button>
             </Link>
             <Link
               href={""}
               className={styles.infoLink}
-              onClick={() => setIsOpenMenu(false)}
             >
-              About us
+              <button onClick={() => setIsOpenMenu(false)}>
+                About us
+              </button>
             </Link>
             <Link
               href={"/campaigns"}
               className={styles.infoLink}
-              onClick={() => setIsOpenMenu(false)}
             >
-              Campaigns            </Link>
+              <button >
+                Campaigns
+              </button>
+            </Link>
           </div>
           <div className={styles.btnActions}>
             <div onClick={() => setIsOpenMenu(false)}>

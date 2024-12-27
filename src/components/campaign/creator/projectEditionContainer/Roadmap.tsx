@@ -4,6 +4,7 @@ import MilestoneCardEdit from './MilestoneEdit';
 import { handlePercentageChange } from '@/handlers/projectEditionContainer/projectEditionContainerHandlers';
 import type { MilestoneF } from "@/HardCode/databaseType";
 import EmptyState from '@/components/emptyStates/EmptyState';
+import styles from "./Roadmap.module.scss"
 
 
 interface RoadMapYMilestonesProps {
@@ -15,7 +16,6 @@ const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
 
     const { milestones } = project;
 
-    console.log("milestones", milestones);
 
 
 
@@ -28,7 +28,6 @@ const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
     };
 
     const totalPercentage = getTotalPercentage();
-    console.log("totalPercentage", totalPercentage);
 
 
 
@@ -36,7 +35,7 @@ const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
 
 
     return (
-        <div className={totalPercentage > 100 ? 'over-limit' : ''}>
+        <div className={styles.milestoneContainer} >
             {milestones.map((milestone, index) => (
                 <div key={milestone.id}>
                     <MilestoneCardEdit

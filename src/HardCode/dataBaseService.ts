@@ -105,23 +105,36 @@ export const dataBaseService = {
         categoryFilter: string;
         isProtocolTeam: boolean;
         myProposal: boolean;
+        haveProjects: boolean;
+        setHaveProjects: (haveProjects: boolean) => void;
     }) => {
         const data = dataBaseService.getData();
         if (!data) return { campaigns: [], contracts: [], categories: [], states: [] };
 
-        const { userId, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam, myProposal, isHomePage } = filters;
+        const { isHomePage, userId, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam, myProposal, setHaveProjects } = filters;
 
-        console.log(stateFilter);
-        console.log();
+        const stateMatches = (campaign: Campaign) => !stateFilter || campaign.state_id === Number(stateFilter);
 
-        // Si `isHomePage` es verdadero, devuelve todas las campañas sin filtrar
+        const categoryMatches = (campaign: Campaign) => !categoryFilter || campaign.category_id === Number(categoryFilter);
+
+        const searchTermMatches = (campaign: Campaign) => campaign.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+        const userMatches = (campaign: Campaign) => data.users.some((user: User) => user.id === campaign.user_id && user.wallet_address === userId);
+
+        const isContractVisible = (campaign: Campaign) => campaign.contract_id === 1 || campaign.contract_id === 2;
+
+        const isVisible = (campaign: Campaign) => isContractVisible(campaign) && (campaign.vizualization === 1 || campaign.vizualization === 2) && userMatches(campaign);
+
+        // Si `isHomePage` es verdadero, incluye lógica de userMatches
         if (isHomePage) {
             const filteredCampaigns = data.campaigns.filter((campaign: Campaign) => {
-                const stateMatches = !stateFilter || campaign.state_id === Number(stateFilter);
-                const categoryMatches = !categoryFilter || campaign.category_id === Number(categoryFilter);
-                const searchTermMatches = campaign.title.toLowerCase().includes(searchTerm.toLowerCase());
+                const matches = campaign.state_id >= 8 && campaign.state_id !== 10 && stateMatches(campaign) && categoryMatches(campaign) && searchTermMatches(campaign);
 
-                return campaign.state_id >= 8 && campaign.state_id !== 10 && stateMatches && categoryMatches && searchTermMatches;
+                if (userMatches(campaign)) {
+                    setHaveProjects(true);
+                }
+
+                return matches;
             });
 
             return {
@@ -131,26 +144,24 @@ export const dataBaseService = {
                 categories: data.categories || [],
             };
         }
+
         // Lógica de filtrado para otros casos
         const filteredCampaigns = data.campaigns.filter((campaign: Campaign) => {
-            const stateMatches = !stateFilter || campaign.state_id === Number(stateFilter);
-            const categoryMatches = !categoryFilter || campaign.category_id === Number(categoryFilter);
-            const searchTermMatches = campaign.title.toLowerCase().includes(searchTerm.toLowerCase());
-
             if (myProposal) {
                 return campaign.user_id === parseInt(userId as string);
             }
 
             if (isProtocolTeam || (isAdmin && adminView)) {
-                return searchTermMatches && stateMatches && categoryMatches;
-            } else {
-                const userMatches = data.users.some((user: User) => user.id === campaign.user_id && user.wallet_address === userId);
-                const isContractVisible = campaign.contract_id === 1 || campaign.contract_id === 2;
-                const isVisible = isContractVisible && (campaign.vizualization === 1 || campaign.vizualization === 2) && userMatches;
-
-                return isVisible && searchTermMatches && stateMatches && categoryMatches;
+                return searchTermMatches(campaign) && stateMatches(campaign) && categoryMatches(campaign);
             }
+
+            if (userMatches(campaign)) {
+                setHaveProjects(true);
+            }
+
+            return isVisible(campaign) && searchTermMatches(campaign) && stateMatches(campaign) && categoryMatches(campaign);
         });
+
         return {
             campaigns: filteredCampaigns,
             contracts: data.contracts || [],

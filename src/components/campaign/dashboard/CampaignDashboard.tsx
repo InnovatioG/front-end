@@ -47,6 +47,10 @@ export default function CampaignDashboard() {
   //! TODO my proposal filter */
 
 
+
+  console.log(myProposal)
+
+
   const getInitialLoadCount = useCallback(() => {
     if (screenSize === "mobile") return 3; ``
     if (screenSize === "tablet") return 4;
@@ -67,6 +71,7 @@ export default function CampaignDashboard() {
   return (
     <div className={styles.campaignDashboard}>
       <CampaignFilters
+        isHomePage={isHomePage}
         searchTerm={searchTerm}
         statusFilter={stateFilter}
         categoryFilter={categoryFilter}

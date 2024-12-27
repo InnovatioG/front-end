@@ -23,7 +23,8 @@ export const useDashboardCard = (address: string | null) => {
     const [isHomePage, setIsHomePage] = useState(false);
     const router = useRouter();
     const [loadMoreEnabled, setLoadMoreEnabled] = useState(true);
-
+    const [haveProjects, setHaveProjects] = useState(false);
+    console.log(haveProjects);
     const pathName = router.pathname;
 
     useEffect(() => {
@@ -42,10 +43,8 @@ export const useDashboardCard = (address: string | null) => {
 
     useEffect(() => {
         pathName === '/' || pathName === '/campaigns' ? setIsHomePage(true) : setIsHomePage(false);
-        console.log(isHomePage);
 
-        /*         if (!address || !isHomePage) return;
-         */ setLoading(true);
+        setLoading(true);
         const fetchData = async () => {
             try {
                 const filters = {
@@ -58,6 +57,8 @@ export const useDashboardCard = (address: string | null) => {
                     categoryFilter,
                     isProtocolTeam,
                     myProposal,
+                    haveProjects,
+                    setHaveProjects,
                 };
 
                 const data = await dataBaseService.getFilteredData(filters);
@@ -76,7 +77,7 @@ export const useDashboardCard = (address: string | null) => {
         };
 
         fetchData();
-    }, [address, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam, myProposal, isHomePage, pathName]);
+    }, [address, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam, myProposal, isHomePage, pathName, haveProjects, setHaveProjects]);
 
     const getStatusName = useCallback(
         (statusId: number): string => {
@@ -160,5 +161,6 @@ export const useDashboardCard = (address: string | null) => {
         isHomePage,
         setIsHomePage,
         pathName,
+        haveProjects,
     };
 };
