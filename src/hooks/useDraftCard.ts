@@ -14,31 +14,41 @@ const getMilestoneStatusId = (campaign: Campaign): number | undefined => {
     return Object.keys(milestoneStatusMap).find((key) => milestoneStatusMap[key]) as number | undefined;
 };
 
+/* TODO PREGUNTAR LO DEL MILESTONE STATUS INTERMEDIO (APPROVED) */
+
 const getCurrentMilestone = (campaign: Campaign): string => {
     for (let i = 0; i < campaign.milestones.length; i++) {
         const milestone = campaign.milestones[i];
         const statusId = milestone.milestone_status?.milestone_submission?.milestone_status_id;
-
-        /* CHEQUEO SI MI ESTADO ACTUAL ES FINISHED PARA ARRANCAR A ITERAR EL SIGUIENTE MILESTONE */
+        /*         if (campaign.id === 17) {
+            console.log(statusId);
+        } */
         if (statusId === 5) {
             const nextMilestone = campaign.milestones[i + 1];
+
             const nextStatusId = nextMilestone?.milestone_status?.milestone_submission?.milestone_status_id;
+
             if (nextStatusId === 2 || nextStatusId === 3 || nextStatusId === 4 || nextStatusId === 0 || nextStatusId === 6) {
-                return `M${i + 2}`; // M2, M3, etc.
+                return `M${i + 2}`;
             }
         }
 
+        if (statusId === 1) {
+            return `M${i}`;
+        }
+
         if (statusId === 2 || statusId === 3 || statusId === 4 || statusId === 6) {
-            return `M${i + 1}`; // M2, M3, etc.
+            return `M${i + 1}`;
         }
     }
     return '';
 };
-const useDraftCard = (campaign: Campaign, isProtocolTeam: boolean) => {
+
+const useDraftCard = (campaign: Campaign, isProtocolTeam: boolean, isAdmin: boolean) => {
     const milestoneStatusId = getMilestoneStatusId(campaign);
     const currentMilestone = getCurrentMilestone(campaign);
 
-    const { label, buttons } = isProtocolTeam ? cardInformationForProtocolTeam(campaign.state_id) : CardInformationByState(campaign.state_id, milestoneStatusId);
+    const { label, buttons } = isProtocolTeam ? cardInformationForProtocolTeam(campaign.state_id) : CardInformationByState(campaign.state_id, milestoneStatusId, isAdmin);
 
     const labelClass = label.toLowerCase().replace(/\s+/g, '-');
 
@@ -53,7 +63,11 @@ const useDraftCard = (campaign: Campaign, isProtocolTeam: boolean) => {
     }, [campaign.start_date]);
 
     const formatAllTime = (timeRemaining: any) => {
-        return `${timeRemaining.days}:${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}`;
+        if (timeRemaining.days >= 4) {
+            return `${timeRemaining.days} days`;
+        } else {
+            return `${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}: ${formatTime(timeRemaining.seconds)}`;
+        }
     };
 
     return {

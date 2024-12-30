@@ -18,7 +18,7 @@ interface CampaignCardProps {
 const CampaignCard: React.FC<CampaignCardProps> = ({ status, goal, min_request, investors, startDate }) => {
     const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(startDate));
     const { priceAdaOrDollar } = usePriceStore();
-    const { price_ada, fetchAdaPrice } = useProjectDetailStore();
+    const { price_ada, fetchAdaPrice, isAdmin, isProtocolTeam } = useProjectDetailStore();
 
     useEffect(() => {
         fetchAdaPrice();
@@ -40,10 +40,14 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ status, goal, min_request, 
     const goalInCurrentCurrency = priceAdaOrDollar === 'dollar' ? goal : goal / price_ada;
     const currencySymbol = priceAdaOrDollar === 'dollar' ? 'USD' : 'ADA';
 
+
+
+
     return (
         <section className={styles.campaignCard}>
             <div className={styles.campaignCardStatus}>
                 <div className={`${styles.statusContainer} ${styles[stateClass]}`}>
+
                     <span className={`${styles.status} ${styles[stateClass]}`}>
                         {status === "countdown" ? formatAllTime(timeRemaining) : status}
                     </span>

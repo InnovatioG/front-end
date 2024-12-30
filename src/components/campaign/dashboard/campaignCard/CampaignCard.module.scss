@@ -9,6 +9,10 @@
     border-radius: 20px;
     border: 1px, solid colors.$border-light-color;
     gap: 14px;
+    height: 100%;
+    min-height: 422px;
+    justify-content: space-between;
+    max-width: 400px;
     .headCard {
         display: flex;
         justify-content: space-between;
@@ -51,6 +55,10 @@
                         background: colors.$intermediate-green;
                     }
                     &.complete {
+                        background: colors.$primary-blue;
+                        color: colors.$light-font;
+                    }
+                    &.countdown {
                         background: colors.$primary-blue;
                         color: colors.$light-font;
                     }
@@ -97,38 +105,14 @@
     }
 }
 
-/* LARGER SCREEN */
+@media screen and (max-width: 768px) {
+}
 
-@media (width >= 942px) {
-    .campaignCard {
-        .headCard {
-            .logoCard {
-                width: 58px;
-                height: auto;
-            }
-            .cardDetails {
-                height: 32px;
-                .status {
-                    .state {
-                        font: fonts.$f200-medium;
-                    }
-                    .category {
-                        font: fonts.$f200-medium;
-                    }
-                }
-                .investors {
-                    .cant {
-                        font: fonts.$f200-medium;
-                    }
-                }
-            }
-        }
-        .cardTitle {
-            font: fonts.$f600-medium;
-            height: 52px;
-        }
-        .cardDescription {
-            height: 75px;
-        }
-    }
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1570px) {
+}
+
+@media screen and (min-width: 1571px) {
 }

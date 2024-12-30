@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from "./MilestoneTimeEdit.module.scss"
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import type { MilestoneF } from "@/HardCode/databaseType";
+import { formatDateFromString } from '@/utils/formats';
 
 interface MilestoneTimeEditProps {
     milestone: MilestoneF;
@@ -17,6 +18,7 @@ const numberToWords: { [key: number]: string } = {
 const MilestoneTimeEdit: React.FC<MilestoneTimeEditProps> = ({ milestone }) => {
     const { project, setProject, setMilestone, editionMode } = useProjectDetailStore();
     const weekOptions = [2, 3, 4, 5];
+
 
     const handleWeekSelect = (weeks: number) => {
         const updatedMilestone = {
@@ -71,7 +73,7 @@ const MilestoneTimeEdit: React.FC<MilestoneTimeEditProps> = ({ milestone }) => {
                             <img src="/img/icons/arrow-back.svg" alt="arrow-back" />
                         </button>
                     }
-                    <span>{milestone.cmEstimatedDeliveryDate}</span>
+                    <span>{formatDateFromString(milestone.cmEstimatedDeliveryDate)}</span>
                 </div>
             )}
         </div>

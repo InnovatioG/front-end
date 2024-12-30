@@ -44,6 +44,9 @@ const QYA: React.FC<QYAProps> = (props) => {
 
     return (
         <div className={styles.generalContainer}>
+
+
+
             {faqs.map((faq, index) => (
                 <div key={index} className={styles.questionContainer}>
                     <div>
@@ -58,6 +61,7 @@ const QYA: React.FC<QYAProps> = (props) => {
                     <div className={styles.divisor}></div>
                 </div>
             ))}
+
 
             <div className={styles.buttonGeneral}>
                 <AddMore isOpen={isOpen} setIsOpen={setIsOpen} handleAddMore={handleQuestionOpen} />

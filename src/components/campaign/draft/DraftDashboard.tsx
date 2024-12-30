@@ -1,22 +1,18 @@
-import React, { useEffect } from 'react';
+
+import React from 'react';
 import { useDashboardCard } from '@/hooks/useDashboardCard';
 import DraftFilters from './draftFilters/DraftFilters';
 import DraftCard from './draftCard/DraftCard';
 import styles from "./DraftDashboard.module.scss";
-import { useModalStore } from '@/store/modal/useModalStoreState';
-import ModalTemplate from '@/components/modal/Modal';
-import InitializeCampaignModal from '@/components/modal/InitializeCampaignModal';
-import ManageCampaignModal from '@/components/modal/ManageCampaignModal';
-import SendReportMilestone from '@/components/modal/SendReport';
 import { PLUS_ICON } from '@/utils/images';
 import Link from 'next/link';
+
 
 interface NewDraftDashboardProps {
     address: string | null;
 }
 
 const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
-    const { openModal, closeModal, modalType, campaignId } = useModalStore();
 
     const {
         campaigns,
@@ -42,6 +38,8 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
         stateFilter
     } = useDashboardCard(address);
 
+
+    console.log(visibleCampaigns)
 
 
     return (
@@ -70,8 +68,9 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
                     </div>
                 </Link>
                 {visibleCampaigns.map((campaign) => (
-                    <DraftCard key={campaign.id} campaign={campaign} isProtocolTeam={isProtocolTeam} />
+                    <DraftCard key={campaign.id} campaign={campaign} isProtocolTeam={isProtocolTeam} isAdmin={isAdmin} />
                 ))}
+                <button onClick={loadMoreCampaigns}>Load more</button>
             </div>
 
 

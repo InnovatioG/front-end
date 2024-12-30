@@ -21,13 +21,11 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
     const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>("website");
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
-    console.log("modalOpen", modalOpen)
 
     const { openModal } = useModalStore();
     const { buttons } = ButtonsForCampaignPage(project.state_id, isProtocolTeam, isAdmin);
 
 
-    console.log("editionMode", editionMode)
 
     const editLinkButton = () => {
         setModalOpen(true);

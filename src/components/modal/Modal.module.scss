@@ -28,6 +28,10 @@
 
 .drawerContent {
     background: colors.$primary-background;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 2rem;
 }
 
 .modalContent {

@@ -5,8 +5,14 @@ import { PEOPLE } from '@/utils/images';
 import CampaignHighLight from '@/components/campaign/highlight/CampaignHighLight';
 import CampaignDashboard from '@/components/campaign/dashboard/CampaignDashboard';
 import { useEffect, useState } from 'react';
-
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 export default function Home() {
+
+    const { fetchAdaPrice } = useProjectDetailStore();
+
+    useEffect(() => {
+        fetchAdaPrice();
+    }, [fetchAdaPrice]);
 
     return (
         <>
@@ -30,7 +36,7 @@ export default function Home() {
             </main>
             <CampaignHighLight />
             <CampaignDashboard />
-           
+
         </>
     );
 }

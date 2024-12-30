@@ -37,22 +37,39 @@ export interface Milestone {
 
 export interface BaseCampaign {
     id: number;
-    user_id: number;
-    state_id: number;
-    category_id: number;
-    contract_id: number;
-    vizualization: number;
-    investors: number;
+    user_id: number | null;
     title: string;
     description: string;
-    milestones: MilestoneF[];
-    raise_amount: number;
-    start_date: string;
-    end_date: string;
-    logo_url: string;
+    state_id: number;
     banner_url: string;
+    logoUrl: string;
     created_at: string;
     updated_at: string;
+    investors: number;
+    status: string;
+    goal: number;
+    min_request: number;
+    cdRequestedMaxADA: number | null;
+    cdCampaignToken_PriceADA: number | null;
+    cdCampaignToken_TN: string;
+    campaign_content: campaingContent[];
+    tokenomics_description: string;
+    vizualization?: number;
+    website: string;
+    facebook: string;
+    instagram: string;
+    discord: string;
+    linkedin: string;
+    start_date: string;
+    xs: string;
+    category_id: number;
+    contract_id?: number;
+    raise_amount: number;
+    members_team: MembersTeam[];
+    milestones: MilestoneF[];
+    faqs: FAQ[];
+    campaign_type: 'Target' | 'Milestone';
+    end_date: string;
 }
 
 export interface MilestoneCampaign extends BaseCampaign {
@@ -61,7 +78,6 @@ export interface MilestoneCampaign extends BaseCampaign {
 
 export interface TargetCampaign extends BaseCampaign {
     campaign_type: 'Target';
-    goal: number;
 }
 
 export type Campaign = MilestoneCampaign | TargetCampaign;
@@ -78,6 +94,7 @@ export interface Milestone_submission {
     id_milestione_submission: number;
     milestone_id: number;
     milestone_status_id: number;
+    report_proof_of_finalization: string;
     approved_justification: string;
     rejected_justification: string;
 }

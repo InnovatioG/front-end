@@ -5,6 +5,7 @@ import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import { inputFieldsToken } from '@/utils/constants';
 import { ADAIC, FACEBOOK } from '@/utils/images';
 import EmptyState from '@/components/emptyStates/EmptyState';
+import AdminUTXOS from './adminUTXO';
 const Tokenomics: React.FC = () => {
     const { project, setProject, price_ada } = useProjectDetailStore();
 
@@ -62,6 +63,10 @@ const Tokenomics: React.FC = () => {
                     content={project.tokenomics_description || ""}
                     onChange={(content) => handleInputChange("tokenomics_description", content, (value) => value)}
                 />
+            </div>
+
+            <div className={styles.editUTXO}>
+                <AdminUTXOS />
             </div>
         </div>
     );

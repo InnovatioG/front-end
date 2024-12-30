@@ -35,7 +35,6 @@ export default function Header() {
       ) : (
         <HeaderDesktop session={session} setIsOpen={setIsOpen} isOpen={isOpen} />
       )}
-      <CalendarModal isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
 
 

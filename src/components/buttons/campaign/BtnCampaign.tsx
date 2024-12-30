@@ -3,7 +3,8 @@ import styles from './BtnCampaign.module.scss';
 import { PLUS_ICON } from '@/utils/images';
 import { ROUTES } from '@/utils/routes';
 import { useRouter } from 'next/router';
-
+import { useCardano } from "@/contexts/CardanoContext";
+import { useDashboardCard } from '@/hooks/useDashboardCard';
 interface BtnCampaignProps {
     type: 'mobile' | 'primary' | 'secondary';
     width?: number;
@@ -27,26 +28,34 @@ const BtnCampaignMobile: React.FC<SubComponentProps> = ({ dir }) => {
 };
 
 const BtnCampaignPrimary: React.FC<SubComponentProps> = ({ width, dir }) => {
+    const { address } = useCardano()
+
+    const { haveProjects } = useDashboardCard(address)
+    //! TODO: Cambiar el nombre del boton segun si hay campañas creadas o no. 
+
     return (
         <Link href={dir} >
             <div className={styles.BtnCampaignPrimary} style={width ? { width: `${width}px` } : undefined}>
                 <svg width="24" height="24" className={styles.icon}>
                     <use href={PLUS_ICON}></use>
                 </svg>
-                <p className={styles.text}>Start new campaign</p>
+                <p className={styles.text}>{haveProjects ? 'Manage Campaigns' : 'Start new campaign'}</p>
             </div>
         </Link>
     );
 };
 
 const BtnCampaignSecondary: React.FC<SubComponentProps> = ({ width, closeMenu, dir }) => {
+    const { address } = useCardano()
+    const { haveProjects } = useDashboardCard(address)
+
     return (
         <Link href={dir}>
             <div className={styles.btnCampaignSecondary} style={width ? { width: `${width}px` } : undefined} onClick={closeMenu}>
                 <svg width="24" height="24" className={styles.icon}>
                     <use href={PLUS_ICON}></use>
                 </svg>
-                <p className={styles.text}>Start new campaign</p>
+                <p className={styles.text}>{haveProjects ? 'Manage Campaigns' : 'Start new campaign'}</p>
             </div>
         </Link>
     );

@@ -23,6 +23,12 @@
     }
 }
 
+.buttonContainer {
+    min-height: 53px;
+    width: 257px;
+    display: flex;
+}
+
 /* LARGER SCREEN */
 @media screen and (max-width: 768px) {
     .campaignDashboard {
@@ -46,7 +52,7 @@
 @media screen and (min-width: 1025px) and (max-width: 1570px) {
     .campaignDashboard {
         .campaignGrid {
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         }
     }
 }
@@ -54,7 +60,7 @@
 @media screen and (min-width: 1571px) {
     .campaignDashboard {
         .campaignGrid {
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
         }
     }
 }

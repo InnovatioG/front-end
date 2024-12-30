@@ -19,7 +19,12 @@ export const useDashboardCard = (address: string | null) => {
     const [loading, setLoading] = useState(true);
     const [campaignsLoading, setCampaignsLoading] = useState(true);
     const [isProtocolTeam, setIsProtocolTeam] = useState(false);
+    const [myProposal, setMyProposal] = useState(false);
+    const [isHomePage, setIsHomePage] = useState(false);
     const router = useRouter();
+    const [loadMoreEnabled, setLoadMoreEnabled] = useState(true);
+    const [haveProjects, setHaveProjects] = useState(false);
+    console.log(haveProjects);
     const pathName = router.pathname;
 
     useEffect(() => {
@@ -37,18 +42,23 @@ export const useDashboardCard = (address: string | null) => {
     }, [address]);
 
     useEffect(() => {
-        if (!address) return;
+        pathName === '/' || pathName === '/campaigns' ? setIsHomePage(true) : setIsHomePage(false);
+
         setLoading(true);
         const fetchData = async () => {
             try {
                 const filters = {
+                    isHomePage,
                     userId: address,
                     isAdmin,
                     adminView,
                     searchTerm,
-                    stateFilter,
+                    stateFilter: stateFilter || '', // Asegura que no sea null/undefined
                     categoryFilter,
                     isProtocolTeam,
+                    myProposal,
+                    haveProjects,
+                    setHaveProjects,
                 };
 
                 const data = await dataBaseService.getFilteredData(filters);
@@ -56,6 +66,7 @@ export const useDashboardCard = (address: string | null) => {
                 setFilteredCampaigns(data.campaigns);
                 setStates(data.states || []);
                 setCategories(data.categories || []);
+
                 setCampaignsLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -66,7 +77,7 @@ export const useDashboardCard = (address: string | null) => {
         };
 
         fetchData();
-    }, [address, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam]);
+    }, [address, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam, myProposal, isHomePage, pathName, haveProjects, setHaveProjects]);
 
     const getStatusName = useCallback(
         (statusId: number): string => {
@@ -98,15 +109,26 @@ export const useDashboardCard = (address: string | null) => {
 
     const loadMoreCampaigns = useCallback(() => {
         setVisibleCampaigns((prevVisible) => {
+            console.log(prevVisible);
             const currentCount = prevVisible.length;
+
             const newCount = currentCount === 0 ? getInitialLoadCount() : currentCount + getLoadMoreCount();
             return filteredCampaigns.slice(0, newCount);
         });
     }, [filteredCampaigns, getInitialLoadCount, getLoadMoreCount]);
 
     useEffect(() => {
-        loadMoreCampaigns();
-    }, [filteredCampaigns, screenSize, loadMoreCampaigns]);
+        if (pathName === '/campaigns' || pathName === '/campaign/manage') {
+            loadMoreCampaigns(); // Carga inicial y permite cargar más.
+        } else if (isHomePage) {
+            setVisibleCampaigns(filteredCampaigns.slice(0, getInitialLoadCount())); // Solo carga initialLoadCount.
+        }
+    }, [filteredCampaigns, screenSize, loadMoreCampaigns, pathName, isHomePage]);
+
+    const handleMyProposalChange = useEffect(() => {
+        if (myProposal) {
+        }
+    }, [myProposal]);
 
     return {
         campaigns,
@@ -134,5 +156,11 @@ export const useDashboardCard = (address: string | null) => {
         screenSize,
         isProtocolTeam,
         setLoading,
+        myProposal,
+        setMyProposal,
+        isHomePage,
+        setIsHomePage,
+        pathName,
+        haveProjects,
     };
 };

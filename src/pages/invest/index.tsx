@@ -3,23 +3,54 @@ import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import InvestHeader from '@/components/invest/InvestHeader';
 import styles from "./InvestPage.module.scss";
 import InvestmentForm from '@/components/invest/Form';
-
+import { useRouter } from 'next/router';
+import JSON from "@/HardCode/campaignId.json";
+import LoadingPage from '@/components/LoadingPage/LoadingPage';
 interface InvestPageProps {
     // Define props here
 }
 
 const InvestPage: React.FC<InvestPageProps> = (props) => {
 
+    const router = useRouter();
 
-    const project = localStorage.getItem('project') ? JSON.parse(localStorage.getItem('project') as string) : null;
-    const { fetchAdaPrice } = useProjectDetailStore();
-    const { cdCampaignToken_TN, cdRequestedMaxADA, cdCampaignToken_PriceADA, goal, id, start_date, title, logoUrl } = project;
+    const { id } = router.query;
+    const { setProject, project, setIsLoading, isLoading, setMenuView, setEditionMode, fetchAdaPrice } = useProjectDetailStore();
+
+
+    const fetchCampaign = () => {
+        setIsLoading(true);
+        setEditionMode(true);
+        fetchAdaPrice();
+
+        if (id) {
+            const campaignId = Number(id);
+            const campaign: any = JSON.campaigns.find((camp) => camp.id === campaignId);
+
+            if (campaign) {
+                setProject(campaign);
+            }
+        }
+
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    };
+
+    const { } = useProjectDetailStore();
+    const { cdCampaignToken_TN, cdRequestedMaxADA, cdCampaignToken_PriceADA, goal, start_date, title, logoUrl } = project;
 
 
 
     useEffect(() => {
         fetchAdaPrice();
-    }, [fetchAdaPrice]);
+        fetchCampaign();
+    }, [fetchAdaPrice, fetchCampaign, id]);
+
+
+
 
     return (
         <main className={styles.layout}>
@@ -30,7 +61,7 @@ const InvestPage: React.FC<InvestPageProps> = (props) => {
                     cdCampaignToken_TN={cdCampaignToken_TN}
                     cdRequestedMaxADA={cdRequestedMaxADA}
                     goal={goal}
-                    id={id}
+                    id={id ? Number(id) : 0}
                     deliveryDate={start_date}
                 />
             </article>

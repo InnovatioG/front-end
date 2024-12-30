@@ -23,9 +23,6 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index,
             m.id === milestone.id && m.milestone_status ? { ...m, milestone_status: { ...m.milestone_status, description: content, id: m.milestone_status.id ?? 0 } } : m
         );
 
-
-
-
         setProject({
             ...project,
             milestones: updatedMilestones

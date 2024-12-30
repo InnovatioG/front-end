@@ -1,7 +1,7 @@
 {
     "version": {
-        "version": "1.0.2",
-        "stored_at": "2024-04-01T00:35:24.725Z"
+        "version": "2.0.0",
+        "stored_at": "2024-12-16T00:35:24.725Z"
     },
 
     "users": [
@@ -17,7 +17,7 @@
             "email": "user2@example.com",
             "wallet_address": "addr_test1qz2fyvjvy9nqayp2kplpyeu25fx2kcejyvkdwugc90glmant5thgl8ucsstqc05exmcrhqxpwe4a22nltq7366qt69lsd0y5y3",
             "is_admin": false,
-            "is_protocol_team": false
+            "is_protocol_team": true
         }
     ],
     "categories": [
@@ -85,6 +85,42 @@
         }
     ],
 
+    "campaign_content": [
+        {
+            "id_campaign_content": 1,
+            "campaign_id": 2,
+            "name": "What's the product?",
+            "description": "<h1>The Innovatio Founder it's the first crowdfunding reward based platform on the Cardano's blockchain.</h1><p><br></p><p>Innovatio Founder is a dynamic B2C crowdfunding platform that empowers diverse products, communities, and projects to launch their own campaigns and secure the funding needed to bring their ideas to life. Currently, only projects seeking to raise funds in ADA, the native currency of the Cardano blockchain, will be accepted, as this DApp is executed on Cardano.</p><p>Therefore, any project, community, brand, or organization can contact the Innovatio team to develop their crowdfunding campaign alongside a professional team specializing in business, product, marketing, and development. The Innovatio team will assist with the drafting and strategy of your crowdfunding campaign to help you reach your funding goal. If you don't have your utility token developed yet, the Innovatio team can help you determine the tokenomics, mint it, and deploy it on the network to start your campaign. Thanks to this platform, launching crowdfunding campaigns on Cardano is just a step away. What are you waiting for?</p><p><br></p><p><br></p>",
+            "order": 10
+        },
+        {
+            "id_campaign_content": 2,
+            "campaign_id": 2,
+            "name": "What's your value?",
+            "description": "<h1>Crowdfunding Marketplace B2C with funds decentralized and desintermediated management.</h1><p><br></p><p><br></p><p>The distinguishing feature of Innovatio Founder lies in the disintermediation of fund management and the control over campaign development once the fundraising goal is achieved. While funds are securely stored in a fully decentralized smart contract, the Innovatio team of professionals will review campaign proposals to ensure they are well-developed before they are accepted into the marketplace for fundraising.</p><p>Additionally, the Innovatio team will monitor the progress of campaigns after they reach their funding goal to ensure that milestones are being met. If a campaign fails to meet its milestones, the team will deem the proposal unsuccessful and initiate the refund process for investors.</p><p><br></p><p><br></p>",
+            "order": 40
+        },
+        {
+            "id_campaign_content": 3,
+            "campaign_id": 2,
+            "name": "How it wokrs?",
+            "description": "<h1>Fundraising goal, milestones &amp; periodic results.</h1><h1><br></h1><p><br></p><p>To explain how the campaign flow works, we'll use an example where the campaign \"Cardano’s Workshops in LATAM\" launched a crowdfunding campaign aiming to raise $25,000 by selling 50 digital tickets to this workshop. This will allow 50 developers from the community to be trained by the best professionals in the ecosystem. To achieve this, the project developed a detailed explanation and determined that it could be delivered in 3 milestones of 1 month each.</p><p><br></p><p>Once they reach the funding goal, they will have 3 months to complete the project and deliver the 50 digital tickets (utility tokens) to the developers so they can attend the Digital Workshop. Following the example, the first milestone is focused on determining the date and confirming the mentors from Cardano, promising at least 3 top companies in smart-contract development on Cardano. The percentage of funds established in the first milestone is released, and the project will have to present the previously set objectives and deliverables.</p><p><img src=\"/img/database/banner_logo_id3.png\" alt=\"\" width=\"100%\" height=\"100%\"></><br></p><p>If the Innovatio team, upon reviewing these results, determines that the milestone is met, they will mark it as satisfied and activate the distribution for the second milestone, and so on. If this first milestone is not satisfactory, the Innovatio team will cancel the campaign, and the Re-fund protocol will be activated for the campaign investors, who will recover the proportional part of their investment and the pending funds for distribution.</p>",
+            "order": 0
+        }
+    ],
+
+    "milestone_submission": [
+        {
+            "id_milestone_submission": 1,
+            "milestone_id": 1,
+            "milestone_status_id": 2,
+            "approved_justification": "",
+            "rejected_justification": "",
+            "report_proof_of_finalization": ""
+        },
+        {},
+        {}
+    ],
     "campaigns": [
         {
             "id": 1,

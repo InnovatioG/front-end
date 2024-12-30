@@ -1,12 +1,14 @@
 import { createContext, useContext, useState } from 'react';
 import { useModalStore } from '@/store/modal/useModalStoreState';
 import ModalTemplate from '@/components/modal/Modal';
-import InitializeCampaignModal from '@/components/modal/InitializeCampaignModal';
+import SingleQuestionModal from '@/components/modal/InitializeCampaignModal';
 import ManageCampaignModal from '@/components/modal/ManageCampaignModal';
-import SendReportMilestone from '@/components/modal/SendReport';
+import SendReport from '@/components/modal/SendReport';
 import ContactSupportModal from '@/components/modal/ContactSupportModal';
 import ViewReportModal from '@/components/modal/ViewReportModal';
 import WalletInformationModal from '@/components/modal/WalletInformation';
+import CalendarModal from '@/components/modal/CalendarModal';
+import ViewReportMilestone from '@/components/modal/ViewReportMilestone';
 type ModalType = 'walletSelector';
 
 interface ModalContextType {
@@ -17,8 +19,6 @@ interface ModalContextType {
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
-
-
 export const useModal = () => {
   const context = useContext(ModalContext);
   if (context === undefined) {
@@ -28,22 +28,36 @@ export const useModal = () => {
 };
 
 export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { openModal: openModalFromStore, closeModal: closeModalFromStore, modalType: modalTypeToStore, campaignId } = useModalStore();
+  const { openModal: openModalFromStore, closeModal: closeModalFromStore, modalType: modalTypeToStore, campaignId, campaign, submission } = useModalStore();
   const [modalType, setModalType] = useState<ModalType | null>(null);
 
   const openModal = (type: ModalType) => setModalType(type);
   const closeModal = () => setModalType(null);
 
+  // Map of modal types to components
+  const modalComponents: Record<string, JSX.Element | null> = {
+    launchCampaign: <CalendarModal />,
+    initializeCampaign: <SingleQuestionModal modalType="initializeCampaign" />,
+    createSmartContract: <SingleQuestionModal modalType="createSmartContract" />,
+    publishSmartContract: <SingleQuestionModal modalType="publishSmartContract" />,
+    withdrawTokens: <SingleQuestionModal modalType="withdrawTokens" />,
+    collect: <SingleQuestionModal modalType="collect" />,
+    validateFundraisingStatus: <SingleQuestionModal modalType="validateFundraisingStatus" />,
+    manageCampaign: <ManageCampaignModal id={campaignId} />,
+    sendReport: <SendReport campaign={campaign} />,
+    viewReport: <ViewReportModal id={campaignId} />,
+    viewReportMilestone: <ViewReportMilestone submission={submission} />,
+    contactSupport: <ContactSupportModal />,
+
+    walletInformation: <WalletInformationModal />,
+
+  };
+
   return (
     <ModalContext.Provider value={{ openModal, closeModal, modalType }}>
       {modalTypeToStore && (
         <ModalTemplate isOpen={modalTypeToStore !== null} setIsOpen={closeModalFromStore}>
-          {modalTypeToStore === 'initializeCampaign' && <InitializeCampaignModal />}
-          {modalTypeToStore === "manageCampaign" && <ManageCampaignModal id={campaignId} />}
-          {modalTypeToStore === 'sendReport' && <SendReportMilestone />}
-          {modalTypeToStore === 'viewReport' && <ViewReportModal id={campaignId} />}
-          {modalTypeToStore === 'contactSupport' && <ContactSupportModal />}
-          {modalTypeToStore === 'walletInformation' && <WalletInformationModal />}
+          {modalComponents[modalTypeToStore] || null}
         </ModalTemplate>
       )}
       {children}

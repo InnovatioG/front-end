@@ -150,6 +150,10 @@
     background: colors.$primary-yellow;
 }
 
+.finishing {
+    background: colors.$light-green;
+}
+
 .countdown {
     background: colors.$blue-dark-color;
     color: white;
@@ -178,4 +182,14 @@
 .collect,
 .reported {
     background-color: colors.$intermediate-green;
+}
+
+.failed {
+    background-color: colors.$red-color;
+    color: white;
+}
+
+.unreached {
+    background-color: colors.$secondary-red;
+    color: white;
 }

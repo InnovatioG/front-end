@@ -1,0 +1,141 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.stateContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 1.06rem;
+    padding: 2rem 2rem;
+    height: 8.625rem;
+    .goal,
+    .white {
+        color: colors.$light-color;
+        font: fonts.$f800-medium;
+    }
+}
+
+.countdown {
+    background-color: colors.$primary-blue;
+}
+
+.fundraising {
+    background-color: colors.$primary-light-color;
+    border-radius: 1.06rem;
+    padding: 1rem 2rem;
+    color: colors.$primary-dark-color;
+}
+
+.goalFundraising {
+    color: colors.$primary-dark-color;
+    font: fonts.$f800-medium;
+}
+
+.fa {
+    color: colors.$primary-dark-color;
+    font: fonts.$f800-medium;
+}
+
+.milestonesQuant {
+    width: 100%;
+    border: 1px solid colors.$primary-dark-color;
+    border-radius: 2.3125rem;
+    padding: 0.4rem 1rem;
+}
+
+.loaderContainer {
+    width: 100%; /* El contenedor siempre ocupa el ancho completo */
+    height: 3px;
+    background-color: colors.$primary-dark-color; /* Color del progreso */
+    border-radius: 2rem;
+    overflow: hidden; /* Asegura que el progreso no salga del contenedor */
+    margin: 0.5rem 0; /* Espaciado opcional */
+}
+
+.loader {
+    height: 100%;
+    background-color: colors.$green-color; /* Color del progreso */
+    border-radius: 2rem;
+    transition: width 0.3s ease-in-out; /* Transición suave al actualizar */
+}
+
+.active {
+    background-color: colors.$light-color;
+}
+
+.flexRow {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 1rem;
+}
+
+.ordinalString,
+.percentage {
+    height: 100%;
+    background-color: colors.$light-color;
+    display: flex;
+    align-items: center;
+    border-radius: 1.0625rem;
+}
+
+.ordinal {
+    text-align: center;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
+
+.unreached,
+.failed {
+    background-color: colors.$secondary-red;
+    .span,
+    .spanStrong {
+        color: colors.$light-color;
+    }
+    .spanStrong {
+        font: fonts.$f800-medium;
+    }
+}
+
+.failed {
+    background-color: colors.$red-color;
+}
+
+.percentage {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.span {
+    color: colors.$light-color;
+    font: fonts.$f150-medium;
+}
+
+.strong {
+    font: fonts.$f150-medium;
+}
+
+.black {
+    color: colors.$primary-dark-color;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    gap: 1rem;
+    min-height: 40px;
+}
