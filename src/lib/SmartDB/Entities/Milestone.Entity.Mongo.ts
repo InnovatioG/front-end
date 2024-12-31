@@ -47,7 +47,7 @@ export class MilestoneEntityMongo extends BaseEntityMongo {
         interface Interface {
             campaignId: string;
             milestoneStatusId: string;
-            estimateDeliveryDate: Date;
+            estimatedDeliveryDate: Date;
             percentage: number;
             status: number;
             description: string;
@@ -59,7 +59,7 @@ export class MilestoneEntityMongo extends BaseEntityMongo {
             {
                 campaignId: { type: String, required: true },
                 milestoneStatusId: { type: String, required: true },
-                estimateDeliveryDate: { type: Date, required: true },
+                estimatedDeliveryDate: { type: Date, required: true },
                 percentage: { type: Number, required: true },
                 status: { type: Number, required: true },
                 description: { type: String, required: true },

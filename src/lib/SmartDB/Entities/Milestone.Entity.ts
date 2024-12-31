@@ -1,6 +1,10 @@
 import 'reflect-metadata';
 import { BaseEntity, Convertible, asEntity } from 'smart-db';
 
+
+
+
+
 @asEntity()
 export class MilestoneEntity extends BaseEntity {
     protected static _apiRoute: string = 'milestone';
@@ -12,7 +16,7 @@ export class MilestoneEntity extends BaseEntity {
     @Convertible({ isDB_id: true })
     milestoneStatusId!: string;
     @Convertible()
-    estimateDeliveryDate!: Date;
+    estimatedDeliveryDate!: Date;
     @Convertible()
     percentage!: number;
     @Convertible()
@@ -34,7 +38,7 @@ export class MilestoneEntity extends BaseEntity {
         ...super.alwaysFieldsForSelect,
         campaignId: true,
         milestoneStatusId: true,
-        estimateDeliveryDate: true,
+        estimatedDeliveryDate: true,
         percentage: true,
         status: true,
         description: true,

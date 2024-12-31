@@ -18,7 +18,7 @@ export class MilestoneEntityPostgreSQL extends BaseEntityPostgreSQL {
     @Column({ type: 'varchar', length: 255 })
     milestoneStatusId!: string;
     @Column({ type: 'date' })
-    estimateDeliveryDate!: Date;
+    estimatedDeliveryDate!: Date;
     @Column({ type: 'integer' })
     percentage!: number;
     @Column({ type: 'integer' })
