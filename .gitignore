@@ -41,8 +41,6 @@ src/HardCode/DBSchema.prisma
 
 .env
 
-files-contents.txt
-files-contents-config.*.json
 files-contents-config-*.json
 files-contents-export-*.txt
 
