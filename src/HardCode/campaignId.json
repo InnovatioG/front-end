@@ -69,9 +69,9 @@
                     "id": 1,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 0,
+                    "percentage": 0,
                     "status": "pending",
-                    "cmEstimatedDeliveryDate": "",
+                    "estimatedDeliveryDate": "",
                     "milestone_status": {
                         "id": 1,
                         "name": "pending",
@@ -84,9 +84,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 0,
+                    "percentage": 0,
                     "status": "pending",
-                    "cmEstimatedDeliveryDate": "",
+                    "estimatedDeliveryDate": "",
                     "milestone_status": {
                         "id": 2,
                         "name": "pending",
@@ -99,9 +99,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 0,
+                    "percentage": 0,
                     "status": "pending",
-                    "cmEstimatedDeliveryDate": "",
+                    "estimatedDeliveryDate": "",
                     "milestone_status": {
                         "id": 3,
                         "name": "pending",
@@ -254,9 +254,9 @@
                     "id": 1,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 40,
+                    "percentage": 40,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "estimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "id": 1,
                         "name": "Bit",
@@ -269,9 +269,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 2,
                         "name": "in_progress",
@@ -284,9 +284,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 3,
                         "name": "completed",
@@ -440,9 +440,9 @@
                     "id": 1,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 40,
+                    "percentage": 40,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "estimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "id": 1,
                         "name": "Bit",
@@ -455,9 +455,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 2,
                         "name": "in_progress",
@@ -470,9 +470,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 3,
                         "name": "completed",
@@ -625,9 +625,9 @@
                     "id": 1,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 40,
+                    "percentage": 40,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "estimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "id": 1,
                         "name": "Bit",
@@ -640,9 +640,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 2,
                         "name": "in_progress",
@@ -655,9 +655,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 3,
                         "name": "completed",
@@ -809,9 +809,9 @@
                     "id": 1,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 40,
+                    "percentage": 40,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "estimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "id": 1,
                         "name": "Bit",
@@ -824,9 +824,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 2,
                         "name": "in_progress",
@@ -839,9 +839,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 3,
                         "name": "completed",
@@ -994,9 +994,9 @@
                     "id": 1,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 40,
+                    "percentage": 40,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "estimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "id": 1,
                         "name": "Bit",
@@ -1009,9 +1009,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 2,
                         "name": "in_progress",
@@ -1024,9 +1024,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 3,
                         "name": "completed",
@@ -1179,9 +1179,9 @@
                     "id": 1,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 40,
+                    "percentage": 40,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "estimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "id": 1,
                         "name": "Bit",
@@ -1194,9 +1194,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 2,
                         "name": "in_progress",
@@ -1209,9 +1209,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 3,
                         "name": "completed",
@@ -1364,9 +1364,9 @@
                     "id": 1,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 40,
+                    "percentage": 40,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "estimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "id": 1,
                         "name": "Bit",
@@ -1379,9 +1379,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 2,
                         "name": "in_progress",
@@ -1394,9 +1394,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "id": 3,
                         "name": "completed",
@@ -1549,8 +1549,8 @@
                     "id": 1,
                     "campaign_id": 11,
                     "campaign_status_id": 2,
-                    "cmPercentage": 40,
-                    "cmEstimatedDeliveryDate": "2024-12-15T00:35:24.725Z",
+                    "percentage": 40,
+                    "estimatedDeliveryDate": "2024-12-15T00:35:24.725Z",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -1570,8 +1570,8 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
-                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "percentage": 30,
+                    "estimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -1591,9 +1591,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "2 weeks",
+                    "estimatedDeliveryDate": "2 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -1754,8 +1754,8 @@
                     "id": 1,
                     "campaign_id": 11,
                     "campaign_status_id": 2,
-                    "cmPercentage": 40,
-                    "cmEstimatedDeliveryDate": "2024-12-15T00:35:24.725Z",
+                    "percentage": 40,
+                    "estimatedDeliveryDate": "2024-12-15T00:35:24.725Z",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -1775,8 +1775,8 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
-                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "percentage": 30,
+                    "estimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -1796,9 +1796,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "2 weeks",
+                    "estimatedDeliveryDate": "2 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -1959,8 +1959,8 @@
                     "id": 1,
                     "campaign_id": 11,
                     "campaign_status_id": 2,
-                    "cmPercentage": 40,
-                    "cmEstimatedDeliveryDate": "2024-12-15T00:35:24.725Z",
+                    "percentage": 40,
+                    "estimatedDeliveryDate": "2024-12-15T00:35:24.725Z",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -1980,8 +1980,8 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
-                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "percentage": 30,
+                    "estimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -2001,9 +2001,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "2 weeks",
+                    "estimatedDeliveryDate": "2 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -2163,8 +2163,8 @@
                     "id": 1,
                     "campaign_id": 11,
                     "campaign_status_id": 1,
-                    "cmPercentage": 40,
-                    "cmEstimatedDeliveryDate": "2025-01-03T00:35:24.725Z",
+                    "percentage": 40,
+                    "estimatedDeliveryDate": "2025-01-03T00:35:24.725Z",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 3,
@@ -2185,9 +2185,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -2207,9 +2207,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -2369,8 +2369,8 @@
                     "id": 1,
                     "campaign_id": 11,
                     "campaign_status_id": 1,
-                    "cmPercentage": 40,
-                    "cmEstimatedDeliveryDate": "2025-01-03T00:35:24.725Z",
+                    "percentage": 40,
+                    "estimatedDeliveryDate": "2025-01-03T00:35:24.725Z",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 3,
@@ -2391,9 +2391,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -2413,9 +2413,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -2575,8 +2575,8 @@
                     "id": 1,
                     "campaign_id": 11,
                     "campaign_status_id": 1,
-                    "cmPercentage": 40,
-                    "cmEstimatedDeliveryDate": "2025-01-03T00:35:24.725Z",
+                    "percentage": 40,
+                    "estimatedDeliveryDate": "2025-01-03T00:35:24.725Z",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 3,
@@ -2597,9 +2597,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": 2,
-                    "cmEstimatedDeliveryDate": "2024-12-19T00:35:24.725Z",
+                    "estimatedDeliveryDate": "2024-12-19T00:35:24.725Z",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -2619,9 +2619,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -2781,8 +2781,8 @@
                     "id": 1,
                     "campaign_id": 11,
                     "campaign_status_id": 4,
-                    "cmPercentage": 40,
-                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "percentage": 40,
+                    "estimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -2802,9 +2802,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -2824,9 +2824,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -2986,8 +2986,8 @@
                     "id": 1,
                     "campaign_id": 11,
                     "campaign_status_id": 4,
-                    "cmPercentage": 40,
-                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "percentage": 40,
+                    "estimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -3007,9 +3007,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -3029,9 +3029,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -3191,8 +3191,8 @@
                     "id": 1,
                     "campaign_id": 11,
                     "campaign_status_id": 4,
-                    "cmPercentage": 40,
-                    "cmEstimatedDeliveryDate": "5 weeks",
+                    "percentage": 40,
+                    "estimatedDeliveryDate": "5 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -3212,9 +3212,9 @@
                     "id": 2,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,
@@ -3234,9 +3234,9 @@
                     "id": 3,
                     "campaign_id": 2,
                     "campaign_status_id": 1,
-                    "cmPercentage": 30,
+                    "percentage": 30,
                     "status": "Not Started",
-                    "cmEstimatedDeliveryDate": "3 weeks",
+                    "estimatedDeliveryDate": "3 weeks",
                     "milestone_status": {
                         "milestone_submission": {
                             "id_milestone_submission": 1,

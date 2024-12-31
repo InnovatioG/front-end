@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ProtocolEntity } from '../../../lib/SmartDB/Entities/Protocol.Entity';
 import { ProtocolApi } from '../../../lib/SmartDB/FrontEnd/Protocol.FrontEnd.Api.Calls';
-import { pushWarningNotification } from 'smart-db';
+import { pushWarningNotification, toJson } from 'smart-db';
 
 export function useProtocol() {
     const [list, setList] = useState<ProtocolEntity[]>([]);
@@ -28,8 +28,10 @@ export function useProtocol() {
         try {
             newItem._NET_address = 'test address';
             newItem._NET_id_CS = 'test CS';
-            newItem._isDeployed = true;
+            newItem._isDeployed = false;
+            console.log('newItem', toJson(newItem));
             let entity: ProtocolEntity = new ProtocolEntity(newItem);
+            console.log('entity', toJson(entity));
             entity = await ProtocolApi.createApi(entity);
             setNewItem({});
             fetch();
@@ -44,6 +46,7 @@ export function useProtocol() {
         if (editItem && editItem._DB_id) {
             try {
                 let entity = new ProtocolEntity(editItem);
+                console.log('entity', toJson(entity));
                 entity = await ProtocolApi.updateWithParamsApi_(editItem._DB_id, entity);
                 setEditItem(null);
                 fetch();

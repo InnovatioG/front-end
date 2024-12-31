@@ -1,7 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { CampaignEntity } from '../../../lib/SmartDB/Entities/Campaign.Entity';
 import { CampaignApi } from '../../../lib/SmartDB/FrontEnd/Campaign.FrontEnd.Api.Calls';
 import { pushWarningNotification } from 'smart-db';
+
+export interface MilestoneFormProps {
+    item: Partial<CampaignEntity>;
+    setItem: (value: SetStateAction<Partial<CampaignEntity>>) => void;
+}
 
 export function useCampaign() {
     const [list, setList] = useState<CampaignEntity[]>([]);
@@ -28,7 +33,7 @@ export function useCampaign() {
         try {
             newItem._NET_address = 'test address';
             newItem._NET_id_CS = 'test CS';
-            newItem._isDeployed = true;
+            newItem._isDeployed = false;
             let entity: CampaignEntity = new CampaignEntity(newItem);
             entity = await CampaignApi.createApi(entity);
             setNewItem({});
@@ -43,6 +48,7 @@ export function useCampaign() {
     const update = async () => {
         if (editItem && editItem._DB_id) {
             try {
+                editItem._isDeployed = false;
                 let entity = new CampaignEntity(editItem);
                 entity = await CampaignApi.updateWithParamsApi_(editItem._DB_id, entity);
                 setEditItem(null);

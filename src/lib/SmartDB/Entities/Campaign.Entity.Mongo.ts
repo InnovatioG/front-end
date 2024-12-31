@@ -111,7 +111,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             cdbegin_at: { type: String, required: false },
             cdDeadline: { type: String, required: false },
             cdStatus: { type: Number, required: false },
-            cdMilestones: { type: String, required: false },
+            cdMilestones: { type: [Object], required: false },
             cdFundsCount: { type: Number, required: false },
             cdFundsIndex: { type: Number, required: false },
             cdMinADA: { type: String, required: false },

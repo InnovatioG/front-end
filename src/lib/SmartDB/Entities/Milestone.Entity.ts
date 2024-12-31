@@ -1,6 +1,10 @@
 import 'reflect-metadata';
 import { BaseEntity, Convertible, asEntity } from 'smart-db';
 
+
+
+
+
 @asEntity()
 export class MilestoneEntity extends BaseEntity {
     protected static _apiRoute: string = 'milestone';

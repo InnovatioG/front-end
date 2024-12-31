@@ -1,6 +1,37 @@
 import 'reflect-metadata';
 import { BaseSmartDBEntity, Convertible, asSmartDBEntity, type POSIXTime } from 'smart-db';
 
+export interface CampaignMilestone {
+    cmEstimatedDeliveryDate: POSIXTime;
+    cmPerncentage: number;
+    cmStatus: number;
+}
+
+export const deserealizeCampaignMilestone = (value: any | undefined): CampaignMilestone | undefined => {
+    if (value === undefined) return undefined;
+    const deserialized: CampaignMilestone = {
+        cmEstimatedDeliveryDate: BigInt(value.cmEstimatedDeliveryDate),
+        cmPerncentage: value.cmPerncentage,
+        cmStatus: value.cmStatus,
+    };
+    return deserialized;
+};
+
+export const campaignMilestonefromPlutusData = (lucidDataForDatum: any | undefined) => {
+    if (lucidDataForDatum?.index === 0) {
+        const lucidDataForConstr0 = lucidDataForDatum.fields;
+        if (lucidDataForConstr0.length === 3) {
+            const objectInstance: CampaignMilestone = {
+                cmEstimatedDeliveryDate: lucidDataForConstr0[0],
+                cmPerncentage: Number(lucidDataForConstr0[1]),
+                cmStatus: Number(lucidDataForConstr0[2]),
+            };
+            return objectInstance;
+        }
+    }
+    throw `CampaignMilestone - Can't get from Datum`;
+};
+
 export interface CampaignDatum {
     cdCampaignVersion: number;
     cdCampaignPolicy_CS: string;
@@ -18,7 +49,7 @@ export interface CampaignDatum {
     cdbegin_at: POSIXTime;
     cdDeadline: POSIXTime;
     cdStatus: number;
-    cdMilestones: string;
+    cdMilestones: CampaignMilestone[];
     cdFundsCount: number;
     cdFundsIndex: number;
     cdMinADA: bigint;
@@ -74,8 +105,13 @@ export class CampaignEntity extends BaseSmartDBEntity {
     cdDeadline!: POSIXTime;
     @Convertible({ isForDatum: true })
     cdStatus!: number;
-    @Convertible({ isForDatum: true })
-    cdMilestones!: string;
+    @Convertible({
+        isForDatum: true,
+        type: Object,
+        fromPlainObject: deserealizeCampaignMilestone,
+        fromPlutusData: campaignMilestonefromPlutusData,
+    })
+    cdMilestones!: CampaignMilestone[];
     @Convertible({ isForDatum: true })
     cdFundsCount!: number;
     @Convertible({ isForDatum: true })

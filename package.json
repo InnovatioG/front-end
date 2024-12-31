@@ -13,6 +13,7 @@
     "lint": "next lint",
     "smartDBInstall": "npm run dev:stop && npm install ./smart-db.tgz --force",
     "watchSmartDBAndInstall": "chokidar \"./smart-db.tgz\" -c \"npm run smartDBInstall\"",
+    "watchOriginSmartDBAndInstall": "chokidar \"/home/manuelpadilla/sources/reposUbuntu/PROTOFIRE/Cardano-SmartDB-v1.1.0/smart-db.tgz\" -c \"cp /home/manuelpadilla/sources/reposUbuntu/PROTOFIRE/Cardano-SmartDB-v1.1.0/smart-db.tgz ./ && npm run smartDBInstall\"",
     "swagger-dev": "ts-node -P tsconfig.server.json ./_swagger/server.ts",
     "swagger-start": "NODE_ENV=production ts-node -P tsconfig.server.json ./_swagger/server.ts"
   },
