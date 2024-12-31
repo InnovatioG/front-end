@@ -31,14 +31,14 @@ export default function Milestone() {
                     <tbody>
                         {list.map((item) => (
                             <tr key={item._DB_id}>
-                                <td>{item.campaignId}</td>
-                                <td>{item.milestoneStatusId}</td>
-                                <td>{item.estimatedDeliveryDate.toISOString()}</td>
+                                <td>{item.campaign_id}</td>
+                                <td>{item.milestone_status_id}</td>
+                                <td>{item.estimate_delivery_date.toISOString()}</td>
                                 <td>{item.percentage}</td>
                                 <td>{item.status}</td>
                                 <td>{item.description}</td>
                                 <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updatedAt?.toISOString()}</td>
+                                <td>{item.updated_at?.toISOString()}</td>
                                 <td>
                                     <button
                                         onClick={() => {
@@ -72,21 +72,21 @@ export default function Milestone() {
         <form className={styles.form}>
             <div>
                 <label>Campaign ID:</label>
-                <input type="text" value={item.campaignId || ''} onChange={(e) => setItem({ ...item, campaignId: e.target.value })} />
+                <input type="text" value={item.campaign_id || ''} onChange={(e) => setItem({ ...item, campaign_id: e.target.value })} />
             </div>
             <div>
                 <label>Milestone Status ID:</label>
-                <input type="text" value={item.milestoneStatusId || ''} onChange={(e) => setItem({ ...item, milestoneStatusId: e.target.value })} />
+                <input type="text" value={item.milestone_status_id || ''} onChange={(e) => setItem({ ...item, milestone_status_id: e.target.value })} />
             </div>
             <div>
                 <label>Estimated Delivery Date:</label>
                 <input
                     type="datetime-local"
-                    value={item.estimatedDeliveryDate ? new Date(item.estimatedDeliveryDate).toISOString().slice(0, -1) : ''}
+                    value={item.estimate_delivery_date ? new Date(item.estimate_delivery_date).toISOString().slice(0, -1) : ''}
                     onChange={(e) =>
                         setItem({
                             ...item,
-                            estimatedDeliveryDate: new Date(e.target.value),
+                            estimate_delivery_date: new Date(e.target.value),
                         })
                     }
                 />

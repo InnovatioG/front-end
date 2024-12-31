@@ -27,10 +27,10 @@ export default function ProtocolAdminWallet() {
                     <tbody>
                         {list.map((item) => (
                             <tr key={item._DB_id}>
-                                <td>{item.protocolId}</td>
-                                <td>{item.walletId}</td>
+                                <td>{item.protocol_id}</td>
+                                <td>{item.wallet_id}</td>
                                 <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updatedAt?.toISOString()}</td>
+                                <td>{item.updated_at?.toISOString()}</td>
                                 <td>
                                     <button
                                         onClick={() => {
@@ -64,11 +64,11 @@ export default function ProtocolAdminWallet() {
         <form className={styles.form}>
             <div>
                 <label>Protocol ID:</label>
-                <input type="text" value={item.protocolId || ''} onChange={(e) => setItem({ ...item, protocolId: e.target.value })} />
+                <input type="text" value={item.protocol_id || ''} onChange={(e) => setItem({ ...item, protocol_id: e.target.value })} />
             </div>
             <div>
                 <label>Wallet ID:</label>
-                <input type="text" value={item.walletId || ''} onChange={(e) => setItem({ ...item, walletId: e.target.value })} />
+                <input type="text" value={item.wallet_id || ''} onChange={(e) => setItem({ ...item, wallet_id: e.target.value })} />
             </div>
             <div>
                 <label>Created At:</label>

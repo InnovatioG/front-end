@@ -35,9 +35,9 @@ export default function CampaignMember() {
                     <tbody>
                         {list.map((item) => (
                             <tr key={item._DB_id}>
-                                <td>{item.campaignId}</td>
+                                <td>{item.campaign_id}</td>
                                 <td>{item.editor ? 'Yes' : 'No'}</td>
-                                <td>{item.walletId}</td>
+                                <td>{item.wallet_id}</td>
                                 <td>{item.rol}</td>
                                 <td>{item.description}</td>
                                 <td>{item.website}</td>
@@ -46,7 +46,7 @@ export default function CampaignMember() {
                                 <td>{item.discord}</td>
                                 <td>{item.facebook}</td>
                                 <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updatedAt?.toISOString()}</td>
+                                <td>{item.updated_at?.toISOString()}</td>
                                 <td>
                                     <button
                                         onClick={() => {
@@ -80,7 +80,7 @@ export default function CampaignMember() {
         <form className={styles.form}>
             <div>
                 <label>Campaign ID:</label>
-                <input type="text" value={item.campaignId || ''} onChange={(e) => setItem({ ...item, campaignId: e.target.value })} />
+                <input type="text" value={item.campaign_id || ''} onChange={(e) => setItem({ ...item, campaign_id: e.target.value })} />
             </div>
             <div>
                 <label>Editor:</label>
@@ -88,7 +88,7 @@ export default function CampaignMember() {
             </div>
             <div>
                 <label>Wallet ID:</label>
-                <input type="text" value={item.walletId || ''} onChange={(e) => setItem({ ...item, walletId: e.target.value })} />
+                <input type="text" value={item.wallet_id || ''} onChange={(e) => setItem({ ...item, wallet_id: e.target.value })} />
             </div>
             <div>
                 <label>Role:</label>

@@ -45,26 +45,26 @@ export class MilestoneSubmissionEntityMongo extends BaseEntityMongo {
 
     public static MongoModel() {
         interface Interface {
-            milestoneId: string;
-            submissionStatusId: string;
-            submittedByWalletId: string;
-            revisedByWalletId: string;
-            reportProofOfFinalization: string;
-            approvedJustification: string;
-            rejectedJustification: string;
+            milestone_id: string;
+            submission_status_id: string;
+            submitted_by_wallet_id: string;
+            revised_by_wallet_id: string;
+            report_proof_of_finalization: string;
+            approved_justification: string;
+            rejected_justification: string;
             createdAt: Date;
             updatedAt: Date;
         }
 
         const schema = new Schema<Interface>(
             {
-                milestoneId: { type: String, required: true },
-                submissionStatusId: { type: String, required: true },
-                submittedByWalletId: { type: String, required: true },
-                revisedByWalletId: { type: String, required: true },
-                reportProofOfFinalization: { type: String, required: true },
-                approvedJustification: { type: String, required: false },
-                rejectedJustification: { type: String, required: false },
+                milestone_id: { type: String, required: true },
+                submission_status_id: { type: String, required: true },
+                submitted_by_wallet_id: { type: String, required: true },
+                revised_by_wallet_id: { type: String, required: true },
+                report_proof_of_finalization: { type: String, required: true },
+                approved_justification: { type: String, required: false },
+                rejected_justification: { type: String, required: false },
             },
             { timestamps: true }
         );

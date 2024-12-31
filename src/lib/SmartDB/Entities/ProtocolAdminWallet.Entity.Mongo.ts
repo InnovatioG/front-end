@@ -45,16 +45,16 @@ export class ProtocolAdminWalletEntityMongo extends BaseEntityMongo {
 
     public static MongoModel() {
         interface Interface {
-            protocolId: string;
-            walletId: string;
+            protocol_id: string;
+            wallet_id: string;
             createdAt: Date;
             updatedAt: Date;
         }
 
         const schema = new Schema<Interface>(
             {
-                protocolId: { type: String, required: true },
-                walletId: { type: String, required: true },
+                protocol_id: { type: String, required: true },
+                wallet_id: { type: String, required: true },
             },
             { timestamps: true }
         );

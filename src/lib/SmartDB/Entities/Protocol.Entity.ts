@@ -16,7 +16,7 @@ export class ProtocolEntity extends BaseSmartDBEntity {
 
     protected static _plutusDataIsSubType = true;
     protected static _is_NET_id_Unique = true;
-    _NET_id_TN: string = 'ProtocolID';
+    _NET_id_TN: string = 'protocol_id';
 
     // #region fields
     @Convertible({ isForDatum: true })
@@ -30,9 +30,9 @@ export class ProtocolEntity extends BaseSmartDBEntity {
     @Convertible({ type: String })
     contracts!: string[];
     @Convertible({ isCreatedAt: true })
-    createdAt!: Date;
+    created_at!: Date;
     @Convertible({ isUpdatedAt: true })
-    updatedAt?: Date;
+    updated_at?: Date;
 
     // #endregion fields
 

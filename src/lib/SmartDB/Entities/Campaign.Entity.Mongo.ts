@@ -45,23 +45,23 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
 
     public static MongoModel() {
         interface InterfaceDB extends IBaseSmartDBEntity {
-            projectId: string;
-            campaingCategoryId: string;
-            campaignStatusId: string;
-            creatorWalletId: string;
+            project_id: string;
+            campaing_category_id: string;
+            campaign_status_id: string;
+            creator_wallet_id: string;
             description: string;
-            beginAt: Date;
+            begin_at: Date;
             deadline: Date;
-            logoUrl: string;
-            bannerUrl: string;
+            logo_url: string;
+            banner_url: string;
             website: string;
             instagram: string;
             twitter: string;
             discord: string;
             facebook: string;
             investors: number;
-            tokenomicsMaxSupply: string;
-            tokenomicsDescription: string;
+            tokenomics_max_supply: string;
+            tokenomics_description: string;
             featured: boolean;
             archived: boolean;
             createdAt: Date;
@@ -73,23 +73,23 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
         //TODO: Esto es obligatorio así con SmartDB Entities
         const schemaDB = {
             ...BaseSmartDBEntityMongo.smartDBSchema,
-            projectId: { type: String, required: true },
-            campaingCategoryId: { type: String, required: true },
-            campaignStatusId: { type: String, required: true },
-            creatorWalletId: { type: String, required: true },
+            project_id: { type: String, required: true },
+            campaing_category_id: { type: String, required: true },
+            campaign_status_id: { type: String, required: true },
+            creator_wallet_id: { type: String, required: true },
             description: { type: String, required: false },
-            beginAt: { type: Date, required: false },
+            begin_at: { type: Date, required: false },
             deadline: { type: Date, required: false },
-            logoUrl: { type: String, required: false },
-            bannerUrl: { type: String, required: false },
+            logo_url: { type: String, required: false },
+            banner_url: { type: String, required: false },
             website: { type: String, required: false },
             instagram: { type: String, required: false },
             twitter: { type: String, required: false },
             discord: { type: String, required: false },
             facebook: { type: String, required: false },
             investors: { type: Number, required: false },
-            tokenomicsMaxSupply: { type: String, required: false },
-            tokenomicsDescription: { type: String, required: false },
+            tokenomics_max_supply: { type: String, required: false },
+            tokenomics_description: { type: String, required: false },
             featured: { type: Boolean, required: false },
             archived: { type: Boolean, required: false },
         };
@@ -108,7 +108,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             cdRequestedMinADA: { type: String, required: false },
             cdFundedADA: { type: String, required: false },
             cdCollectedADA: { type: String, required: false },
-            cdBeginAt: { type: String, required: false },
+            cdbegin_at: { type: String, required: false },
             cdDeadline: { type: String, required: false },
             cdStatus: { type: Number, required: false },
             cdMilestones: { type: [Object], required: false },

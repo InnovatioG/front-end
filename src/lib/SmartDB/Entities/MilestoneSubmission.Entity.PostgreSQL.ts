@@ -14,23 +14,23 @@ export class MilestoneSubmissionEntityPostgreSQL extends BaseEntityPostgreSQL {
     _id!: number; // Auto-generated primary key
 
     @Column({ type: 'varchar', length: 255 })
-    milestoneId!: string;
+    milestone_id!: string;
     @Column({ type: 'varchar', length: 255 })
-    submissionStatusId!: string;
+    submission_status_id!: string;
     @Column({ type: 'varchar', length: 255 })
-    submittedByWalletId!: string;
+    submitted_by_wallet_id!: string;
     @Column({ type: 'varchar', length: 255 })
-    revisedByWalletId!: string;
+    revised_by_wallet_id!: string;
     @Column({ type: 'text'})
-    reportProofOfFinalization?: string;
+    report_proof_of_finalization?: string;
     @Column({ type: 'text', nullable: true })
-    approvedJustification?: string;
+    approved_justification?: string;
     @Column({ type: 'text', nullable: true })
-    rejectedJustification?: string;
+    rejected_justification?: string;
     @CreateDateColumn()
-    createdAt!: Date;
+    created_at!: Date;
     @UpdateDateColumn()
-    updatedAt!: Date;
+    updated_at!: Date;
 
     // #endregion fields
 

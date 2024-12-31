@@ -14,13 +14,13 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     _id!: number; // Auto-generated primary key
 
     @Column({ type: 'varchar', length: 255 })
-    projectId!: string;
+    project_id!: string;
     @Column({ type: 'varchar', length: 255 })
-    campaingCategoryId!: string;
+    campaing_category_id!: string;
     @Column({ type: 'varchar', length: 255 })
-    campaignStatusId!: string;
+    campaign_status_id!: string;
     @Column({ type: 'varchar', length: 255 })
-    creatorWalletId!: string;
+    creator_wallet_id!: string;
     @Column({ type: 'integer', nullable: true })
     cdCampaignVersion!: number;
     @Column({ type: 'varchar', length: 255, nullable: true })
@@ -48,7 +48,7 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'bigint', nullable: true })
     cdCollectedADA!: string;
     @Column({ type: 'bigint', nullable: true })
-    cdBeginAt!: string;
+    cdbegin_at!: string;
     @Column({ type: 'bigint', nullable: true })
     cdDeadline!: string;
     @Column({ type: 'integer', nullable: true })
@@ -78,13 +78,13 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'text', nullable: true })
     description?: string;
     @Column({ type: 'timestamp', nullable: true })
-    beginAt!: Date;
+    begin_at!: Date;
     @Column({ type: 'timestamp', nullable: true })
     deadline!: Date;
     @Column({ type: 'varchar', length: 255, nullable: true })
-    logoUrl?: string;
+    logo_url?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
-    bannerUrl?: string;
+    banner_url?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     website?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
@@ -98,17 +98,17 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'integer', nullable: true })
     investors!: number;
     @Column({ type: 'bigint', nullable: true })
-    tokenomicsMaxSupply!: string;
+    tokenomics_max_supply!: string;
     @Column({ type: 'text', nullable: true })
-    tokenomicsDescription!: string;
+    tokenomics_description!: string;
     @Column({ type: 'boolean', default: false })
     featured!: boolean;
     @Column({ type: 'boolean', default: false })
     archived!: boolean;
     @CreateDateColumn()
-    createdAt!: Date;
+    created_at!: Date;
     @UpdateDateColumn()
-    updatedAt!: Date;
+    updated_at!: Date;
 
     // #endregion fields
 

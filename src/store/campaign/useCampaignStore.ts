@@ -93,7 +93,7 @@ export const useCampaignStore = create<UseCampaignStore>()(
             }),
         setCompanyLogo: (companyLogo) =>
             set((state) => {
-                setNestedCampaignStateAction(state, 'logoUrl', companyLogo);
+                setNestedCampaignStateAction(state, 'logo_url', companyLogo);
             }),
         nextStep: () =>
             set((state) => {

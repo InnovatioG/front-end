@@ -9,7 +9,7 @@ export class CampaignContentEntity extends BaseEntity {
 
     // #region fields
     @Convertible({ isDB_id: true })
-    campaignId!: string;
+    campaign_id!: string;
     @Convertible()
     name!: string;
     @Convertible()
@@ -17,9 +17,9 @@ export class CampaignContentEntity extends BaseEntity {
     @Convertible()
     order!: number;
     @Convertible({ isCreatedAt: true })
-    createdAt!: Date;
+    created_at!: Date;
     @Convertible({ isUpdatedAt: true })
-    updatedAt?: Date;
+    updated_at?: Date;
 
     // #endregion fields
 
@@ -29,7 +29,7 @@ export class CampaignContentEntity extends BaseEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-        campaignId: true,
+        campaign_id: true,
         name: true,
         description: true,
         order: true,

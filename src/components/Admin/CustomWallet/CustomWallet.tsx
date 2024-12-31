@@ -33,14 +33,14 @@ export default function CustomWallet() {
                             <tr key={item._DB_id}>
                                 <td>{item.name}</td>
                                 <td>{item.email || 'N/A'}</td>
-                                <td>{item.createdBy}</td>
-                                <td>{item.lastConnection?.toISOString()}</td>
-                                <td>{item.walletUsed}</td>
-                                <td>{item.walletValidatedWithSignedToken == true ? 'Yes' : 'No'}</td>
-                                <td>{item.paymentPkh}</td>
+                                <td>{item.created_by}</td>
+                                <td>{item.last_connection?.toISOString()}</td>
+                                <td>{item.wallet_used}</td>
+                                <td>{item.wallet_validated_with_signed_token == true ? 'Yes' : 'No'}</td>
+                                <td>{item.payment_pkh}</td>
                                 <td>{item.stakePkh}</td>
-                                <td>{item.testnetAddress}</td>
-                                <td>{item.mainnetAddress}</td>
+                                <td>{item.testnet_address}</td>
+                                <td>{item.mainnet_address}</td>
                                 <td>
                                     <button
                                         onClick={() => {
@@ -79,41 +79,41 @@ export default function CustomWallet() {
             </div>
             <div>
                 <label>Created By:</label>
-                <input type="text" value={newItem.createdBy || ''} onChange={(e) => setNewItem({ ...newItem, createdBy: e.target.value })} />
+                <input type="text" value={newItem.created_by || ''} onChange={(e) => setNewItem({ ...newItem, created_by: e.target.value })} />
             </div>
             <div>
                 <label>Last Connection:</label>
                 <input
                     type="date"
-                    value={newItem.lastConnection ? newItem.lastConnection.toISOString().split('T')[0] : ''}
+                    value={newItem.last_connection ? newItem.last_connection.toISOString().split('T')[0] : ''}
                     onChange={(e) =>
                         setNewItem({
                             ...newItem,
-                            lastConnection: new Date(e.target.value),
+                            last_connection: new Date(e.target.value),
                         })
                     }
                 />
             </div>
             <div>
                 <label>Wallet Used:</label>
-                <input type="text" value={newItem.walletUsed || ''} onChange={(e) => setNewItem({ ...newItem, walletUsed: e.target.value })} />
+                <input type="text" value={newItem.wallet_used || ''} onChange={(e) => setNewItem({ ...newItem, wallet_used: e.target.value })} />
             </div>
             <div>
                 <label>Wallet Validated With Signed Token:</label>
                 <input
                     type="checkbox"
-                    checked={newItem.walletValidatedWithSignedToken || false}
+                    checked={newItem.wallet_validated_with_signed_token || false}
                     onChange={(e) =>
                         setNewItem({
                             ...newItem,
-                            walletValidatedWithSignedToken: e.target.checked,
+                            wallet_validated_with_signed_token: e.target.checked,
                         })
                     }
                 />
             </div>
             <div>
                 <label>Payment Pkh:</label>
-                <input type="text" value={newItem.paymentPkh || ''} onChange={(e) => setNewItem({ ...newItem, paymentPkh: e.target.value })} />
+                <input type="text" value={newItem.payment_pkh || ''} onChange={(e) => setNewItem({ ...newItem, payment_pkh: e.target.value })} />
             </div>
             <div>
                 <label>Stake Pkh:</label>
@@ -121,11 +121,11 @@ export default function CustomWallet() {
             </div>
             <div>
                 <label>Testnet Address:</label>
-                <input type="text" value={newItem.testnetAddress || ''} onChange={(e) => setNewItem({ ...newItem, testnetAddress: e.target.value })} />
+                <input type="text" value={newItem.testnet_address || ''} onChange={(e) => setNewItem({ ...newItem, testnet_address: e.target.value })} />
             </div>
             <div>
                 <label>Mainnet Address:</label>
-                <input type="text" value={newItem.mainnetAddress || ''} onChange={(e) => setNewItem({ ...newItem, mainnetAddress: e.target.value })} />
+                <input type="text" value={newItem.mainnet_address || ''} onChange={(e) => setNewItem({ ...newItem, mainnet_address: e.target.value })} />
             </div>
             <button type="button" onClick={create}>
                 Create
@@ -148,41 +148,41 @@ export default function CustomWallet() {
             </div>
             <div>
                 <label>Created By:</label>
-                <input type="text" value={editItem?.createdBy || ''} onChange={(e) => setEditItem({ ...editItem, createdBy: e.target.value })} />
+                <input type="text" value={editItem?.created_by || ''} onChange={(e) => setEditItem({ ...editItem, created_by: e.target.value })} />
             </div>
             <div>
                 <label>Last Connection:</label>
                 <input
                     type="date"
-                    value={editItem?.lastConnection ? editItem.lastConnection.toISOString().split('T')[0] : ''}
+                    value={editItem?.last_connection ? editItem.last_connection.toISOString().split('T')[0] : ''}
                     onChange={(e) =>
                         setEditItem({
                             ...editItem,
-                            lastConnection: new Date(e.target.value),
+                            last_connection: new Date(e.target.value),
                         })
                     }
                 />
             </div>
             <div>
                 <label>Wallet Used:</label>
-                <input type="text" value={editItem?.walletUsed || ''} onChange={(e) => setEditItem({ ...editItem, walletUsed: e.target.value })} />
+                <input type="text" value={editItem?.wallet_used || ''} onChange={(e) => setEditItem({ ...editItem, wallet_used: e.target.value })} />
             </div>
             <div>
                 <label>Wallet Validated With Signed Token:</label>
                 <input
                     type="checkbox"
-                    checked={editItem?.walletValidatedWithSignedToken || false}
+                    checked={editItem?.wallet_validated_with_signed_token || false}
                     onChange={(e) =>
                         setEditItem({
                             ...editItem,
-                            walletValidatedWithSignedToken: e.target.checked,
+                            wallet_validated_with_signed_token: e.target.checked,
                         })
                     }
                 />
             </div>
             <div>
                 <label>Payment Pkh:</label>
-                <input type="text" value={editItem?.paymentPkh || ''} onChange={(e) => setEditItem({ ...editItem, paymentPkh: e.target.value })} />
+                <input type="text" value={editItem?.payment_pkh || ''} onChange={(e) => setEditItem({ ...editItem, payment_pkh: e.target.value })} />
             </div>
             <div>
                 <label>Stake Pkh:</label>
@@ -190,11 +190,11 @@ export default function CustomWallet() {
             </div>
             <div>
                 <label>Testnet Address:</label>
-                <input type="text" value={editItem?.testnetAddress || ''} onChange={(e) => setEditItem({ ...editItem, testnetAddress: e.target.value })} />
+                <input type="text" value={editItem?.testnet_address || ''} onChange={(e) => setEditItem({ ...editItem, testnet_address: e.target.value })} />
             </div>
             <div>
                 <label>Mainnet Address:</label>
-                <input type="text" value={editItem?.mainnetAddress || ''} onChange={(e) => setEditItem({ ...editItem, mainnetAddress: e.target.value })} />
+                <input type="text" value={editItem?.mainnet_address || ''} onChange={(e) => setEditItem({ ...editItem, mainnet_address: e.target.value })} />
             </div>
             <button type="button" onClick={update}>
                 Update

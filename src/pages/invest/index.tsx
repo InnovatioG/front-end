@@ -24,8 +24,8 @@ const InvestPage: React.FC<InvestPageProps> = (props) => {
         fetchAdaPrice();
 
         if (id) {
-            const campaignId = Number(id);
-            const campaign: any = JSON.campaigns.find((camp) => camp.id === campaignId);
+            const campaign_id = Number(id);
+            const campaign: any = JSON.campaigns.find((camp) => camp.id === campaign_id);
 
             if (campaign) {
                 setProject(campaign);
@@ -40,7 +40,7 @@ const InvestPage: React.FC<InvestPageProps> = (props) => {
     };
 
     const { } = useProjectDetailStore();
-    const { cdCampaignToken_TN, cdRequestedMaxADA, cdCampaignToken_PriceADA, goal, start_date, title, logoUrl } = project;
+    const { cdCampaignToken_TN, cdRequestedMaxADA, cdCampaignToken_PriceADA, goal, start_date, title, logo_url } = project;
 
 
 
@@ -54,7 +54,7 @@ const InvestPage: React.FC<InvestPageProps> = (props) => {
 
     return (
         <main className={styles.layout}>
-            <InvestHeader title={project.title} logoUrl={project.logoUrl} />
+            <InvestHeader title={project.title} logo_url={project.logo_url} />
             <article>
                 <InvestmentForm
                     cdCampaignToken_PriceADA={cdCampaignToken_PriceADA}

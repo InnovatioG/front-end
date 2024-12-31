@@ -29,12 +29,12 @@ export default function CampaignContent() {
                     <tbody>
                         {list.map((item) => (
                             <tr key={item._DB_id}>
-                                <td>{item.campaignId}</td>
+                                <td>{item.campaign_id}</td>
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>
                                 <td>{item.order}</td>
                                 <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updatedAt?.toISOString()}</td>
+                                <td>{item.updated_at?.toISOString()}</td>
                                 <td>
                                     <button
                                         onClick={() => {
@@ -68,7 +68,7 @@ export default function CampaignContent() {
         <form className={styles.form}>
             <div>
                 <label>Campaign ID:</label>
-                <input type="text" value={item.campaignId || ''} onChange={(e) => setItem({ ...item, campaignId: e.target.value })} />
+                <input type="text" value={item.campaign_id || ''} onChange={(e) => setItem({ ...item, campaign_id: e.target.value })} />
             </div>
             <div>
                 <label>Name:</label>

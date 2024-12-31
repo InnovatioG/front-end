@@ -39,7 +39,7 @@ export default function CampaignCard(props: CampaignCardProps) {
         <Image
           width={58}
           height={58}
-          src={campaign.logoUrl}
+          src={campaign.logo_url}
           alt="logo-company"
           className={styles.logoCard}
         />

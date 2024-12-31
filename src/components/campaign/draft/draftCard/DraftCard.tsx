@@ -25,7 +25,7 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin
                 <Image
                     width={58}
                     height={58}
-                    src={campaign.logoUrl}
+                    src={campaign.logo_url}
                     alt="logo-company"
                     className={styles.logoCard}
                 />

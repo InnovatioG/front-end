@@ -101,7 +101,7 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -126,7 +126,7 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id2.png",
+            "logo_url": "/img/database/company_logo_id2.png",
             "banner_url": "/img/database/banner_logo_id2.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -151,7 +151,7 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id3.png",
+            "logo_url": "/img/database/company_logo_id3.png",
             "banner_url": "/img/database/banner_logo_id3.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -176,7 +176,7 @@
             "raise_amount": 0.0,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id2.png",
+            "logo_url": "/img/database/company_logo_id2.png",
             "banner_url": "/img/database/banner_logo_id2.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -201,7 +201,7 @@
             "raise_amount": 0.0,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id2.png",
+            "logo_url": "/img/database/company_logo_id2.png",
             "banner_url": "/img/database/banner_logo_id2.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -226,7 +226,7 @@
             "raise_amount": 0.0,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id2.png",
+            "logo_url": "/img/database/company_logo_id2.png",
             "banner_url": "/img/database/banner_logo_id2.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -251,7 +251,7 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "2024-04-01T00:35:24.725Z",
             "updated_at": "2024-04-01T00:35:24.725Z"
@@ -276,7 +276,7 @@
             "raise_amount": 0,
             "start_date": "2024-12-18T00:35:24.725Z",
             "end_date": "2024-12-19T00:35:24.725Z",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "2024-11-01T00:35:24.725Z",
             "updated_at": "2024-12-01T00:35:24.725Z"
@@ -301,7 +301,7 @@
             "raise_amount": 30000.0,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
@@ -365,7 +365,7 @@
             "raise_amount": 0,
             "start_date": "2024-12-20T00:35:24.725Z",
             "end_date": "2024-12-31T00:35:24.725Z",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "2024-11-01T00:35:24.725Z",
             "updated_at": "2024-12-01T00:35:24.725Z"
@@ -452,7 +452,7 @@
             "raise_amount": 300000,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
@@ -540,7 +540,7 @@
             "raise_amount": 340000,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
@@ -628,7 +628,7 @@
             "raise_amount": 340000,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
@@ -716,7 +716,7 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
@@ -805,7 +805,7 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
@@ -893,7 +893,7 @@
             "raise_amount": 0,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
@@ -981,7 +981,7 @@
             "raise_amount": 300000.0,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
@@ -1070,7 +1070,7 @@
             "raise_amount": 100000,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""
@@ -1158,7 +1158,7 @@
             "raise_amount": 250000,
             "start_date": "",
             "end_date": "",
-            "logoUrl": "/img/database/company_logo_id1.png",
+            "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
             "created_at": "",
             "updated_at": ""

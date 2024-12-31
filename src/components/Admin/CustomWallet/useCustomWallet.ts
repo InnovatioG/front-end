@@ -26,7 +26,7 @@ export function useCustomWallet() {
 
     const create = async () => {
         try {
-            newItem.walletValidatedWithSignedToken = newItem.walletValidatedWithSignedToken ?? false;
+            newItem.wallet_validated_with_signed_token = newItem.wallet_validated_with_signed_token ?? false;
             let entity: CustomWalletEntity = new CustomWalletEntity(newItem);
             entity = await CustomWalletApi.createApi(entity);
             setNewItem({});

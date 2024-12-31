@@ -45,9 +45,9 @@ export class MilestoneEntityMongo extends BaseEntityMongo {
 
     public static MongoModel() {
         interface Interface {
-            campaignId: string;
-            milestoneStatusId: string;
-            estimatedDeliveryDate: Date;
+            campaign_id: string;
+            milestone_status_id: string;
+            estimate_delivery_date: Date;
             percentage: number;
             status: number;
             description: string;
@@ -57,9 +57,9 @@ export class MilestoneEntityMongo extends BaseEntityMongo {
 
         const schema = new Schema<Interface>(
             {
-                campaignId: { type: String, required: true },
-                milestoneStatusId: { type: String, required: true },
-                estimatedDeliveryDate: { type: Date, required: true },
+                campaign_id: { type: String, required: true },
+                milestone_status_id: { type: String, required: true },
+                estimate_delivery_date: { type: Date, required: true },
                 percentage: { type: Number, required: true },
                 status: { type: Number, required: true },
                 description: { type: String, required: true },

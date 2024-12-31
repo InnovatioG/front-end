@@ -42,7 +42,7 @@ export interface BaseCampaign {
     description: string;
     state_id: number;
     banner_url: string;
-    logoUrl: string;
+    logo_url: string;
     created_at: string;
     updated_at: string;
     investors: number;
@@ -186,7 +186,7 @@ export interface Project {
     title: string;
     description: string;
     banner_url: string;
-    logoUrl: string;
+    logo_url: string;
     created_at: string;
     updated_at: string;
     investors: number;

@@ -39,9 +39,9 @@ export class CampaignFundsEntity extends BaseSmartDBEntity {
     @Convertible({ isForDatum: true })
     cfdMinADA!: bigint;
     @Convertible({ isCreatedAt: true })
-    createdAt!: Date;
+    created_at!: Date;
     @Convertible({ isUpdatedAt: true })
-    updatedAt?: Date;
+    updated_at?: Date;
 
     // #endregion fields
 

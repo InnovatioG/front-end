@@ -3,7 +3,7 @@ import { Campaign } from '@/HardCode/databaseType';
 import { CardInformationByState, cardInformationForProtocolTeam } from '@/utils/constants';
 import { formatTime, getTimeRemaining } from '@/utils/formats';
 
-const getMilestoneStatusId = (campaign: Campaign): number | undefined => {
+const getmilestone_status_id = (campaign: Campaign): number | undefined => {
     const milestoneStatusMap: { [key: string]: any } = {
         2: campaign.milestones.find((milestone) => milestone.milestone_status?.milestone_submission?.milestone_status_id === 2),
         3: campaign.milestones.find((milestone) => milestone.milestone_status?.milestone_submission?.milestone_status_id === 3),
@@ -45,10 +45,10 @@ const getCurrentMilestone = (campaign: Campaign): string => {
 };
 
 const useDraftCard = (campaign: Campaign, isProtocolTeam: boolean, isAdmin: boolean) => {
-    const milestoneStatusId = getMilestoneStatusId(campaign);
+    const milestone_status_id = getmilestone_status_id(campaign);
     const currentMilestone = getCurrentMilestone(campaign);
 
-    const { label, buttons } = isProtocolTeam ? cardInformationForProtocolTeam(campaign.state_id) : CardInformationByState(campaign.state_id, milestoneStatusId, isAdmin);
+    const { label, buttons } = isProtocolTeam ? cardInformationForProtocolTeam(campaign.state_id) : CardInformationByState(campaign.state_id, milestone_status_id, isAdmin);
 
     const labelClass = label.toLowerCase().replace(/\s+/g, '-');
 

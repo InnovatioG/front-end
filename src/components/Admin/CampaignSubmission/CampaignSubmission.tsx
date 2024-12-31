@@ -31,14 +31,14 @@ export default function CampaignSubmission() {
                     <tbody>
                         {list.map((item) => (
                             <tr key={item._DB_id}>
-                                <td>{item.campaignId}</td>
-                                <td>{item.submissionStatusId}</td>
-                                <td>{item.submittedByWalletId}</td>
-                                <td>{item.revisedByWalletId}</td>
-                                <td>{item.approvedJustification}</td>
-                                <td>{item.rejectedJustification}</td>
+                                <td>{item.campaign_id}</td>
+                                <td>{item.submission_status_id}</td>
+                                <td>{item.submitted_by_wallet_id}</td>
+                                <td>{item.revised_by_wallet_id}</td>
+                                <td>{item.approved_justification}</td>
+                                <td>{item.rejected_justification}</td>
                                 <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updatedAt?.toISOString()}</td>
+                                <td>{item.updated_at?.toISOString()}</td>
                                 <td>
                                     <button
                                         onClick={() => {
@@ -72,27 +72,27 @@ export default function CampaignSubmission() {
         <form className={styles.form}>
             <div>
                 <label>Campaign ID:</label>
-                <input type="text" value={item.campaignId || ''} onChange={(e) => setItem({ ...item, campaignId: e.target.value })} />
+                <input type="text" value={item.campaign_id || ''} onChange={(e) => setItem({ ...item, campaign_id: e.target.value })} />
             </div>
             <div>
                 <label>Submission Status ID:</label>
-                <input type="text" value={item.submissionStatusId || ''} onChange={(e) => setItem({ ...item, submissionStatusId: e.target.value })} />
+                <input type="text" value={item.submission_status_id || ''} onChange={(e) => setItem({ ...item, submission_status_id: e.target.value })} />
             </div>
             <div>
                 <label>Submitted By Wallet ID:</label>
-                <input type="text" value={item.submittedByWalletId || ''} onChange={(e) => setItem({ ...item, submittedByWalletId: e.target.value })} />
+                <input type="text" value={item.submitted_by_wallet_id || ''} onChange={(e) => setItem({ ...item, submitted_by_wallet_id: e.target.value })} />
             </div>
             <div>
                 <label>Revised By Wallet ID:</label>
-                <input type="text" value={item.revisedByWalletId || ''} onChange={(e) => setItem({ ...item, revisedByWalletId: e.target.value })} />
+                <input type="text" value={item.revised_by_wallet_id || ''} onChange={(e) => setItem({ ...item, revised_by_wallet_id: e.target.value })} />
             </div>
             <div>
                 <label>Approved Justification:</label>
-                <input type="text" value={item.approvedJustification || ''} onChange={(e) => setItem({ ...item, approvedJustification: e.target.value })} />
+                <input type="text" value={item.approved_justification || ''} onChange={(e) => setItem({ ...item, approved_justification: e.target.value })} />
             </div>
             <div>
                 <label>Rejected Justification:</label>
-                <input type="text" value={item.rejectedJustification || ''} onChange={(e) => setItem({ ...item, rejectedJustification: e.target.value })} />
+                <input type="text" value={item.rejected_justification || ''} onChange={(e) => setItem({ ...item, rejected_justification: e.target.value })} />
             </div>
             <div>
                 <label>Created At:</label>

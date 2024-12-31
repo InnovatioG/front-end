@@ -45,9 +45,9 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo {
 
     public static MongoModel() {
         interface Interface {
-            campaignId: string;
+            campaign_id: string;
             editor: boolean;
-            walletId: string;
+            wallet_id: string;
             rol: string;
             description: string;
             website: string;
@@ -61,9 +61,9 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo {
 
         const schema = new Schema<Interface>(
             {
-                campaignId: { type: String, required: true },
+                campaign_id: { type: String, required: true },
                 editor: { type: Boolean, required: true },
-                walletId: { type: String, required: true },
+                wallet_id: { type: String, required: true },
                 rol: { type: String, required: false },
                 description: { type: String, required: false },
                 website: { type: String, required: false },

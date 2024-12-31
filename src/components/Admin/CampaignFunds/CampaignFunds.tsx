@@ -42,7 +42,7 @@ export default function CampaignFunds() {
                                 <td>{item.cfdSubtotal_Collected_ADA.toString()}</td>
                                 <td>{item.cfdMinADA.toString()}</td>
                                 <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updatedAt?.toISOString()}</td>
+                                <td>{item.updated_at?.toISOString()}</td>
                                 <td>
                                     <button
                                         onClick={() => {

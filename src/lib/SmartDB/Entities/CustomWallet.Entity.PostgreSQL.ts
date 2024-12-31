@@ -15,15 +15,15 @@ export class CustomWalletEntityPostgreSQL extends BaseEntityPostgreSQL {
     _id!: number; // Auto-generated primary key
 
     @Column({ type: 'varchar', length: 255 })
-    createdBy!: string;
+    created_by!: string;
     @Column({ type: 'varchar', length: 255 })
-    lastConnection!: Date;
+    last_connection!: Date;
     @Column({ type: 'varchar', length: 255 })
-    walletUsed!: string;
+    wallet_used!: string;
     @Column({ type: 'boolean', default: false })
-    walletValidatedWithSignedToken!: boolean
+    wallet_validated_with_signed_token!: boolean
     @Column({ type: 'varchar', length: 255 })
-    paymentPkh!: PaymentKeyHash;
+    payment_pkh!: PaymentKeyHash;
     @Column({ type: 'varchar', length: 255 })
     stakePkh!: StakeKeyHash;
     @Column({ type: 'varchar', length: 255 })
@@ -31,15 +31,15 @@ export class CustomWalletEntityPostgreSQL extends BaseEntityPostgreSQL {
     @Column({ type: 'varchar', length: 255, nullable: true })
     email?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
-    validatedEmail?: string;
+    validated_email?: string;
     @Column({ type: 'varchar', length: 255 })
-    testnetAddress!: Address;
+    testnet_address!: Address;
     @Column({ type: 'varchar', length: 255 })
-    mainnetAddress!: Address;
+    mainnet_address!: Address;
     @CreateDateColumn()
-    createdAt!: Date;
+    created_at!: Date;
     @UpdateDateColumn()
-    updatedAt!: Date;
+    updated_at!: Date;
 
     // #endregion fields
 
