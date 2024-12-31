@@ -1,10 +1,274 @@
 import { useProtocol } from './useProtocol';
 import styles from './Protocol.module.scss';
 import { ProtocolEntity } from '@/lib/SmartDB/Entities';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 export default function Protocol() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useProtocol();
+
+    const AdminsForm: React.FC<{
+        item: Partial<ProtocolEntity>;
+        setItem: Dispatch<SetStateAction<Partial<ProtocolEntity>>>;
+    }> = ({ item, setItem }) => {
+        const [localAdmins, setLocalAdmins] = useState<string[]>(item.pdAdmins || []);
+        const [editingIndex, setEditingIndex] = useState<number | null>(null); // Track the currently edited row
+
+        useEffect(() => {
+            setLocalAdmins(item.pdAdmins || []); // Sync local state when the parent changes
+        }, [item.pdAdmins]);
+
+        const addAdmin = () => {
+            const newAdminIndex = localAdmins.length; // Index of the new admin
+            setLocalAdmins((prev) => [...prev, '']); // Add an empty admin row
+            setEditingIndex(newAdminIndex); // Enter edit mode for the new row
+        };
+
+        const removeAdmin = (index: number) => {
+            const updatedAdmins = localAdmins.filter((_, i) => i !== index);
+            setLocalAdmins(updatedAdmins);
+            setItem((prev) => ({ ...prev, pdAdmins: updatedAdmins })); // Save to parent
+            if (editingIndex === index) setEditingIndex(null); // Exit edit mode if the current row is removed
+        };
+
+        const saveAdmin = (index: number, value: string) => {
+            const updatedAdmins = localAdmins.map((admin, i) => (i === index ? value : admin));
+            setLocalAdmins(updatedAdmins);
+            setItem((prev) => ({ ...prev, pdAdmins: updatedAdmins })); // Save to parent
+            setEditingIndex(null); // Exit edit mode
+        };
+
+        return (
+            <table style={{ width: '100%', marginTop: '10px', borderCollapse: 'collapse' }}>
+                <thead>
+                    <tr>
+                        <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #ddd' }}>Admin Address</th>
+                        <th style={{ textAlign: 'center', padding: '8px', borderBottom: '1px solid #ddd' }}>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {localAdmins.map((admin, index) => (
+                        <tr key={index}>
+                            <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>
+                                {editingIndex === index ? (
+                                    <input
+                                        type="text"
+                                        value={admin}
+                                        onChange={(e) => {
+                                            const updatedAdmins = localAdmins.map((a, i) => (i === index ? e.target.value : a));
+                                            setLocalAdmins(updatedAdmins); // Update local state
+                                        }}
+                                        placeholder="Enter admin address"
+                                        style={{ width: '100%' }}
+                                    />
+                                ) : (
+                                    admin
+                                )}
+                            </td>
+                            <td style={{ textAlign: 'center', padding: '8px', borderBottom: '1px solid #ddd' }}>
+                                {editingIndex === index ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => saveAdmin(index, localAdmins[index])}
+                                        style={{
+                                            backgroundColor: 'green',
+                                            color: 'white',
+                                            padding: '4px 8px',
+                                            border: 'none',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                        }}
+                                    >
+                                        Save
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditingIndex(index)}
+                                        style={{
+                                            backgroundColor: 'blue',
+                                            color: 'white',
+                                            padding: '4px 8px',
+                                            border: 'none',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                            marginRight: '8px',
+                                        }}
+                                    >
+                                        Edit
+                                    </button>
+                                )}
+                                <button
+                                    type="button"
+                                    onClick={() => removeAdmin(index)}
+                                    style={{
+                                        backgroundColor: 'red',
+                                        color: 'white',
+                                        padding: '4px 8px',
+                                        border: 'none',
+                                        borderRadius: '4px',
+                                        cursor: 'pointer',
+                                        marginLeft: '8px',
+                                    }}
+                                >
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                    <tr>
+                        <td colSpan={2} style={{ textAlign: 'center', padding: '12px 0' }}>
+                            <button
+                                type="button"
+                                onClick={addAdmin}
+                                style={{
+                                    backgroundColor: 'blue',
+                                    color: 'white',
+                                    padding: '6px 12px',
+                                    border: 'none',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                Add Admin
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        );
+    };
+
+    const ContractsForm: React.FC<{
+        item: Partial<ProtocolEntity>;
+        setItem: Dispatch<SetStateAction<Partial<ProtocolEntity>>>;
+    }> = ({ item, setItem }) => {
+        const [localContracts, setLocalContracts] = useState<string[]>(item.contracts || []);
+        const [editingIndex, setEditingIndex] = useState<number | null>(null); // Track the currently edited row
+
+        useEffect(() => {
+            setLocalContracts(item.contracts || []); // Sync local state when the parent changes
+        }, [item.contracts]);
+
+        const addContract = () => {
+            const newContractIndex = localContracts.length; // Index of the new contract
+            setLocalContracts((prev) => [...prev, '']); // Add an empty contract row
+            setEditingIndex(newContractIndex); // Enter edit mode for the new row
+        };
+
+        const removeContract = (index: number) => {
+            const updatedContracts = localContracts.filter((_, i) => i !== index);
+            setLocalContracts(updatedContracts);
+            setItem((prev) => ({ ...prev, contracts: updatedContracts })); // Save to parent
+            if (editingIndex === index) setEditingIndex(null); // Exit edit mode if the current row is removed
+        };
+
+        const saveContract = (index: number, value: string) => {
+            const updatedContracts = localContracts.map((contract, i) => (i === index ? value : contract));
+            setLocalContracts(updatedContracts);
+            setItem((prev) => ({ ...prev, contracts: updatedContracts })); // Save to parent
+            setEditingIndex(null); // Exit edit mode
+        };
+
+        return (
+            <table style={{ width: '100%', marginTop: '10px', borderCollapse: 'collapse' }}>
+                <thead>
+                    <tr>
+                        <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #ddd' }}>Contracts Code</th>
+                        <th style={{ textAlign: 'center', padding: '8px', borderBottom: '1px solid #ddd' }}>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {localContracts.map((contract, index) => (
+                        <tr key={index}>
+                            <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>
+                                {editingIndex === index ? (
+                                    <input
+                                        type="text"
+                                        value={contract}
+                                        onChange={(e) => {
+                                            const updatedContracts = localContracts.map((c, i) => (i === index ? e.target.value : c));
+                                            setLocalContracts(updatedContracts); // Update local state
+                                        }}
+                                        placeholder="Enter contract address"
+                                        style={{ width: '100%' }}
+                                    />
+                                ) : (
+                                    contract
+                                )}
+                            </td>
+                            <td style={{ textAlign: 'center', padding: '8px', borderBottom: '1px solid #ddd' }}>
+                                {editingIndex === index ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => saveContract(index, localContracts[index])}
+                                        style={{
+                                            backgroundColor: 'green',
+                                            color: 'white',
+                                            padding: '4px 8px',
+                                            border: 'none',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                        }}
+                                    >
+                                        Save
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditingIndex(index)}
+                                        style={{
+                                            backgroundColor: 'blue',
+                                            color: 'white',
+                                            padding: '4px 8px',
+                                            border: 'none',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                            marginRight: '8px',
+                                        }}
+                                    >
+                                        Edit
+                                    </button>
+                                )}
+                                <button
+                                    type="button"
+                                    onClick={() => removeContract(index)}
+                                    style={{
+                                        backgroundColor: 'red',
+                                        color: 'white',
+                                        padding: '4px 8px',
+                                        border: 'none',
+                                        borderRadius: '4px',
+                                        cursor: 'pointer',
+                                        marginLeft: '8px',
+                                    }}
+                                >
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                    <tr>
+                        <td colSpan={2} style={{ textAlign: 'center', padding: '12px 0' }}>
+                            <button
+                                type="button"
+                                onClick={addContract}
+                                style={{
+                                    backgroundColor: 'blue',
+                                    color: 'white',
+                                    padding: '6px 12px',
+                                    border: 'none',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                Add Contract
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        );
+    };
 
     const renderList = () => (
         <div>
@@ -80,20 +344,7 @@ export default function Protocol() {
             </div>
             <div>
                 <label>Admins:</label>
-                <input
-                    type="text"
-                    value={item.pdAdmins?.join(', ') || ''}
-                    placeholder="Comma-separated list of admin addresses"
-                    onChange={(e) =>
-                        setItem({
-                            ...item,
-                            pdAdmins: e.target.value
-                                .split(',')
-                                .map((s) => s.trim())
-                                .filter(Boolean),
-                        })
-                    }
-                />
+                <AdminsForm item={item} setItem={(value) => setItem(typeof value === 'function' ? (prev: any) => value(prev) : value)} />
             </div>
             <div>
                 <label>Token Admin Policy:</label>
@@ -125,20 +376,7 @@ export default function Protocol() {
             </div>
             <div>
                 <label>Contracts:</label>
-                <input
-                    type="text"
-                    value={item.contracts?.join(', ') || ''}
-                    placeholder="Comma-separated list of contract addresses"
-                    onChange={(e) =>
-                        setItem({
-                            ...item,
-                            contracts: e.target.value
-                                .split(',')
-                                .map((s) => s.trim())
-                                .filter(Boolean),
-                        })
-                    }
-                />
+                <ContractsForm item={item} setItem={(value) => setItem(typeof value === 'function' ? (prev: any) => value(prev) : value)} />
             </div>
             <div>
                 <label>Created At:</label>

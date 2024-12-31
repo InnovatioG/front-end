@@ -1,10 +1,318 @@
-import { useCampaign } from './useCampaign';
+import { MilestoneFormProps, useCampaign } from './useCampaign';
 import styles from './Campaign.module.scss';
-import { CampaignEntity } from '@/lib/SmartDB/Entities';
-import { Dispatch, SetStateAction } from 'react';
+import { CampaignEntity, CampaignMilestone } from '@/lib/SmartDB/Entities';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { toJson } from 'smart-db';
 
 export default function Campaign() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaign();
+
+    const AdminsForm: React.FC<{
+        item: Partial<CampaignEntity>;
+        setItem: Dispatch<SetStateAction<Partial<CampaignEntity>>>;
+    }> = ({ item, setItem }) => {
+        const [localAdmins, setLocalAdmins] = useState<string[]>(item.cdAdmins || []);
+        const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
+        useEffect(() => {
+            setLocalAdmins(item.cdAdmins || []); // Sync with parent state
+        }, [item.cdAdmins]);
+
+        const addAdmin = () => {
+            const newAdminIndex = localAdmins.length;
+            setLocalAdmins((prev) => [...prev, '']); // Add an empty admin
+            setEditingIndex(newAdminIndex); // Focus on editing the new admin
+        };
+
+        const removeAdmin = (index: number) => {
+            const updatedAdmins = localAdmins.filter((_, i) => i !== index);
+            setLocalAdmins(updatedAdmins);
+            setItem((prev) => ({ ...prev, cdAdmins: updatedAdmins })); // Update parent state
+            if (editingIndex === index) setEditingIndex(null);
+        };
+
+        const saveAdmin = (index: number, value: string) => {
+            const updatedAdmins = localAdmins.map((admin, i) => (i === index ? value : admin));
+            setLocalAdmins(updatedAdmins);
+            setItem((prev) => ({ ...prev, cdAdmins: updatedAdmins })); // Update parent state
+            setEditingIndex(null); // Exit editing mode
+        };
+
+        return (
+            <table style={{ width: '100%', marginTop: '10px', borderCollapse: 'collapse' }}>
+                <thead>
+                    <tr>
+                        <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #ddd' }}>Admin Address</th>
+                        <th style={{ textAlign: 'center', padding: '8px', borderBottom: '1px solid #ddd' }}>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {localAdmins.map((admin, index) => (
+                        <tr key={index}>
+                            <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>
+                                {editingIndex === index ? (
+                                    <input
+                                        type="text"
+                                        value={admin}
+                                        onChange={(e) => {
+                                            const updatedAdmins = localAdmins.map((a, i) => (i === index ? e.target.value : a));
+                                            setLocalAdmins(updatedAdmins); // Update locally
+                                        }}
+                                        placeholder="Enter admin address"
+                                        style={{ width: '100%' }}
+                                    />
+                                ) : (
+                                    admin
+                                )}
+                            </td>
+                            <td style={{ textAlign: 'center', padding: '8px', borderBottom: '1px solid #ddd' }}>
+                                {editingIndex === index ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => saveAdmin(index, localAdmins[index])}
+                                        style={{
+                                            backgroundColor: 'green',
+                                            color: 'white',
+                                            padding: '4px 8px',
+                                            border: 'none',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                        }}
+                                    >
+                                        Save
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditingIndex(index)}
+                                        style={{
+                                            backgroundColor: 'blue',
+                                            color: 'white',
+                                            padding: '4px 8px',
+                                            border: 'none',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                            marginRight: '8px',
+                                        }}
+                                    >
+                                        Edit
+                                    </button>
+                                )}
+                                <button
+                                    type="button"
+                                    onClick={() => removeAdmin(index)}
+                                    style={{
+                                        backgroundColor: 'red',
+                                        color: 'white',
+                                        padding: '4px 8px',
+                                        border: 'none',
+                                        borderRadius: '4px',
+                                        cursor: 'pointer',
+                                        marginLeft: '8px',
+                                    }}
+                                >
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                    <tr>
+                        <td colSpan={2} style={{ textAlign: 'center', padding: '12px 0' }}>
+                            <button
+                                type="button"
+                                onClick={addAdmin}
+                                style={{
+                                    backgroundColor: 'blue',
+                                    color: 'white',
+                                    padding: '6px 12px',
+                                    border: 'none',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                Add Admin
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        );
+    };
+
+    const MilestoneForm: React.FC<MilestoneFormProps> = ({ item, setItem }) => {
+        const [localMilestones, setLocalMilestones] = useState<CampaignMilestone[]>(item.cdMilestones || []);
+        const [editingIndex, setEditingIndex] = useState<number | null>(null); // Track the currently edited row
+    
+        useEffect(() => {
+            setLocalMilestones(item.cdMilestones || []); // Sync with parent state
+        }, [item.cdMilestones]);
+    
+        const addMilestone = () => {
+            const newMilestone: CampaignMilestone = {
+                cmEstimatedDeliveryDate: BigInt(Date.now()), // Default to current timestamp
+                cmPerncentage: 0,
+                cmStatus: 0, // Default status
+            };
+            const newMilestoneIndex = localMilestones.length; // Index of the new milestone
+            setLocalMilestones((prev) => [...prev, newMilestone]); // Add a new milestone row
+            setEditingIndex(newMilestoneIndex); // Focus on editing the new row
+        };
+    
+        const removeMilestone = (index: number) => {
+            const updatedMilestones = localMilestones.filter((_, i) => i !== index);
+            setLocalMilestones(updatedMilestones);
+            setItem((prev) => ({ ...prev, cdMilestones: updatedMilestones })); // Update parent state
+            if (editingIndex === index) setEditingIndex(null); // Exit edit mode if the current row is removed
+        };
+    
+        const saveMilestone = (index: number) => {
+            setItem((prev) => ({ ...prev, cdMilestones: localMilestones })); // Save to parent state
+            setEditingIndex(null); // Exit editing mode
+        };
+    
+        const updateMilestone = (index: number, field: keyof CampaignMilestone, value: string | number | bigint) => {
+            const parsedValue = field === 'cmEstimatedDeliveryDate' ? BigInt(value) : Number(value);
+            const updatedMilestones = localMilestones.map((m, i) => (i === index ? { ...m, [field]: parsedValue } : m));
+            setLocalMilestones(updatedMilestones); // Update local state
+        };
+    
+        return (
+            <table style={{ width: '100%', marginTop: '10px', borderCollapse: 'collapse' }}>
+                <thead>
+                    <tr>
+                        <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #ddd' }}>Delivery Date</th>
+                        <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #ddd' }}>Percentage</th>
+                        <th style={{ textAlign: 'left', padding: '8px', borderBottom: '1px solid #ddd' }}>Status</th>
+                        <th style={{ textAlign: 'center', padding: '8px', borderBottom: '1px solid #ddd' }}>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {localMilestones.map((milestone, index) => (
+                        <tr key={index}>
+                            <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>
+                                {editingIndex === index ? (
+                                    <input
+                                        type="datetime-local"
+                                        value={
+                                            milestone.cmEstimatedDeliveryDate
+                                                ? new Date(Number(milestone.cmEstimatedDeliveryDate)).toISOString().slice(0, -1)
+                                                : ''
+                                        }
+                                        onChange={(e) => {
+                                            const selectedDate = new Date(e.target.value);
+                                            if (!isNaN(selectedDate.getTime())) {
+                                                updateMilestone(index, 'cmEstimatedDeliveryDate', BigInt(selectedDate.getTime()));
+                                            }
+                                        }}
+                                        style={{ width: '100%' }}
+                                    />
+                                ) : (
+                                    new Date(Number(milestone.cmEstimatedDeliveryDate)).toLocaleString()
+                                )}
+                            </td>
+                            <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>
+                                {editingIndex === index ? (
+                                    <input
+                                        type="number"
+                                        value={milestone.cmPerncentage}
+                                        min="0"
+                                        max="100"
+                                        onChange={(e) => updateMilestone(index, 'cmPerncentage', e.target.value)}
+                                        style={{ width: '100%' }}
+                                    />
+                                ) : (
+                                    `${milestone.cmPerncentage}%`
+                                )}
+                            </td>
+                            <td style={{ padding: '8px', borderBottom: '1px solid #ddd' }}>
+                                {editingIndex === index ? (
+                                    <select
+                                        value={milestone.cmStatus}
+                                        onChange={(e) => updateMilestone(index, 'cmStatus', e.target.value)}
+                                        style={{ width: '100%' }}
+                                    >
+                                        <option value="0">Created</option>
+                                        <option value="1">Success</option>
+                                        <option value="2">Failed</option>
+                                    </select>
+                                ) : (
+                                    milestone.cmStatus === 0 ? 'Created' : milestone.cmStatus === 1 ? 'Success' : 'Failed'
+                                )}
+                            </td>
+                            <td style={{ textAlign: 'center', padding: '8px', borderBottom: '1px solid #ddd' }}>
+                                {editingIndex === index ? (
+                                    <button
+                                        type="button"
+                                        onClick={() => saveMilestone(index)}
+                                        style={{
+                                            backgroundColor: 'green',
+                                            color: 'white',
+                                            padding: '4px 8px',
+                                            border: 'none',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                        }}
+                                    >
+                                        Save
+                                    </button>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={() => setEditingIndex(index)}
+                                        style={{
+                                            backgroundColor: 'blue',
+                                            color: 'white',
+                                            padding: '4px 8px',
+                                            border: 'none',
+                                            borderRadius: '4px',
+                                            cursor: 'pointer',
+                                            marginRight: '8px',
+                                        }}
+                                    >
+                                        Edit
+                                    </button>
+                                )}
+                                <button
+                                    type="button"
+                                    onClick={() => removeMilestone(index)}
+                                    style={{
+                                        backgroundColor: 'red',
+                                        color: 'white',
+                                        padding: '4px 8px',
+                                        border: 'none',
+                                        borderRadius: '4px',
+                                        cursor: 'pointer',
+                                        marginLeft: '8px',
+                                    }}
+                                >
+                                    Remove
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                    <tr>
+                        <td colSpan={4} style={{ textAlign: 'center', padding: '12px 0' }}>
+                            <button
+                                type="button"
+                                onClick={addMilestone}
+                                style={{
+                                    backgroundColor: 'blue',
+                                    color: 'white',
+                                    padding: '6px 12px',
+                                    border: 'none',
+                                    borderRadius: '4px',
+                                    cursor: 'pointer',
+                                }}
+                            >
+                                Add Milestone
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        );
+    };
+    
 
     const renderList = () => (
         <div>
@@ -84,7 +392,7 @@ export default function Campaign() {
                                 <td>{new Date(item.cdBeginAt?.toString()).toISOString()}</td>
                                 <td>{new Date(item.cdDeadline?.toString()).toISOString()}</td>
                                 <td>{item.cdStatus}</td>
-                                <td>{item.cdMilestones}</td>
+                                <td>{toJson(item.cdMilestones)}</td>
                                 <td>{item.cdFundsCount}</td>
                                 <td>{item.cdFundsIndex}</td>
                                 <td>{item.cdMinADA.toString()}</td>
@@ -165,8 +473,8 @@ export default function Campaign() {
                 <input type="text" value={item.cdCampaignFundsPolicyID_CS || ''} onChange={(e) => setItem({ ...item, cdCampaignFundsPolicyID_CS: e.target.value })} />
             </div>
             <div>
-                <label>Admins (comma-separated):</label>
-                <input type="text" value={item.cdAdmins?.join(', ') || ''} onChange={(e) => setItem({ ...item, cdAdmins: e.target.value.split(',').map((v) => v.trim()) })} />
+                <label>Admins:</label>
+                <AdminsForm item={item} setItem={(value) => setItem(typeof value === 'function' ? (prev: any) => value(prev) : value)} />
             </div>
             <div>
                 <label>Token Admin Policy:</label>
@@ -274,7 +582,7 @@ export default function Campaign() {
             </div>
             <div>
                 <label>Milestones:</label>
-                <input type="text" value={item.cdMilestones || ''} onChange={(e) => setItem({ ...item, cdMilestones: e.target.value })} />
+                <MilestoneForm item={item} setItem={(value) => setItem(typeof value === 'function' ? (prev: any) => value(prev) : value)} />
             </div>
             <div>
                 <label>Funds Count:</label>
