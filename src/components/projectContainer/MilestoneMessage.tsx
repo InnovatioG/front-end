@@ -22,10 +22,10 @@ const MilestoneMessage: React.FC<MilestoneMessageProps> = ({ milestone, icon }) 
 
 
     useEffect(() => {
-        if (!milestone.cmEstimatedDeliveryDate.includes('weeks')) {
+        if (!milestone.estimatedDeliveryDate.includes('weeks')) {
 
             const today = new Date();
-            const milestoneDate = new Date(milestone.cmEstimatedDeliveryDate);
+            const milestoneDate = new Date(milestone.estimatedDeliveryDate);
             const diffTime = milestoneDate.getTime() - today.getTime();
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             if (diffDays > 0 && diffDays <= 7) {
@@ -56,7 +56,7 @@ const MilestoneMessage: React.FC<MilestoneMessageProps> = ({ milestone, icon }) 
                     {messageType == "expire" && (
                         <div className={styles.content}>
                             <p className={styles.text}>
-                                Time to prepare your report for the next milestone! Remember, the deadline is {formatDateFromString(milestone.cmEstimatedDeliveryDate)}. Make sure to submit it before this date to avoid marking the milestone as failed, which could trigger a refund process for the campaign. Share as many deliverables as possible&mdash;videos, photos, and detailed documentation&mdash;to showcase a clear roadmap of your progress. Be transparent about how you&apos;re tackling this milestone and your plans for the next steps in this amazing journey. We&apos;re excited to see how far you&apos;ve come!
+                                Time to prepare your report for the next milestone! Remember, the deadline is {formatDateFromString(milestone.estimatedDeliveryDate)}. Make sure to submit it before this date to avoid marking the milestone as failed, which could trigger a refund process for the campaign. Share as many deliverables as possible&mdash;videos, photos, and detailed documentation&mdash;to showcase a clear roadmap of your progress. Be transparent about how you&apos;re tackling this milestone and your plans for the next steps in this amazing journey. We&apos;re excited to see how far you&apos;ve come!
 
                             </p>
                             <button onClick={handleSendToRevision} className={styles.button}>
