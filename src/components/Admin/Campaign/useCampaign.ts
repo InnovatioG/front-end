@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { CampaignEntity } from '../../../lib/SmartDB/Entities/Campaign.Entity';
 import { CampaignApi } from '../../../lib/SmartDB/FrontEnd/Campaign.FrontEnd.Api.Calls';
 import { pushWarningNotification } from 'smart-db';
-import { th } from 'date-fns/locale';
 
 export function useCampaign() {
     const [list, setList] = useState<CampaignEntity[]>([]);
@@ -27,8 +26,9 @@ export function useCampaign() {
 
     const create = async () => {
         try {
-            newItem.featured= newItem.featured?? false 
-            newItem.archived= newItem.archived?? false 
+            newItem._NET_address = 'test address';
+            newItem._NET_id_CS = 'test CS';
+            newItem._isDeployed = true;
             let entity: CampaignEntity = new CampaignEntity(newItem);
             entity = await CampaignApi.createApi(entity);
             setNewItem({});

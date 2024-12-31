@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { CustomWalletEntity } from '../../../lib/SmartDB/Entities/CustomWallet.Entity';
 import { CustomWalletApi } from '../../../lib/SmartDB/FrontEnd/CustomWallet.FrontEnd.Api.Calls';
 import { pushWarningNotification } from 'smart-db';
-import { th } from 'date-fns/locale';
 
 export function useCustomWallet() {
     const [list, setList] = useState<CustomWalletEntity[]>([]);
@@ -27,7 +26,7 @@ export function useCustomWallet() {
 
     const create = async () => {
         try {
-            newItem.walletValidatedWithSignedToken = newItem.walletValidatedWithSignedToken ?? false 
+            newItem.walletValidatedWithSignedToken = newItem.walletValidatedWithSignedToken ?? false;
             let entity: CustomWalletEntity = new CustomWalletEntity(newItem);
             entity = await CustomWalletApi.createApi(entity);
             setNewItem({});

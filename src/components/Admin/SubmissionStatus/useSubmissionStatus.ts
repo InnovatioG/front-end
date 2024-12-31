@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { SubmissionStatusEntity } from '../../../lib/SmartDB/Entities/SubmissionStatus.Entity';
 import { SubmissionStatusApi } from '../../../lib/SmartDB/FrontEnd/SubmissionStatus.FrontEnd.Api.Calls';
 import { pushWarningNotification } from 'smart-db';
-import { th } from 'date-fns/locale';
 
 export function useSubmissionStatus() {
     const [list, setList] = useState<SubmissionStatusEntity[]>([]);

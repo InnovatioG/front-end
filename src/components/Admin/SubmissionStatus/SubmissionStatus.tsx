@@ -1,21 +1,10 @@
 import { useSubmissionStatus } from './useSubmissionStatus';
 import styles from './SubmissionStatus.module.scss';
+import { SubmissionStatusEntity } from '@/lib/SmartDB/Entities';
+import { Dispatch, SetStateAction } from 'react';
 
 export default function SubmissionStatus() {
-    const {
-        list,
-        newItem,
-        editItem,
-        deleteItem,
-        view,
-        setNewItem,
-        setEditItem,
-        setDeleteItem,
-        setView,
-        create,
-        update,
-        remove,
-    } = useSubmissionStatus();
+    const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useSubmissionStatus();
 
     const renderList = () => (
         <div>
@@ -23,7 +12,7 @@ export default function SubmissionStatus() {
                 <button onClick={() => setView('create')}>Create New Item</button>
             </div>
             {list.length === 0 ? (
-                <p>No SubmissionStatus found.</p>
+                <p>No Submission Status found.</p>
             ) : (
                 <table>
                     <thead>
@@ -43,14 +32,22 @@ export default function SubmissionStatus() {
                                 <td>{item.createdAt.toISOString()}</td>
                                 <td>{item.updatedAt?.toISOString()}</td>
                                 <td>
-                                    <button onClick={() => {
-                                        setEditItem(item);
-                                        setView('edit');
-                                    }}>Edit</button>
-                                    <button onClick={() => {
-                                        setDeleteItem(item);
-                                        setView('confirmDelete');
-                                    }}>Delete</button>
+                                    <button
+                                        onClick={() => {
+                                            setEditItem(item);
+                                            setView('edit');
+                                        }}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setDeleteItem(item);
+                                            setView('confirmDelete');
+                                        }}
+                                    >
+                                        Delete
+                                    </button>
                                 </td>
                             </tr>
                         ))}
@@ -60,49 +57,55 @@ export default function SubmissionStatus() {
         </div>
     );
 
-    const renderCreateForm = () => (
+    const renderForm = (
+        item: Partial<SubmissionStatusEntity>,
+        setItem: Dispatch<SetStateAction<Partial<SubmissionStatusEntity>>> | Dispatch<SetStateAction<Partial<SubmissionStatusEntity> | null>>
+    ) => (
         <form className={styles.form}>
             <div>
                 <label>Name:</label>
-                <input
-                    type="text"
-                    value={newItem.name || ''}
-                    onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-                />
+                <input type="text" value={item.name || ''} onChange={(e) => setItem({ ...item, name: e.target.value })} />
             </div>
             <div>
                 <label>Description:</label>
-                <input
-                    type="text"
-                    value={newItem.description || ''}
-                    onChange={(e) => setNewItem({ ...newItem, description: e.target.value })}
-                />
+                <textarea value={item.description || ''} onChange={(e) => setItem({ ...item, description: e.target.value })} />
             </div>
-            <button type="button" onClick={create}>Create</button>
-            <button type="button" onClick={() => setView('list')}>Cancel</button>
-        </form>
-    );
-
-    const renderEditForm = () => (
-        <form className={styles.form}>
             <div>
-                <label>Name:</label>
+                <label>Created At:</label>
                 <input
-                    type="text"
-                    value={editItem?.name || ''}
-                    onChange={(e) => setEditItem({ ...editItem, name: e.target.value })}
+                    type="datetime-local"
+                    value={item.createdAt ? new Date(item.createdAt).toISOString().slice(0, -1) : ''}
+                    onChange={(e) => {
+                        const selectedDate = new Date(e.target.value);
+                        setItem({ ...item, createdAt: selectedDate });
+                    }}
+                    disabled={true}
                 />
             </div>
             <div>
-                <label>Description:</label>
+                <label>Updated At:</label>
                 <input
-                    type="text"
-                    value={editItem?.description || ''}
-                    onChange={(e) => setEditItem({ ...editItem, description: e.target.value })}
+                    type="datetime-local"
+                    value={item.updatedAt ? new Date(item.updatedAt).toISOString().slice(0, -1) : ''}
+                    onChange={(e) => {
+                        const selectedDate = new Date(e.target.value);
+                        setItem({ ...item, updatedAt: selectedDate });
+                    }}
+                    disabled={true}
                 />
             </div>
-            <button type="button" onClick={update}>Update</button>
-            <button type="button" onClick={() => setView('list')}>Cancel</button>
+            {view === 'create' ? (
+                <button type="button" onClick={create}>
+                    Create
+                </button>
+            ) : (
+                <button type="button" onClick={update}>
+                    Update
+                </button>
+            )}
+            <button type="button" onClick={() => setView('list')}>
+                Cancel
+            </button>
         </form>
     );
 
@@ -118,8 +121,8 @@ export default function SubmissionStatus() {
     return (
         <div className={styles.content}>
             {view === 'list' && renderList()}
-            {view === 'create' && renderCreateForm()}
-            {view === 'edit' && renderEditForm()}
+            {view === 'create' && renderForm(newItem, setNewItem)}
+            {view === 'edit' && editItem !== null && renderForm(editItem, setEditItem)}
             {view === 'confirmDelete' && renderConfirmDelete()}
         </div>
     );

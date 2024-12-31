@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { CampaignFaqsEntity } from '../../../lib/SmartDB/Entities/CampaignFaqs.Entity';
 import { CampaignFaqsApi } from '../../../lib/SmartDB/FrontEnd/CampaignFaqs.FrontEnd.Api.Calls';
 import { pushWarningNotification } from 'smart-db';
-import { th } from 'date-fns/locale';
 
 export function useCampaignFaqs() {
     const [list, setList] = useState<CampaignFaqsEntity[]>([]);

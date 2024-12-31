@@ -1,10 +1,10 @@
-import { useProtocol } from './useProtocol';
-import styles from './Protocol.module.scss';
-import { ProtocolEntity } from '@/lib/SmartDB/Entities';
+import { useCampaignFunds } from './useCampaignFunds';
+import styles from './CampaignFunds.module.scss';
+import { CampaignFundsEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
 
-export default function Protocol() {
-    const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useProtocol();
+export default function CampaignFunds() {
+    const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaignFunds();
 
     const renderList = () => (
         <div>
@@ -12,16 +12,19 @@ export default function Protocol() {
                 <button onClick={() => setView('create')}>Create New Item</button>
             </div>
             {list.length === 0 ? (
-                <p>No Protocol found.</p>
+                <p>No Campaign Funds found.</p>
             ) : (
                 <table>
                     <thead>
                         <tr>
-                            <th>Protocol Version</th>
-                            <th>Admins</th>
-                            <th>Token Admin Policy</th>
+                            <th>Index</th>
+                            <th>Campaign Policy CS</th>
+                            <th>Campaign Funds Policy ID CS</th>
+                            <th>Available Campaign Tokens</th>
+                            <th>Sold Campaign Tokens</th>
+                            <th>Available ADA</th>
+                            <th>Collected ADA</th>
                             <th>Min ADA</th>
-                            <th>Contracts</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>Actions</th>
@@ -30,11 +33,14 @@ export default function Protocol() {
                     <tbody>
                         {list.map((item) => (
                             <tr key={item._DB_id}>
-                                <td>{item.pdProtocolVersion}</td>
-                                <td>{item.pdAdmins.join(', ')}</td>
-                                <td>{item.pdTokenAdminPolicy_CS}</td>
-                                <td>{item.pdMinADA.toString()}</td>
-                                <td>{item.contracts.join(', ')}</td>
+                                <td>{item.cfdIndex}</td>
+                                <td>{item.cfdCampaignPolicy_CS}</td>
+                                <td>{item.cfdCampaignFundsPolicyID_CS}</td>
+                                <td>{item.cfdSubtotal_Avalaible_CampaignToken.toString()}</td>
+                                <td>{item.cfdSubtotal_Sold_CampaignToken.toString()}</td>
+                                <td>{item.cfdSubtotal_Avalaible_ADA.toString()}</td>
+                                <td>{item.cfdSubtotal_Collected_ADA.toString()}</td>
+                                <td>{item.cfdMinADA.toString()}</td>
                                 <td>{item.createdAt.toISOString()}</td>
                                 <td>{item.updatedAt?.toISOString()}</td>
                                 <td>
@@ -63,81 +69,81 @@ export default function Protocol() {
         </div>
     );
 
-    const renderForm = (item: Partial<ProtocolEntity>, setItem: Dispatch<SetStateAction<Partial<ProtocolEntity>>> | Dispatch<SetStateAction<Partial<ProtocolEntity> | null>>) => (
+    const renderForm = (
+        item: Partial<CampaignFundsEntity>,
+        setItem: Dispatch<SetStateAction<Partial<CampaignFundsEntity>>> | Dispatch<SetStateAction<Partial<CampaignFundsEntity> | null>>
+    ) => (
         <form className={styles.form}>
             <div>
-                <label>Protocol Version:</label>
+                <label>Index:</label>
+                <input type="number" value={item.cfdIndex || ''} onChange={(e) => setItem({ ...item, cfdIndex: Number(e.target.value) })} />
+            </div>
+            <div>
+                <label>Campaign Policy CS:</label>
+                <input type="text" value={item.cfdCampaignPolicy_CS || ''} onChange={(e) => setItem({ ...item, cfdCampaignPolicy_CS: e.target.value })} />
+            </div>
+            <div>
+                <label>Campaign Funds Policy ID CS:</label>
+                <input type="text" value={item.cfdCampaignFundsPolicyID_CS || ''} onChange={(e) => setItem({ ...item, cfdCampaignFundsPolicyID_CS: e.target.value })} />
+            </div>
+            <div>
+                <label>Available Campaign Tokens:</label>
                 <input
-                    type="number"
-                    value={item.pdProtocolVersion || ''}
-                    onChange={(e) =>
-                        setItem({
-                            ...item,
-                            pdProtocolVersion: Number(e.target.value),
-                        })
-                    }
+                    type="text"
+                    value={item.cfdSubtotal_Avalaible_CampaignToken?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cfdSubtotal_Avalaible_CampaignToken: BigInt(e.target.value) });
+                        }
+                    }}
                 />
             </div>
             <div>
-                <label>Admins:</label>
+                <label>Sold Campaign Tokens:</label>
                 <input
                     type="text"
-                    value={item.pdAdmins?.join(', ') || ''}
-                    placeholder="Comma-separated list of admin addresses"
-                    onChange={(e) =>
-                        setItem({
-                            ...item,
-                            pdAdmins: e.target.value
-                                .split(',')
-                                .map((s) => s.trim())
-                                .filter(Boolean),
-                        })
-                    }
+                    value={item.cfdSubtotal_Sold_CampaignToken?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cfdSubtotal_Sold_CampaignToken: BigInt(e.target.value) });
+                        }
+                    }}
                 />
             </div>
             <div>
-                <label>Token Admin Policy:</label>
+                <label>Available ADA:</label>
                 <input
                     type="text"
-                    value={item.pdTokenAdminPolicy_CS || ''}
-                    onChange={(e) =>
-                        setItem({
-                            ...item,
-                            pdTokenAdminPolicy_CS: e.target.value,
-                        })
-                    }
+                    value={item.cfdSubtotal_Avalaible_ADA?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cfdSubtotal_Avalaible_ADA: BigInt(e.target.value) });
+                        }
+                    }}
+                />
+            </div>
+            <div>
+                <label>Collected ADA:</label>
+                <input
+                    type="text"
+                    value={item.cfdSubtotal_Collected_ADA?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cfdSubtotal_Collected_ADA: BigInt(e.target.value) });
+                        }
+                    }}
                 />
             </div>
             <div>
                 <label>Min ADA:</label>
                 <input
                     type="text"
-                    value={item.pdMinADA?.toString() || ''}
+                    value={item.cfdMinADA?.toString() || ''}
                     onChange={(e) => {
                         if (!isNaN(Number(e.target.value))) {
-                            setItem({
-                                ...item,
-                                pdMinADA: BigInt(e.target.value),
-                            });
+                            setItem({ ...item, cfdMinADA: BigInt(e.target.value) });
                         }
                     }}
-                />
-            </div>
-            <div>
-                <label>Contracts:</label>
-                <input
-                    type="text"
-                    value={item.contracts?.join(', ') || ''}
-                    placeholder="Comma-separated list of contract addresses"
-                    onChange={(e) =>
-                        setItem({
-                            ...item,
-                            contracts: e.target.value
-                                .split(',')
-                                .map((s) => s.trim())
-                                .filter(Boolean),
-                        })
-                    }
                 />
             </div>
             <div>

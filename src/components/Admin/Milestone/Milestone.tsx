@@ -1,176 +1,182 @@
 import { useMilestone } from './useMilestone';
 import styles from './Milestone.module.scss';
+import { MilestoneEntity } from '@/lib/SmartDB/Entities';
+import { Dispatch, SetStateAction } from 'react';
 
 export default function Milestone() {
-  const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useMilestone();
+    const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useMilestone();
 
-  const renderList = () => (
-    <div>
-      <div className={styles.listHeader}>
-        <button onClick={() => setView('create')}>Create New Item</button>
-      </div>
-      {list.length === 0 ? (
-        <p>No Milestone found.</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Campaign ID</th>
-              <th>Campaign Status ID</th>
-              <th>Estimate Delivery Date</th>
-              <th>Percentage</th>
-              <th>Status</th>
-              <th>Description</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {list.map((item) => (
-              <tr key={item._DB_id}>
-                <td>{item.campaignId}</td>
-                <td>{item.campaignStatusId}</td>
-                <td>{item.cmEstimateDeliveryDate.toISOString()}</td>
-                <td>{item.cmPercentage}</td>
-                <td>{item.cmStatus}</td>
-                <td>{item.description}</td>
-                <td>
-                  <button
-                    onClick={() => {
-                      setEditItem(item);
-                      setView('edit');
+    const renderList = () => (
+        <div>
+            <div className={styles.listHeader}>
+                <button onClick={() => setView('create')}>Create New Item</button>
+            </div>
+            {list.length === 0 ? (
+                <p>No Milestones found.</p>
+            ) : (
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Campaign ID</th>
+                            <th>Milestone Status ID</th>
+                            <th>Estimated Delivery Date</th>
+                            <th>Percentage</th>
+                            <th>Status</th>
+                            <th>Description</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {list.map((item) => (
+                            <tr key={item._DB_id}>
+                                <td>{item.campaignId}</td>
+                                <td>{item.milestoneStatusId}</td>
+                                <td>{item.estimateDeliveryDate.toISOString()}</td>
+                                <td>{item.percentage}</td>
+                                <td>{item.status}</td>
+                                <td>{item.description}</td>
+                                <td>{item.createdAt.toISOString()}</td>
+                                <td>{item.updatedAt?.toISOString()}</td>
+                                <td>
+                                    <button
+                                        onClick={() => {
+                                            setEditItem(item);
+                                            setView('edit');
+                                        }}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setDeleteItem(item);
+                                            setView('confirmDelete');
+                                        }}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+        </div>
+    );
+
+    const renderForm = (
+        item: Partial<MilestoneEntity>,
+        setItem: Dispatch<SetStateAction<Partial<MilestoneEntity>>> | Dispatch<SetStateAction<Partial<MilestoneEntity> | null>>
+    ) => (
+        <form className={styles.form}>
+            <div>
+                <label>Campaign ID:</label>
+                <input type="text" value={item.campaignId || ''} onChange={(e) => setItem({ ...item, campaignId: e.target.value })} />
+            </div>
+            <div>
+                <label>Milestone Status ID:</label>
+                <input type="text" value={item.milestoneStatusId || ''} onChange={(e) => setItem({ ...item, milestoneStatusId: e.target.value })} />
+            </div>
+            <div>
+                <label>Estimated Delivery Date:</label>
+                <input
+                    type="datetime-local"
+                    value={item.estimateDeliveryDate ? new Date(item.estimateDeliveryDate).toISOString().slice(0, -1) : ''}
+                    onChange={(e) =>
+                        setItem({
+                            ...item,
+                            estimateDeliveryDate: new Date(e.target.value),
+                        })
+                    }
+                />
+            </div>
+            <div>
+                <label>Percentage:</label>
+                <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={item.percentage || ''}
+                    onChange={(e) =>
+                        setItem({
+                            ...item,
+                            percentage: Number(e.target.value),
+                        })
+                    }
+                />
+            </div>
+            <div>
+                <label>Status:</label>
+                <input
+                    type="number"
+                    value={item.status || ''}
+                    onChange={(e) =>
+                        setItem({
+                            ...item,
+                            status: Number(e.target.value),
+                        })
+                    }
+                />
+            </div>
+            <div>
+                <label>Description:</label>
+                <textarea value={item.description || ''} onChange={(e) => setItem({ ...item, description: e.target.value })} />
+            </div>
+            <div>
+                <label>Created At:</label>
+                <input
+                    type="datetime-local"
+                    value={item.createdAt ? new Date(item.createdAt).toISOString().slice(0, -1) : ''}
+                    onChange={(e) => {
+                        const selectedDate = new Date(e.target.value);
+                        setItem({ ...item, createdAt: selectedDate });
                     }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => {
-                      setDeleteItem(item);
-                      setView('confirmDelete');
+                    disabled={true}
+                />
+            </div>
+            <div>
+                <label>Updated At:</label>
+                <input
+                    type="datetime-local"
+                    value={item.updatedAt ? new Date(item.updatedAt).toISOString().slice(0, -1) : ''}
+                    onChange={(e) => {
+                        const selectedDate = new Date(e.target.value);
+                        setItem({ ...item, updatedAt: selectedDate });
                     }}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
-  );
+                    disabled={true}
+                />
+            </div>
+            {view === 'create' ? (
+                <button type="button" onClick={create}>
+                    Create
+                </button>
+            ) : (
+                <button type="button" onClick={update}>
+                    Update
+                </button>
+            )}
+            <button type="button" onClick={() => setView('list')}>
+                Cancel
+            </button>
+        </form>
+    );
 
-  const renderCreateForm = () => (
-    <form className={styles.form}>
-      <div>
-        <label>Campaign ID:</label>
-        <input type="number" value={newItem.campaignId || ''} onChange={(e) => setNewItem({ ...newItem, campaignId: e.target.value })} />
-      </div>
-      <div>
-        <label>Campaign Status ID:</label>
-        <input type="number" value={newItem.campaignStatusId || ''} onChange={(e) => setNewItem({ ...newItem, campaignStatusId: e.target.value })} />
-      </div>
-      <div>
-        <label>Estimate Delivery Date:</label>
-        <input
-          type="date"
-          value={newItem?.cmEstimateDeliveryDate? newItem.cmEstimateDeliveryDate.toISOString().split('T')[0] : ''}
-          onChange={(e) =>
-            setNewItem({
-              ...newItem,
-              cmEstimateDeliveryDate: new Date(e.target.value),
-            })
-          }
-        />
-      </div>
-      <div>
-        <label>Percentage:</label>
-        <input type="number" value={newItem.cmPercentage || ''} onChange={(e) => setNewItem({ ...newItem, cmPercentage: parseInt(e.target.value) })} />
-      </div>
-      <div>
-        <label>Status:</label>
-        <input type="number" value={newItem.cmStatus || ''} onChange={(e) => setNewItem({ ...newItem, cmStatus: parseInt(e.target.value) })} />
-      </div>
-      <div>
-        <label>Description:</label>
-        <input type="text" value={newItem.description || ''} onChange={(e) => setNewItem({ ...newItem, description: e.target.value })} />
-      </div>
-      <button type="button" onClick={create}>
-        Create
-      </button>
-      <button type="button" onClick={() => setView('list')}>
-        Cancel
-      </button>
-    </form>
-  );
+    const renderConfirmDelete = () => (
+        <div className={styles.confirmDelete}>
+            <p>Are you sure you want to delete this item?</p>
+            {deleteItem && <pre>{deleteItem.show()}</pre>}
+            <button onClick={remove}>Confirm</button>
+            <button onClick={() => setView('list')}>Cancel</button>
+        </div>
+    );
 
-  const renderEditForm = () => (
-    <form className={styles.form}>
-      <div>
-        <label>Campaign ID:</label>
-        <input type="number" value={editItem?.campaignId || ''} onChange={(e) => setEditItem({ ...editItem, campaignId: e.target.value })} />
-      </div>
-      <div>
-        <label>Campaign Status ID:</label>
-        <input type="number" value={editItem?.campaignStatusId || ''} onChange={(e) => setEditItem({ ...editItem, campaignStatusId: e.target.value })} />
-      </div>
-      <div>
-        <label>Estimate Delivery Date:</label>
-        <input
-          type="date"
-          value={editItem?.cmEstimateDeliveryDate? editItem.cmEstimateDeliveryDate.toISOString().split('T')[0] : ''}
-          onChange={(e) =>
-            setEditItem({
-              ...editItem,
-              cmEstimateDeliveryDate: new Date(e.target.value),
-            })
-          }
-        />
-      </div>
-      <div>
-        <label>Percentage:</label>
-        <input
-          type="number"
-          value={editItem?.cmPercentage || ''}
-          onChange={(e) =>
-            setEditItem({
-              ...editItem,
-              cmPercentage: parseInt(e.target.value),
-            })
-          }
-        />
-      </div>
-      <div>
-        <label>Status:</label>
-        <input type="number" value={editItem?.cmStatus || ''} onChange={(e) => setEditItem({ ...editItem, cmStatus: parseInt(e.target.value) })} />
-      </div>
-      <div>
-        <label>Description:</label>
-        <input type="text" value={editItem?.description || ''} onChange={(e) => setEditItem({ ...editItem, description: e.target.value })} />
-      </div>
-      <button type="button" onClick={create}>
-        Create
-      </button>
-      <button type="button" onClick={() => setView('list')}>
-        Cancel
-      </button>
-    </form>
-  );
-
-  const renderConfirmDelete = () => (
-    <div className={styles.confirmDelete}>
-      <p>Are you sure you want to delete this item?</p>
-      {deleteItem && <pre>{deleteItem.show()}</pre>}
-      <button onClick={remove}>Confirm</button>
-      <button onClick={() => setView('list')}>Cancel</button>
-    </div>
-  );
-
-  return (
-    <div className={styles.content}>
-      {view === 'list' && renderList()}
-      {view === 'create' && renderCreateForm()}
-      {view === 'edit' && renderEditForm()}
-      {view === 'confirmDelete' && renderConfirmDelete()}
-    </div>
-  );
+    return (
+        <div className={styles.content}>
+            {view === 'list' && renderList()}
+            {view === 'create' && renderForm(newItem, setNewItem)}
+            {view === 'edit' && editItem !== null && renderForm(editItem, setEditItem)}
+            {view === 'confirmDelete' && renderConfirmDelete()}
+        </div>
+    );
 }

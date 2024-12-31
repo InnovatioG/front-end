@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { CampaignSubmissionEntity } from '../../../lib/SmartDB/Entities/CampaignSubmission.Entity';
 import { CampaignSubmissionApi } from '../../../lib/SmartDB/FrontEnd/CampaignSubmission.FrontEnd.Api.Calls';
 import { pushWarningNotification } from 'smart-db';
-import { th } from 'date-fns/locale';
 
 export function useCampaignSubmission() {
     const [list, setList] = useState<CampaignSubmissionEntity[]>([]);
@@ -41,7 +40,7 @@ export function useCampaignSubmission() {
     const update = async () => {
         if (editItem && editItem._DB_id) {
             try {
-                console.log(editItem._DB_id)
+                console.log(editItem._DB_id);
                 let entity = new CampaignSubmissionEntity(editItem);
                 entity = await CampaignSubmissionApi.updateWithParamsApi_(editItem._DB_id, entity);
                 setEditItem(null);
