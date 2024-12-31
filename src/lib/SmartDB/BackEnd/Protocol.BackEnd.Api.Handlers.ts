@@ -10,6 +10,7 @@ import {
     NextApiRequestAuthenticated,
     console_error,
     console_log,
+    showData,
 } from 'smart-db/backEnd';
 import { ProtocolEntity } from '../Entities/Protocol.Entity';
 
@@ -17,6 +18,49 @@ import { ProtocolEntity } from '../Entities/Protocol.Entity';
 export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
     protected static _Entity = ProtocolEntity;
     protected static _BackEndMethods = BaseSmartDBBackEndMethods;
+
+    // #region class methods
+
+    public static async  populate() {
+        //--------------------------------------
+        console_log(1, this._Entity.className(), `populate - Init`);
+
+        console_log(0, this._Entity.className(), `populate - Working on...`);
+
+        const CampaignBackEndApplied = (await import('./Campaign.BackEnd.Api.Handlers')).CampaignBackEndApplied;
+        const CampaignCategoryBackEndApplied = (await import('./CampaignCategory.BackEnd.Api.Handlers')).CampaignCategoryBackEndApplied;
+        const CampaignContentBackEndApplied = (await import('./CampaignContent.BackEnd.Api.Handlers')).CampaignContentBackEndApplied;
+        const CampaignFaqsBackEndApplied = (await import('./CampaignFaqs.BackEnd.Api.Handlers')).CampaignFaqsBackEndApplied;
+        const CampaignFundsBackEndApplied = (await import('./CampaignFunds.BackEnd.Api.Handlers')).CampaignFundsBackEndApplied;
+        const CampaignMemberBackEndApplied = (await import('./CampaignMember.BackEnd.Api.Handlers')).CampaignMemberBackEndApplied;
+        const CampaignStatusBackEndApplied = (await import('./CampaignStatus.BackEnd.Api.Handlers')).CampaignStatusBackEndApplied;
+        const CampaignSubmissionBackEndApplied = (await import('./CampaignSubmission.BackEnd.Api.Handlers')).CampaignSubmissionBackEndApplied;
+        const CustomWalletBackEndApplied = (await import('./CustomWallet.BackEnd.Api.Handlers')).CustomWalletBackEndApplied;
+        const MilestoneBackEndApplied = (await import('./Milestone.BackEnd.Api.Handlers')).MilestoneBackEndApplied;
+        const MilestoneStatusBackEndApplied = (await import('./MilestoneStatus.BackEnd.Api.Handlers')).MilestoneStatusBackEndApplied;
+        const MilestoneSubmissionBackEndApplied = (await import('./MilestoneSubmission.BackEnd.Api.Handlers')).MilestoneSubmissionBackEndApplied;
+        const ProtocoBackEndApplied = (await import('./Protocol.BackEnd.Api.Handlers')).ProtocolBackEndApplied;
+        const ProtocolAdminWalletBackEndApplied = (await import('./ProtocolAdminWallet.BackEnd.Api.Handlers')).ProtocolAdminWalletBackEndApplied;
+        const SubmissionStatusBackEndApplied = (await import('./SubmissionStatus.BackEnd.Api.Handlers')).SubmissionStatusBackEndApplied;
+
+        let protocol: ProtocolEntity = new ProtocolEntity();
+        //  para protocol, campaing, y campaign funds, quye son smart db tenes que setear estas:
+        protocol._creator = 'test creator';
+        protocol._NET_address = 'test address';
+        protocol._NET_id_CS = 'test CS';
+        protocol._isDeployed = false;
+        // setea todo el resto de los campos
+        protocol.pdMinADA = 1000n;
+        protocol = await ProtocoBackEndApplied.create(protocol);
+
+        console_log(-1, this._Entity.className(), `populate - End`);
+        //--------------------------------------
+        return true;
+        //--------------------------------------
+    }
+
+
+    // #endregion class methods
 }
 
 @BackEndApiHandlersFor(ProtocolEntity)
@@ -130,7 +174,7 @@ export class ProtocolApiHandlers extends BaseSmartDBBackEndApiHandlers {
 
     // #region custom api handlers
 
-    protected static _ApiHandlers: string[] = ['tx'];
+    protected static _ApiHandlers: string[] = ['tx','populate'];
 
     protected static async executeApiHandlers(command: string, req: NextApiRequestAuthenticated, res: NextApiResponse) {
         //--------------------
@@ -148,6 +192,8 @@ export class ProtocolApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     // }
                 }
                 return res.status(405).json({ error: 'Wrong Api route' });
+            } else if (query[0] === 'populate') {
+                return await this.populateApiHandler(req, res);
             } else {
                 console_error(0, this._Entity.className(), `executeApiHandlers - Error: Api Handler function not found`);
                 return res.status(500).json({ error: 'Api Handler function not found ' });
@@ -155,6 +201,31 @@ export class ProtocolApiHandlers extends BaseSmartDBBackEndApiHandlers {
         } else {
             console_error(0, this._Entity.className(), `executeApiHandlers - Error: Wrong Custom Api route`);
             return res.status(405).json({ error: 'Wrong Custom Api route ' });
+        }
+    }
+
+
+    public static async populateApiHandler(req: NextApiRequestAuthenticated, res: NextApiResponse) {
+        if (req.method === 'POST') {
+            //-------------------------
+            console_log(1, this._Entity.className(), `populateApiHandler - POST - Init`);
+            console_log(0, this._Entity.className(), `query: ${showData(req.query)}`);
+            console_log(0, this._Entity.className(), `body: ${showData(req.body)}`);
+            //-------------------------
+            try {
+                //-------------------------
+                await this._BackEndApplied.populate()
+                //-------------------------
+                console_log(-1, this._Entity.className(), `populateApiHandler - POST - OK`);
+                //-------------------------
+                return res.status(200).json({result: true});
+            } catch (error) {
+                console_error(-1, this._Entity.className(), `populateApiHandler - Error: ${error}`);
+                return res.status(500).json({ error: `An error occurred while fetching the ${this._Entity.className()}` });
+            }
+        } else {
+            console_error(-1, this._Entity.className(), `populateApiHandler - Error: Method not allowed`);
+            return res.status(405).json({ error: `Method not allowed` });
         }
     }
 

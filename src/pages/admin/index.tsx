@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styles from '@/styles/Admin.module.scss';
 import { pushWarningNotification } from 'smart-db';
 import Button from '@/components/buttons/UI/Button';
+import { ProtocolApi } from '@/lib/SmartDB/FrontEnd';
 
 const AdminDashboard: NextPage = () => {
     const pages = [
@@ -25,12 +26,10 @@ const AdminDashboard: NextPage = () => {
 
     const handlePopulateDB = async () => {
         try {
-            const response = await fetch('/api/admin/populate-db', {
-                method: 'POST',
-            });
+            const response = await ProtocolApi.populateApi();
             
-            if (!response.ok) {
-                throw new Error('Failed to populate database');
+            if (response === false) {
+                throw 'Failed to populate database'
             }
             
             pushWarningNotification('Success', 'Database populated successfully');
