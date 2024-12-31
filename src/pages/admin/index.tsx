@@ -1,12 +1,15 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import styles from '@/styles/Admin.module.scss';
+import { pushWarningNotification } from 'smart-db';
+import Button from '@/components/buttons/UI/Button';
 
 const AdminDashboard: NextPage = () => {
     const pages = [
         { name: 'Campaign Category', path: '/admin/campaign-category' },
         { name: 'Campaign Content', path: '/admin/campaign-content' },
         { name: 'Campaign FAQs', path: '/admin/campaign-faqs' },
+        { name: 'Campaign Funds', path: '/admin/campaign-funds' },
         { name: 'Campaign Member', path: '/admin/campaign-member' },
         { name: 'Campaign Status', path: '/admin/campaign-status' },
         { name: 'Campaign Submission', path: '/admin/campaign-submission' },
@@ -20,9 +23,34 @@ const AdminDashboard: NextPage = () => {
         { name: 'Submission Status', path: '/admin/submission-status' },
     ];
 
+    const handlePopulateDB = async () => {
+        try {
+            const response = await fetch('/api/admin/populate-db', {
+                method: 'POST',
+            });
+            
+            if (!response.ok) {
+                throw new Error('Failed to populate database');
+            }
+            
+            pushWarningNotification('Success', 'Database populated successfully');
+        } catch (error) {
+            pushWarningNotification('Error', `Failed to populate database: ${error}`);
+        }
+    };
+
+
     return (
         <main className={styles.dashboard}>
             <h1>Admin Dashboard</h1>
+            <div className="mb-6">
+                <Button 
+                    onClick={handlePopulateDB}
+                    className="bg-blue-600 hover:bg-blue-700"
+                >
+                    Populate Database
+                </Button>
+            </div>
             <ul className={styles.pageList}>
                 {pages.map((page) => (
                     <li key={page.path}>
