@@ -1,7 +1,7 @@
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
 import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { CampaignEntity } from './Campaign.Entity';
+import { CampaignEntity, CampaignMilestone } from './Campaign.Entity';
 
 @PostgreSQLAppliedFor([CampaignEntity])
 @Entity({ name: getPostgreSQLTableName(CampaignEntity.className()) })
@@ -53,8 +53,22 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     cdDeadline!: string;
     @Column({ type: 'integer', nullable: true })
     cdStatus!: number;
-    @Column({ type: 'varchar', length: 255, nullable: true })
-    cdMilestones!: string;
+    @Column({
+        type: 'jsonb',
+        nullable: true,
+        transformer: {
+            to: (value: CampaignMilestone[]) => value,
+            from: (value: any) =>
+                value
+                    ? value.map((m: { cmEstimatedDeliveryDate: number; cmPerncentage: number; cmStatus: number; }) => ({
+                          cmEstimatedDeliveryDate: BigInt(m.cmEstimatedDeliveryDate),
+                          cmPerncentage: m.cmPerncentage,
+                          cmStatus: m.cmStatus,
+                      }))
+                    : [],
+        },
+    })
+    cdMilestones!: CampaignMilestone[];
     @Column({ type: 'integer', nullable: true })
     cdFundsCount!: number;
     @Column({ type: 'integer', nullable: true })
