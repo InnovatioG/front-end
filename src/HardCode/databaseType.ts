@@ -136,7 +136,7 @@ export interface MilestoneF {
     id: number;
     campaign_id: number;
     campaign_status_id: number;
-    cmEstimatedDeliveryDate: string;
+    estimatedDeliveryDate: string;
     percentage: number;
     status: string;
     description: string;
