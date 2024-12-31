@@ -18,15 +18,15 @@ const MilestonePercentage: React.FC<MilestonePercentageProps> = ({
     maxAvailablePercentage,
     onPercentageChange,
 }) => {
-    const [percentage, setPercentage] = useState<number>(milestone.cmPercentage);
+    const [percentage, setPercentage] = useState<number>(milestone.percentage);
     console.log("percentage", percentage);
     const { editionMode } = useProjectDetailStore();
     const { priceAdaOrDollar } = usePriceStore();
     const { price_ada } = useProjectDetailStore();
 
     useEffect(() => {
-        setPercentage(milestone.cmPercentage);
-    }, [milestone.cmPercentage]);
+        setPercentage(milestone.percentage);
+    }, [milestone.percentage]);
 
     console.log("maxAvailablePercentage", maxAvailablePercentage);
 

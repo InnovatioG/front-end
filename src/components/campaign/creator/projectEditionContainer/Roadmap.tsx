@@ -24,7 +24,7 @@ const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
     };
 
     const getTotalPercentage = () => {
-        return milestones.reduce((sum, milestone) => sum + milestone.cmPercentage, 0);
+        return milestones.reduce((sum, milestone) => sum + milestone.percentage, 0);
     };
 
     const totalPercentage = getTotalPercentage();
@@ -41,7 +41,7 @@ const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
                     <MilestoneCardEdit
                         milestone={milestone}
                         index={index}
-                        maxAvailablePercentage={100 - totalPercentage + milestone.cmPercentage}
+                        maxAvailablePercentage={100 - totalPercentage + milestone.percentage}
                         onPercentageChange={(newPercentage) => handlePercentageChangeWrapper(milestone.id, newPercentage)}
                     />
                 </div>
