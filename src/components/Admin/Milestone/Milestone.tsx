@@ -33,7 +33,7 @@ export default function Milestone() {
                             <tr key={item._DB_id}>
                                 <td>{item.campaignId}</td>
                                 <td>{item.milestoneStatusId}</td>
-                                <td>{item.estimateDeliveryDate.toISOString()}</td>
+                                <td>{item.estimatedDeliveryDate.toISOString()}</td>
                                 <td>{item.percentage}</td>
                                 <td>{item.status}</td>
                                 <td>{item.description}</td>
@@ -82,11 +82,11 @@ export default function Milestone() {
                 <label>Estimated Delivery Date:</label>
                 <input
                     type="datetime-local"
-                    value={item.estimateDeliveryDate ? new Date(item.estimateDeliveryDate).toISOString().slice(0, -1) : ''}
+                    value={item.estimatedDeliveryDate ? new Date(item.estimatedDeliveryDate).toISOString().slice(0, -1) : ''}
                     onChange={(e) =>
                         setItem({
                             ...item,
-                            estimateDeliveryDate: new Date(e.target.value),
+                            estimatedDeliveryDate: new Date(e.target.value),
                         })
                     }
                 />
