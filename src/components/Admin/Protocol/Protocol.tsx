@@ -36,7 +36,7 @@ export default function Protocol() {
                                 <td>{item.pdMinADA.toString()}</td>
                                 <td>{item.contracts.join(', ')}</td>
                                 <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updatedAt?.toISOString()}</td>
+                                <td>{item.updated_at?.toISOString()}</td>
                                 <td>
                                     <button
                                         onClick={() => {

@@ -13,9 +13,9 @@ export class CampaignStatusEntity extends BaseEntity {
     @Convertible()
     description?: string;
     @Convertible({ isCreatedAt: true })
-    createdAt!: Date;
+    created_at!: Date;
     @Convertible({ isUpdatedAt: true })
-    updatedAt?: Date;
+    updated_at?: Date;
 
     // #endregion fields
 

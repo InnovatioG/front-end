@@ -9,13 +9,13 @@ export class ProtocolAdminWalletEntity extends BaseEntity {
 
     // #region fields
     @Convertible({ isDB_id: true })
-    protocolId!: string;
+    protocol_id!: string;
     @Convertible({ isDB_id: true })
-    walletId!: string;
+    wallet_id!: string;
     @Convertible({ isCreatedAt: true })
-    createdAt!: Date;
+    created_at!: Date;
     @Convertible({ isUpdatedAt: true })
-    updatedAt?: Date;
+    updated_at?: Date;
 
     // #endregion fields
 
@@ -25,8 +25,8 @@ export class ProtocolAdminWalletEntity extends BaseEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-        protocolId: true,
-        walletId: true,
+        protocol_id: true,
+        wallet_id: true,
         createdAt: true,
         updatedAt: true,
     };

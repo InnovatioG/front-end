@@ -28,7 +28,7 @@ export const useModal = () => {
 };
 
 export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { openModal: openModalFromStore, closeModal: closeModalFromStore, modalType: modalTypeToStore, campaignId, campaign, submission } = useModalStore();
+  const { openModal: openModalFromStore, closeModal: closeModalFromStore, modalType: modalTypeToStore, campaign_id, campaign, submission } = useModalStore();
   const [modalType, setModalType] = useState<ModalType | null>(null);
 
   const openModal = (type: ModalType) => setModalType(type);
@@ -43,9 +43,9 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     withdrawTokens: <SingleQuestionModal modalType="withdrawTokens" />,
     collect: <SingleQuestionModal modalType="collect" />,
     validateFundraisingStatus: <SingleQuestionModal modalType="validateFundraisingStatus" />,
-    manageCampaign: <ManageCampaignModal id={campaignId} />,
+    manageCampaign: <ManageCampaignModal id={campaign_id} />,
     sendReport: <SendReport campaign={campaign} />,
-    viewReport: <ViewReportModal id={campaignId} />,
+    viewReport: <ViewReportModal id={campaign_id} />,
     viewReportMilestone: <ViewReportMilestone submission={submission} />,
     contactSupport: <ContactSupportModal />,
 

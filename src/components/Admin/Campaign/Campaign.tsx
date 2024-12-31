@@ -64,10 +64,10 @@ export default function Campaign() {
                     <tbody>
                         {list.map((item) => (
                             <tr key={item._DB_id}>
-                                <td>{item.projectId}</td>
-                                <td>{item.campaingCategoryId}</td>
-                                <td>{item.campaignStatusId}</td>
-                                <td>{item.creatorWalletId}</td>
+                                <td>{item.project_id}</td>
+                                <td>{item.campaing_category_id}</td>
+                                <td>{item.campaign_status_id}</td>
+                                <td>{item.creator_wallet_id}</td>
                                 <td>{item.cdCampaignVersion}</td>
                                 <td>{item.cdCampaignPolicy_CS}</td>
                                 <td>{item.cdCampaignFundsPolicyID_CS}</td>
@@ -81,7 +81,7 @@ export default function Campaign() {
                                 <td>{item.cdRequestedMinADA.toString()}</td>
                                 <td>{item.cdFundedADA.toString()}</td>
                                 <td>{item.cdCollectedADA.toString()}</td>
-                                <td>{new Date(item.cdBeginAt?.toString()).toISOString()}</td>
+                                <td>{new Date(item.cdbegin_at?.toString()).toISOString()}</td>
                                 <td>{new Date(item.cdDeadline?.toString()).toISOString()}</td>
                                 <td>{item.cdStatus}</td>
                                 <td>{item.cdMilestones}</td>
@@ -89,22 +89,22 @@ export default function Campaign() {
                                 <td>{item.cdFundsIndex}</td>
                                 <td>{item.cdMinADA.toString()}</td>
                                 <td>{item.description}</td>
-                                <td>{item.beginAt?.toISOString()}</td>
+                                <td>{item.begin_at?.toISOString()}</td>
                                 <td>{item.deadline?.toISOString()}</td>
-                                <td>{item.logoUrl}</td>
-                                <td>{item.bannerUrl}</td>
+                                <td>{item.logo_url}</td>
+                                <td>{item.banner_url}</td>
                                 <td>{item.website}</td>
                                 <td>{item.instagram}</td>
                                 <td>{item.twitter}</td>
                                 <td>{item.discord}</td>
                                 <td>{item.facebook}</td>
                                 <td>{item.investors}</td>
-                                <td>{item.tokenomicsMaxSupply}</td>
-                                <td>{item.tokenomicsDescription}</td>
+                                <td>{item.tokenomics_max_supply}</td>
+                                <td>{item.tokenomics_description}</td>
                                 <td>{item.featured ? 'Yes' : 'No'}</td>
                                 <td>{item.archived ? 'Yes' : 'No'}</td>
                                 <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updatedAt?.toISOString()}</td>
+                                <td>{item.updated_at?.toISOString()}</td>
                                 <td>
                                     <button
                                         onClick={() => {
@@ -136,19 +136,19 @@ export default function Campaign() {
             {/* General Fields */}
             <div>
                 <label>Project ID:</label>
-                <input type="text" value={item.projectId || ''} onChange={(e) => setItem({ ...item, projectId: e.target.value })} />
+                <input type="text" value={item.project_id || ''} onChange={(e) => setItem({ ...item, project_id: e.target.value })} />
             </div>
             <div>
                 <label>Campaign Category ID:</label>
-                <input type="text" value={item.campaingCategoryId || ''} onChange={(e) => setItem({ ...item, campaingCategoryId: e.target.value })} />
+                <input type="text" value={item.campaing_category_id || ''} onChange={(e) => setItem({ ...item, campaing_category_id: e.target.value })} />
             </div>
             <div>
                 <label>Campaign Status ID:</label>
-                <input type="text" value={item.campaignStatusId || ''} onChange={(e) => setItem({ ...item, campaignStatusId: e.target.value })} />
+                <input type="text" value={item.campaign_status_id || ''} onChange={(e) => setItem({ ...item, campaign_status_id: e.target.value })} />
             </div>
             <div>
                 <label>Creator Wallet ID:</label>
-                <input type="text" value={item.creatorWalletId || ''} onChange={(e) => setItem({ ...item, creatorWalletId: e.target.value })} />
+                <input type="text" value={item.creator_wallet_id || ''} onChange={(e) => setItem({ ...item, creator_wallet_id: e.target.value })} />
             </div>
 
             {/* Datum Fields */}
@@ -248,10 +248,10 @@ export default function Campaign() {
                 <label>Begin At (POSIXTime):</label>
                 <input
                     type="text"
-                    value={item.cdBeginAt?.toString() || ''}
+                    value={item.cdbegin_at?.toString() || ''}
                     onChange={(e) => {
                         if (!isNaN(Number(e.target.value))) {
-                            setItem({ ...item, cdBeginAt: BigInt(e.target.value) });
+                            setItem({ ...item, cdbegin_at: BigInt(e.target.value) });
                         }
                     }}
                 />
@@ -306,10 +306,10 @@ export default function Campaign() {
                 <label>Begin At (Human-Readable):</label>
                 <input
                     type="datetime-local"
-                    value={item.beginAt ? new Date(item.beginAt).toISOString().split('T')[0] : ''}
+                    value={item.begin_at ? new Date(item.begin_at).toISOString().split('T')[0] : ''}
                     onChange={(e) => {
                         const selectedDate = new Date(e.target.value);
-                        setItem({ ...item, beginAt: selectedDate });
+                        setItem({ ...item, begin_at: selectedDate });
                     }}
                 />
             </div>
@@ -327,11 +327,11 @@ export default function Campaign() {
 
             <div>
                 <label>Logo URL:</label>
-                <input type="text" value={item.logoUrl || ''} onChange={(e) => setItem({ ...item, logoUrl: e.target.value })} />
+                <input type="text" value={item.logo_url || ''} onChange={(e) => setItem({ ...item, logo_url: e.target.value })} />
             </div>
             <div>
                 <label>Banner URL:</label>
-                <input type="text" value={item.bannerUrl || ''} onChange={(e) => setItem({ ...item, bannerUrl: e.target.value })} />
+                <input type="text" value={item.banner_url || ''} onChange={(e) => setItem({ ...item, banner_url: e.target.value })} />
             </div>
             <div>
                 <label>Website:</label>
@@ -359,11 +359,11 @@ export default function Campaign() {
             </div>
             <div>
                 <label>Tokenomics Max Supply:</label>
-                <input type="text" value={item.tokenomicsMaxSupply || ''} onChange={(e) => setItem({ ...item, tokenomicsMaxSupply: e.target.value })} />
+                <input type="text" value={item.tokenomics_max_supply || ''} onChange={(e) => setItem({ ...item, tokenomics_max_supply: e.target.value })} />
             </div>
             <div>
                 <label>Tokenomics Description:</label>
-                <input type="text" value={item.tokenomicsDescription || ''} onChange={(e) => setItem({ ...item, tokenomicsDescription: e.target.value })} />
+                <input type="text" value={item.tokenomics_description || ''} onChange={(e) => setItem({ ...item, tokenomics_description: e.target.value })} />
             </div>
             <div>
                 <label>Featured:</label>

@@ -9,23 +9,23 @@ export class MilestoneSubmissionEntity extends BaseEntity {
 
     // #region fields
     @Convertible({ isDB_id: true })
-    milestoneId!: string;
+    milestone_id!: string;
     @Convertible({ isDB_id: true })
-    submissionStatusId!: string;
+    submission_status_id!: string;
     @Convertible({ isDB_id: true })
-    submittedByWalletId!: string;
+    submitted_by_wallet_id!: string;
     @Convertible({ isDB_id: true })
-    revisedByWalletId!: string;
+    revised_by_wallet_id!: string;
     @Convertible()
-    reportProofOfFinalization?: string;
+    report_proof_of_finalization?: string;
     @Convertible()
-    approvedJustification?: string;
+    approved_justification?: string;
     @Convertible()
-    rejectedJustification?: string;
+    rejected_justification?: string;
     @Convertible({ isCreatedAt: true })
-    createdAt!: Date;
+    created_at!: Date;
     @Convertible({ isUpdatedAt: true })
-    updatedAt?: Date;
+    updated_at?: Date;
 
     // #endregion fields
 
@@ -35,13 +35,13 @@ export class MilestoneSubmissionEntity extends BaseEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-        milestoneId: true,
-        submissionStatusId: true,
-        submittedByWalletId: true,
-        revisedByWalletId: true,
-        reportProofOfFinalization: true,
-        approvedJustification: true,
-        rejectedJustification: true,
+        milestone_id: true,
+        submission_status_id: true,
+        submitted_by_wallet_id: true,
+        revised_by_wallet_id: true,
+        report_proof_of_finalization: true,
+        approved_justification: true,
+        rejected_justification: true,
         createdAt: true,
         updatedAt: true,
     };

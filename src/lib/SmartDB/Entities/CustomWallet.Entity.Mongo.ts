@@ -46,34 +46,34 @@ export class CustomWalletEntityMongo extends BaseEntityMongo {
 
     public static MongoModel() {
         interface Interface {
-            createdBy: string;
-            lastConnection: Date;
-            walletUsed: string;
-            walletValidatedWithSignedToken: boolean;
-            paymentPkh: PaymentKeyHash;
+            created_by: string;
+            last_connection: Date;
+            wallet_used: string;
+            wallet_validated_with_signed_token: boolean;
+            payment_pkh: PaymentKeyHash;
             stakePkh: StakeKeyHash;
             name: string;
             email: string;
-            validatedEmail: string;
-            testnetAddress: Address;
-            mainnetAddress: Address;
+            validated_email: string;
+            testnet_address: Address;
+            mainnet_address: Address;
             createdAt: Date;
             updatedAt: Date;
         }
 
         const schema = new Schema<Interface>(
             {
-                createdBy: { type: String, required: true },
-                lastConnection: { type: Date, required: true },
-                walletUsed: { type: String, required: true },
-                walletValidatedWithSignedToken: { type: Boolean, required: true },
-                paymentPkh: { type: String, required: true },
+                created_by: { type: String, required: true },
+                last_connection: { type: Date, required: true },
+                wallet_used: { type: String, required: true },
+                wallet_validated_with_signed_token: { type: Boolean, required: true },
+                payment_pkh: { type: String, required: true },
                 stakePkh: { type: String, required: true },
                 name: { type: String, required: true },
                 email: { type: String, required: false },
-                validatedEmail: { type: String, required: false },
-                testnetAddress: { type: String, required: true },
-                mainnetAddress: { type: String, required: true },
+                validated_email: { type: String, required: false },
+                testnet_address: { type: String, required: true },
+                mainnet_address: { type: String, required: true },
             },
             { timestamps: true }
         );

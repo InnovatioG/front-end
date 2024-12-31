@@ -29,8 +29,8 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
         setEditionMode(false);
 
         if (id) {
-            const campaignId = Number(id);
-            const campaign: any = JSON.campaigns.find((camp: any) => camp.id === campaignId);
+            const campaign_id = Number(id);
+            const campaign: any = JSON.campaigns.find((camp: any) => camp.id === campaign_id);
             const user: any = JSON.users.find((user: any) => user.wallet_address === session?.user?.address);
 
             if (campaign) {

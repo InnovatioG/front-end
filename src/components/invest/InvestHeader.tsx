@@ -4,10 +4,10 @@ import styles from "./InvestHeader.module.scss"
 import Image from 'next/image';
 interface InvestHeaderProps {
     title: string;
-    logoUrl: string;
+    logo_url: string;
 }
 
-const InvestHeader: React.FC<InvestHeaderProps> = ({ title, logoUrl }) => {
+const InvestHeader: React.FC<InvestHeaderProps> = ({ title, logo_url }) => {
 
     console.log("title", title)
 
@@ -17,7 +17,7 @@ const InvestHeader: React.FC<InvestHeaderProps> = ({ title, logoUrl }) => {
             <div className={styles.textInfo}>
                 <h2>{title}</h2>
                 <div className={styles.imagenContainer}>
-                    <Image src={logoUrl} alt="cohete" layout='fill' objectFit='cover' />
+                    <Image src={logo_url} alt="cohete" layout='fill' objectFit='cover' />
                 </div>
             </div>
         </div>

@@ -15,14 +15,14 @@ const StepTwo: React.FC<StepTwoProps> = (props) => {
 
 
     const disabledButton = () => {
-        return !newCampaign.banner_url || !newCampaign.logoUrl || newCampaign.milestones.length === 0 || newCampaign.min_request === 0;
+        return !newCampaign.banner_url || !newCampaign.logo_url || newCampaign.milestones.length === 0 || newCampaign.min_request === 0;
     };
 
     return (
         <article className={styles.articleContainer} >
             <h2 className={styles.title}>Add Company logo</h2>
             <section className={styles.imagenContainer}>
-                <Avatar setPicture={setCompanyLogo} picture={newCampaign.logoUrl} />
+                <Avatar setPicture={setCompanyLogo} picture={newCampaign.logo_url} />
                 <div className={styles.spanContainer}>
                     <span className={styles.span}>
                         The image shoud be 600x600 píxeles.t must be a JPG, PNG, GIF, TIFF or BMP file, no larger than 5 MB.

@@ -14,11 +14,11 @@ export class MilestoneEntityPostgreSQL extends BaseEntityPostgreSQL {
     _id!: number; // Auto-generated primary key
 
     @Column({ type: 'varchar', length: 255 })
-    campaignId!: string;
+    campaign_id!: string;
     @Column({ type: 'varchar', length: 255 })
-    milestoneStatusId!: string;
+    milestone_status_id!: string;
     @Column({ type: 'date' })
-    estimateDeliveryDate!: Date;
+    estimate_delivery_date!: Date;
     @Column({ type: 'integer' })
     percentage!: number;
     @Column({ type: 'integer' })
@@ -26,9 +26,9 @@ export class MilestoneEntityPostgreSQL extends BaseEntityPostgreSQL {
     @Column({ type: 'text' })
     description!: string;
     @CreateDateColumn()
-    createdAt!: Date;
+    created_at!: Date;
     @UpdateDateColumn()
-    updatedAt!: Date;
+    updated_at!: Date;
 
     // #endregion fields
 

@@ -38,7 +38,7 @@ export interface CampaignState {
         title: string;
         min_request: number;
         description: string;
-        logoUrl: string;
+        logo_url: string;
         banner_url: string;
         start_date: string;
         end_date: string;
@@ -72,7 +72,7 @@ export const initialState: CampaignState = {
         user_id: null,
         state_id: 1,
         category_id: null,
-        logoUrl: '',
+        logo_url: '',
         banner_url: '',
         milestones: [],
         min_request: 0,

@@ -15,7 +15,7 @@ export interface CampaignDatum {
     cdRequestedMinADA: bigint;
     cdFundedADA: bigint;
     cdCollectedADA: bigint;
-    cdBeginAt: POSIXTime;
+    cdbegin_at: POSIXTime;
     cdDeadline: POSIXTime;
     cdStatus: number;
     cdMilestones: string;
@@ -31,17 +31,17 @@ export class CampaignEntity extends BaseSmartDBEntity {
 
     protected static _plutusDataIsSubType = true;
     protected static _is_NET_id_Unique = true;
-    _NET_id_TN: string = 'CampaignID';
+    _NET_id_TN: string = 'campaign_id';
 
     // #region fields
     @Convertible({ isDB_id: true })
-    projectId!: string;
+    project_id!: string;
     @Convertible({ isDB_id: true })
-    campaingCategoryId!: string;
+    campaing_category_id!: string;
     @Convertible({ isDB_id: true })
-    campaignStatusId!: string;
+    campaign_status_id!: string;
     @Convertible({ isDB_id: true })
-    creatorWalletId!: string;
+    creator_wallet_id!: string;
     @Convertible({ isForDatum: true })
     cdCampaignVersion!: number;
     @Convertible({ isForDatum: true })
@@ -69,7 +69,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible({ isForDatum: true })
     cdCollectedADA!: bigint;
     @Convertible({ isForDatum: true, type: BigInt })
-    cdBeginAt!: POSIXTime;
+    cdbegin_at!: POSIXTime;
     @Convertible({ isForDatum: true, type: BigInt })
     cdDeadline!: POSIXTime;
     @Convertible({ isForDatum: true })
@@ -85,13 +85,13 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible()
     description?: string;
     @Convertible()
-    beginAt?: Date;
+    begin_at?: Date;
     @Convertible()
     deadline?: Date;
     @Convertible()
-    logoUrl?: string;
+    logo_url?: string;
     @Convertible()
-    bannerUrl?: string;
+    banner_url?: string;
     @Convertible()
     website?: string;
     @Convertible()
@@ -105,17 +105,17 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible()
     investors!: number;
     @Convertible()
-    tokenomicsMaxSupply!: string;
+    tokenomics_max_supply!: string;
     @Convertible()
-    tokenomicsDescription!: string;
+    tokenomics_description!: string;
     @Convertible()
     featured!: boolean;
     @Convertible()
     archived!: boolean;
     @Convertible({ isCreatedAt: true })
-    createdAt!: Date;
+    created_at!: Date;
     @Convertible({ isUpdatedAt: true })
-    updatedAt?: Date;
+    updated_at?: Date;
 
     // #endregion fields
 
@@ -125,10 +125,10 @@ export class CampaignEntity extends BaseSmartDBEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-        projectId: true,
-        campaingCategoryId: true,
-        campaignStatusId: true,
-        creatorWalletId: true,
+        project_id: true,
+        campaing_category_id: true,
+        campaign_status_id: true,
+        creator_wallet_id: true,
         cdCampaignVersion: true,
         cdCampaignPolicy_CS: true,
         cdCampaignFundsPolicyID_CS: true,
@@ -142,7 +142,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
         cdRequestedMinADA: true,
         cdFundedADA: true,
         cdCollectedADA: true,
-        cdBeginAt: true,
+        cdbegin_at: true,
         cdDeadline: true,
         cdStatus: true,
         cdMilestones: true,
@@ -150,18 +150,18 @@ export class CampaignEntity extends BaseSmartDBEntity {
         cdFundsIndex: true,
         cdMinADA: true,
         description: true,
-        beginAt: true,
+        begin_at: true,
         deadline: true,
-        logoUrl: true,
-        bannerUrl: true,
+        logo_url: true,
+        banner_url: true,
         website: true,
         instagram: true,
         twitter: true,
         discord: true,
         facebook: true,
         investors: true,
-        tokenomicsMaxSupply: true,
-        tokenomicsDescription: true,
+        tokenomics_max_supply: true,
+        tokenomics_description: true,
         featured: true,
         archived: true,
         createdAt: true,

@@ -8,11 +8,11 @@ export class MilestoneEntity extends BaseEntity {
 
     // #region fields
     @Convertible({ isDB_id: true })
-    campaignId!: string;
+    campaign_id!: string;
     @Convertible({ isDB_id: true })
-    milestoneStatusId!: string;
+    milestone_status_id!: string;
     @Convertible()
-    estimateDeliveryDate!: Date;
+    estimate_delivery_date!: Date;
     @Convertible()
     percentage!: number;
     @Convertible()
@@ -20,9 +20,9 @@ export class MilestoneEntity extends BaseEntity {
     @Convertible()
     description!: string;
     @Convertible({ isCreatedAt: true })
-    createdAt!: Date;
+    created_at!: Date;
     @Convertible({ isUpdatedAt: true })
-    updatedAt?: Date;
+    updated_at?: Date;
 
     // #endregion fields
 
@@ -32,9 +32,9 @@ export class MilestoneEntity extends BaseEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-        campaignId: true,
-        milestoneStatusId: true,
-        estimateDeliveryDate: true,
+        campaign_id: true,
+        milestone_status_id: true,
+        estimate_delivery_date: true,
         percentage: true,
         status: true,
         description: true,

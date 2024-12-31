@@ -14,13 +14,13 @@ export class ProtocolAdminWalletEntityPostgreSQL extends BaseEntityPostgreSQL {
     _id!: number; // Auto-generated primary key
 
     @Column({ type: 'varchar', length: 255 })
-    protocolId!: string;
+    protocol_id!: string;
     @Column({ type: 'varchar', length: 255 })
-    walletId!: string;
+    wallet_id!: string;
     @CreateDateColumn()
-    createdAt!: Date;
+    created_at!: Date;
     @UpdateDateColumn()
-    updatedAt!: Date;
+    updated_at!: Date;
 
     // #endregion fields
 

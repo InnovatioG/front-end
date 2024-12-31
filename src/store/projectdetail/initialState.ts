@@ -9,7 +9,7 @@ export interface ProjectDetailState {
         description: string;
         state_id: number;
         banner_url: string;
-        logoUrl: string;
+        logo_url: string;
         created_at: string;
         updated_at: string;
         investors: number;
@@ -58,7 +58,7 @@ export const initialState: ProjectDetailState = {
         state_id: 0,
         investors: 0,
         banner_url: '',
-        logoUrl: '',
+        logo_url: '',
         created_at: '',
         updated_at: '',
         status: '',

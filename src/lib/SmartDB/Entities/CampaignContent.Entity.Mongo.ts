@@ -45,7 +45,7 @@ export class CampaignContentEntityMongo extends BaseEntityMongo {
 
     public static MongoModel() {
         interface Interface {
-            campaignId: string;
+            campaign_id: string;
             name: string;
             description: string;
             order: number;
@@ -55,7 +55,7 @@ export class CampaignContentEntityMongo extends BaseEntityMongo {
 
         const schema = new Schema<Interface>(
             {
-                campaignId: { type: String, required: true },
+                campaign_id: { type: String, required: true },
                 name: { type: String, required: true },
                 description: { type: String, required: false },
                 order: { type: Number, required: true },

@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router';
 import JSON from "@/HardCode/campaignId.json";
 import CampaignHeader from '@/components/campaign/campaignHeader/CampaignHeader';
-import styles from "./campaignIdLayout.module.scss";
+import styles from "./campaign_idLayout.module.scss";
 import CampaignDashCreation from '@/components/campaign/campaignHeader/CampaignDash';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import ProjectEditionContainer from '@/components/campaign/creator/projectEditionContainer/ProjectEditionContainer';
@@ -23,8 +23,8 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
         setIsLoading(true);
 
         if (id) {
-            const campaignId = Number(id);
-            const campaign = JSON.campaigns.find((camp) => camp.id === campaignId);
+            const campaign_id = Number(id);
+            const campaign = JSON.campaigns.find((camp) => camp.id === campaign_id);
 
             if (campaign) {
                 setProject(campaign);

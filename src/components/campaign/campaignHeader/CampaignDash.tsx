@@ -92,7 +92,7 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
             </div>
             <div className={styles.avatarContainer}>
                 <Avatar big={true} className={styles.pictureContainer}>
-                    <AvatarImage src={project.logoUrl} alt={project.title} />
+                    <AvatarImage src={project.logo_url} alt={project.title} />
                     <AvatarFallback>{project.title[0]}</AvatarFallback>
                 </Avatar>
             </div>

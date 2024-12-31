@@ -32,7 +32,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
         //----------------------------
         // let restricFilter: any = await super.restricFilter(user);
         // //-------------------
-        // if (user === undefined || user.isWalletValidatedWithSignedToken === false) {
+        // if (user === undefined || user.iswallet_validated_with_signed_token === false) {
         //     restricFilter = { showInSite: true };
         // } else {
         //     if (user.isCoreTeam === false) {
@@ -62,7 +62,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
         //     throw `Can't create ${this._Entity.className()} if not logged`;
         // }
         // //-------------------
-        // if (user.isWalletValidatedWithSignedToken === false) {
+        // if (user.iswallet_validated_with_signed_token === false) {
         //     throw `Can't create ${this._Entity.className()} if not logged in Admin Mode`;
         // }
         // //-------------------
@@ -78,7 +78,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
         //     throw `Can't update ${this._Entity.className()} if not logged`;
         // }
         // //-------------------
-        // if (user.isWalletValidatedWithSignedToken === false) {
+        // if (user.iswallet_validated_with_signed_token === false) {
         //     throw `Can't update ${this._Entity.className()} if not logged in Admin Mode`;
         // }
         // //-------------------
@@ -96,7 +96,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
         //     throw `Can't delete ${this._Entity.className()} if not logged`;
         // }
         // //-------------------
-        // if (user.isWalletValidatedWithSignedToken === false) {
+        // if (user.iswallet_validated_with_signed_token === false) {
         //     throw `Can't delete ${this._Entity.className()} if not logged in Admin Mode`;
         // }
         // //-------------------

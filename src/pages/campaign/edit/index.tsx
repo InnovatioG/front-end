@@ -34,8 +34,8 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
         fetchAdaPrice();
 
         if (id) {
-            const campaignId = Number(id);
-            const campaign: any = JSON.campaigns.find((camp) => camp.id === campaignId);
+            const campaign_id = Number(id);
+            const campaign: any = JSON.campaigns.find((camp) => camp.id === campaign_id);
 
             if (campaign) {
                 const user = JSON.users.find(user => user.wallet_address === session?.user?.address);

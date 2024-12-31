@@ -28,12 +28,12 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
         console.log(milestone)
     }, [milestone]);
 
-    const milestoneStatusId = milestone.milestone_status?.milestone_submission?.milestone_status_id || 0;
+    const milestone_status_id = milestone.milestone_status?.milestone_submission?.milestone_status_id || 0;
 
-    const reportProofOfFinalization = milestone.milestone_status?.milestone_submission?.report_proof_of_finalization;
+    const report_proof_of_finalization = milestone.milestone_status?.milestone_submission?.report_proof_of_finalization;
 
-    const icon = milestoneStatusId ? imageByStatus(milestoneStatusId) : '';
-    const milestoneStyle = stylesByStatus(milestoneStatusId, styles);
+    const icon = milestone_status_id ? imageByStatus(milestone_status_id) : '';
+    const milestoneStyle = stylesByStatus(milestone_status_id, styles);
 
     return (
         <article className={styles.main}>
@@ -69,12 +69,12 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
 
                 </section>
             )}
-            {reportProofOfFinalization && (
+            {report_proof_of_finalization && (
                 <section className={styles.buttonView}>
                     <GeneralButtonUI
                         classNameStyle="fillb"
                         onClick={() => {
-                            openModal("viewReportMilestone", 0, undefined, reportProofOfFinalization);
+                            openModal("viewReportMilestone", 0, undefined, report_proof_of_finalization);
                         }}
                     >
                         View Reprt Submitted

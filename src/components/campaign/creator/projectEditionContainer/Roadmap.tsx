@@ -19,8 +19,8 @@ const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
 
 
 
-    const handlePercentageChangeWrapper = (milestoneId: number, newPercentage: number) => {
-        return handlePercentageChange(milestoneId, newPercentage, milestones, setProject, project);
+    const handlePercentageChangeWrapper = (milestone_id: number, newPercentage: number) => {
+        return handlePercentageChange(milestone_id, newPercentage, milestones, setProject, project);
     };
 
     const getTotalPercentage = () => {

@@ -9,15 +9,15 @@ export class CustomWalletEntity extends BaseEntity {
 
     // #region fields
     @Convertible()
-    createdBy!: string;
+    created_by!: string;
     @Convertible()
-    lastConnection!: Date;
+    last_connection!: Date;
     @Convertible()
-    walletUsed!: string;
+    wallet_used!: string;
     @Convertible()
-    walletValidatedWithSignedToken!: boolean;
+    wallet_validated_with_signed_token!: boolean;
     @Convertible()
-    paymentPkh!: PaymentKeyHash;
+    payment_pkh!: PaymentKeyHash;
     @Convertible()
     stakePkh!: StakeKeyHash;
     @Convertible()
@@ -25,15 +25,15 @@ export class CustomWalletEntity extends BaseEntity {
     @Convertible()
     email?: string;
     @Convertible()
-    validatedEmail?: string;
+    validated_email?: string;
     @Convertible()
-    testnetAddress!: Address;
+    testnet_address!: Address;
     @Convertible()
-    mainnetAddress!: Address;
+    mainnet_address!: Address;
     @Convertible({ isCreatedAt: true })
-    createdAt!: Date;
+    created_at!: Date;
     @Convertible({ isUpdatedAt: true })
-    updatedAt?: Date;
+    updated_at?: Date;
 
     // #endregion fields
 
@@ -43,17 +43,17 @@ export class CustomWalletEntity extends BaseEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-        createdBy: true,
-        lastConnection: true,
-        walletUsed: true,
-        walletValidatedWithSignedToken: true,
-        paymentPkh: true,
+        created_by: true,
+        last_connection: true,
+        wallet_used: true,
+        wallet_validated_with_signed_token: true,
+        payment_pkh: true,
         stakePkh: true,
         name: true,
         email: true,
-        validatedEmail: true,
-        testnetAddress: true,
-        mainnetAddress: true,
+        validated_email: true,
+        testnet_address: true,
+        mainnet_address: true,
         createdAt: true,
         updatedAt: true,
     };
