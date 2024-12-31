@@ -1,8 +1,8 @@
-import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { CustomWalletEntity } from './CustomWallet.Entity';
+import { type Address, type PaymentKeyHash, type StakeKeyHash } from 'lucid-cardano';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
 import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
-import { type PaymentKeyHash, type StakeKeyHash, type Address } from 'lucid-cardano';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { CustomWalletEntity } from './CustomWallet.Entity';
 
 @PostgreSQLAppliedFor([CustomWalletEntity])
 @Entity({ name: getPostgreSQLTableName(CustomWalletEntity.className()) })
@@ -20,8 +20,8 @@ export class CustomWalletEntityPostgreSQL extends BaseEntityPostgreSQL {
     lastConnection!: Date;
     @Column({ type: 'varchar', length: 255 })
     walletUsed!: string;
-    @Column({ type: 'varchar', length: 255 })
-    walletValidatedWithSignedToken!: boolean;
+    @Column({ type: 'boolean', default: false })
+    walletValidatedWithSignedToken!: boolean
     @Column({ type: 'varchar', length: 255 })
     paymentPkh!: PaymentKeyHash;
     @Column({ type: 'varchar', length: 255 })

@@ -11,16 +11,6 @@ export class MilestoneSubmissionEntityMongo extends BaseEntityMongo {
 
     // #region fields
 
-    // milestoneId:ID
-    // submissionStatusId:ID
-    // submittedByWalletId:ID
-    // revisedByWalletId:ID
-    // reportProofOfFinalization:String
-    // approvedJustification:String
-    // rejectedJustification:String
-    // createdAt: Date
-    // updatedAt: Date
-
     // #endregion fields
 
     // #region internal class methods
@@ -62,6 +52,8 @@ export class MilestoneSubmissionEntityMongo extends BaseEntityMongo {
             reportProofOfFinalization: string;
             approvedJustification: string;
             rejectedJustification: string;
+            createdAt: Date;
+            updatedAt: Date;
         }
 
         const schema = new Schema<Interface>(
@@ -70,7 +62,7 @@ export class MilestoneSubmissionEntityMongo extends BaseEntityMongo {
                 submissionStatusId: { type: String, required: true },
                 submittedByWalletId: { type: String, required: true },
                 revisedByWalletId: { type: String, required: true },
-                reportProofOfFinalization: { type: String, required: false },
+                reportProofOfFinalization: { type: String, required: true },
                 approvedJustification: { type: String, required: false },
                 rejectedJustification: { type: String, required: false },
             },

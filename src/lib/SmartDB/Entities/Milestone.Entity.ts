@@ -1,27 +1,22 @@
 import 'reflect-metadata';
-import { Convertible, BaseSmartDBEntity, asSmartDBEntity } from 'smart-db';
-import {} from 'lucid-cardano';
+import { BaseEntity, Convertible, asEntity } from 'smart-db';
 
-@asSmartDBEntity()
-export class MilestoneEntity extends BaseSmartDBEntity {
+@asEntity()
+export class MilestoneEntity extends BaseEntity {
     protected static _apiRoute: string = 'milestone';
     protected static _className: string = 'Milestone';
 
-    protected static _plutusDataIsSubType = false;
-    protected static _is_NET_id_Unique = false;
-    _NET_id_TN: string = 'MilestoneID';
-
     // #region fields
-    @Convertible()
+    @Convertible({ isDB_id: true })
     campaignId!: string;
+    @Convertible({ isDB_id: true })
+    milestoneStatusId!: string;
     @Convertible()
-    campaignStatusId!: string;
-    @Convertible({ isForDatum: true })
-    cmEstimateDeliveryDate!: Date;
-    @Convertible({ isForDatum: true })
-    cmPercentage!: number;
-    @Convertible({ isForDatum: true })
-    cmStatus!: number;
+    estimateDeliveryDate!: Date;
+    @Convertible()
+    percentage!: number;
+    @Convertible()
+    status!: number;
     @Convertible()
     description!: string;
     @Convertible({ isCreatedAt: true })
@@ -38,10 +33,10 @@ export class MilestoneEntity extends BaseSmartDBEntity {
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
         campaignId: true,
-        campaignStatusId: true,
-        cmEstimateDeliveryDate: true,
-        cmPercentage: true,
-        cmStatus: true,
+        milestoneStatusId: true,
+        estimateDeliveryDate: true,
+        percentage: true,
+        status: true,
         description: true,
         createdAt: true,
         updatedAt: true,

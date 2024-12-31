@@ -1,7 +1,7 @@
-import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { ProtocolAdminWalletEntity } from './ProtocolAdminWallet.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
 import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { ProtocolAdminWalletEntity } from './ProtocolAdminWallet.Entity';
 
 @PostgreSQLAppliedFor([ProtocolAdminWalletEntity])
 @Entity({ name: getPostgreSQLTableName(ProtocolAdminWalletEntity.className()) })

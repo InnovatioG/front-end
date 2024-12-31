@@ -1,6 +1,6 @@
+import { } from 'lucid-cardano';
 import 'reflect-metadata';
-import { Convertible, BaseEntity, asEntity } from 'smart-db';
-import {} from 'lucid-cardano';
+import { BaseEntity, Convertible, asEntity } from 'smart-db';
 
 @asEntity()
 export class ProtocolAdminWalletEntity extends BaseEntity {
@@ -8,9 +8,9 @@ export class ProtocolAdminWalletEntity extends BaseEntity {
     protected static _className: string = 'ProtocolAdminWallet';
 
     // #region fields
-    @Convertible()
+    @Convertible({ isDB_id: true })
     protocolId!: string;
-    @Convertible()
+    @Convertible({ isDB_id: true })
     walletId!: string;
     @Convertible({ isCreatedAt: true })
     createdAt!: Date;

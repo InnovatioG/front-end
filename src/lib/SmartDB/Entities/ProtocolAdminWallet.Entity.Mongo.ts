@@ -11,11 +11,6 @@ export class ProtocolAdminWalletEntityMongo extends BaseEntityMongo {
 
     // #region fields
 
-    // protocolId:ID
-    // walletId:ID
-    // createdAt: Date
-    // updatedAt: Date
-
     // #endregion fields
 
     // #region internal class methods
@@ -52,6 +47,8 @@ export class ProtocolAdminWalletEntityMongo extends BaseEntityMongo {
         interface Interface {
             protocolId: string;
             walletId: string;
+            createdAt: Date;
+            updatedAt: Date;
         }
 
         const schema = new Schema<Interface>(

@@ -1,6 +1,6 @@
+import { } from 'lucid-cardano';
 import 'reflect-metadata';
-import { Convertible, BaseEntity, asEntity } from 'smart-db';
-import {} from 'lucid-cardano';
+import { BaseEntity, Convertible, asEntity } from 'smart-db';
 
 @asEntity()
 export class CampaignMemberEntity extends BaseEntity {
@@ -8,11 +8,11 @@ export class CampaignMemberEntity extends BaseEntity {
     protected static _className: string = 'CampaignMember';
 
     // #region fields
-    @Convertible()
+    @Convertible({ isDB_id: true })
     campaignId!: string;
     @Convertible()
     editor!: boolean;
-    @Convertible()
+    @Convertible({ isDB_id: true })
     walletId!: string;
     @Convertible()
     rol?: string;

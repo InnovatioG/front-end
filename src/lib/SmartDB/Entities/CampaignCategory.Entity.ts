@@ -1,6 +1,6 @@
+import { } from 'lucid-cardano';
 import 'reflect-metadata';
-import { Convertible, BaseEntity, asEntity } from 'smart-db';
-import {} from 'lucid-cardano';
+import { BaseEntity, Convertible, asEntity } from 'smart-db';
 
 @asEntity()
 export class CampaignCategoryEntity extends BaseEntity {

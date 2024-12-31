@@ -11,18 +11,18 @@ import {
     console_error,
     console_log
 } from 'smart-db/backEnd';
-import { CampaignEntity } from '../Entities/Campaign.Entity';
+import { CampaignFundsEntity } from '../Entities/CampaignFunds.Entity';
 
-@BackEndAppliedFor(CampaignEntity)
-export class CampaignBackEndApplied extends BaseSmartDBBackEndApplied {
-    protected static _Entity = CampaignEntity;
+@BackEndAppliedFor(CampaignFundsEntity)
+export class CampaignFundsBackEndApplied extends BaseSmartDBBackEndApplied {
+    protected static _Entity = CampaignFundsEntity;
     protected static _BackEndMethods = BaseSmartDBBackEndMethods;
 }
 
-@BackEndApiHandlersFor(CampaignEntity)
-export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
-    protected static _Entity = CampaignEntity;
-    protected static _BackEndApplied = CampaignBackEndApplied;
+@BackEndApiHandlersFor(CampaignFundsEntity)
+export class CampaignFundsApiHandlers extends BaseSmartDBBackEndApiHandlers {
+    protected static _Entity = CampaignFundsEntity;
+    protected static _BackEndApplied = CampaignFundsBackEndApplied;
 
     // #region restrict api handlers
 

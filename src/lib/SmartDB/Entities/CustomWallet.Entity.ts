@@ -1,6 +1,6 @@
+import { type Address, type PaymentKeyHash, type StakeKeyHash } from 'lucid-cardano';
 import 'reflect-metadata';
-import { Convertible, BaseEntity, asEntity } from 'smart-db';
-import { type PaymentKeyHash, type StakeKeyHash, type Address } from 'lucid-cardano';
+import { BaseEntity, Convertible, asEntity } from 'smart-db';
 
 @asEntity()
 export class CustomWalletEntity extends BaseEntity {

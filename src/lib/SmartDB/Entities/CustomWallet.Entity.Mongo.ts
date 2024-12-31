@@ -1,9 +1,9 @@
+import { Address, PaymentKeyHash, StakeKeyHash } from 'lucid-cardano';
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
 import { MongoAppliedFor } from 'smart-db';
 import { BaseEntityMongo } from 'smart-db/backEnd';
 import { CustomWalletEntity } from './CustomWallet.Entity';
-import { PaymentKeyHash, StakeKeyHash, Address } from 'lucid-cardano';
 
 @MongoAppliedFor([CustomWalletEntity])
 export class CustomWalletEntityMongo extends BaseEntityMongo {
@@ -11,20 +11,6 @@ export class CustomWalletEntityMongo extends BaseEntityMongo {
     protected static _mongoTableName: string = CustomWalletEntity.className();
 
     // #region fields
-
-    // createdBy:String
-    // lastConnection: Date
-    // walletUsed:String
-    // walletValidatedWithSignedToken:Boolean
-    // paymentPkh: PaymentKeyHash
-    // stakePkh: StakeKeyHash
-    // name:String
-    // email:String
-    // validatedEmail:String
-    // testnetAddress: Address
-    // mainnetAddress: Address
-    // createdAt: Date
-    // updatedAt: Date
 
     // #endregion fields
 
@@ -71,6 +57,8 @@ export class CustomWalletEntityMongo extends BaseEntityMongo {
             validatedEmail: string;
             testnetAddress: Address;
             mainnetAddress: Address;
+            createdAt: Date;
+            updatedAt: Date;
         }
 
         const schema = new Schema<Interface>(

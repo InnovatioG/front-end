@@ -1,11 +1,11 @@
-import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { MilestoneEntity } from './Milestone.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
+import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { MilestoneEntity } from './Milestone.Entity';
 
 @PostgreSQLAppliedFor([MilestoneEntity])
 @Entity({ name: getPostgreSQLTableName(MilestoneEntity.className()) })
-export class MilestoneEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
+export class MilestoneEntityPostgreSQL extends BaseEntityPostgreSQL {
     protected static Entity = MilestoneEntity;
 
     // #region fields
@@ -16,14 +16,14 @@ export class MilestoneEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'varchar', length: 255 })
     campaignId!: string;
     @Column({ type: 'varchar', length: 255 })
-    campaignStatusId!: string;
+    milestoneStatusId!: string;
     @Column({ type: 'date' })
-    cmEstimateDeliveryDate!: Date;
-    @Column({ type: 'int' })
-    cmPercentage!: number;
-    @Column({ type: 'int' })
-    cmStatus!: number;
-    @Column({ type: 'varchar', length: 255 })
+    estimateDeliveryDate!: Date;
+    @Column({ type: 'integer' })
+    percentage!: number;
+    @Column({ type: 'integer' })
+    status!: number;
+    @Column({ type: 'text' })
     description!: string;
     @CreateDateColumn()
     createdAt!: Date;

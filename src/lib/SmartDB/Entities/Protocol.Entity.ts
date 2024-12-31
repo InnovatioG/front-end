@@ -1,25 +1,32 @@
+import { } from 'lucid-cardano';
 import 'reflect-metadata';
-import { Convertible, BaseSmartDBEntity, asSmartDBEntity } from 'smart-db';
-import {} from 'lucid-cardano';
+import { BaseSmartDBEntity, Convertible, asSmartDBEntity } from 'smart-db';
+
+export interface ProtocolDatum {
+    pdProtocolVersion: number;
+    pdAdmins: string[];
+    pdTokenAdminPolicy_CS: string;
+    pdMinADA: bigint;
+}
 
 @asSmartDBEntity()
 export class ProtocolEntity extends BaseSmartDBEntity {
     protected static _apiRoute: string = 'protocol';
     protected static _className: string = 'Protocol';
 
-    protected static _plutusDataIsSubType = false;
-    protected static _is_NET_id_Unique = false;
+    protected static _plutusDataIsSubType = true;
+    protected static _is_NET_id_Unique = true;
     _NET_id_TN: string = 'ProtocolID';
 
     // #region fields
     @Convertible({ isForDatum: true })
-    pdProtocolVersion!: string;
+    pdProtocolVersion!: number;
     @Convertible({ isForDatum: true, type: String })
     pdAdmins!: string[];
     @Convertible({ isForDatum: true })
     pdTokenAdminPolicy_CS!: string;
     @Convertible({ isForDatum: true })
-    pdMinADA!: string;
+    pdMinADA!: bigint;
     @Convertible({ type: String })
     contracts!: string[];
     @Convertible({ isCreatedAt: true })

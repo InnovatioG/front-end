@@ -1,7 +1,7 @@
-import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { CampaignMemberEntity } from './CampaignMember.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
 import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { CampaignMemberEntity } from './CampaignMember.Entity';
 
 @PostgreSQLAppliedFor([CampaignMemberEntity])
 @Entity({ name: getPostgreSQLTableName(CampaignMemberEntity.className()) })
@@ -15,15 +15,15 @@ export class CampaignMemberEntityPostgreSQL extends BaseEntityPostgreSQL {
 
     @Column({ type: 'varchar', length: 255 })
     campaignId!: string;
-    @Column({ type: 'varchar', length: 255 })
-    editor!: boolean;
+    @Column({ type: 'boolean', default: false })
+    editor!: boolean
     @Column({ type: 'varchar', length: 255 })
     walletId!: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     rol?: string;
-    @Column({ type: 'varchar', length: 255, nullable: true })
+    @Column({ type: 'text', nullable: true })
     description?: string;
-    @Column({ type: 'varchar', length: 255 , nullable: true })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     website?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     instagram?: string;

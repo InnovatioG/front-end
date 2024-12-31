@@ -11,15 +11,6 @@ export class CampaignSubmissionEntityMongo extends BaseEntityMongo {
 
     // #region fields
 
-    // campaignId:ID
-    // submissionStatusId:ID
-    // submittedByWalletId:ID
-    // revisedByWalletId:ID
-    // approvedJustification:String
-    // rejectedJustification:String
-    // createdAt: Date
-    // updatedAt: Date
-
     // #endregion fields
 
     // #region internal class methods
@@ -60,6 +51,8 @@ export class CampaignSubmissionEntityMongo extends BaseEntityMongo {
             revisedByWalletId: string;
             approvedJustification: string;
             rejectedJustification: string;
+            createdAt: Date;
+            updatedAt: Date;
         }
 
         const schema = new Schema<Interface>(
