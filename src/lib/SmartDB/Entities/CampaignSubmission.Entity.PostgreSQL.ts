@@ -1,7 +1,7 @@
-import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { CampaignSubmissionEntity } from './CampaignSubmission.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
 import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { CampaignSubmissionEntity } from './CampaignSubmission.Entity';
 
 @PostgreSQLAppliedFor([CampaignSubmissionEntity])
 @Entity({ name: getPostgreSQLTableName(CampaignSubmissionEntity.className()) })
@@ -21,9 +21,9 @@ export class CampaignSubmissionEntityPostgreSQL extends BaseEntityPostgreSQL {
     submittedByWalletId!: string;
     @Column({ type: 'varchar', length: 255 })
     revisedByWalletId!: string;
-    @Column({ type: 'varchar', length: 255, nullable: true })
+    @Column({ type: 'text', nullable: true })
     approvedJustification?: string;
-    @Column({ type: 'varchar', length: 255, nullable: true })
+    @Column({ type: 'text', nullable: true })
     rejectedJustification?: string;
     @CreateDateColumn()
     createdAt!: Date;

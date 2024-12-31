@@ -11,19 +11,6 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo {
 
     // #region fields
 
-    // campaignId:ID
-    // editor:Boolean
-    // walletId:ID
-    // rol:String
-    // description:String
-    // website:String
-    // instagram:String
-    // twitter:String
-    // discord:String
-    // facebook:String
-    // createdAt: Date
-    // updatedAt: Date
-
     // #endregion fields
 
     // #region internal class methods
@@ -68,6 +55,8 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo {
             twitter: string;
             discord: string;
             facebook: string;
+            createdAt: Date;
+            updatedAt: Date;
         }
 
         const schema = new Schema<Interface>(

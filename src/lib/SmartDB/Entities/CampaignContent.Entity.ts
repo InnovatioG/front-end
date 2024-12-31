@@ -1,6 +1,6 @@
+import { } from 'lucid-cardano';
 import 'reflect-metadata';
-import { Convertible, BaseEntity, asEntity } from 'smart-db';
-import {} from 'lucid-cardano';
+import { BaseEntity, Convertible, asEntity } from 'smart-db';
 
 @asEntity()
 export class CampaignContentEntity extends BaseEntity {
@@ -8,14 +8,14 @@ export class CampaignContentEntity extends BaseEntity {
     protected static _className: string = 'CampaignContent';
 
     // #region fields
-    @Convertible()
+    @Convertible({ isDB_id: true })
     campaignId!: string;
     @Convertible()
     name!: string;
     @Convertible()
     description?: string;
     @Convertible()
-    order!: string;
+    order!: number;
     @Convertible({ isCreatedAt: true })
     createdAt!: Date;
     @Convertible({ isUpdatedAt: true })

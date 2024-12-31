@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { MilestoneSubmissionEntity } from '../../../lib/SmartDB/Entities/MilestoneSubmission.Entity';
 import { MilestoneSubmissionApi } from '../../../lib/SmartDB/FrontEnd/MilestoneSubmission.FrontEnd.Api.Calls';
 import { pushWarningNotification } from 'smart-db';
-import { th } from 'date-fns/locale';
 
 export function useMilestoneSubmission() {
     const [list, setList] = useState<MilestoneSubmissionEntity[]>([]);

@@ -20,7 +20,8 @@
         }
     }
 
-    .form, .confirmDelete {
+    .form,
+    .confirmDelete {
         margin-top: 20px;
         display: flex;
         flex-direction: column;
@@ -42,6 +43,15 @@
                 border: 1px solid #ccc;
                 border-radius: 4px;
                 font-size: 14px;
+            }
+
+            textarea {
+                flex: 1;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 14px;
+                width: 100%;
             }
         }
 
@@ -73,7 +83,8 @@
         border-collapse: collapse;
         margin-top: 20px;
 
-        th, td {
+        th,
+        td {
             padding: 12px 8px;
             text-align: left;
             border-bottom: 1px solid #ccc;

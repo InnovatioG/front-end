@@ -1,22 +1,15 @@
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
 import { MongoAppliedFor } from 'smart-db';
-import { BaseSmartDBEntityMongo, IBaseSmartDBEntity } from 'smart-db/backEnd';
 import { MilestoneEntity } from './Milestone.Entity';
+import { BaseEntityMongo } from 'smart-db/backEnd';
 
 @MongoAppliedFor([MilestoneEntity])
-export class MilestoneEntityMongo extends BaseSmartDBEntityMongo {
+export class MilestoneEntityMongo extends BaseEntityMongo {
     protected static Entity = MilestoneEntity;
     protected static _mongoTableName: string = MilestoneEntity.className();
 
     // #region fields
-
-    // campaignId:ID
-    // campaignStatusId:ID
-    // cmEstimateDeliveryDate:Int
-    // cmPercentage:Int
-    // cmStatus:Int
-    // description:String
 
     // #endregion fields
 
@@ -53,20 +46,22 @@ export class MilestoneEntityMongo extends BaseSmartDBEntityMongo {
     public static MongoModel() {
         interface Interface {
             campaignId: string;
-            campaignStatusId: string;
-            cmEstimateDeliveryDate: Date;
-            cmPercentage: number;
-            cmStatus: number;
+            milestoneStatusId: string;
+            estimateDeliveryDate: Date;
+            percentage: number;
+            status: number;
             description: string;
+            createdAt: Date;
+            updatedAt: Date;
         }
 
         const schema = new Schema<Interface>(
             {
                 campaignId: { type: String, required: true },
-                campaignStatusId: { type: String, required: true },
-                cmEstimateDeliveryDate: { type: Date, required: true },
-                cmPercentage: { type: Number, required: true },
-                cmStatus: { type: Number, required: true },
+                milestoneStatusId: { type: String, required: true },
+                estimateDeliveryDate: { type: Date, required: true },
+                percentage: { type: Number, required: true },
+                status: { type: Number, required: true },
                 description: { type: String, required: true },
             },
             { timestamps: true }

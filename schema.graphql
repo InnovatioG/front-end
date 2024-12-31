@@ -109,9 +109,9 @@ type Campaign @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, t
 type Milestone @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, tokenName: "MilestoneID") {
  campaignId: ID
  campaignStatusId: ID
- cmEstimateDeliveryDate: Int @convertible(params:["isForDatum: true"])
- cmPercentage: Int @convertible(params:["isForDatum: true"])
- cmStatus: Int @convertible(params:["isForDatum: true"])
+ estimateDeliveryDate: Int @convertible(params:["isForDatum: true"])
+ percentage: Int @convertible(params:["isForDatum: true"])
+ status: Int @convertible(params:["isForDatum: true"])
  description: String
 }
 

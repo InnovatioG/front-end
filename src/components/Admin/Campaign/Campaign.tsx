@@ -1,6 +1,7 @@
 import { useCampaign } from './useCampaign';
 import styles from './Campaign.module.scss';
-import { nextWednesday } from 'date-fns';
+import { CampaignEntity } from '@/lib/SmartDB/Entities';
+import { Dispatch, SetStateAction } from 'react';
 
 export default function Campaign() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaign();
@@ -11,7 +12,7 @@ export default function Campaign() {
                 <button onClick={() => setView('create')}>Create New Item</button>
             </div>
             {list.length === 0 ? (
-                <p>No Campaign found.</p>
+                <p>No Campaigns found.</p>
             ) : (
                 <table>
                     <thead>
@@ -22,15 +23,27 @@ export default function Campaign() {
                             <th>Creator Wallet ID</th>
                             <th>Campaign Version</th>
                             <th>Campaign Policy</th>
+                            <th>Campaign Funds Policy ID</th>
                             <th>Admins</th>
-                            <th>Campaign Token</th>
-                            <th>Funds</th>
+                            <th>Token Admin Policy</th>
+                            <th>Mint Campaign Token</th>
+                            <th>Campaign Token CS</th>
+                            <th>Campaign Token TN</th>
+                            <th>Campaign Token Price (ADA)</th>
+                            <th>Requested Max ADA</th>
+                            <th>Requested Min ADA</th>
+                            <th>Funded ADA</th>
+                            <th>Collected ADA</th>
+                            <th>Begin At</th>
+                            <th>Deadline</th>
                             <th>Status</th>
                             <th>Milestones</th>
                             <th>Funds Count</th>
                             <th>Funds Index</th>
                             <th>Minimum ADA</th>
                             <th>Description</th>
+                            <th>Begin At (Human-Readable)</th>
+                            <th>Deadline (Human-Readable)</th>
                             <th>Logo URL</th>
                             <th>Banner URL</th>
                             <th>Website</th>
@@ -57,15 +70,27 @@ export default function Campaign() {
                                 <td>{item.creatorWalletId}</td>
                                 <td>{item.cdCampaignVersion}</td>
                                 <td>{item.cdCampaignPolicy_CS}</td>
+                                <td>{item.cdCampaignFundsPolicyID_CS}</td>
                                 <td>{item.cdAdmins.join(', ')}</td>
+                                <td>{item.cdTokenAdminPolicy_CS}</td>
+                                <td>{item.cdMint_CampaignToken ? 'Yes' : 'No'}</td>
                                 <td>{item.cdCampaignToken_CS}</td>
-                                <td>{item.cdFundedADA}</td>
+                                <td>{item.cdCampaignToken_TN}</td>
+                                <td>{item.cdCampaignToken_PriceADA.toString()}</td>
+                                <td>{item.cdRequestedMaxADA.toString()}</td>
+                                <td>{item.cdRequestedMinADA.toString()}</td>
+                                <td>{item.cdFundedADA.toString()}</td>
+                                <td>{item.cdCollectedADA.toString()}</td>
+                                <td>{new Date(item.cdBeginAt?.toString()).toISOString()}</td>
+                                <td>{new Date(item.cdDeadline?.toString()).toISOString()}</td>
                                 <td>{item.cdStatus}</td>
                                 <td>{item.cdMilestones}</td>
                                 <td>{item.cdFundsCount}</td>
                                 <td>{item.cdFundsIndex}</td>
-                                <td>{item.cdMinADA}</td>
+                                <td>{item.cdMinADA.toString()}</td>
                                 <td>{item.description}</td>
+                                <td>{item.beginAt?.toISOString()}</td>
+                                <td>{item.deadline?.toISOString()}</td>
                                 <td>{item.logoUrl}</td>
                                 <td>{item.bannerUrl}</td>
                                 <td>{item.website}</td>
@@ -76,11 +101,10 @@ export default function Campaign() {
                                 <td>{item.investors}</td>
                                 <td>{item.tokenomicsMaxSupply}</td>
                                 <td>{item.tokenomicsDescription}</td>
-                                <td>{(item.featured == "true")? 'Yes' : 'No'}</td>
-                                <td>{(item.archived == "true") ? 'Yes' : 'No'}</td>
+                                <td>{item.featured ? 'Yes' : 'No'}</td>
+                                <td>{item.archived ? 'Yes' : 'No'}</td>
                                 <td>{item.createdAt.toISOString()}</td>
                                 <td>{item.updatedAt?.toISOString()}</td>
-
                                 <td>
                                     <button
                                         onClick={() => {
@@ -103,308 +127,292 @@ export default function Campaign() {
                         ))}
                     </tbody>
                 </table>
-                // <table>
-                //   <thead>
-                //     <tr>
-                //       {Object.keys(list[0] || {}).map((field) => (
-                //         <th key={field}>{field}</th>
-                //       ))}
-                //       <th>Actions</th>
-                //     </tr>
-                //   </thead>
-                //   <tbody>
-                //     {list.map((item) => (
-                //       <tr key={item._DB_id}>
-                //         {Object.entries(item).map(([field, value]) => (
-                //           <td key={field}>{value?.toString() || ''}</td>
-                //         ))}
-                //         <td>
-                //           <button
-                //             onClick={() => {
-                //               setEditItem(item);
-                //               setView('edit');
-                //             }}
-                //           >
-                //             Edit
-                //           </button>
-                //           <button
-                //             onClick={() => {
-                //               setDeleteItem(item);
-                //               setView('confirmDelete');
-                //             }}
-                //           >
-                //             Delete
-                //           </button>
-                //         </td>
-                //       </tr>
-                //     ))}
-                //   </tbody>
-                // </table>
             )}
         </div>
     );
 
-    const renderCreateForm = () => (
+    const renderForm = (item: Partial<CampaignEntity>, setItem: Dispatch<SetStateAction<Partial<CampaignEntity>>> | Dispatch<SetStateAction<Partial<CampaignEntity> | null>>) => (
         <form className={styles.form}>
+            {/* General Fields */}
             <div>
                 <label>Project ID:</label>
-                <input type="number" value={newItem.projectId || ''} onChange={(e) => setNewItem({ ...newItem, projectId: e.target.value })} />
+                <input type="text" value={item.projectId || ''} onChange={(e) => setItem({ ...item, projectId: e.target.value })} />
             </div>
             <div>
                 <label>Campaign Category ID:</label>
-                <input type="number" value={newItem.campaingCategoryId || ''} onChange={(e) => setNewItem({ ...newItem, campaingCategoryId: e.target.value })} />
+                <input type="text" value={item.campaingCategoryId || ''} onChange={(e) => setItem({ ...item, campaingCategoryId: e.target.value })} />
             </div>
             <div>
                 <label>Campaign Status ID:</label>
-                <input type="number" value={newItem.campaignStatusId || ''} onChange={(e) => setNewItem({ ...newItem, campaignStatusId: e.target.value })} />
+                <input type="text" value={item.campaignStatusId || ''} onChange={(e) => setItem({ ...item, campaignStatusId: e.target.value })} />
             </div>
             <div>
                 <label>Creator Wallet ID:</label>
-                <input type="number" value={newItem.creatorWalletId || ''} onChange={(e) => setNewItem({ ...newItem, creatorWalletId: e.target.value })} />
+                <input type="text" value={item.creatorWalletId || ''} onChange={(e) => setItem({ ...item, creatorWalletId: e.target.value })} />
             </div>
+
+            {/* Datum Fields */}
             <div>
                 <label>Campaign Version:</label>
-                <input type="text" value={newItem.cdCampaignVersion || ''} onChange={(e) => setNewItem({ ...newItem, cdCampaignVersion: e.target.value })} />
+                <input type="number" value={item.cdCampaignVersion || ''} onChange={(e) => setItem({ ...item, cdCampaignVersion: Number(e.target.value) })} />
             </div>
             <div>
                 <label>Campaign Policy:</label>
-                <input type="text" value={newItem.cdCampaignPolicy_CS || ''} onChange={(e) => setNewItem({ ...newItem, cdCampaignPolicy_CS: e.target.value })} />
+                <input type="text" value={item.cdCampaignPolicy_CS || ''} onChange={(e) => setItem({ ...item, cdCampaignPolicy_CS: e.target.value })} />
             </div>
             <div>
-                <label>Admins:</label>
-                <input type="text" value={newItem.cdAdmins?.join(', ') || ''} onChange={(e) => setNewItem({ ...newItem, cdAdmins: e.target.value.split(', ') })} />
+                <label>Campaign Funds Policy ID:</label>
+                <input type="text" value={item.cdCampaignFundsPolicyID_CS || ''} onChange={(e) => setItem({ ...item, cdCampaignFundsPolicyID_CS: e.target.value })} />
             </div>
             <div>
-                <label>Campaign Token:</label>
-                <input type="text" value={newItem.cdCampaignToken_CS || ''} onChange={(e) => setNewItem({ ...newItem, cdCampaignToken_CS: e.target.value })} />
+                <label>Admins (comma-separated):</label>
+                <input type="text" value={item.cdAdmins?.join(', ') || ''} onChange={(e) => setItem({ ...item, cdAdmins: e.target.value.split(',').map((v) => v.trim()) })} />
+            </div>
+            <div>
+                <label>Token Admin Policy:</label>
+                <input type="text" value={item.cdTokenAdminPolicy_CS || ''} onChange={(e) => setItem({ ...item, cdTokenAdminPolicy_CS: e.target.value })} />
+            </div>
+            <div>
+                <label>Mint Campaign Token:</label>
+                <input type="checkbox" checked={item.cdMint_CampaignToken || false} onChange={(e) => setItem({ ...item, cdMint_CampaignToken: e.target.checked })} />
+            </div>
+            <div>
+                <label>Campaign Token CS:</label>
+                <input type="text" value={item.cdCampaignToken_CS || ''} onChange={(e) => setItem({ ...item, cdCampaignToken_CS: e.target.value })} />
+            </div>
+            <div>
+                <label>Campaign Token TN:</label>
+                <input type="text" value={item.cdCampaignToken_TN || ''} onChange={(e) => setItem({ ...item, cdCampaignToken_TN: e.target.value })} />
+            </div>
+            <div>
+                <label>Campaign Token Price (ADA):</label>
+                <input
+                    type="text"
+                    value={item.cdCampaignToken_PriceADA?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cdCampaignToken_PriceADA: BigInt(e.target.value) });
+                        }
+                    }}
+                />
+            </div>
+            <div>
+                <label>Requested Max ADA:</label>
+                <input
+                    type="text"
+                    value={item.cdRequestedMaxADA?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cdRequestedMaxADA: BigInt(e.target.value) });
+                        }
+                    }}
+                />
+            </div>
+            <div>
+                <label>Requested Min ADA:</label>
+                <input
+                    type="text"
+                    value={item.cdRequestedMinADA?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cdRequestedMinADA: BigInt(e.target.value) });
+                        }
+                    }}
+                />
             </div>
             <div>
                 <label>Funded ADA:</label>
-                <input type="text" value={newItem.cdFundedADA || ''} onChange={(e) => setNewItem({ ...newItem, cdFundedADA: e.target.value })} />
+                <input
+                    type="text"
+                    value={item.cdFundedADA?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cdFundedADA: BigInt(e.target.value) });
+                        }
+                    }}
+                />
+            </div>
+            <div>
+                <label>Collected ADA:</label>
+                <input
+                    type="text"
+                    value={item.cdCollectedADA?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cdCollectedADA: BigInt(e.target.value) });
+                        }
+                    }}
+                />
+            </div>
+            <div>
+                <label>Begin At (POSIXTime):</label>
+                <input
+                    type="text"
+                    value={item.cdBeginAt?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cdBeginAt: BigInt(e.target.value) });
+                        }
+                    }}
+                />
+            </div>
+            <div>
+                <label>Deadline (POSIXTime):</label>
+                <input
+                    type="text"
+                    value={item.cdDeadline?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cdDeadline: BigInt(e.target.value) });
+                        }
+                    }}
+                />
             </div>
             <div>
                 <label>Status:</label>
-                <input type="number" value={newItem.cdStatus || ''} onChange={(e) => setNewItem({ ...newItem, cdStatus: e.target.value })} />
+                <input type="number" value={item.cdStatus || ''} onChange={(e) => setItem({ ...item, cdStatus: Number(e.target.value) })} />
             </div>
             <div>
                 <label>Milestones:</label>
-                <input type="text" value={newItem.cdMilestones || ''} onChange={(e) => setNewItem({ ...newItem, cdMilestones: e.target.value })} />
+                <input type="text" value={item.cdMilestones || ''} onChange={(e) => setItem({ ...item, cdMilestones: e.target.value })} />
             </div>
             <div>
                 <label>Funds Count:</label>
-                <input type="number" value={newItem.cdFundsCount || ''} onChange={(e) => setNewItem({ ...newItem, cdFundsCount: e.target.value })} />
+                <input type="number" value={item.cdFundsCount || ''} onChange={(e) => setItem({ ...item, cdFundsCount: Number(e.target.value) })} />
             </div>
             <div>
                 <label>Funds Index:</label>
-                <input type="number" value={newItem.cdFundsIndex || ''} onChange={(e) => setNewItem({ ...newItem, cdFundsIndex: e.target.value })} />
+                <input type="number" value={item.cdFundsIndex || ''} onChange={(e) => setItem({ ...item, cdFundsIndex: Number(e.target.value) })} />
             </div>
             <div>
                 <label>Minimum ADA:</label>
-                <input type="text" value={newItem.cdMinADA || ''} onChange={(e) => setNewItem({ ...newItem, cdMinADA: e.target.value })} />
+                <input
+                    type="text"
+                    value={item.cdMinADA?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cdMinADA: BigInt(e.target.value) });
+                        }
+                    }}
+                />
             </div>
+
+            {/* Additional Campaign Details */}
             <div>
                 <label>Description:</label>
-                <input type="text" value={newItem.description || ''} onChange={(e) => setNewItem({ ...newItem, description: e.target.value })} />
+                <textarea value={item.description || ''} onChange={(e) => setItem({ ...item, description: e.target.value })} />
             </div>
             <div>
+                <label>Begin At (Human-Readable):</label>
+                <input
+                    type="datetime-local"
+                    value={item.beginAt ? new Date(item.beginAt).toISOString().split('T')[0] : ''}
+                    onChange={(e) => {
+                        const selectedDate = new Date(e.target.value);
+                        setItem({ ...item, beginAt: selectedDate });
+                    }}
+                />
+            </div>
+            <div>
+                <label>Deadline (Human-Readable):</label>
+                <input
+                    type="datetime-local"
+                    value={item.deadline ? new Date(item.deadline).toISOString().split('T')[0] : ''}
+                    onChange={(e) => {
+                        const selectedDate = new Date(e.target.value);
+                        setItem({ ...item, deadline: selectedDate });
+                    }}
+                />
+            </div>
+
+            <div>
                 <label>Logo URL:</label>
-                <input type="text" value={newItem.logoUrl || ''} onChange={(e) => setNewItem({ ...newItem, logoUrl: e.target.value })} />
+                <input type="text" value={item.logoUrl || ''} onChange={(e) => setItem({ ...item, logoUrl: e.target.value })} />
             </div>
             <div>
                 <label>Banner URL:</label>
-                <input type="text" value={newItem.bannerUrl || ''} onChange={(e) => setNewItem({ ...newItem, bannerUrl: e.target.value })} />
+                <input type="text" value={item.bannerUrl || ''} onChange={(e) => setItem({ ...item, bannerUrl: e.target.value })} />
             </div>
             <div>
                 <label>Website:</label>
-                <input type="text" value={newItem.website || ''} onChange={(e) => setNewItem({ ...newItem, website: e.target.value })} />
+                <input type="text" value={item.website || ''} onChange={(e) => setItem({ ...item, website: e.target.value })} />
             </div>
             <div>
                 <label>Instagram:</label>
-                <input type="text" value={newItem.instagram || ''} onChange={(e) => setNewItem({ ...newItem, instagram: e.target.value })} />
+                <input type="text" value={item.instagram || ''} onChange={(e) => setItem({ ...item, instagram: e.target.value })} />
             </div>
             <div>
                 <label>Twitter:</label>
-                <input type="text" value={newItem.twitter || ''} onChange={(e) => setNewItem({ ...newItem, twitter: e.target.value })} />
+                <input type="text" value={item.twitter || ''} onChange={(e) => setItem({ ...item, twitter: e.target.value })} />
             </div>
             <div>
                 <label>Discord:</label>
-                <input type="text" value={newItem.discord || ''} onChange={(e) => setNewItem({ ...newItem, discord: e.target.value })} />
+                <input type="text" value={item.discord || ''} onChange={(e) => setItem({ ...item, discord: e.target.value })} />
             </div>
             <div>
                 <label>Facebook:</label>
-                <input type="text" value={newItem.facebook || ''} onChange={(e) => setNewItem({ ...newItem, facebook: e.target.value })} />
+                <input type="text" value={item.facebook || ''} onChange={(e) => setItem({ ...item, facebook: e.target.value })} />
             </div>
             <div>
                 <label>Investors:</label>
-                <input type="number" value={newItem.investors || ''} onChange={(e) => setNewItem({ ...newItem, investors: e.target.value })} />
+                <input type="number" value={item.investors || ''} onChange={(e) => setItem({ ...item, investors: Number(e.target.value) })} />
             </div>
             <div>
                 <label>Tokenomics Max Supply:</label>
-                <input type="text" value={newItem.tokenomicsMaxSupply || ''} onChange={(e) => setNewItem({ ...newItem, tokenomicsMaxSupply: e.target.value })} />
+                <input type="text" value={item.tokenomicsMaxSupply || ''} onChange={(e) => setItem({ ...item, tokenomicsMaxSupply: e.target.value })} />
             </div>
             <div>
                 <label>Tokenomics Description:</label>
-                <input type="text" value={newItem.tokenomicsDescription || ''} onChange={(e) => setNewItem({ ...newItem, tokenomicsDescription: e.target.value })} />
+                <input type="text" value={item.tokenomicsDescription || ''} onChange={(e) => setItem({ ...item, tokenomicsDescription: e.target.value })} />
             </div>
             <div>
                 <label>Featured:</label>
-                <input type="checkbox" checked={newItem.featured || false} onChange={(e) => setNewItem({ ...newItem, featured: e.target.checked })} />
+                <input type="checkbox" checked={item.featured || false} onChange={(e) => setItem({ ...item, featured: e.target.checked })} />
             </div>
             <div>
                 <label>Archived:</label>
-                <input type="checkbox" checked={newItem.archived || false} onChange={(e) => setNewItem({ ...newItem, archived: e.target.checked })} />
+                <input type="checkbox" checked={item.archived || false} onChange={(e) => setItem({ ...item, archived: e.target.checked })} />
             </div>
-            <button type="button" onClick={create}>
-                Create
-            </button>
+            <div>
+                <label>Created At:</label>
+                <input
+                    type="datetime-local"
+                    value={item.createdAt ? new Date(item.createdAt).toISOString().slice(0, -1) : ''}
+                    onChange={(e) => {
+                        const selectedDate = new Date(e.target.value);
+                        setItem({ ...item, createdAt: selectedDate });
+                    }}
+                    disabled={true}
+                />
+            </div>
+            <div>
+                <label>Updated At:</label>
+                <input
+                    type="datetime-local"
+                    value={item.updatedAt ? new Date(item.updatedAt).toISOString().slice(0, -1) : ''}
+                    onChange={(e) => {
+                        const selectedDate = new Date(e.target.value);
+                        setItem({ ...item, updatedAt: selectedDate });
+                    }}
+                    disabled={true}
+                />
+            </div>
+            {/* Submit */}
+            {view === 'create' ? (
+                <button type="button" onClick={create}>
+                    Create
+                </button>
+            ) : (
+                <button type="button" onClick={update}>
+                    Update
+                </button>
+            )}
             <button type="button" onClick={() => setView('list')}>
                 Cancel
             </button>
         </form>
     );
 
-    const renderEditForm = () => (
-        <form className={styles.form}>
-            <button type="button" onClick={update}>
-                Update
-            </button>
-            <button type="button" onClick={() => setView('list')}>
-                Cancel
-            </button>
-        </form>
-    );
-    // const renderCreateForm = () => (
-    //     <form className={styles.form}>
-    //         {Object.entries(newItem).map(([field, value]) => {
-    //             const isNumber = typeof value === 'number';
-    //             const isBoolean = typeof value === 'boolean';
-    //             const isArray = Array.isArray(value);
-    //             const isDate = value instanceof Date;
-    //             const isObject = typeof value === 'object' && value !== null && !isArray && !isDate;
-    //
-    //             // Normalizar el valor para mostrar en el input
-    //             let displayedValue: string = '';
-    //             if (isNumber) {
-    //                 displayedValue = value.toString();
-    //             } else if (isBoolean) {
-    //                 displayedValue = value ? 'true' : 'false';
-    //             } else if (isArray) {
-    //                 displayedValue = value.join(', ');
-    //             } else if (isDate) {
-    //                 displayedValue = (value as Date).toISOString().split('T')[0]; // Convertir Date a formato YYYY-MM-DD
-    //             } else if (isObject) {
-    //                 displayedValue = JSON.stringify(value); // Serializar objetos
-    //             } else {
-    //                 displayedValue = value as string;
-    //             }
-    //
-    //             return (
-    //                 <div key={field}>
-    //                     <label>{field}:</label>
-    //                     <input
-    //                         type={isNumber ? 'number' : isDate ? 'date' : 'text'}
-    //                         value={displayedValue}
-    //                         onChange={(e) => {
-    //                             let newValue: any = e.target.value;
-    //                             if (isNumber) {
-    //                                 newValue = parseFloat(e.target.value) || 0;
-    //                             } else if (isBoolean) {
-    //                                 newValue = e.target.value === 'true';
-    //                             } else if (isArray) {
-    //                                 newValue = e.target.value.split(',').map((item) => item.trim());
-    //                             } else if (isDate) {
-    //                                 newValue = new Date(e.target.value);
-    //                             } else if (isObject) {
-    //                                 try {
-    //                                     newValue = JSON.parse(e.target.value);
-    //                                 } catch (error) {
-    //                                     newValue = e.target.value; // Si no es JSON válido, mantener el texto
-    //                                 }
-    //                             }
-    //                             setNewItem({
-    //                                 ...newItem,
-    //                                 [field]: newValue,
-    //                             });
-    //                         }}
-    //                     />
-    //                 </div>
-    //             );
-    //         })}
-    //         <button type="button" onClick={create}>
-    //             Create
-    //         </button>
-    //         <button type="button" onClick={() => setView('list')}>
-    //             Cancel
-    //         </button>
-    //     </form>
-    // );
-    //
-    // const renderEditForm = () => (
-    //     <form className={styles.form}>
-    //         {Object.entries(editItem!).map(([field, value]) => {
-    //             const isNumber = typeof value === 'number';
-    //             const isBoolean = typeof value === 'boolean';
-    //             const isArray = Array.isArray(value);
-    //             const isDate = value instanceof Date;
-    //             const isObject = typeof value === 'object' && value !== null && !isArray && !isDate;
-    //
-    //             // Normalizar el valor para mostrar en el input
-    //             let displayedValue: string = '';
-    //             if (isNumber) {
-    //                 displayedValue = value.toString();
-    //             } else if (isBoolean) {
-    //                 displayedValue = value ? 'true' : 'false';
-    //             } else if (isArray) {
-    //                 displayedValue = value.join(', ');
-    //             } else if (isDate) {
-    //                 displayedValue = (value as Date).toISOString().split('T')[0]; // Convertir Date a formato YYYY-MM-DD
-    //             } else if (isObject) {
-    //                 displayedValue = JSON.stringify(value); // Serializar objetos
-    //             } else {
-    //                 displayedValue = value as string;
-    //             }
-    //
-    //             return (
-    //                 <div key={field}>
-    //                     <label>{field}:</label>
-    //                     <input
-    //                         type={isNumber ? 'number' : isDate ? 'date' : 'text'}
-    //                         value={displayedValue}
-    //                         onChange={(e) => {
-    //                             let editItem: any = e.target.value;
-    //                             if (isNumber) {
-    //                                 editItem = parseFloat(e.target.value) || 0;
-    //                             } else if (isBoolean) {
-    //                                 editItem = e.target.value === 'true';
-    //                             } else if (isArray) {
-    //                                 editItem = e.target.value.split(',').map((item) => item.trim());
-    //                             } else if (isDate) {
-    //                                 editItem = new Date(e.target.value);
-    //                             } else if (isObject) {
-    //                                 try {
-    //                                     editItem = JSON.parse(e.target.value);
-    //                                 } catch (error) {
-    //                                     editItem = e.target.value; // Si no es JSON válido, mantener el texto
-    //                                 }
-    //                             }
-    //                             setEditItem({
-    //                                 ...editItem,
-    //                                 [field]: editItem,
-    //                             });
-    //                         }}
-    //                     />
-    //                 </div>
-    //             );
-    //         })}
-    //         <button type="button" onClick={update}>
-    //             Update
-    //         </button>
-    //         <button type="button" onClick={() => setView('list')}>
-    //             Cancel
-    //         </button>
-    //     </form>
-    // );
-    //
     const renderConfirmDelete = () => (
         <div className={styles.confirmDelete}>
             <p>Are you sure you want to delete this item?</p>
@@ -417,8 +425,8 @@ export default function Campaign() {
     return (
         <div className={styles.content}>
             {view === 'list' && renderList()}
-            {view === 'create' && renderCreateForm()}
-            {view === 'edit' && renderEditForm()}
+            {view === 'create' && renderForm(newItem, setNewItem)}
+            {view === 'edit' && editItem !== null && renderForm(editItem, setEditItem)}
             {view === 'confirmDelete' && renderConfirmDelete()}
         </div>
     );

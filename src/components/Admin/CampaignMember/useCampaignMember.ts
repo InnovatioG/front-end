@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { CampaignMemberEntity } from '../../../lib/SmartDB/Entities/CampaignMember.Entity';
 import { CampaignMemberApi } from '../../../lib/SmartDB/FrontEnd/CampaignMember.FrontEnd.Api.Calls';
 import { pushWarningNotification } from 'smart-db';
-import { th } from 'date-fns/locale';
+
 import { Newspaper } from 'lucide-react';
 
 export function useCampaignMember() {
@@ -28,7 +28,7 @@ export function useCampaignMember() {
 
     const create = async () => {
         try {
-            newItem.editor = newItem.editor ?? false 
+            newItem.editor = newItem.editor ?? false;
             let entity: CampaignMemberEntity = new CampaignMemberEntity(newItem);
             entity = await CampaignMemberApi.createApi(entity);
             setNewItem({});

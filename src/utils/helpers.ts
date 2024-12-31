@@ -5,6 +5,6 @@ interface getRemainingPercentageF {
 }
 
 export const getRemainingPercentage: getRemainingPercentageF = (currentMilestoneId, milestones) => {
-    const totalUsed = milestones.filter((milestone) => milestone.id !== currentMilestoneId).reduce((sum, milestone) => sum + milestone.cmPercentage, 0);
+    const totalUsed = milestones.filter((milestone) => milestone.id !== currentMilestoneId).reduce((sum, milestone) => sum + milestone.percentage, 0);
     return 100 - totalUsed;
 };

@@ -11,11 +11,6 @@ export class CampaignStatusEntityMongo extends BaseEntityMongo {
 
     // #region fields
 
-    // name:String
-    // description:String
-    // createdAt: Date
-    // updatedAt: Date
-
     // #endregion fields
 
     // #region internal class methods
@@ -52,6 +47,8 @@ export class CampaignStatusEntityMongo extends BaseEntityMongo {
         interface Interface {
             name: string;
             description: string;
+            createdAt: Date;
+            updatedAt: Date;
         }
 
         const schema = new Schema<Interface>(

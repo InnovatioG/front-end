@@ -2,7 +2,7 @@ import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
 import { MongoAppliedFor } from 'smart-db';
 import { BaseSmartDBEntityMongo, IBaseSmartDBEntity } from 'smart-db/backEnd';
-import { ProtocolEntity } from './Protocol.Entity';
+import { ProtocolDatum, ProtocolEntity } from './Protocol.Entity';
 
 @MongoAppliedFor([ProtocolEntity])
 export class ProtocolEntityMongo extends BaseSmartDBEntityMongo {
@@ -52,23 +52,35 @@ export class ProtocolEntityMongo extends BaseSmartDBEntityMongo {
     // #region mongo db
 
     public static MongoModel() {
-        interface Interface {
-            pdProtocolVersion: string;
-            pdAdmins: string[];
-            pdTokenAdminPolicy_CS: string;
-            pdMinADA: string;
+        interface InterfaceDB extends IBaseSmartDBEntity {
             contracts: string[];
+            createdAt: Date;
+            updatedAt: Date;
         }
+
+        interface Interface extends InterfaceDB, ProtocolDatum {}
+
+        //TODO: Esto es obligatorio así con SmartDB Entities
+        const schemaDB = {
+            ...BaseSmartDBEntityMongo.smartDBSchema,
+            contracts: { type: [String], required: false },
+        };
+
+        const schemaDatum = {
+            pdProtocolVersion: { type: Number, required: false },
+            pdAdmins: { type: [String], required: false },
+            pdTokenAdminPolicy_CS: { type: String, required: false },
+            pdMinADA: { type: String, required: false },
+        };
 
         const schema = new Schema<Interface>(
             {
-                pdProtocolVersion: { type: String, required: true },
-                pdAdmins: { type: [String], required: true },
-                pdTokenAdminPolicy_CS: { type: String, required: true },
-                pdMinADA: { type: String, required: true },
-                contracts: { type: [String], required: true },
+                ...schemaDB,
+                ...schemaDatum,
             },
-            { timestamps: true }
+            {
+                timestamps: true,
+            }
         );
 
         const ModelDB = models[this._mongoTableName] || model<Interface>(this._mongoTableName, schema);

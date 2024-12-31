@@ -1,28 +1,50 @@
 import 'reflect-metadata';
-import { Convertible, BaseSmartDBEntity, asSmartDBEntity } from 'smart-db';
-import { UnixTime } from 'lucid-cardano';
+import { BaseSmartDBEntity, Convertible, asSmartDBEntity, type POSIXTime } from 'smart-db';
+
+export interface CampaignDatum {
+    cdCampaignVersion: number;
+    cdCampaignPolicy_CS: string;
+    cdCampaignFundsPolicyID_CS: string;
+    cdAdmins: string[];
+    cdTokenAdminPolicy_CS: string;
+    cdMint_CampaignToken: boolean;
+    cdCampaignToken_CS: string;
+    cdCampaignToken_TN: string;
+    cdCampaignToken_PriceADA: bigint;
+    cdRequestedMaxADA: bigint;
+    cdRequestedMinADA: bigint;
+    cdFundedADA: bigint;
+    cdCollectedADA: bigint;
+    cdBeginAt: POSIXTime;
+    cdDeadline: POSIXTime;
+    cdStatus: number;
+    cdMilestones: string;
+    cdFundsCount: number;
+    cdFundsIndex: number;
+    cdMinADA: bigint;
+}
 
 @asSmartDBEntity()
 export class CampaignEntity extends BaseSmartDBEntity {
     protected static _apiRoute: string = 'campaign';
     protected static _className: string = 'Campaign';
 
-    protected static _plutusDataIsSubType = false;
-    protected static _is_NET_id_Unique = false;
+    protected static _plutusDataIsSubType = true;
+    protected static _is_NET_id_Unique = true;
     _NET_id_TN: string = 'CampaignID';
 
     // #region fields
-    @Convertible()
+    @Convertible({ isDB_id: true })
     projectId!: string;
-    @Convertible()
+    @Convertible({ isDB_id: true })
     campaingCategoryId!: string;
-    @Convertible()
+    @Convertible({ isDB_id: true })
     campaignStatusId!: string;
-    @Convertible()
+    @Convertible({ isDB_id: true })
     creatorWalletId!: string;
     @Convertible({ isForDatum: true })
-    cdCampaignVersion!: string;
-    @Convertible()
+    cdCampaignVersion!: number;
+    @Convertible({ isForDatum: true })
     cdCampaignPolicy_CS!: string;
     @Convertible({ isForDatum: true })
     cdCampaignFundsPolicyID_CS!: string;
@@ -37,19 +59,19 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible({ isForDatum: true })
     cdCampaignToken_TN!: string;
     @Convertible({ isForDatum: true })
-    cdCampaignToken_PriceADA!: string;
+    cdCampaignToken_PriceADA!: bigint;
     @Convertible({ isForDatum: true })
-    cdRequestedMaxADA!: string;
+    cdRequestedMaxADA!: bigint;
     @Convertible({ isForDatum: true })
-    cdRequestedMinADA!: string;
+    cdRequestedMinADA!: bigint;
     @Convertible({ isForDatum: true })
-    cdFundedADA!: string;
+    cdFundedADA!: bigint;
     @Convertible({ isForDatum: true })
-    cdCollectedADA!: string;
-    @Convertible({ isForDatum: true })
-    cdBeginAt!: Date;
-    @Convertible({ isForDatum: true })
-    cdDeadline!: Date;
+    cdCollectedADA!: bigint;
+    @Convertible({ isForDatum: true, type: BigInt })
+    cdBeginAt!: POSIXTime;
+    @Convertible({ isForDatum: true, type: BigInt })
+    cdDeadline!: POSIXTime;
     @Convertible({ isForDatum: true })
     cdStatus!: number;
     @Convertible({ isForDatum: true })
@@ -59,9 +81,13 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible({ isForDatum: true })
     cdFundsIndex!: number;
     @Convertible({ isForDatum: true })
-    cdMinADA!: string;
+    cdMinADA!: bigint;
     @Convertible()
     description?: string;
+    @Convertible()
+    beginAt?: Date;
+    @Convertible()
+    deadline?: Date;
     @Convertible()
     logoUrl?: string;
     @Convertible()
@@ -124,6 +150,8 @@ export class CampaignEntity extends BaseSmartDBEntity {
         cdFundsIndex: true,
         cdMinADA: true,
         description: true,
+        beginAt: true,
+        deadline: true,
         logoUrl: true,
         bannerUrl: true,
         website: true,

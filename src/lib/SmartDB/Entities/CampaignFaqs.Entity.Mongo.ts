@@ -11,13 +11,6 @@ export class CampaignFaqsEntityMongo extends BaseEntityMongo {
 
     // #region fields
 
-    // campaignId:ID
-    // name:String
-    // description:String
-    // order:String
-    // createdAt: Date
-    // updatedAt:String
-
     // #endregion fields
 
     // #region internal class methods
@@ -55,7 +48,9 @@ export class CampaignFaqsEntityMongo extends BaseEntityMongo {
             campaignId: string;
             name: string;
             description: string;
-            order: string;
+            order: number;
+            createdAt: Date;
+            updatedAt: Date;
         }
 
         const schema = new Schema<Interface>(
@@ -63,7 +58,7 @@ export class CampaignFaqsEntityMongo extends BaseEntityMongo {
                 campaignId: { type: String, required: true },
                 name: { type: String, required: true },
                 description: { type: String, required: false },
-                order: { type: String, required: true },
+                order: { type: Number, required: true },
             },
             { timestamps: true }
         );

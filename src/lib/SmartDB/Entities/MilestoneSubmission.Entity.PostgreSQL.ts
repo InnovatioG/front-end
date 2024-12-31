@@ -1,7 +1,7 @@
-import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { MilestoneSubmissionEntity } from './MilestoneSubmission.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
 import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { MilestoneSubmissionEntity } from './MilestoneSubmission.Entity';
 
 @PostgreSQLAppliedFor([MilestoneSubmissionEntity])
 @Entity({ name: getPostgreSQLTableName(MilestoneSubmissionEntity.className()) })
@@ -21,11 +21,11 @@ export class MilestoneSubmissionEntityPostgreSQL extends BaseEntityPostgreSQL {
     submittedByWalletId!: string;
     @Column({ type: 'varchar', length: 255 })
     revisedByWalletId!: string;
-    @Column({ type: 'varchar', length: 255, nullable: true })
+    @Column({ type: 'text'})
     reportProofOfFinalization?: string;
-    @Column({ type: 'varchar', length: 255, nullable: true })
+    @Column({ type: 'text', nullable: true })
     approvedJustification?: string;
-    @Column({ type: 'varchar', length: 255, nullable: true })
+    @Column({ type: 'text', nullable: true })
     rejectedJustification?: string;
     @CreateDateColumn()
     createdAt!: Date;

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { CampaignCategoryEntity } from '../../../lib/SmartDB/Entities/CampaignCategory.Entity';
 import { CampaignCategoryApi } from '../../../lib/SmartDB/FrontEnd/CampaignCategory.FrontEnd.Api.Calls';
@@ -85,4 +84,3 @@ export function useCampaignCategory() {
         remove,
     };
 }
-

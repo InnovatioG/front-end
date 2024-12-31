@@ -1,7 +1,7 @@
-import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { CampaignStatusEntity } from './CampaignStatus.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
 import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { CampaignStatusEntity } from './CampaignStatus.Entity';
 
 @PostgreSQLAppliedFor([CampaignStatusEntity])
 @Entity({ name: getPostgreSQLTableName(CampaignStatusEntity.className()) })
@@ -15,7 +15,7 @@ export class CampaignStatusEntityPostgreSQL extends BaseEntityPostgreSQL {
 
     @Column({ type: 'varchar', length: 255 })
     name!: string;
-    @Column({ type: 'varchar', length: 255, nullable: true })
+    @Column({ type: 'text', nullable: true })
     description?: string;
     @CreateDateColumn()
     createdAt!: Date;

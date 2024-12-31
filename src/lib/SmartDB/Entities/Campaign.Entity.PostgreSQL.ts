@@ -1,13 +1,11 @@
-import { Column, CreateDateColumn, Entity, Index, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { CampaignEntity } from './Campaign.Entity';
 import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import {  BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
-import { UnixTime,  } from 'lucid-cardano';
+import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
+import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { CampaignEntity } from './Campaign.Entity';
 
 @PostgreSQLAppliedFor([CampaignEntity])
 @Entity({ name: getPostgreSQLTableName(CampaignEntity.className()) })
-
-export class CampaignEntityPostgreSQL extends  BaseSmartDBEntityPostgreSQL {
+export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     protected static Entity = CampaignEntity;
 
     // #region fields
@@ -15,80 +13,84 @@ export class CampaignEntityPostgreSQL extends  BaseSmartDBEntityPostgreSQL {
     @PrimaryGeneratedColumn()
     _id!: number; // Auto-generated primary key
 
-    @Column({ type: "varchar", length: 255  })
-    projectId!:string;
-    @Column({ type: "varchar", length: 255  })
-    campaingCategoryId!:string;
-    @Column({ type: "varchar", length: 255  })
-    campaignStatusId!:string;
-    @Column({ type: "varchar", length: 255  })
-    creatorWalletId!:string;
-    @Column({ type: "varchar", length: 255  })
-    cdCampaignVersion!:string;
-    @Column({ type: "varchar", length: 255  })
-    cdCampaignPolicy_CS!:string;
-    @Column({ type: "varchar", length: 255  })
-    cdCampaignFundsPolicyID_CS!:string;
-    @Column({ type: "varchar", length: 255  })
-    cdAdmins!:String [];
-    @Column({ type: "varchar", length: 255  })
-    cdTokenAdminPolicy_CS!:string;
-    @Column({ type: "varchar", length: 255  })
-    cdMint_CampaignToken!:boolean;
-    @Column({ type: "varchar", length: 255  })
-    cdCampaignToken_CS!:string;
-    @Column({ type: "varchar", length: 255  })
-    cdCampaignToken_TN!:string;
-    @Column({ type: "varchar", length: 255  })
-    cdCampaignToken_PriceADA!:string;
-    @Column({ type: "varchar", length: 255  })
-    cdRequestedMaxADA!:string;
-    @Column({ type: "varchar", length: 255  })
-    cdRequestedMinADA!:string;
-    @Column({ type: "varchar", length: 255  })
-    cdFundedADA!:string;
-    @Column({ type: "varchar", length: 255  })
-    cdCollectedADA!:string;
-    @Column({ type: "varchar", length: 255  })
-    cdBeginAt!: Date ;
-    @Column({ type: "varchar", length: 255  })
-    cdDeadline!: Date ;
-    @Column({ type: "int"  })
-    cdStatus!:number;
-    @Column({ type: "varchar", length: 255  })
-    cdMilestones!:string;
-    @Column({ type: "int"  })
-    cdFundsCount!:number;
-    @Column({ type: "int"  })
-    cdFundsIndex!:number;
-    @Column({ type: "varchar", length: 255  })
-    cdMinADA!:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    description?:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    logoUrl?:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    bannerUrl?:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    website?:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    instagram?:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    twitter?:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    discord?:string;
-    @Column({ type: "varchar", length: 255 , nullable: true })
-    facebook?:string;
-    @Column({ type: "int"  })
-    investors!:number;
-    @Column({ type: "varchar", length: 255  })
-    tokenomicsMaxSupply!:string;
-    @Column({ type: "varchar", length: 255  })
-    tokenomicsDescription!:string;
-    @Column({ type: "varchar", length: 255  })
-    featured!:boolean;
-    @Column({ type: "varchar", length: 255  })
-    archived!:boolean;
+    @Column({ type: 'varchar', length: 255 })
+    projectId!: string;
+    @Column({ type: 'varchar', length: 255 })
+    campaingCategoryId!: string;
+    @Column({ type: 'varchar', length: 255 })
+    campaignStatusId!: string;
+    @Column({ type: 'varchar', length: 255 })
+    creatorWalletId!: string;
+    @Column({ type: 'integer', nullable: true })
+    cdCampaignVersion!: number;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    cdCampaignPolicy_CS!: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    cdCampaignFundsPolicyID_CS!: string;
+    @Column({ type: 'varchar', length: 255, array: true, nullable: true })
+    cdAdmins!: String[];
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    cdTokenAdminPolicy_CS!: string;
+    @Column({ type: 'boolean', default: false, nullable: true })
+    cdMint_CampaignToken!: boolean;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    cdCampaignToken_CS!: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    cdCampaignToken_TN!: string;
+    @Column({ type: 'bigint', nullable: true })
+    cdCampaignToken_PriceADA!: string;
+    @Column({ type: 'bigint', nullable: true })
+    cdRequestedMaxADA!: string;
+    @Column({ type: 'bigint', nullable: true })
+    cdRequestedMinADA!: string;
+    @Column({ type: 'bigint', nullable: true })
+    cdFundedADA!: string;
+    @Column({ type: 'bigint', nullable: true })
+    cdCollectedADA!: string;
+    @Column({ type: 'bigint', nullable: true })
+    cdBeginAt!: string;
+    @Column({ type: 'bigint', nullable: true })
+    cdDeadline!: string;
+    @Column({ type: 'integer', nullable: true })
+    cdStatus!: number;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    cdMilestones!: string;
+    @Column({ type: 'integer', nullable: true })
+    cdFundsCount!: number;
+    @Column({ type: 'integer', nullable: true })
+    cdFundsIndex!: number;
+    @Column({ type: 'bigint', nullable: true })
+    cdMinADA!: string;
+    @Column({ type: 'text', nullable: true })
+    description?: string;
+    @Column({ type: 'timestamp', nullable: true })
+    beginAt!: Date;
+    @Column({ type: 'timestamp', nullable: true })
+    deadline!: Date;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    logoUrl?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    bannerUrl?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    website?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    instagram?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    twitter?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    discord?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    facebook?: string;
+    @Column({ type: 'integer', nullable: true })
+    investors!: number;
+    @Column({ type: 'bigint', nullable: true })
+    tokenomicsMaxSupply!: string;
+    @Column({ type: 'text', nullable: true })
+    tokenomicsDescription!: string;
+    @Column({ type: 'boolean', default: false })
+    featured!: boolean;
+    @Column({ type: 'boolean', default: false })
+    archived!: boolean;
     @CreateDateColumn()
     createdAt!: Date;
     @UpdateDateColumn()

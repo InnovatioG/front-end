@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { MilestoneStatusEntity } from '../../../lib/SmartDB/Entities/MilestoneStatus.Entity';
 import { MilestoneStatusApi } from '../../../lib/SmartDB/FrontEnd/MilestoneStatus.FrontEnd.Api.Calls';
 import { pushWarningNotification } from 'smart-db';
-import { th } from 'date-fns/locale';
 
 export function useMilestoneStatus() {
     const [list, setList] = useState<MilestoneStatusEntity[]>([]);
