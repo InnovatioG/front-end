@@ -24,9 +24,9 @@ export class ProtocolEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'varchar', length: 255, array: true, nullable: true })
     contracts!: String[];
     @CreateDateColumn()
-    created_at!: Date;
+    createdAt!: Date;
     @UpdateDateColumn()
-    updated_at!: Date;
+    updatedAt!: Date;
 
     // #endregion fields
 

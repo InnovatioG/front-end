@@ -139,8 +139,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "2024-04-01T00:35:24.725Z",
-            "updated_at": "2024-04-01T00:35:24.725Z"
+            "createdAt": "2024-04-01T00:35:24.725Z",
+            "updatedAt": "2024-04-01T00:35:24.725Z"
         },
         {
             "id": 2,
@@ -164,8 +164,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id2.png",
             "banner_url": "/img/database/banner_logo_id2.png",
-            "created_at": "2024-04-01T00:35:24.725Z",
-            "updated_at": "2024-04-01T00:35:24.725Z"
+            "createdAt": "2024-04-01T00:35:24.725Z",
+            "updatedAt": "2024-04-01T00:35:24.725Z"
         },
         {
             "id": 3,
@@ -189,8 +189,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id3.png",
             "banner_url": "/img/database/banner_logo_id3.png",
-            "created_at": "2024-04-01T00:35:24.725Z",
-            "updated_at": "2024-04-01T00:35:24.725Z"
+            "createdAt": "2024-04-01T00:35:24.725Z",
+            "updatedAt": "2024-04-01T00:35:24.725Z"
         },
         {
             "id": 4,
@@ -214,8 +214,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id2.png",
             "banner_url": "/img/database/banner_logo_id2.png",
-            "created_at": "2024-04-01T00:35:24.725Z",
-            "updated_at": "2024-04-01T00:35:24.725Z"
+            "createdAt": "2024-04-01T00:35:24.725Z",
+            "updatedAt": "2024-04-01T00:35:24.725Z"
         },
         {
             "id": 5,
@@ -239,8 +239,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id2.png",
             "banner_url": "/img/database/banner_logo_id2.png",
-            "created_at": "2024-04-01T00:35:24.725Z",
-            "updated_at": "2024-04-01T00:35:24.725Z"
+            "createdAt": "2024-04-01T00:35:24.725Z",
+            "updatedAt": "2024-04-01T00:35:24.725Z"
         },
         {
             "id": 6,
@@ -264,8 +264,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id2.png",
             "banner_url": "/img/database/banner_logo_id2.png",
-            "created_at": "2024-04-01T00:35:24.725Z",
-            "updated_at": "2024-04-01T00:35:24.725Z"
+            "createdAt": "2024-04-01T00:35:24.725Z",
+            "updatedAt": "2024-04-01T00:35:24.725Z"
         },
         {
             "id": 7,
@@ -289,8 +289,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "2024-04-01T00:35:24.725Z",
-            "updated_at": "2024-04-01T00:35:24.725Z"
+            "createdAt": "2024-04-01T00:35:24.725Z",
+            "updatedAt": "2024-04-01T00:35:24.725Z"
         },
         {
             "id": 8,
@@ -314,8 +314,8 @@
             "end_date": "2024-12-19T00:35:24.725Z",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "2024-11-01T00:35:24.725Z",
-            "updated_at": "2024-12-01T00:35:24.725Z"
+            "createdAt": "2024-11-01T00:35:24.725Z",
+            "updatedAt": "2024-12-01T00:35:24.725Z"
         },
         {
             "id": 9,
@@ -339,8 +339,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "",
-            "updated_at": ""
+            "createdAt": "",
+            "updatedAt": ""
         },
         {
             "id": 10,
@@ -371,8 +371,8 @@
                         "id": 1,
                         "name": "Bit",
                         "description": "The first milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -392,8 +392,8 @@
                         "id": 2,
                         "name": "in_progress",
                         "description": "The second milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 }
             ],
@@ -403,8 +403,8 @@
             "end_date": "2024-12-31T00:35:24.725Z",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "2024-11-01T00:35:24.725Z",
-            "updated_at": "2024-12-01T00:35:24.725Z"
+            "createdAt": "2024-11-01T00:35:24.725Z",
+            "updatedAt": "2024-12-01T00:35:24.725Z"
         },
         {
             "id": 11,
@@ -435,8 +435,8 @@
                         "id": 1,
                         "name": "Bit",
                         "description": "<p>The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.</p><p><br></p><p>Deliverables: </p><ol><li>Figma Mockup in react, 100% functional in the UI with minimal complications with the backend </li><li>Comprehensive document outlining the tech, frameworks, and architectures used for MVP development. </li><li>Payment to all team members, fulfilling all salaries. </li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -456,8 +456,8 @@
                         "id": 2,
                         "name": "in_progress",
                         "description": "<p>The second milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.</p><p><br></p><ol><li>Application architectures and its backend.</li><li>Operation and relationship of the smart contracts</li><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -479,8 +479,8 @@
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 }
             ],
@@ -490,8 +490,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "",
-            "updated_at": ""
+            "createdAt": "",
+            "updatedAt": ""
         },
         {
             "id": 12,
@@ -522,8 +522,8 @@
                         "id": 1,
                         "name": "Bit",
                         "description": "<p>The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.</p><p><br></p><p>Deliverables: </p><ol><li>Figma Mockup in react, 100% functional in the UI with minimal complications with the backend </li><li>Comprehensive document outlining the tech, frameworks, and architectures used for MVP development. </li><li>Payment to all team members, fulfilling all salaries. </li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -544,8 +544,8 @@
                         "id": 2,
                         "name": "in_progress",
                         "description": "<p>The second milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.</p><p><br></p><ol><li>Application architectures and its backend.</li><li>Operation and relationship of the smart contracts</li><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -567,8 +567,8 @@
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 }
             ],
@@ -578,8 +578,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "",
-            "updated_at": ""
+            "createdAt": "",
+            "updatedAt": ""
         },
         {
             "id": 13,
@@ -610,8 +610,8 @@
                         "id": 1,
                         "name": "Bit",
                         "description": "<p>The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.</p><p><br></p><p>Deliverables: </p><ol><li>Figma Mockup in react, 100% functional in the UI with minimal complications with the backend </li><li>Comprehensive document outlining the tech, frameworks, and architectures used for MVP development. </li><li>Payment to all team members, fulfilling all salaries. </li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -632,8 +632,8 @@
                         "id": 2,
                         "name": "in_progress",
                         "description": "<p>The second milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.</p><p><br></p><ol><li>Application architectures and its backend.</li><li>Operation and relationship of the smart contracts</li><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -655,8 +655,8 @@
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 }
             ],
@@ -666,8 +666,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "",
-            "updated_at": ""
+            "createdAt": "",
+            "updatedAt": ""
         },
         {
             "id": 14,
@@ -698,8 +698,8 @@
                         "id": 1,
                         "name": "Bit",
                         "description": "<p>The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.</p><p><br></p><p>Deliverables: </p><ol><li>Figma Mockup in react, 100% functional in the UI with minimal complications with the backend </li><li>Comprehensive document outlining the tech, frameworks, and architectures used for MVP development. </li><li>Payment to all team members, fulfilling all salaries. </li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -720,8 +720,8 @@
                         "id": 2,
                         "name": "in_progress",
                         "description": "<p>The second milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.</p><p><br></p><ol><li>Application architectures and its backend.</li><li>Operation and relationship of the smart contracts</li><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -743,8 +743,8 @@
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 }
             ],
@@ -754,8 +754,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "",
-            "updated_at": ""
+            "createdAt": "",
+            "updatedAt": ""
         },
 
         {
@@ -787,8 +787,8 @@
                         "id": 1,
                         "name": "Bit",
                         "description": "<p>The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.</p><p><br></p><p>Deliverables: </p><ol><li>Figma Mockup in react, 100% functional in the UI with minimal complications with the backend </li><li>Comprehensive document outlining the tech, frameworks, and architectures used for MVP development. </li><li>Payment to all team members, fulfilling all salaries. </li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -809,8 +809,8 @@
                         "id": 2,
                         "name": "in_progress",
                         "description": "<p>The second milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.</p><p><br></p><ol><li>Application architectures and its backend.</li><li>Operation and relationship of the smart contracts</li><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -832,8 +832,8 @@
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 }
             ],
@@ -843,8 +843,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "",
-            "updated_at": ""
+            "createdAt": "",
+            "updatedAt": ""
         },
         {
             "id": 17,
@@ -875,8 +875,8 @@
                         "id": 1,
                         "name": "Bit",
                         "description": "<p>The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.</p><p><br></p><p>Deliverables: </p><ol><li>Figma Mockup in react, 100% functional in the UI with minimal complications with the backend </li><li>Comprehensive document outlining the tech, frameworks, and architectures used for MVP development. </li><li>Payment to all team members, fulfilling all salaries. </li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -897,8 +897,8 @@
                         "id": 2,
                         "name": "in_progress",
                         "description": "<p>The second milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.</p><p><br></p><ol><li>Application architectures and its backend.</li><li>Operation and relationship of the smart contracts</li><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -920,8 +920,8 @@
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 }
             ],
@@ -931,8 +931,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "",
-            "updated_at": ""
+            "createdAt": "",
+            "updatedAt": ""
         },
         {
             "id": 18,
@@ -963,8 +963,8 @@
                         "id": 1,
                         "name": "Bit",
                         "description": "<p>The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.</p><p><br></p><p>Deliverables: </p><ol><li>Figma Mockup in react, 100% functional in the UI with minimal complications with the backend </li><li>Comprehensive document outlining the tech, frameworks, and architectures used for MVP development. </li><li>Payment to all team members, fulfilling all salaries. </li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -985,8 +985,8 @@
                         "id": 2,
                         "name": "in_progress",
                         "description": "<p>The second milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.</p><p><br></p><ol><li>Application architectures and its backend.</li><li>Operation and relationship of the smart contracts</li><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -1008,8 +1008,8 @@
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 }
             ],
@@ -1019,8 +1019,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "",
-            "updated_at": ""
+            "createdAt": "",
+            "updatedAt": ""
         },
 
         {
@@ -1052,8 +1052,8 @@
                         "id": 1,
                         "name": "Bit",
                         "description": "<p>The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.</p><p><br></p><p>Deliverables: </p><ol><li>Figma Mockup in react, 100% functional in the UI with minimal complications with the backend </li><li>Comprehensive document outlining the tech, frameworks, and architectures used for MVP development. </li><li>Payment to all team members, fulfilling all salaries. </li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -1074,8 +1074,8 @@
                         "id": 2,
                         "name": "in_progress",
                         "description": "<p>The second milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.</p><p><br></p><ol><li>Application architectures and its backend.</li><li>Operation and relationship of the smart contracts</li><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -1097,8 +1097,8 @@
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 }
             ],
@@ -1108,8 +1108,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "",
-            "updated_at": ""
+            "createdAt": "",
+            "updatedAt": ""
         },
         {
             "id": 19,
@@ -1140,8 +1140,8 @@
                         "id": 1,
                         "name": "Bit",
                         "description": "<p>The first milestone corresponds to the official launch of the product development. Therefore, this first Milestone aims to achieve the development of the mock-up and the integration of the smart contracts.</p><p><br></p><p>Deliverables: </p><ol><li>Figma Mockup in react, 100% functional in the UI with minimal complications with the backend </li><li>Comprehensive document outlining the tech, frameworks, and architectures used for MVP development. </li><li>Payment to all team members, fulfilling all salaries. </li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -1162,8 +1162,8 @@
                         "id": 2,
                         "name": "in_progress",
                         "description": "<p>The second milestone is focused on completing the infrastructure and integration of the smart contracts and all backend of the application in general.</p><p><br></p><ol><li>Application architectures and its backend.</li><li>Operation and relationship of the smart contracts</li><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 },
                 {
@@ -1185,8 +1185,8 @@
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
-                        "created_at": "",
-                        "updated_at": ""
+                        "createdAt": "",
+                        "updatedAt": ""
                     }
                 }
             ],
@@ -1196,8 +1196,8 @@
             "end_date": "",
             "logo_url": "/img/database/company_logo_id1.png",
             "banner_url": "/img/database/banner_logo_id1.png",
-            "created_at": "",
-            "updated_at": ""
+            "createdAt": "",
+            "updatedAt": ""
         }
     ]
 }

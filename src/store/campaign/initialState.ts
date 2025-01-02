@@ -45,8 +45,8 @@ export interface CampaignState {
         goal: number;
         milestones: Milestone[];
         balance: number;
-        created_at: string;
-        updated_at: string;
+        createdAt: string;
+        updatedAt: string;
         website: string;
         facebook: string;
         instagram: string;
@@ -85,8 +85,8 @@ export const initialState: CampaignState = {
         goal: 20000,
         balance: 0,
 
-        created_at: '',
-        updated_at: '',
+        createdAt: '',
+        updatedAt: '',
 
         website: '',
         facebook: '',

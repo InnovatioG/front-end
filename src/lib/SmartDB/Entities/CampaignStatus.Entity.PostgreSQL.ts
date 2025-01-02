@@ -18,9 +18,9 @@ export class CampaignStatusEntityPostgreSQL extends BaseEntityPostgreSQL {
     @Column({ type: 'text', nullable: true })
     description?: string;
     @CreateDateColumn()
-    created_at!: Date;
+    createdAt!: Date;
     @UpdateDateColumn()
-    updated_at!: Date;
+    updatedAt!: Date;
 
     // #endregion fields
 

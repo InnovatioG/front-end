@@ -30,7 +30,7 @@ export default function ProtocolAdminWallet() {
                                 <td>{item.protocol_id}</td>
                                 <td>{item.wallet_id}</td>
                                 <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updated_at?.toISOString()}</td>
+                                <td>{item.updatedAt?.toISOString()}</td>
                                 <td>
                                     <button
                                         onClick={() => {

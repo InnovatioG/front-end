@@ -18,9 +18,9 @@ export class ProtocolAdminWalletEntityPostgreSQL extends BaseEntityPostgreSQL {
     @Column({ type: 'varchar', length: 255 })
     wallet_id!: string;
     @CreateDateColumn()
-    created_at!: Date;
+    createdAt!: Date;
     @UpdateDateColumn()
-    updated_at!: Date;
+    updatedAt!: Date;
 
     // #endregion fields
 

@@ -30,7 +30,7 @@ export default function CampaignStatus() {
                                 <td>{item.name}</td>
                                 <td>{item.description}</td>
                                 <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updated_at?.toISOString()}</td>
+                                <td>{item.updatedAt?.toISOString()}</td>
                                 <td>
                                     <button
                                         onClick={() => {

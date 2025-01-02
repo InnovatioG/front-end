@@ -106,9 +106,9 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'boolean', default: false })
     archived!: boolean;
     @CreateDateColumn()
-    created_at!: Date;
+    createdAt!: Date;
     @UpdateDateColumn()
-    updated_at!: Date;
+    updatedAt!: Date;
 
     // #endregion fields
 

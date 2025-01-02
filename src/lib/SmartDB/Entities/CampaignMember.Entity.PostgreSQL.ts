@@ -34,9 +34,9 @@ export class CampaignMemberEntityPostgreSQL extends BaseEntityPostgreSQL {
     @Column({ type: 'varchar', length: 255, nullable: true })
     facebook?: string;
     @CreateDateColumn()
-    created_at!: Date;
+    createdAt!: Date;
     @UpdateDateColumn()
-    updated_at!: Date;
+    updatedAt!: Date;
 
     // #endregion fields
 

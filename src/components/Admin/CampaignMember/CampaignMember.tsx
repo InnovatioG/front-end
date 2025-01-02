@@ -46,7 +46,7 @@ export default function CampaignMember() {
                                 <td>{item.discord}</td>
                                 <td>{item.facebook}</td>
                                 <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updated_at?.toISOString()}</td>
+                                <td>{item.updatedAt?.toISOString()}</td>
                                 <td>
                                     <button
                                         onClick={() => {

@@ -31,9 +31,9 @@ export class CustomWalletEntity extends BaseEntity {
     @Convertible()
     mainnet_address!: Address;
     @Convertible({ isCreatedAt: true })
-    created_at!: Date;
+    createdAt!: Date;
     @Convertible({ isUpdatedAt: true })
-    updated_at?: Date;
+    updatedAt?: Date;
 
     // #endregion fields
 
