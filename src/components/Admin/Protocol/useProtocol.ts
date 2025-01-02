@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import { ProtocolEntity } from '../../../lib/SmartDB/Entities/Protocol.Entity';
 import { ProtocolApi } from '../../../lib/SmartDB/FrontEnd/Protocol.FrontEnd.Api.Calls';
-import { pushWarningNotification, toJson } from 'smart-db';
+import { isNullOrBlank, pushWarningNotification, toJson, useWalletStore } from 'smart-db';
 
 export function useProtocol() {
     const [list, setList] = useState<ProtocolEntity[]>([]);
     const [newItem, setNewItem] = useState<Partial<ProtocolEntity>>({});
+    const [configJson, setConfigJson] = useState('');
     const [editItem, setEditItem] = useState<Partial<ProtocolEntity> | null>(null);
     const [view, setView] = useState<'list' | 'create' | 'edit' | 'confirmDelete'>('list');
     const [deleteItem, setDeleteItem] = useState<ProtocolEntity | null>(null);
+
+    const walletStore = useWalletStore();
 
     const fetch = async () => {
         try {
@@ -25,20 +28,15 @@ export function useProtocol() {
     }, []);
 
     const create = async () => {
-        try {
-            newItem._NET_address = 'test address';
-            newItem._NET_id_CS = 'test CS';
-            newItem._isDeployed = false;
-            console.log('newItem', toJson(newItem));
-            let entity: ProtocolEntity = new ProtocolEntity(newItem);
-            console.log('entity', toJson(entity));
-            entity = await ProtocolApi.createApi(entity);
+        const id = await ProtocolApi.handleBtnCreate(walletStore, {
+            name: newItem.name!,
+            configJson,
+        });
+
+        if (!isNullOrBlank(id)) {
             setNewItem({});
             fetch();
             setView('list');
-        } catch (e) {
-            console.error(e);
-            pushWarningNotification('Error', `Error creating Protocol: ${e}`);
         }
     };
 
@@ -88,5 +86,7 @@ export function useProtocol() {
         create,
         update,
         remove,
+        configJson,
+        setConfigJson,
     };
 }
