@@ -14,6 +14,8 @@ export class CampaignFundsEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     _id!: number; // Auto-generated primary key
 
     @Column({ type: 'integer', nullable: true })
+    cfdVersion!: number;
+    @Column({ type: 'integer', nullable: true })
     cfdIndex!: number;
     @Column({ type: 'varchar', length: 255, nullable: true })
     cfdCampaignPolicy_CS!: string;

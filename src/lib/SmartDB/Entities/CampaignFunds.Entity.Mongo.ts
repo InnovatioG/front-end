@@ -55,6 +55,7 @@ export class CampaignFundsEntityMongo extends BaseSmartDBEntityMongo {
         };
 
         const schemaDatum = {
+            cfdVersion: { type: Number, required: false },
             cfdIndex: { type: Number, required: false },
             cfdCampaignPolicy_CS: { type: String, required: false },
             cfdCampaignFundsPolicyID_CS: { type: String, required: false },
