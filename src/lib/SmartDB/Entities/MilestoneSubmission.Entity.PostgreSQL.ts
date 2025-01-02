@@ -28,9 +28,9 @@ export class MilestoneSubmissionEntityPostgreSQL extends BaseEntityPostgreSQL {
     @Column({ type: 'text', nullable: true })
     rejected_justification?: string;
     @CreateDateColumn()
-    created_at!: Date;
+    createdAt!: Date;
     @UpdateDateColumn()
-    updated_at!: Date;
+    updatedAt!: Date;
 
     // #endregion fields
 

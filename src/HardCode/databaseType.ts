@@ -43,8 +43,8 @@ export interface BaseCampaign {
     state_id: number;
     banner_url: string;
     logo_url: string;
-    created_at: string;
-    updated_at: string;
+    createdAt: string;
+    updatedAt: string;
     investors: number;
     status: string;
     goal: number;
@@ -119,9 +119,9 @@ export interface MilestoneStatus {
     id: number;
     name: string;
     description: string;
-    created_at: string;
+    createdAt: string;
     milestone_submission: Milestone_submission;
-    updated_at: string;
+    updatedAt: string;
 }
 
 export interface CampaignStatus {
@@ -129,8 +129,8 @@ export interface CampaignStatus {
     name: string;
     campaign_submission?: Campaign_Submission;
     description: string;
-    created_at: string;
-    updated_at: string;
+    createdAt: string;
+    updatedAt: string;
 }
 export interface MilestoneF {
     id: number;
@@ -140,8 +140,8 @@ export interface MilestoneF {
     percentage: number;
     status: string;
     description: string;
-    created_at: string;
-    updated_at: string;
+    createdAt: string;
+    updatedAt: string;
     milestone_status?: MilestoneStatus;
     campaign_status?: CampaignStatus;
 }
@@ -187,8 +187,8 @@ export interface Project {
     description: string;
     banner_url: string;
     logo_url: string;
-    created_at: string;
-    updated_at: string;
+    createdAt: string;
+    updatedAt: string;
     investors: number;
     status: string;
     goal: number;

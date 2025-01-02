@@ -74,7 +74,7 @@ export const dataBaseService = {
             ...campaign,
             id: data.campaigns.length + 1,
             create_at: Date.now().toString(),
-            updated_at: Date.now().toString(),
+            updatedAt: Date.now().toString(),
         };
         data.campaigns.push(newCampaign);
         dataBaseService.updateData(data);
@@ -88,7 +88,7 @@ export const dataBaseService = {
             data.campaigns[index] = {
                 ...data.campaigns[index],
                 ...updates,
-                updated_at: Date.now().toString(),
+                updatedAt: Date.now().toString(),
             };
             dataBaseService.updateData(data);
             return data.campaigns[index];

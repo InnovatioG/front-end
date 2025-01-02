@@ -412,7 +412,7 @@ export default function Campaign() {
                                 <td>{item.featured ? 'Yes' : 'No'}</td>
                                 <td>{item.archived ? 'Yes' : 'No'}</td>
                                 <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updated_at?.toISOString()}</td>
+                                <td>{item.updatedAt?.toISOString()}</td>
                                 <td>
                                     <button
                                         onClick={() => {

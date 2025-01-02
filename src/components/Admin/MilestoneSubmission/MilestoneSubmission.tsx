@@ -40,7 +40,7 @@ export default function MilestoneSubmission() {
                                 <td>{item.approved_justification}</td>
                                 <td>{item.rejected_justification}</td>
                                 <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updated_at?.toISOString()}</td>
+                                <td>{item.updatedAt?.toISOString()}</td>
                                 <td>
                                     <button
                                         onClick={() => {

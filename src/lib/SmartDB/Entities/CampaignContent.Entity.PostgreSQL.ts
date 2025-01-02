@@ -22,9 +22,9 @@ export class CampaignContentEntityPostgreSQL extends BaseEntityPostgreSQL {
     @Column({ type: 'integer' })
     order!: number;
     @CreateDateColumn()
-    created_at!: Date;
+    createdAt!: Date;
     @UpdateDateColumn()
-    updated_at!: Date;
+    updatedAt!: Date;
 
     // #endregion fields
 

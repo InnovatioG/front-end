@@ -26,9 +26,9 @@ export class MilestoneEntityPostgreSQL extends BaseEntityPostgreSQL {
     @Column({ type: 'text' })
     description!: string;
     @CreateDateColumn()
-    created_at!: Date;
+    createdAt!: Date;
     @UpdateDateColumn()
-    updated_at!: Date;
+    updatedAt!: Date;
 
     // #endregion fields
 
