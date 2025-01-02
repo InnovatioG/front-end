@@ -45,6 +45,7 @@ export class SubmissionStatusEntityMongo extends BaseEntityMongo {
 
     public static MongoModel() {
         interface Interface {
+            id_internal: number;
             name: string;
             description: string;
             createdAt: Date;
@@ -53,6 +54,7 @@ export class SubmissionStatusEntityMongo extends BaseEntityMongo {
 
         const schema = new Schema<Interface>(
             {
+                id_internal: { type: Number, required: true },
                 name: { type: String, required: true },
                 description: { type: String, required: false },
             },

@@ -159,6 +159,30 @@ export const categoriesById = (categoryId: number) => {
     };
     return category[categoryId] || '';
 };
+
+
+export const contractstatusById = (contract_status_id: number) => {
+    const contract_status: { [key: number]: string } = {
+        1: 'Active',
+        2: 'TBL',
+        3: 'Created',
+        4: 'Signed',
+        5: 'Ready',
+        6: 'Deleted',
+        7: 'Ended',
+    };
+    return contract_status[contract_status_id] || '';
+}
+
+export const visualizationById = (visualization_id: number) => {
+    const visualization: { [key: number]: string } = {
+        1: 'All',
+        2: 'User',
+        3: 'Admin',
+    };
+    return visualization[visualization_id] || '';
+};
+
 export interface ButtonConfig {
     id: number;
     label: string;
