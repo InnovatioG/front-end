@@ -1,5 +1,6 @@
+import { type Script } from 'lucid-cardano';
 import 'reflect-metadata';
-import { BaseSmartDBEntity, Convertible, asSmartDBEntity, type POSIXTime } from 'smart-db';
+import { BaseSmartDBEntity, type CS, Convertible, asSmartDBEntity, type POSIXTime, LucidLUCID_NETWORK_MAINNET_NAME } from 'smart-db';
 
 export interface CampaignMilestone {
     cmEstimatedDeliveryDate: POSIXTime;
@@ -73,6 +74,62 @@ export class CampaignEntity extends BaseSmartDBEntity {
     campaign_status_id!: string;
     @Convertible({ isDB_id: true })
     creator_wallet_id!: string;
+    
+    @Convertible()
+    name!: string;
+
+    @Convertible()
+    fdpCampaignVersion!: number;
+
+    @Convertible()
+    fdpCampaignPolicy_Params!: object;
+
+    @Convertible()
+    fdpCampaignPolicy_Script!: Script;
+
+    @Convertible({ isUnique: true })
+    fdpCampaignPolicy_CS!: CS;
+
+    @Convertible()
+    fdpCampaignValidator_AddressMainnet!: string;
+
+    @Convertible()
+    fdpCampaignValidator_AddressTestnet!: string;
+
+    @Convertible()
+    fdpCampaignValidator_Script!: Script;
+
+    @Convertible()
+    fdpCampaignValidator_Hash!: string;
+
+    @Convertible()
+    fdpCampaignValidator_Params!: object;
+
+    @Convertible()
+    fdpCampaignFundsPolicyID_Params!: object;
+
+    @Convertible()
+    fdpCampaignFundsPolicyID_Script!: Script;
+
+    @Convertible()
+    fdpCampaignFundsPolicyID_CS!: CS;
+
+    @Convertible()
+    fdpCampaignFundsValidator_Params!: object;
+
+    @Convertible()
+    fdpCampaignFundsValidator_Hash!: string;
+
+    @Convertible()
+    fdpCampaignFundsValidator_Script!: Script;
+
+    @Convertible()
+    fdpCampaignFundsValidator_AddressTestnet!: string;
+
+    @Convertible()
+    fdpCampaignFundsValidator_AddressMainnet!: string;
+    
+
     @Convertible({ isForDatum: true })
     cdCampaignVersion!: number;
     @Convertible({ isForDatum: true })
@@ -118,6 +175,8 @@ export class CampaignEntity extends BaseSmartDBEntity {
     cdFundsIndex!: number;
     @Convertible({ isForDatum: true })
     cdMinADA!: bigint;
+
+    
     @Convertible()
     description?: string;
     @Convertible()
@@ -149,6 +208,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible()
     archived!: boolean;
     @Convertible({ isCreatedAt: true })
+
     createdAt!: Date;
     @Convertible({ isUpdatedAt: true })
     updatedAt?: Date;
@@ -157,7 +217,16 @@ export class CampaignEntity extends BaseSmartDBEntity {
 
     // #region db
 
-    public static defaultFieldsWhenUndefined: Record<string, boolean> = {};
+    public static defaultFieldsWhenUndefined: Record<string, boolean> = {
+        fdpCampaignPolicy_Params: false,
+        fdpCampaignPolicy_Script: false,
+        fdpCampaignValidator_Params: false,
+        fdpCampaignValidator_Script: false,
+        fdpCampaignFundsPolicyID_Params: false,
+        fdpCampaignFundsPolicyID_Script: false,
+        fdpCampaignFundsValidator_Params: false,
+        fdpCampaignFundsValidator_Script: false,
+    };
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
@@ -165,6 +234,26 @@ export class CampaignEntity extends BaseSmartDBEntity {
         campaing_category_id: true,
         campaign_status_id: true,
         creator_wallet_id: true,
+
+        name: true,
+        fdpCampaignVersion: true,
+        fdpCampaignPolicy_CS: true,
+        fdpCampaignPolicy_Params: false,
+        fdpCampaignPolicy_Script: false,
+        fdpCampaignValidator_AddressTestnet: true,
+        fdpCampaignValidator_AddressMainnet: true,
+        fdpCampaignValidator_Hash: true,
+        fdpCampaignValidator_Params: false,
+        fdpCampaignValidator_Script: false,
+        fdpCampaignFundsPolicyID_CS: true,
+        fdpCampaignFundsPolicyID_Params: false,
+        fdpCampaignFundsPolicyID_Script: false,
+        fdpCampaignFundsValidator_AddressMainnet: true,
+        fdpCampaignFundsValidator_AddressTestnet: true,
+        fdpCampaignFundsValidator_Hash: true,
+        fdpCampaignFundsValidator_Params: false,
+        fdpCampaignFundsValidator_Script: false,
+
         cdCampaignVersion: true,
         cdCampaignPolicy_CS: true,
         cdCampaignFundsPolicyID_CS: true,
@@ -205,4 +294,32 @@ export class CampaignEntity extends BaseSmartDBEntity {
     };
 
     // #endregion db
+
+    // #region class methods
+
+    public getNet_Address(): string {
+        if (process.env.NEXT_PUBLIC_CARDANO_NET === LucidLUCID_NETWORK_MAINNET_NAME) {
+            return this.fdpCampaignValidator_AddressMainnet;
+        } else {
+            return this.fdpCampaignValidator_AddressTestnet;
+        }
+    }
+
+    public getNET_id_CS(): string {
+        return this.fdpCampaignPolicy_CS;
+    }
+
+    public getNet_FundHoldingPolicyID_CS(): string {
+        return this.fdpCampaignFundsPolicyID_CS;
+    }
+
+    public getNet_FundHolding_Validator_Address(): string {
+        if (process.env.NEXT_PUBLIC_CARDANO_NET === LucidLUCID_NETWORK_MAINNET_NAME) {
+            return this.fdpCampaignFundsValidator_AddressMainnet;
+        } else {
+            return this.fdpCampaignFundsValidator_AddressTestnet;
+        }
+    }
+
+    // #endregion class methods
 }
