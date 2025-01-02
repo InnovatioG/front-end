@@ -14,4 +14,5 @@ export * from './MilestoneSubmission.FrontEnd.Api.Calls';
 export * from './CustomWallet.FrontEnd.Api.Calls';
 export * from './Protocol.FrontEnd.Api.Calls';
 export * from './ProtocolAdminWallet.FrontEnd.Api.Calls';
+export * from './Script.FrontEnd.Api.Calls';
 export * from './SubmissionStatus.FrontEnd.Api.Calls';

@@ -39,9 +39,8 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
     public static async populate() {
         //--------------------------------------
         console_log(1, this._Entity.className(), `populate - Init`);
-
         console_log(0, this._Entity.className(), `populate - Working on...`);
-
+        //--------------------------------------
         const CampaignBackEndApplied = (await import('./Campaign.BackEnd.Api.Handlers')).CampaignBackEndApplied;
         const CampaignContentBackEndApplied = (await import('./CampaignContent.BackEnd.Api.Handlers')).CampaignContentBackEndApplied;
         const CampaignFaqsBackEndApplied = (await import('./CampaignFaqs.BackEnd.Api.Handlers')).CampaignFaqsBackEndApplied;
@@ -56,6 +55,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
 
         this.populateAll();
 
+
         let protocol: ProtocolEntity = new ProtocolEntity();
         //  para protocol, campaing, y campaign funds, quye son smart db tenes que setear estas:
         protocol._creator = 'test creator';
@@ -65,7 +65,6 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         // setea todo el resto de los campos
         protocol.pdMinADA = 1000n;
         protocol = await ProtocoBackEndApplied.create(protocol);
-
         console_log(-1, this._Entity.className(), `populate - End`);
         //--------------------------------------
         return true;

@@ -12,5 +12,6 @@ export * from './MilestoneStatus.Entity';
 export * from './MilestoneSubmission.Entity';
 export * from './Protocol.Entity';
 export * from './ProtocolAdminWallet.Entity';
+export * from './Script.Entity';
 export * from './SubmissionStatus.Entity';
 

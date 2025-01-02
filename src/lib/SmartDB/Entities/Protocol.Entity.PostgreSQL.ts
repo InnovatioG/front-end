@@ -1,7 +1,8 @@
-import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
+import { type CS, PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
 import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { ProtocolEntity } from './Protocol.Entity';
+import { CampaignFactory, ProtocolEntity } from './Protocol.Entity';
+import { type Script } from 'lucid-cardano';
 
 @PostgreSQLAppliedFor([ProtocolEntity])
 @Entity({ name: getPostgreSQLTableName(ProtocolEntity.className()) })
@@ -13,6 +14,66 @@ export class ProtocolEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @PrimaryGeneratedColumn()
     _id!: number; // Auto-generated primary key
 
+    @Column({ type: 'varchar', length: 255 })
+    name!: string;
+
+    @Column({ type: 'integer' })
+    fdpProtocolVersion!: number;
+
+    @Column({ type: 'integer' })
+    fdpScriptVersion!: number;
+
+    @Column({ type: 'varchar', length: 255, unique: true })
+    fdpProtocolPolicyID_CS!: CS;
+
+    @Column({ type: 'jsonb' })
+    fdpProtocolPolicyID_Script!: Script;
+
+    @Column({ type: 'jsonb' })
+    fdpProtocolPolicyID_Params!: object;
+
+    @Column({ type: 'varchar', length: 255 })
+    fdpProtocolValidator_AddressMainnet!: string;
+
+    @Column({ type: 'varchar', length: 255 })
+    fdpProtocolValidator_AddressTestnet!: string;
+
+    @Column({ type: 'jsonb' })
+    fdpProtocolValidator_Script!: Script;
+
+    @Column({ type: 'varchar', length: 255, unique: true })
+    fdpProtocolValidator_Hash!: string;
+
+    @Column({ type: 'jsonb' })
+    fdpProtocolValidator_Params!: object;
+
+    @Column({ type: 'varchar', length: 255 })
+    fdpScriptPolicyID_CS!: CS;
+
+    @Column({ type: 'jsonb' })
+    fdpScriptPolicyID_Script!: Script;
+
+    @Column({ type: 'jsonb' })
+    fdpScriptPolicyID_Params!: object;
+
+    @Column({ type: 'varchar', length: 255 })
+    fdpScriptValidator_AddressMainnet!: string;
+
+    @Column({ type: 'varchar', length: 255 })
+    fdpScriptValidator_AddressTestnet!: string;
+
+    @Column({ type: 'jsonb' })
+    fdpScriptValidator_Script!: Script;
+
+    @Column({ type: 'varchar', length: 255 })
+    fdpScriptValidator_Hash!: string;
+
+    @Column({ type: 'jsonb' })
+    fdpScriptValidator_Params!: object;
+
+    @Column({ type: 'jsonb' })
+    fdpCampaignFactories!: CampaignFactory[];
+
     @Column({ type: 'integer', nullable: true })
     pdProtocolVersion!: number;
     @Column({ type: 'varchar', length: 255, array: true, nullable: true })
@@ -21,8 +82,7 @@ export class ProtocolEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     pdTokenAdminPolicy_CS!: string;
     @Column({ type: 'bigint', nullable: true })
     pdMinADA!: string;
-    @Column({ type: 'varchar', length: 255, array: true, nullable: true })
-    contracts!: String[];
+   
     @CreateDateColumn()
     createdAt!: Date;
     @UpdateDateColumn()

@@ -1,7 +1,8 @@
-import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
+import { type CS, PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
 import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CampaignEntity, CampaignMilestone } from './Campaign.Entity';
+import { type Script } from 'lucid-cardano';
 
 @PostgreSQLAppliedFor([CampaignEntity])
 @Entity({ name: getPostgreSQLTableName(CampaignEntity.className()) })
@@ -22,6 +23,62 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'varchar', length: 255 })
     creator_wallet_id!: string;
     @Column({ type: 'integer', nullable: true })
+
+    @Column({ type: 'varchar', length: 255 })
+    name!: string;
+
+    @Column({ type: 'integer' })
+    fdpCampaignVersion!: number;
+
+    @Column({ type: 'jsonb' })
+    fdpCampaignPolicy_Params!: object;
+
+    @Column({ type: 'jsonb' })
+    fdpCampaignPolicy_Script!: Script;
+
+    @Column({ type: 'varchar', length: 255, unique: true })
+    fdpCampaignPolicy_CS!: CS;
+
+    @Column({ type: 'varchar', length: 255 })
+    fdpCampaignValidator_AddressMainnet!: string;
+
+    @Column({ type: 'varchar', length: 255 })
+    fdpCampaignValidator_AddressTestnet!: string;
+
+    @Column({ type: 'jsonb' })
+    fdpCampaignValidator_Script!: Script;
+
+    @Column({ type: 'varchar', length: 255 })
+    fdpCampaignValidator_Hash!: string;
+
+    @Column({ type: 'jsonb' })
+    fdpCampaignValidator_Params!: object;
+
+    @Column({ type: 'jsonb' })
+    fdpCampaignFundsPolicyID_Params!: object;
+
+    @Column({ type: 'jsonb' })
+    fdpCampaignFundsPolicyID_Script!: Script;
+
+    @Column({ type: 'varchar', length: 255 })
+    fdpCampaignFundsPolicyID_CS!: CS;
+
+    @Column({ type: 'jsonb' })
+    fdpCampaignFundsValidator_Params!: object;
+
+    @Column({ type: 'varchar', length: 255 })
+    fdpCampaignFundsValidator_Hash!: string;
+
+    @Column({ type: 'jsonb' })
+    fdpCampaignFundsValidator_Script!: Script;
+
+    @Column({ type: 'varchar', length: 255 })
+    fdpCampaignFundsValidator_AddressTestnet!: string;
+
+    @Column({ type: 'varchar', length: 255 })
+    fdpCampaignFundsValidator_AddressMainnet!: string;
+
+
     cdCampaignVersion!: number;
     @Column({ type: 'varchar', length: 255, nullable: true })
     cdCampaignPolicy_CS!: string;

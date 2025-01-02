@@ -23,6 +23,8 @@ export class CampaignFundsEntity extends BaseSmartDBEntity {
 
     // #region fields
     @Convertible({ isForDatum: true })
+    cfdVersion!: number;
+    @Convertible({ isForDatum: true })
     cfdIndex!: number;
     @Convertible({ isForDatum: true, type: String })
     cfdCampaignPolicy_CS!: CS;
@@ -51,6 +53,7 @@ export class CampaignFundsEntity extends BaseSmartDBEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
+        cfdVersion: true,
         cfdIndex: true,
         cfdCampaignPolicy_CS: true,
         cfdCampaignFundsPolicyID_CS: true,

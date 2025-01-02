@@ -11,14 +11,6 @@ export class ProtocolEntityMongo extends BaseSmartDBEntityMongo {
 
     // #region fields
 
-    // pdProtocolVersion:String
-    // pdAdmins:String []
-    // pdTokenAdminPolicy_CS:String
-    // pdMinADA:String
-    // contracts:String []
-    // createdAt: Date
-    // updatedAt: Date
-
     // #endregion fields
 
     // #region internal class methods
@@ -53,7 +45,30 @@ export class ProtocolEntityMongo extends BaseSmartDBEntityMongo {
 
     public static MongoModel() {
         interface InterfaceDB extends IBaseSmartDBEntity {
-            contracts: string[];
+            name: string;
+            fdpProtocolVersion: number;
+            fdpScriptVersion: number;
+
+            fdpProtocolPolicyID_CS: string;
+            fdpProtocolPolicyID_Script: { [key: string]: any };
+            fdpProtocolPolicyID_Params: { [key: string]: any };
+            fdpProtocolValidator_AddressMainnet: string;
+            fdpProtocolValidator_AddressTestnet: string;
+            fdpProtocolValidator_Script: { [key: string]: any };
+            fdpProtocolValidator_Hash: string;
+            fdpProtocolValidator_Params: { [key: string]: any };
+
+            fdpScriptPolicyID_CS: string;
+            fdpScriptPolicyID_Script: { [key: string]: any };
+            fdpScriptPolicyID_Params: { [key: string]: any };
+            fdpScriptValidator_AddressMainnet: string;
+            fdpScriptValidator_AddressTestnet: string;
+            fdpScriptValidator_Script: { [key: string]: any };
+            fdpScriptValidator_Hash: string;
+            fdpScriptValidator_Params: { [key: string]: any };
+
+            fdpCampaignFactories: { [key: string]: any }[];
+
             createdAt: Date;
             updatedAt: Date;
         }
@@ -63,7 +78,28 @@ export class ProtocolEntityMongo extends BaseSmartDBEntityMongo {
         //TODO: Esto es obligatorio así con SmartDB Entities
         const schemaDB = {
             ...BaseSmartDBEntityMongo.smartDBSchema,
-            contracts: { type: [String], required: false },
+            name: { type: String, required: true },
+            fdpProtocolVersion: { type: Number, required: true },
+            fdpScriptVersion: { type: Number, required: true },
+
+            fdpProtocolPolicyID_CS: { type: String, required: true },
+            fdpProtocolPolicyID_Script: { type: Object, required: true },
+            fdpProtocolPolicyID_Params: { type: Object, required: true },
+            fdpProtocolValidator_AddressMainnet: { type: String, required: true },
+            fdpProtocolValidator_AddressTestnet: { type: String, required: true },
+            fdpProtocolValidator_Script: { type: Object, required: true },
+            fdpProtocolValidator_Hash: { type: String, required: true },
+            fdpProtocolValidator_Params: { type: Object, required: true },
+            fdpScriptPolicyID_CS: { type: String, required: true },
+            fdpScriptPolicyID_Script: { type: Object, required: true },
+            fdpScriptPolicyID_Params: { type: Object, required: true },
+            fdpScriptValidator_AddressMainnet: { type: String, required: true },
+            fdpScriptValidator_AddressTestnet: { type: String, required: true },
+            fdpScriptValidator_Script: { type: Object, required: true },
+            fdpScriptValidator_Hash: { type: String, required: true },
+            fdpScriptValidator_Params: { type: Object, required: true },
+
+            fdpCampaignFactories: { type: [Object], required: true },
         };
 
         const schemaDatum = {

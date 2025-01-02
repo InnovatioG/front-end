@@ -27,6 +27,8 @@ export * from './Protocol.Entity.Mongo';
 export * from './Protocol.Entity.PostgreSQL';
 export * from './ProtocolAdminWallet.Entity.Mongo';
 export * from './ProtocolAdminWallet.Entity.PostgreSQL';
+export * from './Script.Entity.Mongo';
+export * from './Script.Entity.PostgreSQL';
 export * from './SubmissionStatus.Entity.Mongo';
 export * from './SubmissionStatus.Entity.PostgreSQL';
 
