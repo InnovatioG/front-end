@@ -13,7 +13,7 @@ export class ScriptEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @PrimaryGeneratedColumn()
     _id!: number; // Auto-generated primary key
 
-    @Column({ type: 'integer', length: 255 })
+    @Column({ type: 'integer', nullable: true  })
     sdVersion!: number;
     @Column({ type: 'varchar', length: 255, nullable: true })
     sdAdminPaymentPKH?: string;
