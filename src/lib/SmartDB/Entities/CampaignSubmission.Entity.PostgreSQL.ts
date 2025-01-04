@@ -19,7 +19,7 @@ export class CampaignSubmissionEntityPostgreSQL extends BaseEntityPostgreSQL {
     submission_status_id!: string;
     @Column({ type: 'varchar', length: 255 })
     submitted_by_wallet_id!: string;
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     revised_by_wallet_id!: string;
     @Column({ type: 'text', nullable: true })
     approved_justification?: string;

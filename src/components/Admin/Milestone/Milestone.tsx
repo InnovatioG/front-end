@@ -19,6 +19,7 @@ export default function Milestone() {
                         <tr>
                             <th>Campaign ID</th>
                             <th>Milestone Status ID</th>
+                            <th>Estimated Delivery Days</th>
                             <th>Estimated Delivery Date</th>
                             <th>Percentage</th>
                             <th>Status</th>
@@ -33,7 +34,8 @@ export default function Milestone() {
                             <tr key={item._DB_id}>
                                 <td>{item.campaign_id}</td>
                                 <td>{item.milestone_status_id}</td>
-                                <td>{item.estimate_delivery_date.toISOString()}</td>
+                                <td>{item.estimate_delivery_days}</td>
+                                <td>{item.estimate_delivery_date?.toISOString()}</td>
                                 <td>{item.percentage}</td>
                                 <td>{item.status}</td>
                                 <td>{item.description}</td>
@@ -77,6 +79,19 @@ export default function Milestone() {
             <div>
                 <label>Milestone Status ID:</label>
                 <input type="text" value={item.milestone_status_id || ''} onChange={(e) => setItem({ ...item, milestone_status_id: e.target.value })} />
+            </div>
+            <div>
+                <label>Estimated Delivery Days:</label>
+                <input
+                    type="number"
+                    value={item.estimate_delivery_days}
+                    onChange={(e) =>
+                        setItem({
+                            ...item,
+                            estimate_delivery_days: Number(e.target.value),
+                        })
+                    }
+                />
             </div>
             <div>
                 <label>Estimated Delivery Date:</label>

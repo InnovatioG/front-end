@@ -14,10 +14,10 @@ export class MilestoneSubmissionEntity extends BaseEntity {
     submission_status_id!: string;
     @Convertible({ isDB_id: true })
     submitted_by_wallet_id!: string;
-    @Convertible({ isDB_id: true })
-    revised_by_wallet_id!: string;
     @Convertible()
     report_proof_of_finalization?: string;
+    @Convertible({ isDB_id: true })
+    revised_by_wallet_id!: string;
     @Convertible()
     approved_justification?: string;
     @Convertible()

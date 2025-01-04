@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import styles from '@/styles/Admin.module.scss';
-import { pushWarningNotification } from 'smart-db';
+import { LucidToolsFrontEnd, pushSucessNotification, pushWarningNotification, useWalletStore } from 'smart-db';
 import Button from '@/components/buttons/UI/Button';
 import { ProtocolApi } from '@/lib/SmartDB/FrontEnd';
 
@@ -24,29 +24,28 @@ const AdminDashboard: NextPage = () => {
         { name: 'Submission Status', path: '/admin/submission-status' },
     ];
 
+    const walletStore = useWalletStore();
+
     const handlePopulateDB = async () => {
         try {
-            const response = await ProtocolApi.populateApi();
-            
+            //--------------------------------------
+            const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
+            //--------------------------------------
+            const response = await ProtocolApi.populateApi(walletTxParams);
             if (response === false) {
-                throw 'Failed to populate database'
+                throw 'Failed to populate database';
             }
-            
-            pushWarningNotification('Success', 'Database populated successfully');
+            pushSucessNotification('Success', 'Database populated successfully');
         } catch (error) {
             pushWarningNotification('Error', `Failed to populate database: ${error}`);
         }
     };
 
-
     return (
         <main className={styles.dashboard}>
             <h1>Admin Dashboard</h1>
             <div className="mb-6">
-                <Button 
-                    onClick={handlePopulateDB}
-                    className="bg-blue-600 hover:bg-blue-700"
-                >
+                <Button onClick={handlePopulateDB} className="bg-blue-600 hover:bg-blue-700">
                     Populate Database
                 </Button>
             </div>

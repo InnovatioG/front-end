@@ -3,7 +3,6 @@ import styles from "../draftCard/DraftCard.module.scss";
 import { Campaign } from '@/HardCode/databaseType';
 import Link from 'next/link';
 import Image from 'next/image';
-import { categoriesById } from '@/utils/constants';
 import GeneralButtonUI from '@/components/buttons/UI/Button';
 import { useModalStore } from '@/store/modal/useModalStoreState';
 import useDraftCard from '@/hooks/useDraftCard';
@@ -17,6 +16,10 @@ interface DraftCardProps {
 const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin }) => {
     const { openModal } = useModalStore();
     const { label, labelClass, buttons, timeRemaining, formatAllTime, currentMilestone } = useDraftCard(campaign, isProtocolTeam, isAdmin);
+
+    const categoriesById = (id: number) => {
+        return 'TODO'
+    }
 
     return (
         <div className={styles.campaignCard}>

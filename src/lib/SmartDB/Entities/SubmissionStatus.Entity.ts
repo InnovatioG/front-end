@@ -1,4 +1,4 @@
-import { } from 'lucid-cardano';
+import {} from 'lucid-cardano';
 import 'reflect-metadata';
 import { BaseEntity, Convertible, asEntity } from 'smart-db';
 

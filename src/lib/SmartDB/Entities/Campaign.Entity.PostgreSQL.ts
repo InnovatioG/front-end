@@ -15,70 +15,67 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     _id!: number; // Auto-generated primary key
 
     @Column({ type: 'varchar', length: 255 })
-    project_id!: string;
-    @Column({ type: 'varchar', length: 255 })
     campaing_category_id!: string;
     @Column({ type: 'varchar', length: 255 })
     campaign_status_id!: string;
     @Column({ type: 'varchar', length: 255 })
     creator_wallet_id!: string;
-    @Column({ type: 'integer', nullable: true })
 
     @Column({ type: 'varchar', length: 255 })
     name!: string;
 
-    @Column({ type: 'integer' })
+    @Column({ type: 'integer' , nullable: true })
     fdpCampaignVersion!: number;
 
-    @Column({ type: 'jsonb' })
+    @Column({ type: 'jsonb' , nullable: true })
     fdpCampaignPolicy_Params!: object;
 
-    @Column({ type: 'jsonb' })
+    @Column({ type: 'jsonb' , nullable: true })
     fdpCampaignPolicy_Script!: Script;
 
-    @Column({ type: 'varchar', length: 255, unique: true })
+    @Column({ type: 'varchar', length: 255, unique: true , nullable: true })
     fdpCampaignPolicy_CS!: CS;
 
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255 , nullable: true })
     fdpCampaignValidator_AddressMainnet!: string;
 
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255 , nullable: true })
     fdpCampaignValidator_AddressTestnet!: string;
 
-    @Column({ type: 'jsonb' })
+    @Column({ type: 'jsonb' , nullable: true })
     fdpCampaignValidator_Script!: Script;
 
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255 , nullable: true })
     fdpCampaignValidator_Hash!: string;
 
-    @Column({ type: 'jsonb' })
+    @Column({ type: 'jsonb' , nullable: true })
     fdpCampaignValidator_Params!: object;
 
-    @Column({ type: 'jsonb' })
+    @Column({ type: 'jsonb' , nullable: true })
     fdpCampaignFundsPolicyID_Params!: object;
 
-    @Column({ type: 'jsonb' })
+    @Column({ type: 'jsonb' , nullable: true })
     fdpCampaignFundsPolicyID_Script!: Script;
 
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255 , nullable: true })
     fdpCampaignFundsPolicyID_CS!: CS;
 
-    @Column({ type: 'jsonb' })
+    @Column({ type: 'jsonb' , nullable: true })
     fdpCampaignFundsValidator_Params!: object;
 
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255 , nullable: true })
     fdpCampaignFundsValidator_Hash!: string;
 
-    @Column({ type: 'jsonb' })
+    @Column({ type: 'jsonb' , nullable: true })
     fdpCampaignFundsValidator_Script!: Script;
 
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255 , nullable: true })
     fdpCampaignFundsValidator_AddressTestnet!: string;
 
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255 , nullable: true })
     fdpCampaignFundsValidator_AddressMainnet!: string;
 
-
+    @Column({ type: 'integer', nullable: true })
     cdCampaignVersion!: number;
     @Column({ type: 'varchar', length: 255, nullable: true })
     cdCampaignPolicy_CS!: string;
@@ -153,8 +150,10 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'varchar', length: 255, nullable: true })
     facebook?: string;
     @Column({ type: 'integer', nullable: true })
+    visualizations!: number;
+    @Column({ type: 'integer', nullable: true })
     investors!: number;
-    @Column({ type: 'bigint', nullable: true })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     tokenomics_max_supply!: string;
     @Column({ type: 'text', nullable: true })
     tokenomics_description!: string;

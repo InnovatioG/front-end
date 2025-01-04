@@ -1,9 +1,7 @@
-import { Category } from '@/types/ConstantTypes';
 import { DISCORD, FACEBOOK, INSTAGRAM, LOGO_FULL_LIGHT, XS, WEBSITE, LINKEDIN } from '@/utils/images';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import { set } from 'date-fns';
 
-export const categories: Category[] = ['Technology', 'Event', 'Education', 'Gaming', 'Social', 'Food'];
+export const categories: string[] = ['Technology', 'Event', 'Education', 'Gaming', 'Social', 'Food'];
 
 export const socialIcons = [
     { icon: WEBSITE, name: 'website' },
@@ -53,6 +51,7 @@ export const initialTextEditorOptions = [
             "In this section, describe your general strategy to promote and market your digital product, service, or project. Explore the marketing channels you will utilize, such as social media, email marketing, digital advertising, etc. Detail your specific tactics, like content creation, participation in events, collaboration with influencers, etc. It's also helpful to explain how you will measure and evaluate the success of your marketing efforts.",
     },
 ];
+
 export const inputFieldsToken = (project: any) => [
     {
         id: 'cdCampaignToken_TN',
@@ -79,109 +78,6 @@ export const inputFieldsToken = (project: any) => [
     transform: (value: string) => (value ? Number(value) : null),
   }, */
 ];
-export const stylesByStatus = (status: number, styles: { [key: string]: string }) => {
-    const statusStyles: { [key: string]: string } = {
-        'Not Started': styles.notStarted,
-        Started: styles.started,
-        Submited: styles.submited,
-        Rejected: styles.rejected,
-        Finished: styles.finished,
-        Failed: styles.failed,
-        3: styles.submited,
-        4: styles.rejected,
-        5: styles.finished,
-        2: styles.submited,
-    };
-
-    return statusStyles[status] || styles.pending;
-};
-
-export const imageByStatus = (status: number) => {
-    const statusImages: { [key: string]: string } = {
-        'Not Started': '/img/icons/status/yellow.svg',
-        Started: '/img/icons/status/green.svg',
-        Submited: '/img/icons/status/yellow.svg',
-        Rejected: '/img/icons/status/red.svg',
-        Finished: '/img/icons/status/green.svg',
-        Failed: '/img/icons/status/red.svg',
-        2: '/img/icons/status/yellow.svg',
-        3: '/img/icons/status/yellow.svg',
-        4: '/img/icons/status/red.svg',
-        5: '/img/icons/status/green.svg',
-    };
-    return statusImages[status] || '';
-};
-
-//! ME VA A VENIR DE LA API, es MOMENTANEO   */
-
-export const statedById = (id: number) => {
-    const status: { [key: number]: string } = {
-        1: 'Created',
-        2: 'Submitted',
-        3: 'Rejected',
-        4: 'Approved',
-        5: 'Contract Created',
-        6: 'Contract Published',
-        7: 'Contract Started',
-        8: 'Countdown',
-        9: 'Fundraising',
-        10: 'Finishing',
-        11: 'Active',
-        12: 'Failed',
-        13: 'Unreached',
-        14: 'Success',
-    };
-    return status[id] || 'Not Started';
-};
-
-export const milestoneStatusByID = (id: number) => {
-    const milestone_status: { [key: number]: string } = {
-        1: 'Not Started',
-        2: 'Started',
-        3: 'Submited',
-        4: 'Rejected',
-        5: 'Finished',
-        6: 'Failed',
-    };
-    return milestone_status[id] || 'Not Started';
-};
-
-//! ME VA A VENIR DE LA API, es MOMENTANEO   */
-
-export const categoriesById = (categoryId: number) => {
-    const category: { [key: number]: string } = {
-        1: 'Technology',
-        2: 'Event',
-        3: 'Education',
-        4: 'Gaming',
-        5: 'Social',
-        6: 'Food',
-    };
-    return category[categoryId] || '';
-};
-
-
-export const contractstatusById = (contract_status_id: number) => {
-    const contract_status: { [key: number]: string } = {
-        1: 'Active',
-        2: 'TBL',
-        3: 'Created',
-        4: 'Signed',
-        5: 'Ready',
-        6: 'Deleted',
-        7: 'Ended',
-    };
-    return contract_status[contract_status_id] || '';
-}
-
-export const visualizationById = (visualization_id: number) => {
-    const visualization: { [key: number]: string } = {
-        1: 'All',
-        2: 'User',
-        3: 'Admin',
-    };
-    return visualization[visualization_id] || '';
-};
 
 export interface ButtonConfig {
     id: number;

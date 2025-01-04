@@ -18,8 +18,8 @@ export default function CampaignFaqs() {
                     <thead>
                         <tr>
                             <th>Campaign ID</th>
-                            <th>Name</th>
-                            <th>Description</th>
+                            <th>Question</th>
+                            <th>Answer</th>
                             <th>Order</th>
                             <th>Created At</th>
                             <th>Updated At</th>
@@ -30,8 +30,8 @@ export default function CampaignFaqs() {
                         {list.map((item) => (
                             <tr key={item._DB_id}>
                                 <td>{item.campaign_id}</td>
-                                <td>{item.name}</td>
-                                <td>{item.description}</td>
+                                <td>{item.question}</td>
+                                <td>{item.answer}</td>
                                 <td>{item.order}</td>
                                 <td>{item.createdAt.toISOString()}</td>
                                 <td>{item.updatedAt?.toISOString()}</td>
@@ -71,12 +71,12 @@ export default function CampaignFaqs() {
                 <input type="text" value={item.campaign_id || ''} onChange={(e) => setItem({ ...item, campaign_id: e.target.value })} />
             </div>
             <div>
-                <label>Name:</label>
-                <input type="text" value={item.name || ''} onChange={(e) => setItem({ ...item, name: e.target.value })} />
+                <label>Question:</label>
+                <input type="text" value={item.question || ''} onChange={(e) => setItem({ ...item, question: e.target.value })} />
             </div>
             <div>
-                <label>Description:</label>
-                <textarea value={item.description || ''} onChange={(e) => setItem({ ...item, description: e.target.value })} />
+                <label>Answer:</label>
+                <textarea value={item.answer || ''} onChange={(e) => setItem({ ...item, answer: e.target.value })} />
             </div>
             <div>
                 <label>Order:</label>

@@ -48,8 +48,8 @@ export class MilestoneSubmissionEntityMongo extends BaseEntityMongo {
             milestone_id: string;
             submission_status_id: string;
             submitted_by_wallet_id: string;
-            revised_by_wallet_id: string;
             report_proof_of_finalization: string;
+            revised_by_wallet_id: string;
             approved_justification: string;
             rejected_justification: string;
             createdAt: Date;
@@ -61,8 +61,8 @@ export class MilestoneSubmissionEntityMongo extends BaseEntityMongo {
                 milestone_id: { type: String, required: true },
                 submission_status_id: { type: String, required: true },
                 submitted_by_wallet_id: { type: String, required: true },
-                revised_by_wallet_id: { type: String, required: true },
                 report_proof_of_finalization: { type: String, required: true },
+                revised_by_wallet_id: { type: String, required: false },
                 approved_justification: { type: String, required: false },
                 rejected_justification: { type: String, required: false },
             },

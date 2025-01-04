@@ -4,12 +4,11 @@ import { getOrdinalString } from '@/utils/formats';
 import type { MilestoneF } from '@/HardCode/databaseType';
 import MilestoneTime from '@/components/campaign/creator/projectEditionContainer/MilestoneTimeEdit';
 import MilestonePercentage from '../campaign/creator/projectEditionContainer/MilestonePercentage';
-import { stylesByStatus, imageByStatus } from '@/utils/constants';
+import { stylesByStatus, imageByStatus } from '@/utils/constants/status';
 import MilestoneMessage from './MilestoneMessage';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import GeneralButtonUI from '../buttons/UI/Button';
 import { useModalStore } from '@/store/modal/useModalStoreState';
-import { sub } from 'date-fns';
 
 interface RoadMapCardProps {
     milestone: MilestoneF;

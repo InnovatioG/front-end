@@ -17,12 +17,12 @@ export class MilestoneEntityPostgreSQL extends BaseEntityPostgreSQL {
     campaign_id!: string;
     @Column({ type: 'varchar', length: 255 })
     milestone_status_id!: string;
-    @Column({ type: 'date' })
+    @Column({ type: 'integer' })
+    estimate_delivery_days!: number;
+    @Column({ type: 'date', nullable: true })
     estimate_delivery_date!: Date;
     @Column({ type: 'integer' })
     percentage!: number;
-    @Column({ type: 'integer' })
-    status!: number;
     @Column({ type: 'text' })
     description!: string;
     @CreateDateColumn()

@@ -12,11 +12,11 @@ export class MilestoneEntity extends BaseEntity {
     @Convertible({ isDB_id: true })
     milestone_status_id!: string;
     @Convertible()
+    estimate_delivery_days!: number;
+    @Convertible()
     estimate_delivery_date!: Date;
     @Convertible()
     percentage!: number;
-    @Convertible()
-    status!: number;
     @Convertible()
     description!: string;
     @Convertible({ isCreatedAt: true })
@@ -34,9 +34,9 @@ export class MilestoneEntity extends BaseEntity {
         ...super.alwaysFieldsForSelect,
         campaign_id: true,
         milestone_status_id: true,
+        estimate_delivery_days: true,
         estimate_delivery_date: true,
         percentage: true,
-        status: true,
         description: true,
         createdAt: true,
         updatedAt: true,

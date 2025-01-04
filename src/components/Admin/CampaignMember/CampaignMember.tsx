@@ -6,6 +6,24 @@ import { Dispatch, SetStateAction } from 'react';
 export default function CampaignMember() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaignMember();
 
+    // campaign_id: string;
+    // name: string;
+    // last_name: string;
+    // rol: string;
+    // description: string;
+    // editor: boolean;
+    // admin: boolean;
+    // email: string;
+    // wallet_id: string;
+    // wallet_address: string;
+    // website: string;
+    // instagram: string;
+    // twitter: string;
+    // discord: string;
+    // facebook: string;
+    // createdAt: Date;
+    // updatedAt: Date;
+
     const renderList = () => (
         <div>
             <div className={styles.listHeader}>
@@ -18,10 +36,15 @@ export default function CampaignMember() {
                     <thead>
                         <tr>
                             <th>Campaign ID</th>
-                            <th>Editor</th>
-                            <th>Wallet ID</th>
+                            <th>Name</th>
+                            <th>Last Name</th>
                             <th>Role</th>
                             <th>Description</th>
+                            <th>Editor</th>
+                            <th>Admin</th>
+                            <th>Email</th>
+                            <th>Wallet ID</th>
+                            <th>Wallet Address</th>
                             <th>Website</th>
                             <th>Instagram</th>
                             <th>Twitter</th>
@@ -36,9 +59,14 @@ export default function CampaignMember() {
                         {list.map((item) => (
                             <tr key={item._DB_id}>
                                 <td>{item.campaign_id}</td>
-                                <td>{item.editor ? 'Yes' : 'No'}</td>
-                                <td>{item.wallet_id}</td>
+                                <td>{item.name}</td>
+                                <td>{item.last_name}</td>
                                 <td>{item.rol}</td>
+                                <td>{item.editor ? 'Yes' : 'No'}</td>
+                                <td>{item.admin ? 'Yes' : 'No'}</td>
+                                <td>{item.email}</td>
+                                <td>{item.wallet_id}</td>
+                                <td>{item.wallet_address}</td>
                                 <td>{item.description}</td>
                                 <td>{item.website}</td>
                                 <td>{item.instagram}</td>
@@ -83,12 +111,12 @@ export default function CampaignMember() {
                 <input type="text" value={item.campaign_id || ''} onChange={(e) => setItem({ ...item, campaign_id: e.target.value })} />
             </div>
             <div>
-                <label>Editor:</label>
-                <input type="checkbox" checked={item.editor || false} onChange={(e) => setItem({ ...item, editor: e.target.checked })} />
+                <label>Name:</label>
+                <input type="text" value={item.name || ''} onChange={(e) => setItem({ ...item, name: e.target.value })} />
             </div>
             <div>
-                <label>Wallet ID:</label>
-                <input type="text" value={item.wallet_id || ''} onChange={(e) => setItem({ ...item, wallet_id: e.target.value })} />
+                <label>Last Name:</label>
+                <input type="text" value={item.last_name || ''} onChange={(e) => setItem({ ...item, last_name: e.target.value })} />
             </div>
             <div>
                 <label>Role:</label>
@@ -97,6 +125,26 @@ export default function CampaignMember() {
             <div>
                 <label>Description:</label>
                 <textarea value={item.description || ''} onChange={(e) => setItem({ ...item, description: e.target.value })} />
+            </div>
+            <div>
+                <label>Editor:</label>
+                <input type="checkbox" checked={item.editor || false} onChange={(e) => setItem({ ...item, editor: e.target.checked })} />
+            </div>
+            <div>
+                <label>Admin:</label>
+                <input type="checkbox" checked={item.admin || false} onChange={(e) => setItem({ ...item, admin: e.target.checked })} />
+            </div>
+            <div>
+                <label>Email:</label>
+                <input type="text" value={item.email || ''} onChange={(e) => setItem({ ...item, email: e.target.value })} />
+            </div>
+            <div>
+                <label>Wallet ID:</label>
+                <input type="text" value={item.wallet_id || ''} onChange={(e) => setItem({ ...item, wallet_id: e.target.value })} />
+            </div>
+            <div>
+                <label>Wallet Address:</label>
+                <input type="text" value={item.wallet_address || ''} onChange={(e) => setItem({ ...item, wallet_address: e.target.value })} />
             </div>
             <div>
                 <label>Website:</label>

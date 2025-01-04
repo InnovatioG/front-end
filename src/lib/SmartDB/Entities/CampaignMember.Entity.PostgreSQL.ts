@@ -15,14 +15,24 @@ export class CampaignMemberEntityPostgreSQL extends BaseEntityPostgreSQL {
 
     @Column({ type: 'varchar', length: 255 })
     campaign_id!: string;
-    @Column({ type: 'boolean', default: false })
-    editor!: boolean
-    @Column({ type: 'varchar', length: 255 })
-    wallet_id!: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    name?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    last_name?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     rol?: string;
     @Column({ type: 'text', nullable: true })
     description?: string;
+    @Column({ type: 'boolean', default: false })
+    editor!: boolean
+    @Column({ type: 'boolean', default: false })
+    admin!: boolean;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    email?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true  })
+    wallet_id?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true  })
+    wallet_address?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     website?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })

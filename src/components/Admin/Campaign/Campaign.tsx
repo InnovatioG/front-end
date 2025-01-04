@@ -325,7 +325,6 @@ export default function Campaign() {
                 <table>
                     <thead>
                         <tr>
-                            <th>Project ID</th>
                             <th>Campaign Category ID</th>
                             <th>Campaign Status ID</th>
                             <th>Creator Wallet ID</th>
@@ -372,7 +371,6 @@ export default function Campaign() {
                     <tbody>
                         {list.map((item) => (
                             <tr key={item._DB_id}>
-                                <td>{item.project_id}</td>
                                 <td>{item.campaing_category_id}</td>
                                 <td>{item.campaign_status_id}</td>
                                 <td>{item.creator_wallet_id}</td>
@@ -389,8 +387,10 @@ export default function Campaign() {
                                 <td>{item.cdRequestedMinADA.toString()}</td>
                                 <td>{item.cdFundedADA.toString()}</td>
                                 <td>{item.cdCollectedADA.toString()}</td>
-                                <td>{new Date(item.cdbegin_at?.toString()).toISOString()}</td>
-                                <td>{new Date(item.cdDeadline?.toString()).toISOString()}</td>
+                                {/* <td>{new Date(item.cdbegin_at?.toString() || 1).toISOString()}</td>
+                                <td>{new Date(item.cdDeadline?.toString() || 1).toISOString()}</td> */}
+                                <td>{item.cdbegin_at?.toString()}</td>
+                                <td>{item.cdDeadline?.toString()}</td>
                                 <td>{item.cdStatus}</td>
                                 <td>{toJson(item.cdMilestones)}</td>
                                 <td>{item.cdFundsCount}</td>
@@ -442,10 +442,6 @@ export default function Campaign() {
     const renderForm = (item: Partial<CampaignEntity>, setItem: Dispatch<SetStateAction<Partial<CampaignEntity>>> | Dispatch<SetStateAction<Partial<CampaignEntity> | null>>) => (
         <form className={styles.form}>
             {/* General Fields */}
-            <div>
-                <label>Project ID:</label>
-                <input type="text" value={item.project_id || ''} onChange={(e) => setItem({ ...item, project_id: e.target.value })} />
-            </div>
             <div>
                 <label>Campaign Category ID:</label>
                 <input type="text" value={item.campaing_category_id || ''} onChange={(e) => setItem({ ...item, campaing_category_id: e.target.value })} />

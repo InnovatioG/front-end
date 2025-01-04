@@ -66,8 +66,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
     _NET_id_TN: string = 'campaign_id';
 
     // #region fields
-    @Convertible({ isDB_id: true })
-    project_id!: string;
+   
     @Convertible({ isDB_id: true })
     campaing_category_id!: string;
     @Convertible({ isDB_id: true })
@@ -176,7 +175,6 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible({ isForDatum: true })
     cdMinADA!: bigint;
 
-    
     @Convertible()
     description?: string;
     @Convertible()
@@ -198,6 +196,8 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible()
     facebook?: string;
     @Convertible()
+    visualizations!: number;
+    @Convertible()
     investors!: number;
     @Convertible()
     tokenomics_max_supply!: string;
@@ -208,7 +208,6 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible()
     archived!: boolean;
     @Convertible({ isCreatedAt: true })
-
     createdAt!: Date;
     @Convertible({ isUpdatedAt: true })
     updatedAt?: Date;
@@ -230,7 +229,6 @@ export class CampaignEntity extends BaseSmartDBEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-        project_id: true,
         campaing_category_id: true,
         campaign_status_id: true,
         creator_wallet_id: true,
@@ -284,6 +282,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
         twitter: true,
         discord: true,
         facebook: true,
+        visualizations: true,
         investors: true,
         tokenomics_max_supply: true,
         tokenomics_description: true,
