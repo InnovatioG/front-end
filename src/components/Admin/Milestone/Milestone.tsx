@@ -22,7 +22,6 @@ export default function Milestone() {
                             <th>Estimated Delivery Days</th>
                             <th>Estimated Delivery Date</th>
                             <th>Percentage</th>
-                            <th>Status</th>
                             <th>Description</th>
                             <th>Created At</th>
                             <th>Updated At</th>
@@ -37,7 +36,6 @@ export default function Milestone() {
                                 <td>{item.estimate_delivery_days}</td>
                                 <td>{item.estimate_delivery_date?.toISOString()}</td>
                                 <td>{item.percentage}</td>
-                                <td>{item.status}</td>
                                 <td>{item.description}</td>
                                 <td>{item.createdAt.toISOString()}</td>
                                 <td>{item.updatedAt?.toISOString()}</td>
@@ -117,19 +115,6 @@ export default function Milestone() {
                         setItem({
                             ...item,
                             percentage: Number(e.target.value),
-                        })
-                    }
-                />
-            </div>
-            <div>
-                <label>Status:</label>
-                <input
-                    type="number"
-                    value={item.status || ''}
-                    onChange={(e) =>
-                        setItem({
-                            ...item,
-                            status: Number(e.target.value),
                         })
                     }
                 />

@@ -6,24 +6,6 @@ import { Dispatch, SetStateAction } from 'react';
 export default function CampaignMember() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaignMember();
 
-    // campaign_id: string;
-    // name: string;
-    // last_name: string;
-    // rol: string;
-    // description: string;
-    // editor: boolean;
-    // admin: boolean;
-    // email: string;
-    // wallet_id: string;
-    // wallet_address: string;
-    // website: string;
-    // instagram: string;
-    // twitter: string;
-    // discord: string;
-    // facebook: string;
-    // createdAt: Date;
-    // updatedAt: Date;
-
     const renderList = () => (
         <div>
             <div className={styles.listHeader}>
@@ -39,7 +21,6 @@ export default function CampaignMember() {
                             <th>Name</th>
                             <th>Last Name</th>
                             <th>Role</th>
-                            <th>Description</th>
                             <th>Editor</th>
                             <th>Admin</th>
                             <th>Email</th>
@@ -61,13 +42,12 @@ export default function CampaignMember() {
                                 <td>{item.campaign_id}</td>
                                 <td>{item.name}</td>
                                 <td>{item.last_name}</td>
-                                <td>{item.rol}</td>
+                                <td>{item.role}</td>
                                 <td>{item.editor ? 'Yes' : 'No'}</td>
                                 <td>{item.admin ? 'Yes' : 'No'}</td>
                                 <td>{item.email}</td>
                                 <td>{item.wallet_id}</td>
                                 <td>{item.wallet_address}</td>
-                                <td>{item.description}</td>
                                 <td>{item.website}</td>
                                 <td>{item.instagram}</td>
                                 <td>{item.twitter}</td>
@@ -120,11 +100,7 @@ export default function CampaignMember() {
             </div>
             <div>
                 <label>Role:</label>
-                <input type="text" value={item.rol || ''} onChange={(e) => setItem({ ...item, rol: e.target.value })} />
-            </div>
-            <div>
-                <label>Description:</label>
-                <textarea value={item.description || ''} onChange={(e) => setItem({ ...item, description: e.target.value })} />
+                <input type="text" value={item.role || ''} onChange={(e) => setItem({ ...item, role: e.target.value })} />
             </div>
             <div>
                 <label>Editor:</label>

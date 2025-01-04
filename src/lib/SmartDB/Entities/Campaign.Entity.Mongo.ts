@@ -49,7 +49,36 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             campaing_category_id: string;
             campaign_status_id: string;
             creator_wallet_id: string;
+            
             name: string;
+            description: string;
+            begin_at_days: number;
+            deadline_days: number;
+            campaign_deployed_date: Date;
+            campaign_actived_date: Date;
+
+            begin_at: Date;
+            deadline: Date;
+
+            mint_CampaignToken: boolean;
+            campaignToken_CS: string;
+            campaignToken_TN: string;
+            campaignToken_PriceADA: bigint;
+            requestedMaxADA: bigint;
+            requestedMinADA: bigint;
+
+            logo_url: string;
+            banner_url: string;
+            website: string;
+            instagram: string;
+            twitter: string;
+            discord: string;
+            facebook: string;
+            visualizations: number;
+            investors: number;
+            tokenomics_max_supply: string;
+            tokenomics_description: string;
+
             fdpCampaignVersion: number;
             fdpCampaignPolicy_Params: object;
             fdpCampaignPolicy_Script: Script;
@@ -67,20 +96,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             fdpCampaignFundsValidator_Script: Script;
             fdpCampaignFundsValidator_AddressTestnet: string;
             fdpCampaignFundsValidator_AddressMainnet: string;
-            description: string;
-            begin_at: Date;
-            deadline: Date;
-            logo_url: string;
-            banner_url: string;
-            website: string;
-            instagram: string;
-            twitter: string;
-            discord: string;
-            facebook: string;
-            visualizations: number;
-            investors: number;
-            tokenomics_max_supply: string;
-            tokenomics_description: string;
+
             featured: boolean;
             archived: boolean;
             createdAt: Date;
@@ -95,7 +111,36 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             campaing_category_id: { type: String, required: true },
             campaign_status_id: { type: String, required: true },
             creator_wallet_id: { type: String, required: true },
+
             name: { type: String, required: true },
+            description: { type: String, required: false },
+            begin_at_days: { type: Number, required: false },
+            deadline_days: { type: Number, required: false },
+            campaign_deployed_date: { type: Date, required: false },
+            campaign_actived_date: { type: Date, required: false },
+
+            begin_at: { type: Date, required: false },
+            deadline: { type: Date, required: false },
+
+            mint_CampaignToken: { type: Boolean, required: false },
+            campaignToken_CS: { type: String, required: false },
+            campaignToken_TN: { type: String, required: false },
+            campaignToken_PriceADA: { type: Number, required: false },
+            requestedMaxADA: { type: Number, required: false },
+            requestedMinADA: { type: Number, required: false },
+
+            logo_url: { type: String, required: false },
+            banner_url: { type: String, required: false },
+            website: { type: String, required: false },
+            instagram: { type: String, required: false },
+            twitter: { type: String, required: false },
+            discord: { type: String, required: false },
+            facebook: { type: String, required: false },
+            visualizations: { type: Number, required: false },
+            investors: { type: Number, required: false },
+            tokenomics_max_supply: { type: String, required: false },
+            tokenomics_description: { type: String, required: false },
+
             fdpCampaignVersion: { type: Number, required: false },
             fdpCampaignPolicy_Params: { type: Object, required: false },
             fdpCampaignPolicy_Script: { type: Object, required: false },
@@ -113,20 +158,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             fdpCampaignFundsValidator_Script: { type: Object, required: false },
             fdpCampaignFundsValidator_AddressTestnet: { type: String, required: false },
             fdpCampaignFundsValidator_AddressMainnet: { type: String, required: false },
-            description: { type: String, required: false },
-            begin_at: { type: Date, required: false },
-            deadline: { type: Date, required: false },
-            logo_url: { type: String, required: false },
-            banner_url: { type: String, required: false },
-            website: { type: String, required: false },
-            instagram: { type: String, required: false },
-            twitter: { type: String, required: false },
-            discord: { type: String, required: false },
-            facebook: { type: String, required: false },
-            visualizations: { type: Number, required: false },
-            investors: { type: Number, required: false },
-            tokenomics_max_supply: { type: String, required: false },
-            tokenomics_description: { type: String, required: false },
+
             featured: { type: Boolean, required: false },
             archived: { type: Boolean, required: false },
         };

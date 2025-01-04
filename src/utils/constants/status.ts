@@ -1,6 +1,20 @@
 
 //--------------------------------------------------------------
 
+export enum CampaignDatumStatus {
+    CsCreated = 1,
+    CsInitialized = 2,
+    CsReached = 3,
+    CsNotReached = 4,
+    CsFailedMilestone = 5,
+}
+
+export enum MilestoneDatumStatus {
+    MsCreated = 1,
+    MsSuccess = 2,
+    MsFailed = 3,
+}
+
 export enum CampaignStatus {
     NOT_STARTED = 0,
     CREATED = 1,
@@ -81,20 +95,5 @@ export const imageByStatus = (status: number): string => {
 
     return statusImages[status as CampaignStatus] || '/img/icons/status/default.svg';
 };
-
-
-//--------------------------------------------------------------
-
-// export const getStates = (id: number) => {
-//     return CampaignStateName[id as CampaignState] || 'Unknown State';
-// };
-
-// export const statedById = (id: number) => {
-//     return CampaignStateName[id as CampaignState] || 'Unknown State';
-// };
-
-// export const milestoneStatusByID = (id: number): string => {
-//     return MilestoneStatusNames[id as MilestoneStatus] || 'Unknown State';
-// };
 
 //--------------------------------------------------------------

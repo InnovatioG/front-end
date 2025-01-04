@@ -6,7 +6,7 @@ import {
     protocolDefault,
     SubmissionStatusDefaultNames,
 } from '@/utils/constants/populate';
-import { CampaignStatus, MilestoneStatus, SubmissionStatus } from '@/utils/constants/status';
+import { CampaignDatumStatus, CampaignStatus, MilestoneDatumStatus, MilestoneStatus, SubmissionStatus } from '@/utils/constants/status';
 import { applyParamsToScript, Data, Lucid, MintingPolicy, UTxO, Validator } from 'lucid-cardano';
 import { NextApiResponse } from 'next';
 import { User } from 'next-auth';
@@ -31,7 +31,6 @@ import {
     WalletEntity,
     WalletTxParams,
 } from 'smart-db/backEnd';
-import { EMERGENCY_ADMIN_TOKEN_POLICY_CS } from '../Commons/Constants';
 import { ProtocolCreateParams } from '../Commons/Params';
 import {
     CampaignCategoryEntity,
@@ -39,6 +38,7 @@ import {
     CampaignEntity,
     CampaignFaqsEntity,
     CampaignMemberEntity,
+    CampaignMilestone,
     CampaignStatusEntity,
     CampaignSubmissionEntity,
     MilestoneEntity,
@@ -49,6 +49,7 @@ import {
     SubmissionStatusEntity,
 } from '../Entities';
 import { CampaignFactory, ProtocolEntity } from '../Entities/Protocol.Entity';
+import { CAMPAIGN_VERSION, EMERGENCY_ADMIN_TOKEN_POLICY_CS } from '@/utils/constants/contracts';
 
 @BackEndAppliedFor(ProtocolEntity)
 export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
@@ -453,8 +454,8 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
                 const campaignWallets = await this.getOrCreateCampaignWallets(campaignData);
 
                 // Fetch reference IDs
-                const categoryId = await this.getCampaignCategoryId(campaignData.campaing_category_id);
-                const statusId = await this.getCampaignStatusId(campaignData.campaign_status_id);
+                const categoryId = await this.getCampaignCategoryId(campaignData.campaing_category_id_as_string);
+                const statusId = await this.getCampaignStatusId(campaignData.campaign_status_id_as_string);
 
                 // Create campaign
                 campaign = await this.createCampaign(campaignData, categoryId, statusId, campaignWallets);
@@ -595,34 +596,46 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         return status._DB_id;
     }
 
+    private static async getCampaignAdmins(campaignData: any, wallets: Record<string, WalletEntity>): Promise<string[]> {
+        // Get all members marked as admin including creator
+        const adminMembers = campaignData.members.filter((m: any) => m.admin === true);
+        const adminWallets = adminMembers.map((m: any) => wallets[m.wallet_id_as_string]);
+
+        // Get unique paymentPKH values
+        return [...new Set(adminWallets.map((w: any) => w.paymentPKH as string))] as string[];
+    }
+
     private static async getOrCreateCampaignWallets(campaignData: any): Promise<Record<string, WalletEntity>> {
         // const WalletBackEndApplied = (await import('./CustomWallet.BackEnd.Api.Handlers')).CustomWalletBackEndApplied;
         const wallets: Record<string, WalletEntity> = {};
         // Get unique wallet IDs from campaign data
         const walletIds = new Set<string>(
             [
-                campaignData.creator_wallet_id,
-                ...campaignData.admins,
-                ...campaignData.members.map((m: any) => m.wallet_id),
-                ...campaignData.submissions.map((s: any) => [s.submitted_by_wallet_id, s.revised_by_wallet_id]).flat(),
+                campaignData.creator_wallet_id_as_string,
+                ...campaignData.members.map((m: any) => m.wallet_id_as_string),
+                ...campaignData.submissions.map((s: any) => [s.submitted_by_wallet_id_as_string, s.revised_by_wallet_id_as_string]).flat(),
                 // Milestone submissions
-                ...campaignData.milestones.map((m: any) => (m.submissions || []).map((s: any) => [s.submitted_by_wallet_id, s.revised_by_wallet_id]).flat()).flat(),
+                ...campaignData.milestones
+                    .map((m: any) => (m.submissions || []).map((s: any) => [s.submitted_by_wallet_id_as_string, s.revised_by_wallet_id_as_string]).flat())
+                    .flat(),
             ].filter((id) => id)
         ); // Remove undefined/null
         for (const walletId of walletIds) {
             let wallet = await WalletBackEndApplied.getOneByParams_<WalletEntity>({ name: walletId });
+            // Find first occurrence of this wallet in members array to get data
+            const memberData = campaignData.members.find((m: any) => m.wallet_id_as_string === walletId);
             if (!wallet) {
                 wallet = new WalletEntity({
                     createdBy: 'POPULATE',
                     lastConnection: new Date(),
                     walletUsed: 'eternl',
                     walletValidatedWithSignedToken: false,
-                    paymentPKH: `pkh_${walletId}`, // Placeholder
-                    stakePKH: `stake_${walletId}`, // Placeholder
+                    paymentPKH: memberData?.paymentPKH || `pkh_${walletId}`, // Placeholder
+                    stakePKH: memberData?.stakePKH || `stake_${walletId}`, // Placeholder
                     name: walletId,
-                    email: `${walletId.toLowerCase()}@example.com`,
-                    testnet_address: `addr_test_${walletId}`, // Placeholder
-                    mainnet_address: `addr_${walletId}`, // Placeholder
+                    email: memberData?.email || `${walletId.toLowerCase()}@example.com`,
+                    testnet_address: memberData?.testnet_address || `addr_test_${walletId}`, // Placeholder
+                    mainnet_address: memberData?.mainnet_address || `addr_${walletId}`, // Placeholder
                 });
 
                 wallet = await WalletBackEndApplied.create<WalletEntity>(wallet);
@@ -635,29 +648,156 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
     private static async createCampaign(campaignData: any, categoryId: string, statusId: string, wallets: Record<string, WalletEntity>): Promise<CampaignEntity> {
         const CampaignBackEndApplied = (await import('./Campaign.BackEnd.Api.Handlers')).CampaignBackEndApplied;
 
+        const currentDate = new Date();
+
+        const getCampaignDeployedStatus = (statusStr: string): boolean => {
+            // First get the numeric status ID
+            const statusId = CampaignStatus[statusStr as keyof typeof CampaignStatus];
+
+            return [
+                CampaignStatus.CONTRACT_STARTED,
+                CampaignStatus.COUNTDOWN,
+                CampaignStatus.FUNDRAISING,
+                CampaignStatus.FINISHING,
+                CampaignStatus.ACTIVE,
+                CampaignStatus.SUCCESS,
+                CampaignStatus.FAILED,
+                CampaignStatus.UNREACHED,
+            ].includes(statusId);
+        };
+
+        const getCampaignActiveStatus = (statusStr: string): boolean => {
+            const statusId = CampaignStatus[statusStr as keyof typeof CampaignStatus];
+
+            return [CampaignStatus.ACTIVE, CampaignStatus.SUCCESS, CampaignStatus.FAILED].includes(statusId);
+        };
+
+        const getCampaignDatumStatus = (statusStr: string): CampaignDatumStatus => {
+            const statusId = CampaignStatus[statusStr as keyof typeof CampaignStatus];
+            
+            // Map Campaign Status to Datum Status
+            switch (statusId) {
+                case CampaignStatus.NOT_STARTED:
+                case CampaignStatus.CREATED:
+                case CampaignStatus.SUBMITTED:
+                case CampaignStatus.REJECTED:
+                case CampaignStatus.APPROVED:
+                case CampaignStatus.CONTRACT_CREATED:
+                case CampaignStatus.CONTRACT_PUBLISHED:
+                case CampaignStatus.CONTRACT_STARTED:
+                    return CampaignDatumStatus.CsCreated;
+                case CampaignStatus.COUNTDOWN:
+                case CampaignStatus.FUNDRAISING:
+                case CampaignStatus.FINISHING:
+                    return CampaignDatumStatus.CsInitialized;
+                case CampaignStatus.ACTIVE:
+                case CampaignStatus.SUCCESS:
+                    return CampaignDatumStatus.CsReached;
+                case CampaignStatus.UNREACHED:
+                    return CampaignDatumStatus.CsNotReached;
+                case CampaignStatus.FAILED:
+                    return CampaignDatumStatus.CsFailedMilestone;
+                default:
+                    throw new Error(`Invalid campaign status: ${statusStr}`);
+            }
+        };
+        
+        const getMilestoneDatumStatus = (statusStr: string): MilestoneDatumStatus => {
+            const statusId = MilestoneStatus[statusStr as keyof typeof MilestoneStatus];
+            
+            // Map Milestone Status to Datum Status
+            switch (statusId) {
+                case MilestoneStatus.NOT_STARTED:
+                case MilestoneStatus.STARTED:
+                case MilestoneStatus.SUBMITTED:
+                case MilestoneStatus.REJECTED:
+                    return MilestoneDatumStatus.MsCreated;
+                case MilestoneStatus.FINISHED:
+                    return MilestoneDatumStatus.MsSuccess;
+                case MilestoneStatus.FAILED:
+                    return MilestoneDatumStatus.MsFailed;
+                default:
+                    throw new Error(`Invalid milestone status: ${statusStr}`);
+            }
+        };
+
+        const getDatumsMilestone = (milestones: any[]): CampaignMilestone[] => {
+            return milestones.map((m) => ({
+                cmPerncentage: m.perncentage,
+                cmStatus: getMilestoneDatumStatus(m.milestone_status_id_as_string),
+            }))
+        }
+
+        // In createCampaign:
+        const isDeployed = getCampaignDeployedStatus(campaignData.campaign_status_id_as_string);
+        const isActiveOrBeyond = getCampaignActiveStatus(campaignData.campaign_status_id_as_string);
+
+        // Calculate dates for started campaigns
+        let dateFields = {};
+        if (isDeployed) {
+            const beginAtDate = new Date(currentDate.getTime() + campaignData.begin_at_days * 24 * 60 * 60 * 1000);
+            const deadlineDate = new Date(currentDate.getTime() + campaignData.deadline_days * 24 * 60 * 60 * 1000);
+
+            dateFields = {
+                cdbegin_at: BigInt(Math.floor(beginAtDate.getTime() / 1000)),
+                cdDeadline: BigInt(Math.floor(deadlineDate.getTime() / 1000)),
+                begin_at: beginAtDate,
+                deadline: deadlineDate,
+                campaign_deployed_date: currentDate,
+            };
+        }
+
+        // Add activation date for active campaigns
+        if (isActiveOrBeyond) {
+            dateFields = {
+                ...dateFields,
+                campaign_actived_date: currentDate,
+            };
+        }
+
         const campaign = new CampaignEntity({
-            name: campaignData.name,
-            description: campaignData.description,
+            isDeployed,
+
             campaing_category_id: categoryId,
             campaign_status_id: statusId,
-            creator_wallet_id: wallets[campaignData.creator_wallet_id]._DB_id,
+            creator_wallet_id: wallets[campaignData.creator_wallet_id_as_string]._DB_id,
 
-            // Token related fields from JSON
-            cdMint_CampaignToken: campaignData.mint_CampaignToken,
-            cdCampaignToken_CS: campaignData.campaignToken_CS,
-            cdCampaignToken_TN: campaignData.campaignToken_TN,
-            cdCampaignToken_PriceADA: BigInt(campaignData.campaignToken_PriceADA || 0),
+            name: campaignData.name,
+            description: campaignData.description,
 
-            // ADA amounts
-            cdRequestedMaxADA: BigInt(campaignData.requestedMaxADA || 0),
-            cdRequestedMinADA: BigInt(campaignData.requestedMinADA || 0),
-            cdFundedADA: BigInt(campaignData.fundedADA || 0),
-            cdCollectedADA: BigInt(campaignData.collectedADA || 0),
-            cdMinADA: BigInt(campaignData.collectedADA || 0),
+            // Always set these days
+            begin_at_days: campaignData.begin_at_days,
+            deadline_days: campaignData.deadline_days,
 
-            // Dates as numbers
-            cdbegin_at: BigInt(campaignData.begin_at || 0),
-            cdDeadline: BigInt(campaignData.deadline || 0),
+            // Add calculated date fields if applicable
+            ...dateFields,
+
+            mint_CampaignToken: campaignData.mint_CampaignToken,
+            campaignToken_CS: campaignData.campaignToken_CS,
+            campaignToken_TN: campaignData.campaignToken_TN,
+            campaignToken_PriceADA: BigInt(campaignData.campaignToken_PriceADA || 0),
+            requestedMaxADA: BigInt(campaignData.requestedMaxADA || 0),
+            requestedMinADA: BigInt(campaignData.requestedMinADA || 0),
+
+            // Datum
+            cdCampaignVersion: isDeployed ? CAMPAIGN_VERSION : 0,
+            cdCampaignPolicy_CS: isDeployed ? campaignData.campaignPolicy_CS || 'test CS' : '',
+            cdCampaignFundsPolicyID_CS: isDeployed ? campaignData.campaignFundsPolicyID_CS || 'test CS' : '',
+            cdAdmins: isDeployed ? await this.getCampaignAdmins(campaignData, wallets) : [],
+            cdTokenAdminPolicy_CS: isDeployed ? campaignData.tokenAdminPolicy_CS || 'test CS' : '',
+            cdMint_CampaignToken: isDeployed ? campaignData.mint_CampaignToken : false,
+            cdCampaignToken_CS: isDeployed ? campaignData.campaignToken_CS || 'test CS' : '',
+            cdCampaignToken_TN: isDeployed ? campaignData.campaignToken_TN || 'test TN' : '',
+            cdCampaignToken_PriceADA: isDeployed ? BigInt(campaignData.campaignToken_PriceADA || 0) : BigInt(0),
+            cdRequestedMaxADA: isDeployed ? BigInt(campaignData.requestedMaxADA || 0) : BigInt(0),
+            cdRequestedMinADA: isDeployed ? BigInt(campaignData.requestedMinADA || 0) : BigInt(0),
+            cdFundedADA: isDeployed ? BigInt(campaignData.fundedADA || 0) : BigInt(0),
+            cdCollectedADA: isDeployed ? BigInt(campaignData.collectedADA || 0) : BigInt(0),
+            cdStatus: isDeployed ? getCampaignDatumStatus(campaignData.campaign_status_id_as_string ): 0,
+            cdMilestones: isDeployed ? getDatumsMilestone(campaignData.milestones) : [],
+            cdFundsCount: isDeployed ? BigInt(campaignData.fundsCount || 0) : BigInt(0),
+            cdFundsIndex: isDeployed ? BigInt(campaignData.fundsIndex || 0) : BigInt(0),
+            cdMinADA: isDeployed ? BigInt(campaignData.cdMinADA || 0) : BigInt(0),
 
             // Campaign details
             logo_url: campaignData.logo_url,
@@ -715,13 +855,13 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         for (const memberData of members) {
             const member = new CampaignMemberEntity({
                 campaign_id: campaignId,
-                wallet_id: wallets[memberData.wallet_id]._DB_id,
-                rol: memberData.role,
+                wallet_id: wallets[memberData.wallet_id_as_string]._DB_id,
+                role: memberData.role,
                 description: memberData.description,
                 editor: memberData.editor || false,
                 admin: memberData.admin || false,
-                email: memberData.email || wallets[memberData.wallet_id].email || '',
-                wallet_address: memberData.wallet_address || wallets[memberData.wallet_id].mainnet_address || '',
+                email: memberData.email || wallets[memberData.wallet_id_as_string].email || '',
+                wallet_address: memberData.wallet_address || wallets[memberData.wallet_id_as_string].mainnet_address || '',
                 website: memberData.socials?.website,
                 instagram: memberData.socials?.instagram,
                 twitter: memberData.socials?.twitter,
@@ -739,9 +879,9 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         for (const submissionData of submissionsData) {
             const submission = new CampaignSubmissionEntity({
                 campaign_id: campaignId,
-                submission_status_id: await this.getSubmissionStatusId(submissionData.submission_status_id),
-                submitted_by_wallet_id: wallets[submissionData.submitted_by_wallet_id]._DB_id,
-                revised_by_wallet_id: submissionData.revised_by_wallet_id ? wallets[submissionData.revised_by_wallet_id]._DB_id : undefined,
+                submission_status_id: await this.getSubmissionStatusId(submissionData.submission_status_id_as_string),
+                submitted_by_wallet_id: wallets[submissionData.submitted_by_wallet_id_as_string]._DB_id,
+                revised_by_wallet_id: submissionData.revised_by_wallet_id_as_string ? wallets[submissionData.revised_by_wallet_id_as_string]._DB_id : undefined,
                 approved_justification: submissionData.approved_justification,
                 rejected_justification: submissionData.rejected_justification,
             });
@@ -751,16 +891,44 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
     }
 
     private static async createCampaignMilestones(campaignId: string, milestonesData: any[], campaignWallets: Record<string, WalletEntity>) {
+        const CampaignBackEndApplied = (await import('./Campaign.BackEnd.Api.Handlers')).CampaignBackEndApplied;
+        const CampaignStatusBackEndApplied = (await import('./CampaignStatus.BackEnd.Api.Handlers')).CampaignStatusBackEndApplied;
         const MilestoneBackEndApplied = (await import('./Milestone.BackEnd.Api.Handlers')).MilestoneBackEndApplied;
         const MilestoneSubmissionBackEndApplied = (await import('./MilestoneSubmission.BackEnd.Api.Handlers')).MilestoneSubmissionBackEndApplied;
 
+        // Check if campaign is active
+        const campaign = await CampaignBackEndApplied.getById_<CampaignEntity>(campaignId);
+        if (!campaign) {
+            throw new Error('Campaign not found');
+        }
+
+        // Get campaign status string from ID
+        const statusEntity = await CampaignStatusBackEndApplied.getById_<CampaignStatusEntity>(campaign.campaign_status_id);
+        if (!statusEntity) {
+            throw new Error('Campaign status not found');
+        }
+
+        const getCampaignActiveStatus = (statusId: number): boolean => {
+            return [CampaignStatus.ACTIVE, CampaignStatus.SUCCESS, CampaignStatus.FAILED].includes(statusId);
+        };
+
+        const isActive = getCampaignActiveStatus(statusEntity.id_internal);
+
+        const currentDate = new Date();
+
         for (const milestoneData of milestonesData) {
+            // Calculate milestone date if campaign is active
+            let estimateDeliveryDate;
+            if (isActive) {
+                estimateDeliveryDate = new Date(currentDate.getTime() + milestoneData.estimatedDeliveryDays * 24 * 60 * 60 * 1000);
+            }
+
             // Create milestone
             const milestone = new MilestoneEntity({
                 campaign_id: campaignId,
-                milestone_status_id: await this.getMilestoneStatusId(milestoneData.milestone_status_id),
-                estimate_delivery_days: milestoneData.estimatedDeliveryDays || 0,
-                estimate_delivery_date: new Date(milestoneData.estimatedDeliveryDate || 0),
+                milestone_status_id: await this.getMilestoneStatusId(milestoneData.milestone_status_id_as_string),
+                estimate_delivery_days: milestoneData.estimatedDeliveryDays,
+                estimate_delivery_date: estimateDeliveryDate,
                 percentage: milestoneData.perncentage,
                 description: milestoneData.description,
             });
@@ -772,10 +940,10 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
                 for (const submissionData of milestoneData.submissions) {
                     const submission = new MilestoneSubmissionEntity({
                         milestone_id: createdMilestone._DB_id,
-                        submission_status_id: await this.getSubmissionStatusId(submissionData.submission_status_id),
-                        submitted_by_wallet_id: campaignWallets[submissionData.submitted_by_wallet_id]._DB_id,
+                        submission_status_id: await this.getSubmissionStatusId(submissionData.submission_status_id_as_string),
+                        submitted_by_wallet_id: campaignWallets[submissionData.submitted_by_wallet_id_as_string]._DB_id,
                         report_proof_of_finalization: submissionData.ReportProofOfFinalization,
-                        revised_by_wallet_id: submissionData.revised_by_wallet_id ? campaignWallets[submissionData.revised_by_wallet_id]._DB_id : undefined,
+                        revised_by_wallet_id: submissionData.revised_by_wallet_id_as_string ? campaignWallets[submissionData.revised_by_wallet_id_as_string]._DB_id : undefined,
                         approved_justification: submissionData.approved_justification,
                         rejected_justification: submissionData.rejected_justification,
                     });

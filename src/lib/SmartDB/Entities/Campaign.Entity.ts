@@ -3,7 +3,6 @@ import 'reflect-metadata';
 import { BaseSmartDBEntity, type CS, Convertible, asSmartDBEntity, type POSIXTime, LucidLUCID_NETWORK_MAINNET_NAME } from 'smart-db';
 
 export interface CampaignMilestone {
-    cmEstimatedDeliveryDate: POSIXTime;
     cmPerncentage: number;
     cmStatus: number;
 }
@@ -11,7 +10,6 @@ export interface CampaignMilestone {
 export const deserealizeCampaignMilestone = (value: any | undefined): CampaignMilestone | undefined => {
     if (value === undefined) return undefined;
     const deserialized: CampaignMilestone = {
-        cmEstimatedDeliveryDate: BigInt(value.cmEstimatedDeliveryDate),
         cmPerncentage: value.cmPerncentage,
         cmStatus: value.cmStatus,
     };
@@ -21,11 +19,10 @@ export const deserealizeCampaignMilestone = (value: any | undefined): CampaignMi
 export const campaignMilestonefromPlutusData = (lucidDataForDatum: any | undefined) => {
     if (lucidDataForDatum?.index === 0) {
         const lucidDataForConstr0 = lucidDataForDatum.fields;
-        if (lucidDataForConstr0.length === 3) {
+        if (lucidDataForConstr0.length === 2) {
             const objectInstance: CampaignMilestone = {
-                cmEstimatedDeliveryDate: lucidDataForConstr0[0],
-                cmPerncentage: Number(lucidDataForConstr0[1]),
-                cmStatus: Number(lucidDataForConstr0[2]),
+                cmPerncentage: Number(lucidDataForConstr0[0]),
+                cmStatus: Number(lucidDataForConstr0[1]),
             };
             return objectInstance;
         }
@@ -73,61 +70,61 @@ export class CampaignEntity extends BaseSmartDBEntity {
     campaign_status_id!: string;
     @Convertible({ isDB_id: true })
     creator_wallet_id!: string;
-    
+
     @Convertible()
     name!: string;
-
     @Convertible()
-    fdpCampaignVersion!: number;
-
-    @Convertible()
-    fdpCampaignPolicy_Params!: object;
-
-    @Convertible()
-    fdpCampaignPolicy_Script!: Script;
-
-    @Convertible({ isUnique: true })
-    fdpCampaignPolicy_CS!: CS;
-
-    @Convertible()
-    fdpCampaignValidator_AddressMainnet!: string;
-
-    @Convertible()
-    fdpCampaignValidator_AddressTestnet!: string;
-
-    @Convertible()
-    fdpCampaignValidator_Script!: Script;
-
-    @Convertible()
-    fdpCampaignValidator_Hash!: string;
-
-    @Convertible()
-    fdpCampaignValidator_Params!: object;
-
-    @Convertible()
-    fdpCampaignFundsPolicyID_Params!: object;
-
-    @Convertible()
-    fdpCampaignFundsPolicyID_Script!: Script;
-
-    @Convertible()
-    fdpCampaignFundsPolicyID_CS!: CS;
-
-    @Convertible()
-    fdpCampaignFundsValidator_Params!: object;
-
-    @Convertible()
-    fdpCampaignFundsValidator_Hash!: string;
-
-    @Convertible()
-    fdpCampaignFundsValidator_Script!: Script;
-
-    @Convertible()
-    fdpCampaignFundsValidator_AddressTestnet!: string;
-
-    @Convertible()
-    fdpCampaignFundsValidator_AddressMainnet!: string;
+    description?: string;
     
+    @Convertible()
+    begin_at_days?: number;
+    @Convertible()
+    deadline_days?: number;
+    @Convertible()
+    campaign_deployed_date!: Date;
+    @Convertible()
+    campaign_actived_date!: Date;
+    
+    @Convertible()
+    begin_at?: Date;
+    @Convertible()
+    deadline?: Date;
+
+    @Convertible()
+    mint_CampaignToken!: boolean;
+    @Convertible()
+    campaignToken_CS!: string;
+    @Convertible()
+    campaignToken_TN!: string;
+    @Convertible()
+    campaignToken_PriceADA!: bigint;
+    @Convertible()
+    requestedMaxADA!: bigint;
+    @Convertible()
+    requestedMinADA!: bigint;
+
+    @Convertible()
+    logo_url?: string;
+    @Convertible()
+    banner_url?: string;
+    @Convertible()
+    website?: string;
+    @Convertible()
+    instagram?: string;
+    @Convertible()
+    twitter?: string;
+    @Convertible()
+    discord?: string;
+    @Convertible()
+    facebook?: string;
+    @Convertible()
+    visualizations!: number;
+    @Convertible()
+    investors!: number;
+    @Convertible()
+    tokenomics_max_supply!: string;
+    @Convertible()
+    tokenomics_description!: string;
 
     @Convertible({ isForDatum: true })
     cdCampaignVersion!: number;
@@ -176,33 +173,40 @@ export class CampaignEntity extends BaseSmartDBEntity {
     cdMinADA!: bigint;
 
     @Convertible()
-    description?: string;
+    fdpCampaignVersion!: number;
     @Convertible()
-    begin_at?: Date;
+    fdpCampaignPolicy_Params!: object;
     @Convertible()
-    deadline?: Date;
+    fdpCampaignPolicy_Script!: Script;
+    @Convertible({ isUnique: true })
+    fdpCampaignPolicy_CS!: CS;
     @Convertible()
-    logo_url?: string;
+    fdpCampaignValidator_AddressMainnet!: string;
     @Convertible()
-    banner_url?: string;
+    fdpCampaignValidator_AddressTestnet!: string;
     @Convertible()
-    website?: string;
+    fdpCampaignValidator_Script!: Script;
     @Convertible()
-    instagram?: string;
+    fdpCampaignValidator_Hash!: string;
     @Convertible()
-    twitter?: string;
+    fdpCampaignValidator_Params!: object;
     @Convertible()
-    discord?: string;
+    fdpCampaignFundsPolicyID_Params!: object;
     @Convertible()
-    facebook?: string;
+    fdpCampaignFundsPolicyID_Script!: Script;
     @Convertible()
-    visualizations!: number;
+    fdpCampaignFundsPolicyID_CS!: CS;
     @Convertible()
-    investors!: number;
+    fdpCampaignFundsValidator_Params!: object;
     @Convertible()
-    tokenomics_max_supply!: string;
+    fdpCampaignFundsValidator_Hash!: string;
     @Convertible()
-    tokenomics_description!: string;
+    fdpCampaignFundsValidator_Script!: Script;
+    @Convertible()
+    fdpCampaignFundsValidator_AddressTestnet!: string;
+    @Convertible()
+    fdpCampaignFundsValidator_AddressMainnet!: string;
+
     @Convertible()
     featured!: boolean;
     @Convertible()
@@ -233,24 +237,33 @@ export class CampaignEntity extends BaseSmartDBEntity {
         campaign_status_id: true,
         creator_wallet_id: true,
 
+        campaign_deployed_date: true,
+        campaign_actived_date: true,
+
         name: true,
-        fdpCampaignVersion: true,
-        fdpCampaignPolicy_CS: true,
-        fdpCampaignPolicy_Params: false,
-        fdpCampaignPolicy_Script: false,
-        fdpCampaignValidator_AddressTestnet: true,
-        fdpCampaignValidator_AddressMainnet: true,
-        fdpCampaignValidator_Hash: true,
-        fdpCampaignValidator_Params: false,
-        fdpCampaignValidator_Script: false,
-        fdpCampaignFundsPolicyID_CS: true,
-        fdpCampaignFundsPolicyID_Params: false,
-        fdpCampaignFundsPolicyID_Script: false,
-        fdpCampaignFundsValidator_AddressMainnet: true,
-        fdpCampaignFundsValidator_AddressTestnet: true,
-        fdpCampaignFundsValidator_Hash: true,
-        fdpCampaignFundsValidator_Params: false,
-        fdpCampaignFundsValidator_Script: false,
+        description: true,
+        begin_at_days: true,
+        deadline_days: true,
+        begin_at: true,
+        deadline: true,
+        mint_CampaignToken: true,
+        campaignToken_CS: true,
+        campaignToken_TN: true,
+        campaignToken_PriceADA: true,
+        requestedMaxADA: true,
+        requestedMinADA: true,
+
+        logo_url: true,
+        banner_url: true,
+        website: true,
+        instagram: true,
+        twitter: true,
+        discord: true,
+        facebook: true,
+        visualizations: true,
+        investors: true,
+        tokenomics_max_supply: true,
+        tokenomics_description: true,
 
         cdCampaignVersion: true,
         cdCampaignPolicy_CS: true,
@@ -272,20 +285,26 @@ export class CampaignEntity extends BaseSmartDBEntity {
         cdFundsCount: true,
         cdFundsIndex: true,
         cdMinADA: true,
-        description: true,
-        begin_at: true,
-        deadline: true,
-        logo_url: true,
-        banner_url: true,
-        website: true,
-        instagram: true,
-        twitter: true,
-        discord: true,
-        facebook: true,
-        visualizations: true,
-        investors: true,
-        tokenomics_max_supply: true,
-        tokenomics_description: true,
+
+        fdpCampaignVersion: true,
+        fdpCampaignPolicy_CS: true,
+        fdpCampaignPolicy_Params: false,
+        fdpCampaignPolicy_Script: false,
+        fdpCampaignValidator_AddressTestnet: true,
+        fdpCampaignValidator_AddressMainnet: true,
+        fdpCampaignValidator_Hash: true,
+        fdpCampaignValidator_Params: false,
+        fdpCampaignValidator_Script: false,
+        fdpCampaignFundsPolicyID_CS: true,
+        fdpCampaignFundsPolicyID_Params: false,
+        fdpCampaignFundsPolicyID_Script: false,
+        fdpCampaignFundsValidator_AddressMainnet: true,
+        fdpCampaignFundsValidator_AddressTestnet: true,
+        fdpCampaignFundsValidator_Hash: true,
+        fdpCampaignFundsValidator_Params: false,
+        fdpCampaignFundsValidator_Script: false,
+
+       
         featured: true,
         archived: true,
         createdAt: true,

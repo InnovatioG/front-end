@@ -40,12 +40,23 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
     const router = useRouter();
 
     useEffect(() => {
-        const minLoadTime = new Promise((resolve) => setTimeout(resolve, 1000));
-        Promise.all([minLoadTime]).then(() => setIsLoading(false));
-    }, []);
+        const initialize = async () => {
+            // Ensure initialization logic is complete
+            await dataBaseService.initializeData();
 
-    useEffect(() => {
-        dataBaseService.initializeData();
+            // Wait for appStore to complete its initialization
+            const checkInit = async () => {
+                console.log('Waiting for appStore to complete its initialization');
+                while (!globalStore.getState().swInitApiCompleted) {
+                    await new Promise((resolve) => setTimeout(resolve, 100)); // Poll every 100ms
+                }
+            };
+
+            await Promise.all([checkInit()]);
+            setIsLoading(false);
+        };
+
+        initialize();
     }, []);
 
     if (isLoading) {

@@ -1,12 +1,18 @@
 import { useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { CampaignEntity } from '../../../lib/SmartDB/Entities/Campaign.Entity';
-import { CampaignApi } from '../../../lib/SmartDB/FrontEnd/Campaign.FrontEnd.Api.Calls';
 import { pushWarningNotification } from 'smart-db';
+import { CampaignCategoryEntity, CampaignStatusEntity } from '@/lib/SmartDB/Entities';
+import { CampaignCategoryApi, CampaignStatusApi, CampaignApi } from '@/lib/SmartDB/FrontEnd';
 
 export interface MilestoneFormProps {
     item: Partial<CampaignEntity>;
     setItem: (value: SetStateAction<Partial<CampaignEntity>>) => void;
 }
+
+// export interface CampaignStatusAndCategory {
+//     category: CampaignCategoryEntity;
+//     status: CampaignStatusEntity;
+// }
 
 export function useCampaign() {
     const [list, setList] = useState<CampaignEntity[]>([]);
@@ -15,8 +21,30 @@ export function useCampaign() {
     const [view, setView] = useState<'list' | 'create' | 'edit' | 'confirmDelete'>('list');
     const [deleteItem, setDeleteItem] = useState<CampaignEntity | null>(null);
 
+    const [categories, setCategories] = useState<CampaignCategoryEntity[]>([]);
+    const [statuses, setStatuses] = useState<CampaignStatusEntity[]>([]);
+
+    const fetchCampaignsExtras = async () => {
+        // const campaigns: CampaignEntity[] = await CampaignApi.getAllApi_();
+        const categories: CampaignCategoryEntity[] = await CampaignCategoryApi.getAllApi_();
+        const statuses: CampaignStatusEntity[] = await CampaignStatusApi.getAllApi_();
+
+        setCategories(categories);
+        setStatuses(statuses);
+
+        // // const categoryMap = Object.fromEntries(categories.map(cat => [cat._DB_id, cat]));
+        // // const statusMap = Object.fromEntries(statuses.map(stat => [stat._DB_id, stat]));
+
+        // return campaigns.map(campaign => ({
+        //     ...campaign,
+        //     category: categoryMap[campaign.campaingCategoryId],
+        //     status: statusMap[campaign.campaignStatusId],
+        // }));
+    };
+
     const fetch = async () => {
         try {
+            await fetchCampaignsExtras();
             const fetchedList: CampaignEntity[] = await CampaignApi.getAllApi_();
             setList(fetchedList);
         } catch (e) {
@@ -91,5 +119,7 @@ export function useCampaign() {
         create,
         update,
         remove,
+        categories,
+        statuses,
     };
 }
