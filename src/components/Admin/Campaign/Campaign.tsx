@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { toJson } from 'smart-db';
 
 export default function Campaign() {
-    const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove, categories, statuses } = useCampaign();
+    const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove, getCategoryName, getStatusName } = useCampaign();
 
     const AdminsForm: React.FC<{
         item: Partial<CampaignEntity>;
@@ -365,92 +365,87 @@ export default function Campaign() {
                         </tr>
                     </thead>
                     <tbody>
-                        {list.map((item) => {
-                            const category = categories.find((cat) => cat._DB_id === item.campaing_category_id)?.name || 'Unknown';
-                            const status = statuses.find((stat) => stat._DB_id === item.campaign_status_id)?.name || 'Unknown';
+                        {list.map((item) => (
+                            <tr key={item._DB_id}>
+                                <td>{getCategoryName(item.campaing_category_id)}</td>
+                                <td>{getStatusName(item.campaign_status_id)}</td>
+                                <td>{item.creator_wallet_id}</td>
 
-                            return (
-                                <tr key={item._DB_id}>
-                                    <td>{category}</td>
-                                    <td>{status}</td>
-                                    <td>{item.creator_wallet_id}</td>
+                                <td>{item.name}</td>
+                                <td>{item.description}</td>
 
-                                    <td>{item.name}</td>
-                                    <td>{item.description}</td>
+                                <td>{item.begin_at_days}</td>
+                                <td>{item.deadline_days}</td>
+                                <td>{item.campaign_deployed_date?.toISOString()}</td>
+                                <td>{item.campaign_actived_date?.toISOString()}</td>
 
-                                    <td>{item.begin_at_days}</td>
-                                    <td>{item.deadline_days}</td>
-                                    <td>{item.campaign_deployed_date?.toISOString()}</td>
-                                    <td>{item.campaign_actived_date?.toISOString()}</td>
+                                <td>{item.begin_at?.toISOString()}</td>
+                                <td>{item.deadline?.toISOString()}</td>
 
-                                    <td>{item.begin_at?.toISOString()}</td>
-                                    <td>{item.deadline?.toISOString()}</td>
+                                <td>{item.mint_CampaignToken ? 'Yes' : 'No'}</td>
+                                <td>{item.campaignToken_CS}</td>
+                                <td>{item.campaignToken_TN}</td>
+                                <td>{item.campaignToken_PriceADA.toString()}</td>
+                                <td>{item.requestedMaxADA.toString()}</td>
+                                <td>{item.requestedMinADA.toString()}</td>
 
-                                    <td>{item.mint_CampaignToken ? 'Yes' : 'No'}</td>
-                                    <td>{item.campaignToken_CS}</td>
-                                    <td>{item.campaignToken_TN}</td>
-                                    <td>{item.campaignToken_PriceADA.toString()}</td>
-                                    <td>{item.requestedMaxADA.toString()}</td>
-                                    <td>{item.requestedMinADA.toString()}</td>
+                                <td>{item.logo_url}</td>
+                                <td>{item.banner_url}</td>
+                                <td>{item.website}</td>
+                                <td>{item.instagram}</td>
+                                <td>{item.twitter}</td>
+                                <td>{item.discord}</td>
+                                <td>{item.facebook}</td>
+                                <td>{item.visualizations}</td>
+                                <td>{item.investors}</td>
+                                <td>{item.tokenomics_max_supply}</td>
+                                <td>{item.tokenomics_description}</td>
 
-                                    <td>{item.logo_url}</td>
-                                    <td>{item.banner_url}</td>
-                                    <td>{item.website}</td>
-                                    <td>{item.instagram}</td>
-                                    <td>{item.twitter}</td>
-                                    <td>{item.discord}</td>
-                                    <td>{item.facebook}</td>
-                                    <td>{item.visualizations}</td>
-                                    <td>{item.investors}</td>
-                                    <td>{item.tokenomics_max_supply}</td>
-                                    <td>{item.tokenomics_description}</td>
+                                <td>{item.cdCampaignVersion}</td>
+                                <td>{item.cdCampaignPolicy_CS}</td>
+                                <td>{item.cdCampaignFundsPolicyID_CS}</td>
+                                <td>{item.cdAdmins.join(', ')}</td>
+                                <td>{item.cdTokenAdminPolicy_CS}</td>
+                                <td>{item.cdMint_CampaignToken ? 'Yes' : 'No'}</td>
+                                <td>{item.cdCampaignToken_CS}</td>
+                                <td>{item.cdCampaignToken_TN}</td>
+                                <td>{item.cdCampaignToken_PriceADA.toString()}</td>
+                                <td>{item.cdRequestedMaxADA.toString()}</td>
+                                <td>{item.cdRequestedMinADA.toString()}</td>
+                                <td>{item.cdFundedADA.toString()}</td>
+                                <td>{item.cdCollectedADA.toString()}</td>
+                                <td>{item.cdbegin_at?.toString()}</td>
+                                <td>{item.cdDeadline?.toString()}</td>
+                                <td>{item.cdStatus}</td>
+                                <td>{toJson(item.cdMilestones)}</td>
+                                <td>{item.cdFundsCount}</td>
+                                <td>{item.cdFundsIndex}</td>
+                                <td>{item.cdMinADA.toString()}</td>
 
-                                    <td>{item.cdCampaignVersion}</td>
-                                    <td>{item.cdCampaignPolicy_CS}</td>
-                                    <td>{item.cdCampaignFundsPolicyID_CS}</td>
-                                    <td>{item.cdAdmins.join(', ')}</td>
-                                    <td>{item.cdTokenAdminPolicy_CS}</td>
-                                    <td>{item.cdMint_CampaignToken ? 'Yes' : 'No'}</td>
-                                    <td>{item.cdCampaignToken_CS}</td>
-                                    <td>{item.cdCampaignToken_TN}</td>
-                                    <td>{item.cdCampaignToken_PriceADA.toString()}</td>
-                                    <td>{item.cdRequestedMaxADA.toString()}</td>
-                                    <td>{item.cdRequestedMinADA.toString()}</td>
-                                    <td>{item.cdFundedADA.toString()}</td>
-                                    <td>{item.cdCollectedADA.toString()}</td>
-                                    <td>{item.cdbegin_at?.toString()}</td>
-                                    <td>{item.cdDeadline?.toString()}</td>
-                                    <td>{item.cdStatus}</td>
-                                    <td>{toJson(item.cdMilestones)}</td>
-                                    <td>{item.cdFundsCount}</td>
-                                    <td>{item.cdFundsIndex}</td>
-                                    <td>{item.cdMinADA.toString()}</td>
-
-                                    <td>{item.featured ? 'Yes' : 'No'}</td>
-                                    <td>{item.archived ? 'Yes' : 'No'}</td>
-                                    <td>{item.createdAt.toISOString()}</td>
-                                    <td>{item.updatedAt?.toISOString()}</td>
-                                    <td>
-                                        <button
-                                            onClick={() => {
-                                                setEditItem(item);
-                                                setView('edit');
-                                            }}
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            onClick={() => {
-                                                setDeleteItem(item);
-                                                setView('confirmDelete');
-                                            }}
-                                        >
-                                            Delete
-                                        </button>
-                                    </td>
-                                </tr>
-                            );
-                        })}
+                                <td>{item.featured ? 'Yes' : 'No'}</td>
+                                <td>{item.archived ? 'Yes' : 'No'}</td>
+                                <td>{item.createdAt.toISOString()}</td>
+                                <td>{item.updatedAt?.toISOString()}</td>
+                                <td>
+                                    <button
+                                        onClick={() => {
+                                            setEditItem(item);
+                                            setView('edit');
+                                        }}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setDeleteItem(item);
+                                            setView('confirmDelete');
+                                        }}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             )}

@@ -25,21 +25,22 @@ export function useCampaign() {
     const [statuses, setStatuses] = useState<CampaignStatusEntity[]>([]);
 
     const fetchCampaignsExtras = async () => {
-        // const campaigns: CampaignEntity[] = await CampaignApi.getAllApi_();
         const categories: CampaignCategoryEntity[] = await CampaignCategoryApi.getAllApi_();
         const statuses: CampaignStatusEntity[] = await CampaignStatusApi.getAllApi_();
-
         setCategories(categories);
         setStatuses(statuses);
+    };
 
-        // // const categoryMap = Object.fromEntries(categories.map(cat => [cat._DB_id, cat]));
-        // // const statusMap = Object.fromEntries(statuses.map(stat => [stat._DB_id, stat]));
+     // Helper method to get category name by ID
+     const getCategoryName = (id: string): string => {
+        const category = categories.find((cat) => cat._DB_id === id);
+        return category?.name || 'Unknown';
+    };
 
-        // return campaigns.map(campaign => ({
-        //     ...campaign,
-        //     category: categoryMap[campaign.campaingCategoryId],
-        //     status: statusMap[campaign.campaignStatusId],
-        // }));
+    // Helper method to get status name by ID
+    const getStatusName = (id: string): string => {
+        const status = statuses.find((stat) => stat._DB_id === id);
+        return status?.name || 'Unknown';
     };
 
     const fetch = async () => {
@@ -119,7 +120,7 @@ export function useCampaign() {
         create,
         update,
         remove,
-        categories,
-        statuses,
+        getCategoryName,
+        getStatusName,
     };
 }

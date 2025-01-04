@@ -4,7 +4,7 @@ import { MilestoneEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
 
 export default function Milestone() {
-    const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useMilestone();
+    const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove, getStatusName } = useMilestone();
 
     const renderList = () => (
         <div>
@@ -18,7 +18,7 @@ export default function Milestone() {
                     <thead>
                         <tr>
                             <th>Campaign ID</th>
-                            <th>Milestone Status ID</th>
+                            <th>Milestone Status</th>
                             <th>Estimated Delivery Days</th>
                             <th>Estimated Delivery Date</th>
                             <th>Percentage</th>
@@ -32,7 +32,7 @@ export default function Milestone() {
                         {list.map((item) => (
                             <tr key={item._DB_id}>
                                 <td>{item.campaign_id}</td>
-                                <td>{item.milestone_status_id}</td>
+                                <td>{getStatusName(item.milestone_status_id)}</td>
                                 <td>{item.estimate_delivery_days}</td>
                                 <td>{item.estimate_delivery_date?.toISOString()}</td>
                                 <td>{item.percentage}</td>
