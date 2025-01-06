@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import styles from "./ProjectDetail.module.scss";
-import EmptyState from '../emptyStates/EmptyState';
+import EmptyState from "@/components/CampaignId/sections/EmptyState"
 
 const ProjectDetail: React.FC = () => {
     const { project } = useProjectDetailStore();

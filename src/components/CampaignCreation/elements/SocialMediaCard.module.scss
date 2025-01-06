@@ -1,6 +1,6 @@
 @use '@/styles/settings/colors';
 @use '@/styles/settings/fonts';
-@use '../form//FormSteps.module.scss';
+@use '@/components/CampaignCreation/layout/form/FormSteps.module.scss';
 
 .socialMediaCard {
     border-radius: 1.375rem;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion/Accordion"
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import styles from "@/components/campaign/creator/projectEditionContainer/Qa.module.scss"
-import EmptyState from '../emptyStates/EmptyState';
+import styles from "@/components/CampaignCreation/elements/Qa.module.scss"
+import EmptyState from "@/components/CampaignId/sections/EmptyState"
 
 interface QAProps {
     // Define props here

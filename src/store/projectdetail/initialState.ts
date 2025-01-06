@@ -1,8 +1,74 @@
 import type { MembersTeam } from '@/HardCode/databaseType';
-import type { MilestoneF, FAQ, campaingContent } from '@/HardCode/databaseType';
+import type { MilestoneF, FAQ, campaingContent, BaseCampaign } from '@/HardCode/databaseType';
 
 export interface ProjectDetailState {
+    project: BaseCampaign;
+    isLoading: boolean;
+    menuView: 'Project Detail' | 'Resume of the team' | 'Roadmap & Milestones' | 'Tokenomics' | 'Q&A';
+    error: string;
+    milestone: MilestoneF | null; // Add this for active/selected milestone
+    editionMode: boolean;
+    isLoadingPrice: boolean;
+    isAdmin: boolean;
+    isProtocolTeam: boolean;
+    price_ada: number;
+}
+
+export const initialState: ProjectDetailState = {
     project: {
+        creator_wallet_id: null,
+        id: 0,
+        title: '',
+        description: '',
+        state_id: 0,
+        investors: 0,
+        banner_url: '',
+        logo_url: '',
+        createdAt: '',
+        updatedAt: '',
+        status: '',
+        goal: 0,
+        min_request: 0,
+        website: '',
+        facebook: '',
+        instagram: '',
+        discord: '',
+        linkedin: '',
+        twitter: '',
+
+        tokenomics_description: '',
+        start_date: '',
+        end_date: '',
+        members_team: [],
+        milestones: [],
+        faqs: [],
+        campaign_content: [],
+        category_id: 0,
+        contract_id: 0,
+        raise_amount: 0,
+    },
+    price_ada: 0,
+    menuView: 'Project Detail',
+    isLoading: false,
+    error: '',
+    milestone: null,
+    editionMode: true,
+    isAdmin: false,
+    isProtocolTeam: false,
+    isLoadingPrice: false,
+};
+
+/* 
+
+matwitteruply, cuantos token existen de algo, 
+
+el precio se calcula con la plata que el usuario quiere en total, y cuantos token el usuarios pone en la venta 
+
+
+
+
+
+/* {
         id: number;
         creator_wallet_id: number | null;
         title: string;
@@ -36,73 +102,4 @@ export interface ProjectDetailState {
         milestones: MilestoneF[];
         faqs: FAQ[];
         end_date: string;
-    };
-    isLoading: boolean;
-    menuView: 'Project Detail' | 'Resume of the team' | 'Roadmap & Milestones' | 'Tokenomics' | 'Q&A';
-    error: string;
-    milestone: MilestoneF | null; // Add this for active/selected milestone
-    editionMode: boolean;
-    isLoadingPrice: boolean;
-    isAdmin: boolean;
-    isProtocolTeam: boolean;
-    price_ada: number;
-}
-
-export const initialState: ProjectDetailState = {
-    project: {
-        creator_wallet_id: null,
-        id: 0,
-        title: '',
-        description: '',
-        state_id: 0,
-        investors: 0,
-        banner_url: '',
-        logo_url: '',
-        createdAt: '',
-        updatedAt: '',
-        status: '',
-        goal: 0,
-        min_request: 0,
-        website: '',
-        facebook: '',
-        instagram: '',
-        discord: '',
-        linkedin: '',
-        twitter: '',
-        cdRequestedMaxADA: null,
-        cdCampaignToken_PriceADA: null,
-        cdCampaignToken_TN: '',
-        tokenomics_description: '',
-        start_date: '',
-        end_date: '',
-        members_team: [],
-        milestones: [],
-        faqs: [],
-        campaign_content: [],
-        vizualization: 0,
-        category_id: 0,
-        contract_id: 0,
-        raise_amount: 0,
-    },
-    price_ada: 0,
-    menuView: 'Project Detail',
-    isLoading: false,
-    error: '',
-    milestone: null,
-    editionMode: true,
-    isAdmin: false,
-    isProtocolTeam: false,
-    isLoadingPrice: false,
-};
-
-/* 
-
-matwitteruply, cuantos token existen de algo, 
-
-el precio se calcula con la plata que el usuario quiere en total, y cuantos token el usuarios pone en la venta 
-
-
-
-
-
-*/
+    }; */

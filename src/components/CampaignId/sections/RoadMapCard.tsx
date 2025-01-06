@@ -3,11 +3,11 @@ import styles from "./RoadMapCard.module.scss";
 import { getOrdinalString } from '@/utils/formats';
 import type { MilestoneF } from '@/HardCode/databaseType';
 import MilestoneTime from '@/components/CampaignCreation/elements/MilestoneTimeEdit';
-import MilestonePercentage from '../CampaignCreation/elements/MilestonePercentage';
+import MilestonePercentage from '@/components/CampaignCreation/elements/MilestonePercentage';
 import { stylesByStatus, imageByStatus } from '@/utils/constants/status';
 import MilestoneMessage from './MilestoneMessage';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import GeneralButtonUI from '../ui/buttons/UI/Button';
+import GeneralButtonUI from '@/components/ui/buttons/UI/Button';
 import { useModalStore } from '@/store/modal/useModalStoreState';
 
 interface RoadMapCardProps {

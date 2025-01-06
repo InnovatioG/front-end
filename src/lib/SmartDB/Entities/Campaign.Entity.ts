@@ -63,7 +63,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
     _NET_id_TN: string = 'campaign_id';
 
     // #region fields
-   
+
     @Convertible({ isDB_id: true })
     campaing_category_id!: string;
     @Convertible({ isDB_id: true })
@@ -75,7 +75,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
     name!: string;
     @Convertible()
     description?: string;
-    
+
     @Convertible()
     begin_at_days?: number;
     @Convertible()
@@ -84,7 +84,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
     campaign_deployed_date!: Date;
     @Convertible()
     campaign_actived_date!: Date;
-    
+
     @Convertible()
     begin_at?: Date;
     @Convertible()
@@ -231,6 +231,45 @@ export class CampaignEntity extends BaseSmartDBEntity {
         fdpCampaignFundsValidator_Script: false,
     };
 
+    public static fieldsForHomePage: Record<string, boolean> = {
+        ...super.fieldsForHomePage,
+        campaing_category_id: true,
+        campaign_status_id: true,
+        creator_wallet_id: true,
+
+        campaign_deployed_date: true,
+        campaign_actived_date: true,
+
+        name: true,
+        description: true,
+        begin_at_days: true,
+        deadline_days: true,
+        begin_at: true,
+        deadline: true,
+        mint_CampaignToken: true,
+        campaignToken_CS: true,
+        campaignToken_TN: true,
+        campaignToken_PriceADA: true,
+        requestedMaxADA: true,
+        requestedMinADA: true,
+
+        logo_url: true,
+        banner_url: true,
+        website: true,
+        instagram: true,
+        twitter: true,
+        discord: true,
+        facebook: true,
+        visualizations: true,
+        investors: true,
+        tokenomics_max_supply: true,
+        tokenomics_description: true,
+        featured: true,
+        archived: true,
+        createdAt: true,
+        updatedAt: true,
+    };
+
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
         campaing_category_id: true,
@@ -304,7 +343,6 @@ export class CampaignEntity extends BaseSmartDBEntity {
         fdpCampaignFundsValidator_Params: false,
         fdpCampaignFundsValidator_Script: false,
 
-       
         featured: true,
         archived: true,
         createdAt: true,

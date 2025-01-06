@@ -31,8 +31,8 @@ export function useCampaign() {
         setStatuses(statuses);
     };
 
-     // Helper method to get category name by ID
-     const getCategoryName = (id: string): string => {
+    // Helper method to get category name by ID
+    const getCategoryName = (id: string): string => {
         const category = categories.find((cat) => cat._DB_id === id);
         return category?.name || 'Unknown';
     };

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import axios from 'axios';
-import LoadingPage from '../LoadingPage/LoadingPage';
+import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import styles from "./Tokenomics.module.scss";
-import EmptyState from '../emptyStates/EmptyState';
+import EmptyState from "@/components/CampaignId/sections/EmptyState"
 interface TokenomicsProps {
     // Define props here
 }

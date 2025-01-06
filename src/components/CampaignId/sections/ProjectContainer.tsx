@@ -1,13 +1,12 @@
 import React from 'react';
-import QA from "@/components/projectContainer/QA";
-import RoadMap from "@/components/projectContainer/RoadMap";
-import ResumeOfTheTeam from "@/components/projectContainer/ResumeOfTheTeam";
-import ProjectDetail from "@/components/projectContainer/ProjectDetail";
-import Tokenomics from "@/components/projectContainer/Tokenomics";
+import QA from '@/components/CampaignId/sections/QA';
+import RoadMap from "@/components/CampaignId/sections/RoadMap";
+import ResumeOfTheTeam from "@/components/CampaignId/sections/ResumeOfTheTeam";
+import ProjectDetail from "@/components/CampaignId/sections/ProjectDetail";
+import Tokenomics from "@/components/CampaignId/sections/Tokenomics";
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import NavBarProjectEdition from '@/components/CampaignCreation/elements/NavMenuProjectEdition';
 import styles from "./ProjectContainer.module.scss"
-import { useEffect } from 'react';
 interface ProjectContainerProps {
 }
 

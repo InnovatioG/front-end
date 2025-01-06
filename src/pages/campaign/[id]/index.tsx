@@ -5,7 +5,7 @@ import styles from "./campainPagelayout.module.scss";
 import CampaignHeader from '@/components/CampaignDashboard/campaignHeader/CampaignHeader';
 import CampaignDashCreation from '@/components/CampaignDashboard/campaignHeader/CampaignDash';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import ProjectContainer from '@/components/projectContainer/ProjectContainer';
+import ProjectContainer from '@/components/CampaignId/sections/ProjectContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import { useSession } from 'next-auth/react';
 import CampaignButtonContainer from './campainButtonsContainer';

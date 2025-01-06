@@ -1,7 +1,7 @@
 import React from 'react';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import styles from "./EmptyState.module.scss"
-import GeneralButtonUI from '../ui/buttons/UI/Button';
+import GeneralButtonUI from '@/components/ui/buttons/UI/Button';
 import Link from 'next/link';
 interface EmptyStateProps {
     // Define props here

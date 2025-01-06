@@ -60,7 +60,7 @@ export interface BaseCampaign {
     discord: string;
     linkedin: string;
     start_date: string;
-    xs: string;
+    twitter: string;
     category_id: number;
     contract_id?: number;
     raise_amount: number;

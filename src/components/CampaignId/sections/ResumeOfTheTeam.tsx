@@ -1,6 +1,6 @@
 import React from 'react';
 import ResumeOfTheTeamAccordion from '@/components/CampaignCreation/elements/ResumeOfTheTeamAccordion';
-import styles from "@/components/campaign/creator/projectEditionContainer/ResumeOftheTeam.module.scss"
+import styles from "@/components/CampaignCreation/elements/ResumeOftheTeam.module.scss"
 interface ResumeOfTheTeamProps {
     // Define props here
 }

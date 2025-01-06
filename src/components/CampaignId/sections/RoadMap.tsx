@@ -1,7 +1,7 @@
 import React from 'react';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import RoadMapCard from './RoadMapCard';
-import EmptyState from '../emptyStates/EmptyState';
+import EmptyState from "@/components/CampaignId/sections/EmptyState"
 
 
 interface RoadMapProps {
