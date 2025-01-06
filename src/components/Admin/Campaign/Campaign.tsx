@@ -7,6 +7,7 @@ import { toJson } from 'smart-db';
 export default function Campaign() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove, getCategoryName, getStatusName } = useCampaign();
 
+
     const AdminsForm: React.FC<{
         item: Partial<CampaignEntity>;
         setItem: Dispatch<SetStateAction<Partial<CampaignEntity>>>;

@@ -2,13 +2,13 @@ import { useCardano } from "@/contexts/CardanoContext";
 import React from "react";
 import styles from "./Campaign.module.scss";
 import { useSession } from "next-auth/react";
-import BtnConnectWallet from "@/components/buttons/connectWallet/BtnConnectWallet";
+import BtnConnectWallet from "@/components/ui/buttons/connectWallet/BtnConnectWallet";
 import { useScreenSize } from "@/hooks/useScreenSize";
-import DraftDashboard from "@/components/campaign/draft/DraftDashboard";
-import NewDraftDashboard from "@/components/campaign/draft/DraftDashboard";
+import DraftDashboard from "@/components/CampaignDashboard/draft/DraftDashboard";
+import NewDraftDashboard from "@/components/CampaignDashboard/draft/DraftDashboard";
 import { useDashboardCard } from "@/hooks/useDashboardCard";
 import LoadingPage from "@/components/LoadingPage/LoadingPage";
-import GoogleConnect from "@/components/buttons/googleConnect/GoogleConnect";
+import GoogleConnect from "@/components/ui/buttons/googleConnect/GoogleConnect";
 
 export default function Home() {
   const { address } = useCardano();

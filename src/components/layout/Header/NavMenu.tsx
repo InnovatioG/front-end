@@ -2,8 +2,8 @@ import { useState } from "react";
 import styles from "./NavMenu.module.scss";
 import { CALENDAR } from "@/utils/images";
 import Link from "next/link";
-import BtnConnectWallet from "@/components/buttons/connectWallet/BtnConnectWallet";
-import BtnCampaign from "@/components/buttons/campaign/BtnCampaign";
+import BtnConnectWallet from "@/components/ui/buttons/connectWallet/BtnConnectWallet";
+import BtnCampaign from "@/components/ui/buttons/campaign/BtnCampaign";
 
 export default function NavMenu() {
   const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);

@@ -3,10 +3,10 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import * as Images from '@/utils/images';
 import { useState, useEffect } from 'react';
-import PreLoadingPage from '@/components/PreLoadingPage/PreLoadingPage';
+import PreLoadingPage from '@/components/General/elements/PreLoadingPage/PreLoadingPage';
 import { CardanoProvider } from '@/contexts/CardanoContext';
 import { ModalProvider } from '@/contexts/ModalContext';
-import { ModalManager } from '@/components/ModalManager';
+import { ModalManager } from '@/components/ui/modal/ModalManager';
 import Header from '@/components/layout/Header/Header';
 import { ResponsiveProvider } from '@/contexts/ResponsiveContext';
 import { dataBaseService } from '@/HardCode/dataBaseService';
@@ -39,25 +39,24 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
-    useEffect(() => {
-        const initialize = async () => {
-            // Ensure initialization logic is complete
-            await dataBaseService.initializeData();
-
-            // Wait for appStore to complete its initialization
-            const checkInit = async () => {
-                console.log('Waiting for appStore to complete its initialization');
-                while (!globalStore.getState().swInitApiCompleted) {
-                    await new Promise((resolve) => setTimeout(resolve, 100)); // Poll every 100ms
-                }
+    /*     useEffect(() => {
+            const initialize = async () => {
+                await dataBaseService.initializeData();
+    
+                // Wait for appStore to complete its initialization
+                const checkInit = async () => {
+                    console.log('Waiting for appStore to complete its initialization');
+                    while (!globalStore.getState().swInitApiCompleted) {
+                        await new Promise((resolve) => setTimeout(resolve, 100)); // Poll every 100ms
+                    }
+                };
+    
+                await Promise.all([checkInit()]);
+                setIsLoading(false);
             };
-
-            await Promise.all([checkInit()]);
-            setIsLoading(false);
-        };
-
-        initialize();
-    }, []);
+    
+            initialize();
+        }, []); */
 
     if (isLoading) {
         return <PreLoadingPage onLoadComplete={() => setIsLoading(false)} resources={resourcesToPreload} />;

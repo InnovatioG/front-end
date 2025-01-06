@@ -2,8 +2,8 @@ import Head from 'next/head';
 import styles from '@/styles/Home.module.scss';
 import Image from 'next/image';
 import { PEOPLE } from '@/utils/images';
-import CampaignHighLight from '@/components/campaign/highlight/CampaignHighLight';
-import CampaignDashboard from '@/components/campaign/dashboard/CampaignDashboard';
+import CampaignHighLight from '@/components/CampaignDashboard/highlight/CampaignHighLight';
+import CampaignDashboard from '@/components/CampaignDashboard/dashboard/CampaignDashboard';
 import { useEffect, useState } from 'react';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 export default function Home() {

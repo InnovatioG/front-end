@@ -1,35 +1,17 @@
 import type { User, Milestone } from '@/HardCode/databaseType';
-
-export interface MembersTeam {
-    id: number;
-    member_name: string;
-    member_description: string;
-    member_last_name: string;
-    member_role: string;
-    member_email: string;
-    member_picture: string;
-    member_admin: boolean;
-    member_wallet_address: string;
-    member_manage_funds: boolean;
-    website: string;
-    facebook: string;
-    instagram: string;
-    discord: string;
-    linkedin: string;
-    xs: string;
-}
+import { MembersTeam } from '@/HardCode/databaseType';
 
 export interface CampaignState {
     step: 1 | 2 | 3 | 4;
-    title: string;
+    name: string;
     category: string;
-    categoryId: number | null;
+    category_id: number | null;
     description: string;
     user: User | null;
     isLoading: boolean;
     newCampaign: {
         id: number;
-        user_id: number | null;
+        creator_wallet_id: number | null;
 
         state_id: number;
         category_id: number | null;
@@ -51,7 +33,7 @@ export interface CampaignState {
         facebook: string;
         instagram: string;
         discord: string;
-        xs: string;
+        twitter: string;
         linkedin: string;
 
         members_team: MembersTeam[];
@@ -61,15 +43,15 @@ export interface CampaignState {
 
 export const initialState: CampaignState = {
     step: 1,
-    title: '',
+    name: '',
     category: '',
-    categoryId: null,
+    category_id: null,
     description: '',
     user: null,
     isLoading: false,
     newCampaign: {
         id: Date.now(),
-        user_id: null,
+        creator_wallet_id: null,
         state_id: 1,
         category_id: null,
         logo_url: '',
@@ -92,7 +74,7 @@ export const initialState: CampaignState = {
         facebook: '',
         instagram: '',
         discord: '',
-        xs: '',
+        twitter: '',
         linkedin: '',
 
         members_team: [],

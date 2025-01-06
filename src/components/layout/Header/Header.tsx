@@ -7,7 +7,7 @@ import HeaderMobile from "./HeaderMobile";
 import { useState } from "react";
 import HeaderDesktop from "./HeaderDesktop";
 import { useSession } from "next-auth/react";
-import CalendarModal from "@/components/modal/CalendarModal";
+import CalendarModal from "@/components/ui/modal/CalendarModal";
 
 
 export default function Header() {

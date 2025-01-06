@@ -14,7 +14,6 @@ import { ScriptEntity } from '../Entities/Script.Entity';
 
 export class ProtocolApi extends BaseSmartDBFrontEndTxApiCalls {
     protected static _Entity = ProtocolEntity;
-
     // #region front end methods
 
     public static async handleBtnCreate(walletStore: IUseWalletStore, name: string, configJson: string): Promise<string | undefined> {
@@ -78,6 +77,7 @@ export class ProtocolApi extends BaseSmartDBFrontEndTxApiCalls {
                 return data.result;
             } else {
                 const errorData = await response.json();
+
                 //throw `Received status code ${response.status} with message: ${errorData.error.message ? errorData.error.message : errorData.error}`;
                 throw `${errorData.error.message ? errorData.error.message : errorData.error}`;
             }

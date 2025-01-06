@@ -10,7 +10,7 @@ interface DraftCardProps {
   campaign: Campaign;
   getContractsName: (contractId: number) => string;
   getStatusName: (stateId: number) => string;
-  getCategoryName: (categoryId: number) => string;
+  getCategoryName: (category_id: number) => string;
   adminView: boolean;
 }
 

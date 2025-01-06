@@ -1,11 +1,12 @@
 import database from './database.json';
 import { User } from './databaseType';
 import type { Campaign } from './databaseType';
+import { useCampaign } from '@/components/Admin/Campaign/useCampaign';
 
 const LOCAL_STORAGE_KEY = 'campaignData';
 
 export const dataBaseService = {
-    initializeData: () => {
+    /*  initializeData: () => {
         if (!localStorage.getItem(LOCAL_STORAGE_KEY)) {
             const newData = {
                 ...database,
@@ -40,7 +41,7 @@ export const dataBaseService = {
                 dataBaseService.updateData(updatedData);
             }
         }
-    },
+    }, */
 
     getData: () => {
         const data = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -119,7 +120,7 @@ export const dataBaseService = {
 
         const searchTermMatches = (campaign: Campaign) => campaign.title.toLowerCase().includes(searchTerm.toLowerCase());
 
-        const userMatches = (campaign: Campaign) => data.users.some((user: User) => user.id === campaign.user_id && user.wallet_address === userId);
+        const userMatches = (campaign: Campaign) => data.users.some((user: User) => user.id === campaign.creator_wallet_id && user.wallet_address === userId);
 
         const isContractVisible = (campaign: Campaign) => campaign.contract_id === 1 || campaign.contract_id === 2;
 
@@ -148,7 +149,7 @@ export const dataBaseService = {
         // Lógica de filtrado para otros casos
         const filteredCampaigns = data.campaigns.filter((campaign: Campaign) => {
             if (myProposal) {
-                return campaign.user_id === parseInt(userId as string);
+                return campaign.creator_wallet_id === parseInt(creator_wallet_id as string);
             }
 
             if (isProtocolTeam || (isAdmin && adminView)) {

@@ -1,14 +1,14 @@
 import { createContext, useContext, useState } from 'react';
 import { useModalStore } from '@/store/modal/useModalStoreState';
-import ModalTemplate from '@/components/modal/Modal';
-import SingleQuestionModal from '@/components/modal/InitializeCampaignModal';
-import ManageCampaignModal from '@/components/modal/ManageCampaignModal';
-import SendReport from '@/components/modal/SendReport';
-import ContactSupportModal from '@/components/modal/ContactSupportModal';
-import ViewReportModal from '@/components/modal/ViewReportModal';
-import WalletInformationModal from '@/components/modal/WalletInformation';
-import CalendarModal from '@/components/modal/CalendarModal';
-import ViewReportMilestone from '@/components/modal/ViewReportMilestone';
+import ModalTemplate from '@/components/ui/modal/Modal';
+import SingleQuestionModal from '@/components/ui/modal/InitializeCampaignModal';
+import ManageCampaignModal from '@/components/ui/modal/ManageCampaignModal';
+import SendReport from '@/components/ui/modal/SendReport';
+import ContactSupportModal from '@/components/ui/modal/ContactSupportModal';
+import ViewReportModal from '@/components/ui/modal/ViewReportModal';
+import WalletInformationModal from '@/components/ui/modal/WalletInformation';
+import CalendarModal from '@/components/ui/modal/CalendarModal';
+import ViewReportMilestone from '@/components/ui/modal/ViewReportMilestone';
 type ModalType = 'walletSelector';
 
 interface ModalContextType {

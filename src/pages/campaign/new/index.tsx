@@ -6,14 +6,14 @@ import { useCardano } from "@/contexts/CardanoContext";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { ROUTES } from "@/utils/routes";
-import StepController from "@/components/campaign/creator/controller/StepController";
+import StepController from "@/components/CampaignCreation/controller/StepController";
 import { dataBaseService } from "@/HardCode/dataBaseService";
 import { Category, User } from "@/HardCode/databaseType";
-import FormSteps from "@/components/campaign/creator/form/FormSteps";
+import FormSteps from "@/components/CampaignCreation/layout/FormSteps";
 import LoadingPage from "@/components/LoadingPage/LoadingPage";
 import { useCampaignStore } from "@/store/campaign/useCampaignStore";
-import FormHeader from "@/components/campaign/creator/form/layout/FormHeader";
-import MemberController from "@/components/campaign/creator/controller/MemberController";
+import FormHeader from "@/components/CampaignCreation/layout/FormHeader";
+import MemberController from "@/components/CampaignCreation/controller/MemberController";
 import { titleForCampaignCreation } from "@/utils/constants";
 
 
@@ -66,8 +66,8 @@ export default function Home() {
       const selectedCategory = categories.find(
         (cat: Category) => cat.name === category
       );
-      const categoryId = selectedCategory ? selectedCategory.id : null;
-      setCategoryId(categoryId);
+      const category_id = selectedCategory ? selectedCategory.id : null;
+      setCategoryId(category_id);
     } else {
       setCategoryId(null);
     }

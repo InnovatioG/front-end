@@ -37,7 +37,7 @@ export interface Milestone {
 
 export interface BaseCampaign {
     id: number;
-    user_id: number | null;
+    creator_wallet_id: number | null;
     title: string;
     description: string;
     state_id: number;
@@ -49,12 +49,11 @@ export interface BaseCampaign {
     status: string;
     goal: number;
     min_request: number;
-    cdRequestedMaxADA: number | null;
+    /*     cdRequestedMaxADA: number | null;
     cdCampaignToken_PriceADA: number | null;
-    cdCampaignToken_TN: string;
+    cdCampaignToken_TN: string; */
     campaign_content: campaingContent[];
     tokenomics_description: string;
-    vizualization?: number;
     website: string;
     facebook: string;
     instagram: string;
@@ -68,17 +67,12 @@ export interface BaseCampaign {
     members_team: MembersTeam[];
     milestones: MilestoneF[];
     faqs: FAQ[];
-    campaign_type: 'Target' | 'Milestone';
     end_date: string;
 }
 
-export interface MilestoneCampaign extends BaseCampaign {
-    campaign_type: 'Milestone';
-}
+export interface MilestoneCampaign extends BaseCampaign {}
 
-export interface TargetCampaign extends BaseCampaign {
-    campaign_type: 'Target';
-}
+export interface TargetCampaign extends BaseCampaign {}
 
 export type Campaign = MilestoneCampaign | TargetCampaign;
 
@@ -165,20 +159,24 @@ export interface FAQ {
 }
 
 export interface MembersTeam {
-    id: number;
-    member_picture: string;
-    member_name: string;
-    member_last_name: string;
-    member_role: string;
-    member_description: string;
-    member_email: string;
-    member_admin: boolean;
-    member_manage_funds: boolean;
-    member_wallet_address: string;
-    facebook: string;
+    campaign_id: number;
+    name: string;
+    last_name: string;
+    role: string;
+    editor: boolean;
+    admin: boolean;
+    email: string;
+    wallet_id?: string;
+    wallet_address?: string;
+    website: string;
     instagram: string;
+    facebook: string;
+    linkedin?: string;
     discord: string;
-    xs: string;
+    member_description?: string;
+    twitter: string;
+    member_picture?: string;
+    member_manage_funds?: boolean;
 }
 
 export interface Project {

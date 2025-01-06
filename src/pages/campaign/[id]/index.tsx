@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import JSON from "@/HardCode/campaignId.json";
 import styles from "./campainPagelayout.module.scss";
-import CampaignHeader from '@/components/campaign/campaignHeader/CampaignHeader';
-import CampaignDashCreation from '@/components/campaign/campaignHeader/CampaignDash';
+import CampaignHeader from '@/components/CampaignDashboard/campaignHeader/CampaignHeader';
+import CampaignDashCreation from '@/components/CampaignDashboard/campaignHeader/CampaignDash';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import ProjectContainer from '@/components/projectContainer/ProjectContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import { useSession } from 'next-auth/react';
 import CampaignButtonContainer from './campainButtonsContainer';
-import GeneralError from '@/components/errors/GeneralError';
+import GeneralError from '@/components/General/elements/errors/GeneralError';
 
 
 interface CampaignVisualizationProps {
@@ -52,7 +52,7 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
                         },
                     })),
                 });
-                setIsAdmin(campaign.user_id === user?.id);
+                setIsAdmin(campaign.craetor_wallet_id === user?.id);
             }
         }
 

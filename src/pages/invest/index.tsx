@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import InvestHeader from '@/components/invest/InvestHeader';
+import InvestHeader from '@/components/Invest/sections/InvestHeader';
 import styles from "./InvestPage.module.scss";
-import InvestmentForm from '@/components/invest/Form';
+import InvestmentForm from '@/components/Invest/sections/Form';
 import { useRouter } from 'next/router';
 import JSON from "@/HardCode/campaignId.json";
 import LoadingPage from '@/components/LoadingPage/LoadingPage';

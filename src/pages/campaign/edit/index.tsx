@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import JSON from "@/HardCode/campaignId.json";
-import CampaignHeader from '@/components/campaign/campaignHeader/CampaignHeader';
+import CampaignHeader from '@/components/CampaignDashboard/campaignHeader/CampaignHeader';
 import styles from "../[id]/campainPagelayout.module.scss";
-import CampaignDashCreation from '@/components/campaign/campaignHeader/CampaignDash';
+import CampaignDashCreation from '@/components/CampaignDashboard/campaignHeader/CampaignDash';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import ProjectEditionContainer from '@/components/campaign/creator/projectEditionContainer/ProjectEditionContainer';
+import ProjectEditionContainer from '@/components/CampaignCreation/elements/ProjectEditionContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import { useSession } from 'next-auth/react';
-import ButtonSaveDraftContainer from '@/components/campaign/creator/projectEditionContainer/GeneralbuttonContainer';
-import GeneralError from '@/components/errors/GeneralError';
+import ButtonSaveDraftContainer from '@/components/CampaignCreation/elements/GeneralbuttonContainer';
+import GeneralError from '@/components/General/elements/errors/GeneralError';
 
 interface CampaignByIndexProps {
     // Define props aquí si es necesario
@@ -39,7 +39,7 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
 
             if (campaign) {
                 const user = JSON.users.find(user => user.wallet_address === session?.user?.address);
-                if (user && user.id === campaign.user_id) {
+                if (user && user.id === campaign.creator_wallet_id) {
                     setProject(campaign);
                     setError(null);
                 } else {

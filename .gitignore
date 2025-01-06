@@ -45,3 +45,4 @@ files-contents-config-*.json
 files-contents-export-*.txt
 
 
+.env

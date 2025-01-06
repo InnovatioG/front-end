@@ -1,6 +1,6 @@
 import styles from './HeaderMobile.module.scss';
-import BtnCampaign from '../../buttons/campaign/BtnCampaign';
-import BtnConnectWallet from '../../buttons/connectWallet/BtnConnectWallet';
+import BtnCampaign from '../../ui/buttons/campaign/BtnCampaign';
+import BtnConnectWallet from '../../ui/buttons/connectWallet/BtnConnectWallet';
 import NavMenu from './NavMenu';
 import { Session } from 'next-auth';
 

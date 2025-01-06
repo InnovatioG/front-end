@@ -454,11 +454,11 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
                 const campaignWallets = await this.getOrCreateCampaignWallets(campaignData);
 
                 // Fetch reference IDs
-                const categoryId = await this.getCampaignCategoryId(campaignData.campaing_category_id_as_string);
+                const category_id = await this.getCampaignCategoryId(campaignData.campaing_category_id_as_string);
                 const statusId = await this.getCampaignStatusId(campaignData.campaign_status_id_as_string);
 
                 // Create campaign
-                campaign = await this.createCampaign(campaignData, categoryId, statusId, campaignWallets);
+                campaign = await this.createCampaign(campaignData, category_id, statusId, campaignWallets);
 
                 // Create related records
                 await this.createCampaignContents(campaign._DB_id, campaignData.contents);
@@ -528,15 +528,15 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         const CampaignCategoryBackEndApplied = (await import('./CampaignCategory.BackEnd.Api.Handlers')).CampaignCategoryBackEndApplied;
 
         // Get enum value from category name
-        const categoryId = CampaignCategoryDefault[categoryName as keyof typeof CampaignCategoryDefault];
-        if (categoryId === undefined) {
+        const category_id = CampaignCategoryDefault[categoryName as keyof typeof CampaignCategoryDefault];
+        if (category_id === undefined) {
             throw new Error(`Invalid category name: ${categoryName}`);
         }
 
         // Query by internal_id
-        const category = await CampaignCategoryBackEndApplied.getOneByParams_({ id_internal: categoryId });
+        const category = await CampaignCategoryBackEndApplied.getOneByParams_({ id_internal: category_id });
         if (!category) {
-            throw new Error(`Category not found for internal_id: ${categoryId}`);
+            throw new Error(`Category not found for internal_id: ${category_id}`);
         }
 
         return category._DB_id;
@@ -645,7 +645,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         return wallets;
     }
 
-    private static async createCampaign(campaignData: any, categoryId: string, statusId: string, wallets: Record<string, WalletEntity>): Promise<CampaignEntity> {
+    private static async createCampaign(campaignData: any, category_id: string, statusId: string, wallets: Record<string, WalletEntity>): Promise<CampaignEntity> {
         const CampaignBackEndApplied = (await import('./Campaign.BackEnd.Api.Handlers')).CampaignBackEndApplied;
 
         const currentDate = new Date();
@@ -674,7 +674,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
 
         const getCampaignDatumStatus = (statusStr: string): CampaignDatumStatus => {
             const statusId = CampaignStatus[statusStr as keyof typeof CampaignStatus];
-            
+
             // Map Campaign Status to Datum Status
             switch (statusId) {
                 case CampaignStatus.NOT_STARTED:
@@ -701,10 +701,10 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
                     throw new Error(`Invalid campaign status: ${statusStr}`);
             }
         };
-        
+
         const getMilestoneDatumStatus = (statusStr: string): MilestoneDatumStatus => {
             const statusId = MilestoneStatus[statusStr as keyof typeof MilestoneStatus];
-            
+
             // Map Milestone Status to Datum Status
             switch (statusId) {
                 case MilestoneStatus.NOT_STARTED:
@@ -725,8 +725,8 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             return milestones.map((m) => ({
                 cmPerncentage: m.perncentage,
                 cmStatus: getMilestoneDatumStatus(m.milestone_status_id_as_string),
-            }))
-        }
+            }));
+        };
 
         // In createCampaign:
         const isDeployed = getCampaignDeployedStatus(campaignData.campaign_status_id_as_string);
@@ -758,7 +758,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         const campaign = new CampaignEntity({
             isDeployed,
 
-            campaing_category_id: categoryId,
+            campaing_category_id: category_id,
             campaign_status_id: statusId,
             creator_wallet_id: wallets[campaignData.creator_wallet_id_as_string]._DB_id,
 
@@ -793,7 +793,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             cdRequestedMinADA: isDeployed ? BigInt(campaignData.requestedMinADA || 0) : BigInt(0),
             cdFundedADA: isDeployed ? BigInt(campaignData.fundedADA || 0) : BigInt(0),
             cdCollectedADA: isDeployed ? BigInt(campaignData.collectedADA || 0) : BigInt(0),
-            cdStatus: isDeployed ? getCampaignDatumStatus(campaignData.campaign_status_id_as_string ): 0,
+            cdStatus: isDeployed ? getCampaignDatumStatus(campaignData.campaign_status_id_as_string) : 0,
             cdMilestones: isDeployed ? getDatumsMilestone(campaignData.milestones) : [],
             cdFundsCount: isDeployed ? BigInt(campaignData.fundsCount || 0) : BigInt(0),
             cdFundsIndex: isDeployed ? BigInt(campaignData.fundsIndex || 0) : BigInt(0),

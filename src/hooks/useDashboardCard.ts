@@ -88,8 +88,8 @@ export const useDashboardCard = (address: string | null) => {
     );
 
     const getCategoryName = useCallback(
-        (categoryId: number): string => {
-            const category = categories.find((c) => c.id === categoryId);
+        (category_id: number): string => {
+            const category = categories.find((c) => c.id === category_id);
             return category ? category.name : '';
         },
         [categories]

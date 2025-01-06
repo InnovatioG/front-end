@@ -1,10 +1,10 @@
-import type { MembersTeam } from '../campaign/initialState';
+import type { MembersTeam } from '@/HardCode/databaseType';
 import type { MilestoneF, FAQ, campaingContent } from '@/HardCode/databaseType';
 
 export interface ProjectDetailState {
     project: {
         id: number;
-        user_id: number | null;
+        creator_wallet_id: number | null;
         title: string;
         description: string;
         state_id: number;
@@ -28,14 +28,13 @@ export interface ProjectDetailState {
         discord: string;
         linkedin: string;
         start_date: string;
-        xs: string;
+        twitter: string;
         category_id: number;
         contract_id?: number;
         raise_amount: number;
         members_team: MembersTeam[];
         milestones: MilestoneF[];
         faqs: FAQ[];
-        campaign_type: 'Target' | 'Milestone';
         end_date: string;
     };
     isLoading: boolean;
@@ -51,7 +50,7 @@ export interface ProjectDetailState {
 
 export const initialState: ProjectDetailState = {
     project: {
-        user_id: null,
+        creator_wallet_id: null,
         id: 0,
         title: '',
         description: '',
@@ -69,7 +68,7 @@ export const initialState: ProjectDetailState = {
         instagram: '',
         discord: '',
         linkedin: '',
-        xs: '',
+        twitter: '',
         cdRequestedMaxADA: null,
         cdCampaignToken_PriceADA: null,
         cdCampaignToken_TN: '',
@@ -84,7 +83,6 @@ export const initialState: ProjectDetailState = {
         category_id: 0,
         contract_id: 0,
         raise_amount: 0,
-        campaign_type: 'Target',
     },
     price_ada: 0,
     menuView: 'Project Detail',
@@ -99,7 +97,7 @@ export const initialState: ProjectDetailState = {
 
 /* 
 
-maxSuply, cuantos token existen de algo, 
+matwitteruply, cuantos token existen de algo, 
 
 el precio se calcula con la plata que el usuario quiere en total, y cuantos token el usuarios pone en la venta 
 

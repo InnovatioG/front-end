@@ -2,7 +2,7 @@ import React from 'react';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import styles from "./campaignButtonContainer.module.scss";
 import { CardInformationByState } from '@/utils/constants';
-import GeneralButtonUI from '@/components/buttons/UI/Button';
+import GeneralButtonUI from '@/components/ui/buttons/UI/Button';
 import Link from 'next/link';
 import { useModalStore } from '@/store/modal/useModalStoreState';
 import useDraftCard from '@/hooks/useDraftCard';

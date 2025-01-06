@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import CampaignHighLight from '@/components/campaign/highlight/CampaignHighLight';
-import CampaignDashboard from '@/components/campaign/dashboard/CampaignDashboard';
+import CampaignHighLight from '@/components/CampaignDashboard/highlight/CampaignHighLight';
+import CampaignDashboard from '@/components/CampaignDashboard/dashboard/CampaignDashboard';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 interface CampaignsProps {
     // Define props here

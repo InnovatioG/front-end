@@ -12,8 +12,7 @@ import {
     updateMemberField,
 } from '@/store/campaign/actions';
 import type { User, Milestone } from '@/HardCode/databaseType';
-import type { MembersTeam } from '@/store/campaign/initialState';
-
+import { MembersTeam } from '@/HardCode/databaseType';
 interface UseCampaignStore extends CampaignState {
     newMember: MembersTeam;
     setStep: (step: 1 | 2 | 3 | 4) => void;
@@ -33,7 +32,7 @@ interface UseCampaignStore extends CampaignState {
     setBrandField: <K extends keyof CampaignState['newCampaign']>(key: K, value: CampaignState['newCampaign'][K]) => void;
     setMembersTeam: (users: MembersTeam[]) => void;
     addMemberToTeam: (member: MembersTeam) => void;
-    updateMemberField: <K extends keyof MembersTeam>(memberId: number, key: K, value: MembersTeam[K]) => void;
+    updateMemberField: <K extends keyof MembersTeam>(key: K, value: MembersTeam[K]) => void;
     setNewMemberField: <K extends keyof MembersTeam>(key: K, value: MembersTeam[K]) => void;
     resetNewMember: () => void;
     selectedMember: MembersTeam | null;
@@ -45,39 +44,40 @@ export const useCampaignStore = create<UseCampaignStore>()(
         ...initialState,
         selectedMember: null,
         newMember: {
-            id: Date.now(),
+            editor: false,
+            campaign_id: 0,
             member_picture: '',
-            member_name: '',
-            member_last_name: '',
-            member_role: '',
+            name: '',
+            last_name: '',
+            role: '',
             member_description: '',
-            member_email: '',
-            member_admin: false,
+            email: '',
+            admin: false,
             website: '',
             facebook: '',
             instagram: '',
             discord: '',
             linkedin: '',
-            xs: '',
+            twitter: '',
             member_manage_funds: false,
-            member_wallet_address: '',
+            wallet_address: '',
         },
 
         setStep: (step) =>
             set((state) => {
                 setCampaignStateAction(state, 'step', step);
             }),
-        setTitle: (title) =>
+        setTitle: (name) =>
             set((state) => {
-                setCampaignStateAction(state, 'title', title);
+                setCampaignStateAction(state, 'name', name);
             }),
         setCategory: (category) =>
             set((state) => {
                 setCampaignStateAction(state, 'category', category);
             }),
-        setCategoryId: (categoryId) =>
+        setCategoryId: (category_id) =>
             set((state) => {
-                setCampaignStateAction(state, 'categoryId', categoryId);
+                setCampaignStateAction(state, 'category_id', category_id);
             }),
         setDescription: (description) =>
             set((state) => {
@@ -152,22 +152,23 @@ export const useCampaignStore = create<UseCampaignStore>()(
         resetNewMember: () =>
             set((state) => {
                 state.newMember = {
-                    id: Date.now(),
+                    campaign_id: 0,
                     member_picture: '',
-                    member_name: '',
-                    member_last_name: '',
-                    member_role: '',
+                    name: '',
+                    last_name: '',
+                    role: '',
                     member_description: '',
-                    member_email: '',
-                    member_admin: false,
+                    email: '',
+                    admin: false,
                     website: '',
                     facebook: '',
                     instagram: '',
                     discord: '',
                     linkedin: '',
-                    xs: '',
+                    twitter: '',
                     member_manage_funds: false,
-                    member_wallet_address: '',
+                    wallet_address: '',
+                    editor: false,
                 };
             }),
     }))

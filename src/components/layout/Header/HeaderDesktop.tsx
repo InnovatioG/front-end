@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import styles from './HeaderDesktop.module.scss';
-import BtnCampaign from '@/components/buttons/campaign/BtnCampaign';
-import BtnConnectWallet from '@/components/buttons/connectWallet/BtnConnectWallet';
+import BtnCampaign from '@/components/ui/buttons/campaign/BtnCampaign';
+import BtnConnectWallet from '@/components/ui/buttons/connectWallet/BtnConnectWallet';
 import { CALENDAR } from '@/utils/images';
 import { Session } from 'next-auth';
-import TogglePrice from '@/components/buttons/toggle/TogglePrice';
+import TogglePrice from '@/components/ui/buttons/toggle/TogglePrice';
 
 export default function HeaderDesktop({ session, setIsOpen, isOpen }: { session: Session | null; setIsOpen: (isOpen: boolean) => void; isOpen: boolean }) {
     return (
