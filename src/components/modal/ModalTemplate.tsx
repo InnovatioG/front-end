@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import Modal from "react-modal";
-import styles from "./Modal.module.scss";
+import styles from "./ModalTemplate.module.scss";
 import { useResponsiveContext } from "@/contexts/ResponsiveContext";
 import {
     Drawer,

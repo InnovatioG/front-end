@@ -1,12 +1,10 @@
-import { useCardano } from '@/contexts/CardanoContext';
 import { useModal } from '@/contexts/ModalContext';
 import { formatAddress } from '@/utils/formats';
 import { ADA, WALLET_ICON } from '@/utils/images';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useWalletActions, useWalletSession } from 'smart-db';
 import styles from './BtnConnectWallet.module.scss';
-import { useWalletStore } from 'smart-db';
-import { useModalStore } from '@/store/modal/useModalStoreState';
 
 interface BtnConnectProps {
     type: 'mobile' | 'primary' | 'secondary';
@@ -14,39 +12,36 @@ interface BtnConnectProps {
 }
 
 interface SubComponentProps {
-    openModal: () => void;
-    address: string | null;
-    disconnect: () => void;
     width?: number;
 }
 
 interface SecondarySubComponentProps {
-    openModal: () => void;
-    address: string | null;
     width?: number;
 }
 
-const BtnConnectMobile: React.FC<SubComponentProps> = ({ openModal, address, disconnect }) => {
-    const walletStore = useWalletStore();
-
-
+const BtnConnectMobile: React.FC<SubComponentProps> = () => {
+    //--------------------------------------
+    const { walletStore, walletDisconnect } = useWalletActions();
+    //--------------------------------------
+    const { openModal } = useModal();
+    //--------------------------------------
     const [showDisconnect, setShowDisconnect] = useState<boolean>(false);
-
+    //--------------------------------------
     const handleClick = () => {
         if (walletStore.isConnected !== true) {
-            openModal();
+            openModal('walletSelector');
         } else {
             setShowDisconnect(!showDisconnect);
         }
     };
-
+    //--------------------------------------
     return (
-        <button className={`${styles.btnConnectMob} ${address !== null ? styles.connected : ''}`} onClick={handleClick}>
+        <button className={`${styles.btnConnectMob} ${walletStore.isConnected === true ? styles.connected : ''}`} onClick={handleClick}>
             <svg width="20" height="20" className={styles.icon}>
                 <use href={WALLET_ICON}></use>
             </svg>
-            {showDisconnect && address !== null && (
-                <p className={styles.btnDisconnect} onClick={disconnect}>
+            {showDisconnect && (
+                <p className={styles.btnDisconnect} onClick={() => walletDisconnect()}>
                     Disconnect
                 </p>
             )}
@@ -54,70 +49,64 @@ const BtnConnectMobile: React.FC<SubComponentProps> = ({ openModal, address, dis
     );
 };
 
-const BtnConnectPrimary: React.FC<SubComponentProps> = ({ openModal, address, disconnect, width }) => {
-    const walletStore = useWalletStore();
-    const openModalStore = useModalStore().openModal;
-
-
-    const [showDisconnect, setShowDisconnect] = useState<boolean>(false);
-
+const BtnConnectPrimary: React.FC<SubComponentProps> = ({ width }) => {
+    //--------------------------------------
+    const { walletStore, walletDisconnect } = useWalletActions();
+    //--------------------------------------
+    const { openModal } = useModal();
+    //--------------------------------------
     const handleClick = () => {
         if (walletStore.isConnected !== true) {
-            openModal();
+            openModal('walletSelector');
         } else {
-            openModalStore("walletInformation", 0);
-            /*             setShowDisconnect(!showDisconnect);
-             */
+            openModal('walletInformation');
         }
     };
     return (
-        <button className={`${styles.BtnConnectPrimary} ${address !== null ? styles.connected : ''}`} onClick={handleClick} style={width ? { width: `${width}px` } : undefined}>
-            {address === null ? (
+        <button
+            className={`${styles.BtnConnectPrimary} ${walletStore.isConnected === true ? styles.connected : ''}`}
+            onClick={handleClick}
+            style={width ? { width: `${width}px` } : undefined}
+        >
+            {walletStore.isConnected !== true ? (
                 <p className={styles.text}>Connect wallet</p>
             ) : (
                 <>
                     <Image width={22} height={22} src={ADA} alt="ada-logo" />
-                    <p className={styles.text}>{formatAddress(address)}</p>
+                    <p className={styles.text}>{formatAddress(walletStore.info?.address || '')}</p>
                 </>
-            )}
-            {showDisconnect && address !== null && (
-                <div>
-                    <p className={styles.btnDisconnect} onClick={disconnect} style={width ? { width: `${width}px` } : undefined}>
-                        Disconnect
-                    </p>
-                    <p className={styles.btnDisconnect} onClick={() => { openModalStore("walletInformation", 0) }} style={width ? { width: `${width}px` } : undefined}>
-                        Wallet Information
-                    </p>
-                </div>
             )}
         </button>
     );
 };
 
-const BtnConnectSecondary: React.FC<SecondarySubComponentProps> = ({ openModal, address, width }) => {
-    const walletStore = useWalletStore();
-    const openModalStore = useModalStore().openModal;
-
-    const [showDisconnect, setShowDisconnect] = useState<boolean>(false);
+const BtnConnectSecondary: React.FC<SecondarySubComponentProps> = ({ width }) => {
+    //--------------------------------------
+    const { walletStore, walletDisconnect } = useWalletActions();
+    //--------------------------------------
+    const { openModal } = useModal();
+    //--------------------------------------
 
     const handleClick = () => {
         if (walletStore.isConnected !== true) {
-            openModal();
+            openModal('walletSelector');
         } else {
-            openModalStore("walletInformation", 0);
-            setShowDisconnect(!showDisconnect);
+            openModal('walletInformation');
         }
-
     };
 
     return (
-        <button className={`${styles.BtnConnectSecondary} ${address !== null ? styles.connected : ''}`} onClick={handleClick} style={width ? { width: `${width}px` } : undefined}>
-            {address === null ? (
+        <button
+            className={`${styles.BtnConnectSecondary} ${walletStore.isConnected !== true ? styles.connected : ''}`}
+            onClick={handleClick}
+            style={width ? { width: `${width}px` } : undefined}
+        >
+            {walletStore.isConnected !== true ? (
                 <p className={styles.text}>Connect wallet</p>
             ) : (
                 <>
                     <Image width={22} height={22} src={ADA} alt="ada-logo" />
-                    <p className={styles.text}>{formatAddress(address)}</p>
+                    <p className={styles.text}>{formatAddress(walletStore.info?.address || '')}</p>
                 </>
             )}
         </button>
@@ -125,16 +114,14 @@ const BtnConnectSecondary: React.FC<SecondarySubComponentProps> = ({ openModal, 
 };
 
 const BtnConnectWallet: React.FC<BtnConnectProps> = ({ type, width }) => {
-    const { openModal } = useModal();
-    const { address, disconnectWallet } = useCardano();
-
+    
     switch (type) {
         case 'mobile':
-            return <BtnConnectMobile openModal={() => openModal('walletSelector')} address={address} disconnect={disconnectWallet} />;
+            return <BtnConnectMobile />;
         case 'primary':
-            return <BtnConnectPrimary openModal={() => openModal('walletSelector')} address={address} disconnect={disconnectWallet} width={width} />;
+            return <BtnConnectPrimary width={width} />;
         case 'secondary':
-            return <BtnConnectSecondary openModal={() => openModal('walletSelector')} address={address} width={width} />;
+            return <BtnConnectSecondary width={width} />;
         default:
             return null;
     }

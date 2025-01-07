@@ -3,12 +3,13 @@ import styles from "./CampaignDashboard.module.scss";
 import GeneralButtonUI from "@/components/buttons/UI/Button";
 import CampaignCard from "./campaignCard/CampaignCard";
 import CampaignFilters from "./campaignFilters/CampaignFilters";
-import { useCardano } from "@/contexts/CardanoContext";
 import { useDashboardCard } from "@/hooks/useDashboardCard";
 import Link from "next/link";
+import { useWalletStore } from "smart-db";
 export default function CampaignDashboard() {
-  const { address } = useCardano();
 
+  const walletStore = useWalletStore();
+  const address  = walletStore.info?.address || '';
 
   const {
     campaigns,

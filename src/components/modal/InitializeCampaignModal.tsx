@@ -1,8 +1,8 @@
 import React from 'react';
-import { useModalStore } from '@/store/modal/useModalStoreState';
-import styles from "./Modal.module.scss"
+import styles from "./ModalTemplate.module.scss"
 import GeneralButtonUI from '../buttons/UI/Button';
 import { title } from 'process';
+import { useModal } from '@/contexts/ModalContext';
 
 
 
@@ -12,7 +12,6 @@ interface InitializeCampaignModalProps {
 }
 
 const SingleQuestionModal: React.FC<InitializeCampaignModalProps> = ({ modalType }) => {
-
 
     const informationByType = {
         initializeCampaign: {
@@ -66,7 +65,7 @@ const SingleQuestionModal: React.FC<InitializeCampaignModalProps> = ({ modalType
     }
 
 
-    const { closeModal } = useModalStore();
+    const { closeModal } = useModal();
     return (
         <div className={styles.modalQuestionLayout}>
             <h2>{/* Are you sure that you want to create the Smart Contract for this proposal? */}

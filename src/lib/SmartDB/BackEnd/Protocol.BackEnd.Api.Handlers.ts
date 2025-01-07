@@ -265,7 +265,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             //-------------------------
             const createdBy = WALLET_CREATEDBY_LOGIN;
             const lastConnection = new Date();
-            const walletUsed = 'eternl'; // walletTxParams.walletNameOrSeedOrKey;
+            const walletName = 'eternl'; // walletTxParams.walletNameOrSeedOrKey;
             const walletValidatedWithSignedToken = false; //walletTxParams.isWalletValidatedWithSignedToken;
             //--------------------
             const paymentPKH = walletTxParams.pkh;
@@ -283,7 +283,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             wallet = new WalletEntity({
                 createdBy,
                 lastConnection,
-                walletUsed,
+                walletName,
                 walletValidatedWithSignedToken: walletValidatedWithSignedToken,
                 paymentPKH,
                 stakePKH,
@@ -628,7 +628,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
                 wallet = new WalletEntity({
                     createdBy: 'POPULATE',
                     lastConnection: new Date(),
-                    walletUsed: 'eternl',
+                    walletName: 'eternl',
                     walletValidatedWithSignedToken: false,
                     paymentPKH: memberData?.paymentPKH || `pkh_${walletId}`, // Placeholder
                     stakePKH: memberData?.stakePKH || `stake_${walletId}`, // Placeholder

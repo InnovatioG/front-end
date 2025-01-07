@@ -376,6 +376,7 @@ export default function Campaign() {
 
                                 <td>{item.begin_at_days}</td>
                                 <td>{item.deadline_days}</td>
+                                
                                 <td>{item.campaign_deployed_date?.toISOString()}</td>
                                 <td>{item.campaign_actived_date?.toISOString()}</td>
 

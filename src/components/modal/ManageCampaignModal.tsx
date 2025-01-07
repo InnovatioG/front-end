@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from "./ManageCampaignModal.module.scss";
 import GeneralButtonUI from '../buttons/UI/Button';
-import { useModalStore } from '@/store/modal/useModalStoreState';
+import { useModal } from '@/contexts/ModalContext';
 
 interface ManageCampaignModalProps {
     id: number | null;
@@ -10,7 +10,7 @@ interface ManageCampaignModalProps {
 /* MODAL PARA LOS PROTOCOL MANAGER PARA QUE PUEDAN ACEPTAR O RECHAZAR EL MILESTONE  */
 
 const ManageCampaignModal: React.FC<ManageCampaignModalProps> = ({ id }) => {
-    const { closeModal } = useModalStore();
+    const { closeModal } = useModal();
     const [status, setStatus] = useState<boolean | null>(null);
     const [description, setDescription] = useState("");
 

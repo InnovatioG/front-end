@@ -1,7 +1,7 @@
 import React from 'react';
-import { useModalStore } from '@/store/modal/useModalStoreState';
 import GeneralButtonUI from '../buttons/UI/Button';
-import styles from "./Modal.module.scss"
+import styles from "./ModalTemplate.module.scss"
+import { useModal } from '@/contexts/ModalContext';
 
 
 
@@ -12,7 +12,7 @@ interface ContactSupportModalProps {
 
 const ContactSupportModal: React.FC<ContactSupportModalProps> = (props) => {
 
-    const { closeModal } = useModalStore();
+    const { closeModal } = useModal();
 
     return (
         <article className={styles.modalQuestionLayout} style={{ minWidth: "50dvw", padding: "1rem 2rem" }}>

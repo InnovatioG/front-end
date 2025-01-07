@@ -5,7 +5,7 @@ import GeneralButtonUI from '@/components/buttons/UI/Button';
 import Checkbox from '@/components/buttons/checkbox/Checkbox';
 import { useProjectDetail } from '@/hooks/useProjectDetail';
 import ToolTipInformation from '@/components/general/tooltipInformation/tooltipInformation';
-import ModalTemplate from '@/components/modal/Modal';
+import ModalTemplate from '@/components/modal/ModalTemplate';
 interface ProjectDetailProps {
     // Define props here
 }
