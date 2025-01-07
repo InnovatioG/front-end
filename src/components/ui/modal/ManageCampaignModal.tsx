@@ -15,7 +15,6 @@ const ManageCampaignModal: React.FC<ManageCampaignModalProps> = ({ id }) => {
     const [description, setDescription] = useState("");
 
     const handleConfirm = () => {
-        console.log("Confirm", { id, status, description });
         // Aquí puedes agregar la lógica para manejar la confirmación
         closeModal();
     };

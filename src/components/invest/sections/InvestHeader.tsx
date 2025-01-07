@@ -9,7 +9,6 @@ interface InvestHeaderProps {
 
 const InvestHeader: React.FC<InvestHeaderProps> = ({ title, logo_url }) => {
 
-    console.log("title", title)
 
     return (
         <div className={styles.layout}>

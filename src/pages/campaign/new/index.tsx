@@ -6,14 +6,14 @@ import { useCardano } from "@/contexts/CardanoContext";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { ROUTES } from "@/utils/routes";
-import StepController from "@/components/CampaignCreation/controller/StepController";
+import StepController from "@/components/CampaignCreation/elements/controller/StepController";
 import { dataBaseService } from "@/HardCode/dataBaseService";
 import { Category, User } from "@/HardCode/databaseType";
 import FormSteps from "@/components/CampaignCreation/layout/FormSteps";
 import LoadingPage from "@/components/LoadingPage/LoadingPage";
 import { useCampaignStore } from "@/store/campaign/useCampaignStore";
 import FormHeader from "@/components/CampaignCreation/layout/FormHeader";
-import MemberController from "@/components/CampaignCreation/controller/MemberController";
+import MemberController from "@/components/CampaignCreation/elements/controller/MemberController";
 import { titleForCampaignCreation } from "@/utils/constants";
 
 
@@ -27,7 +27,6 @@ export default function Home() {
 
 
 
-  console.log(newCampaign)
 
 
   const handleClickBack = () => {

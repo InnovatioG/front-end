@@ -19,7 +19,7 @@ import { Session } from 'next-auth';
 import { AppGeneral, globalStore } from 'smart-db';
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
-
+import { fetchAllData } from '@/store/generalConstants/actions';
 type ImageType = string | { [key: string]: string };
 
 const getResourcesFromImages = (images: { [key: string]: ImageType }): string[] => {
@@ -39,24 +39,7 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
-    /*     useEffect(() => {
-            const initialize = async () => {
-                await dataBaseService.initializeData();
-    
-                // Wait for appStore to complete its initialization
-                const checkInit = async () => {
-                    console.log('Waiting for appStore to complete its initialization');
-                    while (!globalStore.getState().swInitApiCompleted) {
-                        await new Promise((resolve) => setTimeout(resolve, 100)); // Poll every 100ms
-                    }
-                };
-    
-                await Promise.all([checkInit()]);
-                setIsLoading(false);
-            };
-    
-            initialize();
-        }, []); */
+    fetchAllData()
 
     if (isLoading) {
         return <PreLoadingPage onLoadComplete={() => setIsLoading(false)} resources={resourcesToPreload} />;
@@ -94,3 +77,24 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
         </>
     );
 }
+
+
+
+/*     useEffect(() => {
+        const initialize = async () => {
+            await dataBaseService.initializeData();
+ 
+            // Wait for appStore to complete its initialization
+            const checkInit = async () => {
+                console.log('Waiting for appStore to complete its initialization');
+                while (!globalStore.getState().swInitApiCompleted) {
+                    await new Promise((resolve) => setTimeout(resolve, 100)); // Poll every 100ms
+                }
+            };
+ 
+            await Promise.all([checkInit()]);
+            setIsLoading(false);
+        };
+ 
+        initialize();
+    }, []); */

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import type { MilestoneF } from '@/HardCode/databaseType';
 import styles from "./MilestoneMessage.module.scss"
 import { formatDateFromString } from '@/utils/formats';
-import GeneralButtonUI from '../ui/buttons/UI/Button';
+import GeneralButtonUI from '@/components/ui/buttons/UI/Button';
 import { useModalStore } from '@/store/modal/useModalStoreState';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 interface MilestoneMessageProps {
@@ -34,7 +34,6 @@ const MilestoneMessage: React.FC<MilestoneMessageProps> = ({ milestone, icon }) 
                 setMessageType(""); // Asegura que se resetee si no cumple la condición
             }
         }
-        console.log(milestone)
 
         if (milestone.milestone_status?.milestone_submission.approved_justification) {
             setMessageType("approved")

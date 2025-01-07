@@ -5,7 +5,7 @@ import { TWO_USERS } from "@/utils/images";
 import { useEffect, useState } from "react";
 import { formatTime, getTimeRemaining } from "@/utils/formats";
 import useDraftCard from "@/hooks/useDraftCard";
-import CardFooter from "@/components/CampaignDashboard/dashboard/campaignCard/CardFooter";
+import CardFooter from "@/components/CampaignDashboard/sections/dashboard/campaignCard/CardFooter";
 
 interface CampaignCardProps {
   campaign: Campaign;

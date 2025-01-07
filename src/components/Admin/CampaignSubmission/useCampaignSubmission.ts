@@ -40,7 +40,6 @@ export function useCampaignSubmission() {
     const update = async () => {
         if (editItem && editItem._DB_id) {
             try {
-                console.log(editItem._DB_id);
                 let entity = new CampaignSubmissionEntity(editItem);
                 entity = await CampaignSubmissionApi.updateWithParamsApi_(editItem._DB_id, entity);
                 setEditItem(null);

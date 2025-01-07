@@ -14,7 +14,7 @@ import type { MembersTeam } from '@/HardCode/databaseType';
 type SocialLinkKeys = "website" | "facebook" | "instagram" | "discord" | "linkedin" | "twitter";
 
 
-//! TODO: PROBLEM WITH MEMBER ID  
+//! TODO: PROBLEM WITH MEMBER ID 
 
 
 
@@ -28,7 +28,6 @@ const StepFour: React.FC = (props) => {
 
 
     const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>("website");
-    console.log("selectedLink", selectedLink);
     const isEditing = newMember.id && newCampaign.members_team.some(m => m.id === newMember.id);
 
 

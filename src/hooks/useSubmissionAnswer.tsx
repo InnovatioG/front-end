@@ -6,7 +6,6 @@ export default function useSubmissionAnswer({ id }: { id: number }) {
     /*     const { project } = useProjectDetailStore();
         const { id } = project; */
 
-    console.log(id)
     const [approved, setApproved] = useState<string | null>(null);
     const [answer, setAnswer] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -14,7 +13,6 @@ export default function useSubmissionAnswer({ id }: { id: number }) {
     useEffect(() => {
         setLoading(true);
         if (id) {
-            console.log(id)
             const campaignSubmission = JSON.campaign_submissions.find((camp: any) => camp.campaign_id === id);
             if (campaignSubmission) {
                 const justificationMap: { [key: number]: string } = {

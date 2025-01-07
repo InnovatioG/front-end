@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import JSON from "@/HardCode/campaignId.json";
-import CampaignHeader from '@/components/CampaignDashboard/campaignHeader/CampaignHeader';
+import CampaignHeader from '@/components/CampaignDashboard/sections/campaignHeader/CampaignHeader';
 import styles from "../[id]/campainPagelayout.module.scss";
-import CampaignDashCreation from '@/components/CampaignDashboard/campaignHeader/CampaignDash';
+import CampaignDashCreation from '@/components/CampaignDashboard/sections/campaignHeader/CampaignDash';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import ProjectEditionContainer from '@/components/CampaignCreation/elements/ProjectEditionContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';

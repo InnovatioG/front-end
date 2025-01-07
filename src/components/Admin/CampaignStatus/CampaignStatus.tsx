@@ -6,6 +6,8 @@ import { Dispatch, SetStateAction } from 'react';
 export default function CampaignStatus() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaignStatus();
 
+
+
     const renderList = () => (
         <div>
             <div className={styles.listHeader}>

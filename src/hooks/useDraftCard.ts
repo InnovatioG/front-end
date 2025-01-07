@@ -20,9 +20,7 @@ const getCurrentMilestone = (campaign: Campaign): string => {
     for (let i = 0; i < campaign.milestones.length; i++) {
         const milestone = campaign.milestones[i];
         const statusId = milestone.milestone_status?.milestone_submission?.milestone_status_id;
-        /*         if (campaign.id === 17) {
-            console.log(statusId);
-        } */
+
         if (statusId === 5) {
             const nextMilestone = campaign.milestones[i + 1];
 

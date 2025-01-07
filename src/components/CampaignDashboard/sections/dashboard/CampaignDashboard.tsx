@@ -1,22 +1,16 @@
-import { useCallback, useEffect } from "react";
-import styles from "./CampaignDashboard.module.scss";
-import GeneralButtonUI from "@/components/ui/buttons/UI/Button";
-import CampaignCard from "./campaignCard/CampaignCard";
-import CampaignFilters from "./campaignFilters/CampaignFilters";
-import { useCardano } from "@/contexts/CardanoContext";
-import { useDashboardCard } from "@/hooks/useDashboardCard";
-import Link from "next/link";
-import { useNewDashboardCard } from "@/hooks/newUseDashboardCard";
+import { useCallback, useEffect } from 'react';
+import styles from './CampaignDashboard.module.scss';
+import GeneralButtonUI from '@/components/ui/buttons/UI/Button';
+import CampaignCard from './campaignCard/CampaignCard';
+import CampaignFilters from './campaignFilters/CampaignFilters';
+import { useCardano } from '@/contexts/CardanoContext';
+import { useDashboardCard } from '@/hooks/useDashboardCard';
+import Link from 'next/link';
+import { useNewDashboardCard } from '@/hooks/newUseDashboardCard';
 export default function CampaignDashboard() {
   const { address } = useCardano();
 
-
-
-
-
   const { campaignsa, milestoneList, campaignList } = useNewDashboardCard(address);
-
-
 
   const {
     campaigns,
@@ -44,31 +38,27 @@ export default function CampaignDashboard() {
     setMyProposal,
     isHomePage,
     setIsHomePage,
-    pathName
+    pathName,
   } = useDashboardCard(address);
 
   useEffect(() => {
-    console.log(campaignList);
-    console.log(campaignsa);
-    console.log(milestoneList)
+    console.log('campaignList', campaignList);
+    console.log('campaignsa', campaignsa);
+    console.log('milestoneList', milestoneList);
   }, [campaignsa, milestoneList]);
 
-
-
-
-
   const getInitialLoadCount = useCallback(() => {
-    if (screenSize === "mobile") return 3; ``
-    if (screenSize === "tablet") return 4;
+    if (screenSize === 'mobile') return 3;
+    ``;
+    if (screenSize === 'tablet') return 4;
     return 8;
   }, [screenSize]);
 
   const getLoadMoreCount = useCallback(() => {
-    if (screenSize === "mobile") return 3;
-    if (screenSize === "tablet") return 4;
+    if (screenSize === 'mobile') return 3;
+    if (screenSize === 'tablet') return 4;
     return 8;
   }, [screenSize]);
-
 
   const handleMyProposalChange = (checked: boolean) => {
     setMyProposal(checked);
@@ -96,41 +86,23 @@ export default function CampaignDashboard() {
       ) : (
         <div className={styles.campaignGrid}>
           {visibleCampaigns.map((campaign) => (
-            <CampaignCard
-              key={campaign.id}
-              campaign={campaign}
-              getStatusName={getStatusName}
-              getCategoryName={getCategoryName}
-            />
+            <CampaignCard key={campaign.id} campaign={campaign} getStatusName={getStatusName} getCategoryName={getCategoryName} />
           ))}
         </div>
       )}
 
-      {visibleCampaigns.length < filteredCampaigns.length && (
-        pathName === "/" ? (
-          <Link href={"/campaigns"}>
+      {visibleCampaigns.length < filteredCampaigns.length &&
+        (pathName === '/' ? (
+          <Link href={'/campaigns'}>
             <div className={styles.buttonContainer}>
-              <GeneralButtonUI
-                onClick={() => { }}
-                classNameStyle="outlineb"
-                text="Explore more campaings"
-              />
+              <GeneralButtonUI onClick={() => { }} classNameStyle="outlineb" text="Explore more campaings" />
             </div>
           </Link>
         ) : (
           <div className={styles.buttonContainer}>
-            <GeneralButtonUI
-              onClick={loadMoreCampaigns}
-              classNameStyle="outlineb"
-              text="Explore more campaings"
-            />
+            <GeneralButtonUI onClick={loadMoreCampaigns} classNameStyle="outlineb" text="Explore more campaings" />
           </div>
-        )
-
-
-
-      )
-      }
-    </div >
+        ))}
+    </div>
   );
 }

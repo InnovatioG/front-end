@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import Image from 'next/image';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import CampaignCard from '../../CampaignCreation/elements/CampaignCard';
-import SocialMediaCardContainer from '../../CampaignCreation/elements/SocialMediaCard';
+import CampaignCard from '../../../CampaignCreation/elements/CampaignCard';
+import SocialMediaCardContainer from '../../../CampaignCreation/elements/SocialMediaCard';
 import { CardInformationByState } from '@/utils/constants';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/General/elements/defaultAvatar/DefaultAvatar';
 import styles from "@/pages/campaign/[id]/campainPagelayout.module.scss"

@@ -17,11 +17,9 @@ interface ViewReportModalProps {
 
 
 const ViewReportModal: React.FC<ViewReportModalProps> = ({ id }) => {
-    console.log("id", id);
 
     const { closeModal } = useModalStore();
     const { answer, loading, approved } = useSubmissionAnswer({ id: id ?? 0 });
-    console.log("answer", answer);
 
 
     if (loading) {

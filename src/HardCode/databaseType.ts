@@ -159,6 +159,7 @@ export interface FAQ {
 }
 
 export interface MembersTeam {
+    id: string;
     campaign_id: number;
     name: string;
     last_name: string;
@@ -212,4 +213,21 @@ export interface campaingContent {
     name: string;
     description: string;
     order: number;
+}
+
+export interface CampaignCategory {
+    id: number;
+    name: string;
+    description: string | undefined;
+}
+
+export interface CampaignStatusGlobal {
+    id: number;
+    name: string;
+    description: string | undefined;
+}
+
+export interface MilestoneStatusGlobal {
+    id: number;
+    name: string;
 }

@@ -3,6 +3,7 @@ import { Campaign, Category, State, User } from '@/HardCode/databaseType';
 import { useScreenSize } from '@/hooks/useScreenSize';
 import { dataBaseService } from '@/HardCode/dataBaseService';
 import { useRouter } from 'next/router';
+import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 
 export const useDashboardCard = (address: string | null) => {
     const [campaigns, setCampaigns] = useState<Campaign[]>([]);
@@ -24,7 +25,6 @@ export const useDashboardCard = (address: string | null) => {
     const router = useRouter();
     const [loadMoreEnabled, setLoadMoreEnabled] = useState(true);
     const [haveProjects, setHaveProjects] = useState(false);
-    console.log(haveProjects);
     const pathName = router.pathname;
 
     useEffect(() => {
@@ -109,7 +109,6 @@ export const useDashboardCard = (address: string | null) => {
 
     const loadMoreCampaigns = useCallback(() => {
         setVisibleCampaigns((prevVisible) => {
-            console.log(prevVisible);
             const currentCount = prevVisible.length;
 
             const newCount = currentCount === 0 ? getInitialLoadCount() : currentCount + getLoadMoreCount();

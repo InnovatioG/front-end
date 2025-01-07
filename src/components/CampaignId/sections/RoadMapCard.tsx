@@ -23,9 +23,7 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
     const { openModal } = useModalStore();
 
 
-    useEffect(() => {
-        console.log(milestone)
-    }, [milestone]);
+
 
     const milestone_status_id = milestone.milestone_status?.milestone_submission?.milestone_status_id || 0;
 

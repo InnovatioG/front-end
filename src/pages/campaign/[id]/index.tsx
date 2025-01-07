@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import JSON from "@/HardCode/campaignId.json";
 import styles from "./campainPagelayout.module.scss";
-import CampaignHeader from '@/components/CampaignDashboard/campaignHeader/CampaignHeader';
-import CampaignDashCreation from '@/components/CampaignDashboard/campaignHeader/CampaignDash';
+import CampaignHeader from '@/components/CampaignDashboard/sections/campaignHeader/CampaignHeader';
+import CampaignDashCreation from '@/components/CampaignDashboard/sections/campaignHeader/CampaignDash';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import ProjectContainer from '@/components/CampaignId/sections/ProjectContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import { useSession } from 'next-auth/react';
 import CampaignButtonContainer from './campainButtonsContainer';
 import GeneralError from '@/components/General/elements/errors/GeneralError';
+import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 
 
 interface CampaignVisualizationProps {
@@ -21,9 +22,9 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
     const router = useRouter();
     const { id } = router.query;
     const { project, setProject, setEditionMode, isLoading, setIsLoading, setIsAdmin, isAdmin } = useProjectDetailStore();
+    const { campaignCategories } = useGeneralStore();
 
-    console.log(project)
-
+    console.log("campaignCategories", campaignCategories)
     useEffect(() => {
         setIsLoading(true);
         setEditionMode(false);
