@@ -36,6 +36,8 @@ export interface Milestone {
 }
 
 export interface BaseCampaign {
+    /* Erase xs and all the cd parameters */
+
     id: number;
     creator_wallet_id: number | null;
     title: string;
@@ -49,9 +51,7 @@ export interface BaseCampaign {
     status: string;
     goal: number;
     min_request: number;
-    /*     cdRequestedMaxADA: number | null;
-    cdCampaignToken_PriceADA: number | null;
-    cdCampaignToken_TN: string; */
+
     campaign_content: campaingContent[];
     tokenomics_description: string;
     website: string;
@@ -68,6 +68,11 @@ export interface BaseCampaign {
     milestones: MilestoneF[];
     faqs: FAQ[];
     end_date: string;
+    xs: string;
+    cdRequestedMaxADA: number | null;
+    cdCampaignToken_PriceADA: number | null;
+    cdCampaignToken_TN: string;
+    vizualization?: number;
 }
 
 export interface MilestoneCampaign extends BaseCampaign {}

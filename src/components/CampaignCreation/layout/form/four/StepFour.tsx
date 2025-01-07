@@ -36,7 +36,6 @@ const StepFour: React.FC = (props) => {
             // Update existing member
             Object.keys(newMember).forEach(key => {
                 updateMemberField(
-                    newMember.id,
                     key as keyof MembersTeam,
                     newMember[key as keyof MembersTeam]
                 );
@@ -45,7 +44,6 @@ const StepFour: React.FC = (props) => {
             // Add new member with new id
             const memberToAdd = {
                 ...newMember,
-                id: Date.now() // Ensure new ID for new members
             };
             addMemberToTeam(memberToAdd);
         }
@@ -56,7 +54,7 @@ const StepFour: React.FC = (props) => {
 
     return (
         <section className={styles.containerLayout}>
-            <Avatar picture={newMember.member_picture} setPicture={(picture) => setNewMemberField('member_picture', picture)} />
+            <Avatar picture={newMember.member_picture || ''} setPicture={(picture) => setNewMemberField('member_picture', picture)} />
             <div className={styles.inputContainer}>
                 {memberFields.map(field => (
                     <input
@@ -107,18 +105,18 @@ const StepFour: React.FC = (props) => {
                         label='Edit Campaign'
                     />
                 </div>
-                <input type="text" className={styles.input} placeholder="Email" value={newMember.email} onChange={(e) => { setNewMemberField("member_email", e.target.value) }} />
+                <input type="text" className={styles.input} placeholder="Email" value={newMember.email} onChange={(e) => { setNewMemberField("email", e.target.value) }} />
 
             </article>
             <article className={styles.permissionContainer}>
                 <div className={styles.input}>
                     <Checkbox
-                        checked={newMember.member_manage_funds}
+                        checked={newMember.member_manage_funds || false}
                         onChange={(e) => setNewMemberField('member_manage_funds', e)}
                         label='Manage Funds'
                     />
                 </div>
-                <input type="text" className={styles.input} placeholder="Wallet Address" value={newMember.wallet_address} onChange={(e) => { setNewMemberField("member_wallet_address", e.target.value) }} />
+                <input type="text" className={styles.input} placeholder="Wallet Address" value={newMember.wallet_address} onChange={(e) => { setNewMemberField("wallet_address", e.target.value) }} />
             </article>
             <div className={styles.buttonContainer}>
 

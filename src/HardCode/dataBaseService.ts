@@ -149,7 +149,7 @@ export const dataBaseService = {
         // Lógica de filtrado para otros casos
         const filteredCampaigns = data.campaigns.filter((campaign: Campaign) => {
             if (myProposal) {
-                return campaign.creator_wallet_id === parseInt(creator_wallet_id as string);
+                return campaign.creator_wallet_id === parseInt(userId as string);
             }
 
             if (isProtocolTeam || (isAdmin && adminView)) {

@@ -10,13 +10,13 @@ interface StepThreeProps {
 const StepThree: React.FC<StepThreeProps> = (props) => {
     const { setBrandField, newCampaign, nextStep } = useCampaignStore();
 
-    const formFields: { [key in "website" | "facebook" | "instagram" | "discord" | "linkedin" | "xs"]: string } = {
+    const formFields: { [key in "website" | "facebook" | "instagram" | "discord" | "linkedin" | "twitter"]: string } = {
         website: newCampaign.website,
         facebook: newCampaign.facebook,
         instagram: newCampaign.instagram,
         discord: newCampaign.discord,
         linkedin: newCampaign.linkedin,
-        xs: newCampaign.xs,
+        twitter: newCampaign.twitter,
     };
 
     const disabledButton = () => {

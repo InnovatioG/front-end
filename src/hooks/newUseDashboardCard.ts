@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+/* import { useCallback, useEffect, useState } from 'react';
 import { Campaign, Category, State, User } from '@/HardCode/databaseType';
 import { useScreenSize } from '@/hooks/useScreenSize';
 import { dataBaseService } from '@/HardCode/dataBaseService';
@@ -9,9 +9,9 @@ import { useMilestone } from '@/components/Admin/Milestone/useMilestone';
 export const useNewDashboardCard = (address: string | null) => {
     const { list: campaignList } = useCampaign();
     const { list: campaignMemberList } = useCampaignMember();
-    const { list: milestoneList } = useMilestone();
+    const { list: milestoneList } = useMilestone(); */
 
-    /* 
+/* 
       {
       id: '9',
       creator_wallet_id: '23',
@@ -129,7 +129,7 @@ export const useNewDashboardCard = (address: string | null) => {
     "createdAt": "2025-01-06T14:44:53.758Z",
     "updatedAt": "2025-01-06T14:44:53.758Z"
 }
-    */
+    */ /* 
 
     const campaignsa: Campaign[] = campaignList.map((campaign) => ({
         id: campaign._DB_id,
@@ -163,3 +163,4 @@ export const useNewDashboardCard = (address: string | null) => {
         milestoneList,
     };
 };
+ */

@@ -7,7 +7,7 @@ import { socialIcons } from '@/utils/constants';
 import styles from "./ResumeOftheTeam.module.scss"
 import { formatLink } from '@/utils/formats';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
-import { MembersTeam } from '@/store/campaign/initialState';
+import { MembersTeam } from '@/HardCode/databaseType';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -54,11 +54,11 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
                         <AccordionTrigger open={true} toggleOpen={() => { }}>
                             <div className={styles.faqContainer}>
                                 <Avatar big={true}>
-                                    <AvatarImage src={formatLink(member.member_picture)} alt={member.member_name} />
-                                    <AvatarFallback>{member.member_name.slice(0, 2)}</AvatarFallback>
+                                    <AvatarImage src={formatLink(member.member_picture || '')} alt={member.name} />
+                                    <AvatarFallback>{member.name.slice(0, 2)}</AvatarFallback>
                                 </Avatar>
                                 <span>
-                                    {member.member_name} {member.member_last_name}
+                                    {member.name} {member.last_name}
                                 </span>
                             </div>
                         </AccordionTrigger>
@@ -67,7 +67,7 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
                                 <div className={styles.contentHeader}>
                                     <div className={styles.subContentHeader}>
                                         <span className={styles.spanTitle}>Role:</span>
-                                        <p className={styles.contentText}>{member.member_role}</p>
+                                        <p className={styles.contentText}>{member.role}</p>
                                     </div>
 
                                     <div className={styles.subContentHeader}>
@@ -87,7 +87,7 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
                                                             <a href={formatLink(link as string)} key={key} target="_blank" rel="noopener noreferrer">
                                                                 <SocialButton
                                                                     icon={socialIcon.icon}
-                                                                    name={key as "website" | "facebook" | "instagram" | "discord" | "linkedin" | "xs"}
+                                                                    name={key as "website" | "facebook" | "instagram" | "discord" | "linkedin" | "twitter"}
                                                                 />
                                                             </a>
                                                         )

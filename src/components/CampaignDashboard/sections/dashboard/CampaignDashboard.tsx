@@ -6,12 +6,12 @@ import CampaignFilters from './campaignFilters/CampaignFilters';
 import { useCardano } from '@/contexts/CardanoContext';
 import { useDashboardCard } from '@/hooks/useDashboardCard';
 import Link from 'next/link';
-import { useNewDashboardCard } from '@/hooks/newUseDashboardCard';
-export default function CampaignDashboard() {
+/* import { useNewDashboardCard } from '@/hooks/newUseDashboardCard';
+ */export default function CampaignDashboard() {
   const { address } = useCardano();
 
-  const { campaignsa, milestoneList, campaignList } = useNewDashboardCard(address);
-
+  /*   const { campaignsa, milestoneList, campaignList } = useNewDashboardCard(address);
+   */
   const {
     campaigns,
     filteredCampaigns,
@@ -41,12 +41,12 @@ export default function CampaignDashboard() {
     pathName,
   } = useDashboardCard(address);
 
-  useEffect(() => {
-    console.log('campaignList', campaignList);
-    console.log('campaignsa', campaignsa);
-    console.log('milestoneList', milestoneList);
-  }, [campaignsa, milestoneList]);
-
+  /*   useEffect(() => {
+      console.log('campaignList', campaignList);
+      console.log('campaignsa', campaignsa);
+      console.log('milestoneList', milestoneList);
+    }, [campaignsa, milestoneList]);
+   */
   const getInitialLoadCount = useCallback(() => {
     if (screenSize === 'mobile') return 3;
     ``;

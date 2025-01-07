@@ -1,6 +1,6 @@
 import { CampaignState } from '@/store/campaign/initialState';
 import type { User } from '@/HardCode/databaseType';
-import type { MembersTeam } from '@/store/campaign/initialState';
+import type { MembersTeam } from '@/HardCode/databaseType';
 
 type CampaignStateKey = keyof CampaignState;
 
@@ -23,7 +23,7 @@ export const addMemberToTeam = (state: CampaignState, member: MembersTeam) => {
     state.newCampaign.members_team.push(member);
 };
 
-export const updateMemberField = <K extends keyof MembersTeam>(state: CampaignState, memberId: number, key: K, value: MembersTeam[K]) => {
+export const updateMemberField = <K extends keyof MembersTeam>(state: CampaignState, memberId: string, key: K, value: MembersTeam[K]) => {
     const member = state.newCampaign.members_team.find((m) => m.id === memberId);
     if (member) {
         member[key] = value;

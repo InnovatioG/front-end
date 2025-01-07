@@ -7,50 +7,54 @@ import GeneralButtonUI from '@/components/ui/buttons/UI/Button';
 
 interface FormNewMemberProps {
     newMember: {
-        member_name: string;
-        member_description: string;
-        member_last_name: string;
-        member_role: string;
-        member_email: string;
-        member_picture: string;
-        member_admin: boolean;
-        member_wallet_address: string;
-        member_manage_funds: boolean;
+        id: string;
+        campaign_id: number;
+        name: string;
+        member_description?: string;
+        last_name: string;
+        role: string;
+        editor: boolean;
+        admin: boolean;
+        email: string;
+        wallet_id?: string;
+        wallet_address?: string;
+        member_picture?: string;
+        member_manage_funds?: boolean;
         website: string;
         facebook: string;
         instagram: string;
         discord: string;
-        linkedin: string;
-        xs: string;
+        twitter: string;
     };
     setNewMember: React.Dispatch<React.SetStateAction<{
-        member_name: string;
-        member_last_name: string;
-        member_email: string;
-        member_role: string;
-        member_description: string;
-        member_picture: string;
+        id: string;
+        campaign_id: number;
+        name: string;
+        last_name: string;
+        role: string;
+        editor: boolean;
+        admin: boolean;
+        email: string;
+        wallet_id?: string;
+        wallet_address?: string;
+        member_picture?: string;
+        member_manage_funds?: boolean;
         website: string;
         facebook: string;
         instagram: string;
         discord: string;
-        linkedin: string;
-        xs: string;
-        member_admin: boolean;
-        member_manage_funds: boolean;
-        member_wallet_address: string;
+        twitter: string;
     }>>;
     setNewMemberField: (key: keyof FormNewMemberProps['newMember'], value: any) => void;
 }
 
 const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, setNewMemberField }) => {
-    const socialMedia: Record<Extract<keyof FormNewMemberProps['newMember'], 'website' | 'facebook' | 'instagram' | 'discord' | 'linkedin' | 'xs'>, string> = {
+    const socialMedia: Record<Extract<keyof FormNewMemberProps['newMember'], 'website' | 'facebook' | 'instagram' | 'discord' | 'linkedin' | 'twitter'>, string> = {
         website: 'Website',
         facebook: 'Facebook',
         instagram: 'Instagram',
         discord: 'Discord',
-        linkedin: 'Linkedin',
-        xs: 'XS',
+        twitter: 'XS',
     };
 
 
@@ -71,7 +75,7 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
 
             <textarea
                 placeholder="Tell it as a description. Maximum 650 characters"
-                value={newMember.member_description}
+                value={newMember.member_description || ''}
                 onChange={(e) => setNewMemberField('member_description', e.target.value)}
                 maxLength={650}
                 className={styles.textarea}
@@ -84,21 +88,21 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
                 <div className={styles.permissionContainer}>
                     <div className={styles.input}>
                         <Checkbox
-                            checked={newMember.member_admin}
-                            onChange={(e) => setNewMemberField('member_admin', e)}
+                            checked={newMember.admin}
+                            onChange={(e) => setNewMemberField('admin', e)}
                             label='Edit Campaign'
                         />
                     </div>
                     <input
                         type="text"
                         placeholder='Email'
-                        value={newMember.member_email}
-                        onChange={(e) => setNewMemberField('member_email', e.target.value)}
+                        value={newMember.email}
+                        onChange={(e) => setNewMemberField('email', e.target.value)}
                         className={styles.input}
                     />
                     <div className={styles.input}>
                         <Checkbox
-                            checked={newMember.member_manage_funds}
+                            checked={newMember.member_manage_funds || false}
                             onChange={(e) => setNewMemberField('member_manage_funds', e)}
                             label='Manage Funds'
                         />
@@ -106,8 +110,8 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
                     <input
                         type="text"
                         placeholder='Wallet Address'
-                        value={newMember.member_wallet_address}
-                        onChange={(e) => setNewMemberField('member_wallet_address', e.target.value)}
+                        value={newMember.wallet_address}
+                        onChange={(e) => setNewMemberField('wallet_address', e.target.value)}
                         className={styles.input}
                     />
                 </div>

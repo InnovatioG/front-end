@@ -7,7 +7,7 @@ import { useCampaignStore } from "@/store/campaign/useCampaignStore";
 
 
 export default function StepOne() {
-  const { step, title, setTitle, category, setCategory, setDescription, nextStep, description } = useCampaignStore();
+  const { step, name, setTitle, category, setCategory, setDescription, nextStep, description } = useCampaignStore();
 
 
   const categoryOptions = categories.map((category) => ({
@@ -35,7 +35,7 @@ export default function StepOne() {
               className={styles.input}
               type="text"
               placeholder="Title of project"
-              value={title}
+              value={name}
               onChange={(e) => setTitle(e.target.value)}
             />
           </div>
@@ -67,7 +67,7 @@ export default function StepOne() {
           type="primary"
           action={() => nextStep()}
           content="Continue"
-          disabled={title === "" || category === "" || description === ""}
+          disabled={name === "" || category === "" || description === ""}
         />
       </div>
 

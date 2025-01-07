@@ -44,6 +44,7 @@ export const useCampaignStore = create<UseCampaignStore>()(
         ...initialState,
         selectedMember: null,
         newMember: {
+            id: '0',
             editor: false,
             campaign_id: 0,
             member_picture: '',
@@ -131,9 +132,9 @@ export const useCampaignStore = create<UseCampaignStore>()(
             set((state) => {
                 addMemberToTeam(state, member);
             }),
-        updateMemberField: (memberId, key, value) =>
+        updateMemberField: <K extends keyof MembersTeam>(key: K, value: MembersTeam[K]) =>
             set((state) => {
-                updateMemberField(state, memberId, key, value);
+                updateMemberField(state, state.selectedMember!.id, key, value);
             }),
         setNewMemberField: (key, value) =>
             set((state) => {
@@ -152,6 +153,7 @@ export const useCampaignStore = create<UseCampaignStore>()(
         resetNewMember: () =>
             set((state) => {
                 state.newMember = {
+                    id: '0',
                     campaign_id: 0,
                     member_picture: '',
                     name: '',

@@ -5,6 +5,7 @@ import ResumeOfTheTeamAccordion from './ResumeOfTheTeamAccordion';
 import FormNewMember from './FormNewMember';
 import FramerMotionAnimation from '@/utils/framerMotion';
 import AddMore from '@/components/ui/buttons/addMore/AddMore';
+import { MembersTeam } from '@/HardCode/databaseType';
 
 interface ResumeOfTheTeamProps {
     // Define props here
@@ -30,11 +31,13 @@ linkedin: string;
 xs: string; */
 const ResumeOfTheTeam: React.FC<ResumeOfTheTeamProps> = (props) => {
     const [addNewMember, setAddNewMember] = useState(false);
-    const [newMember, setNewMember] = useState({
-        member_name: '',
-        member_last_name: '',
-        member_email: '',
-        member_role: '',
+    const [newMember, setNewMember] = useState<MembersTeam>({
+        id: '',
+        campaign_id: 0,
+        name: '',
+        last_name: '',
+        email: '',
+        role: '',
         member_description: '',
         member_picture: '',
         website: '',
@@ -42,11 +45,12 @@ const ResumeOfTheTeam: React.FC<ResumeOfTheTeamProps> = (props) => {
         instagram: '',
         discord: '',
         linkedin: '',
-        xs: '',
-
-        member_admin: false,
+        twitter: '',
+        admin: false,
         member_manage_funds: false,
-        member_wallet_address: '',
+        wallet_id: '',
+        wallet_address: '',
+        editor: false
     });
 
     const formRef = useRef<HTMLDivElement>(null);
