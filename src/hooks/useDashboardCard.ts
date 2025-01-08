@@ -8,6 +8,8 @@ import { useNewDashboardCard } from './newUseDashboardCard';
 
 export const useDashboardCard = (address: string | null) => {
     const { campaigns, filteredCampaigns } = useNewDashboardCard(address);
+
+    console.log('campaigns', campaigns);
     /*     const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
      */
 

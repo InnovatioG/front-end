@@ -38,37 +38,34 @@ export interface Milestone {
 export interface BaseCampaign {
     /* Erase xs and all the cd parameters */
 
-    id: number;
-    creator_wallet_id: number | null;
+    id: string;
+    creator_wallet_id: string | null;
     title: string;
-    description: string;
-    state_id: number;
-    banner_url: string;
-    logo_url: string;
-    createdAt: string;
-    updatedAt: string;
+    description: string | undefined;
+    banner_url: string | undefined;
+    logo_url: string | undefined;
+    createdAt: Date;
+    updatedAt: Date | undefined;
     investors: number;
     status: string;
-    goal: number;
-    min_request: number;
-    campaign_status_id: string;
-
-    campaign_content: campaingContent[];
+    goal: BigInt;
+    min_request: BigInt;
+    campaign_status_id: number;
+    campaign_content?: campaingContent[];
     tokenomics_description: string;
-    website: string;
-    facebook: string;
-    instagram: string;
-    discord: string;
-    linkedin: string;
-    start_date: string;
-    twitter: string;
-    category_id: number;
+    website: string | undefined;
+    facebook: string | undefined;
+    instagram: string | undefined;
+    discord: string | undefined;
+    start_date: Date | undefined;
+    twitter: string | undefined;
+    category_id: string;
     contract_id?: number;
     raise_amount: number;
     members_team: MembersTeam[];
-    milestones: MilestoneF[];
+    milestones?: MilestoneF[];
     faqs: FAQ[];
-    end_date: string;
+    end_date: Date | undefined;
     xs: string;
     cdRequestedMaxADA: number | null;
     cdCampaignToken_PriceADA: number | null;

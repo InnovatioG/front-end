@@ -29,7 +29,6 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
         handleStateFilterChange,
         handleCategoryFilterChange,
         handleClickAdminView,
-        getStatusName,
         getCategoryName,
         loadMoreCampaigns,
         screenSize,

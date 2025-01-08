@@ -54,7 +54,7 @@ export default function CampaignCard(props: CampaignCardProps) {
           <div className={styles.status}>
             <div className={`${styles.state} ${styles[labelClass]}`}>
 
-              {campaign.state_id === 8 ? formatAllTime(timeRemaining) : label}
+              {campaign.campaign_status_id === 8 ? formatAllTime(timeRemaining) : label}
             </div>
             <div className={styles.category}>
               {getCategoryName(campaign.category_id)}

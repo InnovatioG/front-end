@@ -1,34 +1,69 @@
 import { useState, useEffect } from 'react';
-import { Campaign } from '@/HardCode/databaseType';
+import { BaseCampaign, MilestoneF } from '@/HardCode/databaseType';
 import { CampaignApi, CampaignMemberApi, MilestoneApi } from '@/lib/SmartDB/FrontEnd';
 import { pushWarningNotification } from 'smart-db';
-import { Milestone } from '@/HardCode/databaseType';
+import { CampaignEntity } from '@/lib/SmartDB/Entities';
 
 export const useNewDashboardCard = (address: string | null) => {
-    const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-    const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
+    const [campaigns, setCampaigns] = useState<BaseCampaign[]>([]);
+    const [filteredCampaigns, setFilteredCampaigns] = useState<BaseCampaign[]>([]);
+
+    // Función para transformar CampaignEntity a BaseCampaign
+    const transformToBaseCampaign = async (campaign: CampaignEntity): Promise<BaseCampaign> => {
+        const milestones = await MilestoneApi.getByParamsApi_({ campaign_id: campaign._DB_id });
+        const members_team = await CampaignMemberApi.getByParamsApi_({ campaign_id: campaign._DB_id });
+
+        /* 
+        cdFundedADA!: bigint;
+        raise_amount: number;
+        
+        */
+
+        return {
+            id: campaign._DB_id,
+            creator_wallet_id: campaign.creator_wallet_id,
+            title: campaign.name,
+            description: campaign.description,
+            campaign_status_id: Number(campaign.campaign_status_id),
+            banner_url: campaign.banner_url,
+            logo_url: campaign.logo_url,
+            createdAt: campaign.createdAt,
+            updatedAt: campaign.updatedAt,
+            investors: campaign.investors,
+            goal: campaign.requestedMaxADA,
+            category_id: campaign.campaing_category_id,
+            min_request: campaign.requestedMinADA,
+            website: campaign.website,
+            facebook: campaign.facebook,
+            instagram: campaign.instagram,
+            discord: campaign.discord,
+            twitter: campaign.twitter,
+            /*             members_team: campaignMemberList.filter((member) => member.campaign_id === campaign._DB_id),
+             */ status: campaign.campaign_status_id,
+            milestones,
+            members_team,
+            start_date: campaign.begin_at,
+            end_date: campaign.deadline,
+            tokenomics_description: campaign.tokenomics_description,
+        };
+    };
 
     // Función para obtener todas las campañas
     const fetchCampaigns = async () => {
         try {
-            const campaigns: Campaign[] = await CampaignApi.getAllApi_();
-            const campaignWithMilestones = await Promise.all(
-                campaigns.map(async (campaign) => {
-                    const milestones: Milestone[] = await MilestoneApi.getByParamsApi_({ campaign_id: campaign._DB_id });
-                    return { ...campaign, milestones };
-                })
-            );
+            const data: CampaignEntity[] = await CampaignApi.getByParamsApi_({}, { limit: 10 }); // Obtener todas las campañas
+            const campaignWithDetails = await Promise.all(data.map((campaign) => transformToBaseCampaign(campaign)));
 
-            setCampaigns(campaignWithMilestones);
+            setCampaigns(campaignWithDetails);
         } catch (err) {
             console.error('Error fetching campaigns:', err);
             pushWarningNotification('Error', `Error fetching Campaigns: ${err}`);
         }
     };
+
     // Función para obtener campañas filtradas
     const fetchCampaignsByFilter = async (filters: { category?: string; state?: string; searchTerm?: string; userId?: string | null; isHomePage?: boolean; isAdmin?: boolean }) => {
         try {
-            // Construimos los filtros dinámicamente
             const paramsFilter: Record<string, any> = {};
             if (filters.category) paramsFilter.category_id = filters.category;
             if (filters.state) paramsFilter.campaign_status_id = filters.state;
@@ -37,9 +72,13 @@ export const useNewDashboardCard = (address: string | null) => {
             if (filters.isHomePage) paramsFilter.isHomePage = filters.isHomePage;
             if (filters.isAdmin) paramsFilter.isAdmin = filters.isAdmin;
 
-            // Llamada a la API con los filtros
-            const filteredCampaigns = await CampaignApi.getByParamsApi_(paramsFilter);
-            setFilteredCampaigns(filteredCampaigns);
+            const filteredData: CampaignEntity[] = await CampaignApi.getByParamsApi_(paramsFilter);
+            const campaignMemberList = await CampaignMemberApi.getAllApi_(); // Obtener todos los miembros
+
+            // Transformar datos de CampaignEntity a BaseCampaign con milestones específicos
+            const filteredCampaignsWithDetails = await Promise.all(filteredData.map((campaign) => transformToBaseCampaign(campaign)));
+
+            setFilteredCampaigns(filteredCampaignsWithDetails);
         } catch (err) {
             console.error('Error fetching campaigns with filters:', err);
             pushWarningNotification('Error', `Error fetching Campaigns with filters: ${err}`);
@@ -49,7 +88,6 @@ export const useNewDashboardCard = (address: string | null) => {
     // Cargar campañas iniciales al montar el componente
     useEffect(() => {
         fetchCampaigns();
-        fetchCampaignsByFilter({ isHomePage: true });
     }, []);
 
     return {
