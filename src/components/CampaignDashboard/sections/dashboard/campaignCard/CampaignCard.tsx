@@ -9,18 +9,21 @@ import CardFooter from "@/components/CampaignDashboard/sections/dashboard/campai
 
 interface CampaignCardProps {
   campaign: Campaign;
-  getStatusName: (statusId: number) => string;
+  /*   getStatusName: (statusId: number) => string;
+   */
+  states: any;
   getCategoryName: (category_id: number) => string;
 }
 
 
 export default function CampaignCard(props: CampaignCardProps) {
-  const { campaign, getStatusName, getCategoryName } = props;
+  const { campaign, states, getCategoryName } = props;
   const [timeRemaining, setTimeRemaining,] = useState(
     campaign.end_date ? getTimeRemaining(campaign.end_date) : { total: 0, days: 0, totalHours: 0, minutes: 0 }
   );
-
   const { label, labelClass, currentMilestone, formatAllTime } = useDraftCard(campaign, false, false);
+
+
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -31,6 +34,10 @@ export default function CampaignCard(props: CampaignCardProps) {
 
     return () => clearInterval(timer);
   }, [campaign.end_date]);
+
+  useEffect(() => {
+    console.log("campaign", campaign)
+  }, [campaign])
 
 
   return (

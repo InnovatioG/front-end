@@ -51,6 +51,7 @@ export interface BaseCampaign {
     status: string;
     goal: number;
     min_request: number;
+    campaign_status_id: string;
 
     campaign_content: campaingContent[];
     tokenomics_description: string;

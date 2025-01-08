@@ -4,14 +4,17 @@ import { useScreenSize } from '@/hooks/useScreenSize';
 import { dataBaseService } from '@/HardCode/dataBaseService';
 import { useRouter } from 'next/router';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
+import { useNewDashboardCard } from './newUseDashboardCard';
 
 export const useDashboardCard = (address: string | null) => {
-    const [campaigns, setCampaigns] = useState<Campaign[]>([]);
-    const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
+    const { campaigns, filteredCampaigns } = useNewDashboardCard(address);
+    /*     const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
+     */
+
+    const { campaignStatus, campaignCategories } = useGeneralStore();
     const [visibleCampaigns, setVisibleCampaigns] = useState<Campaign[]>([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [stateFilter, setStateFilter] = useState('');
-    const [states, setStates] = useState<State[]>([]);
     const [categoryFilter, setCategoryFilter] = useState('');
     const [categories, setCategories] = useState<Category[]>([]);
     const screenSize = useScreenSize();
@@ -41,7 +44,7 @@ export const useDashboardCard = (address: string | null) => {
         setLoading(false);
     }, [address]);
 
-    useEffect(() => {
+    /*   useEffect(() => {
         pathName === '/' || pathName === '/campaigns' ? setIsHomePage(true) : setIsHomePage(false);
 
         setLoading(true);
@@ -77,16 +80,16 @@ export const useDashboardCard = (address: string | null) => {
         };
 
         fetchData();
-    }, [address, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam, myProposal, isHomePage, pathName, haveProjects, setHaveProjects]);
+    }, [address, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam, myProposal, isHomePage, pathName, haveProjects, setHaveProjects]); */
 
-    const getStatusName = useCallback(
+    /*     const getStatusName = useCallback(
         (statusId: number): string => {
             const status = states.find((s) => s.id === statusId);
             return status ? status.name : '';
         },
         [states]
     );
-
+ */
     const getCategoryName = useCallback(
         (category_id: number): string => {
             const category = categories.find((c) => c.id === category_id);
@@ -132,11 +135,11 @@ export const useDashboardCard = (address: string | null) => {
     return {
         campaigns,
         filteredCampaigns,
-        visibleCampaigns,
+        visibleCampaigns: campaigns,
         searchTerm,
         stateFilter,
         categoryFilter,
-        states,
+        states: campaignStatus,
         categories,
         adminView,
         isAdmin,
@@ -149,7 +152,6 @@ export const useDashboardCard = (address: string | null) => {
         handleStateFilterChange: (value: string) => setStateFilter(value),
         handleCategoryFilterChange: (value: string) => setCategoryFilter(value),
         handleClickAdminView: () => isAdmin && setAdminView(!adminView),
-        getStatusName,
         getCategoryName,
         loadMoreCampaigns,
         screenSize,

@@ -41,12 +41,14 @@ import Link from 'next/link';
     pathName,
   } = useDashboardCard(address);
 
+
   /*   useEffect(() => {
       console.log('campaignList', campaignList);
       console.log('campaignsa', campaignsa);
       console.log('milestoneList', milestoneList);
     }, [campaignsa, milestoneList]);
    */
+
   const getInitialLoadCount = useCallback(() => {
     if (screenSize === 'mobile') return 3;
     ``;
@@ -85,8 +87,8 @@ import Link from 'next/link';
         <p className={styles.notFound}>No Campaigns Found</p>
       ) : (
         <div className={styles.campaignGrid}>
-          {visibleCampaigns.map((campaign) => (
-            <CampaignCard key={campaign.id} campaign={campaign} getStatusName={getStatusName} getCategoryName={getCategoryName} />
+          {campaigns.map((campaign) => (
+            <CampaignCard key={campaign.id} campaign={campaign} states={states} getCategoryName={getCategoryName} />
           ))}
         </div>
       )}

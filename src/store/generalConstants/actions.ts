@@ -2,11 +2,14 @@ import { useCampaignCategory } from '@/components/Admin/CampaignCategory/useCamp
 import { useCampaignStatus } from '@/components/Admin/CampaignStatus/useCampaignStatus';
 import { useGeneralStore } from './useGeneralConstants';
 
+// Función para manejar la obtención de datos y actualización del store
 const fetchAndSetData = async <T, U>(fetchFunction: () => { list: T[] }, mapFunction: (item: T) => U, setFunction: (data: U[]) => void): Promise<T[]> => {
     try {
         const { list } = fetchFunction();
+        console.log('list', list);
         const mappedData = list.map(mapFunction);
-        setFunction(mappedData);
+        console.log('mappedData', mappedData);
+        setFunction(mappedData); // Se actualiza el estado de manera correcta aquí
         return list;
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -23,7 +26,7 @@ const fetchCampaignCategories = async () => {
             name: category.name,
             description: category.description,
         }),
-        useGeneralStore.getState().setCampaignCategories
+        useGeneralStore.getState().setCampaignCategories // Uso del setter de Zustand
     );
 };
 
@@ -36,7 +39,7 @@ const fetchCampaignStatus = async () => {
             name: status.name,
             description: status.description,
         }),
-        useGeneralStore.getState().setCampaignStatus
+        useGeneralStore.getState().setCampaignStatus // Uso del setter de Zustand
     );
 };
 

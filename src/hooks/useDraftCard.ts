@@ -46,7 +46,9 @@ const useDraftCard = (campaign: Campaign, isProtocolTeam: boolean, isAdmin: bool
     const milestone_status_id = getmilestone_status_id(campaign);
     const currentMilestone = getCurrentMilestone(campaign);
 
-    const { label, buttons } = isProtocolTeam ? cardInformationForProtocolTeam(campaign.state_id) : CardInformationByState(campaign.state_id, milestone_status_id, isAdmin);
+    const { label, buttons } = isProtocolTeam
+        ? cardInformationForProtocolTeam(Number(campaign.campaign_status_id))
+        : CardInformationByState(Number(campaign.campaign_status_id), milestone_status_id, isAdmin);
 
     const labelClass = label.toLowerCase().replace(/\s+/g, '-');
 
