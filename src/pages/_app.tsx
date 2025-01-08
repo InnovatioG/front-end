@@ -3,14 +3,12 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import * as Images from '@/utils/images';
 import { useState, useEffect } from 'react';
-import PreLoadingPage from '@/components/General/elements/PreLoadingPage/PreLoadingPage';
-import { CardanoProvider } from '@/contexts/CardanoContext';
+import PreLoadingPage from '@/components/General/Elements/PreLoadingPage/PreLoadingPage';
 import { ModalProvider } from '@/contexts/ModalContext';
-import { ModalManager } from '@/components/ui/modal/ModalManager';
-import Header from '@/components/layout/Header/Header';
+import Header from '@/components/Layout/Header/Header';
 import { ResponsiveProvider } from '@/contexts/ResponsiveContext';
 import { dataBaseService } from '@/HardCode/dataBaseService';
-import Footer from '@/components/layout/Footer/Footer';
+import Footer from '@/components/Layout/Footer/Footer';
 import { SessionProvider } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { ROUTES } from '@/utils/routes';
@@ -20,6 +18,9 @@ import { AppGeneral, globalStore } from 'smart-db';
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import { fetchAllData } from '@/store/generalConstants/actions';
+import 'smart-db/dist/styles.css';
+import LoadingPage from '@/components/LoadingPage/LoadingPage';
+
 type ImageType = string | { [key: string]: string };
 
 const getResourcesFromImages = (images: { [key: string]: ImageType }): string[] => {
@@ -36,14 +37,18 @@ const getResourcesFromImages = (images: { [key: string]: ImageType }): string[] 
 const resourcesToPreload = getResourcesFromImages(Images);
 
 export default function App({ Component, pageProps }: AppProps<{ session?: Session }>) {
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoadingResources, setIsLoadingResources] = useState(true);
+    const [isLoadingDatabaseService, setIsLoadingDatabaseService] = useState(true);
+
     const router = useRouter();
 
-    fetchAllData()
-
-    if (isLoading) {
-        return <PreLoadingPage onLoadComplete={() => setIsLoading(false)} resources={resourcesToPreload} />;
-    }
+    useEffect(() => {
+        const initialize = async () => {
+            await fetchAllData();
+            setIsLoadingDatabaseService(false);
+        };
+        initialize();
+    }, []);
 
     return (
         <>
@@ -61,40 +66,21 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
             <ReactNotifications />
             <SessionProvider session={pageProps.session} refetchInterval={0}>
                 <StoreProvider store={globalStore}>
-                    <AppGeneral />
-                    <ResponsiveProvider>
-                        <CardanoProvider>
-                            <ModalProvider>
-                                <ModalManager />
-                                {router.pathname !== ROUTES.new && <Header />}
-                                <Component {...pageProps} />
-                                {router.pathname !== ROUTES.new && <Footer />}
-                            </ModalProvider>
-                        </CardanoProvider>
-                    </ResponsiveProvider>
+                    <AppGeneral loader={<LoadingPage />}>
+                        {isLoadingResources || isLoadingDatabaseService ? (
+                            <PreLoadingPage onLoadComplete={() => setIsLoadingResources(false)} resources={resourcesToPreload} />
+                        ) : (
+                            <ResponsiveProvider>
+                                <ModalProvider>
+                                    {router.pathname !== ROUTES.new && <Header />}
+                                    <Component {...pageProps} />
+                                    {router.pathname !== ROUTES.new && <Footer />}
+                                </ModalProvider>
+                            </ResponsiveProvider>
+                        )}
+                    </AppGeneral>
                 </StoreProvider>
             </SessionProvider>
         </>
     );
 }
-
-
-
-/*     useEffect(() => {
-        const initialize = async () => {
-            await dataBaseService.initializeData();
- 
-            // Wait for appStore to complete its initialization
-            const checkInit = async () => {
-                console.log('Waiting for appStore to complete its initialization');
-                while (!globalStore.getState().swInitApiCompleted) {
-                    await new Promise((resolve) => setTimeout(resolve, 100)); // Poll every 100ms
-                }
-            };
- 
-            await Promise.all([checkInit()]);
-            setIsLoading(false);
-        };
- 
-        initialize();
-    }, []); */

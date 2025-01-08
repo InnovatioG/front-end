@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import JSON from "@/HardCode/campaignId.json";
 import styles from "./campainPagelayout.module.scss";
-import CampaignHeader from '@/components/CampaignDashboard/sections/campaignHeader/CampaignHeader';
-import CampaignDashCreation from '@/components/CampaignDashboard/sections/campaignHeader/CampaignDash';
+import CampaignHeader from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignHeader';
+import CampaignDashCreation from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignDash';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import ProjectContainer from '@/components/CampaignId/sections/ProjectContainer';
+import ProjectContainer from '@/components/CampaignId/Sections/ProjectContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import { useSession } from 'next-auth/react';
 import CampaignButtonContainer from './campainButtonsContainer';
-import GeneralError from '@/components/General/elements/errors/GeneralError';
+import GeneralError from '@/components/General/Elements/Errors/GeneralError';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 
 

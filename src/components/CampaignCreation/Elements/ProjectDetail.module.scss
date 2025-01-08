@@ -1,0 +1,162 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+@use '@/components/CampaignCreation/Layout/Form/FormSteps.module.scss';
+.generalLayout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.layoutProject {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 2rem;
+    padding: 4rem 1rem;
+}
+
+.buttonContainer {
+    justify-self: flex-end;
+    align-self: flex-end;
+}
+
+.optionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.textButton {
+    font: fonts.$f200-medium;
+    min-width: 140px;
+    width: 100%;
+    text-wrap: nowrap;
+    text-align: left;
+}
+
+.draggableItem {
+    cursor: grab;
+    margin-bottom: 0.5rem;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.draggableItem:active {
+    cursor: grabbing;
+}
+
+.dragging {
+    background-color: transparent; /* Cambia el color de fondo cuando se arrastra */
+    opacity: 0.8; /* Cambia la opacidad cuando se arrastra */
+    transform: scale(1.05); /* Escala el elemento cuando se arrastra */
+}
+
+.option {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+}
+
+.activeOption {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    border: 1px solid #999;
+    border-radius: 0.25rem;
+}
+
+.addOptionContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.buttonContainer {
+    margin-top: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .buttonContainer {
+        width: 100%;
+    }
+    .generalLayout {
+    }
+
+    .layoutProject {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+    .optionsContainer {
+        display: flex;
+        flex-direction: row;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        width: 100%;
+        align-items: center;
+        min-height: 52px;
+        padding-top: 1rem;
+        padding-left: 1rem;
+    }
+    .draggableItem {
+        width: 100%;
+        flex-wrap: nowrap;
+        height: 100%;
+        align-self: center;
+        justify-self: center;
+        overflow: visible;
+    }
+
+    .menu-index,
+    .menu-index-selected,
+    .non-empty-content,
+    .activeButton,
+    .hasContentButton {
+        width: fit-content;
+        padding: none;
+        text-wrap: nowrap;
+        background-color: blue;
+        width: 100%;
+    }
+}
+
+.buttonSpan {
+    color: black;
+    width: 100%;
+    text-wrap: nowrap;
+    font-size: 0.8rem;
+}
+
+.buttonWhite {
+    color: white;
+    text-wrap: nowrap;
+}
+
+.modalContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    width: 100%;
+}
+
+.modalTitle {
+    font: fonts.$f800-medium;
+    color: colors.$primary-dark-color;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.input {
+    @include FormSteps.inputStyles;
+    padding: 1rem;
+    min-width: 318px;
+}

@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Link from 'next/link';
 import styles from '@/styles/Admin.module.scss';
 import { LucidToolsFrontEnd, pushSucessNotification, pushWarningNotification, useWalletStore } from 'smart-db';
-import Button from '@/components/ui/buttons/UI/Button';
+import Button from '@/components/UI/Buttons/UI/Button';
 import { ProtocolApi } from '@/lib/SmartDB/FrontEnd';
 
 const AdminDashboard: NextPage = () => {

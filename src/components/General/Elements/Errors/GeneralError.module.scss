@@ -1,0 +1,16 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+.layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+    min-height: 70vh;
+}
+
+.message {
+    font: fonts.$f900-medium;
+    font-size: 52px;
+    margin-bottom: 20px;
+}

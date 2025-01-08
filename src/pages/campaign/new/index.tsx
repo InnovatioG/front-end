@@ -2,26 +2,28 @@ import { useScreenSize } from "@/hooks/useScreenSize";
 import styles from "./CreatorCampaign.module.scss";
 import { CHEVRON_RIGHT } from "@/utils/images";
 import { useSession } from "next-auth/react";
-import { useCardano } from "@/contexts/CardanoContext";
+
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { ROUTES } from "@/utils/routes";
-import StepController from "@/components/CampaignCreation/elements/controller/StepController";
+import StepController from "@/components/CampaignCreation/Elements/Controller/StepController";
 import { dataBaseService } from "@/HardCode/dataBaseService";
 import { Category, User } from "@/HardCode/databaseType";
-import FormSteps from "@/components/CampaignCreation/layout/FormSteps";
+import FormSteps from "@/components/CampaignCreation/Layout/FormSteps";
 import LoadingPage from "@/components/LoadingPage/LoadingPage";
 import { useCampaignStore } from "@/store/campaign/useCampaignStore";
-import FormHeader from "@/components/CampaignCreation/layout/FormHeader";
-import MemberController from "@/components/CampaignCreation/elements/controller/MemberController";
+import FormHeader from "@/components/CampaignCreation/Layout/FormHeader";
+import MemberController from "@/components/CampaignCreation/Elements/Controller/MemberController";
 import { titleForCampaignCreation } from "@/utils/constants";
+import { useWalletStore } from "smart-db";
 
 
 
 export default function Home() {
   const screenSize = useScreenSize();
   const { data: session } = useSession();
-  const { address } = useCardano();
+  const walletStore = useWalletStore();
+    const address = walletStore.info?.address || '';
   const router = useRouter();
   const { step, setStep, category, setUser, isLoading, setCategoryId, setIsLoading, newCampaign } = useCampaignStore();
 

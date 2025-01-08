@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import JSON from "@/HardCode/campaignId.json";
-import CampaignHeader from '@/components/CampaignDashboard/sections/campaignHeader/CampaignHeader';
+import CampaignHeader from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignHeader';
 import styles from "../[id]/campainPagelayout.module.scss";
-import CampaignDashCreation from '@/components/CampaignDashboard/sections/campaignHeader/CampaignDash';
+import CampaignDashCreation from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignDash';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import ProjectEditionContainer from '@/components/CampaignCreation/elements/ProjectEditionContainer';
+import ProjectEditionContainer from '@/components/CampaignCreation/Elements/ProjectEditionContainer';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import { useSession } from 'next-auth/react';
-import ButtonSaveDraftContainer from '@/components/CampaignCreation/elements/GeneralbuttonContainer';
-import GeneralError from '@/components/General/elements/errors/GeneralError';
+import ButtonSaveDraftContainer from '@/components/CampaignCreation/Elements/GeneralbuttonContainer';
+import GeneralError from '@/components/General/Elements/Errors/GeneralError';
 
 interface CampaignByIndexProps {
     // Define props aquí si es necesario

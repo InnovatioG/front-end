@@ -232,7 +232,6 @@ export class CampaignEntity extends BaseSmartDBEntity {
     };
 
     public static fieldsForHomePage: Record<string, boolean> = {
-        ...super.fieldsForHomePage,
         campaing_category_id: true,
         campaign_status_id: true,
         creator_wallet_id: true,
