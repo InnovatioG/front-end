@@ -4,7 +4,7 @@ import { MilestoneEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
 
 export default function Milestone() {
-    const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useMilestone();
+    const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove, getStatusName } = useMilestone();
 
     const renderList = () => (
         <div>
@@ -18,10 +18,10 @@ export default function Milestone() {
                     <thead>
                         <tr>
                             <th>Campaign ID</th>
-                            <th>Milestone Status ID</th>
+                            <th>Milestone Status</th>
+                            <th>Estimated Delivery Days</th>
                             <th>Estimated Delivery Date</th>
                             <th>Percentage</th>
-                            <th>Status</th>
                             <th>Description</th>
                             <th>Created At</th>
                             <th>Updated At</th>
@@ -32,10 +32,10 @@ export default function Milestone() {
                         {list.map((item) => (
                             <tr key={item._DB_id}>
                                 <td>{item.campaign_id}</td>
-                                <td>{item.milestone_status_id}</td>
-                                <td>{item.estimate_delivery_date.toISOString()}</td>
+                                <td>{getStatusName(item.milestone_status_id)}</td>
+                                <td>{item.estimate_delivery_days}</td>
+                                <td>{item.estimate_delivery_date?.toISOString()}</td>
                                 <td>{item.percentage}</td>
-                                <td>{item.status}</td>
                                 <td>{item.description}</td>
                                 <td>{item.createdAt.toISOString()}</td>
                                 <td>{item.updatedAt?.toISOString()}</td>
@@ -79,6 +79,19 @@ export default function Milestone() {
                 <input type="text" value={item.milestone_status_id || ''} onChange={(e) => setItem({ ...item, milestone_status_id: e.target.value })} />
             </div>
             <div>
+                <label>Estimated Delivery Days:</label>
+                <input
+                    type="number"
+                    value={item.estimate_delivery_days}
+                    onChange={(e) =>
+                        setItem({
+                            ...item,
+                            estimate_delivery_days: Number(e.target.value),
+                        })
+                    }
+                />
+            </div>
+            <div>
                 <label>Estimated Delivery Date:</label>
                 <input
                     type="datetime-local"
@@ -102,19 +115,6 @@ export default function Milestone() {
                         setItem({
                             ...item,
                             percentage: Number(e.target.value),
-                        })
-                    }
-                />
-            </div>
-            <div>
-                <label>Status:</label>
-                <input
-                    type="number"
-                    value={item.status || ''}
-                    onChange={(e) =>
-                        setItem({
-                            ...item,
-                            status: Number(e.target.value),
                         })
                     }
                 />

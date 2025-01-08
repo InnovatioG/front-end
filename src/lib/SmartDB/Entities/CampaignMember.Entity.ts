@@ -10,14 +10,23 @@ export class CampaignMemberEntity extends BaseEntity {
     // #region fields
     @Convertible({ isDB_id: true })
     campaign_id!: string;
+    
+    @Convertible()
+    name?: string;
+    @Convertible()
+    last_name?: string;
+    @Convertible()
+    role?: string;
     @Convertible()
     editor!: boolean;
+    @Convertible()
+    admin!: boolean;
+    @Convertible()
+    email?: string;
     @Convertible({ isDB_id: true })
     wallet_id!: string;
     @Convertible()
-    rol?: string;
-    @Convertible()
-    description?: string;
+    wallet_address?: string;
     @Convertible()
     website?: string;
     @Convertible()
@@ -42,10 +51,14 @@ export class CampaignMemberEntity extends BaseEntity {
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
         campaign_id: true,
-        editor: true,
-        wallet_id: true,
+        name: true,
+        last_name: true,
         rol: true,
-        description: true,
+        editor: true,
+        admin: true,
+        email: true,
+        wallet_id: true,
+        wallet_address: true,
         website: true,
         instagram: true,
         twitter: true,

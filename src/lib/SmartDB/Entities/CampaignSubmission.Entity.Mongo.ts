@@ -60,7 +60,7 @@ export class CampaignSubmissionEntityMongo extends BaseEntityMongo {
                 campaign_id: { type: String, required: true },
                 submission_status_id: { type: String, required: true },
                 submitted_by_wallet_id: { type: String, required: true },
-                revised_by_wallet_id: { type: String, required: true },
+                revised_by_wallet_id: { type: String, required: false },
                 approved_justification: { type: String, required: false },
                 rejected_justification: { type: String, required: false },
             },

@@ -11,9 +11,9 @@ export class CampaignFaqsEntity extends BaseEntity {
     @Convertible({ isDB_id: true })
     campaign_id!: string;
     @Convertible()
-    name!: string;
+    question!: string;
     @Convertible()
-    description?: string;
+    answer?: string;
     @Convertible()
     order!: number;
     @Convertible({ isCreatedAt: true })
@@ -30,8 +30,8 @@ export class CampaignFaqsEntity extends BaseEntity {
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
         campaign_id: true,
-        name: true,
-        description: true,
+        question: true,
+        answer: true,
         order: true,
         createdAt: true,
         updatedAt: true,

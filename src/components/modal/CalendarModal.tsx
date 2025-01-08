@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { Calendar } from '../ui/calendar';
-import ModalTemplate from '@/components/modal/Modal';
+import ModalTemplate from '@/components/modal/ModalTemplate';
 import styles from "./CalendarModal.module.scss"
-import { useModalStore } from '@/store/modal/useModalStoreState';
 import { TimeInput } from '../ui/TimePicker';
 import GeneralButtonUI from '../buttons/UI/Button';
+import { useModal } from '@/contexts/ModalContext';
 interface CalendarModalProps {
 }
 
 const CalendarModal: React.FC<CalendarModalProps> = ({ }) => {
 
-    const { closeModal } = useModalStore();
+    const { closeModal } = useModal();
 
     const [dateRange, setDateRange] = React.useState<{ from: Date | undefined; to?: Date | undefined }>({ from: new Date() })
     const [time, setTime] = useState('')

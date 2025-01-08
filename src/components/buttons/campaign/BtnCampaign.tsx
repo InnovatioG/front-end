@@ -3,8 +3,8 @@ import styles from './BtnCampaign.module.scss';
 import { PLUS_ICON } from '@/utils/images';
 import { ROUTES } from '@/utils/routes';
 import { useRouter } from 'next/router';
-import { useCardano } from "@/contexts/CardanoContext";
 import { useDashboardCard } from '@/hooks/useDashboardCard';
+import { useWalletStore } from 'smart-db';
 interface BtnCampaignProps {
     type: 'mobile' | 'primary' | 'secondary';
     width?: number;
@@ -28,9 +28,9 @@ const BtnCampaignMobile: React.FC<SubComponentProps> = ({ dir }) => {
 };
 
 const BtnCampaignPrimary: React.FC<SubComponentProps> = ({ width, dir }) => {
-    const { address } = useCardano()
+    const  walletStore = useWalletStore()
 
-    const { haveProjects } = useDashboardCard(address)
+    const { haveProjects } = useDashboardCard(walletStore.info?.address || '')
     //! TODO: Cambiar el nombre del boton segun si hay campañas creadas o no. 
 
     return (
@@ -46,8 +46,8 @@ const BtnCampaignPrimary: React.FC<SubComponentProps> = ({ width, dir }) => {
 };
 
 const BtnCampaignSecondary: React.FC<SubComponentProps> = ({ width, closeMenu, dir }) => {
-    const { address } = useCardano()
-    const { haveProjects } = useDashboardCard(address)
+    const  walletStore = useWalletStore()
+    const { haveProjects } = useDashboardCard(walletStore.info?.address || '')
 
     return (
         <Link href={dir}>

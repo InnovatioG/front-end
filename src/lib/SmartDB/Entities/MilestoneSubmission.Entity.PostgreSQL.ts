@@ -19,10 +19,10 @@ export class MilestoneSubmissionEntityPostgreSQL extends BaseEntityPostgreSQL {
     submission_status_id!: string;
     @Column({ type: 'varchar', length: 255 })
     submitted_by_wallet_id!: string;
-    @Column({ type: 'varchar', length: 255 })
-    revised_by_wallet_id!: string;
-    @Column({ type: 'text'})
+    @Column({ type: 'text' })
     report_proof_of_finalization?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    revised_by_wallet_id!: string;
     @Column({ type: 'text', nullable: true })
     approved_justification?: string;
     @Column({ type: 'text', nullable: true })

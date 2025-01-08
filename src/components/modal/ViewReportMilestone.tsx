@@ -1,14 +1,14 @@
 import React from 'react';
 import styles from "./ViewReportModal.module.scss"
 import GeneralButtonUI from '../buttons/UI/Button';
-import { useModalStore } from '@/store/modal/useModalStoreState';
+import { useModal } from '@/contexts/ModalContext';
 interface ViewReportMilestoneProps {
     submission: string | undefined;
 }
 
 const ViewReportMilestone: React.FC<ViewReportMilestoneProps> = ({ submission }) => {
 
-    const { closeModal } = useModalStore();
+    const { closeModal } = useModal();
 
     return (
         <article className={styles.modalLayout}>

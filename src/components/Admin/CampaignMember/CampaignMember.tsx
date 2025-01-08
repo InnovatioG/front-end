@@ -18,10 +18,14 @@ export default function CampaignMember() {
                     <thead>
                         <tr>
                             <th>Campaign ID</th>
-                            <th>Editor</th>
-                            <th>Wallet ID</th>
+                            <th>Name</th>
+                            <th>Last Name</th>
                             <th>Role</th>
-                            <th>Description</th>
+                            <th>Editor</th>
+                            <th>Admin</th>
+                            <th>Email</th>
+                            <th>Wallet ID</th>
+                            <th>Wallet Address</th>
                             <th>Website</th>
                             <th>Instagram</th>
                             <th>Twitter</th>
@@ -36,10 +40,14 @@ export default function CampaignMember() {
                         {list.map((item) => (
                             <tr key={item._DB_id}>
                                 <td>{item.campaign_id}</td>
+                                <td>{item.name}</td>
+                                <td>{item.last_name}</td>
+                                <td>{item.role}</td>
                                 <td>{item.editor ? 'Yes' : 'No'}</td>
+                                <td>{item.admin ? 'Yes' : 'No'}</td>
+                                <td>{item.email}</td>
                                 <td>{item.wallet_id}</td>
-                                <td>{item.rol}</td>
-                                <td>{item.description}</td>
+                                <td>{item.wallet_address}</td>
                                 <td>{item.website}</td>
                                 <td>{item.instagram}</td>
                                 <td>{item.twitter}</td>
@@ -83,20 +91,36 @@ export default function CampaignMember() {
                 <input type="text" value={item.campaign_id || ''} onChange={(e) => setItem({ ...item, campaign_id: e.target.value })} />
             </div>
             <div>
+                <label>Name:</label>
+                <input type="text" value={item.name || ''} onChange={(e) => setItem({ ...item, name: e.target.value })} />
+            </div>
+            <div>
+                <label>Last Name:</label>
+                <input type="text" value={item.last_name || ''} onChange={(e) => setItem({ ...item, last_name: e.target.value })} />
+            </div>
+            <div>
+                <label>Role:</label>
+                <input type="text" value={item.role || ''} onChange={(e) => setItem({ ...item, role: e.target.value })} />
+            </div>
+            <div>
                 <label>Editor:</label>
                 <input type="checkbox" checked={item.editor || false} onChange={(e) => setItem({ ...item, editor: e.target.checked })} />
+            </div>
+            <div>
+                <label>Admin:</label>
+                <input type="checkbox" checked={item.admin || false} onChange={(e) => setItem({ ...item, admin: e.target.checked })} />
+            </div>
+            <div>
+                <label>Email:</label>
+                <input type="text" value={item.email || ''} onChange={(e) => setItem({ ...item, email: e.target.value })} />
             </div>
             <div>
                 <label>Wallet ID:</label>
                 <input type="text" value={item.wallet_id || ''} onChange={(e) => setItem({ ...item, wallet_id: e.target.value })} />
             </div>
             <div>
-                <label>Role:</label>
-                <input type="text" value={item.rol || ''} onChange={(e) => setItem({ ...item, rol: e.target.value })} />
-            </div>
-            <div>
-                <label>Description:</label>
-                <textarea value={item.description || ''} onChange={(e) => setItem({ ...item, description: e.target.value })} />
+                <label>Wallet Address:</label>
+                <input type="text" value={item.wallet_address || ''} onChange={(e) => setItem({ ...item, wallet_address: e.target.value })} />
             </div>
             <div>
                 <label>Website:</label>

@@ -28,10 +28,7 @@ export function useProtocol() {
     }, []);
 
     const create = async () => {
-        const id = await ProtocolApi.handleBtnCreate(walletStore, {
-            name: newItem.name!,
-            configJson,
-        });
+        const id = await ProtocolApi.handleBtnCreate(walletStore, newItem.name!, configJson);
 
         if (!isNullOrBlank(id)) {
             setNewItem({});

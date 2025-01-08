@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { useModalStore } from '@/store/modal/useModalStoreState';
 import styles from "./ViewReportModal.module.scss"
 import useDraftCard from '@/hooks/useDraftCard';
 import type { Campaign } from '@/HardCode/databaseType';
 import { getOrdinalString } from '@/utils/formats';
 import GeneralButtonUI from '../buttons/UI/Button';
+import { useModal } from '@/contexts/ModalContext';
 
 interface SendReportMilestoneProps {
     campaign: Campaign | undefined
@@ -26,7 +26,7 @@ const SendReportMilestone: React.FC<SendReportMilestoneProps> = ({ campaign }) =
         currentMilestone, } = useDraftCard(campaign, false, true);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const { closeModal } = useModalStore();
+    const { closeModal } = useModal();
 
 
     const numberFromCurrentMilestone = getOrdinalString(Number(currentMilestone.charAt(1)))

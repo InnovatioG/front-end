@@ -1,9 +1,10 @@
-import { Script } from 'lucid-cardano';
+import { Script, UTxO } from 'lucid-cardano';
 import { scriptSchema, yup } from 'smart-db/backEnd';
 
 export interface ProtocolCreateParams {
     name: string;
     configJson: string;
+    uTxO: UTxO;
 }
 
 // export interface SellMarketNFTTxParams {
