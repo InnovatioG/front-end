@@ -4,60 +4,60 @@
 /* BASE BUTTON */
 
 .standardBtnCampaignMob {
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background: colors.$primary-color;
-  .icon {
-    fill: colors.$primary-dark-color;
-  }
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background: colors.$primary-color;
+    .icon {
+        fill: colors.$primary-dark-color;
+    }
 }
 
 .standardBtnCampaign {
-  background: colors.$primary-color;
-  border-radius: 26px;
-  height: 52px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font: fonts.$f400-medium;
-  cursor: pointer;
-  border: 2px solid colors.$border-dark-color;
-  .icon {
-    fill: colors.$primary-dark-color;
-    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  }
-  .text {
-    color: colors.$primary-font;
-  }
-  &:hover {
-    background: colors.$primary-dark-color;
+    background: colors.$primary-color;
+    border-radius: 26px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font: fonts.$f400-medium;
+    cursor: pointer;
+    border: 2px solid colors.$border-dark-color;
     .icon {
-      fill: colors.$light-color;
-      animation: bounceRotate 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        fill: colors.$primary-dark-color;
+        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
     .text {
-      color: colors.$light-color;
+        color: colors.$primary-font;
     }
-  }
+    &:hover {
+        background: colors.$primary-dark-color;
+        .icon {
+            fill: colors.$light-color;
+            animation: bounceRotate 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .text {
+            color: colors.$light-color;
+        }
+    }
 }
 
 /* BUTTON TYPES */
 
 .btnCampaignMob {
-  @extend .standardBtnCampaignMob;
+    @extend .standardBtnCampaignMob;
 }
 
 .BtnCampaignPrimary {
-  @extend .standardBtnCampaign;
-  border: 2px solid colors.$primary-dark-color;
+    @extend .standardBtnCampaign;
+    border: 2px solid colors.$primary-dark-color;
 }
 
 .btnCampaignSecondary {
-  @extend .standardBtnCampaign;
+    @extend .standardBtnCampaign;
 }

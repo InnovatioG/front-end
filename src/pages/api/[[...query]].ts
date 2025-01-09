@@ -22,4 +22,3 @@ export default smartDBMainApiHandler.bind(smartDBMainApiHandler);
 // This is the main API handler for the backend, provided by the SmartDB library.
 // It acts as an all-in-one function to manage requests, routing them to the appropriate endpoints.
 // By binding the handler to itself, the method's internal context is preserved, ensuring proper execution.
-

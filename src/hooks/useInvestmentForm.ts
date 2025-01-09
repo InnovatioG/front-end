@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { getInputFields, getRectangles } from '@/components/Invest/constats';
+import { useState } from 'react';
 
 interface UseInvestmentFormProps {
     cdCampaignToken_PriceADA: number | null;

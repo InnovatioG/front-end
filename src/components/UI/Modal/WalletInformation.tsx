@@ -1,6 +1,6 @@
 import { useModal } from '@/contexts/ModalContext';
 import { HIDE, REFRESH, SHOW } from '@/utils/images';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { CARDANO_WALLETS, useWalletActions } from 'smart-db';
 import Toggle from '../Buttons/Toggle/Toggle';
 import GeneralButtonUI from '../Buttons/UI/Button';

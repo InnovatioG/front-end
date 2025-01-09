@@ -166,8 +166,7 @@
                         "twitter": "https://twitter.com/user7",
                         "linkedin": "https://linkedin.com/in/user7"
                     }
-                }
-                ,
+                },
                 {
                     "wallet_id_as_string": "USER8",
                     "role": "Editor",
@@ -278,7 +277,6 @@
                         "linkedin": "https://linkedin.com/in/user10"
                     }
                 }
-
             ],
             "contents": [
                 {

@@ -1,8 +1,8 @@
-import styles from './HeaderMobile.module.scss';
+import { Session } from 'next-auth';
 import BtnCampaign from '../../UI/Buttons/Campaign/BtnCampaign';
 import BtnConnectWallet from '../../UI/Buttons/ConnectWallet/BtnConnectWallet';
+import styles from './HeaderMobile.module.scss';
 import NavMenu from './NavMenu';
-import { Session } from 'next-auth';
 
 export default function HeaderMobile({ session }: { session: Session | null }) {
     return (

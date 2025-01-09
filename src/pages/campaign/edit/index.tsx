@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import JSON from "@/HardCode/campaignId.json";
-import CampaignHeader from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignHeader';
-import styles from "../[id]/campainPagelayout.module.scss";
-import CampaignDashCreation from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignDash';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import ProjectEditionContainer from '@/components/CampaignCreation/Elements/ProjectEditionContainer';
-import LoadingPage from '@/components/LoadingPage/LoadingPage';
-import { useSession } from 'next-auth/react';
+import JSON from '@/HardCode/campaignId.json';
 import ButtonSaveDraftContainer from '@/components/CampaignCreation/Elements/GeneralbuttonContainer';
+import ProjectEditionContainer from '@/components/CampaignCreation/Elements/ProjectEditionContainer';
+import CampaignDashCreation from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignDash';
+import CampaignHeader from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignHeader';
 import GeneralError from '@/components/General/Elements/Errors/GeneralError';
+import LoadingPage from '@/components/LoadingPage/LoadingPage';
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import styles from '../[id]/campainPagelayout.module.scss';
 
 interface CampaignByIndexProps {
     // Define props aquí si es necesario
 }
 
 const errorMessages = {
-    notFound: "Campaign not found",
-    noPermission: "You do not have permission to edit this campaign.",
+    notFound: 'Campaign not found',
+    noPermission: 'You do not have permission to edit this campaign.',
 };
 
 const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
@@ -38,7 +38,7 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
             const campaign: any = JSON.campaigns.find((camp) => camp.id === campaign_id);
 
             if (campaign) {
-                const user = JSON.users.find(user => user.wallet_address === session?.user?.address);
+                const user = JSON.users.find((user) => user.wallet_address === session?.user?.address);
                 if (user && user.id === campaign.creator_wallet_id) {
                     setProject(campaign);
                     setError(null);
@@ -50,8 +50,8 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
             }
 
             if (menuview) {
-                if (typeof menuview === 'string' && ["Project Detail", "Resume of the team", "Roadmap & Milestones", "Tokenomics", "Q&A"].includes(menuview)) {
-                    setMenuView(menuview as "Project Detail" | "Resume of the team" | "Roadmap & Milestones" | "Tokenomics" | "Q&A");
+                if (typeof menuview === 'string' && ['Project Detail', 'Resume of the team', 'Roadmap & Milestones', 'Tokenomics', 'Q&A'].includes(menuview)) {
+                    setMenuView(menuview as 'Project Detail' | 'Resume of the team' | 'Roadmap & Milestones' | 'Tokenomics' | 'Q&A');
                 }
             }
         }
@@ -66,7 +66,6 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
     useEffect(() => {
         fetchCampaign();
     }, [id, setProject, fetchAdaPrice, setIsLoading, setMenuView, menuview, session]);
-
 
     if (isLoading) {
         return <LoadingPage />;
@@ -86,7 +85,6 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
             </div>
         </main>
     );
-}
+};
 
 export default CampaignByIndex;
-

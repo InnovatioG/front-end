@@ -1,23 +1,25 @@
-import React from 'react';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/UI/Accordion/Accordion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/Elements/DefaultAvatar/DefaultAvatar';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/UI/Accordion/Accordion';
 import SocialButton from '@/components/UI/Buttons/SocialIcon/SocialButton';
-import { socialIcons } from '@/utils/constants';
-import styles from "./ResumeOftheTeam.module.scss"
-import { formatLink } from '@/utils/formats';
-import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import { MembersTeam } from '@/HardCode/databaseType';
-import Link from 'next/link';
+import { useCampaignStore } from '@/store/campaign/useCampaignStore';
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { socialIcons } from '@/utils/constants';
+import { formatLink } from '@/utils/formats';
 import { useRouter } from 'next/router';
+import React from 'react';
+import styles from './ResumeOftheTeam.module.scss';
 
 interface ResumeOfTheTeamAccordionProps {
     onEditMember?: (member: MembersTeam) => void;
 }
 
-type SocialMediaKeys = Extract<{
-    [K in keyof MembersTeam]: MembersTeam[K] extends string ? K : never
-}[keyof MembersTeam], string>;
+type SocialMediaKeys = Extract<
+    {
+        [K in keyof MembersTeam]: MembersTeam[K] extends string ? K : never;
+    }[keyof MembersTeam],
+    string
+>;
 
 const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onEditMember }) => {
     const { project, editionMode } = useProjectDetailStore();
@@ -32,7 +34,6 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
         linkedin: 'Linkedin',
         xs: 'XS',
     };
-
 
     /*************  ✨ Codeium Command ⭐  *************/
     /**
@@ -50,8 +51,8 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
         <div>
             <Accordion type="single" collapsible className={styles.accordionContainer}>
                 {project.members_team.map((member, index) => (
-                    <AccordionItem key={index} value={`item-${index}`} >
-                        <AccordionTrigger open={true} toggleOpen={() => { }}>
+                    <AccordionItem key={index} value={`item-${index}`}>
+                        <AccordionTrigger open={true} toggleOpen={() => {}}>
                             <div className={styles.faqContainer}>
                                 <Avatar big={true}>
                                     <AvatarImage src={formatLink(member.member_picture || '')} alt={member.name} />
@@ -71,23 +72,20 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
                                     </div>
 
                                     <div className={styles.subContentHeader}>
-                                        <span className={styles.spanTitle}>
-                                            Social Media:
-                                        </span>
+                                        <span className={styles.spanTitle}>Social Media:</span>
                                         <div className={styles.subContentHeader}>
-                                            <span className={styles.spanTitle}>
-                                                Social Media:
-                                            </span>
+                                            <span className={styles.spanTitle}>Social Media:</span>
                                             <div className={styles.socialMediaContainer}>
                                                 {Object.entries(socialMedia).map(([key, label]) => {
                                                     const link = member[key as keyof MembersTeam]; // Acceso directo
-                                                    const socialIcon = socialIcons.find(icon => icon.name === key);
+                                                    const socialIcon = socialIcons.find((icon) => icon.name === key);
                                                     return (
-                                                        link && socialIcon && (
+                                                        link &&
+                                                        socialIcon && (
                                                             <a href={formatLink(link as string)} key={key} target="_blank" rel="noopener noreferrer">
                                                                 <SocialButton
                                                                     icon={socialIcon.icon}
-                                                                    name={key as "website" | "facebook" | "instagram" | "discord" | "linkedin" | "twitter"}
+                                                                    name={key as 'website' | 'facebook' | 'instagram' | 'discord' | 'linkedin' | 'twitter'}
                                                                 />
                                                             </a>
                                                         )
@@ -98,16 +96,14 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
                                     </div>
                                 </div>
                                 <div>
-                                    <span className={styles.spanTitle}>
-                                        Description:</span>
+                                    <span className={styles.spanTitle}>Description:</span>
                                     <p className={styles.contentText}>{member.member_description}</p>
                                 </div>
-                                {
-                                    editionMode &&
-                                    <button
-                                        className={styles.editButton}
-                                        onClick={() => handleClickEditButton(member)}>Edit </button>
-                                }
+                                {editionMode && (
+                                    <button className={styles.editButton} onClick={() => handleClickEditButton(member)}>
+                                        Edit{' '}
+                                    </button>
+                                )}
                             </div>
                         </AccordionContent>
                     </AccordionItem>
@@ -115,6 +111,6 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
             </Accordion>
         </div>
     );
-}
+};
 
 export default ResumeOfTheTeamAccordion;

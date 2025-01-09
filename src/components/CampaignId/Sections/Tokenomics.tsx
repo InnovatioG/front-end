@@ -1,47 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import axios from 'axios';
+import EmptyState from '@/components/CampaignId/Sections/EmptyState';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
-import styles from "./Tokenomics.module.scss";
-import EmptyState from "@/components/CampaignId/Sections/EmptyState"
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import React, { useEffect } from 'react';
+import styles from './Tokenomics.module.scss';
 interface TokenomicsProps {
     // Define props here
 }
 
 const Tokenomics: React.FC<TokenomicsProps> = (props) => {
-
     const { project, fetchAdaPrice, price_ada, isLoadingPrice } = useProjectDetailStore();
     const goal = project.goal;
     const cdRequestedMaxADA = project.cdRequestedMaxADA;
-
-
 
     useEffect(() => {
         fetchAdaPrice();
     }, [fetchAdaPrice]);
 
-
-    const valuePerToken = project.cdRequestedMaxADA === null || isNaN(project.cdRequestedMaxADA) || project.goal === null || isNaN(project.goal) || project.goal === 0
-        ? "Price per token"
-        : (
+    const valuePerToken =
+        project.cdRequestedMaxADA === null || isNaN(project.cdRequestedMaxADA) || project.goal === null || isNaN(project.goal) || project.goal === 0 ? (
+            'Price per token'
+        ) : (
             <div className={styles.priceInAda}>
-                <img src={"/img/icons/ADA.svg"} alt="ADA" height={40} width={40} />
-                <span className={styles.strong}>
-                    {(project.goal / project.cdRequestedMaxADA / price_ada).toFixed(2)}
-                </span>
+                <img src={'/img/icons/ADA.svg'} alt="ADA" height={40} width={40} />
+                <span className={styles.strong}>{(project.goal / project.cdRequestedMaxADA / price_ada).toFixed(2)}</span>
             </div>
         );
-
 
     if (isLoadingPrice) {
         return <LoadingPage />;
     }
 
-    if (project.tokenomics_description === "") {
+    if (project.tokenomics_description === '') {
         return <EmptyState />;
     }
-
-
 
     return (
         <div className={styles.layout}>
@@ -59,11 +50,9 @@ const Tokenomics: React.FC<TokenomicsProps> = (props) => {
                     <span className={styles.strong}>{valuePerToken}</span>
                 </div>
             </div>
-            <div
-                dangerouslySetInnerHTML={{ __html: project.tokenomics_description }}
-            />
+            <div dangerouslySetInnerHTML={{ __html: project.tokenomics_description }} />
         </div>
     );
-}
+};
 
 export default Tokenomics;

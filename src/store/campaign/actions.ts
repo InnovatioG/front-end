@@ -1,6 +1,5 @@
-import { CampaignState } from '@/store/campaign/initialState';
-import type { User } from '@/HardCode/databaseType';
 import type { MembersTeam } from '@/HardCode/databaseType';
+import { CampaignState } from '@/store/campaign/initialState';
 
 type CampaignStateKey = keyof CampaignState;
 

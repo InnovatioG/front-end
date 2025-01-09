@@ -1,7 +1,7 @@
-import { useMilestone } from './useMilestone';
-import styles from './Milestone.module.scss';
 import { MilestoneEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
+import styles from './Milestone.module.scss';
+import { useMilestone } from './useMilestone';
 
 export default function Milestone() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove, getStatusName } = useMilestone();

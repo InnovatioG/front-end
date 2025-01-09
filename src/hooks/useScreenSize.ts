@@ -1,6 +1,6 @@
-import { useResponsiveContext } from "@/contexts/ResponsiveContext";
+import { useResponsiveContext } from '@/contexts/ResponsiveContext';
 
 export const useScreenSize = () => {
-  const { screenSize } = useResponsiveContext();
-  return screenSize;
-}
+    const { screenSize } = useResponsiveContext();
+    return screenSize;
+};

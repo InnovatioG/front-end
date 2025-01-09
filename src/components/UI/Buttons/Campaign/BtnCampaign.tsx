@@ -1,8 +1,8 @@
-import Link from 'next/link';
-import styles from './BtnCampaign.module.scss';
 import { PLUS_ICON } from '@/utils/images';
 import { ROUTES } from '@/utils/routes';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import styles from './BtnCampaign.module.scss';
 
 import { useDashboardCard } from '@/hooks/useDashboardCard';
 import { useWalletStore } from 'smart-db';
@@ -30,13 +30,14 @@ const BtnCampaignMobile: React.FC<SubComponentProps> = ({ dir }) => {
 
 const BtnCampaignPrimary: React.FC<SubComponentProps> = ({ width, dir }) => {
     const walletStore = useWalletStore();
+
     const address = walletStore.info?.address || '';
 
-    const { haveProjects } = useDashboardCard(address)
-    //! TODO: Cambiar el nombre del boton segun si hay campañas creadas o no. 
+    const { haveProjects } = useDashboardCard(address);
+    //! TODO: Cambiar el nombre del boton segun si hay campañas creadas o no.
 
     return (
-        <Link href={dir} >
+        <Link href={dir}>
             <div className={styles.BtnCampaignPrimary} style={width ? { width: `${width}px` } : undefined}>
                 <svg width="24" height="24" className={styles.icon}>
                     <use href={PLUS_ICON}></use>
@@ -50,7 +51,7 @@ const BtnCampaignPrimary: React.FC<SubComponentProps> = ({ width, dir }) => {
 const BtnCampaignSecondary: React.FC<SubComponentProps> = ({ width, closeMenu, dir }) => {
     const walletStore = useWalletStore();
     const address = walletStore.info?.address || '';
-    const { haveProjects } = useDashboardCard(address)
+    const { haveProjects } = useDashboardCard(address);
 
     return (
         <Link href={dir}>

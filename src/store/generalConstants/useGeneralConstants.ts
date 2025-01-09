@@ -1,7 +1,6 @@
+import type { CampaignCategory, CampaignStatusGlobal, MilestoneStatusGlobal } from '@/HardCode/databaseType';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import axios from 'axios';
-import type { CampaignCategory, CampaignStatusGlobal, MilestoneStatusGlobal } from '@/HardCode/databaseType';
 
 interface GeneralStore {
     campaignCategories: CampaignCategory[];

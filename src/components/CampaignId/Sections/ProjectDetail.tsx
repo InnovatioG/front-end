@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import EmptyState from '@/components/CampaignId/Sections/EmptyState';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import styles from "./ProjectDetail.module.scss";
-import EmptyState from "@/components/CampaignId/Sections/EmptyState"
+import React, { useEffect, useRef, useState } from 'react';
+import styles from './ProjectDetail.module.scss';
 
 const ProjectDetail: React.FC = () => {
     const { project } = useProjectDetailStore();
@@ -47,7 +47,7 @@ const ProjectDetail: React.FC = () => {
     }, [campaignContentSorted, activeSection]);
 
     const handleClick = (id: number) => {
-        const index = campaignContentSorted.findIndex(content => content.id === id);
+        const index = campaignContentSorted.findIndex((content) => content.id === id);
         const section = sectionRefs.current[index];
         if (section) {
             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -63,11 +63,7 @@ const ProjectDetail: React.FC = () => {
             <div className={styles.sideBarNavagation}>
                 <ul className={styles.listContainer}>
                     {campaignContentSorted.map((content) => (
-                        <li
-                            key={content.id}
-                            className={`${styles.buttonList} ${activeSection === content.id ? styles.active : ''}`}
-                            onClick={() => handleClick(content.id)}
-                        >
+                        <li key={content.id} className={`${styles.buttonList} ${activeSection === content.id ? styles.active : ''}`} onClick={() => handleClick(content.id)}>
                             {content.name}
                         </li>
                     ))}
@@ -79,16 +75,15 @@ const ProjectDetail: React.FC = () => {
                         key={content.id}
                         id={`section-${content.id}`}
                         className={styles.container}
-                        ref={el => { sectionRefs.current[index] = el!; }}
+                        ref={(el) => {
+                            sectionRefs.current[index] = el!;
+                        }}
                     >
                         <div className={styles.titleContainer}>
                             <h2 className={styles.title}>{content.name}</h2>
                             <div className={styles.divisor}></div>
                         </div>
-                        <div
-                            dangerouslySetInnerHTML={{ __html: content.description }}
-                            className={styles.content}
-                        />
+                        <div dangerouslySetInnerHTML={{ __html: content.description }} className={styles.content} />
                     </div>
                 ))}
             </div>

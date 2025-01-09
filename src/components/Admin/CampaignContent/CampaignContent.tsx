@@ -1,7 +1,7 @@
-import { useCampaignContent } from './useCampaignContent';
-import styles from './CampaignContent.module.scss';
 import { CampaignContentEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
+import styles from './CampaignContent.module.scss';
+import { useCampaignContent } from './useCampaignContent';
 
 export default function CampaignContent() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaignContent();

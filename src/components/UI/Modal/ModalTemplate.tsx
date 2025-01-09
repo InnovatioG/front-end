@@ -1,17 +1,8 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import Modal from "react-modal";
-import styles from "./ModalTemplate.module.scss";
-import { useResponsiveContext } from "@/contexts/ResponsiveContext";
-import {
-    Drawer,
-    DrawerClose,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
-    DrawerTrigger,
-} from "@/components/UI/drawer";
+import { Drawer, DrawerContent } from '@/components/UI/drawer';
+import { useResponsiveContext } from '@/contexts/ResponsiveContext';
+import React from 'react';
+import Modal from 'react-modal';
+import styles from './ModalTemplate.module.scss';
 
 interface ModalProps {
     isOpen: boolean;
@@ -25,7 +16,7 @@ const ModalTemplate: React.FC<ModalProps> = ({ isOpen, setIsOpen, children }) =>
     if (screenSize === 'mobile' || screenSize === 'tablet') {
         return (
             <Drawer open={isOpen} onClose={() => setIsOpen(false)}>
-                <DrawerContent >
+                <DrawerContent>
                     <div className={styles.drawerContent}>
                         <button className={styles.closeButton} onClick={() => setIsOpen(false)}>
                             <span>x</span>
@@ -38,12 +29,7 @@ const ModalTemplate: React.FC<ModalProps> = ({ isOpen, setIsOpen, children }) =>
     }
 
     return (
-        <Modal
-            isOpen={isOpen}
-            onRequestClose={() => setIsOpen(false)}
-            overlayClassName={styles.overlay}
-            className={styles.modal}
-        >
+        <Modal isOpen={isOpen} onRequestClose={() => setIsOpen(false)} overlayClassName={styles.overlay} className={styles.modal}>
             <div className={styles.modalContent}>
                 <button className={styles.closeButton} onClick={() => setIsOpen(false)}>
                     <span>x</span>

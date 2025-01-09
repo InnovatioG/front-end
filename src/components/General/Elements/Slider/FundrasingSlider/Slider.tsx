@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import styles from "./Slider.module.scss";
+import styles from './Slider.module.scss';
 
 interface SliderProps {
     value: number;
@@ -31,6 +31,6 @@ const Slider: React.FC<SliderProps> = ({ value, setValue, min, max, step }) => {
             className={`${styles.slider} ${styles['slider-filled']}`} // Apply styling to the slider
         />
     );
-}
+};
 
 export default Slider;

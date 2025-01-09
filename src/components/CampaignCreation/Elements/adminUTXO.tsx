@@ -1,7 +1,6 @@
-import React from 'react';
-import styles from "./aminUTXO.module.scss"
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
-
+import React from 'react';
+import styles from './aminUTXO.module.scss';
 
 interface AdminUTXOSProps {
     // Define props here
@@ -16,11 +15,7 @@ const AdminUTXOS: React.FC<AdminUTXOSProps> = (props) => {
                     <h3 className={styles.h3}>Add UTXO</h3>
                     <div className={styles.buttonRow}>
                         <div className={styles.button}>
-                            <GeneralButtonUI
-                                text='Connect Wallet'
-                                onClick={() => console.log("Create")}
-                                classNameStyle='fillb'
-                            />
+                            <GeneralButtonUI text="Connect Wallet" onClick={() => console.log('Create')} classNameStyle="fillb" />
                         </div>
                     </div>
                 </div>
@@ -28,18 +23,10 @@ const AdminUTXOS: React.FC<AdminUTXOSProps> = (props) => {
                     <h3 className={styles.h3}>Manage UTXO</h3>
                     <div className={styles.buttonRow}>
                         <div className={styles.button}>
-                            <GeneralButtonUI
-                                text='Merge Funds'
-                                onClick={() => console.log("Create")}
-                                classNameStyle='fillb'
-                            />
+                            <GeneralButtonUI text="Merge Funds" onClick={() => console.log('Create')} classNameStyle="fillb" />
                         </div>
                         <div className={styles.button}>
-                            <GeneralButtonUI
-                                text='Balance Funds'
-                                onClick={() => console.log("Create")}
-                                classNameStyle='outline'
-                            />
+                            <GeneralButtonUI text="Balance Funds" onClick={() => console.log('Create')} classNameStyle="outline" />
                         </div>
                     </div>
                 </div>
@@ -47,6 +34,6 @@ const AdminUTXOS: React.FC<AdminUTXOSProps> = (props) => {
             <div></div>
         </article>
     );
-}
+};
 
 export default AdminUTXOS;

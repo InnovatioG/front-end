@@ -1,10 +1,10 @@
-import React from 'react';
+import BtnConnectWallet from '@/components/UI/Buttons/ConnectWallet/BtnConnectWallet';
+import TogglePrice from '@/components/UI/Buttons/Toggle/TogglePrice';
+import styles from '@/pages/campaign/new/CreatorCampaign.module.scss';
+import { LOGO_FULL_DARK } from '@/utils/images';
 import Image from 'next/image';
 import Link from 'next/link';
-import BtnConnectWallet from '@/components/UI/Buttons/ConnectWallet/BtnConnectWallet';
-import { LOGO_FULL_DARK } from '@/utils/images';
-import styles from '@/pages/campaign/new/CreatorCampaign.module.scss';
-import TogglePrice from '@/components/UI/Buttons/Toggle/TogglePrice';
+import React from 'react';
 
 /*  */
 
@@ -22,7 +22,7 @@ const FormHeader: React.FC<FormHeaderProps> = ({ session }) => {
                 <TogglePrice />
                 <BtnConnectWallet type="primary" width={166} />
             </div>
-        </div >
+        </div>
     );
 };
 

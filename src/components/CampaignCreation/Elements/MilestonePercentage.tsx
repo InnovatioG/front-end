@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import type { MilestoneF } from "@/HardCode/databaseType";
-import styles from "./MilestonePercentage.module.scss";
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import type { MilestoneF } from '@/HardCode/databaseType';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import { formatMoney } from '@/utils/formats';
+import React, { useEffect, useState } from 'react';
+import styles from './MilestonePercentage.module.scss';
 
 interface MilestonePercentageProps {
     milestone: MilestoneF;
@@ -12,12 +12,7 @@ interface MilestonePercentageProps {
     onPercentageChange: (percentage: number) => boolean;
 }
 
-const MilestonePercentage: React.FC<MilestonePercentageProps> = ({
-    milestone,
-    goal,
-    maxAvailablePercentage,
-    onPercentageChange,
-}) => {
+const MilestonePercentage: React.FC<MilestonePercentageProps> = ({ milestone, goal, maxAvailablePercentage, onPercentageChange }) => {
     const [percentage, setPercentage] = useState<number>(milestone.percentage);
     const { editionMode } = useProjectDetailStore();
     const { priceAdaOrDollar } = usePriceStore();
@@ -26,7 +21,6 @@ const MilestonePercentage: React.FC<MilestonePercentageProps> = ({
     useEffect(() => {
         setPercentage(milestone.percentage);
     }, [milestone.percentage]);
-
 
     const handlePercentageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value.replace(/[^0-9]/g, ''); // Remove non-digits

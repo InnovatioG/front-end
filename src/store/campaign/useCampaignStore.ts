@@ -1,18 +1,18 @@
-import { create } from 'zustand';
-import { immer } from 'zustand/middleware/immer';
-import { CampaignState, initialState } from '@/store/campaign/initialState';
+import type { Milestone, User } from '@/HardCode/databaseType';
+import { MembersTeam } from '@/HardCode/databaseType';
 import {
+    addMemberToTeam,
+    setBrandFieldAction,
     setCampaignStateAction,
+    setMembersTeam,
     setNestedCampaignStateAction,
     setNextStepAction,
     setPrevStepAction,
-    setBrandFieldAction,
-    setMembersTeam,
-    addMemberToTeam,
     updateMemberField,
 } from '@/store/campaign/actions';
-import type { User, Milestone } from '@/HardCode/databaseType';
-import { MembersTeam } from '@/HardCode/databaseType';
+import { CampaignState, initialState } from '@/store/campaign/initialState';
+import { create } from 'zustand';
+import { immer } from 'zustand/middleware/immer';
 interface UseCampaignStore extends CampaignState {
     newMember: MembersTeam;
     setStep: (step: 1 | 2 | 3 | 4) => void;

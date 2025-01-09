@@ -1,14 +1,12 @@
-import React from 'react';
-import styles from './Campaign.module.scss';
-import { useSession } from 'next-auth/react';
-import BtnConnectWallet from '@/components/UI/Buttons/ConnectWallet/BtnConnectWallet';
-import { useScreenSize } from '@/hooks/useScreenSize';
-import DraftDashboard from '@/components/CampaignDashboard/Sections/Draft/DraftDashboard';
 import NewDraftDashboard from '@/components/CampaignDashboard/Sections/Draft/DraftDashboard';
-import { useDashboardCard } from '@/hooks/useDashboardCard';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
+import BtnConnectWallet from '@/components/UI/Buttons/ConnectWallet/BtnConnectWallet';
 import GoogleConnect from '@/components/UI/Buttons/GoogleConnect/GoogleConnect';
+import { useDashboardCard } from '@/hooks/useDashboardCard';
+import { useScreenSize } from '@/hooks/useScreenSize';
+import { useSession } from 'next-auth/react';
 import { useWalletStore } from 'smart-db';
+import styles from './Campaign.module.scss';
 
 export default function Home() {
     const walletStore = useWalletStore();

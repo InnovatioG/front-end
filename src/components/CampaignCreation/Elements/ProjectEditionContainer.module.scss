@@ -1,14 +1,14 @@
 .generalContainer {
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border-radius: 2.5rem;
-  padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 2.5rem;
+    padding: 3rem;
 }
 
 @media screen and (max-width: 768px) {
-  .generalContainer {
-    padding: 1rem 0.5rem;
-    border-radius: 1rem;
-  }
+    .generalContainer {
+        padding: 1rem 0.5rem;
+        border-radius: 1rem;
+    }
 }

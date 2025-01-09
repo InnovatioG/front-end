@@ -31,4 +31,3 @@ export * from './Script.Entity.Mongo';
 export * from './Script.Entity.PostgreSQL';
 export * from './SubmissionStatus.Entity.Mongo';
 export * from './SubmissionStatus.Entity.PostgreSQL';
-

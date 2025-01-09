@@ -1,21 +1,14 @@
-import React, { useState } from 'react';
-import Image from 'next/image';
-import styles from './Avatar.module.scss';
-import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import UploadFile from '@/components/UI/Buttons/UploadFile/UploadFile';
-import { Interface } from 'readline';
-
+import Image from 'next/image';
+import React from 'react';
+import styles from './Avatar.module.scss';
 
 export interface AvatarProps {
     setPicture: (value: string) => void;
     picture: string;
 }
 
-
-
-const Avatar = ({
-    setPicture, picture
-}: AvatarProps) => {
+const Avatar = ({ setPicture, picture }: AvatarProps) => {
     /*     const { setCompanyLogo, newCampaign } = useCampaignStore();
      */
 
@@ -34,20 +27,13 @@ const Avatar = ({
 
     return (
         <section className={styles.generalContainer}>
-            <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
-                id="fileInput"
-            />
+            <input type="file" accept="image/*" onChange={handleFileChange} style={{ display: 'none' }} id="fileInput" />
             <div className={styles.containerIcon}>
                 {!picture ? (
-                    <UploadFile styleType='black' />
+                    <UploadFile styleType="black" />
                 ) : (
                     <div className={styles.avatarContainer}>
-                        <Image src={picture} alt="Avatar" layout="fill"
-                            objectFit="cover" className={styles.picturePreview} />
+                        <Image src={picture} alt="Avatar" layout="fill" objectFit="cover" className={styles.picturePreview} />
                     </div>
                 )}
             </div>

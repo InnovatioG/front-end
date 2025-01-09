@@ -1,6 +1,6 @@
 import { CHEVRON_RIGHT } from '@/utils/images';
-import styles from './BtnDraftActions.module.scss';
 import Link from 'next/link';
+import styles from './BtnDraftActions.module.scss';
 
 interface BtnActionsProps {
     type: any;

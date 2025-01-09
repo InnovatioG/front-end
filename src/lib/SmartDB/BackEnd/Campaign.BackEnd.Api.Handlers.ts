@@ -10,7 +10,7 @@ import {
     CascadeUpdate,
     NextApiRequestAuthenticated,
     console_error,
-    console_log
+    console_log,
 } from 'smart-db/backEnd';
 import { CampaignEntity } from '../Entities/Campaign.Entity';
 

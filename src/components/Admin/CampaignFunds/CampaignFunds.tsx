@@ -1,7 +1,7 @@
-import { useCampaignFunds } from './useCampaignFunds';
-import styles from './CampaignFunds.module.scss';
 import { CampaignFundsEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
+import styles from './CampaignFunds.module.scss';
+import { useCampaignFunds } from './useCampaignFunds';
 
 export default function CampaignFunds() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaignFunds();

@@ -1,6 +1,6 @@
-import React from 'react';
 import CommonsBtn from '@/components/UI/Buttons/CommonsBtn';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
+import React from 'react';
 import styles from './StepThree.module.scss';
 
 interface StepThreeProps {
@@ -10,7 +10,7 @@ interface StepThreeProps {
 const StepThree: React.FC<StepThreeProps> = (props) => {
     const { setBrandField, newCampaign, nextStep } = useCampaignStore();
 
-    const formFields: { [key in "website" | "facebook" | "instagram" | "discord" | "linkedin" | "twitter"]: string } = {
+    const formFields: { [key in 'website' | 'facebook' | 'instagram' | 'discord' | 'linkedin' | 'twitter']: string } = {
         website: newCampaign.website,
         facebook: newCampaign.facebook,
         instagram: newCampaign.instagram,
@@ -21,8 +21,7 @@ const StepThree: React.FC<StepThreeProps> = (props) => {
 
     const disabledButton = () => {
         return !newCampaign.website;
-    }
-
+    };
 
     return (
         <div className={styles.stepThreeLayout}>
@@ -44,15 +43,10 @@ const StepThree: React.FC<StepThreeProps> = (props) => {
                 })}
             </div>
             <div className={styles.btnActions}>
-                <CommonsBtn
-                    type="primary"
-                    action={() => nextStep()}
-                    content="Continue"
-                    disabled={disabledButton()}
-                />
+                <CommonsBtn type="primary" action={() => nextStep()} content="Continue" disabled={disabledButton()} />
             </div>
         </div>
     );
-}
+};
 
 export default StepThree;

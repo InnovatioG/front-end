@@ -1,7 +1,7 @@
-import { useCampaignFaqs } from './useCampaignFaqs';
-import styles from './CampaignFaqs.module.scss';
 import { CampaignFaqsEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
+import styles from './CampaignFaqs.module.scss';
+import { useCampaignFaqs } from './useCampaignFaqs';
 
 export default function CampaignFaqs() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaignFaqs();

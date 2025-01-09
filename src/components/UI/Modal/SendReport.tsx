@@ -1,56 +1,62 @@
-import React, { useState } from 'react';
 import { useModal } from '@/contexts/ModalContext';
-import styles from "./ViewReportModal.module.scss"
-import useDraftCard from '@/hooks/useDraftCard';
 import type { Campaign } from '@/HardCode/databaseType';
+import useDraftCard from '@/hooks/useDraftCard';
 import { getOrdinalString } from '@/utils/formats';
+import React, { useState } from 'react';
 import GeneralButtonUI from '../Buttons/UI/Button';
+import styles from './ViewReportModal.module.scss';
 
 interface SendReportMilestoneProps {
-    campaign: Campaign | undefined
-
+    campaign: Campaign | undefined;
 }
 
 const SendReportMilestone: React.FC<SendReportMilestoneProps> = ({ campaign }) => {
     const [report, setReport] = useState('');
 
-
     if (!campaign) return null; // o algún otro comportamiento por defecto
 
-    const { label,
+    //TODO: esta mal el uso de useDraftCard react-hooks/rules-of-hooks
+
+    const {
+        label,
         labelClass,
         buttons,
         timeRemaining,
         formatAllTime,
+        currentMilestone,
         // eslint-disable-next-line react-hooks/rules-of-hooks
-        currentMilestone, } = useDraftCard(campaign, false, true);
+    } = useDraftCard(campaign, false, true);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { closeModal } = useModal();
 
-
-    const numberFromCurrentMilestone = getOrdinalString(Number(currentMilestone.charAt(1)))
+    const numberFromCurrentMilestone = getOrdinalString(Number(currentMilestone.charAt(1)));
 
     return (
         <article className={styles.modalLayout}>
             <h1 className={styles.title}>{numberFromCurrentMilestone} Campaign Milestone </h1>
             <div className={styles.textAreaContainer}>
-                <textarea name="" id="" cols={30} rows={10} className={styles.textArea} placeholder='Maximum 5000 characters' maxLength={5000}
+                <textarea
+                    name=""
+                    id=""
+                    cols={30}
+                    rows={10}
+                    className={styles.textArea}
+                    placeholder="Maximum 5000 characters"
+                    maxLength={5000}
                     value={report}
                     onChange={(e) => setReport(e.target.value)}
                 ></textarea>
                 <label htmlFor="" className={styles.count}>
                     {report.length} / 5000
                 </label>
-
             </div>
             <div className={styles.buttonContainerSendReport}>
-                <GeneralButtonUI text="Cancel" classNameStyle='outlineb' onClick={closeModal} />
-                <GeneralButtonUI text="Confirm" classNameStyle='fillb' onClick={closeModal} />
-
+                <GeneralButtonUI text="Cancel" classNameStyle="outlineb" onClick={closeModal} />
+                <GeneralButtonUI text="Confirm" classNameStyle="fillb" onClick={closeModal} />
             </div>
         </article>
     );
-}
+};
 
 export default SendReportMilestone;

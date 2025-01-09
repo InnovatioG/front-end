@@ -1,3 +1,4 @@
+import { CAMPAIGN_VERSION, EMERGENCY_ADMIN_TOKEN_POLICY_CS } from '@/utils/constants/contracts';
 import {
     CampaignCategoryDefault,
     CampaignCategoryDefaultNames,
@@ -49,7 +50,6 @@ import {
     SubmissionStatusEntity,
 } from '../Entities';
 import { CampaignFactory, ProtocolEntity } from '../Entities/Protocol.Entity';
-import { CAMPAIGN_VERSION, EMERGENCY_ADMIN_TOKEN_POLICY_CS } from '@/utils/constants/contracts';
 
 @BackEndAppliedFor(ProtocolEntity)
 export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
@@ -674,7 +674,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
 
         const getCampaignDatumStatus = (statusStr: string): CampaignDatumStatus => {
             const statusId = CampaignStatus[statusStr as keyof typeof CampaignStatus];
-            
+
             // Map Campaign Status to Datum Status
             switch (statusId) {
                 case CampaignStatus.NOT_STARTED:
@@ -701,10 +701,10 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
                     throw new Error(`Invalid campaign status: ${statusStr}`);
             }
         };
-        
+
         const getMilestoneDatumStatus = (statusStr: string): MilestoneDatumStatus => {
             const statusId = MilestoneStatus[statusStr as keyof typeof MilestoneStatus];
-            
+
             // Map Milestone Status to Datum Status
             switch (statusId) {
                 case MilestoneStatus.NOT_STARTED:
@@ -725,8 +725,8 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             return milestones.map((m) => ({
                 cmPerncentage: m.perncentage,
                 cmStatus: getMilestoneDatumStatus(m.milestone_status_id_as_string),
-            }))
-        }
+            }));
+        };
 
         // In createCampaign:
         const isDeployed = getCampaignDeployedStatus(campaignData.campaign_status_id_as_string);
@@ -793,7 +793,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             cdRequestedMinADA: isDeployed ? BigInt(campaignData.requestedMinADA || 0) : BigInt(0),
             cdFundedADA: isDeployed ? BigInt(campaignData.fundedADA || 0) : BigInt(0),
             cdCollectedADA: isDeployed ? BigInt(campaignData.collectedADA || 0) : BigInt(0),
-            cdStatus: isDeployed ? getCampaignDatumStatus(campaignData.campaign_status_id_as_string ): 0,
+            cdStatus: isDeployed ? getCampaignDatumStatus(campaignData.campaign_status_id_as_string) : 0,
             cdMilestones: isDeployed ? getDatumsMilestone(campaignData.milestones) : [],
             cdFundsCount: isDeployed ? BigInt(campaignData.fundsCount || 0) : BigInt(0),
             cdFundsIndex: isDeployed ? BigInt(campaignData.fundsIndex || 0) : BigInt(0),

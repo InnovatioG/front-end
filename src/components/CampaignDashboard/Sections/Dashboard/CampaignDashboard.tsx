@@ -1,11 +1,11 @@
-import { useCallback, useEffect } from 'react';
-import styles from './CampaignDashboard.module.scss';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
-import CampaignCard from './CampaignCard/CampaignCard';
-import CampaignFilters from './CampaignFilters/CampaignFilters';
 import { useDashboardCard } from '@/hooks/useDashboardCard';
 import Link from 'next/link';
+import { useCallback } from 'react';
 import { useWalletStore } from 'smart-db';
+import CampaignCard from './CampaignCard/CampaignCard';
+import styles from './CampaignDashboard.module.scss';
+import CampaignFilters from './CampaignFilters/CampaignFilters';
 export default function CampaignDashboard() {
     const walletStore = useWalletStore();
     const address = walletStore.info?.address || '';

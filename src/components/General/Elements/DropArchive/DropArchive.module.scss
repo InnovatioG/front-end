@@ -1,36 +1,36 @@
-@use "@/styles/settings/colors";
-@use "@/styles/settings/fonts";
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
 .container {
-  border-radius: 1rem;
-  border: 1px dashed #dfdfdf;
-  padding: 1.38rem;
+    border-radius: 1rem;
+    border: 1px dashed #dfdfdf;
+    padding: 1.38rem;
 }
 
 .uploadArchiveContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 0rem 4rem;
-  p {
-    font: fonts.$f50-regular;
-    color: colors.$placeholder-color;
-  }
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0rem 4rem;
+    p {
+        font: fonts.$f50-regular;
+        color: colors.$placeholder-color;
+    }
 }
 
 .avatarContainer {
-  position: relative;
-  overflow: hidden;
-  border-radius: 50%;
-  height: 76px;
-  width: 76px;
-  top: 0;
-  margin: -1rem;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    height: 76px;
+    width: 76px;
+    top: 0;
+    margin: -1rem;
 }
 
 .picturePreview {
-  top: 0;
-  left: 0;
+    top: 0;
+    left: 0;
 }

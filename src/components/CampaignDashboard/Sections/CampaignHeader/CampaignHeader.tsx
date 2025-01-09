@@ -1,18 +1,12 @@
-import React from 'react';
-import { Avatar, AvatarImage, AvatarFallback } from '@/components/General/Elements/DefaultAvatar/DefaultAvatar';
-import styles from "./CampaignHeader.module.scss"
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/Elements/DefaultAvatar/DefaultAvatar';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import React from 'react';
+import styles from './CampaignHeader.module.scss';
 
-interface CampaignHeaderProps {
-
-}
+interface CampaignHeaderProps {}
 
 const CampaignHeader: React.FC<CampaignHeaderProps> = () => {
-
-
     const { project } = useProjectDetailStore();
-
-
 
     return (
         <div className={styles.headerCampaignContainer}>
@@ -23,6 +17,6 @@ const CampaignHeader: React.FC<CampaignHeaderProps> = () => {
             <h2 className={styles.title}>{project.title}</h2>
         </div>
     );
-}
+};
 
 export default CampaignHeader;

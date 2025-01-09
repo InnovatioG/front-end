@@ -14,4 +14,3 @@ export * from './Protocol.Entity';
 export * from './ProtocolAdminWallet.Entity';
 export * from './Script.Entity';
 export * from './SubmissionStatus.Entity';
-

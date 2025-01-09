@@ -1,7 +1,7 @@
+import Toggle from '@/components/UI/Buttons/Toggle/Toggle';
+import styles from '@/components/UI/Buttons/Toggle/Toggle.module.scss';
+import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 import React, { useState } from 'react';
-import Toggle from "@/components/UI/Buttons/Toggle/Toggle";
-import { usePriceStore } from "@/store/price/usepriceAdaOrDollar";
-import styles from "@/components/UI/Buttons/Toggle/Toggle.module.scss";
 
 interface TogglePriceProps {
     // Define props here
@@ -9,10 +9,10 @@ interface TogglePriceProps {
 
 const TogglePrice: React.FC<TogglePriceProps> = (props) => {
     const { priceAdaOrDollar, setPriceAdaOrDollar } = usePriceStore();
-    const [isActive, setIsActive] = useState(priceAdaOrDollar === "dollar");
+    const [isActive, setIsActive] = useState(priceAdaOrDollar === 'dollar');
 
     const handleClickToggle = () => {
-        const newPrice = priceAdaOrDollar === "ada" ? "dollar" : "ada";
+        const newPrice = priceAdaOrDollar === 'ada' ? 'dollar' : 'ada';
         setIsActive(!isActive);
         setPriceAdaOrDollar(newPrice);
     };
@@ -33,6 +33,6 @@ const TogglePrice: React.FC<TogglePriceProps> = (props) => {
             )}
         </div>
     );
-}
+};
 
 export default TogglePrice;

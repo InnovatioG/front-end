@@ -1,14 +1,13 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import styles from './Header.module.scss';
-import { LOGO_FULL_LIGHT } from '@/utils/images';
 import { useScreenSize } from '@/hooks/useScreenSize';
-import HeaderMobile from './HeaderMobile';
-import { useState } from 'react';
-import HeaderDesktop from './HeaderDesktop';
+import { LOGO_FULL_LIGHT } from '@/utils/images';
 import { useSession } from 'next-auth/react';
-import CalendarModal from '@/components/UI/Modal/CalendarModal';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
 import { useWalletSession } from 'smart-db';
+import styles from './Header.module.scss';
+import HeaderDesktop from './HeaderDesktop';
+import HeaderMobile from './HeaderMobile';
 
 export default function Header() {
     const screenSize = useScreenSize();

@@ -1,5 +1,4 @@
-import { Script, UTxO } from 'lucid-cardano';
-import { scriptSchema, yup } from 'smart-db/backEnd';
+import { UTxO } from 'lucid-cardano';
 
 export interface ProtocolCreateParams {
     name: string;

@@ -1,28 +1,25 @@
-import React, { useEffect, useState } from 'react';
 import Slider from '@/components/General/Elements/Slider/FundrasingSlider/Slider';
-import styles from "./StepTwo.module.scss";
-import { useCampaignStore } from '@/store/campaign/useCampaignStore';
+import ToolTipInformation from '@/components/General/Elements/TooltipInformation/tooltipInformation';
 import SelectButton from '@/components/UI/Buttons/SelectButton/SelectButton';
+import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import ToolTipInformation from '@/components/General/Elements/TooltipInformation/tooltipInformation';
+import React, { useEffect, useState } from 'react';
+import styles from './StepTwo.module.scss';
 interface FundrasingSliderProps {
     // Define props here
 }
 
 //! TODO Cambiar el h2 por un input para que el usuario pueda escribir el valor que desee
 
-
 const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
     const { newCampaign, setGoal, setMilestones } = useCampaignStore();
-    const { fetchAdaPrice, price_ada } = useProjectDetailStore()
+    const { fetchAdaPrice, price_ada } = useProjectDetailStore();
     const { priceAdaOrDollar } = usePriceStore();
 
     useEffect(() => {
-        fetchAdaPrice()
-    }, [])
-
-
+        fetchAdaPrice();
+    }, []);
 
     const goal = newCampaign.goal;
     const [selectedMilestones, setSelectedMilestones] = useState<number | null>(null);
@@ -36,15 +33,12 @@ const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
         setMilestones(milestones);
     };
 
-
     const calculateGoal = (goal: number, price_ada: number) => {
-        if (priceAdaOrDollar == "dollar") {
+        if (priceAdaOrDollar == 'dollar') {
             return goal / price_ada;
         }
         return goal;
-    }
-
-
+    };
 
     return (
         <div className={styles.layout}>
@@ -52,12 +46,15 @@ const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
                 <div className={styles.sliderHeader}>
                     <div className={styles.tooltipContainer}>
                         <ToolTipInformation
-                            content={`The fundraising goal is the amount of money you want to raise with your campaign, configured in ₳. While you can use the dollar value as a reference, the actual amount in dollars may vary at the time of signing the smart contract. In today value is ₳${calculateGoal(goal, price_ada).toFixed(2)}`}
+                            content={`The fundraising goal is the amount of money you want to raise with your campaign, configured in ₳. While you can use the dollar value as a reference, the actual amount in dollars may vary at the time of signing the smart contract. In today value is ₳${calculateGoal(
+                                goal,
+                                price_ada
+                            ).toFixed(2)}`}
                         />
                     </div>
                     <h3>Fundraise goal</h3>
                     <h2>
-                        {priceAdaOrDollar === "ada" ? "₳" : "$"}
+                        {priceAdaOrDollar === 'ada' ? '₳' : '$'}
                         {goal.toLocaleString()}
                     </h2>
                 </div>
@@ -65,15 +62,9 @@ const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
             </article>
             <article className={styles.buttonContainer}>
                 {[1, 2, 3, 4, 5].map((num) => (
-                    <SelectButton
-                        key={num}
-                        text={num.toString()}
-                        onClick={() => handleSelect(num)}
-                        selected={selectedMilestones === num}
-                    />
+                    <SelectButton key={num} text={num.toString()} onClick={() => handleSelect(num)} selected={selectedMilestones === num} />
                 ))}
             </article>
-
         </div>
     );
 };

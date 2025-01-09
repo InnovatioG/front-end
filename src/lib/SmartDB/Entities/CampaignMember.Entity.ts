@@ -10,7 +10,7 @@ export class CampaignMemberEntity extends BaseEntity {
     // #region fields
     @Convertible({ isDB_id: true })
     campaign_id!: string;
-    
+
     @Convertible()
     name?: string;
     @Convertible()

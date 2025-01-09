@@ -1,25 +1,24 @@
-import '@/styles/globals.scss';
-import type { AppProps } from 'next/app';
-import Head from 'next/head';
-import * as Images from '@/utils/images';
-import { useState, useEffect } from 'react';
 import PreLoadingPage from '@/components/General/Elements/PreLoadingPage/PreLoadingPage';
-import { ModalProvider } from '@/contexts/ModalContext';
-import Header from '@/components/Layout/Header/Header';
-import { ResponsiveProvider } from '@/contexts/ResponsiveContext';
-import { dataBaseService } from '@/HardCode/dataBaseService';
 import Footer from '@/components/Layout/Footer/Footer';
-import { SessionProvider } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import Header from '@/components/Layout/Header/Header';
+import LoadingPage from '@/components/LoadingPage/LoadingPage';
+import { ModalProvider } from '@/contexts/ModalContext';
+import { ResponsiveProvider } from '@/contexts/ResponsiveContext';
+import { fetchAllData } from '@/store/generalConstants/actions';
+import '@/styles/globals.scss';
+import * as Images from '@/utils/images';
 import { ROUTES } from '@/utils/routes';
 import { StoreProvider } from 'easy-peasy';
 import { Session } from 'next-auth';
-import { AppGeneral, globalStore } from 'smart-db';
+import { SessionProvider } from 'next-auth/react';
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
-import { fetchAllData } from '@/store/generalConstants/actions';
+import { AppGeneral, globalStore } from 'smart-db';
 import 'smart-db/dist/styles.css';
-import LoadingPage from '@/components/LoadingPage/LoadingPage';
 
 type ImageType = string | { [key: string]: string };
 

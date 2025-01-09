@@ -1,9 +1,6 @@
 import React from 'react';
 import GeneralButtonUI from '../UI/Button';
-import { useState } from 'react';
 import styles from './AddMore.module.scss';
-
-
 
 interface AddMoreProps {
     isOpen: boolean;
@@ -12,22 +9,16 @@ interface AddMoreProps {
 }
 
 const AddMore: React.FC<AddMoreProps> = ({ isOpen, setIsOpen, handleAddMore }) => {
-
-
-
-
     return (
         <div>
-            <GeneralButtonUI onClick={handleAddMore} classNameStyle='menu-index'>
+            <GeneralButtonUI onClick={handleAddMore} classNameStyle="menu-index">
                 <div className={styles.buttonContainer}>
                     <div className={`${styles.plus} ${isOpen ? styles.open : ''}`}>{isOpen ? '×' : '+'}</div>
-                    <span>
-                        {isOpen ? 'Add More' : 'Add More'}
-                    </span>
+                    <span>{isOpen ? 'Add More' : 'Add More'}</span>
                 </div>
             </GeneralButtonUI>
         </div>
     );
-}
+};
 
 export default AddMore;

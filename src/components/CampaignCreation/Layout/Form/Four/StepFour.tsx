@@ -1,44 +1,29 @@
 import React, { useState } from 'react';
 
-
-import styles from "./StepFour.module.scss";
-import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import Avatar from '@/components/General/Elements/PictureUpload/Avatar';
-import SocialButton from '@/components/UI/Buttons/SocialIcon/SocialButton';
-import { memberFields, socialIcons } from '@/utils/constants';
 import Checkbox from '@/components/UI/Buttons/Checkbox/Checkbox';
+import SocialButton from '@/components/UI/Buttons/SocialIcon/SocialButton';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import type { MembersTeam } from '@/HardCode/databaseType';
+import { useCampaignStore } from '@/store/campaign/useCampaignStore';
+import { memberFields, socialIcons } from '@/utils/constants';
+import styles from './StepFour.module.scss';
 
+type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'linkedin' | 'twitter';
 
-type SocialLinkKeys = "website" | "facebook" | "instagram" | "discord" | "linkedin" | "twitter";
-
-
-//! TODO: PROBLEM WITH MEMBER ID 
-
-
-
-
-
-
+//! TODO: PROBLEM WITH MEMBER ID
 
 const StepFour: React.FC = (props) => {
-    const { newCampaign, newMember, addMemberToTeam, resetNewMember, setNewMemberField, updateMemberField, } = useCampaignStore();
+    const { newCampaign, newMember, addMemberToTeam, resetNewMember, setNewMemberField, updateMemberField } = useCampaignStore();
 
-
-
-    const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>("website");
-    const isEditing = newMember.id && newCampaign.members_team.some(m => m.id === newMember.id);
-
+    const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>('website');
+    const isEditing = newMember.id && newCampaign.members_team.some((m) => m.id === newMember.id);
 
     const handleSaveMember = () => {
         if (isEditing) {
             // Update existing member
-            Object.keys(newMember).forEach(key => {
-                updateMemberField(
-                    key as keyof MembersTeam,
-                    newMember[key as keyof MembersTeam]
-                );
+            Object.keys(newMember).forEach((key) => {
+                updateMemberField(key as keyof MembersTeam, newMember[key as keyof MembersTeam]);
             });
         } else {
             // Add new member with new id
@@ -56,7 +41,7 @@ const StepFour: React.FC = (props) => {
         <section className={styles.containerLayout}>
             <Avatar picture={newMember.member_picture || ''} setPicture={(picture) => setNewMemberField('member_picture', picture)} />
             <div className={styles.inputContainer}>
-                {memberFields.map(field => (
+                {memberFields.map((field) => (
                     <input
                         key={field.key}
                         type="text"
@@ -77,13 +62,9 @@ const StepFour: React.FC = (props) => {
             />
 
             <article className={styles.socialContainer}>
-                {socialIcons.map(social => (
-                    <SocialButton
-                        key={social.name}
-                        icon={social.icon}
-                        name={social.name as SocialLinkKeys}
-                        setSocialLink={setSelectedLink}
-                    />))}
+                {socialIcons.map((social) => (
+                    <SocialButton key={social.name} icon={social.icon} name={social.name as SocialLinkKeys} setSocialLink={setSelectedLink} />
+                ))}
             </article>
 
             <input
@@ -99,36 +80,42 @@ const StepFour: React.FC = (props) => {
 
             <article className={styles.permissionContainer}>
                 <div className={styles.input}>
-                    <Checkbox
-                        checked={newMember.admin}
-                        onChange={(e) => setNewMemberField('admin', e)}
-                        label='Edit Campaign'
-                    />
+                    <Checkbox checked={newMember.admin} onChange={(e) => setNewMemberField('admin', e)} label="Edit Campaign" />
                 </div>
-                <input type="text" className={styles.input} placeholder="Email" value={newMember.email} onChange={(e) => { setNewMemberField("email", e.target.value) }} />
-
+                <input
+                    type="text"
+                    className={styles.input}
+                    placeholder="Email"
+                    value={newMember.email}
+                    onChange={(e) => {
+                        setNewMemberField('email', e.target.value);
+                    }}
+                />
             </article>
             <article className={styles.permissionContainer}>
                 <div className={styles.input}>
-                    <Checkbox
-                        checked={newMember.member_manage_funds || false}
-                        onChange={(e) => setNewMemberField('member_manage_funds', e)}
-                        label='Manage Funds'
-                    />
+                    <Checkbox checked={newMember.member_manage_funds || false} onChange={(e) => setNewMemberField('member_manage_funds', e)} label="Manage Funds" />
                 </div>
-                <input type="text" className={styles.input} placeholder="Wallet Address" value={newMember.wallet_address} onChange={(e) => { setNewMemberField("wallet_address", e.target.value) }} />
+                <input
+                    type="text"
+                    className={styles.input}
+                    placeholder="Wallet Address"
+                    value={newMember.wallet_address}
+                    onChange={(e) => {
+                        setNewMemberField('wallet_address', e.target.value);
+                    }}
+                />
             </article>
             <div className={styles.buttonContainer}>
-
-                <GeneralButtonUI onClick={handleSaveMember} disabled={disabledSaveMember} classNameStyle='outlineb'>
+                <GeneralButtonUI onClick={handleSaveMember} disabled={disabledSaveMember} classNameStyle="outlineb">
                     {isEditing ? 'Update member' : 'Add new member'}
                 </GeneralButtonUI>
-                <GeneralButtonUI onClick={() => { }} classNameStyle='fillb' disabled={disabledSaveMember}>
+                <GeneralButtonUI onClick={() => {}} classNameStyle="fillb" disabled={disabledSaveMember}>
                     Create Project
                 </GeneralButtonUI>
             </div>
-        </section >
+        </section>
     );
-}
+};
 
 export default StepFour;

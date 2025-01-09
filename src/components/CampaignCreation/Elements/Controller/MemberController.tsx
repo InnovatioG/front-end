@@ -1,40 +1,31 @@
-import React from 'react';
-import { useCampaignStore } from '@/store/campaign/useCampaignStore';
-import styles from "./MemberControllerCard.module.scss"
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/General/Elements/DefaultAvatar/DefaultAvatar"
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/Elements/DefaultAvatar/DefaultAvatar';
 import type { MembersTeam } from '@/HardCode/databaseType';
+import { useCampaignStore } from '@/store/campaign/useCampaignStore';
+import React from 'react';
+import styles from './MemberControllerCard.module.scss';
 
 interface MemberControllerProps {
     // Define props here
 }
 
-
-//! TODO Seleccionar un member desde el menu 
+//! TODO Seleccionar un member desde el menu
 
 const MemberController: React.FC<MemberControllerProps> = () => {
+    const { newCampaign, setSelectedMember } = useCampaignStore();
 
-    const { newCampaign, setSelectedMember } = useCampaignStore()
-
-
-
-
-    const memberstTeam = newCampaign.members_team
+    const memberstTeam = newCampaign.members_team;
 
     const handleSelectMember = (member: MembersTeam) => {
         setSelectedMember(member);
     };
 
     return (
-
         <article className={styles.genralContainer}>
             {memberstTeam.length > 0 ? (
                 <section>
-
                     <ul className={styles.cardsContainer}>
-                        {memberstTeam.map(member => (
-                            <li key={member.id} className={styles.singleCard} onClick={() => handleSelectMember(member)}
-                            >
-
+                        {memberstTeam.map((member) => (
+                            <li key={member.id} className={styles.singleCard} onClick={() => handleSelectMember(member)}>
                                 <div className={styles.avatarContainer}>
                                     <Avatar>
                                         <AvatarImage src={member.member_picture} />
@@ -42,19 +33,18 @@ const MemberController: React.FC<MemberControllerProps> = () => {
                                     </Avatar>
                                 </div>
                                 <div className={styles.informationContainer}>
-                                    <h3>{member.name} {member.last_name}</h3>
+                                    <h3>
+                                        {member.name} {member.last_name}
+                                    </h3>
                                     <p>{member.role}</p>
                                 </div>
                             </li>
                         ))}
                     </ul>
                 </section>
-            ) : (
-                null)
-            }
-
+            ) : null}
         </article>
     );
-}
+};
 
 export default MemberController;

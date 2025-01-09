@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import styles from "./CampaignCard.module.scss";
-import { TWO_USERS } from '@/utils/images';
-import { calculatePorcentage, formatMoney } from '@/utils/formats';
 import ToolTipInformation from '@/components/General/Elements/TooltipInformation/tooltipInformation';
-import { getTimeRemaining, formatTime } from '@/utils/formats';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { calculatePorcentage, formatMoney, formatTime, getTimeRemaining } from '@/utils/formats';
+import { TWO_USERS } from '@/utils/images';
+import React, { useEffect, useState } from 'react';
+import styles from './CampaignCard.module.scss';
 
 interface CampaignCardProps {
     status: string;
@@ -40,17 +39,11 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ status, goal, min_request, 
     const goalInCurrentCurrency = priceAdaOrDollar === 'dollar' ? goal : goal / price_ada;
     const currencySymbol = priceAdaOrDollar === 'dollar' ? 'USD' : 'ADA';
 
-
-
-
     return (
         <section className={styles.campaignCard}>
             <div className={styles.campaignCardStatus}>
                 <div className={`${styles.statusContainer} ${styles[stateClass]}`}>
-
-                    <span className={`${styles.status} ${styles[stateClass]}`}>
-                        {status === "countdown" ? formatAllTime(timeRemaining) : status}
-                    </span>
+                    <span className={`${styles.status} ${styles[stateClass]}`}>{status === 'countdown' ? formatAllTime(timeRemaining) : status}</span>
                     <div className={styles.tooltipContainer}>
                         <ToolTipInformation content="We need to write the explination status by status " />
                     </div>
@@ -70,10 +63,12 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ status, goal, min_request, 
                 <div className={styles.medidor}>
                     <div className={styles.progress} style={{ width: progressWidth }}></div>
                 </div>
-                <p>Minimum collection to activate the campaign {min_request}%: {formatMoney(calculatePorcentage(goalInCurrentCurrency, min_request), currencySymbol)}</p>
+                <p>
+                    Minimum collection to activate the campaign {min_request}%: {formatMoney(calculatePorcentage(goalInCurrentCurrency, min_request), currencySymbol)}
+                </p>
             </div>
         </section>
     );
-}
+};
 
 export default CampaignCard;

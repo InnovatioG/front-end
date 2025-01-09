@@ -1,7 +1,7 @@
-import { CHEVRON_RIGHT } from '@/utils/images';
-import styles from './BtnActions.module.scss';
-import Link from 'next/link';
 import { useScreenSize } from '@/hooks/useScreenSize';
+import { CHEVRON_RIGHT } from '@/utils/images';
+import Link from 'next/link';
+import styles from './BtnActions.module.scss';
 
 interface BtnActionsProps {
     type: 'primary' | 'invest' | 'secondary' | 'info';

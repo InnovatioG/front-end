@@ -1,14 +1,13 @@
-import React from 'react';
-import styles from "./MinCollector.module.scss"
+import PercentageSlider from '@/components/General/Elements/Slider/PercentageSlider/PercentaSlider';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import { calculatePorcentage } from '@/utils/formats';
-import PercentageSlider from '@/components/General/Elements/Slider/PercentageSlider/PercentaSlider';
+import React from 'react';
+import styles from './MinCollector.module.scss';
 interface MinCollectorSliderProps {
     // Define props here
 }
 
 const MinCollectorSlider: React.FC<MinCollectorSliderProps> = (props) => {
-
     const { setMinRequest, newCampaign } = useCampaignStore();
 
     const min_request = newCampaign.min_request;
@@ -21,6 +20,6 @@ const MinCollectorSlider: React.FC<MinCollectorSliderProps> = (props) => {
             <PercentageSlider initialLabel={porcentage} setValue={setMinRequest} />
         </div>
     );
-}
+};
 
-export default MinCollectorSlider;  
+export default MinCollectorSlider;

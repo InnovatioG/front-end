@@ -1,16 +1,14 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import styles from "./ResumeOftheTeam.module.scss";
-import ResumeOfTheTeamAccordion from './ResumeOfTheTeamAccordion';
-import FormNewMember from './FormNewMember';
-import FramerMotionAnimation from '@/utils/framerMotion';
 import AddMore from '@/components/UI/Buttons/AddMore/AddMore';
 import { MembersTeam } from '@/HardCode/databaseType';
+import FramerMotionAnimation from '@/utils/framerMotion';
+import React, { useEffect, useRef, useState } from 'react';
+import FormNewMember from './FormNewMember';
+import styles from './ResumeOftheTeam.module.scss';
+import ResumeOfTheTeamAccordion from './ResumeOfTheTeamAccordion';
 
 interface ResumeOfTheTeamProps {
     // Define props here
 }
-
 
 /* 
 id: number;
@@ -50,7 +48,7 @@ const ResumeOfTheTeam: React.FC<ResumeOfTheTeamProps> = (props) => {
         member_manage_funds: false,
         wallet_id: '',
         wallet_address: '',
-        editor: false
+        editor: false,
     });
 
     const formRef = useRef<HTMLDivElement>(null);
@@ -79,9 +77,9 @@ const ResumeOfTheTeam: React.FC<ResumeOfTheTeamProps> = (props) => {
     };
 
     const setNewMemberField = (key: keyof typeof newMember, value: any) => {
-        setNewMember(prevState => ({
+        setNewMember((prevState) => ({
             ...prevState,
-            [key]: value
+            [key]: value,
         }));
     };
 
@@ -92,15 +90,15 @@ const ResumeOfTheTeam: React.FC<ResumeOfTheTeamProps> = (props) => {
             <div className={styles.buttonAddMember}>
                 <AddMore isOpen={addNewMember} setIsOpen={setAddNewMember} handleAddMore={handleAddMore} />
             </div>
-            {addNewMember &&
+            {addNewMember && (
                 <FramerMotionAnimation isVisible={addNewMember}>
                     <div ref={formRef}>
                         <FormNewMember newMember={newMember} setNewMember={setNewMember} setNewMemberField={setNewMemberField} />
                     </div>
                 </FramerMotionAnimation>
-            }
+            )}
         </section>
     );
-}
+};
 
 export default ResumeOfTheTeam;

@@ -1,22 +1,19 @@
-import React, { useEffect } from 'react';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import InvestHeader from '@/components/Invest/Sections/InvestHeader';
-import styles from "./InvestPage.module.scss";
+import JSON from '@/HardCode/campaignId.json';
 import InvestmentForm from '@/components/Invest/Sections/Form';
+import InvestHeader from '@/components/Invest/Sections/InvestHeader';
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import { useRouter } from 'next/router';
-import JSON from "@/HardCode/campaignId.json";
-import LoadingPage from '@/components/LoadingPage/LoadingPage';
+import React, { useEffect } from 'react';
+import styles from './InvestPage.module.scss';
 interface InvestPageProps {
     // Define props here
 }
 
 const InvestPage: React.FC<InvestPageProps> = (props) => {
-
     const router = useRouter();
 
     const { id } = router.query;
     const { setProject, project, setIsLoading, isLoading, setMenuView, setEditionMode, fetchAdaPrice } = useProjectDetailStore();
-
 
     const fetchCampaign = () => {
         setIsLoading(true);
@@ -39,18 +36,13 @@ const InvestPage: React.FC<InvestPageProps> = (props) => {
         return () => clearTimeout(timer);
     };
 
-    const { } = useProjectDetailStore();
+    const {} = useProjectDetailStore();
     const { cdCampaignToken_TN, cdRequestedMaxADA, cdCampaignToken_PriceADA, goal, start_date, title, logo_url } = project;
-
-
 
     useEffect(() => {
         fetchAdaPrice();
         fetchCampaign();
     }, [fetchAdaPrice, fetchCampaign, id]);
-
-
-
 
     return (
         <main className={styles.layout}>
@@ -67,6 +59,6 @@ const InvestPage: React.FC<InvestPageProps> = (props) => {
             </article>
         </main>
     );
-}
+};
 
 export default InvestPage;

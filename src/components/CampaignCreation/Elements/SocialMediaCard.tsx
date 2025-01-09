@@ -1,48 +1,43 @@
-import React, { useState } from 'react';
 import SocialButton from '@/components/UI/Buttons/SocialIcon/SocialButton';
-import styles from "./SocialMediaCard.module.scss";
-import { socialIcons } from '@/utils/constants';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import Image from 'next/image';
-import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
-import type { ButtonConfig } from '@/utils/constants';
-import { ButtonsForCampaignPage } from '@/utils/constants';
-import Link from 'next/link';
+import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
 import { useModal } from '@/contexts/ModalContext';
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import type { ButtonConfig } from '@/utils/constants';
+import { ButtonsForCampaignPage, socialIcons } from '@/utils/constants';
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useState } from 'react';
+import styles from './SocialMediaCard.module.scss';
 
-interface SocialMediaCardContainerProps { }
+interface SocialMediaCardContainerProps {}
 
 // Definir un tipo específico para las claves de redes sociales
-type SocialLinkKeys = "website" | "facebook" | "instagram" | "discord" | "linkedin" | "twitter";
+type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'linkedin' | 'twitter';
 
 const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props) => {
     const { project, setProject, editionMode, isAdmin, isProtocolTeam } = useProjectDetailStore();
-    const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>("website");
+    const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>('website');
     const [modalOpen, setModalOpen] = useState<boolean>(false);
-
 
     const { openModal } = useModal();
     const { buttons } = ButtonsForCampaignPage(project.state_id, isProtocolTeam, isAdmin);
 
-
-
     const editLinkButton = () => {
         setModalOpen(true);
-    }
+    };
 
     const getPlaceholder = () => {
         const linkValue = project[selectedLink];
-        return linkValue && linkValue !== "" ? linkValue : `Enter your ${selectedLink} link`;
-    }
+        return linkValue && linkValue !== '' ? linkValue : `Enter your ${selectedLink} link`;
+    };
 
     const formatSocialLink = (link: string) => {
         if (!link.startsWith('http://') && !link.startsWith('https://')) {
             return `https://${link}`;
         }
         return link;
-    }
-
+    };
 
     return (
         <section className={styles.socialMediaCard}>
@@ -50,23 +45,14 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
                 <div className={styles.socialMediaCardContainer}>
                     <button className={styles.buttonSelected} onClick={editLinkButton}>
                         <span>Edit {selectedLink}</span>
-                        <Image src={"/img/icons/right-arrow.svg"} alt="next" width={10} height={10} />
+                        <Image src={'/img/icons/right-arrow.svg'} alt="next" width={10} height={10} />
                     </button>
                     <article className={styles.socialContainer}>
-                        {socialIcons.map(social => {
-                            return (
-                                <SocialButton
-                                    key={social.name}
-                                    icon={social.icon}
-                                    name={social.name as SocialLinkKeys}
-                                    setSocialLink={setSelectedLink}
-                                />
-                            );
+                        {socialIcons.map((social) => {
+                            return <SocialButton key={social.name} icon={social.icon} name={social.name as SocialLinkKeys} setSocialLink={setSelectedLink} />;
                         })}
                     </article>
                 </div>
-
-
             ) : (
                 <>
                     {buttons.map((button: ButtonConfig, index: number) => (
@@ -90,26 +76,16 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
                     ))}
 
                     <article className={styles.socialContainer}>
-                        {socialIcons.map(social => {
+                        {socialIcons.map((social) => {
                             const socialLink = project[social.name as SocialLinkKeys];
-                            if (!editionMode && (!socialLink || socialLink.trim() === "")) return null; // No renderizar si el enlace está vacío y no está en modo edición
+                            if (!editionMode && (!socialLink || socialLink.trim() === '')) return null; // No renderizar si el enlace está vacío y no está en modo edición
                             return (
-                                <a
-                                    key={social.name}
-                                    href={!editionMode ? formatSocialLink(socialLink) : '#'}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    <SocialButton
-                                        icon={social.icon}
-                                        name={social.name as SocialLinkKeys}
-                                        setSocialLink={setSelectedLink}
-                                    />
+                                <a key={social.name} href={!editionMode ? formatSocialLink(socialLink) : '#'} target="_blank" rel="noopener noreferrer">
+                                    <SocialButton icon={social.icon} name={social.name as SocialLinkKeys} setSocialLink={setSelectedLink} />
                                 </a>
                             );
                         })}
                     </article>
-
                 </>
             )}
 
@@ -119,12 +95,14 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
                     <div className={styles.inputContainer}>
                         <input
                             type="text"
-                            value={project[selectedLink] || ""}
+                            value={project[selectedLink] || ''}
                             placeholder={getPlaceholder()}
-                            onChange={(e) => setProject({
-                                ...project,
-                                [selectedLink]: e.target.value
-                            })}
+                            onChange={(e) =>
+                                setProject({
+                                    ...project,
+                                    [selectedLink]: e.target.value,
+                                })
+                            }
                             className={styles.input}
                         />
                         <GeneralButtonUI text="Confirm" onClick={() => setModalOpen(false)} />
@@ -133,6 +111,6 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
             </ModalTemplate>
         </section>
     );
-}
+};
 
 export default SocialMediaCardContainer;

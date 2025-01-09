@@ -3,7 +3,7 @@ import { formatAddress } from '@/utils/formats';
 import { ADA, WALLET_ICON } from '@/utils/images';
 import Image from 'next/image';
 import { useState } from 'react';
-import { useWalletActions, useWalletSession } from 'smart-db';
+import { useWalletActions } from 'smart-db';
 import styles from './BtnConnectWallet.module.scss';
 
 interface BtnConnectProps {
@@ -114,7 +114,6 @@ const BtnConnectSecondary: React.FC<SecondarySubComponentProps> = ({ width }) =>
 };
 
 const BtnConnectWallet: React.FC<BtnConnectProps> = ({ type, width }) => {
-    
     switch (type) {
         case 'mobile':
             return <BtnConnectMobile />;

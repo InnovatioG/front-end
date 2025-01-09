@@ -1,10 +1,10 @@
+import { useModal } from '@/contexts/ModalContext';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { CardanoWallet, LoadingSpinner, isEmulator, useWalletActions } from 'smart-db';
-import styles from './WalletSelectorModal.module.scss';
-import { useModal } from '@/contexts/ModalContext';
 import Toggle from '../Buttons/Toggle/Toggle';
+import styles from './WalletSelectorModal.module.scss';
 
 export const WalletSelectorModal: React.FC = () => {
     //--------------------------------------
@@ -137,16 +137,16 @@ export const WalletSelectorModal: React.FC = () => {
                 <h2 className={styles.title}>Connect {process.env.NEXT_PUBLIC_CARDANO_NET} Wallet</h2>
 
                 <section className={styles.bodyModal}>
-                    {isEmulator ? (
-                        showKeysWalletButtons()
-                    ) : (
-                        <ul className={styles.walletList}>
-                            {showWalletButtons()}
-
-                            {showWalletsFromSeedButton()}
-                        </ul>
-                    )}
-
+                    <ul className={styles.walletList}>
+                        {isEmulator ? (
+                            showKeysWalletButtons()
+                        ) : (
+                            <>
+                                {showWalletButtons()}
+                                {showWalletsFromSeedButton()}
+                            </>
+                        )}
+                    </ul>
                     <div className={styles.toogleIcon}>
                         <Toggle
                             isActive={createSignedSession}

@@ -1,10 +1,9 @@
-import Link from 'next/link';
-import styles from './HeaderDesktop.module.scss';
 import BtnCampaign from '@/components/UI/Buttons/Campaign/BtnCampaign';
 import BtnConnectWallet from '@/components/UI/Buttons/ConnectWallet/BtnConnectWallet';
-import { CALENDAR } from '@/utils/images';
-import { Session } from 'next-auth';
 import TogglePrice from '@/components/UI/Buttons/Toggle/TogglePrice';
+import { Session } from 'next-auth';
+import Link from 'next/link';
+import styles from './HeaderDesktop.module.scss';
 
 export default function HeaderDesktop({ session, setIsOpen, isOpen }: { session: Session | null; setIsOpen: (isOpen: boolean) => void; isOpen: boolean }) {
     return (

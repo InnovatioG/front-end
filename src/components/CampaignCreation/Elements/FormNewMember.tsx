@@ -1,9 +1,9 @@
-import React from 'react';
-import styles from "./form.module.scss"
-import { memberFields } from '@/utils/constants';
-import Checkbox from '@/components/UI/Buttons/Checkbox/Checkbox';
 import ToolTipInformation from '@/components/General/Elements/TooltipInformation/tooltipInformation';
+import Checkbox from '@/components/UI/Buttons/Checkbox/Checkbox';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
+import { memberFields } from '@/utils/constants';
+import React from 'react';
+import styles from './form.module.scss';
 
 interface FormNewMemberProps {
     newMember: {
@@ -26,25 +26,27 @@ interface FormNewMemberProps {
         discord: string;
         twitter: string;
     };
-    setNewMember: React.Dispatch<React.SetStateAction<{
-        id: string;
-        campaign_id: number;
-        name: string;
-        last_name: string;
-        role: string;
-        editor: boolean;
-        admin: boolean;
-        email: string;
-        wallet_id?: string;
-        wallet_address?: string;
-        member_picture?: string;
-        member_manage_funds?: boolean;
-        website: string;
-        facebook: string;
-        instagram: string;
-        discord: string;
-        twitter: string;
-    }>>;
+    setNewMember: React.Dispatch<
+        React.SetStateAction<{
+            id: string;
+            campaign_id: number;
+            name: string;
+            last_name: string;
+            role: string;
+            editor: boolean;
+            admin: boolean;
+            email: string;
+            wallet_id?: string;
+            wallet_address?: string;
+            member_picture?: string;
+            member_manage_funds?: boolean;
+            website: string;
+            facebook: string;
+            instagram: string;
+            discord: string;
+            twitter: string;
+        }>
+    >;
     setNewMemberField: (key: keyof FormNewMemberProps['newMember'], value: any) => void;
 }
 
@@ -57,11 +59,10 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
         twitter: 'XS',
     };
 
-
     return (
         <section className={styles.formLayout}>
             <div className={styles.inputContainer}>
-                {memberFields.map(field => (
+                {memberFields.map((field) => (
                     <input
                         key={field.key}
                         type="text"
@@ -83,33 +84,19 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
             <article>
                 <div className={styles.labelHeader}>
                     <label htmlFor="">Permissions</label>
-                    <ToolTipInformation content='This user will have the following permissions' />
+                    <ToolTipInformation content="This user will have the following permissions" />
                 </div>
                 <div className={styles.permissionContainer}>
                     <div className={styles.input}>
-                        <Checkbox
-                            checked={newMember.admin}
-                            onChange={(e) => setNewMemberField('admin', e)}
-                            label='Edit Campaign'
-                        />
+                        <Checkbox checked={newMember.admin} onChange={(e) => setNewMemberField('admin', e)} label="Edit Campaign" />
                     </div>
-                    <input
-                        type="text"
-                        placeholder='Email'
-                        value={newMember.email}
-                        onChange={(e) => setNewMemberField('email', e.target.value)}
-                        className={styles.input}
-                    />
+                    <input type="text" placeholder="Email" value={newMember.email} onChange={(e) => setNewMemberField('email', e.target.value)} className={styles.input} />
                     <div className={styles.input}>
-                        <Checkbox
-                            checked={newMember.member_manage_funds || false}
-                            onChange={(e) => setNewMemberField('member_manage_funds', e)}
-                            label='Manage Funds'
-                        />
+                        <Checkbox checked={newMember.member_manage_funds || false} onChange={(e) => setNewMemberField('member_manage_funds', e)} label="Manage Funds" />
                     </div>
                     <input
                         type="text"
-                        placeholder='Wallet Address'
+                        placeholder="Wallet Address"
                         value={newMember.wallet_address}
                         onChange={(e) => setNewMemberField('wallet_address', e.target.value)}
                         className={styles.input}
@@ -134,10 +121,10 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
                 </div>
             </article>
             <div className={styles.buttonContainer}>
-                <GeneralButtonUI text='Add Member' onClick={() => { }} />
+                <GeneralButtonUI text="Add Member" onClick={() => {}} />
             </div>
         </section>
     );
-}
+};
 
 export default FormNewMember;

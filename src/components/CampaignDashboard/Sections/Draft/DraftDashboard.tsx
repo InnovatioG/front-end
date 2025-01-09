@@ -1,19 +1,15 @@
-
-import React from 'react';
 import { useDashboardCard } from '@/hooks/useDashboardCard';
-import DraftFilters from './DraftFilters/DraftFilters';
-import DraftCard from './DraftCard/DraftCard';
-import styles from "./DraftDashboard.module.scss";
 import { PLUS_ICON } from '@/utils/images';
 import Link from 'next/link';
-
-
+import React from 'react';
+import DraftCard from './DraftCard/DraftCard';
+import styles from './DraftDashboard.module.scss';
+import DraftFilters from './DraftFilters/DraftFilters';
 interface NewDraftDashboardProps {
     address: string | null;
 }
 
 const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
-
     const {
         campaigns,
         filteredCampaigns,
@@ -35,11 +31,8 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
         screenSize,
         isProtocolTeam,
         states,
-        stateFilter
+        stateFilter,
     } = useDashboardCard(address);
-
-
-
 
     return (
         <div className={styles.draftDashboard}>
@@ -58,7 +51,7 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
                 isAdmin={isAdmin}
             />
             <div className={styles.draftGrid}>
-                <Link href={"./new"}>
+                <Link href={'./new'}>
                     <div className={styles.newCampaign}>
                         <svg width="24" height="24" className={styles.icon}>
                             <use href={PLUS_ICON}></use>
@@ -71,13 +64,10 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
                 ))}
                 <button onClick={loadMoreCampaigns}>Load more</button>
             </div>
-
-
         </div>
     );
 
-
     /*  */
-}
+};
 
 export default NewDraftDashboard;

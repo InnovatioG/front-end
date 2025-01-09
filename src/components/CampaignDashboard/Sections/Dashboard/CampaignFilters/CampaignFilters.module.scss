@@ -2,25 +2,23 @@
 @use '@/styles/settings/colors';
 
 .filters {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding-inline: 20px;
-  margin-bottom: 30px;
-  .btnActions{
     display: flex;
     align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
+    justify-content: space-between;
+    width: 100%;
+    padding-inline: 20px;
+    margin-bottom: 30px;
+    .btnActions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+    }
 }
 
-
-@media (width >= 942px) { 
-
-  .filters {
-  padding-inline: 50px;
-  margin-bottom: 40px;
-  }
+@media (width >= 942px) {
+    .filters {
+        padding-inline: 50px;
+        margin-bottom: 40px;
+    }
 }

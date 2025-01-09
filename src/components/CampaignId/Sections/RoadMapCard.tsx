@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import styles from './RoadMapCard.module.scss';
-import { getOrdinalString } from '@/utils/formats';
 import type { MilestoneF } from '@/HardCode/databaseType';
-import MilestoneTime from '@/components/CampaignCreation/Elements/MilestoneTimeEdit';
 import MilestonePercentage from '@/components/CampaignCreation/Elements/MilestonePercentage';
-import { stylesByStatus, imageByStatus } from '@/utils/constants/status';
-import MilestoneMessage from './MilestoneMessage';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import MilestoneTime from '@/components/CampaignCreation/Elements/MilestoneTimeEdit';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import { useModal } from '@/contexts/ModalContext';
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { imageByStatus, stylesByStatus } from '@/utils/constants/status';
+import { getOrdinalString } from '@/utils/formats';
+import React from 'react';
+import MilestoneMessage from './MilestoneMessage';
+import styles from './RoadMapCard.module.scss';
 
 interface RoadMapCardProps {
     milestone: MilestoneF;

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import styles from "./ManageCampaignModal.module.scss";
-import GeneralButtonUI from '../Buttons/UI/Button';
 import { useModal } from '@/contexts/ModalContext';
+import React, { useState } from 'react';
+import GeneralButtonUI from '../Buttons/UI/Button';
+import styles from './ManageCampaignModal.module.scss';
 
 interface ManageCampaignModalProps {
     id: number | null;
@@ -12,7 +12,7 @@ interface ManageCampaignModalProps {
 const ManageCampaignModal: React.FC<ManageCampaignModalProps> = ({ id }) => {
     const { closeModal } = useModal();
     const [status, setStatus] = useState<boolean | null>(null);
-    const [description, setDescription] = useState("");
+    const [description, setDescription] = useState('');
 
     const handleConfirm = () => {
         // Aquí puedes agregar la lógica para manejar la confirmación
@@ -26,19 +26,13 @@ const ManageCampaignModal: React.FC<ManageCampaignModalProps> = ({ id }) => {
                 <h3>Project Submission</h3>
             </header>
             <div className={styles.buttonStatusContainer}>
-                <GeneralButtonUI
-                    classNameStyle={`outlineb ${status === true ? "selected" : ''}`}
-                    onClick={() => setStatus(true)}
-                >
+                <GeneralButtonUI classNameStyle={`outlineb ${status === true ? 'selected' : ''}`} onClick={() => setStatus(true)}>
                     <div className={styles.greenCircle}></div>
-                    <span className={`${status === true ? `${styles.selected}` : ""}`}>Approve Campaign</span>
+                    <span className={`${status === true ? `${styles.selected}` : ''}`}>Approve Campaign</span>
                 </GeneralButtonUI>
-                <GeneralButtonUI
-                    classNameStyle={`outlineb ${status === false ? "selected" : ''}`}
-                    onClick={() => setStatus(false)}
-                >
+                <GeneralButtonUI classNameStyle={`outlineb ${status === false ? 'selected' : ''}`} onClick={() => setStatus(false)}>
                     <div className={styles.redCircle}></div>
-                    <span className={`${status === false ? `${styles.selected}` : ""}`}>Reject Campaign</span>
+                    <span className={`${status === false ? `${styles.selected}` : ''}`}>Reject Campaign</span>
                 </GeneralButtonUI>
             </div>
             <div className={styles.text}>
@@ -53,12 +47,12 @@ const ManageCampaignModal: React.FC<ManageCampaignModalProps> = ({ id }) => {
                     />
                 </div>
                 <div className={styles.buttonContainer}>
-                    <GeneralButtonUI classNameStyle='outlineb' text='Back' onClick={closeModal} />
-                    <GeneralButtonUI classNameStyle='fillb' text='Confirm' onClick={handleConfirm} />
+                    <GeneralButtonUI classNameStyle="outlineb" text="Back" onClick={closeModal} />
+                    <GeneralButtonUI classNameStyle="fillb" text="Confirm" onClick={handleConfirm} />
                 </div>
             </div>
         </article>
     );
-}
+};
 
 export default ManageCampaignModal;

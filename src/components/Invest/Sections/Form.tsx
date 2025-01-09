@@ -1,10 +1,9 @@
-import React from 'react';
-import styles from "./InvestmentForm.module.scss";
-import Link from 'next/link';
-import GeneralButtonUI from '../../UI/Buttons/UI/Button';
-import LoaderDots from '../../LoadingPage/LoaderDots';
 import useInvestmentForm from '@/hooks/useInvestmentForm';
-import { ADAIC } from '@/utils/images';
+import Link from 'next/link';
+import React from 'react';
+import LoaderDots from '../../LoadingPage/LoaderDots';
+import GeneralButtonUI from '../../UI/Buttons/UI/Button';
+import styles from './InvestmentForm.module.scss';
 
 interface InvestmentFormProps {
     cdCampaignToken_PriceADA: number | null;
@@ -16,19 +15,7 @@ interface InvestmentFormProps {
 }
 
 const InvestmentForm: React.FC<InvestmentFormProps> = ({ cdCampaignToken_PriceADA, cdCampaignToken_TN, cdRequestedMaxADA, goal, id, deliveryDate }) => {
-    const {
-        amountInTokens,
-        amountInAda,
-        apiCall,
-        isLoading,
-        error,
-        success,
-        handleTokenChange,
-        handleAdaChange,
-        handleInvest,
-        inputFields,
-        rectangles,
-    } = useInvestmentForm({
+    const { amountInTokens, amountInAda, apiCall, isLoading, error, success, handleTokenChange, handleAdaChange, handleInvest, inputFields, rectangles } = useInvestmentForm({
         cdCampaignToken_PriceADA,
         cdCampaignToken_TN,
         cdRequestedMaxADA,
@@ -43,7 +30,9 @@ const InvestmentForm: React.FC<InvestmentFormProps> = ({ cdCampaignToken_PriceAD
                 <div className={styles.inputContainer}>
                     {inputFields.map((field) => (
                         <div key={field.id} className={styles.inputContainer}>
-                            <label htmlFor={field.id} className={styles.label}>{field.label}</label>
+                            <label htmlFor={field.id} className={styles.label}>
+                                {field.label}
+                            </label>
                             <input
                                 type="number"
                                 id={field.id}
@@ -56,24 +45,15 @@ const InvestmentForm: React.FC<InvestmentFormProps> = ({ cdCampaignToken_PriceAD
                     ))}
                     <div className={styles.buttonContainer}>
                         <Link href={`/campaign/${id}`}>
-                            <GeneralButtonUI text="Back" classNameStyle='outlineb' onClick={() => { }} />
+                            <GeneralButtonUI text="Back" classNameStyle="outlineb" onClick={() => {}} />
                         </Link>
-                        <GeneralButtonUI
-                            text="Confirm Invest"
-                            onClick={handleInvest}
-                            classNameStyle='invest' />
+                        <GeneralButtonUI text="Confirm Invest" onClick={handleInvest} classNameStyle="invest" />
                     </div>
                 </div>
             ) : (
                 <div className={styles.apiCallContainer}>
                     {rectangles.map((rect, index) => (
-                        <RectangleWithInformation
-                            key={index}
-                            label={rect.label}
-                            information={rect.information}
-                            img={rect.img}
-                            isDate={rect.isDate}
-                        />
+                        <RectangleWithInformation key={index} label={rect.label} information={rect.information} img={rect.img} isDate={rect.isDate} />
                     ))}
                 </div>
             )}
@@ -82,8 +62,7 @@ const InvestmentForm: React.FC<InvestmentFormProps> = ({ cdCampaignToken_PriceAD
             {success && <SuccessMessage message={success} id={id} />}
         </article>
     );
-}
-
+};
 
 export default InvestmentForm;
 
@@ -93,9 +72,15 @@ const ErrorMessage: React.FC<{ message: string }> = ({ message }) => {
             <p className={styles.errorMessage}>{message}</p>
         </div>
     );
-}
+};
 
-const RectangleWithInformation: React.FC<{ label: string, img?: string, information: number | string, isDate?: boolean, children?: React.ReactNode }> = ({ label, img, information, children, isDate }) => {
+const RectangleWithInformation: React.FC<{ label: string; img?: string; information: number | string; isDate?: boolean; children?: React.ReactNode }> = ({
+    label,
+    img,
+    information,
+    children,
+    isDate,
+}) => {
     return (
         <div className={styles.rectangleContainer}>
             <label htmlFor="">{label}</label>
@@ -106,17 +91,17 @@ const RectangleWithInformation: React.FC<{ label: string, img?: string, informat
             {children}
         </div>
     );
-}
+};
 
-const SuccessMessage: React.FC<{ message: string, id: number }> = ({ message, id }) => {
+const SuccessMessage: React.FC<{ message: string; id: number }> = ({ message, id }) => {
     return (
         <div className={styles.successContainer}>
             <p className={styles.successMessage}>{message}</p>
             <div className={styles.buttonContainerMessage}>
                 <Link href={`campaign/${id}`}>
-                    <GeneralButtonUI text="Back to project" classNameStyle='outlineb' onClick={() => { }} />
+                    <GeneralButtonUI text="Back to project" classNameStyle="outlineb" onClick={() => {}} />
                 </Link>
             </div>
         </div>
     );
-}
+};

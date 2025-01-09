@@ -1,4 +1,4 @@
-import type { User, Milestone } from '@/HardCode/databaseType';
+import type { Milestone, User } from '@/HardCode/databaseType';
 import { MembersTeam } from '@/HardCode/databaseType';
 
 export interface CampaignState {

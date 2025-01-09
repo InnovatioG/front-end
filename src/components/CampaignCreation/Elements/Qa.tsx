@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import styles from "./Qa.module.scss";
-import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
-import FramerMotionAnimation from '@/utils/framerMotion';
 import AddMore from '@/components/UI/Buttons/AddMore/AddMore';
+import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import FramerMotionAnimation from '@/utils/framerMotion';
+import React, { useState } from 'react';
+import styles from './Qa.module.scss';
 interface QYAProps {
     // Define props here
 }
@@ -14,39 +14,36 @@ const QYA: React.FC<QYAProps> = (props) => {
     const [viewInputQuestion, setViewInputQuestion] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
-    const [newQa, setNewQa] = useState({ name: "", description: "", order: 0 });
+    const [newQa, setNewQa] = useState({ name: '', description: '', order: 0 });
 
     const handleNewQa = () => {
         setProject({
             ...project,
-            faqs: [...faqs, newQa]
+            faqs: [...faqs, newQa],
         });
-        setNewQa({ name: "", description: "", order: faqs.length + 1 });
-    }
+        setNewQa({ name: '', description: '', order: faqs.length + 1 });
+    };
 
     const handleQuestionOpen = () => {
         setIsOpen(!isOpen);
         setViewInputQuestion(!viewInputQuestion);
-    }
+    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setNewQa(prevState => ({ ...prevState, [name]: value }));
-    }
+        setNewQa((prevState) => ({ ...prevState, [name]: value }));
+    };
 
     const handleRemoveQa = (index: number) => {
         const newFaqs = faqs.filter((_, i) => i !== index);
         setProject({
             ...project,
-            faqs: newFaqs
+            faqs: newFaqs,
         });
-    }
+    };
 
     return (
         <div className={styles.generalContainer}>
-
-
-
             {faqs.map((faq, index) => (
                 <div key={index} className={styles.questionContainer}>
                     <div>
@@ -62,22 +59,21 @@ const QYA: React.FC<QYAProps> = (props) => {
                 </div>
             ))}
 
-
             <div className={styles.buttonGeneral}>
                 <AddMore isOpen={isOpen} setIsOpen={setIsOpen} handleAddMore={handleQuestionOpen} />
             </div>
 
             <FramerMotionAnimation isVisible={viewInputQuestion}>
                 <div className={styles.textContainer}>
-                    <input type="text" name="name" value={newQa.name} onChange={handleChange} className={styles.input} placeholder='Insert question' />
-                    <textarea name="description" value={newQa.description} onChange={handleChange} className={styles.inputText} placeholder='Describe answer' />
+                    <input type="text" name="name" value={newQa.name} onChange={handleChange} className={styles.input} placeholder="Insert question" />
+                    <textarea name="description" value={newQa.description} onChange={handleChange} className={styles.inputText} placeholder="Describe answer" />
                     <div className={styles.saveButtonContainer}>
-                        <GeneralButtonUI onClick={handleNewQa} text="Save" classNameStyle='green' />
+                        <GeneralButtonUI onClick={handleNewQa} text="Save" classNameStyle="green" />
                     </div>
                 </div>
             </FramerMotionAnimation>
         </div>
     );
-}
+};
 
 export default QYA;

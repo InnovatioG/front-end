@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import styles from "../DraftCard/DraftCard.module.scss";
-import { Campaign } from '@/HardCode/databaseType';
-import Link from 'next/link';
-import Image from 'next/image';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import { useModal } from '@/contexts/ModalContext';
+import { Campaign } from '@/HardCode/databaseType';
 import useDraftCard from '@/hooks/useDraftCard';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
+import styles from '../DraftCard/DraftCard.module.scss';
 
 interface DraftCardProps {
     campaign: Campaign;
@@ -18,30 +18,21 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin
     const { label, labelClass, buttons, timeRemaining, formatAllTime, currentMilestone } = useDraftCard(campaign, isProtocolTeam, isAdmin);
 
     const categoriesById = (id: number) => {
-        return 'TODO'
-    }
+        return 'TODO';
+    };
 
     return (
         <div className={styles.campaignCard}>
             <span>{campaign.id}</span>
             <div className={styles.headCard}>
-                <Image
-                    width={58}
-                    height={58}
-                    src={campaign.logo_url}
-                    alt="logo-company"
-                    className={styles.logoCard}
-                />
+                <Image width={58} height={58} src={campaign.logo_url} alt="logo-company" className={styles.logoCard} />
                 <div className={styles.cardDetails}>
                     <div className={styles.statusContracts}>
                         <div className={`${styles.state} ${styles[labelClass]}`}>
-
                             {campaign.state_id === 8 ? formatAllTime(timeRemaining) : label}
                             {campaign.state_id > 9 && campaign.state_id < 12 && ` ${currentMilestone}`}
                         </div>
-                        <div className={styles.category}>
-                            {categoriesById(campaign.category_id)}
-                        </div>
+                        <div className={styles.category}>{categoriesById(campaign.category_id)}</div>
                     </div>
                 </div>
             </div>
@@ -77,7 +68,6 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin
             </div>
         </div>
     );
-}
+};
 
 export default DraftCard;
-

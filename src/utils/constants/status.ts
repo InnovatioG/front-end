@@ -1,4 +1,3 @@
-
 //--------------------------------------------------------------
 
 export enum CampaignDatumStatus {
@@ -41,7 +40,6 @@ export enum MilestoneStatus {
     FINISHED = 5,
     FAILED = 6,
 }
-
 
 export enum SubmissionStatus {
     SUBMITTED = 1,

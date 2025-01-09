@@ -1,14 +1,13 @@
 import React from 'react';
-import styles from "./SocialButton.module.scss";
+import styles from './SocialButton.module.scss';
 
 interface SocialButtonProps {
     icon: string;
-    name?: "website" | "facebook" | "instagram" | "discord" | "linkedin" | "twitter";
-    setSocialLink?: React.Dispatch<React.SetStateAction<"website" | "facebook" | "instagram" | "discord" | "linkedin" | "twitter">>;
+    name?: 'website' | 'facebook' | 'instagram' | 'discord' | 'linkedin' | 'twitter';
+    setSocialLink?: React.Dispatch<React.SetStateAction<'website' | 'facebook' | 'instagram' | 'discord' | 'linkedin' | 'twitter'>>;
 }
 
 const SocialButton: React.FC<SocialButtonProps> = ({ icon, name, setSocialLink }) => {
-
     return (
         <div className={styles['icon-container']} onClick={() => name && setSocialLink && setSocialLink(name)}>
             <svg width="20" height="20" className={styles.icon}>
@@ -16,6 +15,6 @@ const SocialButton: React.FC<SocialButtonProps> = ({ icon, name, setSocialLink }
             </svg>
         </div>
     );
-}
+};
 
 export default SocialButton;

@@ -1,15 +1,15 @@
-import { createContext, useContext, useEffect, useState } from 'react';
-import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
+import CalendarModal from '@/components/UI/Modal/CalendarModal';
+import ContactSupportModal from '@/components/UI/Modal/ContactSupportModal';
 import SingleQuestionModal from '@/components/UI/Modal/InitializeCampaignModal';
 import ManageCampaignModal from '@/components/UI/Modal/ManageCampaignModal';
+import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
 import SendReport from '@/components/UI/Modal/SendReport';
-import ContactSupportModal from '@/components/UI/Modal/ContactSupportModal';
+import ViewReportMilestone from '@/components/UI/Modal/ViewReportMilestone';
 import ViewReportModal from '@/components/UI/Modal/ViewReportModal';
 import WalletInformationModal from '@/components/UI/Modal/WalletInformation';
-import CalendarModal from '@/components/UI/Modal/CalendarModal';
-import ViewReportMilestone from '@/components/UI/Modal/ViewReportMilestone';
 import { WalletSelectorModal } from '@/components/UI/Modal/WalletSelectorModal';
 import type { Campaign } from '@/HardCode/databaseType';
+import { createContext, useContext, useState } from 'react';
 
 interface ModalState {
     isOpen: boolean;
@@ -36,10 +36,10 @@ export const useModal = () => {
 };
 
 export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [modalState, setModalState] = useState<ModalState>({isOpen: false});
+    const [modalState, setModalState] = useState<ModalState>({ isOpen: false });
 
     const openModal = (modalType: string, options?: Partial<Omit<ModalState, 'modalType'>>) => {
-        setModalState({ ...options, modalType, isOpen: true,  });
+        setModalState({ ...options, modalType, isOpen: true });
     };
 
     const closeModal = () => {
@@ -47,7 +47,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     };
 
     const setIsOpen = (isOpen: boolean) => {
-        setModalState({ ...modalState, isOpen});
+        setModalState({ ...modalState, isOpen });
     };
 
     // Map of modal types to components
@@ -71,7 +71,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return (
         <>
             <ModalContext.Provider value={{ ...modalState, openModal, closeModal, setIsOpen }}>
-                {modalState.modalType!== undefined && (
+                {modalState.modalType !== undefined && (
                     <ModalTemplate isOpen={modalState.isOpen} setIsOpen={setIsOpen}>
                         {modalComponents[modalState.modalType] || undefined}
                     </ModalTemplate>

@@ -1,7 +1,7 @@
+import { ProjectDetailState, initialState } from '@/store/projectdetail/initialState';
+import axios from 'axios';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import axios from 'axios';
-import { ProjectDetailState, initialState } from '@/store/projectdetail/initialState';
 import { usePriceStore } from '../price/usepriceAdaOrDollar';
 
 interface UseProjectDetailStore extends ProjectDetailState {

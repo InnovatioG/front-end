@@ -1,12 +1,13 @@
-{/* <div class="loader">
+{
+    /* <div class="loader">
   <li class="ball"></li>
   <li class="ball"></li>
   <li class="ball"></li>
-</div> */}
-
+</div> */
+}
 
 import React from 'react';
-import styles from "./LoaderDots.module.scss"
+import styles from './LoaderDots.module.scss';
 
 interface LoaderDotsProps {
     // Define props here
@@ -20,6 +21,6 @@ const LoaderDots: React.FC<LoaderDotsProps> = (props) => {
             <li className={styles.ball}></li>
         </div>
     );
-}
+};
 
 export default LoaderDots;

@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { pushWarningNotification } from 'smart-db';
 import { CustomWalletEntity } from '../../../lib/SmartDB/Entities/CustomWallet.Entity';
 import { CustomWalletApi } from '../../../lib/SmartDB/FrontEnd/CustomWallet.FrontEnd.Api.Calls';
-import { pushWarningNotification } from 'smart-db';
 
 export function useCustomWallet() {
     const [list, setList] = useState<CustomWalletEntity[]>([]);

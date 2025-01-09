@@ -1,16 +1,11 @@
-import React from 'react';
-import styles from "./GeneralError.module.scss";
 import Image from 'next/image';
-
-
+import React from 'react';
+import styles from './GeneralError.module.scss';
 
 interface GeneralErrorProps {
     message: string;
     icon?: string;
 }
-
-
-
 
 const GeneralError: React.FC<GeneralErrorProps> = ({ message, icon }) => {
     return (
@@ -19,14 +14,10 @@ const GeneralError: React.FC<GeneralErrorProps> = ({ message, icon }) => {
                 <Image src="/img/icons/error.svg" alt="Error" width={90} height={90} />
             </div>
             <div>
-                <span className={styles.message}>
-
-                    {message}
-                </span>
+                <span className={styles.message}>{message}</span>
             </div>
         </div>
-
     );
-}
+};
 
 export default GeneralError;
