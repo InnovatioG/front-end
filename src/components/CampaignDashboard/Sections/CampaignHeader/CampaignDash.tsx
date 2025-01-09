@@ -1,16 +1,16 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/Elements/DefaultAvatar/DefaultAvatar';
 import useDraftCard from '@/hooks/useDraftCard';
 import styles from '@/pages/campaign/[id]/campainPagelayout.module.scss';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { CardInformationByState } from '@/utils/constants';
 import Image from 'next/image';
 import React, { useRef } from 'react';
 import CampaignCard from '../../../CampaignCreation/Elements/CampaignCard';
 import SocialMediaCardContainer from '../../../CampaignCreation/Elements/SocialMediaCard';
 /*  */
-interface CampaignDashCreationProps {}
+interface CampaignDashCreationProps { }
 
-const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({}) => {
+const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const { project, editionMode, setProject, isProtocolTeam, isAdmin } = useProjectDetailStore();

@@ -18,7 +18,8 @@ export function formatMoney(amount: number, currency: string): string {
         maximumFractionDigits: 0,
     }).format(amount);
 }
-export function getTimeRemaining(date: string) {
+export function getTimeRemaining(date: Date | undefined) {
+    if (date === undefined) return { total: 0, days: 0, totalHours: 0, minutes: 0, seconds: 0 };
     const dat = new Date(date);
     const now = new Date();
 

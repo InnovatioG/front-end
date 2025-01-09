@@ -1,5 +1,5 @@
 import EmptyState from '@/components/CampaignId/Sections/EmptyState';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './ProjectDetail.module.scss';
 

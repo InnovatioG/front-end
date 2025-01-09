@@ -1,9 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/Elements/DefaultAvatar/DefaultAvatar';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import React from 'react';
 import styles from './CampaignHeader.module.scss';
 
-interface CampaignHeaderProps {}
+interface CampaignHeaderProps { }
 
 const CampaignHeader: React.FC<CampaignHeaderProps> = () => {
     const { project } = useProjectDetailStore();

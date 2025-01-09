@@ -1,5 +1,5 @@
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import React from 'react';
 import styles from './generalbuttonContainer.module.scss';
 

@@ -1,4 +1,4 @@
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { initialTextEditorOptions } from '@/utils/constants';
 import { useEffect, useState } from 'react';
 

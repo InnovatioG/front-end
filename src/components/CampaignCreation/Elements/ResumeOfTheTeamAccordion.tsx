@@ -3,7 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import SocialButton from '@/components/UI/Buttons/SocialIcon/SocialButton';
 import { MembersTeam } from '@/HardCode/databaseType';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { socialIcons } from '@/utils/constants';
 import { formatLink } from '@/utils/formats';
 import { useRouter } from 'next/router';
@@ -52,7 +52,7 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
             <Accordion type="single" collapsible className={styles.accordionContainer}>
                 {project.members_team.map((member, index) => (
                     <AccordionItem key={index} value={`item-${index}`}>
-                        <AccordionTrigger open={true} toggleOpen={() => {}}>
+                        <AccordionTrigger open={true} toggleOpen={() => { }}>
                             <div className={styles.faqContainer}>
                                 <Avatar big={true}>
                                     <AvatarImage src={formatLink(member.member_picture || '')} alt={member.name} />

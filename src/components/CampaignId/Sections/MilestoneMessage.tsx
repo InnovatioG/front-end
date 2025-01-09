@@ -1,6 +1,6 @@
 import { useModal } from '@/contexts/ModalContext';
 import type { MilestoneF } from '@/HardCode/databaseType';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { formatDateFromString } from '@/utils/formats';
 import React, { useEffect, useState } from 'react';
 import styles from './MilestoneMessage.module.scss';

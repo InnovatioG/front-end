@@ -1,11 +1,11 @@
-import type { BaseCampaign, MilestoneF } from '@/HardCode/databaseType';
+import type { Campaign, Milestone, MembersTeam } from '@/types/types';
 
-export interface ProjectDetailState {
-    project: BaseCampaign;
+export interface CampaignIdStore {
+    campaign: Campaign;
     isLoading: boolean;
     menuView: 'Project Detail' | 'Resume of the team' | 'Roadmap & Milestones' | 'Tokenomics' | 'Q&A';
     error: string;
-    milestone: MilestoneF | null; // Add this for active/selected milestone
+    milestone: Milestone | null; // Add this for active/selected milestone
     editionMode: boolean;
     isLoadingPrice: boolean;
     isAdmin: boolean;
@@ -13,31 +13,28 @@ export interface ProjectDetailState {
     price_ada: number;
 }
 
-export const initialState: ProjectDetailState = {
-    project: {
-        creator_wallet_id: null,
-        id: 0,
-        title: '',
+export const initialState: CampaignIdStore = {
+    campaign: {
+        _DB_id: '',
+        creator_wallet_id: 'null',
+        name: '',
         description: '',
-        state_id: 0,
+        campaign_status_id: '',
         investors: 0,
         banner_url: '',
         logo_url: '',
         createdAt: '',
         updatedAt: '',
-        status: '',
-        goal: 0,
-        min_request: 0,
+        requestMaxAda: 0n,
+        requestMinAda: 0n,
         website: '',
         facebook: '',
         instagram: '',
         discord: '',
-        linkedin: '',
         twitter: '',
-
         tokenomics_description: '',
-        start_date: '',
-        end_date: '',
+        begin_at: undefined,
+        deadline: undefined,
         members_team: [],
         milestones: [],
         faqs: [],

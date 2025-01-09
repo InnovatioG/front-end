@@ -1,6 +1,6 @@
 import AddMore from '@/components/UI/Buttons/AddMore/AddMore';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import FramerMotionAnimation from '@/utils/framerMotion';
 import React, { useState } from 'react';
 import styles from './Qa.module.scss';

@@ -3,10 +3,11 @@ import axios from 'axios';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { usePriceStore } from '../price/usepriceAdaOrDollar';
+import { Campaign } from '@/HardCode/databaseType';
 
 /* Campaign render */
 
-interface UseProjectDetailStore extends ProjectDetailState {
+interface useCampaignIdStore extends CampaignIdStore {
     setProject: (project: ProjectDetailState['project']) => void;
     setMenuView: (menuView: ProjectDetailState['menuView']) => void;
     setMilestone: (milestone: ProjectDetailState['milestone']) => void;

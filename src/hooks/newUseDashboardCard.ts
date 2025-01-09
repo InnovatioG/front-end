@@ -4,15 +4,20 @@ import { pushWarningNotification } from 'smart-db';
 import { CampaignEntity } from '@/lib/SmartDB/Entities';
 import { MilestoneEntity, CampaignMemberEntity } from '@/lib/SmartDB/Entities';
 import type { Campaign, Milestone, MembersTeam } from '@/types/types';
+import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
+import { set } from 'date-fns';
+import { ca } from 'date-fns/locale';
 
 export const useNewDashboardCard = (address: string | null) => {
     const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+    const [visibleCampaigns, setVisibleCampaigns] = useState<Campaign[]>([]);
     const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
-
-    // Función para transformar CampaignEntity a BaseCampaign
+    const [stateFilter, setStateFilter] = useState<string | null>(null);
+    const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
+    const [searchTerm, setSearchTerm] = useState<string>('');
+    const [myProposal, setMyProposal] = useState(false);
     const transformToBaseCampaign = async (campaign: CampaignEntity): Promise<Campaign> => {
         const milestonesEntities: MilestoneEntity[] = await MilestoneApi.getByParamsApi_({ campaign_id: campaign._DB_id });
-
         const membersTeamEntities: CampaignMemberEntity[] = await CampaignMemberApi.getByParamsApi_({ campaign_id: campaign._DB_id });
         const members_team: MembersTeam[] = membersTeamEntities.map((member) => ({
             id: member._DB_id,
@@ -70,25 +75,19 @@ export const useNewDashboardCard = (address: string | null) => {
         };
     };
 
-    // Función para obtener todas las campañas
-
     //! TODO MOMENTANEO
+
+    /* const data: CampaignEntity[] = await CampaignApi.getByParamsApi_({ campaign_status_id: { $gte: 8, $ne: 10 } }, { limit: 10 }); */
     const fetchCampaigns = async () => {
         try {
-            // Obtener todas las campañas sin filtro
-            const data: CampaignEntity[] = await CampaignApi.getByParamsApi_({}, { limit: 100 });
-
-            // Filtrar en el cliente las campañas que cumplen con la condición
-            const filteredCampaigns = data.filter((campaign) => {
-                const status = parseInt(campaign.campaign_status_id, 10); // Convertir a número si es necesario
+            const filterData: Record<string, any> = { campaign_status_id: { $gte: 8, $ne: 10 } };
+            const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filterData, { limit: 10 });
+            /*        const filteredCampaigns = data.filter((campaign) => {
+                const status = parseInt(campaign.campaign_status_id, 10); 
                 return status >= 8 && status !== 10;
-            });
-
-            // Limitar el número de resultados a 10 después de haber filtrado
-            const limitedCampaigns = filteredCampaigns.slice(0, 20);
-            // Transformar las campañas a un formato adecuado
-            const campaignWithDetails = await Promise.all(limitedCampaigns.map((campaign) => transformToBaseCampaign(campaign)));
-
+            }); */
+            const campaignWithDetails = await Promise.all(data.map((campaign) => transformToBaseCampaign(campaign)));
+            setVisibleCampaigns(campaignWithDetails);
             setCampaigns(campaignWithDetails);
         } catch (err) {
             console.error('Error fetching campaigns:', err);
@@ -97,23 +96,15 @@ export const useNewDashboardCard = (address: string | null) => {
     };
 
     // Función para obtener campañas filtradas
-    const fetchCampaignsByFilter = async (filters: { category?: string; state?: string; searchTerm?: string; userId?: string | null; isHomePage?: boolean; isAdmin?: boolean }) => {
+    const fetchCampaignsByFilter = async (filters: { campaing_category_id?: string | null; campaign_status_id?: string | null; name?: string | null }) => {
         try {
-            const paramsFilter: Record<string, any> = {};
-            if (filters.category) paramsFilter.category_id = filters.category;
-            if (filters.state) paramsFilter.campaign_status_id = filters.state;
-            if (filters.searchTerm) paramsFilter.searchTerm = filters.searchTerm;
-            if (filters.userId) paramsFilter.user_id = filters.userId;
-            if (filters.isHomePage) paramsFilter.isHomePage = filters.isHomePage;
-            if (filters.isAdmin) paramsFilter.isAdmin = filters.isAdmin;
+            const filterData: Record<string, any> = {};
+            if (filters.campaing_category_id) filterData.campaing_category_id = filters.campaing_category_id;
+            if (filters.campaign_status_id) filterData.campaign_status_id = filters.campaign_status_id;
 
-            const filteredData: CampaignEntity[] = await CampaignApi.getByParamsApi_(paramsFilter);
-            const campaignMemberList = await CampaignMemberApi.getAllApi_(); // Obtener todos los miembros
-
-            // Transformar datos de CampaignEntity a BaseCampaign con milestones específicos
-            const filteredCampaignsWithDetails = await Promise.all(filteredData.map((campaign) => transformToBaseCampaign(campaign)));
-
-            setFilteredCampaigns(filteredCampaignsWithDetails);
+            const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filterData, { limit: 10 });
+            const campaignWithDetails = await Promise.all(data.map((campaign) => transformToBaseCampaign(campaign)));
+            setVisibleCampaigns(campaignWithDetails);
         } catch (err) {
             console.error('Error fetching campaigns with filters:', err);
             pushWarningNotification('Error', `Error fetching Campaigns with filters: ${err}`);
@@ -125,10 +116,23 @@ export const useNewDashboardCard = (address: string | null) => {
         fetchCampaigns();
     }, []);
 
+    useEffect(() => {
+        if (stateFilter === null && categoryFilter === null) return;
+        fetchCampaignsByFilter({ campaing_category_id: categoryFilter, campaign_status_id: stateFilter, name: searchTerm });
+    }, [stateFilter, categoryFilter, searchTerm]);
+
     return {
         campaigns,
         filteredCampaigns,
         fetchCampaigns,
         fetchCampaignsByFilter,
+        stateFilter,
+        setStateFilter,
+        categoryFilter,
+        setCategoryFilter,
+        visibleCampaigns,
+        setVisibleCampaigns,
+        searchTerm,
+        setSearchTerm,
     };
 };

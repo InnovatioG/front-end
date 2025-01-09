@@ -6,7 +6,7 @@ export interface Campaign {
     campaign_status_id?: string;
     banner_url?: string;
     logo_url?: string;
-    createdAt: Date;
+    createdAt?: Date;
     updatedAt?: Date;
     investors?: number;
     requestMaxAda: bigint;
@@ -62,4 +62,21 @@ export interface MembersTeam {
     twitter?: string;
     member_picture?: string;
     member_manage_funds?: boolean;
+}
+
+export interface CampaignCategory {
+    id: number;
+    name: string;
+    description: string | undefined;
+}
+
+export interface CampaignStatusGlobal {
+    id: number;
+    name: string;
+    description: string | undefined;
+}
+
+export interface MilestoneStatusGlobal {
+    id: number;
+    name: string;
 }

@@ -2,7 +2,7 @@ import SocialButton from '@/components/UI/Buttons/SocialIcon/SocialButton';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
 import { useModal } from '@/contexts/ModalContext';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import type { ButtonConfig } from '@/utils/constants';
 import { ButtonsForCampaignPage, socialIcons } from '@/utils/constants';
 import Image from 'next/image';
@@ -10,7 +10,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import styles from './SocialMediaCard.module.scss';
 
-interface SocialMediaCardContainerProps {}
+interface SocialMediaCardContainerProps { }
 
 // Definir un tipo específico para las claves de redes sociales
 type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'linkedin' | 'twitter';

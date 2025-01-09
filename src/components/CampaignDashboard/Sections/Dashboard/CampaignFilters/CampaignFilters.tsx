@@ -4,17 +4,16 @@ import BtnDropdown from '@/components/UI/Buttons/Dropdown/BtnDropdown';
 import SearchInput from '@/components/UI/Inputs/SearchInput';
 import { ScreenSize } from '@/contexts/ResponsiveContext';
 import styles from './CampaignFilters.module.scss';
+import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 
 interface CampaignFiltersProps {
     isHomePage: boolean;
     searchTerm: string;
-    statusFilter: string;
-    categoryFilter: string;
-    states: State[];
-    categories: Category[];
+    statusFilter: string | null;
+    categoryFilter: string | null;
     onSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-    onStatusFilterChange: (value: string) => void;
-    onCategoryFilterChange: (value: string) => void;
+    setStateFilter: (value: string) => void;
+    setCategoryFilter: (value: string) => void;
     screenSize: ScreenSize;
     isConnected: boolean;
     myProposal: boolean;
@@ -26,67 +25,78 @@ export default function CampaignFilters(props: CampaignFiltersProps) {
         searchTerm,
         statusFilter,
         categoryFilter,
-        states,
-        categories,
         onSearchChange,
-        onStatusFilterChange,
-        onCategoryFilterChange,
+        setStateFilter,
+        setCategoryFilter,
         screenSize,
         isConnected,
         myProposal,
         onMyProposalChange,
-        isHomePage,
     } = props;
 
-    /*  { value: '', label: 'All' },
-     { value: '1', label: 'Created' },
-     { value: '2', label: 'Submitted' },
-     { value: '3', label: 'Rejected' },
-     { value: '4', label: 'Approved' },
-     { value: '5', label: 'Contract Created' },
-     { value: '6', label: 'Contract Published' },
-     { value: '7', label: 'Contract Started' },
-     { value: '9', label: 'Fundraising' },
-     { value: '10', label: 'Finishing' },
-     { value: '11', label: 'Active' },
-     { value: '12', label: 'Failed' },
-     { value: '13', label: 'Unreached' },
-     { value: '14', label: 'Success' }
-   ] */
+    const { campaignCategories, campaignStatus } = useGeneralStore();
 
+    // Opciones para el filtro de estado
     const stateOptions = [
-        { value: '', label: 'All' },
-        ...states
-            .filter((state) => !isHomePage || !['1', '2', '3', '4', '5', '6', '7'].includes(state.id.toString()))
-            .map((state) => ({ value: state.id.toString(), label: state.name })),
+        { value: '', label: 'All Status' }, // Opción para borrar el filtro
+        ...(campaignStatus?.filter((status) => status.id >= 8 && status.id !== 10)
+            .map((state) => ({
+                value: state.id,
+                label: state.name,
+            })) || []),
     ];
 
-    const categoryOptions = [{ value: '', label: 'All' }, ...categories.map((category) => ({ value: category.id.toString(), label: category.name }))];
+    // Opciones para el filtro de categoría
+    const categoryOptions = [
+        { value: '', label: 'All Categories' }, // Opción para borrar el filtro
+        ...(campaignCategories?.map((category) => ({
+            value: category.id,
+            label: category.name,
+        })) || []),
+    ];
+    // Manejo de cambios en el filtro de estado
+    const handleStateFilterChange = (value: string | number) => {
+        setStateFilter(value.toString());
+    };
+
+    // Manejo de cambios en el filtro de categoría
+    const handleCategoryFilterChange = (value: string | number) => {
+        setCategoryFilter(value.toString());
+    };
 
     return (
         <div className={styles.filters}>
             <div className={styles.btnActions}>
+                {/* Filtro de estado */}
                 <BtnDropdown
                     options={stateOptions}
                     value={statusFilter}
-                    onChange={onStatusFilterChange}
+                    onChange={handleStateFilterChange}
                     placeholder="Status Project"
                     width={screenSize === 'desktop' ? 180 : 160}
                 />
+
+                {/* Filtro de categoría */}
                 <BtnDropdown
                     options={categoryOptions}
                     value={categoryFilter}
-                    onChange={onCategoryFilterChange}
+                    onChange={handleCategoryFilterChange}
                     placeholder="Category"
                     width={screenSize === 'desktop' ? 180 : 150}
                 />
+
+                {/* Checkbox de "My Proposal" */}
                 {isConnected && (
                     <div className={styles.checkboxContainer}>
                         <Checkbox checked={myProposal} onChange={onMyProposalChange} label="My Proposal" />
                     </div>
                 )}
             </div>
-            {screenSize === 'desktop' && <SearchInput searchTerm={searchTerm} onSearchChange={onSearchChange} placeholder="Search Project" width={380} />}
+
+            {/* Barra de búsqueda (solo visible en escritorio) */}
+            {screenSize === 'desktop' && (
+                <SearchInput searchTerm={searchTerm} onSearchChange={onSearchChange} placeholder="Search Project" width={380} />
+            )}
         </div>
     );
 }

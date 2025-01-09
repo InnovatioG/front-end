@@ -1,6 +1,6 @@
 import ToolTipInformation from '@/components/General/Elements/TooltipInformation/tooltipInformation';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { calculatePorcentage, formatMoney, formatTime, getTimeRemaining } from '@/utils/formats';
 import { TWO_USERS } from '@/utils/images';
 import React, { useEffect, useState } from 'react';

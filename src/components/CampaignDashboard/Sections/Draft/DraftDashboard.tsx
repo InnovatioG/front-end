@@ -37,7 +37,6 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
     } = useDashboardCard(address);
 
 
-    console.log(visibleCampaigns)
 
 
     return (

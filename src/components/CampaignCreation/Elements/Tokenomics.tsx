@@ -1,5 +1,5 @@
 import TextEditor from '@/components/General/Elements/TextEditor/TextEditor';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { inputFieldsToken } from '@/utils/constants';
 import React from 'react';
 import AdminUTXOS from './adminUTXO';

@@ -3,6 +3,9 @@ import { CampaignStatusApi } from '@/lib/SmartDB/FrontEnd';
 import { CampaignStatusEntity } from '@/lib/SmartDB/Entities';
 import { CampaignCategoryApi } from '@/lib/SmartDB/FrontEnd';
 import { CampaignCategoryEntity } from '@/lib/SmartDB/Entities';
+import { MilestoneStatusApi } from '@/lib/SmartDB/FrontEnd';
+import { MilestoneStatusEntity } from '@/lib/SmartDB/Entities';
+
 import axios from 'axios';
 // Función para manejar la obtención de datos y actualización del store
 const fetchAndSetData = async <T, U>(fetchFunction: () => { list: T[] }, mapFunction: (item: T) => U, setFunction: (data: U[]) => void): Promise<T[]> => {
@@ -20,7 +23,7 @@ const fetchAndSetData = async <T, U>(fetchFunction: () => { list: T[] }, mapFunc
 // Función para CampaignCategories
 const fetchCampaignCategories = async () => {
     try {
-        const fetchedData: CampaignStatusEntity[] = await CampaignStatusApi.getAllApi_();
+        const fetchedData: CampaignCategoryEntity[] = await CampaignCategoryApi.getAllApi_();
 
         const mappedData = fetchedData.map((category) => ({
             id: category.id_internal,
@@ -37,9 +40,26 @@ const fetchCampaignCategories = async () => {
     }
 };
 
+const fetchMilestoneStatus = async () => {
+    try {
+        const fetchData: MilestoneStatusEntity[] = await MilestoneStatusApi.getAllApi_();
+
+        const mappedData = fetchData.map((milestoneStatus) => ({
+            id: milestoneStatus.id_internal,
+            name: milestoneStatus.name,
+            description: milestoneStatus.description,
+        }));
+
+        useGeneralStore.getState().setMilestoneStatus(mappedData);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return [];
+    }
+};
+
 const fetchCampaignStatus = async () => {
     try {
-        const fetchedData: CampaignCategoryEntity[] = await CampaignCategoryApi.getAllApi_();
+        const fetchedData: CampaignStatusEntity[] = await CampaignStatusApi.getAllApi_();
 
         const mappedData = fetchedData.map((category) => ({
             id: category.id_internal,
@@ -47,7 +67,7 @@ const fetchCampaignStatus = async () => {
             description: category.description,
         }));
 
-        useGeneralStore.getState().setCampaignCategories(mappedData);
+        useGeneralStore.getState().setCampaignStatus(mappedData);
 
         return mappedData;
     } catch (error) {
@@ -69,7 +89,7 @@ const fetchAdaPrice = async () => {
 
 export const fetchAllData = async () => {
     try {
-        await Promise.all([fetchCampaignCategories(), fetchCampaignStatus(), fetchAdaPrice()]);
+        await Promise.all([fetchCampaignCategories(), fetchCampaignStatus(), fetchAdaPrice(), fetchMilestoneStatus()]);
     } catch (error) {
         console.error('Error fetching all data:', error);
     }

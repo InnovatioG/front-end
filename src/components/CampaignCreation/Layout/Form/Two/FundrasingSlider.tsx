@@ -4,8 +4,9 @@ import styles from "./StepTwo.module.scss";
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import SelectButton from '@/components/UI/Buttons/SelectButton/SelectButton';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import ToolTipInformation from '@/components/General/Elements/TooltipInformation/tooltipInformation';
+import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 interface FundrasingSliderProps {
     // Define props here
 }
@@ -15,12 +16,9 @@ interface FundrasingSliderProps {
 
 const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
     const { newCampaign, setRequestMaxAda, setMilestones } = useCampaignStore();
-    const { fetchAdaPrice, price_ada } = useProjectDetailStore()
+    const { adaPrice } = useGeneralStore();
     const { priceAdaOrDollar } = usePriceStore();
 
-    useEffect(() => {
-        fetchAdaPrice()
-    }, [])
 
 
 
@@ -37,9 +35,9 @@ const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
     };
 
 
-    const calculaterequestMaxAda = (requestMaxAda: number, price_ada: number) => {
+    const calculaterequestMaxAda = (requestMaxAda: number, adaPrice: number) => {
         if (priceAdaOrDollar == "dollar") {
-            return requestMaxAda / price_ada;
+            return requestMaxAda / adaPrice;
         }
         return requestMaxAda;
     }
@@ -52,10 +50,10 @@ const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
                 <div className={styles.sliderHeader}>
                     <div className={styles.tooltipContainer}>
                         <ToolTipInformation
-                            content={`The fundraising requestMaxAda is the amount of money you want to raise with your campaign, configured in ₳. While you can use the dollar value as a reference, the actual amount in dollars may vary at the time of signing the smart contract. In today value is ₳${calculaterequestMaxAda(Number(requestMaxAda), price_ada).toFixed(2)}`}
+                            content={`The fundraising requestMaxAda is the amount of money you want to raise with your campaign, configured in ₳. While you can use the dollar value as a reference, the actual amount in dollars may vary at the time of signing the smart contract. In today value is ₳${calculaterequestMaxAda(Number(requestMaxAda), adaPrice).toFixed(2)}`}
                         />
                     </div>
-                    <h3>Fundraise requestMaxAda</h3>
+                    <h3>Fundraise Goal</h3>
                     <h2>
                         {priceAdaOrDollar === "ada" ? "₳" : "$"}
                         {requestMaxAda.toLocaleString()}

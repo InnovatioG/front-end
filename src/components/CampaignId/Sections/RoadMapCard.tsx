@@ -3,7 +3,7 @@ import MilestonePercentage from '@/components/CampaignCreation/Elements/Mileston
 import MilestoneTime from '@/components/CampaignCreation/Elements/MilestoneTimeEdit';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import { useModal } from '@/contexts/ModalContext';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { imageByStatus, stylesByStatus } from '@/utils/constants/status';
 import { getOrdinalString } from '@/utils/formats';
 import React from 'react';

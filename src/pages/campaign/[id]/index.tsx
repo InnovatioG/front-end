@@ -5,7 +5,7 @@ import GeneralError from '@/components/General/Elements/Errors/GeneralError';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import JSON from '@/HardCode/campaignId.json';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';

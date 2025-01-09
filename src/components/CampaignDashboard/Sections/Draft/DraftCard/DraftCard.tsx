@@ -3,8 +3,9 @@ import styles from "../draftCard/DraftCard.module.scss";
 import Link from 'next/link';
 import Image from 'next/image';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
-import { useModalStore } from '@/store/modal/useModalStoreState';
+import { useModal } from '@/contexts/ModalContext';
 import useDraftCard from '@/hooks/useDraftCard';
+import type { Campaign } from '@/types/types';
 
 interface DraftCardProps {
     campaign: Campaign;
@@ -13,7 +14,7 @@ interface DraftCardProps {
 }
 
 const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin }) => {
-    const { openModal } = useModalStore();
+    const { openModal } = useModal();
     const { label, labelClass, buttons, timeRemaining, formatAllTime, currentMilestone } = useDraftCard(campaign, isProtocolTeam, isAdmin);
 
     const categoriesById = (id: number) => {
@@ -50,10 +51,10 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin
                 {buttons.map((button, index) => {
                     if (button.link) {
                         return (
-                            <Link key={index} href={button.link(campaign.id)}>
+                            <Link key={index} href={button.link(campaign._DB_id)}>
                                 <GeneralButtonUI
                                     text={button.label}
-                                    onClick={() => button.action && button.action((modalType) => openModal(modalType, campaign.id))}
+                                    onClick={() => button.action && button.action((modalType) => openModal(modalType, campaign._DB_id))}
                                     classNameStyle={`${button.classNameType} ${buttons.length === 1 ? 'center' : ''}`}
                                 >
                                     {buttons.length > 1 && <span className={styles[button.classNameType]}>{'>'}</span>}
@@ -65,7 +66,7 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin
                             <GeneralButtonUI
                                 key={index}
                                 text={button.label}
-                                onClick={() => button.action && button.action((modalType) => openModal(modalType, campaign.id, campaign))}
+                                onClick={() => button.action && button.action((modalType) => openModal(modalType, campaign._DB_id, campaign))}
                                 classNameStyle={`${button.classNameType} ${buttons.length === 1 ? 'center' : ''}`}
                             >
                                 {buttons.length > 1 && <span className={styles[button.classNameType]}>{'>'}</span>}

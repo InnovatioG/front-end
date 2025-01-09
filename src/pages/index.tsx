@@ -1,14 +1,11 @@
 import CampaignDashboard from '@/components/CampaignDashboard/Sections/Dashboard/CampaignDashboard';
 import CampaignHighLight from '@/components/CampaignDashboard/Sections/Highlight/CampaignHighLight';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import styles from '@/styles/Home.module.scss';
 import { PEOPLE } from '@/utils/images';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useEffect } from 'react';
-export default function Home() {
-    const { fetchAdaPrice } = useProjectDetailStore();
 
+export default function Index() {
 
     return (
         <>

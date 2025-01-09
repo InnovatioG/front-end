@@ -1,5 +1,5 @@
 import CampaignDashboard from '@/components/CampaignDashboard/Sections/Dashboard/CampaignDashboard';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import React, { useEffect } from 'react';
 interface CampaignsProps {
     // Define props here

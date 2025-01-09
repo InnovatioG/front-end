@@ -5,7 +5,7 @@ import CampaignDashCreation from '@/components/CampaignDashboard/Sections/Campai
 import CampaignHeader from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignHeader';
 import GeneralError from '@/components/General/Elements/Errors/GeneralError';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';

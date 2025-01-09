@@ -6,17 +6,9 @@ import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 import { useNewDashboardCard } from './newUseDashboardCard';
 import { useState, useEffect, useCallback } from 'react';
 export const useDashboardCard = (address: string | null) => {
-    const { campaigns, filteredCampaigns } = useNewDashboardCard(address);
-
-    /*     const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
-     */
-
+    const { campaigns, filteredCampaigns, stateFilter, categoryFilter, setStateFilter, setCategoryFilter, visibleCampaigns, setVisibleCampaigns, setSearchTerm, searchTerm } =
+        useNewDashboardCard(address);
     const { campaignStatus, campaignCategories } = useGeneralStore();
-    const [visibleCampaigns, setVisibleCampaigns] = useState<Campaign[]>([]);
-    const [searchTerm, setSearchTerm] = useState('');
-    const [stateFilter, setStateFilter] = useState('');
-    const [categoryFilter, setCategoryFilter] = useState('');
-    const [categories, setCategories] = useState<Category[]>([]);
     const screenSize = useScreenSize();
     const [adminView, setAdminView] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -44,60 +36,6 @@ export const useDashboardCard = (address: string | null) => {
         setLoading(false);
     }, [address]);
 
-    /*   useEffect(() => {
-        pathName === '/' || pathName === '/campaigns' ? setIsHomePage(true) : setIsHomePage(false);
-
-        setLoading(true);
-        const fetchData = async () => {
-            try {
-                const filters = {
-                    isHomePage,
-                    userId: address,
-                    isAdmin,
-                    adminView,
-                    searchTerm,
-                    stateFilter: stateFilter || '', // Asegura que no sea null/undefined
-                    categoryFilter,
-                    isProtocolTeam,
-                    myProposal,
-                    haveProjects,
-                    setHaveProjects,
-                };
-
-                const data = await dataBaseService.getFilteredData(filters);
-                setCampaigns(data.campaigns);
-                setFilteredCampaigns(data.campaigns);
-                setStates(data.states || []);
-                setCategories(data.categories || []);
-
-                setCampaignsLoading(false);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-                setCampaignsLoading(false);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchData();
-    }, [address, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam, myProposal, isHomePage, pathName, haveProjects, setHaveProjects]); */
-
-    /*     const getStatusName = useCallback(
-        (statusId: number): string => {
-            const status = states.find((s) => s.id === statusId);
-            return status ? status.name : '';
-        },
-        [states]
-    );
- */
-    /*     const getCategoryName = useCallback(
-        (category_id: number): string => {
-            const category = categories.find((c) => c.id === category_id);
-            return category ? category.name : '';
-        },
-        [categories]
-    );
- */
     const getInitialLoadCount = useCallback(() => {
         if (screenSize === 'mobile') return 3;
         if (screenSize === 'tablet') return 4;
@@ -135,12 +73,12 @@ export const useDashboardCard = (address: string | null) => {
     return {
         campaigns,
         filteredCampaigns,
-        visibleCampaigns: campaigns,
+        visibleCampaigns,
         searchTerm,
         stateFilter,
         categoryFilter,
         states: campaignStatus,
-        categories,
+        categories: campaignCategories,
         adminView,
         isAdmin,
         loading,
@@ -149,8 +87,6 @@ export const useDashboardCard = (address: string | null) => {
         setStateFilter,
         setCategoryFilter,
         handleSearchChange: (event: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(event.target.value),
-        handleStateFilterChange: (value: string) => setStateFilter(value),
-        handleCategoryFilterChange: (value: string) => setCategoryFilter(value),
         handleClickAdminView: () => isAdmin && setAdminView(!adminView),
         loadMoreCampaigns,
         screenSize,

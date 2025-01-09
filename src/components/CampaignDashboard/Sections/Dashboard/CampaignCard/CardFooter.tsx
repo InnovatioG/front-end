@@ -2,7 +2,7 @@ import React from 'react';
 import useDraftCard from "@/hooks/useDraftCard";
 import styles from "./CardFooter.module.scss";
 import { formatMoney, getOrdinalString } from '@/utils/formats';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import Link from 'next/link';
@@ -54,7 +54,7 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
                         <div className={styles.milestonesQuant}>
                             <h4>{milestonesQuantity} {milestonesQuantity === 1 ? "milestone" : "milestones"}</h4>
                         </div>
-                        <Link href={`/campaign/${campaign.id}`}>
+                        <Link href={`/campaign/${campaign._DB_id}`}>
                             <GeneralButtonUI text="Learn more" classNameStyle="fillb" onClick={() => { }} />
                         </Link>
                     </div>
@@ -73,12 +73,12 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
                         </span>
                     </div>
                     < div className={styles.footer} >
-                        <Link href={`/campaign/${campaign.id}`}>
+                        <Link href={`/campaign/${campaign._DB_id}`}>
                             <GeneralButtonUI text={"Learn more"} classNameStyle={"fillb"} onClick={() => { setMenuView("Roadmap & Milestones") }} />
                         </Link>
 
 
-                        <Link href={`/invest?id=${campaign.id}`}>
+                        <Link href={`/invest?id=${campaign._DB_id}`}>
                             <GeneralButtonUI
                                 text={"Invest"}
                                 classNameStyle={"invest"}
@@ -104,12 +104,12 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
                     </div>
 
                     < div className={styles.footer} >
-                        <Link href={`/campaign/${campaign.id}`}>
+                        <Link href={`/campaign/${campaign._DB_id}`}>
                             <GeneralButtonUI text={"View Roadmap"} classNameStyle={"fillb"} onClick={() => { setMenuView("Roadmap & Milestones") }} />
                         </Link>
 
 
-                        <Link href={`/campaign/${campaign.id}`}>
+                        <Link href={`/campaign/${campaign._DB_id}`}>
                             <GeneralButtonUI
                                 text={"Learn More"}
                                 classNameStyle={"Learn More"}
@@ -148,7 +148,7 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
                     </div>
 
                     < div className={styles.footer} >
-                        <Link href={`/campaign/${campaign.id}`}>
+                        <Link href={`/campaign/${campaign._DB_id}`}>
                             <GeneralButtonUI text={"Learn more"} classNameStyle={"fillb"} onClick={() => { setMenuView("Roadmap & Milestones") }} />
                         </Link>
                         <GeneralButtonUI text={"Get Back"} classNameStyle={label} onClick={() => { }} />

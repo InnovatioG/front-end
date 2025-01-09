@@ -1,4 +1,4 @@
-import type { CampaignCategory, CampaignStatusGlobal, MilestoneStatusGlobal } from '@/HardCode/databaseType';
+import type { CampaignCategory, CampaignStatusGlobal, MilestoneStatusGlobal } from '@/types/types';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 

@@ -1,6 +1,6 @@
 import EmptyState from '@/components/CampaignId/Sections/EmptyState';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import React, { useEffect } from 'react';
 import styles from './Tokenomics.module.scss';
 interface TokenomicsProps {

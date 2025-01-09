@@ -1,6 +1,6 @@
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import { useScreenSize } from '@/hooks/useScreenSize';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { navMenu, NavMenuItem } from '@/utils/projectDetailsCreation';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -58,7 +58,7 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
                     {editionMode && (
                         <Link href={`./${id}`}>
                             <div>
-                                <GeneralButtonUI text="Overview" classNameStyle="overview" onClick={() => {}} />
+                                <GeneralButtonUI text="Overview" classNameStyle="overview" onClick={() => { }} />
                             </div>
                         </Link>
                     )}
@@ -83,7 +83,7 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
             {editionMode && (
                 <Link href={`./${id}`}>
                     <div>
-                        <GeneralButtonUI text="Overview" classNameStyle="overview" onClick={() => {}} />
+                        <GeneralButtonUI text="Overview" classNameStyle="overview" onClick={() => { }} />
                     </div>
                 </Link>
             )}

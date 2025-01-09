@@ -1,4 +1,4 @@
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { DISCORD, FACEBOOK, INSTAGRAM, LINKEDIN, WEBSITE, XS } from '@/utils/images';
 
 export const socialIcons = [

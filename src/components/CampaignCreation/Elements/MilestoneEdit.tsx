@@ -1,6 +1,6 @@
 import TextEditor from '@/components/General/Elements/TextEditor/TextEditor';
 import type { MilestoneF } from '@/HardCode/databaseType';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { getOrdinalString } from '@/utils/formats';
 import React from 'react';
 import styles from './MilestoneEdit.module.scss';

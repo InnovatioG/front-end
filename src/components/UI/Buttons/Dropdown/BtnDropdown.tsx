@@ -3,14 +3,16 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './BtnDropdown.module.scss';
 
 interface DropdownOption {
-    value: string;
+    value: number | string;
     label: string;
 }
 
+
+
 interface CustomDropdownProps {
     options: DropdownOption[];
-    value: string;
-    onChange: (value: string) => void;
+    value: string | null;
+    onChange: (value: string | number) => void;
     placeholder: string;
     width: number;
 }
@@ -46,7 +48,7 @@ export default function BtnDropdown(props: CustomDropdownProps) {
         }
     }, [isOpen]);
 
-    const handleOptionClick = (optionValue: string) => {
+    const handleOptionClick = (optionValue: string | number) => {
         onChange(optionValue);
         setIsOpen(false);
     };

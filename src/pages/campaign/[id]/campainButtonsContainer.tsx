@@ -1,12 +1,12 @@
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import { useModal } from '@/contexts/ModalContext';
 import useDraftCard from '@/hooks/useDraftCard';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import Link from 'next/link';
 import React from 'react';
 import styles from './campaignButtonContainer.module.scss';
 
-interface CampaignButtonContainerProps {}
+interface CampaignButtonContainerProps { }
 
 const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) => {
     const { project, isAdmin, isProtocolTeam } = useProjectDetailStore();
@@ -38,7 +38,7 @@ const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) 
                     />
                     {project.state_id <= 3 && (
                         <Link href={`/campaign/edit?id=${project.id}`}>
-                            <GeneralButtonUI text={'Edit Campaign'} classNameStyle={'outlineb'} onClick={() => {}} />
+                            <GeneralButtonUI text={'Edit Campaign'} classNameStyle={'outlineb'} onClick={() => { }} />
                         </Link>
                     )}
                     {filteredButtons.map((button, index) => {
