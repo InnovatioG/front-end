@@ -14,7 +14,7 @@ interface FundrasingSliderProps {
 
 
 const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
-    const { newCampaign, setGoal, setMilestones } = useCampaignStore();
+    const { newCampaign, setRequestMaxAda, setMilestones } = useCampaignStore();
     const { fetchAdaPrice, price_ada } = useProjectDetailStore()
     const { priceAdaOrDollar } = usePriceStore();
 
@@ -24,24 +24,24 @@ const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
 
 
 
-    const goal = newCampaign.goal;
+    const requestMaxAda = newCampaign.requestMaxAda;
     const [selectedMilestones, setSelectedMilestones] = useState<number | null>(null);
 
     const handleSelect = (numMilestones: number) => {
         setSelectedMilestones(numMilestones);
         const milestones = Array.from({ length: numMilestones }, (_, index) => ({
             order: index + 1,
-            goal: 0,
+            requestMaxAda: 0,
         }));
         setMilestones(milestones);
     };
 
 
-    const calculateGoal = (goal: number, price_ada: number) => {
+    const calculaterequestMaxAda = (requestMaxAda: number, price_ada: number) => {
         if (priceAdaOrDollar == "dollar") {
-            return goal / price_ada;
+            return requestMaxAda / price_ada;
         }
-        return goal;
+        return requestMaxAda;
     }
 
 
@@ -52,16 +52,16 @@ const FundrasingSlider: React.FC<FundrasingSliderProps> = (props) => {
                 <div className={styles.sliderHeader}>
                     <div className={styles.tooltipContainer}>
                         <ToolTipInformation
-                            content={`The fundraising goal is the amount of money you want to raise with your campaign, configured in ₳. While you can use the dollar value as a reference, the actual amount in dollars may vary at the time of signing the smart contract. In today value is ₳${calculateGoal(goal, price_ada).toFixed(2)}`}
+                            content={`The fundraising requestMaxAda is the amount of money you want to raise with your campaign, configured in ₳. While you can use the dollar value as a reference, the actual amount in dollars may vary at the time of signing the smart contract. In today value is ₳${calculaterequestMaxAda(Number(requestMaxAda), price_ada).toFixed(2)}`}
                         />
                     </div>
-                    <h3>Fundraise goal</h3>
+                    <h3>Fundraise requestMaxAda</h3>
                     <h2>
                         {priceAdaOrDollar === "ada" ? "₳" : "$"}
-                        {goal.toLocaleString()}
+                        {requestMaxAda.toLocaleString()}
                     </h2>
                 </div>
-                <Slider value={goal} setValue={setGoal} min={20000} max={150000} step={10000} />
+                <Slider value={requestMaxAda} setValue={setRequestMaxAda} min={20000n} max={150000n} step={10000} />
             </article>
             <article className={styles.buttonContainer}>
                 {[1, 2, 3, 4, 5].map((num) => (

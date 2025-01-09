@@ -9,7 +9,6 @@ import { useNewDashboardCard } from './newUseDashboardCard';
 export const useDashboardCard = (address: string | null) => {
     const { campaigns, filteredCampaigns } = useNewDashboardCard(address);
 
-    console.log('campaigns', campaigns);
     /*     const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
      */
 
@@ -92,14 +91,14 @@ export const useDashboardCard = (address: string | null) => {
         [states]
     );
  */
-    const getCategoryName = useCallback(
+    /*     const getCategoryName = useCallback(
         (category_id: number): string => {
             const category = categories.find((c) => c.id === category_id);
             return category ? category.name : '';
         },
         [categories]
     );
-
+ */
     const getInitialLoadCount = useCallback(() => {
         if (screenSize === 'mobile') return 3;
         if (screenSize === 'tablet') return 4;
@@ -154,7 +153,6 @@ export const useDashboardCard = (address: string | null) => {
         handleStateFilterChange: (value: string) => setStateFilter(value),
         handleCategoryFilterChange: (value: string) => setCategoryFilter(value),
         handleClickAdminView: () => isAdmin && setAdminView(!adminView),
-        getCategoryName,
         loadMoreCampaigns,
         screenSize,
         isProtocolTeam,

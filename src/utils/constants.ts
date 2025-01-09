@@ -1,8 +1,6 @@
 import { DISCORD, FACEBOOK, INSTAGRAM, LOGO_FULL_LIGHT, XS, WEBSITE, LINKEDIN } from '@/utils/images';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 
-export const categories: string[] = ['Technology', 'Event', 'Education', 'Gaming', 'Social', 'Food'];
-
 export const socialIcons = [
     { icon: WEBSITE, name: 'website' },
     { icon: FACEBOOK, name: 'facebook' },
@@ -13,9 +11,9 @@ export const socialIcons = [
 ];
 
 export const memberFields = [
-    { key: 'member_name', placeholder: 'Name' },
-    { key: 'member_last_name', placeholder: 'Last name' },
-    { key: 'member_role', placeholder: 'Role' },
+    { key: 'name', placeholder: 'Name' },
+    { key: 'last_name', placeholder: 'Last name' },
+    { key: 'role', placeholder: 'Role' },
 ];
 export const titleForCampaignCreation = (step: number): string => {
     if (step !== 4) {

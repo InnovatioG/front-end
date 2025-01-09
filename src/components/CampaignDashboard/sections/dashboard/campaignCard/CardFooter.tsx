@@ -7,6 +7,7 @@ import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 import GeneralButtonUI from '@/components/ui/buttons/UI/Button';
 import Link from 'next/link';
 import { set } from 'date-fns';
+import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 
 interface CardFooterProps {
     campaign: any;
@@ -17,19 +18,21 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
     //! TODO GET BACK SOLO PARA LOS INVERSORES 
 
     const { label, labelClass, currentMilestone, formatAllTime } = useDraftCard(campaign, false, false);
-    const { fetchAdaPrice, price_ada, setMenuView } = useProjectDetailStore();
+    const { setMenuView } = useProjectDetailStore();
+    const { adaPrice } = useGeneralStore();
     const { priceAdaOrDollar } = usePriceStore();
-    const { goal, raise_amount } = campaign;
+    const { requestMaxAda, cdFundedADA } = campaign;
+
 
     const formatMoneyByAdaOrDollar = (value: number) => {
         if (priceAdaOrDollar === "dollar") {
-            return formatMoney(Number(value) / Number(price_ada), "USD");
+            return formatMoney(Number(value) / Number(adaPrice), "USD");
         }
         return formatMoney(Number(value), "ADA");
     };
 
     const milestonesQuantity = campaign.milestones.length;
-    const raisePercentage = Math.min(Number(raise_amount) / Number(goal) * 100, 100);
+    const raisePercentage = Math.min(Number(cdFundedADA) / Number(requestMaxAda) * 100, 100);
     const numberFromCurrentMilestone = getOrdinalString(Number(currentMilestone.charAt(1)));
 
     // Reusable components
@@ -46,7 +49,7 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
         <div>
             {label === "Countdown" && (
                 <div className={styles.container}>
-                    <StateContainer amount={formatMoneyByAdaOrDollar(goal)} subtext="Target Raise" classNameStyle='white' />
+                    <StateContainer amount={formatMoneyByAdaOrDollar(requestMaxAda)} subtext="Target Raise" classNameStyle='white' />
                     <div className={styles.footer}>
                         <div className={styles.milestonesQuant}>
                             <h4>{milestonesQuantity} {milestonesQuantity === 1 ? "milestone" : "milestones"}</h4>
@@ -61,12 +64,12 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
             {label === "Fundraising" && (
                 <div className={styles.container}>
                     <div className={`${styles.stateContainer} ${styles[labelClass]}`}>
-                        <h4 className={styles.fa}>{formatMoneyByAdaOrDollar(raise_amount)}</h4>
+                        <h4 className={styles.fa}>{formatMoneyByAdaOrDollar(cdFundedADA)}</h4>
                         <div className={styles.loaderContainer}>
                             <div className={styles.loader} style={{ width: `${raisePercentage}%` }}></div>
                         </div>
                         <span>
-                            Target Raise:  {formatMoneyByAdaOrDollar(goal)}
+                            Target Raise:  {formatMoneyByAdaOrDollar(requestMaxAda)}
                         </span>
                     </div>
                     < div className={styles.footer} >
@@ -91,7 +94,7 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
             {label === "Active" && (
                 <div className={styles.container}>
                     <div className={styles.flexRow}>
-                        <StateContainer amount={formatMoneyByAdaOrDollar(raise_amount)} subtext="Total Raised" classNameSpan='black' />
+                        <StateContainer amount={formatMoneyByAdaOrDollar(cdFundedADA)} subtext="Total Raised" classNameSpan='black' />
                         <div className={styles.ordinalString}>
                             <span className={styles.ordinal}>
                                 <p className={styles.goalFundraising}>{numberFromCurrentMilestone}</p>
@@ -123,11 +126,11 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
                 <div className={styles.container}>
                     {label === "Unreached" &&
                         <span>
-                            Target Raise: <span className={styles.strong}>{formatMoneyByAdaOrDollar(goal)}</span>
+                            Target Raise: <span className={styles.strong}>{formatMoneyByAdaOrDollar(requestMaxAda)}</span>
                         </span>
                     }
                     <div className={styles.flexRow}>
-                        <StateContainer amount={formatMoneyByAdaOrDollar(raise_amount)} subtext="Total Money Raised" classNameStyle='white' />
+                        <StateContainer amount={formatMoneyByAdaOrDollar(cdFundedADA)} subtext="Total Money Raised" classNameStyle='white' />
                         {label === "Unreached" && (
                             <div className={styles.percentage}>
                                 <span className={styles.goalFundraising}>{raisePercentage}%</span>

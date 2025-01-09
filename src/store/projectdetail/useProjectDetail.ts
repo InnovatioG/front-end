@@ -4,6 +4,8 @@ import axios from 'axios';
 import { ProjectDetailState, initialState } from '@/store/projectdetail/initialState';
 import { usePriceStore } from '../price/usepriceAdaOrDollar';
 
+/* Campaign render */
+
 interface UseProjectDetailStore extends ProjectDetailState {
     setProject: (project: ProjectDetailState['project']) => void;
     setMenuView: (menuView: ProjectDetailState['menuView']) => void;
@@ -53,23 +55,7 @@ export const useProjectDetailStore = create<UseProjectDetailStore>()(
             set((state) => {
                 state.editionMode = editionMode;
             }),
-        fetchAdaPrice: async () => {
-            set((state) => {
-                state.isLoadingPrice = true;
-            });
-            try {
-                const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd');
-                set((state) => {
-                    state.price_ada = response.data.cardano.usd;
-                });
-            } catch (error) {
-                console.error('Error fetching ADA price:', error);
-            } finally {
-                set((state) => {
-                    state.isLoadingPrice = false;
-                });
-            }
-        },
+
         getGoalInCurrentCurrency: () => {
             const { priceAdaOrDollar } = usePriceStore.getState();
             const { project, price_ada } = get();

@@ -4,15 +4,11 @@ import Image from 'next/image';
 import { PEOPLE } from '@/utils/images';
 import CampaignHighLight from '@/components/CampaignDashboard/sections/highlight/CampaignHighLight';
 import CampaignDashboard from '@/components/CampaignDashboard/sections/dashboard/CampaignDashboard';
-import { useEffect, useState } from 'react';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+
+
 export default function Home() {
 
-    const { fetchAdaPrice } = useProjectDetailStore();
 
-    useEffect(() => {
-        fetchAdaPrice();
-    }, [fetchAdaPrice]);
 
     return (
         <>

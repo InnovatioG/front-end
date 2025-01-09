@@ -1,6 +1,6 @@
 import { CampaignState } from '@/store/campaign/initialState';
 import type { User } from '@/HardCode/databaseType';
-import type { MembersTeam } from '@/HardCode/databaseType';
+import type { MembersTeam } from '@/types/types';
 
 type CampaignStateKey = keyof CampaignState;
 
@@ -38,6 +38,6 @@ export const setPrevStepAction = (state: CampaignState) => {
     state.step = (state.step - 1) as 1 | 2 | 3 | 4;
 };
 
-export const setGotal = (state: CampaignState, goal: number) => {
-    state.newCampaign.goal = goal;
+export const setRequestMaxAda = (state: CampaignState, requestMaxAda: bigint) => {
+    state.newCampaign.requestMaxAda = requestMaxAda;
 };

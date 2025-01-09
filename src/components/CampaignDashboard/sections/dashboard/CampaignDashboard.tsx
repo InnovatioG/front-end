@@ -10,8 +10,7 @@ import Link from 'next/link';
  */export default function CampaignDashboard() {
   const { address } = useCardano();
 
-  /*   const { campaignsa, milestoneList, campaignList } = useNewDashboardCard(address);
-   */
+
   const {
     campaigns,
     filteredCampaigns,
@@ -27,8 +26,8 @@ import Link from 'next/link';
     handleStateFilterChange,
     handleCategoryFilterChange,
     handleClickAdminView,
-    getStatusName,
-    getCategoryName,
+    /*     getStatusName,
+        getCategoryName, */
     loadMoreCampaigns,
     screenSize,
     isProtocolTeam,
@@ -42,12 +41,6 @@ import Link from 'next/link';
   } = useDashboardCard(address);
 
 
-  /*   useEffect(() => {
-      console.log('campaignList', campaignList);
-      console.log('campaignsa', campaignsa);
-      console.log('milestoneList', milestoneList);
-    }, [campaignsa, milestoneList]);
-   */
 
   const getInitialLoadCount = useCallback(() => {
     if (screenSize === 'mobile') return 3;
@@ -88,7 +81,7 @@ import Link from 'next/link';
       ) : (
         <div className={styles.campaignGrid}>
           {campaigns.map((campaign) => (
-            <CampaignCard key={campaign.id} campaign={campaign} states={states} getCategoryName={getCategoryName} />
+            <CampaignCard key={campaign._DB_id} campaign={campaign} states={states} />
           ))}
         </div>
       )}

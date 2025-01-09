@@ -1,14 +1,14 @@
-import { useCampaignCategory } from '@/components/Admin/CampaignCategory/useCampaignCategory';
-import { useCampaignStatus } from '@/components/Admin/CampaignStatus/useCampaignStatus';
 import { useGeneralStore } from './useGeneralConstants';
-
+import { CampaignStatusApi } from '@/lib/SmartDB/FrontEnd';
+import { CampaignStatusEntity } from '@/lib/SmartDB/Entities';
+import { CampaignCategoryApi } from '@/lib/SmartDB/FrontEnd';
+import { CampaignCategoryEntity } from '@/lib/SmartDB/Entities';
+import axios from 'axios';
 // Función para manejar la obtención de datos y actualización del store
 const fetchAndSetData = async <T, U>(fetchFunction: () => { list: T[] }, mapFunction: (item: T) => U, setFunction: (data: U[]) => void): Promise<T[]> => {
     try {
         const { list } = fetchFunction();
-        console.log('list', list);
         const mappedData = list.map(mapFunction);
-        console.log('mappedData', mappedData);
         setFunction(mappedData); // Se actualiza el estado de manera correcta aquí
         return list;
     } catch (error) {
@@ -19,35 +19,57 @@ const fetchAndSetData = async <T, U>(fetchFunction: () => { list: T[] }, mapFunc
 
 // Función para CampaignCategories
 const fetchCampaignCategories = async () => {
-    return fetchAndSetData(
-        useCampaignCategory,
-        (category) => ({
+    try {
+        const fetchedData: CampaignStatusEntity[] = await CampaignStatusApi.getAllApi_();
+
+        const mappedData = fetchedData.map((category) => ({
             id: category.id_internal,
             name: category.name,
             description: category.description,
-        }),
-        useGeneralStore.getState().setCampaignCategories // Uso del setter de Zustand
-    );
+        }));
+
+        useGeneralStore.getState().setCampaignCategories(mappedData);
+
+        return mappedData;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return [];
+    }
 };
 
-// Función para CampaignStatus
 const fetchCampaignStatus = async () => {
-    return fetchAndSetData(
-        useCampaignStatus,
-        (status) => ({
-            id: status.id_internal,
-            name: status.name,
-            description: status.description,
-        }),
-        useGeneralStore.getState().setCampaignStatus // Uso del setter de Zustand
-    );
+    try {
+        const fetchedData: CampaignCategoryEntity[] = await CampaignCategoryApi.getAllApi_();
+
+        const mappedData = fetchedData.map((category) => ({
+            id: category.id_internal,
+            name: category.name,
+            description: category.description,
+        }));
+
+        useGeneralStore.getState().setCampaignCategories(mappedData);
+
+        return mappedData;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return [];
+    }
 };
 
-// Función para traer todo en paralelo
+const fetchAdaPrice = async () => {
+    try {
+        const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd');
+        useGeneralStore.getState().setAdaPrice(response.data.cardano.usd);
+        return response.data.cardano.usd;
+    } catch (error) {
+        console.error('Error fetching ADA price:', error);
+        return null;
+    }
+};
+
 export const fetchAllData = async () => {
     try {
-        await Promise.all([fetchCampaignCategories(), fetchCampaignStatus()]);
-        console.log('All data fetched successfully');
+        await Promise.all([fetchCampaignCategories(), fetchCampaignStatus(), fetchAdaPrice()]);
     } catch (error) {
         console.error('Error fetching all data:', error);
     }

@@ -24,7 +24,6 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
     const { project, setProject, setEditionMode, isLoading, setIsLoading, setIsAdmin, isAdmin } = useProjectDetailStore();
     const { campaignCategories } = useGeneralStore();
 
-    console.log("campaignCategories", campaignCategories)
     useEffect(() => {
         setIsLoading(true);
         setEditionMode(false);

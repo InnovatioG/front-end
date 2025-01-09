@@ -18,13 +18,8 @@ type SocialLinkKeys = "website" | "facebook" | "instagram" | "discord" | "linked
 
 
 
-
-
-
-
 const StepFour: React.FC = (props) => {
     const { newCampaign, newMember, addMemberToTeam, resetNewMember, setNewMemberField, updateMemberField, } = useCampaignStore();
-
 
 
     const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>("website");
@@ -100,8 +95,8 @@ const StepFour: React.FC = (props) => {
             <article className={styles.permissionContainer}>
                 <div className={styles.input}>
                     <Checkbox
-                        checked={newMember.admin}
-                        onChange={(e) => setNewMemberField('admin', e)}
+                        checked={newMember.editor}
+                        onChange={(e) => setNewMemberField('editor', e)}
                         label='Edit Campaign'
                     />
                 </div>

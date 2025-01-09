@@ -1,18 +1,23 @@
-import { categories } from "@/utils/constants";
 import CategoryDropdown from "./CategoryDropdown";
 import styles from "./StepOne.module.scss";
 import CommonsBtn from "@/components/ui/buttons/CommonsBtn";
 import { useCampaignStore } from "@/store/campaign/useCampaignStore";
+import { useGeneralStore } from "@/store/generalConstants/useGeneralConstants";
 
 
 
 export default function StepOne() {
-  const { step, name, setTitle, category, setCategory, setDescription, nextStep, description } = useCampaignStore();
+  const { step, newCampaign, setTitle, setDescription, nextStep, setCategoryId } = useCampaignStore();
+  const { name, description, campaing_category_id } = newCampaign;
+  const { campaignCategories, campaignStatus } = useGeneralStore();
 
 
-  const categoryOptions = categories.map((category) => ({
-    value: category,
-    label: category,
+
+
+
+  const categoryOptions = campaignCategories.map((category) => ({
+    value: category.id,
+    label: category.name,
   }));
 
 
@@ -44,8 +49,8 @@ export default function StepOne() {
           <h2 className={styles.title}>Category</h2>
           <CategoryDropdown
             options={categoryOptions}
-            value={category}
-            onChange={(value) => setCategory(value)}
+            value={campaing_category_id}
+            onChange={(value) => setCategoryId(value)}
           />
         </div>
       </div>
@@ -67,7 +72,7 @@ export default function StepOne() {
           type="primary"
           action={() => nextStep()}
           content="Continue"
-          disabled={name === "" || category === "" || description === ""}
+          disabled={name === "" || campaing_category_id === null || description === ""}
         />
       </div>
 

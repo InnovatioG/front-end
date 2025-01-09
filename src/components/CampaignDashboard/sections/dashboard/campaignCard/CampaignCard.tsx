@@ -1,43 +1,56 @@
 import styles from "./CampaignCard.module.scss";
 import Image from "next/image";
-import { Campaign } from "@/HardCode/databaseType";
+import type { Campaign } from "@/types/types";
 import { TWO_USERS } from "@/utils/images";
 import { useEffect, useState } from "react";
 import { formatTime, getTimeRemaining } from "@/utils/formats";
 import useDraftCard from "@/hooks/useDraftCard";
 import CardFooter from "@/components/CampaignDashboard/sections/dashboard/campaignCard/CardFooter";
-
+import { useGeneralStore } from "@/store/generalConstants/useGeneralConstants";
 interface CampaignCardProps {
   campaign: Campaign;
   /*   getStatusName: (statusId: number) => string;
    */
   states: any;
-  getCategoryName: (category_id: number) => string;
 }
 
 
 export default function CampaignCard(props: CampaignCardProps) {
-  const { campaign, states, getCategoryName } = props;
+  const { campaign, states } = props;
   const [timeRemaining, setTimeRemaining,] = useState(
-    campaign.end_date ? getTimeRemaining(campaign.end_date) : { total: 0, days: 0, totalHours: 0, minutes: 0 }
+    campaign.deadline ? getTimeRemaining(campaign.deadline) : { total: 0, days: 0, totalHours: 0, minutes: 0 }
   );
   const { label, labelClass, currentMilestone, formatAllTime } = useDraftCard(campaign, false, false);
+  const { campaignCategories } = useGeneralStore();
+
+
+
+
+  /* {
+    "id": 1,
+    "name": "Technology"
+} */
 
 
 
   useEffect(() => {
     const timer = setInterval(() => {
-      if (campaign.end_date) {
-        setTimeRemaining(getTimeRemaining(campaign.end_date));
+      if (campaign.deadline) {
+        setTimeRemaining(getTimeRemaining(campaign.deadline));
       }
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [campaign.end_date]);
+  }, [campaign.deadline]);
+
 
   useEffect(() => {
-    console.log("campaign", campaign)
-  }, [campaign])
+    console.log(campaignCategories)
+    console.log(campaign.campaing_category_id)
+    console.log(Number(campaign.campaing_category_id) === campaignCategories[0].id)
+  }, [campaignCategories])
+
+  const categoryName = campaignCategories.find(category => category.id === Number(campaign.campaing_category_id))?.name;
 
 
   return (
@@ -46,7 +59,7 @@ export default function CampaignCard(props: CampaignCardProps) {
         <Image
           width={58}
           height={58}
-          src={campaign.logo_url}
+          src={campaign.logo_url ?? ""}
           alt="logo-company"
           className={styles.logoCard}
         />
@@ -54,10 +67,10 @@ export default function CampaignCard(props: CampaignCardProps) {
           <div className={styles.status}>
             <div className={`${styles.state} ${styles[labelClass]}`}>
 
-              {campaign.campaign_status_id === 8 ? formatAllTime(timeRemaining) : label}
+              {campaign.campaign_status_id === "8" ? formatAllTime(timeRemaining) : label}
             </div>
             <div className={styles.category}>
-              {getCategoryName(campaign.category_id)}
+              {categoryName}
             </div>
           </div>
           <div className={styles.investors}>
@@ -68,7 +81,7 @@ export default function CampaignCard(props: CampaignCardProps) {
           </div>
         </div>
       </div>
-      <h3 className={styles.cardTitle}>{campaign.title}</h3>
+      <h3 className={styles.cardTitle}>{campaign.name}</h3>
       <p className={styles.cardDescription}>{campaign.description}</p>
       <CardFooter campaign={campaign} />
     </div>

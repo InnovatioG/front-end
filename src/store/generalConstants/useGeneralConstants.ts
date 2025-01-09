@@ -7,9 +7,11 @@ interface GeneralStore {
     campaignCategories: CampaignCategory[];
     campaignStatus: CampaignStatusGlobal[];
     milestoneStatus: MilestoneStatusGlobal[];
+    adaPrice: number;
     setCampaignCategories: (categories: CampaignCategory[]) => void;
     setCampaignStatus: (statuses: CampaignStatusGlobal[]) => void;
     setMilestoneStatus: (statuses: MilestoneStatusGlobal[]) => void;
+    setAdaPrice: (price: number) => void;
 }
 
 export const useGeneralStore = create<GeneralStore>()(
@@ -17,6 +19,7 @@ export const useGeneralStore = create<GeneralStore>()(
         campaignCategories: [],
         campaignStatus: [],
         milestoneStatus: [],
+        adaPrice: 0,
         setCampaignCategories: (categories) => {
             set((state) => {
                 state.campaignCategories = categories;
@@ -30,6 +33,11 @@ export const useGeneralStore = create<GeneralStore>()(
         setMilestoneStatus: (statuses) => {
             set((state) => {
                 state.milestoneStatus = statuses;
+            });
+        },
+        setAdaPrice: (price) => {
+            set((state) => {
+                state.adaPrice = price;
             });
         },
     }))

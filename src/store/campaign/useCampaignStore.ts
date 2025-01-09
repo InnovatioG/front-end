@@ -11,14 +11,16 @@ import {
     addMemberToTeam,
     updateMemberField,
 } from '@/store/campaign/actions';
-import type { User, Milestone } from '@/HardCode/databaseType';
-import { MembersTeam } from '@/HardCode/databaseType';
+import type { User } from '@/HardCode/databaseType';
+import { MembersTeam } from '@/types/types';
+import { MilestoneCreation } from '@/types/types';
+
+/* TODO REVISAR EL CATEGORY ID  */
 interface UseCampaignStore extends CampaignState {
     newMember: MembersTeam;
     setStep: (step: 1 | 2 | 3 | 4) => void;
-    setTitle: (title: string) => void;
-    setCategory: (category: string) => void;
-    setCategoryId: (categoryId: number | null) => void;
+    setTitle: (name: string) => void;
+    setCategoryId: (campaing_category_id: number | null) => void;
     setDescription: (description: string) => void;
     setIsLoading: (isLoading: boolean) => void;
     setUser: (user: User) => void;
@@ -26,9 +28,9 @@ interface UseCampaignStore extends CampaignState {
     prevStep: () => void;
     setCompanyLogo: (companyLogo: string) => void;
     setBanner: (banner: string) => void;
-    setGoal: (goal: number) => void;
-    setMilestones: (milestones: Milestone[]) => void;
-    setMinRequest: (minRequest: number) => void;
+    setRequestMaxAda: (requestMaxAda: BigInt) => void;
+    setMilestones: (milestones: MilestoneCreation[]) => void;
+    setRequestMinAda: (requestMinAda: BigInt) => void;
     setBrandField: <K extends keyof CampaignState['newCampaign']>(key: K, value: CampaignState['newCampaign'][K]) => void;
     setMembersTeam: (users: MembersTeam[]) => void;
     addMemberToTeam: (member: MembersTeam) => void;
@@ -70,19 +72,19 @@ export const useCampaignStore = create<UseCampaignStore>()(
             }),
         setTitle: (name) =>
             set((state) => {
-                setCampaignStateAction(state, 'name', name);
+                setNestedCampaignStateAction(state, 'name', name);
             }),
-        setCategory: (category) =>
+        /*       setCategory: (category) =>
             set((state) => {
                 setCampaignStateAction(state, 'category', category);
-            }),
-        setCategoryId: (category_id) =>
+            }), */
+        setCategoryId: (campaing_category_id) =>
             set((state) => {
-                setCampaignStateAction(state, 'category_id', category_id);
+                setNestedCampaignStateAction(state, 'campaing_category_id', campaing_category_id);
             }),
         setDescription: (description) =>
             set((state) => {
-                setCampaignStateAction(state, 'description', description);
+                setNestedCampaignStateAction(state, 'description', description);
             }),
         setIsLoading: (isLoading) =>
             set((state) => {
@@ -108,17 +110,17 @@ export const useCampaignStore = create<UseCampaignStore>()(
             set((state) => {
                 setNestedCampaignStateAction(state, 'banner_url', banner);
             }),
-        setGoal: (goal) =>
+        setRequestMaxAda: (requestMaxAda) =>
             set((state) => {
-                setNestedCampaignStateAction(state, 'goal', goal);
+                setNestedCampaignStateAction(state, 'requestMaxAda', requestMaxAda);
             }),
         setMilestones: (milestones) =>
             set((state) => {
                 setNestedCampaignStateAction(state, 'milestones', milestones);
             }),
-        setMinRequest: (minRequest) =>
+        setRequestMinAda: (requestMinAda) =>
             set((state) => {
-                setNestedCampaignStateAction(state, 'min_request', minRequest);
+                setNestedCampaignStateAction(state, 'requestMinAda', requestMinAda);
             }),
         setBrandField: (key, value) =>
             set((state) => {

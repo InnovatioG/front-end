@@ -15,7 +15,7 @@ const StepTwo: React.FC<StepTwoProps> = (props) => {
 
 
     const disabledButton = () => {
-        return !newCampaign.banner_url || !newCampaign.logo_url || newCampaign.milestones.length === 0 || newCampaign.min_request === 0;
+        return !newCampaign.banner_url || !newCampaign.logo_url || newCampaign.milestones.length === 0 || newCampaign.requestMinAda === 0n;
     };
 
     return (

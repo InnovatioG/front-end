@@ -1,58 +1,93 @@
 import { useState, useEffect } from 'react';
-import { BaseCampaign, MilestoneF } from '@/HardCode/databaseType';
 import { CampaignApi, CampaignMemberApi, MilestoneApi } from '@/lib/SmartDB/FrontEnd';
 import { pushWarningNotification } from 'smart-db';
 import { CampaignEntity } from '@/lib/SmartDB/Entities';
+import { MilestoneEntity, CampaignMemberEntity } from '@/lib/SmartDB/Entities';
+import type { Campaign, Milestone, MembersTeam } from '@/types/types';
 
 export const useNewDashboardCard = (address: string | null) => {
-    const [campaigns, setCampaigns] = useState<BaseCampaign[]>([]);
-    const [filteredCampaigns, setFilteredCampaigns] = useState<BaseCampaign[]>([]);
+    const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+    const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
 
     // Función para transformar CampaignEntity a BaseCampaign
-    const transformToBaseCampaign = async (campaign: CampaignEntity): Promise<BaseCampaign> => {
-        const milestones = await MilestoneApi.getByParamsApi_({ campaign_id: campaign._DB_id });
-        const members_team = await CampaignMemberApi.getByParamsApi_({ campaign_id: campaign._DB_id });
+    const transformToBaseCampaign = async (campaign: CampaignEntity): Promise<Campaign> => {
+        const milestonesEntities: MilestoneEntity[] = await MilestoneApi.getByParamsApi_({ campaign_id: campaign._DB_id });
 
-        /* 
-        cdFundedADA!: bigint;
-        raise_amount: number;
-        
-        */
+        const membersTeamEntities: CampaignMemberEntity[] = await CampaignMemberApi.getByParamsApi_({ campaign_id: campaign._DB_id });
+        const members_team: MembersTeam[] = membersTeamEntities.map((member) => ({
+            id: member._DB_id,
+            campaign_id: member.campaign_id,
+            name: member.name,
+            last_name: member.last_name,
+            role: member.role,
+            admin: member.admin,
+            email: member.email,
+            wallet_id: member.wallet_id,
+            wallet_address: member.wallet_address,
+            website: member.website,
+            instagram: member.instagram,
+            facebook: member.facebook,
+            discord: member.discord,
+            twitter: member.twitter,
+        }));
+
+        const milestones: Milestone[] = milestonesEntities.map((milestone) => ({
+            campaign_id: milestone.campaign_id,
+            milestone_status_id: milestone.milestone_status_id,
+            estimate_delivery_days: milestone.estimate_delivery_days,
+            estimate_delivery_date: milestone.estimate_delivery_date,
+            percentage: milestone.percentage,
+            description: milestone.description,
+            createdAt: milestone.createdAt.toISOString(),
+            updatedAt: milestone.updatedAt?.toISOString() || '',
+        }));
 
         return {
-            id: campaign._DB_id,
+            _DB_id: campaign._DB_id,
             creator_wallet_id: campaign.creator_wallet_id,
-            title: campaign.name,
+            name: campaign.name,
             description: campaign.description,
-            campaign_status_id: Number(campaign.campaign_status_id),
+            campaign_status_id: campaign.campaign_status_id,
             banner_url: campaign.banner_url,
             logo_url: campaign.logo_url,
             createdAt: campaign.createdAt,
             updatedAt: campaign.updatedAt,
             investors: campaign.investors,
-            goal: campaign.requestedMaxADA,
-            category_id: campaign.campaing_category_id,
-            min_request: campaign.requestedMinADA,
+            requestMaxAda: campaign.requestedMaxADA,
+            campaing_category_id: campaign.campaing_category_id,
+            requestMinAda: campaign.requestedMinADA,
             website: campaign.website,
             facebook: campaign.facebook,
             instagram: campaign.instagram,
             discord: campaign.discord,
             twitter: campaign.twitter,
-            /*             members_team: campaignMemberList.filter((member) => member.campaign_id === campaign._DB_id),
-             */ status: campaign.campaign_status_id,
             milestones,
             members_team,
-            start_date: campaign.begin_at,
-            end_date: campaign.deadline,
+            begin_at: campaign.begin_at,
+            deadline: campaign.deadline,
+            cdFundedADA: campaign.cdFundedADA,
             tokenomics_description: campaign.tokenomics_description,
         };
     };
 
     // Función para obtener todas las campañas
+
+    //! TODO MOMENTANEO
     const fetchCampaigns = async () => {
         try {
-            const data: CampaignEntity[] = await CampaignApi.getByParamsApi_({}, { limit: 10 }); // Obtener todas las campañas
-            const campaignWithDetails = await Promise.all(data.map((campaign) => transformToBaseCampaign(campaign)));
+            // Obtener todas las campañas sin filtro
+            const data: CampaignEntity[] = await CampaignApi.getByParamsApi_({}, { limit: 100 });
+
+            // Filtrar en el cliente las campañas que cumplen con la condición
+            const filteredCampaigns = data.filter((campaign) => {
+                const status = parseInt(campaign.campaign_status_id, 10); // Convertir a número si es necesario
+                return status >= 8 && status !== 10;
+            });
+
+            // Limitar el número de resultados a 10 después de haber filtrado
+            const limitedCampaigns = filteredCampaigns.slice(0, 20);
+            // Transformar las campañas a un formato adecuado
+            const campaignWithDetails = await Promise.all(limitedCampaigns.map((campaign) => transformToBaseCampaign(campaign)));
 
             setCampaigns(campaignWithDetails);
         } catch (err) {
@@ -97,154 +132,3 @@ export const useNewDashboardCard = (address: string | null) => {
         fetchCampaignsByFilter,
     };
 };
-
-/*
-
-/*     const { list: campaignList } = useCampaign();
-    const { list: campaignMemberList } = useCampaignMember();
-    const { list: milestoneList } = useMilestone(); */
-
-/* 
-      {
-      id: '9',
-      creator_wallet_id: '23',
-      title: 'Tech for Tomorrow',
-      description: 
-        'This campaign is in the countdown phase, preparing to begin fundraising.',
-      state_id: '9',
-      banner_url: '/images/campaigns/tech_tomorrow_banner.png',
-      logo_url: '/images/campaigns/tech_tomorrow_logo.png',
-      createdAt: new Date('2025-01-06T14:44:53.000Z'),
-      updatedAt: new Date('2025-01-06T14:44:53.000Z'),
-      investors: 0,
-      goal: 15000n,
-      category_id: '1',
-      min_request: 7000n,
-      website: 'https://techfortomorrow.com',
-      facebook: '',
-      instagram: '',
-      discord: '',
-      xs: 'https://twitter.com/tech_tomorrow',
-      members_team: [
-        CampaignMemberEntity {
-          _DB_id: '23',
-          campaign_id: '9',
-          role: 'Creator',
-          editor: true,
-          admin: true,
-          email: 'user23@example.com',
-          wallet_id: '23',
-          wallet_address: 'addr_USER23',
-          twitter: 'https://twitter.com/user23',
-          createdAt: new Date('2025-01-06T14:44:53.000Z'),
-          updatedAt: new Date('2025-01-06T14:44:53.000Z')
-        },
-        CampaignMemberEntity {
-          _DB_id: '24',
-          campaign_id: '9',
-          role: 'Admin',
-          editor: true,
-          admin: true,
-          email: 'user24@example.com',
-          wallet_id: '24',
-          wallet_address: 'addr_USER24',
-          twitter: 'https://twitter.com/user24',
-          createdAt: new Date('2025-01-06T14:44:53.000Z'),
-          updatedAt: new Date('2025-01-06T14:44:53.000Z')
-        },
-        CampaignMemberEntity {
-          _DB_id: '25',
-          campaign_id: '9',
-          role: 'Reviewer',
-          editor: true,
-          admin: false,
-          email: 'user25@example.com',
-          wallet_id: '25',
-          wallet_address: 'addr_USER25',
-          createdAt: new Date('2025-01-06T14:44:53.000Z'),
-          updatedAt: new Date('2025-01-06T14:44:53.000Z')
-        },
-        CampaignMemberEntity {
-          _DB_id: '26',
-          campaign_id: '9',
-          role: 'Contributor',
-          editor: false,
-          admin: false,
-          email: 'user26@example.com',
-          wallet_id: '26',
-          wallet_address: 'addr_USER26',
-          createdAt: new Date('2025-01-06T14:44:53.000Z'),
-          updatedAt: new Date('2025-01-06T14:44:53.000Z')
-        }
-      ],
-      status: '9',
-      milestones: [
-        MilestoneEntity {
-          _DB_id: '5',
-          campaign_id: '9',
-          milestone_status_id: '1',
-          estimate_delivery_days: 25,
-          percentage: 40,
-          description: 'Initial prototype development.',
-          createdAt: new Date('2025-01-06T14:44:53.000Z'),
-          updatedAt: new Date('2025-01-06T14:44:53.000Z')
-        },
-        MilestoneEntity {
-          _DB_id: '6',
-          campaign_id: '9',
-          milestone_status_id: '1',
-          estimate_delivery_days: 40,
-          percentage: 30,
-          description: 'Market analysis and scalability research.',
-          createdAt: new Date('2025-01-06T14:44:53.000Z'),
-          updatedAt: new Date('2025-01-06T14:44:53.000Z')
-        },
-        MilestoneEntity {
-          _DB_id: '7',
-          campaign_id: '9',
-          milestone_status_id: '1',
-          estimate_delivery_days: 60,
-          percentage: 30,
-          description: 'Final product launch preparation.',
-          createdAt: new Date('2025-01-06T14:44:53.000Z'),
-          updatedAt: new Date('2025-01-06T14:44:53.000Z')
-        }
-      ]
-    },
-
-    {
-    "_DB_id": "1",
-    "campaign_id": "7",
-    "milestone_status_id": "1",
-    "estimate_delivery_days": 30,
-    "percentage": 40,
-    "description": "Develop smart farming prototype.",
-    "createdAt": "2025-01-06T14:44:53.758Z",
-    "updatedAt": "2025-01-06T14:44:53.758Z"
-}
-const campaignsa: Campaign[] = campaignList.map((campaign) => ({
-    id: campaign._DB_id,
-    creator_wallet_id: campaign.creator_wallet_id,
-    title: campaign.name,
-    description: campaign.description,
-    state_id: campaign.campaign_status_id,
-    banner_url: campaign.banner_url,
-    logo_url: campaign.logo_url,
-    createdAt: campaign.createdAt,
-    updatedAt: campaign.updatedAt,
-    investors: campaign.investors,
-    goal: campaign.requestedMaxADA,
-    category_id: campaign.campaing_category_id,
-    min_request: campaign.requestedMinADA,
-    website: campaign.website,
-    facebook: campaign.facebook,
-    instagram: campaign.instagram,
-    discord: campaign.discord,
-    xs: campaign.twitter,
-    members_team: campaignMemberList.filter((member) => member.campaign_id === campaign._DB_id),
-    status: campaign.campaign_status_id,
-    milestones: milestoneList.filter((milestone) => milestone.campaign_id === campaign._DB_id),
-    start_date: campaign.begin_at,
-    end_date: campaign.deadline,
-}));
-*/

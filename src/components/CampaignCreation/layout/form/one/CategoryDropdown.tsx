@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./CategoryDropdown.module.scss";
 import { CHEVRON_DOWN } from "@/utils/images";
-import { categories } from "@/utils/constants";
 
 interface CategoryDropdownProps {
-  options: { value: string; label: string }[];
-  value: string;
-  onChange: (value: string) => void;
+  options: { value: number; label: string }[];
+  value: number | null;
+  onChange: (value: number) => void;
 }
 
 export default function CategoryDropdown(props: CategoryDropdownProps) {
@@ -14,6 +13,7 @@ export default function CategoryDropdown(props: CategoryDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -43,11 +43,14 @@ export default function CategoryDropdown(props: CategoryDropdownProps) {
     }
   }, [isOpen]);
 
-  const handleOptionClick = (optionValue: string) => {
+  const handleOptionClick = (optionValue: number) => {
     onChange(optionValue);
     setIsOpen(false);
   };
-  
+
+  const selectedLabel = options.find((option) => option.value === value)?.label || "Select category";
+
+
   return (
     <div
       className={`${styles.btnDropdown} ${isOpen ? styles.open : ""}`}
@@ -55,8 +58,9 @@ export default function CategoryDropdown(props: CategoryDropdownProps) {
       onClick={() => setIsOpen(!isOpen)}
     >
       <div className={styles.btnHeader}>
-        <p className={`${styles.label} ${value !== "" ? styles.selected : ""}`}>{categories.find((category) => category === value)?.toString() || "Select category"}</p>
-        <svg
+        <p className={`${styles.label} ${value !== null ? styles.selected : ""}`}>
+          {selectedLabel}
+        </p>        <svg
           width="14"
           height="14"
           className={`${styles.icon} ${isOpen ? styles.open : ""}`}

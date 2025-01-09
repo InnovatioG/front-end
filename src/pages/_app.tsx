@@ -20,6 +20,9 @@ import { AppGeneral, globalStore } from 'smart-db';
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import { fetchAllData } from '@/store/generalConstants/actions';
+import { set } from 'date-fns';
+
+
 type ImageType = string | { [key: string]: string };
 
 const getResourcesFromImages = (images: { [key: string]: ImageType }): string[] => {
@@ -39,7 +42,20 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
     const [isLoading, setIsLoading] = useState(true);
     const router = useRouter();
 
-    fetchAllData()
+
+    useEffect(() => {
+        const initialize = async () => {
+            setIsLoading(true);
+            try {
+                await fetchAllData();
+            } catch (error) {
+                console.error('Error during initialization:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+        initialize();
+    }, []);
 
     if (isLoading) {
         return <PreLoadingPage onLoadComplete={() => setIsLoading(false)} resources={resourcesToPreload} />;

@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import styles from "../draftCard/DraftCard.module.scss";
-import { Campaign } from '@/HardCode/databaseType';
 import Link from 'next/link';
 import Image from 'next/image';
 import GeneralButtonUI from '@/components/ui/buttons/UI/Button';

@@ -23,7 +23,7 @@ export default function Home() {
   const { data: session } = useSession();
   const { address } = useCardano();
   const router = useRouter();
-  const { step, setStep, category, setUser, isLoading, setCategoryId, setIsLoading, newCampaign } = useCampaignStore();
+  const { step, setStep, setUser, isLoading, setCategoryId, setIsLoading, newCampaign } = useCampaignStore();
 
 
 
@@ -59,18 +59,6 @@ export default function Home() {
     return () => clearTimeout(timeoutId);
   }, [address, router]);
 
-  useEffect(() => {
-    if (category !== "") {
-      const categories = dataBaseService.getCategories();
-      const selectedCategory = categories.find(
-        (cat: Category) => cat.name === category
-      );
-      const category_id = selectedCategory ? selectedCategory.id : null;
-      setCategoryId(category_id);
-    } else {
-      setCategoryId(null);
-    }
-  }, [category]);
 
 
   if (isLoading) {

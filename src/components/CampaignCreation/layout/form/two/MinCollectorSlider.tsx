@@ -9,16 +9,18 @@ interface MinCollectorSliderProps {
 
 const MinCollectorSlider: React.FC<MinCollectorSliderProps> = (props) => {
 
-    const { setMinRequest, newCampaign } = useCampaignStore();
+    const { setRequestMinAda, newCampaign } = useCampaignStore();
+    const { requestMinAda, requestMaxAda, } = newCampaign;
 
-    const min_request = newCampaign.min_request;
-    const goal = newCampaign.goal;
-    const porcentage = calculatePorcentage(goal, min_request);
+
+
+    const min_request = newCampaign.requestMinAda;
+    const porcentage = calculatePorcentage(Number(requestMaxAda), Number(requestMinAda));
 
     return (
         <div className={styles.minContainer}>
-            <h3>Minimum collection to activate the campaign: {min_request}% </h3>
-            <PercentageSlider initialLabel={porcentage} setValue={setMinRequest} />
+            <h3>Minimum collection to activate the campaign: {Number(requestMinAda)}% </h3>
+            <PercentageSlider initialLabel={porcentage} setValue={setRequestMinAda} />
         </div>
     );
 }

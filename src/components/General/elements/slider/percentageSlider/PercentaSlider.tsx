@@ -5,7 +5,7 @@ import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 
 interface PercentageSliderProps {
     initialLabel: number; // Assuming you want to pass an initial value
-    setValue: (value: number) => void;
+    setValue: (value: BigInt) => void;
 }
 
 const PercentageSlider: React.FC<PercentageSliderProps> = ({ initialLabel, setValue }) => {
@@ -16,7 +16,7 @@ const PercentageSlider: React.FC<PercentageSliderProps> = ({ initialLabel, setVa
     const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = parseInt(event.target.value);
         setLabel(newValue);
-        setValue(newValue);
+        setValue(BigInt(newValue));
     };
 
 
