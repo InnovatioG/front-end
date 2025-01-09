@@ -17,7 +17,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
-import { AppGeneral, globalStore } from 'smart-db';
+import { AppGeneral, globalStore, useAppStore } from 'smart-db';
 import 'smart-db/dist/styles.css';
 
 type ImageType = string | { [key: string]: string };
@@ -38,16 +38,19 @@ const resourcesToPreload = getResourcesFromImages(Images);
 export default function App({ Component, pageProps }: AppProps<{ session?: Session }>) {
     const [isLoadingResources, setIsLoadingResources] = useState(true);
     const [isLoadingDatabaseService, setIsLoadingDatabaseService] = useState(true);
+    const [isLoadingApp, setIsLoadingApp] = useState(true);
 
     const router = useRouter();
-
+    
     useEffect(() => {
         const initialize = async () => {
             await fetchAllData();
             setIsLoadingDatabaseService(false);
         };
-        initialize();
-    }, []);
+        if (isLoadingApp === true) {
+            initialize();
+        }
+    }, [isLoadingApp]);
 
     return (
         <>
@@ -65,7 +68,7 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
             <ReactNotifications />
             <SessionProvider session={pageProps.session} refetchInterval={0}>
                 <StoreProvider store={globalStore}>
-                    <AppGeneral loader={<LoadingPage />}>
+                    <AppGeneral loader={<LoadingPage />} onLoadComplete={() => setIsLoadingApp(false)}>
                         {isLoadingResources || isLoadingDatabaseService ? (
                             <PreLoadingPage onLoadComplete={() => setIsLoadingResources(false)} resources={resourcesToPreload} />
                         ) : (
