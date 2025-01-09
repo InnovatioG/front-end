@@ -6,57 +6,32 @@ import { useWalletStore } from 'smart-db';
 import CampaignCard from './CampaignCard/CampaignCard';
 import styles from './CampaignDashboard.module.scss';
 import CampaignFilters from './CampaignFilters/CampaignFilters';
+
+
 export default function CampaignDashboard() {
     const walletStore = useWalletStore();
     const address = walletStore.info?.address || '';
 
     const {
-        campaigns,
         filteredCampaigns,
         visibleCampaigns,
         searchTerm,
         categoryFilter,
         categories,
-        adminView,
-        isAdmin,
-        loading,
-        campaignsLoading,
         handleSearchChange,
-        handleStateFilterChange,
-        handleCategoryFilterChange,
-        handleClickAdminView,
-        getStatusName,
-        getCategoryName,
+        setStateFilter,
+        setCategoryFilter,
         loadMoreCampaigns,
         screenSize,
-        isProtocolTeam,
         states,
         stateFilter,
         myProposal,
         setMyProposal,
         isHomePage,
-        setIsHomePage,
         pathName,
     } = useDashboardCard(address);
 
-    /*   useEffect(() => {
-      console.log('campaignList', campaignList);
-      console.log('campaignsa', campaignsa);
-      console.log('milestoneList', milestoneList);
-    }, [campaignsa, milestoneList]);
-   */
-    const getInitialLoadCount = useCallback(() => {
-        if (screenSize === 'mobile') return 3;
-        ``;
-        if (screenSize === 'tablet') return 4;
-        return 8;
-    }, [screenSize]);
 
-    const getLoadMoreCount = useCallback(() => {
-        if (screenSize === 'mobile') return 3;
-        if (screenSize === 'tablet') return 4;
-        return 8;
-    }, [screenSize]);
 
     const handleMyProposalChange = (checked: boolean) => {
         setMyProposal(checked);
@@ -69,11 +44,9 @@ export default function CampaignDashboard() {
                 searchTerm={searchTerm}
                 statusFilter={stateFilter}
                 categoryFilter={categoryFilter}
-                states={states}
-                categories={categories}
+                setCategoryFilter={setCategoryFilter}
+                setStateFilter={setStateFilter}
                 onSearchChange={handleSearchChange}
-                onStatusFilterChange={handleStateFilterChange}
-                onCategoryFilterChange={handleCategoryFilterChange}
                 screenSize={screenSize}
                 isConnected={!!address}
                 myProposal={myProposal}
@@ -84,7 +57,7 @@ export default function CampaignDashboard() {
             ) : (
                 <div className={styles.campaignGrid}>
                     {visibleCampaigns.map((campaign) => (
-                        <CampaignCard key={campaign.id} campaign={campaign} getStatusName={getStatusName} getCategoryName={getCategoryName} />
+                        <CampaignCard key={campaign._DB_id} campaign={campaign} />
                     ))}
                 </div>
             )}
@@ -93,7 +66,7 @@ export default function CampaignDashboard() {
                 (pathName === '/' ? (
                     <Link href={'/campaigns'}>
                         <div className={styles.buttonContainer}>
-                            <GeneralButtonUI onClick={() => {}} classNameStyle="outlineb" text="Explore more campaings" />
+                            <GeneralButtonUI onClick={() => { }} classNameStyle="outlineb" text="Explore more campaings" />
                         </div>
                     </Link>
                 ) : (

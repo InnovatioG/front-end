@@ -7,6 +7,8 @@ import { formatTime, getTimeRemaining } from '@/utils/formats';
 import useDraftCard from '@/hooks/useDraftCard';
 import CardFooter from '@/components/CampaignDashboard/Sections/Dashboard/CampaignCard/CardFooter';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
+import { CampaignStatus } from '@/utils/constants/status';
+
 
 interface CampaignCardProps {
     campaign: Campaign;
@@ -16,12 +18,11 @@ interface CampaignCardProps {
 export default function CampaignCard(props: CampaignCardProps) {
     const { campaign } = props;
     const [timeRemaining, setTimeRemaining] = useState(campaign.deadline ? getTimeRemaining(campaign.deadline) : { total: 0, days: 0, totalHours: 0, minutes: 0 });
-    const { label, labelClass, currentMilestone, formatAllTime } = useDraftCard(campaign, false, false);
+    const { label, labelClass, currentMilestone, formatAllTime, getInternalId } = useDraftCard(campaign, false, false);
+
     const { campaignCategories } = useGeneralStore();
-    const { milestoneStatus } = useGeneralStore();
-
-
-
+    const { milestoneStatus, campaignStatus } = useGeneralStore();
+    const idInternal = getInternalId(campaign.campaign_status_id);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -34,7 +35,6 @@ export default function CampaignCard(props: CampaignCardProps) {
     }, [campaign.deadline]);
 
 
-
     const categoryName = campaignCategories.find((category) => category.id === Number(campaign.campaing_category_id))?.name;
 
     return (
@@ -43,7 +43,7 @@ export default function CampaignCard(props: CampaignCardProps) {
                 <Image width={58} height={58} src={campaign.logo_url ?? ''} alt="logo-company" className={styles.logoCard} />
                 <div className={styles.cardDetails}>
                     <div className={styles.status}>
-                        <div className={`${styles.state} ${styles[labelClass]}`}>{campaign.campaign_status_id === '8' ? formatAllTime(timeRemaining) : label}</div>
+                        <div className={`${styles.state} ${styles[labelClass]}`}>{idInternal === CampaignStatus.COUNTDOWN ? formatAllTime(timeRemaining) : label}</div>
                         <div className={styles.category}>{categoryName}</div>
                     </div>
                     <div className={styles.investors}>

@@ -71,7 +71,8 @@ export interface CampaignCategory {
 }
 
 export interface CampaignStatusGlobal {
-    id: number;
+    id: string;
+    id_internal: number;
     name: string;
     description: string | undefined;
 }

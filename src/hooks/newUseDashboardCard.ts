@@ -7,8 +7,9 @@ import type { Campaign, Milestone, MembersTeam } from '@/types/types';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 import { set } from 'date-fns';
 import { ca } from 'date-fns/locale';
-
+import { CampaignStatus } from '@/utils/constants/status';
 export const useNewDashboardCard = (address: string | null) => {
+    const { campaignStatus } = useGeneralStore();
     const [campaigns, setCampaigns] = useState<Campaign[]>([]);
     const [visibleCampaigns, setVisibleCampaigns] = useState<Campaign[]>([]);
     const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
@@ -79,16 +80,31 @@ export const useNewDashboardCard = (address: string | null) => {
 
     /* const data: CampaignEntity[] = await CampaignApi.getByParamsApi_({ campaign_status_id: { $gte: 8, $ne: 10 } }, { limit: 10 }); */
     const fetchCampaigns = async () => {
+        /* 
+        
+        */
         try {
-            const filterData: Record<string, any> = { campaign_status_id: { $gte: 8, $ne: 10 } };
+            const campaignStatusRequiredList = [
+                CampaignStatus.COUNTDOWN,
+                CampaignStatus.FUNDRAISING,
+                CampaignStatus.ACTIVE,
+                CampaignStatus.FAILED,
+                CampaignStatus.UNREACHED,
+                CampaignStatus.SUCCESS,
+            ];
+
+            const campaignStatusRequiered = campaignStatus.filter((status) => campaignStatusRequiredList.includes(status.id_internal));
+            const campaignStatusIds = campaignStatusRequiered.map((status) => status.id);
+            const filterData = {
+                campaign_status_id: { $in: campaignStatusIds },
+            };
+
             const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filterData, { limit: 10 });
-            /*        const filteredCampaigns = data.filter((campaign) => {
-                const status = parseInt(campaign.campaign_status_id, 10); 
-                return status >= 8 && status !== 10;
-            }); */
+
             const campaignWithDetails = await Promise.all(data.map((campaign) => transformToBaseCampaign(campaign)));
             setVisibleCampaigns(campaignWithDetails);
             setCampaigns(campaignWithDetails);
+            console.log(campaignWithDetails, 'campaignWithDetails');
         } catch (err) {
             console.error('Error fetching campaigns:', err);
             pushWarningNotification('Error', `Error fetching Campaigns: ${err}`);
@@ -101,7 +117,6 @@ export const useNewDashboardCard = (address: string | null) => {
             const filterData: Record<string, any> = {};
             if (filters.campaing_category_id) filterData.campaing_category_id = filters.campaing_category_id;
             if (filters.campaign_status_id) filterData.campaign_status_id = filters.campaign_status_id;
-
             const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filterData, { limit: 10 });
             const campaignWithDetails = await Promise.all(data.map((campaign) => transformToBaseCampaign(campaign)));
             setVisibleCampaigns(campaignWithDetails);

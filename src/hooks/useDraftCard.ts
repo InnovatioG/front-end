@@ -2,6 +2,8 @@ import { Campaign } from '@/types/types';
 import { CardInformationByState, cardInformationForProtocolTeam } from '@/utils/constants';
 import { formatTime, getTimeRemaining } from '@/utils/formats';
 import { useEffect, useState } from 'react';
+import { CampaignStatus } from '@/utils/constants/status';
+import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 
 const getmilestone_status_id = (campaign: Campaign): number | undefined => {
     const milestoneStatusMap: { [key: string]: any } = campaign.milestones
@@ -23,12 +25,9 @@ const getCurrentMilestone = (campaign: Campaign): string => {
     for (let i = 0; i < campaign.milestones.length; i++) {
         const milestone = campaign.milestones[i];
         const statusId = milestone.milestone_status_id;
-
         if (statusId === '5') {
             const nextMilestone = campaign.milestones[i + 1];
-
             const nextStatusId = nextMilestone?.milestone_status_id;
-
             if (nextStatusId === '2' || nextStatusId === '3' || nextStatusId === '4' || nextStatusId === '0' || nextStatusId === '6') {
                 return `M${i + 2}`;
             }
@@ -48,10 +47,18 @@ const getCurrentMilestone = (campaign: Campaign): string => {
 const useDraftCard = (campaign: Campaign, isProtocolTeam: boolean, isAdmin: boolean) => {
     const milestone_status_id = getmilestone_status_id(campaign);
     const currentMilestone = getCurrentMilestone(campaign);
+    const { campaignStatus } = useGeneralStore();
+
+    const getInternalId = (campaignStatusId: string | undefined): number | undefined => {
+        const status = campaignStatus.find((status) => status.id === campaignStatusId);
+        return status?.id_internal;
+    };
+
+    const idInternal = getInternalId(campaign.campaign_status_id);
 
     const { label, buttons } = isProtocolTeam
         ? cardInformationForProtocolTeam(Number(campaign.campaign_status_id))
-        : CardInformationByState(Number(campaign.campaign_status_id), milestone_status_id, isAdmin);
+        : CardInformationByState(Number(idInternal), milestone_status_id, isAdmin);
 
     const labelClass = label.toLowerCase().replace(/\s+/g, '-');
 
@@ -80,6 +87,7 @@ const useDraftCard = (campaign: Campaign, isProtocolTeam: boolean, isAdmin: bool
         timeRemaining,
         formatAllTime,
         currentMilestone,
+        getInternalId,
     };
 };
 

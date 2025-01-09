@@ -1,5 +1,7 @@
 import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
 import { DISCORD, FACEBOOK, INSTAGRAM, LINKEDIN, WEBSITE, XS } from '@/utils/images';
+import { CampaignStatus } from '@/utils/constants/status';
+import { C } from 'lucid-cardano';
 
 export const socialIcons = [
     { icon: WEBSITE, name: 'website' },
@@ -77,37 +79,36 @@ export const inputFieldsToken = (project: any) => [
   }, */
 ];
 
-export interface ButtonConfig {
-    id: number;
-    label: string;
-    action?: (setModalOpen?: (modalType: string) => void, project?: any) => void;
-
-    link?: (id: number) => string;
-    classNameType: string;
-}
-
 interface StateConfig {
     label: string;
-    buttons: ButtonConfig[];
+    buttons: ButtonType[];
     milestone_status_id?: number;
     protocol_team?: boolean;
 }
 
-export const buttonTypes: ButtonConfig[] = [
-    {
+interface ButtonType {
+    id: number;
+    label: string;
+    action?: (setModalOpen?: (modalType: string) => void, project?: any) => void;
+    link?: (id: number) => string;
+    classNameType: string;
+}
+
+export const buttonTypes: { [key: string]: ButtonType } = {
+    VIEW_CAMPAIGN: {
         id: 1,
         label: 'View Campaign',
         action: () => {},
         link: (id: number) => `/campaign/${id}`,
         classNameType: 'outline-card',
     },
-    {
+    SEND_TO_REVISION: {
         id: 2,
         label: 'Send to Revision',
         action: () => alert('Api enviando la campaña a revision'),
         classNameType: 'fill',
     },
-    {
+    VIEW_REPORT: {
         id: 3,
         label: 'View Report',
         action: (setModalOpen) => {
@@ -115,13 +116,13 @@ export const buttonTypes: ButtonConfig[] = [
         },
         classNameType: 'fill',
     },
-    {
+    PRE_LAUNCH: {
         id: 4,
         label: "Your campaign is accepted, let's launch it",
         action: () => console.log('llamado a la api para lanzar la campaña'),
         classNameType: 'outline-card',
     },
-    {
+    LAUNCH_CAMPAIGN: {
         id: 5,
         label: 'Launch Campaign',
         action: (setModalOpen) => {
@@ -129,7 +130,7 @@ export const buttonTypes: ButtonConfig[] = [
         },
         classNameType: 'fill',
     },
-    {
+    MANAGE_CAMPAIGN: {
         id: 6,
         label: 'Manage Campaign',
         action: (setModalOpen) => {
@@ -137,30 +138,30 @@ export const buttonTypes: ButtonConfig[] = [
         },
         classNameType: 'fill',
     },
-    {
+    EDIT_CAMPAIGN: {
         id: 7,
         label: 'Edit Campaign',
         action: () => {},
         link: (id: number) => `/campaign/edit?id=${id}`,
         classNameType: 'fill',
     },
-    {
+    CREATE_CONTRACT: {
         id: 8,
-        label: 'Create Contract', //7
+        label: 'Create Contract',
         action: (setModalOpen) => {
             if (setModalOpen) setModalOpen('createSmartContract');
         },
         classNameType: 'fill',
     },
-    {
+    PUBLISH_CONTRACT: {
         id: 9,
-        label: 'Publish Contract', //7
+        label: 'Publish Contract',
         action: (setModalOpen) => {
             if (setModalOpen) setModalOpen('publishSmartContract');
         },
         classNameType: 'fill',
     },
-    {
+    INITIALIZE_CAMPAIGN: {
         id: 10,
         label: 'Initialize Campaign',
         action: (setModalOpen) => {
@@ -168,16 +169,15 @@ export const buttonTypes: ButtonConfig[] = [
         },
         classNameType: 'fill',
     },
-    {
+    LAUNCH_CAMPAIGN_B: {
         id: 11,
         label: 'Launch Campaign',
         action: (setModalOpen) => {
             if (setModalOpen) setModalOpen('launchCampaign');
         },
-
         classNameType: 'fill',
     },
-    {
+    VALIDATE_FUNDRAISING_STATUS: {
         id: 12,
         label: 'Validate Fundraising Status (TX)',
         action: (setModalOpen) => {
@@ -185,7 +185,7 @@ export const buttonTypes: ButtonConfig[] = [
         },
         classNameType: 'fill',
     },
-    {
+    CONTACT_TEAM_SUPPORT: {
         id: 13,
         label: 'Contact Team Support',
         action: (setModalOpen) => {
@@ -193,7 +193,7 @@ export const buttonTypes: ButtonConfig[] = [
         },
         classNameType: 'fill',
     },
-    {
+    INVEST: {
         id: 14,
         label: 'Invest',
         action: (project) => {
@@ -202,7 +202,7 @@ export const buttonTypes: ButtonConfig[] = [
         link: (id: number) => '/invest',
         classNameType: 'invest',
     },
-    {
+    WITHDRAW: {
         id: 15,
         label: 'Withdraw Tokens',
         action: (setModalOpen) => {
@@ -210,64 +210,64 @@ export const buttonTypes: ButtonConfig[] = [
         },
         classNameType: 'fillb',
     },
-];
+};
 export const ButtonsForCampaignPage = (state_id: number, isProtocolTeam: boolean, isAdmin: boolean): StateConfig => {
     const state: { [key: number]: StateConfig } = {
-        1: {
+        [CampaignStatus.CREATED]: {
             label: 'Draft', // Created
             buttons: [
-                buttonTypes[1], // Send to Revision
+                buttonTypes.SEND_TO_REVISION, // Send to Revision
             ],
         },
-        2: {
+        [CampaignStatus.SUBMITTED]: {
             label: 'Submitted', // Submitted
             buttons: [
-                buttonTypes[12], // Contact Support Team
+                buttonTypes.CONTACT_TEAM_SUPPORT, // Contact Support Team
             ],
         },
-        3: {
+        [CampaignStatus.REJECTED]: {
             label: 'Rejected', // Rejected
             buttons: [
-                buttonTypes[3], // View Report
+                buttonTypes.VIEW_REPORT, // View Report
             ],
         },
-        4: {
+        [CampaignStatus.APPROVED]: {
             label: 'Approved', // Approved
             buttons: [
-                buttonTypes[4], // Launch Campaign
+                buttonTypes.PRE_LAUNCH, // Launch Campaign
             ],
         },
-        5: {
+        [CampaignStatus.CONTRACT_CREATED]: {
             label: 'Created', // Contract Created
             buttons: [
-                buttonTypes[12], // Contact Support Team
+                buttonTypes.CONTACT_TEAM_SUPPORT, // Contact Support Team
             ],
         },
-        6: {
+        [CampaignStatus.CONTRACT_PUBLISHED]: {
             label: 'Deploy', // Contract Published
             buttons: [
-                buttonTypes[12], // Contact Support Team
+                buttonTypes.CONTACT_TEAM_SUPPORT, // Contact Support Team
             ],
         },
-        7: {
+        [CampaignStatus.CONTRACT_STARTED]: {
             label: 'Ready', // Contract Started
             buttons: [
-                buttonTypes[4], // Contact Support Team
+                buttonTypes.LAUNCH_CAMPAIGN, // Contact Support Team
             ],
         },
-        8: {
+        [CampaignStatus.COUNTDOWN]: {
             label: 'Countdown', // Countdown
             buttons: [
-                buttonTypes[12], // Contact Support Team
+                buttonTypes.CONTACT_TEAM_SUPPORT, // Contact Support Team
             ],
         },
-        9: {
+        [CampaignStatus.FUNDRAISING]: {
             label: 'Fundraising',
             buttons: isAdmin
-                ? [buttonTypes[12]] // Contact Support Team
+                ? [buttonTypes.CONTACT_TEAM_SUPPORT] // Contact Support Team
                 : isProtocolTeam
-                ? [buttonTypes[12]] // Protocol Team Button
-                : [buttonTypes[13]], // Default Button
+                ? [buttonTypes.CONTACT_TEAM_SUPPORT] // Protocol Team Button
+                : [buttonTypes.INVEST], // Default Button
         },
     };
     return state[state_id] || { label: 'Not Started', buttons: [] };
@@ -277,7 +277,7 @@ export const CardInformationByState = (state_id: number, milestone_status_id?: n
     const { setMenuView } = useProjectDetailStore();
 
     const state: { [key: number]: StateConfig } = {
-        1: {
+        [CampaignStatus.NOT_STARTED]: {
             label: 'Draft', // Created
             buttons: [
                 {
@@ -287,77 +287,81 @@ export const CardInformationByState = (state_id: number, milestone_status_id?: n
                     link: (id: number) => `/campaign/${id}`,
                     classNameType: 'outline-card',
                 },
-                buttonTypes[1], // Publish
+                buttonTypes.SEND_TO_REVISION,
             ],
         },
-        2: {
+        [CampaignStatus.CREATED]: {
             label: 'Submitted', // Submitted
             buttons: [
-                buttonTypes[0], // View Campaign
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
             ],
         },
-        3: {
+        [CampaignStatus.SUBMITTED]: {
             label: 'Rejected', // Rejected
             buttons: [
-                buttonTypes[2], // View report
+                buttonTypes.VIEW_REPORT, // View report
             ],
         },
-        4: {
+        [CampaignStatus.REJECTED]: {
             label: 'Approved', // Approved
             buttons: [
-                buttonTypes[0], // View Campaign
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
             ],
         },
-        5: {
+        [CampaignStatus.APPROVED]: {
             label: 'Created', // Contract Created
             buttons: [
-                buttonTypes[0], // View Campaign
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
             ],
         },
-        6: {
+        [CampaignStatus.CONTRACT_CREATED]: {
             label: 'Deploy', // Contract Published
             buttons: [
-                buttonTypes[0], // View Campaign
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
             ],
         },
-        7: {
+        [CampaignStatus.CONTRACT_PUBLISHED]: {
             label: 'Ready', // Contract Started
             buttons: [
-                buttonTypes[0], // View Campaign
-                buttonTypes[4], // Launch Campaign (tx)
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
+                buttonTypes.LAUNCH_CAMPAIGN, // Launch Campaign (tx)
             ],
         },
-        8: {
+        [CampaignStatus.COUNTDOWN]: {
             label: 'Countdown', // Countdown
             buttons: [
-                buttonTypes[0], // View Campaign
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
             ],
         },
-        9: {
+        [CampaignStatus.FUNDRAISING]: {
             label: 'Fundraising', // Fundraising
             buttons: [
-                buttonTypes[0], // View Campaign
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
             ],
         },
-        10: {
+        [CampaignStatus.FINISHING]: {
             label: 'Finishing',
             buttons: [
-                buttonTypes[11], // Validate Fundraising Status (TX)
+                buttonTypes.VALIDATE_FUNDRAISING_STATUS, // Validate Fundraising Status (TX)
             ],
         },
-        11: isAdmin ? (milestone_status_id ? ButtonsByMilestoneStatus(milestone_status_id) : { label: 'Active', buttons: [] }) : { label: 'Active', buttons: [] },
-        12: {
+        [CampaignStatus.ACTIVE]: isAdmin
+            ? milestone_status_id
+                ? ButtonsByMilestoneStatus(milestone_status_id)
+                : { label: 'Active', buttons: [] }
+            : { label: 'Active', buttons: [] },
+        [CampaignStatus.FAILED]: {
             label: 'Failed',
-            buttons: [buttonTypes[14]],
+            buttons: [buttonTypes.WITHDRAW],
         },
-        13: {
+        [CampaignStatus.UNREACHED]: {
             label: 'Unreached',
-            buttons: [buttonTypes[14]],
+            buttons: [buttonTypes.WITHDRAW],
         },
-        14: {
+        [CampaignStatus.SUCCESS]: {
             label: 'Succesfull',
             buttons: [
-                buttonTypes[0], // View Campaign
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
             ],
         },
     };
@@ -367,64 +371,64 @@ export const CardInformationByState = (state_id: number, milestone_status_id?: n
 
 export const cardInformationForProtocolTeam = (state_id: number): StateConfig => {
     const state: { [key: number]: StateConfig } = {
-        2: {
+        [CampaignStatus.SUBMITTED]: {
             label: 'Attempmt to Launch', // Submitted
             buttons: [
-                buttonTypes[0], // View Campaign
-                buttonTypes[5], // Manage Campaign
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
+                buttonTypes.MANAGE_CAMPAIGN, // Manage Campaign
             ],
         },
-        3: {
+        [CampaignStatus.REJECTED]: {
             label: 'Rejected', // Rejected
             buttons: [
-                buttonTypes[0], // View report
-                buttonTypes[6], // Edit Campaign
+                buttonTypes.VIEW_CAMPAIGN, // View report
+                buttonTypes.EDIT_CAMPAIGN, // Edit Campaign
             ],
         },
-        4: {
+        [CampaignStatus.APPROVED]: {
             label: 'Approved', // Approved
             buttons: [
-                buttonTypes[0], // View Campaign
-                buttonTypes[7], // Create Contract
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
+                buttonTypes.CREATE_CONTRACT, // Create Contract
             ],
         },
-        5: {
+        [CampaignStatus.CONTRACT_CREATED]: {
             label: 'Created', // Contract Created
             buttons: [
-                buttonTypes[0], // View Campaign
-                buttonTypes[8], // Publish Contract
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
+                buttonTypes.PUBLISH_CONTRACT, // Publish Contract
             ],
         },
-        6: {
+        [CampaignStatus.CONTRACT_PUBLISHED]: {
             label: 'Deploy', // Contract Published
             buttons: [
-                buttonTypes[0], // View Campaign
-                buttonTypes[9], // Initialize Campaign + modal
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
+                buttonTypes.INITIALIZE_CAMPAIGN, // Initialize Campaign + modal
             ],
         },
-        7: {
+        [CampaignStatus.CONTRACT_STARTED]: {
             label: 'Ready', // Contract Started
             buttons: [
-                buttonTypes[0], // View Campaign
-                buttonTypes[10], // Launch Campaign
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
+                buttonTypes.LAUNCH_CAMPAIGN_B, // Launch Campaign
             ],
         },
-        8: {
+        [CampaignStatus.COUNTDOWN]: {
             label: 'Countdown', // Countdown
             buttons: [
-                buttonTypes[0], // View Campaign
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
             ],
         },
-        9: {
+        [CampaignStatus.FUNDRAISING]: {
             label: 'Fundraising', // Fundraising
             buttons: [
-                buttonTypes[0], // View Campaign
+                buttonTypes.VIEW_CAMPAIGN, // View Campaign
             ],
         },
-        10: {
+        [CampaignStatus.FINISHING]: {
             label: 'Finishing',
             buttons: [
-                buttonTypes[11], // Validate Fundraising Status (TX)
+                buttonTypes.VALIDATE_FUNDRAISING_STATUS, // Validate Fundraising Status (TX)
             ],
         },
     };
@@ -472,7 +476,7 @@ export const ButtonsByMilestoneStatus = (milestone_status_id: number): StateConf
         4: {
             label: 'Rejected',
             buttons: [
-                buttonTypes[0],
+                buttonTypes.VIEW_CAMPAIGN,
                 {
                     id: 4,
                     label: 'Send Report',
@@ -486,7 +490,7 @@ export const ButtonsByMilestoneStatus = (milestone_status_id: number): StateConf
         5: {
             label: 'Collect',
             buttons: [
-                buttonTypes[0],
+                buttonTypes.VIEW_CAMPAIGN,
 
                 {
                     id: 5,

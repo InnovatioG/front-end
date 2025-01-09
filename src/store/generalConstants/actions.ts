@@ -8,17 +8,6 @@ import { MilestoneStatusEntity } from '@/lib/SmartDB/Entities';
 
 import axios from 'axios';
 // Función para manejar la obtención de datos y actualización del store
-const fetchAndSetData = async <T, U>(fetchFunction: () => { list: T[] }, mapFunction: (item: T) => U, setFunction: (data: U[]) => void): Promise<T[]> => {
-    try {
-        const { list } = fetchFunction();
-        const mappedData = list.map(mapFunction);
-        setFunction(mappedData); // Se actualiza el estado de manera correcta aquí
-        return list;
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return [];
-    }
-};
 
 // Función para CampaignCategories
 const fetchCampaignCategories = async () => {
@@ -62,7 +51,8 @@ const fetchCampaignStatus = async () => {
         const fetchedData: CampaignStatusEntity[] = await CampaignStatusApi.getAllApi_();
 
         const mappedData = fetchedData.map((category) => ({
-            id: category.id_internal,
+            id: category._DB_id,
+            id_internal: category.id_internal,
             name: category.name,
             description: category.description,
         }));
