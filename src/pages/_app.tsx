@@ -47,7 +47,7 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
             await fetchAllData();
             setIsLoadingDatabaseService(false);
         };
-        if (isLoadingApp === true) {
+        if (isLoadingApp === false) {
             initialize();
         }
     }, [isLoadingApp]);
