@@ -1,0 +1,31 @@
+.avatarRoot {
+    position: relative;
+    display: flex;
+    height: 40px; /* 10 * 4px */
+    width: 40px; /* 10 * 4px */
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.big {
+    height: 85px;
+    width: 85px;
+}
+
+.avatarImage {
+    aspect-ratio: 1 / 1;
+    height: 100%;
+    width: 100%;
+}
+
+.avatarFallback {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #e0e0e0; /* muted color */
+    text-transform: uppercase;
+}

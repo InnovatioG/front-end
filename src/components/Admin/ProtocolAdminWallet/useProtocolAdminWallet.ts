@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { pushWarningNotification } from 'smart-db';
 import { ProtocolAdminWalletEntity } from '../../../lib/SmartDB/Entities/ProtocolAdminWallet.Entity';
 import { ProtocolAdminWalletApi } from '../../../lib/SmartDB/FrontEnd/ProtocolAdminWallet.FrontEnd.Api.Calls';
-import { pushWarningNotification } from 'smart-db';
 
 export function useProtocolAdminWallet() {
     const [list, setList] = useState<ProtocolAdminWalletEntity[]>([]);

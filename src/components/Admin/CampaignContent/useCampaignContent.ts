@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { pushWarningNotification } from 'smart-db';
 import { CampaignContentEntity } from '../../../lib/SmartDB/Entities/CampaignContent.Entity';
 import { CampaignContentApi } from '../../../lib/SmartDB/FrontEnd/CampaignContent.FrontEnd.Api.Calls';
-import { pushWarningNotification } from 'smart-db';
 
 export function useCampaignContent() {
     const [list, setList] = useState<CampaignContentEntity[]>([]);

@@ -1,12 +1,11 @@
-import { MilestoneFormProps, useCampaign } from './useCampaign';
-import styles from './Campaign.module.scss';
 import { CampaignEntity, CampaignMilestone } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { toJson } from 'smart-db';
+import styles from './Campaign.module.scss';
+import { MilestoneFormProps, useCampaign } from './useCampaign';
 
 export default function Campaign() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove, getCategoryName, getStatusName } = useCampaign();
-
 
     const AdminsForm: React.FC<{
         item: Partial<CampaignEntity>;

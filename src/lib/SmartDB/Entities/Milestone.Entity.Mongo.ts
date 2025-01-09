@@ -1,8 +1,8 @@
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
 import { MongoAppliedFor } from 'smart-db';
-import { MilestoneEntity } from './Milestone.Entity';
 import { BaseEntityMongo } from 'smart-db/backEnd';
+import { MilestoneEntity } from './Milestone.Entity';
 
 @MongoAppliedFor([MilestoneEntity])
 export class MilestoneEntityMongo extends BaseEntityMongo {

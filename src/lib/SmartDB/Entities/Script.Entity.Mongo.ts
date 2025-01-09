@@ -1,10 +1,8 @@
-import { type PaymentKeyHash } from "lucid-cardano";
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
-import { MongoAppliedFor } from "smart-db";
-import { BaseSmartDBEntityMongo, IBaseSmartDBEntity } from "smart-db/backEnd";
-import { ScriptDatum, ScriptEntity } from "./Script.Entity";
-
+import { MongoAppliedFor } from 'smart-db';
+import { BaseSmartDBEntityMongo, IBaseSmartDBEntity } from 'smart-db/backEnd';
+import { ScriptDatum, ScriptEntity } from './Script.Entity';
 
 @MongoAppliedFor([ScriptEntity])
 export class ScriptEntityMongo extends BaseSmartDBEntityMongo {
@@ -74,5 +72,4 @@ export class ScriptEntityMongo extends BaseSmartDBEntityMongo {
     }
 
     // #endregion mongo db
-
 }

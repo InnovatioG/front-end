@@ -1,19 +1,19 @@
-import { create } from 'zustand';
-import { immer } from 'zustand/middleware/immer';
-import { CampaignState, initialState } from '@/store/campaign/initialState';
+import type { User } from '@/HardCode/databaseType';
 import {
+    addMemberToTeam,
+    setBrandFieldAction,
     setCampaignStateAction,
+    setMembersTeam,
     setNestedCampaignStateAction,
     setNextStepAction,
     setPrevStepAction,
-    setBrandFieldAction,
-    setMembersTeam,
-    addMemberToTeam,
     updateMemberField,
 } from '@/store/campaign/actions';
-import type { User } from '@/HardCode/databaseType';
+import { create } from 'zustand';
+import { immer } from 'zustand/middleware/immer';
 import { MembersTeam } from '@/types/types';
 import { MilestoneCreation } from '@/types/types';
+import { CampaignState, initialState } from '@/store/campaign/initialState';
 
 /* TODO REVISAR EL CATEGORY ID  */
 interface UseCampaignStore extends CampaignState {
@@ -48,7 +48,7 @@ export const useCampaignStore = create<UseCampaignStore>()(
         newMember: {
             id: '0',
             editor: false,
-            campaign_id: 0,
+            campaign_id: '0',
             member_picture: '',
             name: '',
             last_name: '',
@@ -156,7 +156,7 @@ export const useCampaignStore = create<UseCampaignStore>()(
             set((state) => {
                 state.newMember = {
                     id: '0',
-                    campaign_id: 0,
+                    campaign_id: '0',
                     member_picture: '',
                     name: '',
                     last_name: '',

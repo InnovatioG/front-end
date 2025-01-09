@@ -36,7 +36,6 @@ export function initBackEnd() {
     // Allowing public access to endpoints matching the `/api/transactions/` pattern.
 
     endpointsManager.setPublicEndPointsInternet([/^\/api\/*\/.+/]);
-
 }
 
 /* 
@@ -46,4 +45,3 @@ Summary:
 3. It provides functionality to manage API endpoints, enabling public access for specified routes.
 4. Developers can modify the `setPublicEndPointsInternet` calls to define which API routes should be publicly accessible.
 */
-

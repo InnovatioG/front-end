@@ -1,7 +1,7 @@
-import { useCampaignMember } from './useCampaignMember';
-import styles from './CampaignMember.module.scss';
 import { CampaignMemberEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
+import styles from './CampaignMember.module.scss';
+import { useCampaignMember } from './useCampaignMember';
 
 export default function CampaignMember() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaignMember();

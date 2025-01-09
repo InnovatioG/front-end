@@ -1,12 +1,10 @@
-import { useCampaignStatus } from './useCampaignStatus';
-import styles from './CampaignStatus.module.scss';
 import { CampaignStatusEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
+import styles from './CampaignStatus.module.scss';
+import { useCampaignStatus } from './useCampaignStatus';
 
 export default function CampaignStatus() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaignStatus();
-
-
 
     const renderList = () => (
         <div>

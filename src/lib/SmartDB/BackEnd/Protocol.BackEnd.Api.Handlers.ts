@@ -1,3 +1,4 @@
+import { CAMPAIGN_VERSION, EMERGENCY_ADMIN_TOKEN_POLICY_CS } from '@/utils/constants/contracts';
 import {
     CampaignCategoryDefault,
     CampaignCategoryDefaultNames,
@@ -49,7 +50,6 @@ import {
     SubmissionStatusEntity,
 } from '../Entities';
 import { CampaignFactory, ProtocolEntity } from '../Entities/Protocol.Entity';
-import { CAMPAIGN_VERSION, EMERGENCY_ADMIN_TOKEN_POLICY_CS } from '@/utils/constants/contracts';
 
 @BackEndAppliedFor(ProtocolEntity)
 export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
@@ -265,7 +265,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             //-------------------------
             const createdBy = WALLET_CREATEDBY_LOGIN;
             const lastConnection = new Date();
-            const walletUsed = 'eternl'; // walletTxParams.walletNameOrSeedOrKey;
+            const walletName = 'eternl'; // walletTxParams.walletNameOrSeedOrKey;
             const walletValidatedWithSignedToken = false; //walletTxParams.isWalletValidatedWithSignedToken;
             //--------------------
             const paymentPKH = walletTxParams.pkh;
@@ -283,7 +283,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             wallet = new WalletEntity({
                 createdBy,
                 lastConnection,
-                walletUsed,
+                walletName,
                 walletValidatedWithSignedToken: walletValidatedWithSignedToken,
                 paymentPKH,
                 stakePKH,
@@ -454,11 +454,11 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
                 const campaignWallets = await this.getOrCreateCampaignWallets(campaignData);
 
                 // Fetch reference IDs
-                const category_id = await this.getCampaignCategoryId(campaignData.campaing_category_id_as_string);
+                const categoryId = await this.getCampaignCategoryId(campaignData.campaing_category_id_as_string);
                 const statusId = await this.getCampaignStatusId(campaignData.campaign_status_id_as_string);
 
                 // Create campaign
-                campaign = await this.createCampaign(campaignData, category_id, statusId, campaignWallets);
+                campaign = await this.createCampaign(campaignData, categoryId, statusId, campaignWallets);
 
                 // Create related records
                 await this.createCampaignContents(campaign._DB_id, campaignData.contents);
@@ -528,15 +528,15 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         const CampaignCategoryBackEndApplied = (await import('./CampaignCategory.BackEnd.Api.Handlers')).CampaignCategoryBackEndApplied;
 
         // Get enum value from category name
-        const category_id = CampaignCategoryDefault[categoryName as keyof typeof CampaignCategoryDefault];
-        if (category_id === undefined) {
+        const categoryId = CampaignCategoryDefault[categoryName as keyof typeof CampaignCategoryDefault];
+        if (categoryId === undefined) {
             throw new Error(`Invalid category name: ${categoryName}`);
         }
 
         // Query by internal_id
-        const category = await CampaignCategoryBackEndApplied.getOneByParams_({ id_internal: category_id });
+        const category = await CampaignCategoryBackEndApplied.getOneByParams_({ id_internal: categoryId });
         if (!category) {
-            throw new Error(`Category not found for internal_id: ${category_id}`);
+            throw new Error(`Category not found for internal_id: ${categoryId}`);
         }
 
         return category._DB_id;
@@ -628,7 +628,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
                 wallet = new WalletEntity({
                     createdBy: 'POPULATE',
                     lastConnection: new Date(),
-                    walletUsed: 'eternl',
+                    walletName: 'eternl',
                     walletValidatedWithSignedToken: false,
                     paymentPKH: memberData?.paymentPKH || `pkh_${walletId}`, // Placeholder
                     stakePKH: memberData?.stakePKH || `stake_${walletId}`, // Placeholder
@@ -645,7 +645,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         return wallets;
     }
 
-    private static async createCampaign(campaignData: any, category_id: string, statusId: string, wallets: Record<string, WalletEntity>): Promise<CampaignEntity> {
+    private static async createCampaign(campaignData: any, categoryId: string, statusId: string, wallets: Record<string, WalletEntity>): Promise<CampaignEntity> {
         const CampaignBackEndApplied = (await import('./Campaign.BackEnd.Api.Handlers')).CampaignBackEndApplied;
 
         const currentDate = new Date();
@@ -758,7 +758,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         const campaign = new CampaignEntity({
             isDeployed,
 
-            campaing_category_id: category_id,
+            campaing_category_id: categoryId,
             campaign_status_id: statusId,
             creator_wallet_id: wallets[campaignData.creator_wallet_id_as_string]._DB_id,
 

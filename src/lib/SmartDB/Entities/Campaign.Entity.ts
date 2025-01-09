@@ -1,6 +1,6 @@
 import { type Script } from 'lucid-cardano';
 import 'reflect-metadata';
-import { BaseSmartDBEntity, type CS, Convertible, asSmartDBEntity, type POSIXTime, LucidLUCID_NETWORK_MAINNET_NAME } from 'smart-db';
+import { BaseSmartDBEntity, Convertible, LucidLUCID_NETWORK_MAINNET_NAME, asSmartDBEntity, type CS, type POSIXTime } from 'smart-db';
 
 export interface CampaignMilestone {
     cmPerncentage: number;
@@ -232,7 +232,6 @@ export class CampaignEntity extends BaseSmartDBEntity {
     };
 
     public static fieldsForHomePage: Record<string, boolean> = {
-        ...super.fieldsForHomePage,
         campaing_category_id: true,
         campaign_status_id: true,
         creator_wallet_id: true,

@@ -1,7 +1,7 @@
-import { useProtocol } from './useProtocol';
-import styles from './Protocol.module.scss';
 import { ProtocolEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import styles from './Protocol.module.scss';
+import { useProtocol } from './useProtocol';
 
 export default function Protocol() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove, configJson, setConfigJson } = useProtocol();

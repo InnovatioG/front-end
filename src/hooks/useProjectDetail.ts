@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { initialTextEditorOptions } from '@/utils/constants';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { initialTextEditorOptions } from '@/utils/constants';
+import { useEffect, useState } from 'react';
 
 export const useProjectDetail = () => {
     const { project } = useProjectDetailStore();

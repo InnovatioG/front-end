@@ -1,5 +1,5 @@
 import { Maybe, PostgreSQLAppliedFor, StakeCredentialPubKeyHash, getPostgreSQLTableName } from 'smart-db';
-import { BaseEntityPostgreSQL, BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
+import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ScriptEntity } from './Script.Entity';
 
@@ -13,7 +13,7 @@ export class ScriptEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @PrimaryGeneratedColumn()
     _id!: number; // Auto-generated primary key
 
-    @Column({ type: 'integer', nullable: true  })
+    @Column({ type: 'integer', nullable: true })
     sdVersion!: number;
     @Column({ type: 'varchar', length: 255, nullable: true })
     sdAdminPaymentPKH?: string;

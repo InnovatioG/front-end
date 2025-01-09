@@ -1,7 +1,7 @@
-import { useCampaignCategory } from './useCampaignCategory';
-import styles from './CampaignCategory.module.scss';
 import { CampaignCategoryEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
+import styles from './CampaignCategory.module.scss';
+import { useCampaignCategory } from './useCampaignCategory';
 
 export default function CampaignCategory() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaignCategory();

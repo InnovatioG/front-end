@@ -1,5 +1,4 @@
-import type { MembersTeam } from '@/HardCode/databaseType';
-import type { MilestoneF, FAQ, campaingContent, BaseCampaign } from '@/HardCode/databaseType';
+import type { BaseCampaign, MilestoneF } from '@/HardCode/databaseType';
 
 export interface ProjectDetailState {
     project: BaseCampaign;

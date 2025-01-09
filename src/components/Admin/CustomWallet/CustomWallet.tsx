@@ -1,5 +1,5 @@
-import { useCustomWallet } from './useCustomWallet';
 import styles from './CustomWallet.module.scss';
+import { useCustomWallet } from './useCustomWallet';
 
 export default function CustomWallet() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCustomWallet();

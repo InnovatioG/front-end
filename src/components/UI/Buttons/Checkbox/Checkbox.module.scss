@@ -1,0 +1,142 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    .checkbox {
+        width: 20px;
+        height: 20px;
+        border: 2px solid colors.$black-color;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.2s ease;
+        user-select: none;
+        position: relative;
+
+        .checkmark {
+            color: colors.$white-color;
+            font-size: 12px;
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 100; /* Oculta el contenido por defecto */
+            transition: opacity 0.2s ease; /* Agrega una transición suave a la opacidad */
+        }
+
+        .checkmarkB {
+            color: black;
+            font-size: 12px;
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 100; /* Oculta el contenido por defecto */
+            transition: opacity 0.2s ease; /* Agrega una transición suave a la opacidad */
+        }
+
+        &.checked {
+            background-color: colors.$full-black;
+
+            .checkmark {
+                opacity: 1; /* Muestra el contenido cuando está marcado */
+            }
+
+            &:hover {
+                background-color: colors.$red-disabled;
+
+                .checkmark {
+                    opacity: 1; /* Asegura que el contenido se vea cuando está en estado hover y marcado */
+                }
+            }
+        }
+
+        &:hover:not(.checked) {
+            .checkmark {
+                opacity: 1; /* Muestra el contenido cuando está en estado hover y no marcado */
+                color: black;
+            }
+            .checkkmarkB {
+                opacity: 1; /* Muestra el contenido cuando está en estado hover y no marcado */
+                color: white;
+            }
+        }
+    }
+
+    .checkboxB {
+        width: 20px;
+        height: 20px;
+        border: 2px solid colors.$black-color;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-right: 10px;
+        transition: background-color 0.2s ease;
+        user-select: none;
+        position: relative;
+
+        .checkmarkB {
+            color: black;
+            font-size: 12px;
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 100; /* Oculta el contenido por defecto */
+            transition: opacity 0.2s ease; /* Agrega una transición suave a la opacidad */
+        }
+
+        &.checkedB {
+            background-color: #76d13e;
+
+            .checkmarkB {
+                opacity: 1; /* Muestra el contenido cuando está marcado */
+                color: white;
+            }
+
+            &:hover {
+                background-color: colors.$red-disabled;
+
+                .checkmarkB {
+                    opacity: 1; /* Asegura que el contenido se vea cuando está en estado hover y marcado */
+                }
+            }
+        }
+
+        &:hover:not(.checkedB) {
+            .checkmarkB {
+                opacity: 1; /* Muestra el contenido cuando está en estado hover y no marcado */
+                color: black;
+            }
+            .checkkmarkB {
+                opacity: 1; /* Muestra el contenido cuando está en estado hover y no marcado */
+                color: white;
+            }
+        }
+    }
+
+    .labelText {
+        cursor: pointer;
+        user-select: none;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .labelText {
+        font-size: 1rem;
+        width: 100%;
+        text-wrap: nowrap;
+    }
+}

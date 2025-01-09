@@ -1,8 +1,6 @@
 import type { User } from '@/HardCode/databaseType';
 import type { Campaign, MembersTeam, MilestoneCreation } from '@/types/types';
 
-/* campaign creation */
-
 export interface CampaignState {
     step: 1 | 2 | 3 | 4;
     name: string;

@@ -1,0 +1,95 @@
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-width: 25dvw;
+    min-height: 25dvh;
+    align-items: center;
+}
+
+.layout {
+    position: relative;
+    width: 90%;
+    max-width: 580px;
+    background: colors.$primary-background;
+    border-radius: 16px;
+    padding: 16px;
+
+    .title {
+        font: fonts.$f900-medium;
+        color: colors.$primary-dark-color;
+        text-align: center;
+    }
+
+    .toogleIcon {
+        display: flex;
+        flex-direction: row;
+        margin-top: 1rem;
+        gap: 0.5rem;
+    }
+
+    .bodyModal {
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+
+        .walletList {
+            display: flex;
+            flex-direction: column;
+            border-radius: 8px;
+            gap: 10px;
+
+            .walletItem {
+                height: 50px;
+                display: flex;
+                align-items: center;
+                padding-inline: 16px;
+                gap: 10px;
+                background: colors.$white-background;
+                border: 1px solid colors.$border-light-color;
+                border-radius: 8px;
+                cursor: pointer;
+
+                &:hover {
+                    background: colors.$primary-color;
+                }
+
+                .walletIcon {
+                    height: 40px;
+                    width: auto;
+                }
+
+                .walletLine {
+                    display: flex;
+                    justify-content: space-between;
+                    width: 100%;
+                }
+
+                &.unAvailable {
+                    background: colors.$light-color;
+                }
+            }
+        }
+    }
+}
+
+/* MEDIUM AND LARGER SCREEN */
+@media (width >= 640px) {
+    .layout {
+        padding: 32px;
+
+        .bodyModal {
+            .walletList {
+                .walletItem {
+                    height: 60px;
+
+                    .walletName {
+                        font: fonts.$f600-medium;
+                    }
+                }
+            }
+        }
+    }
+}

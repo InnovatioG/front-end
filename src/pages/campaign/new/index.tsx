@@ -1,33 +1,27 @@
-import { useScreenSize } from "@/hooks/useScreenSize";
-import styles from "./CreatorCampaign.module.scss";
-import { CHEVRON_RIGHT } from "@/utils/images";
-import { useSession } from "next-auth/react";
-import { useCardano } from "@/contexts/CardanoContext";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { ROUTES } from "@/utils/routes";
-import StepController from "@/components/CampaignCreation/elements/controller/StepController";
-import { dataBaseService } from "@/HardCode/dataBaseService";
-import { Category, User } from "@/HardCode/databaseType";
-import FormSteps from "@/components/CampaignCreation/layout/FormSteps";
-import LoadingPage from "@/components/LoadingPage/LoadingPage";
-import { useCampaignStore } from "@/store/campaign/useCampaignStore";
-import FormHeader from "@/components/CampaignCreation/layout/FormHeader";
-import MemberController from "@/components/CampaignCreation/elements/controller/MemberController";
-import { titleForCampaignCreation } from "@/utils/constants";
-
-
+import StepController from '@/components/CampaignCreation/Elements/Controller/StepController';
+import FormHeader from "@/components/CampaignCreation/Layout/FormHeader";
+import FormSteps from '@/components/CampaignCreation/Layout/FormSteps';
+import LoadingPage from '@/components/LoadingPage/LoadingPage';
+import { dataBaseService } from '@/HardCode/dataBaseService';
+import { Category, User } from '@/HardCode/databaseType';
+import { useScreenSize } from '@/hooks/useScreenSize';
+import { useCampaignStore } from '@/store/campaign/useCampaignStore';
+import { titleForCampaignCreation } from '@/utils/constants';
+import { CHEVRON_RIGHT } from '@/utils/images';
+import { ROUTES } from '@/utils/routes';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useWalletStore } from 'smart-db';
+import styles from './CreatorCampaign.module.scss';
 
 export default function Home() {
   const screenSize = useScreenSize();
   const { data: session } = useSession();
-  const { address } = useCardano();
+  const walletStore = useWalletStore();
+  const address = walletStore.info?.address || '';
   const router = useRouter();
   const { step, setStep, setUser, isLoading, setCategoryId, setIsLoading, newCampaign } = useCampaignStore();
-
-
-
-
 
   const handleClickBack = () => {
     if (step === 1) {
@@ -59,7 +53,16 @@ export default function Home() {
     return () => clearTimeout(timeoutId);
   }, [address, router]);
 
-
+  /*     useEffect(() => {
+          if (category !== '') {
+              const categories = dataBaseService.getCategories();
+              const selectedCategory = categories.find((cat: Category) => cat.name === category);
+              const category_id = selectedCategory ? selectedCategory.id : null;
+              setCategoryId(category_id);
+          } else {
+              setCategoryId(null);
+          }
+      }, [category]); */
 
   if (isLoading) {
     return <LoadingPage />;
@@ -70,20 +73,13 @@ export default function Home() {
       <section className={styles.layout}>
         <FormHeader session={session} />
         <div className={styles.stepController}>
-          <h2
-            className={styles.titleSection}
-          >{titleForCampaignCreation(step) || ""}</h2>
+          <h2 className={styles.titleSection}>{titleForCampaignCreation(step) || ''}</h2>
           <StepController step={step} />
         </div>
 
         <div className={styles.stepContent}>
           <div className={styles.backContainer}>
-            <svg
-              width="18"
-              height="18"
-              className={styles.icon}
-              onClick={handleClickBack}
-            >
+            <svg width="18" height="18" className={styles.icon} onClick={handleClickBack}>
               <use href={CHEVRON_RIGHT}></use>
             </svg>
           </div>
@@ -93,7 +89,3 @@ export default function Home() {
     </main>
   );
 }
-
-
-
-

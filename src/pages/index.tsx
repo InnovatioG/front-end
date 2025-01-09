@@ -1,13 +1,13 @@
-import Head from 'next/head';
+import CampaignDashboard from '@/components/CampaignDashboard/Sections/Dashboard/CampaignDashboard';
+import CampaignHighLight from '@/components/CampaignDashboard/Sections/Highlight/CampaignHighLight';
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
 import styles from '@/styles/Home.module.scss';
-import Image from 'next/image';
 import { PEOPLE } from '@/utils/images';
-import CampaignHighLight from '@/components/CampaignDashboard/sections/highlight/CampaignHighLight';
-import CampaignDashboard from '@/components/CampaignDashboard/sections/dashboard/CampaignDashboard';
-
-
+import Head from 'next/head';
+import Image from 'next/image';
+import { useEffect } from 'react';
 export default function Home() {
-
+    const { fetchAdaPrice } = useProjectDetailStore();
 
 
     return (
@@ -25,15 +25,12 @@ export default function Home() {
                 </section>
                 <div className={styles.peopleContainer}>
                     <div className={styles.pictureContainer}>
-                        <Image alt="people" src={PEOPLE}
-                            priority layout='fill' objectFit='contain' />
+                        <Image alt="people" src={PEOPLE} priority layout="fill" objectFit="contain" />
                     </div>
                 </div>
             </main>
             <CampaignHighLight />
             <CampaignDashboard />
-
         </>
     );
 }
-

@@ -1,5 +1,5 @@
-import { DISCORD, FACEBOOK, INSTAGRAM, LOGO_FULL_LIGHT, XS, WEBSITE, LINKEDIN } from '@/utils/images';
 import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { DISCORD, FACEBOOK, INSTAGRAM, LINKEDIN, WEBSITE, XS } from '@/utils/images';
 
 export const socialIcons = [
     { icon: WEBSITE, name: 'website' },

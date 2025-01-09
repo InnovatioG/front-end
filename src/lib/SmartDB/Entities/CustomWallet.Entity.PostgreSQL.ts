@@ -21,7 +21,7 @@ export class CustomWalletEntityPostgreSQL extends BaseEntityPostgreSQL {
     @Column({ type: 'varchar', length: 255 })
     wallet_used!: string;
     @Column({ type: 'boolean', default: false })
-    wallet_validated_with_signed_token!: boolean
+    wallet_validated_with_signed_token!: boolean;
     @Column({ type: 'varchar', length: 255 })
     payment_pkh!: PaymentKeyHash;
     @Column({ type: 'varchar', length: 255 })

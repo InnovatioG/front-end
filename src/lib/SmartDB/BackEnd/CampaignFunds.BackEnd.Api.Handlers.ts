@@ -9,7 +9,7 @@ import {
     BaseSmartDBBackEndMethods,
     NextApiRequestAuthenticated,
     console_error,
-    console_log
+    console_log,
 } from 'smart-db/backEnd';
 import { CampaignFundsEntity } from '../Entities/CampaignFunds.Entity';
 

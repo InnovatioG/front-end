@@ -14,4 +14,3 @@ export * from './Protocol.BackEnd.Api.Handlers';
 export * from './ProtocolAdminWallet.BackEnd.Api.Handlers';
 export * from './Script.BackEnd.Api.Handlers';
 export * from './SubmissionStatus.BackEnd.Api.Handlers';
-

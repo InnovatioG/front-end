@@ -1,11 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import { dataBaseService } from '@/HardCode/dataBaseService';
 import { Campaign, Category, State, User } from '@/HardCode/databaseType';
 import { useScreenSize } from '@/hooks/useScreenSize';
-import { dataBaseService } from '@/HardCode/dataBaseService';
 import { useRouter } from 'next/router';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 import { useNewDashboardCard } from './newUseDashboardCard';
-
+import { useState, useEffect, useCallback } from 'react';
 export const useDashboardCard = (address: string | null) => {
     const { campaigns, filteredCampaigns } = useNewDashboardCard(address);
 

@@ -1,7 +1,7 @@
-import { useProtocolAdminWallet } from './useProtocolAdminWallet';
-import styles from './ProtocolAdminWallet.module.scss';
 import { ProtocolAdminWalletEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
+import styles from './ProtocolAdminWallet.module.scss';
+import { useProtocolAdminWallet } from './useProtocolAdminWallet';
 
 export default function ProtocolAdminWallet() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useProtocolAdminWallet();

@@ -1,7 +1,7 @@
-import { useCampaignSubmission } from './useCampaignSubmission';
-import styles from './CampaignSubmission.module.scss';
 import { CampaignSubmissionEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
+import styles from './CampaignSubmission.module.scss';
+import { useCampaignSubmission } from './useCampaignSubmission';
 
 export default function CampaignSubmission() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useCampaignSubmission();

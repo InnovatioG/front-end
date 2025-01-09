@@ -3,7 +3,6 @@
         "version": "1.0.2",
         "stored_at": "2024-04-01T00:35:24.725Z"
     },
-
     "users": [
         {
             "id": 1,
@@ -21,60 +20,177 @@
         }
     ],
     "categories": [
-        { "id": 1, "name": "Technology" },
-        { "id": 2, "name": "Event" },
-        { "id": 3, "name": "Education" },
-        { "id": 4, "name": "Gaming" },
-        { "id": 5, "name": "Social" },
-        { "id": 6, "name": "Food" }
+        {
+            "id": 1,
+            "name": "Technology"
+        },
+        {
+            "id": 2,
+            "name": "Event"
+        },
+        {
+            "id": 3,
+            "name": "Education"
+        },
+        {
+            "id": 4,
+            "name": "Gaming"
+        },
+        {
+            "id": 5,
+            "name": "Social"
+        },
+        {
+            "id": 6,
+            "name": "Food"
+        }
     ],
     "states": [
-        { "id": 1, "name": "Created" },
-        { "id": 2, "name": "Submitted" },
-        { "id": 3, "name": "Rejected" },
-        { "id": 4, "name": "Approved" },
-        { "id": 5, "name": "Contract Created" },
-        { "id": 6, "name": "Contract Published" },
-        { "id": 7, "name": "Contract Started" },
-        { "id": 8, "name": "Countdown" },
-        { "id": 9, "name": "Fundraising" },
-        { "id": 10, "name": "Finishing" },
-        { "id": 11, "name": "Active" },
-        { "id": 12, "name": "Failed" },
-        { "id": 13, "name": "Unreached" },
-        { "id": 14, "name": "Success" }
+        {
+            "id": 1,
+            "name": "Created"
+        },
+        {
+            "id": 2,
+            "name": "Submitted"
+        },
+        {
+            "id": 3,
+            "name": "Rejected"
+        },
+        {
+            "id": 4,
+            "name": "Approved"
+        },
+        {
+            "id": 5,
+            "name": "Contract Created"
+        },
+        {
+            "id": 6,
+            "name": "Contract Published"
+        },
+        {
+            "id": 7,
+            "name": "Contract Started"
+        },
+        {
+            "id": 8,
+            "name": "Countdown"
+        },
+        {
+            "id": 9,
+            "name": "Fundraising"
+        },
+        {
+            "id": 10,
+            "name": "Finishing"
+        },
+        {
+            "id": 11,
+            "name": "Active"
+        },
+        {
+            "id": 12,
+            "name": "Failed"
+        },
+        {
+            "id": 13,
+            "name": "Unreached"
+        },
+        {
+            "id": 14,
+            "name": "Success"
+        }
     ],
     "contracts": [
-        { "id": 1, "name": "Active" },
-        { "id": 2, "name": "TBL" },
-        { "id": 3, "name": "Created" },
-        { "id": 4, "name": "Signed" },
-        { "id": 5, "name": "Ready" },
-        { "id": 6, "name": "Deleted" },
-        { "id": 7, "name": "Ended" }
+        {
+            "id": 1,
+            "name": "Active"
+        },
+        {
+            "id": 2,
+            "name": "TBL"
+        },
+        {
+            "id": 3,
+            "name": "Created"
+        },
+        {
+            "id": 4,
+            "name": "Signed"
+        },
+        {
+            "id": 5,
+            "name": "Ready"
+        },
+        {
+            "id": 6,
+            "name": "Deleted"
+        },
+        {
+            "id": 7,
+            "name": "Ended"
+        }
     ],
     "vizualization": [
-        { "id": 1, "name": "All" },
-        { "id": 2, "name": "User" },
-        { "id": 3, "name": "Admin" }
+        {
+            "id": 1,
+            "name": "All"
+        },
+        {
+            "id": 2,
+            "name": "User"
+        },
+        {
+            "id": 3,
+            "name": "Admin"
+        }
     ],
-
     "milestone_status": [
-        { "id": 1, "name": "Not Started" },
-        { "id": 2, "name": "Started" },
-        { "id": 3, "name": "Submitted" },
-        { "id": 4, "name": "Rejected" },
-        { "id": 5, "name": "Finished" },
-        { "id": 6, "name": "Failed" }
+        {
+            "id": 1,
+            "name": "Not Started"
+        },
+        {
+            "id": 2,
+            "name": "Started"
+        },
+        {
+            "id": 3,
+            "name": "Submitted"
+        },
+        {
+            "id": 4,
+            "name": "Rejected"
+        },
+        {
+            "id": 5,
+            "name": "Finished"
+        },
+        {
+            "id": 6,
+            "name": "Failed"
+        }
     ],
-
     "submission_status": [
-        { "id_submission_status": 1, "name": "Submitted" },
-        { "id_submission_status": 2, "name": "Approved" },
-        { "id_submission_status": 3, "name": "Rejected" },
-        { "id_submission_status": 4, "name": "Failed" }
+        {
+            "id_submission_status": 1,
+            "name": "Submitted"
+        },
+        {
+            "id_submission_status": 2,
+            "name": "Approved"
+        },
+        {
+            "id_submission_status": 3,
+            "name": "Rejected"
+        },
+        {
+            "id_submission_status": 4,
+            "name": "Failed"
+        }
     ],
-
     "campaign_submissions": [
         {
             "id": 1,
@@ -84,7 +200,6 @@
             "rejected_justification": "Aca va la justificacion de porque se decidio reporbar el reporte"
         }
     ],
-
     "campaigns": [
         {
             "id": 1,
@@ -118,9 +233,18 @@
             "description": "Representacion de la campaña que fue ya actualizada y se empezaron a cargar la informacion del project detail, del roadmap, del team, del tokenomics y del FAQ --- Solo debe renderizarse en la pagina de managment de los usuarios que crearon la campaña (view campaign) y en la del protocol team donde se tiene que ver el boton de view campaign y de manage campain",
             "campaign_type": "Target",
             "milestones": [
-                { "order": 1, "goal": 50000.0 },
-                { "order": 2, "goal": 100000.0 },
-                { "order": 3, "goal": 150000.0 }
+                {
+                    "order": 1,
+                    "goal": 50000.0
+                },
+                {
+                    "order": 2,
+                    "goal": 100000.0
+                },
+                {
+                    "order": 3,
+                    "goal": 150000.0
+                }
             ],
             "goal": 300000.0,
             "raise_amount": 0,
@@ -143,9 +267,18 @@
             "description": "Campaña que fue rechazada por los protocol managers, por lo que no deberia renderizarse en el homepage, en la de los members se renderiza en conjunto al boton de view report que los redirecciona a la pagina /campaign?id=[id], en el protocol team se les ve el boton de view campaign y de edit campaign",
             "campaign_type": "Target",
             "milestones": [
-                { "order": 1, "goal": 35000.0 },
-                { "order": 2, "goal": 50000.0 },
-                { "order": 3, "goal": 60000.0 }
+                {
+                    "order": 1,
+                    "goal": 35000.0
+                },
+                {
+                    "order": 2,
+                    "goal": 50000.0
+                },
+                {
+                    "order": 3,
+                    "goal": 60000.0
+                }
             ],
             "goal": 145000.0,
             "raise_amount": 0,
@@ -168,9 +301,18 @@
             "description": "Campañana que fue aprobada, pero todavia no se generaron los contratos --- se renderiza en la pagina de managers (view campaign) y del protocol team (view campaing y create campaign contracts)",
             "campaign_type": "Target",
             "milestones": [
-                { "order": 1, "goal": 30000.0 },
-                { "order": 2, "goal": 40000.0 },
-                { "order": 3, "goal": 45000.0 }
+                {
+                    "order": 1,
+                    "goal": 30000.0
+                },
+                {
+                    "order": 2,
+                    "goal": 40000.0
+                },
+                {
+                    "order": 3,
+                    "goal": 45000.0
+                }
             ],
             "goal": 120000.0,
             "raise_amount": 0.0,
@@ -193,9 +335,18 @@
             "description": "Los contratos fueron creados para la campaña, en manager se puede ver el view-campaing /// en porotcol tem se deeberia poder ve view campaign y publish campaign contracts --- el label es Created",
             "campaign_type": "Milestone",
             "milestones": [
-                { "order": 1, "goal": 50000.0 },
-                { "order": 2, "goal": 80000.0 },
-                { "order": 3, "goal": 100000.0 }
+                {
+                    "order": 1,
+                    "goal": 50000.0
+                },
+                {
+                    "order": 2,
+                    "goal": 80000.0
+                },
+                {
+                    "order": 3,
+                    "goal": 100000.0
+                }
             ],
             "goal": 230000.0,
             "raise_amount": 0.0,
@@ -218,9 +369,18 @@
             "description": "Los contratos fueron publicados. El Protocolo deberá inicializar los contratos. Se creará el Datum de la Campaña. // en el home no se renderiza, el label que se marca es de deploy, los managers ven el boton de view campaign y el protocol tem view campaign y intilize campaign contracts (tx)",
             "campaign_type": "Milestone",
             "milestones": [
-                { "order": 1, "goal": 50000.0 },
-                { "order": 2, "goal": 50000.0 },
-                { "order": 3, "goal": 50000.0 }
+                {
+                    "order": 1,
+                    "goal": 50000.0
+                },
+                {
+                    "order": 2,
+                    "goal": 50000.0
+                },
+                {
+                    "order": 3,
+                    "goal": 50000.0
+                }
             ],
             "goal": 150000.0,
             "raise_amount": 0.0,
@@ -243,9 +403,18 @@
             "description": "Los contratos fueron iniciados. El Protocolo o Managers deberán iniciar la campaña cuando hayan creado las UTxOs de Fondos y haya dejado los tokens necesarios a la venta. en el dash de protocol y de manager se ve view campaign y launch campaign (tx), el label es Ready",
             "campaign_type": "Milestone",
             "milestones": [
-                { "order": 1, "goal": 100.0 },
-                { "order": 2, "goal": 100.0 },
-                { "order": 3, "goal": 150.0 }
+                {
+                    "order": 1,
+                    "goal": 100.0
+                },
+                {
+                    "order": 2,
+                    "goal": 100.0
+                },
+                {
+                    "order": 3,
+                    "goal": 150.0
+                }
             ],
             "goal": 350.0,
             "raise_amount": 0,
@@ -268,9 +437,18 @@
             "description": "La campaña fue iniciada pero la fecha de comienzo aún no llega. el label es un countdown hasta la fecha que sale a la venta los tokens, se debe renderizar en todas las paginas",
             "campaign_type": "Milestone",
             "milestones": [
-                { "order": 1, "goal": 50000.0 },
-                { "order": 2, "goal": 80000.0 },
-                { "order": 3, "goal": 90000.0 }
+                {
+                    "order": 1,
+                    "goal": 50000.0
+                },
+                {
+                    "order": 2,
+                    "goal": 80000.0
+                },
+                {
+                    "order": 3,
+                    "goal": 90000.0
+                }
             ],
             "goal": 500000.0,
             "raise_amount": 0,
@@ -293,9 +471,18 @@
             "description": "Fundraising activado, la fecha de inicio ya paso, se encuentra vendiendo tokens",
             "campaign_type": "Milestone",
             "milestones": [
-                { "order": 1, "goal": 50000.0 },
-                { "order": 2, "goal": 80000.0 },
-                { "order": 3, "goal": 90000.0 }
+                {
+                    "order": 1,
+                    "goal": 50000.0
+                },
+                {
+                    "order": 2,
+                    "goal": 80000.0
+                },
+                {
+                    "order": 3,
+                    "goal": 90000.0
+                }
             ],
             "goal": 50000.0,
             "raise_amount": 30000.0,
@@ -439,7 +626,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -527,7 +713,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -615,7 +800,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -703,7 +887,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -721,7 +904,6 @@
             "createdAt": "",
             "updatedAt": ""
         },
-
         {
             "id": 15,
             "user_id": 1,
@@ -792,7 +974,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -880,7 +1061,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -968,7 +1148,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -986,7 +1165,6 @@
             "createdAt": "",
             "updatedAt": ""
         },
-
         {
             "id": 19,
             "user_id": 1,
@@ -1057,7 +1235,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -1145,7 +1322,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",

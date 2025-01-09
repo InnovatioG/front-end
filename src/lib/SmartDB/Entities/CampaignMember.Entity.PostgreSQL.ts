@@ -22,14 +22,14 @@ export class CampaignMemberEntityPostgreSQL extends BaseEntityPostgreSQL {
     @Column({ type: 'varchar', length: 255, nullable: true })
     role?: string;
     @Column({ type: 'boolean', default: false })
-    editor!: boolean
+    editor!: boolean;
     @Column({ type: 'boolean', default: false })
     admin!: boolean;
     @Column({ type: 'varchar', length: 255, nullable: true })
     email?: string;
-    @Column({ type: 'varchar', length: 255, nullable: true  })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     wallet_id?: string;
-    @Column({ type: 'varchar', length: 255, nullable: true  })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     wallet_address?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     website?: string;

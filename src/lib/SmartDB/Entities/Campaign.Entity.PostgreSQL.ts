@@ -1,8 +1,8 @@
+import { type Script } from 'lucid-cardano';
 import { type CS, PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
 import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CampaignEntity, CampaignMilestone } from './Campaign.Entity';
-import { type Script } from 'lucid-cardano';
 
 @PostgreSQLAppliedFor([CampaignEntity])
 @Entity({ name: getPostgreSQLTableName(CampaignEntity.className()) })
@@ -114,7 +114,7 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
             to: (value: CampaignMilestone[]) => value,
             from: (value: any) =>
                 value
-                    ? value.map((m: { cmPerncentage: number; cmStatus: number; }) => ({
+                    ? value.map((m: { cmPerncentage: number; cmStatus: number }) => ({
                           cmPerncentage: m.cmPerncentage,
                           cmStatus: m.cmStatus,
                       }))
@@ -129,41 +129,41 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'bigint', nullable: true })
     cdMinADA!: string;
 
-    @Column({ type: 'integer' , nullable: true })
+    @Column({ type: 'integer', nullable: true })
     fdpCampaignVersion!: number;
-    @Column({ type: 'jsonb' , nullable: true })
+    @Column({ type: 'jsonb', nullable: true })
     fdpCampaignPolicy_Params!: object;
-    @Column({ type: 'jsonb' , nullable: true })
+    @Column({ type: 'jsonb', nullable: true })
     fdpCampaignPolicy_Script!: Script;
-    @Column({ type: 'varchar', length: 255, unique: true , nullable: true })
+    @Column({ type: 'varchar', length: 255, unique: true, nullable: true })
     fdpCampaignPolicy_CS!: CS;
-    @Column({ type: 'varchar', length: 255 , nullable: true })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     fdpCampaignValidator_AddressMainnet!: string;
-    @Column({ type: 'varchar', length: 255 , nullable: true })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     fdpCampaignValidator_AddressTestnet!: string;
-    @Column({ type: 'jsonb' , nullable: true })
+    @Column({ type: 'jsonb', nullable: true })
     fdpCampaignValidator_Script!: Script;
-    @Column({ type: 'varchar', length: 255 , nullable: true })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     fdpCampaignValidator_Hash!: string;
-    @Column({ type: 'jsonb' , nullable: true })
+    @Column({ type: 'jsonb', nullable: true })
     fdpCampaignValidator_Params!: object;
-    @Column({ type: 'jsonb' , nullable: true })
+    @Column({ type: 'jsonb', nullable: true })
     fdpCampaignFundsPolicyID_Params!: object;
-    @Column({ type: 'jsonb' , nullable: true })
+    @Column({ type: 'jsonb', nullable: true })
     fdpCampaignFundsPolicyID_Script!: Script;
-    @Column({ type: 'varchar', length: 255 , nullable: true })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     fdpCampaignFundsPolicyID_CS!: CS;
-    @Column({ type: 'jsonb' , nullable: true })
+    @Column({ type: 'jsonb', nullable: true })
     fdpCampaignFundsValidator_Params!: object;
-    @Column({ type: 'varchar', length: 255 , nullable: true })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     fdpCampaignFundsValidator_Hash!: string;
-    @Column({ type: 'jsonb' , nullable: true })
+    @Column({ type: 'jsonb', nullable: true })
     fdpCampaignFundsValidator_Script!: Script;
-    @Column({ type: 'varchar', length: 255 , nullable: true })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     fdpCampaignFundsValidator_AddressTestnet!: string;
-    @Column({ type: 'varchar', length: 255 , nullable: true })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     fdpCampaignFundsValidator_AddressMainnet!: string;
-    
+
     @Column({ type: 'boolean', default: false })
     featured!: boolean;
     @Column({ type: 'boolean', default: false })

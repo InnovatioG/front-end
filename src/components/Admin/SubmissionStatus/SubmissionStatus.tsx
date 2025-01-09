@@ -1,7 +1,7 @@
-import { useSubmissionStatus } from './useSubmissionStatus';
-import styles from './SubmissionStatus.module.scss';
 import { SubmissionStatusEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
+import styles from './SubmissionStatus.module.scss';
+import { useSubmissionStatus } from './useSubmissionStatus';
 
 export default function SubmissionStatus() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useSubmissionStatus();

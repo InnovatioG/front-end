@@ -29,6 +29,8 @@ const nextConfig = {
     },
     webpack: (config, { isServer }) => {
         // or 'errors-only', 'minimal', etc.
+        config.resolve.alias['@'] = path.resolve(__dirname, './src/');
+
         config.stats = 'verbose';
         config.experiments = {
             asyncWebAssembly: true,

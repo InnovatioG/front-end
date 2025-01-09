@@ -10,7 +10,6 @@ import {
     NextApiRequestAuthenticated,
     console_error,
     console_log,
-    showData,
 } from 'smart-db/backEnd';
 import { ScriptEntity } from '../Entities/Script.Entity';
 
@@ -153,7 +152,6 @@ export class ScriptApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     // }
                 }
                 return res.status(405).json({ error: 'Wrong Api route' });
-    
             } else {
                 console_error(0, this._Entity.className(), `executeApiHandlers - Error: Api Handler function not found`);
                 return res.status(500).json({ error: 'Api Handler function not found ' });

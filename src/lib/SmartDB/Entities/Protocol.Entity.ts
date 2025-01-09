@@ -11,7 +11,6 @@ export type CampaignFactory = {
     fdpCampaignFundsValidator_Pre_CborHex: Script;
 };
 
-
 export interface ProtocolDatum {
     pdProtocolVersion: number;
     pdAdmins: string[];
@@ -151,7 +150,6 @@ export class ProtocolEntity extends BaseSmartDBEntity {
     };
 
     // #endregion db
-
 
     // #region class methods
 

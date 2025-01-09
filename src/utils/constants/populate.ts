@@ -1,7 +1,7 @@
 import { CampaignStatus, MilestoneStatus, SubmissionStatus } from './status';
 
-import configJson from './deploy.json';
 import campaignsJson from './campaigns.json';
+import configJson from './deploy.json';
 
 export const CampaignStatusDefaultNames: Record<CampaignStatus, string> = {
     [CampaignStatus.NOT_STARTED]: 'Not Started',
@@ -68,4 +68,3 @@ export const protocolDefault = {
     configJson: configJson,
     campaignsJson: campaignsJson,
 };
-

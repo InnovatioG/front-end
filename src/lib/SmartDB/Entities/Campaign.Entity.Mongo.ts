@@ -1,9 +1,9 @@
+import { Script } from 'lucid-cardano';
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
 import { MongoAppliedFor } from 'smart-db';
 import { BaseSmartDBEntityMongo, IBaseSmartDBEntity } from 'smart-db/backEnd';
 import { CampaignDatum, CampaignEntity } from './Campaign.Entity';
-import { Script } from 'lucid-cardano';
 
 @MongoAppliedFor([CampaignEntity])
 export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
@@ -49,7 +49,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             campaing_category_id: string;
             campaign_status_id: string;
             creator_wallet_id: string;
-            
+
             name: string;
             description: string;
             begin_at_days: number;
@@ -90,7 +90,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             fdpCampaignValidator_Params: { [key: string]: any };
             fdpCampaignFundsPolicyID_Params: object;
             fdpCampaignFundsPolicyID_Script: Script;
-            fdpCampaignFundsPolicyID_CS: string; 
+            fdpCampaignFundsPolicyID_CS: string;
             fdpCampaignFundsValidator_Params: object;
             fdpCampaignFundsValidator_Hash: string;
             fdpCampaignFundsValidator_Script: Script;

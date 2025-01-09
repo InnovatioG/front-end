@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { pushWarningNotification } from 'smart-db';
 import { CampaignMemberEntity } from '../../../lib/SmartDB/Entities/CampaignMember.Entity';
 import { CampaignMemberApi } from '../../../lib/SmartDB/FrontEnd/CampaignMember.FrontEnd.Api.Calls';
-import { pushWarningNotification } from 'smart-db';
-
-import { Newspaper } from 'lucide-react';
 
 export function useCampaignMember() {
     const [list, setList] = useState<CampaignMemberEntity[]>([]);

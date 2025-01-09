@@ -1,7 +1,6 @@
 import { type PaymentKeyHash } from 'lucid-cardano';
 import 'reflect-metadata';
-import { asSmartDBEntity, BaseSmartDBEntity, Convertible, SmartUTxOEntity, Maybe, CS, StakeCredentialPubKeyHash } from 'smart-db';
-
+import { asSmartDBEntity, BaseSmartDBEntity, Convertible, Maybe, SmartUTxOEntity, StakeCredentialPubKeyHash } from 'smart-db';
 
 export interface ScriptDatum {
     sdVersion: number;
@@ -54,7 +53,6 @@ export class ScriptEntity extends BaseSmartDBEntity {
         sdAdminPaymentPKH: true,
         sdAdminStakePKH: true,
         sdScriptHash: true,
-       
     };
 
     // #endregion  db

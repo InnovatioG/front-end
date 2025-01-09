@@ -1,7 +1,7 @@
-import { useMilestoneSubmission } from './useMilestoneSubmission';
-import styles from './MilestoneSubmission.module.scss';
 import { MilestoneSubmissionEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction } from 'react';
+import styles from './MilestoneSubmission.module.scss';
+import { useMilestoneSubmission } from './useMilestoneSubmission';
 
 export default function MilestoneSubmission() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove } = useMilestoneSubmission();

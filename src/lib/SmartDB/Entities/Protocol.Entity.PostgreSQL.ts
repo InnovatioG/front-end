@@ -1,8 +1,8 @@
+import { type Script } from 'lucid-cardano';
 import { type CS, PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
 import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CampaignFactory, ProtocolEntity } from './Protocol.Entity';
-import { type Script } from 'lucid-cardano';
 
 @PostgreSQLAppliedFor([ProtocolEntity])
 @Entity({ name: getPostgreSQLTableName(ProtocolEntity.className()) })
@@ -82,7 +82,7 @@ export class ProtocolEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     pdTokenAdminPolicy_CS!: string;
     @Column({ type: 'bigint', nullable: true })
     pdMinADA!: string;
-   
+
     @CreateDateColumn()
     createdAt!: Date;
     @UpdateDateColumn()

@@ -1,7 +1,5 @@
-import database from './database.json';
-import { User } from './databaseType';
 import type { Campaign } from './databaseType';
-import { useCampaign } from '@/components/Admin/Campaign/useCampaign';
+import { User } from './databaseType';
 
 const LOCAL_STORAGE_KEY = 'campaignData';
 

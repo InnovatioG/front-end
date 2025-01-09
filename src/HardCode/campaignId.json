@@ -1,28 +1,80 @@
 {
     "states": [
-        { "id": 1, "name": "Created" },
-        { "id": 2, "name": "Submitted" },
-        { "id": 3, "name": "Rejected" },
-        { "id": 4, "name": "Approved" },
-        { "id": 5, "name": "Contract Created" },
-        { "id": 6, "name": "Contract Published" },
-        { "id": 7, "name": "Contract Started" },
-        { "id": 8, "name": "Countdown" },
-        { "id": 9, "name": "Fundraising" },
-        { "id": 10, "name": "Finishing" },
-        { "id": 11, "name": "Active" },
-        { "id": 12, "name": "Failed" },
-        { "id": 13, "name": "Unreached" },
-        { "id": 14, "name": "Success" }
+        {
+            "id": 1,
+            "name": "Created"
+        },
+        {
+            "id": 2,
+            "name": "Submitted"
+        },
+        {
+            "id": 3,
+            "name": "Rejected"
+        },
+        {
+            "id": 4,
+            "name": "Approved"
+        },
+        {
+            "id": 5,
+            "name": "Contract Created"
+        },
+        {
+            "id": 6,
+            "name": "Contract Published"
+        },
+        {
+            "id": 7,
+            "name": "Contract Started"
+        },
+        {
+            "id": 8,
+            "name": "Countdown"
+        },
+        {
+            "id": 9,
+            "name": "Fundraising"
+        },
+        {
+            "id": 10,
+            "name": "Finishing"
+        },
+        {
+            "id": 11,
+            "name": "Active"
+        },
+        {
+            "id": 12,
+            "name": "Failed"
+        },
+        {
+            "id": 13,
+            "name": "Unreached"
+        },
+        {
+            "id": 14,
+            "name": "Success"
+        }
     ],
-
     "submission_status": [
-        { "id_submission_status": 1, "name": "Submitted" },
-        { "id_submission_status": 2, "name": "Approved" },
-        { "id_submission_status": 3, "name": "Rejected" },
-        { "id_submission_status": 4, "name": "Failed" }
+        {
+            "id_submission_status": 1,
+            "name": "Submitted"
+        },
+        {
+            "id_submission_status": 2,
+            "name": "Approved"
+        },
+        {
+            "id_submission_status": 3,
+            "name": "Rejected"
+        },
+        {
+            "id_submission_status": 4,
+            "name": "Failed"
+        }
     ],
-
     "campaign_submissions": [
         {
             "id": 1,
@@ -32,7 +84,6 @@
             "rejected_justification": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad et porro molestias consectetur incidunt, in nesciunt sint vero vel placeat architecto, neque, adipisci veritatis amet nihil repellat nulla ipsa magni! Fugit, ratione sed! Delectus, ipsum laudantium molestiae quibusdam sequi dolores eius quaerat debitis a odio? Pariatur, impedit aliquam! Voluptas rem nostrum perspiciatis tempore quia delectus harum earum magnam illo aliquam?"
         }
     ],
-
     "users": [
         {
             "id": 1,
@@ -111,9 +162,7 @@
                     }
                 }
             ],
-
             "min_request": 70,
-
             "title": "Representacion de la campaña creada",
             "description": "Este card representa la campaign que fue creada, pero todavia no fue subida a la base de datos, por lo que no deberia renderizarse ni en el homepage, ni en la pagina de protocol managers. Solo en la de la campaña para que pueda editarlo",
             "contract_id": 1,
@@ -152,7 +201,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -171,7 +219,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -189,7 +236,6 @@
                 }
             ]
         },
-
         {
             "id": 2,
             "user_id": 1,
@@ -235,7 +281,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -296,9 +341,7 @@
                     }
                 }
             ],
-
             "min_request": 70,
-
             "title": "Campaña que ya fue submitteada con la data",
             "description": "Representacion de la campaña que fue ya actualizada y se empezaron a cargar la informacion del project detail, del roadmap, del team, del tokenomics y del FAQ --- Solo debe renderizarse en la pagina de managment de los usuarios que crearon la campaña (view campaign) y en la del protocol team donde se tiene que ver el boton de view campaign y de manage campain",
             "contract_id": 1,
@@ -315,7 +358,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -338,7 +380,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -357,7 +398,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -375,7 +415,6 @@
                 }
             ]
         },
-
         {
             "id": 3,
             "user_id": 1,
@@ -421,7 +460,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -482,9 +520,7 @@
                     }
                 }
             ],
-
             "min_request": 70,
-
             "title": "Campaña que fue rejected por el protocol team",
             "description": "Campaña que fue rechazada por los protocol managers, por lo que no deberia renderizarse en el homepage, en la de los members se renderiza en conjunto al boton de view report que los redirecciona a la pagina /campaign?id=[id], en el protocol team se les ve el boton de view campaign y de edit campaign",
             "contract_id": 1,
@@ -501,7 +537,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -524,7 +559,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -543,7 +577,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -606,7 +639,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -667,9 +699,7 @@
                     }
                 }
             ],
-
             "min_request": 70,
-
             "title": "Campaña que fue aprobada por el protocol team",
             "description": "Campaña que fue aprobada",
             "contract_id": 1,
@@ -686,7 +716,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -709,7 +738,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -728,7 +756,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -744,7 +771,6 @@
                 }
             ]
         },
-
         {
             "id": 5,
             "user_id": 1,
@@ -790,7 +816,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -851,9 +876,7 @@
                     }
                 }
             ],
-
             "min_request": 70,
-
             "title": "Campaña con el contrato creado",
             "description": "Los contratos fueron creados para la campaña, en manager se puede ver el view-campaing /// en porotcol tem se deeberia poder ve view campaign y publish campaign contracts --- el label es Created",
             "contract_id": 1,
@@ -870,7 +893,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -893,7 +915,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -912,7 +933,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -975,7 +995,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -1036,9 +1055,7 @@
                     }
                 }
             ],
-
             "min_request": 70,
-
             "title": "Campaña con el contrato publicado",
             "description": "Los contratos fueron publicados. El Protocolo deberá inicializar los contratos. Se creará el Datum de la Campaña. // en el home no se renderiza, el label que se marca es de deploy, los managers ven el boton de view campaign y el protocol tem view campaign y intilize campaign contracts (tx)",
             "contract_id": 1,
@@ -1055,7 +1072,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -1078,7 +1094,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -1097,7 +1112,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -1160,7 +1174,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -1221,9 +1234,7 @@
                     }
                 }
             ],
-
             "min_request": 70,
-
             "title": "Campana cn el contrato started",
             "description": "Los contratos fueron iniciados. El Protocolo o Managers deberán iniciar la campaña cuando hayan creado las UTxOs de Fondos y haya dejado los tokens necesarios a la venta. en el dash de protocol y de manager se ve view campaign y launch campaign (tx), el label es Ready",
             "contract_id": 1,
@@ -1240,7 +1251,6 @@
             "instagram": "",
             "discord": "",
             "xs": "www.x.com/iairkap",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -1263,7 +1273,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -1282,7 +1291,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -1345,7 +1353,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -1406,9 +1413,7 @@
                     }
                 }
             ],
-
             "min_request": 70,
-
             "title": "Campana ya con los contratos finalizados, pero todavia no arranco la fecha de ventas de tokens",
             "description": "La campaña fue iniciada pero la fecha de comienzo aún no llega. el label es un countdown hasta la fecha que sale a la venta los tokens, se debe renderizar en todas las paginas",
             "contract_id": 1,
@@ -1425,7 +1430,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -1448,7 +1452,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -1467,7 +1470,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -1530,7 +1532,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -1602,7 +1603,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -1611,9 +1611,7 @@
                     }
                 }
             ],
-
             "min_request": 70,
-
             "title": "Fundraising activado.",
             "description": "Campaña con ventas de token activo, ",
             "contract_id": 1,
@@ -1630,7 +1628,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -1653,7 +1650,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -1672,7 +1668,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -1735,7 +1730,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -1807,7 +1801,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -1816,9 +1809,7 @@
                     }
                 }
             ],
-
             "min_request": 70,
-
             "title": "Fundraising que termino de juntar la plata,",
             "description": "Se terminó la campaña por que la fecha de finalización ya pasó. Este es un estado intermedio donde algún usuario debería marcar la campaña como Reached o NotReached. Los contratos validaron esa acción comprobando la cantidad de tokens vendidos y los mínimos esperados.",
             "contract_id": 1,
@@ -1835,7 +1826,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -1858,7 +1848,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -1877,7 +1866,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -1940,7 +1928,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -2012,7 +1999,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -2022,7 +2008,6 @@
                 }
             ],
             "min_request": 70,
-
             "title": "Campaña activa --- todavia no vencio la fecha para enviar reportes para los managers",
             "description": "El primer status del milestone tiene que ser de started y el resto de not started",
             "contract_id": 1,
@@ -2039,7 +2024,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -2062,7 +2046,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -2081,7 +2064,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -2144,7 +2126,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -2218,7 +2199,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -2228,7 +2208,6 @@
                 }
             ],
             "min_request": 70,
-
             "title": "Campaña activa --- estamos en el medio de los milestones asi que la config depende de los estados de los milestones",
             "description": "Campaña activa --- el manager ya envio el reporte y todavia no recibio un feedback.",
             "contract_id": 1,
@@ -2245,7 +2224,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -2268,7 +2246,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -2287,7 +2264,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -2350,7 +2326,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -2424,7 +2399,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -2434,7 +2408,6 @@
                 }
             ],
             "min_request": 70,
-
             "title": "Campaña activa --- estamos en el medio de los milestones asi que la config depende de los estados de los milestones",
             "description": "Campaña activa --- el manager ya envio el reporte y todavia no recibio un feedback.",
             "contract_id": 1,
@@ -2451,7 +2424,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -2474,7 +2446,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -2493,7 +2464,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -2556,7 +2526,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -2630,7 +2599,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -2640,7 +2608,6 @@
                 }
             ],
             "min_request": 70,
-
             "title": "Campaña activa --- estamos en el medio de los milestones asi que la config depende de los estados de los milestones",
             "description": "Campaña activa --- el manager ya envio el reporte y todavia no recibio un feedback.",
             "contract_id": 1,
@@ -2657,7 +2624,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -2680,7 +2646,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -2699,7 +2664,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -2762,7 +2726,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -2835,7 +2798,6 @@
                             "approved_justification": "",
                             "rejected_justification": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad et porro molestias consectetur incidunt, in nesciunt sint vero vel placeat architecto, neque, adipisci veritatis amet nihil repellat nulla ipsa magni! Fugit, ratione sed! Delectus, ipsum laudantium molestiae quibusdam sequi dolores eius quaerat debitis a odio? Pariatur, impedit aliquam! Voluptas rem nostrum perspiciatis tempore quia delectus harum earum magnam illo aliquam?"
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -2845,7 +2807,6 @@
                 }
             ],
             "min_request": 70,
-
             "title": "Campaña activa --- estamos en el medio de los milestones asi que la config depende de los estados de los milestones",
             "description": "Campaña activa --- el manager ya envio el reporte y todavia no recibio un feedback.",
             "contract_id": 1,
@@ -2862,7 +2823,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -2885,7 +2845,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -2904,7 +2863,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -2967,7 +2925,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -3040,7 +2997,6 @@
                             "approved_justification": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad et porro molestias consectetur incidunt, in nesciunt sint vero vel placeat architecto, neque, adipisci veritatis amet nihil repellat nulla ipsa magni! Fugit, ratione sed! Delectus, ipsum laudantium molestiae quibusdam sequi dolores eius quaerat debitis a odio? Pariatur, impedit aliquam! Voluptas rem nostrum perspiciatis tempore quia delectus harum earum magnam illo aliquam?",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -3050,7 +3006,6 @@
                 }
             ],
             "min_request": 70,
-
             "title": "Campaña activa --- estamos en el medio de los milestones asi que la config depende de los estados de los milestones",
             "description": "Campaña activa --- el manager ya envio el reporte y todavia no recibio un feedback.",
             "contract_id": 1,
@@ -3067,7 +3022,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -3090,7 +3044,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -3109,7 +3062,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",
@@ -3172,7 +3124,6 @@
                 {
                     "id": 2,
                     "campaign_id": 2,
-
                     "name": "What are the limits of milestones per campaign?",
                     "order": 10,
                     "description": "The limits set for the campaigns correspond to a limit of 2 and a maximum of 5 milestones to be completed."
@@ -3245,7 +3196,6 @@
                             "approved_justification": "",
                             "rejected_justification": ""
                         },
-
                         "id": 3,
                         "name": "completed",
                         "description": "<p>The third and final milestone correspond to launching the functional application into pre-production and condcting a demostration of the entire UX, smart contracts and backend operations.</p><p><br></p><p><br></p><ol><li>Testing video demonstrating the functionality of the backend and the main smart contracts.</li><li>App archi</li></ol>",
@@ -3255,7 +3205,6 @@
                 }
             ],
             "min_request": 70,
-
             "title": "Campaña activa --- estamos en el medio de los milestones asi que la config depende de los estados de los milestones",
             "description": "Campaña activa --- el manager ya envio el reporte y todavia no recibio un feedback.",
             "contract_id": 1,
@@ -3272,7 +3221,6 @@
             "instagram": "",
             "discord": "",
             "xs": "",
-
             "members_team": [
                 {
                     "id": 1731367675829,
@@ -3295,7 +3243,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Jorge",
                     "member_last_name": "Drexler",
                     "member_role": "Musician",
@@ -3314,7 +3261,6 @@
                 {
                     "id": 1731367762665,
                     "member_picture": "",
-
                     "member_name": "Alan",
                     "member_last_name": "Varela",
                     "member_role": "Electrician",

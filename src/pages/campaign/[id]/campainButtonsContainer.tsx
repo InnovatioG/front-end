@@ -1,47 +1,44 @@
-import React from 'react';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import styles from "./campaignButtonContainer.module.scss";
-import { CardInformationByState } from '@/utils/constants';
-import GeneralButtonUI from '@/components/ui/buttons/UI/Button';
-import Link from 'next/link';
-import { useModalStore } from '@/store/modal/useModalStoreState';
+import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
+import { useModal } from '@/contexts/ModalContext';
 import useDraftCard from '@/hooks/useDraftCard';
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import Link from 'next/link';
+import React from 'react';
+import styles from './campaignButtonContainer.module.scss';
 
-
-interface CampaignButtonContainerProps { }
+interface CampaignButtonContainerProps {}
 
 const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) => {
-
-
-
     const { project, isAdmin, isProtocolTeam } = useProjectDetailStore();
-
-
 
     const campaign = {
         ...project,
-        campaign_type: "Target" as const, // Garantiza el valor correcto
-    }
+        campaign_type: 'Target' as const, // Garantiza el valor correcto
+    };
     const { buttons } = useDraftCard(campaign, isProtocolTeam, isAdmin);
 
-    const { openModal } = useModalStore();
+    const { openModal } = useModal();
 
-    const filteredButtons = buttons.filter(button => button.id !== 1);
-
+    const filteredButtons = buttons.filter((button) => button.id !== 1);
 
     const handleClick = () => {
         localStorage.setItem('project', JSON.stringify(project));
-    }
-
+    };
 
     return (
         <div className={styles.buttonContainerLayout}>
             {isAdmin ? (
                 <div className={styles.buttonContainer}>
-                    <GeneralButtonUI text={"Contact Support Team"} classNameStyle={"outlineb"} onClick={() => { openModal("contactSupport", project.id) }} />
+                    <GeneralButtonUI
+                        text={'Contact Support Team'}
+                        classNameStyle={'outlineb'}
+                        onClick={() => {
+                            openModal('contactSupport', { campaign_id: project.id });
+                        }}
+                    />
                     {project.state_id <= 3 && (
                         <Link href={`/campaign/edit?id=${project.id}`}>
-                            <GeneralButtonUI text={"Edit Campaign"} classNameStyle={"outlineb"} onClick={() => { }} />
+                            <GeneralButtonUI text={'Edit Campaign'} classNameStyle={'outlineb'} onClick={() => {}} />
                         </Link>
                     )}
                     {filteredButtons.map((button, index) => {
@@ -50,7 +47,7 @@ const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) 
                                 <Link key={index} href={button.link(project.id)}>
                                     <GeneralButtonUI
                                         text={button.label}
-                                        onClick={() => button.action && button.action((modalType) => openModal(modalType, project.id))}
+                                        onClick={() => button.action && button.action((modalType) => openModal(modalType, { campaign_id: project.id }))}
                                         classNameStyle={`fillb ${buttons.length === 1 ? 'center' : ''}`}
                                     >
                                         {buttons.length > 1 && <span className={styles[button.classNameType]}>{'>'}</span>}
@@ -62,7 +59,7 @@ const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) 
                                 <GeneralButtonUI
                                     key={index}
                                     text={button.label}
-                                    onClick={() => button.action && button.action((modalType) => openModal(modalType, campaign.id, campaign))}
+                                    onClick={() => button.action && button.action((modalType) => openModal(modalType, { campaign_id: campaign.id, campaign }))}
                                     classNameStyle={`${button.classNameType} ${buttons.length === 1 ? 'center' : ''}`}
                                 >
                                     {buttons.length > 1 && <span className={styles[button.classNameType]}>{'>'}</span>}
@@ -74,14 +71,14 @@ const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) 
             ) : (
                 project.state_id === 9 && (
                     <div className={styles.buttonContainerInvest}>
-                        <Link href={"/invest"}>
-                            <GeneralButtonUI text='Invest' classNameStyle='invest' onClick={handleClick} />
+                        <Link href={'/invest'}>
+                            <GeneralButtonUI text="Invest" classNameStyle="invest" onClick={handleClick} />
                         </Link>
                     </div>
                 )
             )}
         </div>
     );
-}
+};
 
 export default CampaignButtonContainer;

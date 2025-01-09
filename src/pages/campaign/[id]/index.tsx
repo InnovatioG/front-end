@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import JSON from "@/HardCode/campaignId.json";
-import styles from "./campainPagelayout.module.scss";
-import CampaignHeader from '@/components/CampaignDashboard/sections/campaignHeader/CampaignHeader';
-import CampaignDashCreation from '@/components/CampaignDashboard/sections/campaignHeader/CampaignDash';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import ProjectContainer from '@/components/CampaignId/sections/ProjectContainer';
+import CampaignDashCreation from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignDash';
+import CampaignHeader from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignHeader';
+import ProjectContainer from '@/components/CampaignId/Sections/ProjectContainer';
+import GeneralError from '@/components/General/Elements/Errors/GeneralError';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
-import { useSession } from 'next-auth/react';
-import CampaignButtonContainer from './campainButtonsContainer';
-import GeneralError from '@/components/General/elements/errors/GeneralError';
+import JSON from '@/HardCode/campaignId.json';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
-
+import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import CampaignButtonContainer from './campainButtonsContainer';
+import styles from './campainPagelayout.module.scss';
 
 interface CampaignVisualizationProps {
     // Define props here
@@ -63,7 +62,6 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
         return () => clearTimeout(timer);
     }, [id, setProject, setIsAdmin, session?.user?.address]);
 
-
     if (isLoading) {
         return <LoadingPage />;
     }
@@ -77,12 +75,12 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
                     <ProjectContainer />
                 </div>
             ) : (
-                <GeneralError message='Project not found' />
+                <GeneralError message="Project not found" />
             )}
 
             <CampaignButtonContainer />
         </main>
     );
-}
+};
 
 export default CampaignVisualization;
