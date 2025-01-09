@@ -69,7 +69,7 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
             <SessionProvider session={pageProps.session} refetchInterval={0}>
                 <StoreProvider store={globalStore}>
                     <AppGeneral loader={<LoadingPage />} onLoadComplete={() => setIsLoadingApp(false)}>
-                        {isLoadingResources || isLoadingDatabaseService ? (
+                        {isLoadingApp || isLoadingResources || isLoadingDatabaseService ? (
                             <PreLoadingPage onLoadComplete={() => setIsLoadingResources(false)} resources={resourcesToPreload} />
                         ) : (
                             <ResponsiveProvider>
