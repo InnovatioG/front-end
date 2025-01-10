@@ -1,7 +1,7 @@
 import styles from '@/components/CampaignCreation/Elements/Qa.module.scss';
 import EmptyState from '@/components/CampaignId/Sections/EmptyState';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/UI/Accordion/Accordion';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import React from 'react';
 
 interface QAProps {
@@ -9,11 +9,12 @@ interface QAProps {
 }
 
 const QA: React.FC<QAProps> = (props) => {
-    const { project } = useProjectDetailStore();
+    const { campaign } = useCampaignIdStore();
 
-    const faqs = project.faqs || [];
+    const { faqs } = campaign
 
-    if (faqs.length === 0) {
+
+    if (faqs === undefined) {
         return <EmptyState />;
     }
 
@@ -23,10 +24,10 @@ const QA: React.FC<QAProps> = (props) => {
                 {faqs.map((faq, index) => (
                     <AccordionItem key={index} value={`faq-${index}`} style={{ background: 'transparent' }}>
                         <AccordionTrigger open={true} toggleOpen={() => { }} style={{ background: 'transparent' }}>
-                            <h4 className={styles.questionTitle}>{faq.name}</h4>
+                            <h4 className={styles.questionTitle}>{faq.question}</h4>
                         </AccordionTrigger>
                         <AccordionContent open={true} style={{ background: 'transparent', padding: '0.3rem 1rem' }}>
-                            <p className={styles.questionAnswer}>{faq.description}</p>
+                            <p className={styles.questionAnswer}>{faq.answer}</p>
                         </AccordionContent>
                         <div className={styles.borderLine}></div>
                     </AccordionItem>

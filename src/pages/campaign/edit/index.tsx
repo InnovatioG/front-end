@@ -5,7 +5,7 @@ import CampaignDashCreation from '@/components/CampaignDashboard/Sections/Campai
 import CampaignHeader from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignHeader';
 import GeneralError from '@/components/General/Elements/Errors/GeneralError';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -25,7 +25,7 @@ const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
     const { data: session } = useSession();
     const { id, menuview } = router.query;
 
-    const { setProject, project, setIsLoading, isLoading, setMenuView, fetchAdaPrice, setEditionMode } = useProjectDetailStore();
+    const { setProject, project, setIsLoading, isLoading, setMenuView, fetchAdaPrice, setEditionMode } = useCampaignIdStore();
     const [error, setError] = useState<string | null>(null);
 
     const fetchCampaign = () => {

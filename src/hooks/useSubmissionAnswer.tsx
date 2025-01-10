@@ -2,7 +2,7 @@ import JSON from '@/HardCode/campaignId.json';
 import { useEffect, useState } from 'react';
 
 export default function useSubmissionAnswer({ id }: { id: number }) {
-    /*     const { project } = useProjectDetailStore();
+    /*     const { project } = useCampaignIdStore();
         const { id } = project; */
 
     const [approved, setApproved] = useState<string | null>(null);

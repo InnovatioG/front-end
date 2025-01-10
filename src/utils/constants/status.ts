@@ -1,3 +1,5 @@
+/* import type { MilestoneStatusGlobal } from '@/HardCode/databaseType';
+ */
 //--------------------------------------------------------------
 
 export enum CampaignDatumStatus {
@@ -94,4 +96,21 @@ export const imageByStatus = (status: number): string => {
     return statusImages[status as CampaignStatus] || '/img/icons/status/default.svg';
 };
 
+export const imageByStatusMilestone = (status: number): string => {
+    const statusImages: Partial<Record<MilestoneStatus, string>> = {
+        [MilestoneStatus.NOT_STARTED]: '/img/icons/status/yellow.svg',
+        [MilestoneStatus.STARTED]: '/img/icons/status/yellow.svg',
+        [MilestoneStatus.SUBMITTED]: '/img/icons/status/yellow.svg',
+        [MilestoneStatus.REJECTED]: '/img/icons/status/red.svg',
+        [MilestoneStatus.FINISHED]: '/img/icons/status/green.svg',
+        [MilestoneStatus.FAILED]: '/img/icons/status/red.svg',
+    };
+
+    return statusImages[status as MilestoneStatus] || '/img/icons/status/default.svg';
+};
+
+/* export const getInternalId = (milestoneStatusId: string | undefined, milestoneStatus: MilestoneStatusGlobal[]): number | undefined => {
+    const status = milestoneStatus.find((status) => status.id === milestoneStatusId);
+    return status?.id;
+}; */
 //--------------------------------------------------------------

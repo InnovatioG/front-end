@@ -3,14 +3,18 @@ import CampaignHeader from '@/components/CampaignDashboard/Sections/CampaignHead
 import ProjectContainer from '@/components/CampaignId/Sections/ProjectContainer';
 import GeneralError from '@/components/General/Elements/Errors/GeneralError';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
-import JSON from '@/HardCode/campaignId.json';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import CampaignButtonContainer from './campainButtonsContainer';
 import styles from './campainPagelayout.module.scss';
+import { CampaignEntity } from '@/lib/SmartDB/Entities';
+import { CampaignApi } from '@/lib/SmartDB/FrontEnd';
+import { set } from 'date-fns';
+import { pushWarningNotification } from 'smart-db';
+import { useCampaignId } from '@/hooks/useProjectDetail';
 
 interface CampaignVisualizationProps {
     // Define props here
@@ -20,20 +24,52 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
     const { data: session } = useSession();
     const router = useRouter();
     const { id } = router.query;
-    const { project, setProject, setEditionMode, isLoading, setIsLoading, setIsAdmin, isAdmin } = useProjectDetailStore();
+    const { campaign, setCampaign, setEditionMode, isLoading, setIsLoading, setIsAdmin, isAdmin } = useCampaignIdStore();
     const { campaignCategories } = useGeneralStore();
+    const { fetchCampaigns } = useCampaignId();
 
+    useEffect(() => {
+        if (id) {
+            const campaignIds = Array.isArray(id) ? id : [id];
+            fetchCampaigns(campaignIds);
+        }
+    }, []);
+
+    if (isLoading === true) {
+        return <LoadingPage />;
+    }
+
+    return (
+        <main className={styles.layout}>
+            {campaign._DB_id !== '0' ? (
+                <div className={styles.campaignContainerCreator}>
+                    <CampaignHeader />
+                    <CampaignDashCreation />
+                    <ProjectContainer />
+                </div>
+            ) : (
+                <GeneralError message="Project not found" />
+            )}
+
+            <CampaignButtonContainer />
+        </main>
+    );
+};
+
+export default CampaignVisualization;
+
+/*
     useEffect(() => {
         setIsLoading(true);
         setEditionMode(false);
-
+ 
         if (id) {
             const campaign_id = Number(id);
             const campaign: any = JSON.campaigns.find((camp: any) => camp.id === campaign_id);
             const user: any = JSON.users.find((user: any) => user.wallet_address === session?.user?.address);
-
+ 
             if (campaign) {
-                setProject({
+                setCampaign({
                     ...campaign,
                     status: 'status' in campaign ? (campaign as { status: string }).status : 'default status',
                     cdRequestedMaxADA: campaign.cdRequestedMaxADA ?? null,
@@ -54,33 +90,5 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
                 setIsAdmin(campaign.craetor_wallet_id === user?.id);
             }
         }
-
-        const timer = setTimeout(() => {
-            setIsLoading(false);
-        }, 2000);
-
-        return () => clearTimeout(timer);
-    }, [id, setProject, setIsAdmin, session?.user?.address]);
-
-    if (isLoading) {
-        return <LoadingPage />;
-    }
-
-    return (
-        <main className={styles.layout}>
-            {project.id !== 0 ? (
-                <div className={styles.campaignContainerCreator}>
-                    <CampaignHeader />
-                    <CampaignDashCreation />
-                    <ProjectContainer />
-                </div>
-            ) : (
-                <GeneralError message="Project not found" />
-            )}
-
-            <CampaignButtonContainer />
-        </main>
-    );
-};
-
-export default CampaignVisualization;
+ 
+*/

@@ -1,6 +1,6 @@
 import TextEditor from '@/components/General/Elements/TextEditor/TextEditor';
 import type { MilestoneF } from '@/HardCode/databaseType';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { getOrdinalString } from '@/utils/formats';
 import React from 'react';
 import styles from './MilestoneEdit.module.scss';
@@ -15,7 +15,7 @@ interface MilestoneCardEditProps {
 }
 
 const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index, maxAvailablePercentage, onPercentageChange }) => {
-    const { project, setProject } = useProjectDetailStore();
+    const { project, setProject } = useCampaignIdStore();
     const ordinalString = getOrdinalString(index + 1);
 
     const handleDescriptionChange = (content: string) => {

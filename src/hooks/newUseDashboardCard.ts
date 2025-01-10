@@ -76,13 +76,7 @@ export const useNewDashboardCard = (address: string | null) => {
         };
     };
 
-    //! TODO MOMENTANEO
-
-    /* const data: CampaignEntity[] = await CampaignApi.getByParamsApi_({ campaign_status_id: { $gte: 8, $ne: 10 } }, { limit: 10 }); */
     const fetchCampaigns = async () => {
-        /* 
-        
-        */
         try {
             const campaignStatusRequiredList = [
                 CampaignStatus.COUNTDOWN,
@@ -104,7 +98,6 @@ export const useNewDashboardCard = (address: string | null) => {
             const campaignWithDetails = await Promise.all(data.map((campaign) => transformToBaseCampaign(campaign)));
             setVisibleCampaigns(campaignWithDetails);
             setCampaigns(campaignWithDetails);
-            console.log(campaignWithDetails, 'campaignWithDetails');
         } catch (err) {
             console.error('Error fetching campaigns:', err);
             pushWarningNotification('Error', `Error fetching Campaigns: ${err}`);

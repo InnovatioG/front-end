@@ -1,6 +1,6 @@
 import EmptyState from '@/components/CampaignId/Sections/EmptyState';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
-import React from 'react';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
+import React, { useEffect } from 'react';
 import RoadMapCard from './RoadMapCard';
 
 interface RoadMapProps {
@@ -8,16 +8,19 @@ interface RoadMapProps {
 }
 
 const RoadMap: React.FC<RoadMapProps> = (props) => {
-    const { project } = useProjectDetailStore();
-    const milestones = project.milestones;
-    if (milestones.every((milestone) => milestone.milestone_status && milestone.milestone_status.description === '')) {
+    const { campaign } = useCampaignIdStore();
+    const { milestones } = campaign;
+
+
+    if (milestones && milestones.length === 0) {
         return <EmptyState />;
     }
+
     return (
         <article>
             <div id="roadmap">
-                {milestones.map((milestone) => (
-                    <RoadMapCard key={milestone.id} milestone={milestone} index={milestones.indexOf(milestone)} goal={project.goal} />
+                {milestones && milestones.map((milestone) => (
+                    <RoadMapCard key={milestone._Db_id} milestone={milestone} index={milestones.indexOf(milestone)} goal={Number(campaign.requestMaxAda)} />
                 ))}
             </div>
         </article>

@@ -38,7 +38,7 @@ export const formatTime = (time: number) => time.toString().padStart(2, '0');
 /* Funcion para calcular el porcentaje en base a un total y el % a aplicar */
 
 export const calculatePorcentage = (total: number, porcentage: number) => {
-    return (total * porcentage) / 100;
+    return (Number(total) * Number(porcentage)) / 100;
 };
 
 export const formatLink = (link: string) => {

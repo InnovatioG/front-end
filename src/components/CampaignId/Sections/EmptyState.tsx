@@ -1,5 +1,5 @@
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import Link from 'next/link';
 import React from 'react';
 import styles from './EmptyState.module.scss';
@@ -8,12 +8,12 @@ interface EmptyStateProps {
 }
 
 const EmptyState: React.FC<EmptyStateProps> = (props) => {
-    const { project, setMenuView } = useProjectDetailStore();
+    const { campaign, setMenuView } = useCampaignIdStore();
     return (
         <article className={styles.emptyStateContainer}>
             <h2 className={styles.emptyStateText}>No content available</h2>
             <div className={styles.buttonContainer}>
-                <Link href={`edit?id=${project.id}`}>
+                <Link href={`edit?id=${campaign._DB_id}`}>
                     <GeneralButtonUI onClick={() => { }} classNameStyle="outlineb">
                         Start editing your content!
                     </GeneralButtonUI>

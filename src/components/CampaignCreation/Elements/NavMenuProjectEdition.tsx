@@ -1,6 +1,6 @@
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import { useScreenSize } from '@/hooks/useScreenSize';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { navMenu, NavMenuItem } from '@/utils/projectDetailsCreation';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -11,8 +11,8 @@ interface NavBarProjectEditionProps {
 }
 
 const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
-    const { menuView, setMenuView, editionMode, project } = useProjectDetailStore();
-    const { id } = project;
+    const { menuView, setMenuView, editionMode, campaign } = useCampaignIdStore();
+    const { _DB_id } = campaign;
     const screenSize = useScreenSize();
 
     const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +56,7 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
                         ))}
                     </ul>
                     {editionMode && (
-                        <Link href={`./${id}`}>
+                        <Link href={`./${_DB_id}`}>
                             <div>
                                 <GeneralButtonUI text="Overview" classNameStyle="overview" onClick={() => { }} />
                             </div>
@@ -81,7 +81,7 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
                 ))}
             </ul>
             {editionMode && (
-                <Link href={`./${id}`}>
+                <Link href={`./${_DB_id}`}>
                     <div>
                         <GeneralButtonUI text="Overview" classNameStyle="overview" onClick={() => { }} />
                     </div>

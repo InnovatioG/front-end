@@ -4,13 +4,13 @@ import QA from '@/components/CampaignId/Sections/QA';
 import ResumeOfTheTeam from '@/components/CampaignId/Sections/ResumeOfTheTeam';
 import RoadMap from '@/components/CampaignId/Sections/RoadMap';
 import Tokenomics from '@/components/CampaignId/Sections/Tokenomics';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import React from 'react';
 import styles from './ProjectContainer.module.scss';
 interface ProjectContainerProps { }
 
 const ProjectContainer: React.FC<ProjectContainerProps> = (props) => {
-    const { menuView, setEditionMode } = useProjectDetailStore();
+    const { menuView, setEditionMode } = useCampaignIdStore();
 
     const menuComponents: { [key: string]: React.ReactNode } = {
         'Project Detail': <ProjectDetail />,

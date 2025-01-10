@@ -1,33 +1,42 @@
-import type { MilestoneF } from '@/HardCode/databaseType';
 import MilestonePercentage from '@/components/CampaignCreation/Elements/MilestonePercentage';
 import MilestoneTime from '@/components/CampaignCreation/Elements/MilestoneTimeEdit';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import { useModal } from '@/contexts/ModalContext';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
-import { imageByStatus, stylesByStatus } from '@/utils/constants/status';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
+import { imageByStatus, imageByStatusMilestone, stylesByStatus } from '@/utils/constants/status';
 import { getOrdinalString } from '@/utils/formats';
-import React from 'react';
+import React, { useEffect } from 'react';
 import MilestoneMessage from './MilestoneMessage';
 import styles from './RoadMapCard.module.scss';
+import type { Milestone } from '@/types/types';
+import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 
 interface RoadMapCardProps {
-    milestone: MilestoneF;
+    milestone: Milestone;
     index: number;
     goal: number;
 }
 
 const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => {
+    const { milestoneStatus } = useGeneralStore();
     const ordinalString = getOrdinalString(index + 1);
-    const { isAdmin } = useProjectDetailStore();
-
+    const { isAdmin } = useCampaignIdStore();
     const { openModal } = useModal();
+    const { milestone_status_id, description } = milestone;
 
-    const milestone_status_id = milestone.milestone_status?.milestone_submission?.milestone_status_id || 0;
+    const getInternalId = (milestoneStatusId: string | undefined): number | undefined => {
+        const status = milestoneStatus.find((status) => status.id === Number(milestoneStatusId));
+        return status?.id_internal;
+    };
 
-    const report_proof_of_finalization = milestone.milestone_status?.milestone_submission?.report_proof_of_finalization;
+    const internalId = getInternalId(milestone_status_id);
+    const icon = internalId !== undefined ? imageByStatusMilestone(internalId) : undefined;
+    console.log(icon);
+    const milestoneStyle = internalId !== undefined ? stylesByStatus(internalId, styles) : '';
 
-    const icon = milestone_status_id ? imageByStatus(milestone_status_id) : '';
-    const milestoneStyle = stylesByStatus(milestone_status_id, styles);
+    useEffect(() => {
+        console.log('milestone', milestone);
+    }, []);
 
     return (
         <article className={styles.main}>
@@ -37,11 +46,11 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
                         <h4 className={`${styles.milestoneTitle} ${milestoneStyle}`}>{ordinalString} Milestone</h4>
                         {icon && <img src={icon} alt="Milestone status icon" />}
                     </div>
-                    {milestone.milestone_status?.description && <div dangerouslySetInnerHTML={{ __html: milestone.milestone_status.description }}></div>}
+                    {description && <div dangerouslySetInnerHTML={{ __html: description }}></div>}
                 </div>
                 <div className={styles.timesCard}>
                     <label>Time</label>
-                    <MilestoneTime milestone={milestone} />
+                    {/*                     <MilestoneTime milestone={milestone} /> */}
                     <MilestonePercentage milestone={milestone} goal={goal} maxAvailablePercentage={100} onPercentageChange={() => true} />
                 </div>
             </div>
@@ -50,7 +59,7 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
                     <MilestoneMessage milestone={milestone} icon={icon} />
                 </section>
             )}
-            {report_proof_of_finalization && (
+            {/*    {report_proof_of_finalization && (
                 <section className={styles.buttonView}>
                     <GeneralButtonUI
                         classNameStyle="fillb"
@@ -61,7 +70,7 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
                         View Reprt Submitted
                     </GeneralButtonUI>
                 </section>
-            )}
+            )} */}
         </article>
     );
 };

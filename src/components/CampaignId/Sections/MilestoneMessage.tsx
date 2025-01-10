@@ -1,19 +1,19 @@
 import { useModal } from '@/contexts/ModalContext';
-import type { MilestoneF } from '@/HardCode/databaseType';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { Milestone } from '@/types/types';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { formatDateFromString } from '@/utils/formats';
 import React, { useEffect, useState } from 'react';
 import styles from './MilestoneMessage.module.scss';
 interface MilestoneMessageProps {
-    milestone: MilestoneF;
-    icon: string;
+    milestone: Milestone;
+    icon?: string;
 }
 
 const MilestoneMessage: React.FC<MilestoneMessageProps> = ({ milestone, icon }) => {
     const [messageType, setMessageType] = useState('');
     const { openModal } = useModal();
 
-    const { project } = useProjectDetailStore();
+    const { project } = useCampaignIdStore();
 
     const handleSendToRevision = () => {
         openModal('sendReport', { campaign_id: project.id, campaign: project });

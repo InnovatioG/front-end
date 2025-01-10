@@ -1,4 +1,4 @@
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { DISCORD, FACEBOOK, INSTAGRAM, LINKEDIN, WEBSITE, XS } from '@/utils/images';
 import { CampaignStatus } from '@/utils/constants/status';
 import { C } from 'lucid-cardano';
@@ -175,6 +175,7 @@ export const buttonTypes: { [key: string]: ButtonType } = {
         action: (setModalOpen) => {
             if (setModalOpen) setModalOpen('launchCampaign');
         },
+
         classNameType: 'fill',
     },
     VALIDATE_FUNDRAISING_STATUS: {
@@ -274,7 +275,7 @@ export const ButtonsForCampaignPage = (state_id: number, isProtocolTeam: boolean
 };
 
 export const CardInformationByState = (state_id: number, milestone_status_id?: number, isAdmin?: boolean): StateConfig => {
-    const { setMenuView } = useProjectDetailStore();
+    const { setMenuView } = useCampaignIdStore();
 
     const state: { [key: number]: StateConfig } = {
         [CampaignStatus.NOT_STARTED]: {
@@ -437,7 +438,7 @@ export const cardInformationForProtocolTeam = (state_id: number): StateConfig =>
 };
 
 export const ButtonsByMilestoneStatus = (milestone_status_id: number): StateConfig => {
-    const { setMenuView } = useProjectDetailStore();
+    const { setMenuView } = useCampaignIdStore();
     const state: { [key: number]: StateConfig } = {
         2: {
             label: 'Active',

@@ -35,8 +35,8 @@ const fetchMilestoneStatus = async () => {
 
         const mappedData = fetchData.map((milestoneStatus) => ({
             id: milestoneStatus.id_internal,
+            id_internal: milestoneStatus.id_internal,
             name: milestoneStatus.name,
-            description: milestoneStatus.description,
         }));
 
         useGeneralStore.getState().setMilestoneStatus(mappedData);

@@ -1,10 +1,11 @@
 import ToolTipInformation from '@/components/General/Elements/TooltipInformation/tooltipInformation';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { calculatePorcentage, formatMoney, formatTime, getTimeRemaining } from '@/utils/formats';
 import { TWO_USERS } from '@/utils/images';
 import React, { useEffect, useState } from 'react';
 import styles from './CampaignCard.module.scss';
+import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 
 interface CampaignCardProps {
     status: string;
@@ -16,18 +17,17 @@ interface CampaignCardProps {
 
 const CampaignCard: React.FC<CampaignCardProps> = ({ status, goal, min_request, investors, startDate }) => {
     const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(startDate));
+    const { adaPrice } = useGeneralStore()
     const { priceAdaOrDollar } = usePriceStore();
-    const { price_ada, fetchAdaPrice, isAdmin, isProtocolTeam } = useProjectDetailStore();
+    const { isAdmin, isProtocolTeam } = useCampaignIdStore();
 
     useEffect(() => {
-        fetchAdaPrice();
-
         const timer = setInterval(() => {
             setTimeRemaining(getTimeRemaining(startDate));
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [startDate, fetchAdaPrice]);
+    }, [startDate]);
 
     const formatAllTime = (timeRemaining: any) => {
         return `${timeRemaining.days}:${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}`;
@@ -36,7 +36,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ status, goal, min_request, 
     const progressWidth = `${min_request}%`;
     const stateClass = status.toLowerCase().replace(/\s+/g, '-');
 
-    const goalInCurrentCurrency = priceAdaOrDollar === 'dollar' ? goal : goal / price_ada;
+    const goalInCurrentCurrency = priceAdaOrDollar === 'dollar' ? Number(goal) : Number(goal) / adaPrice;
     const currencySymbol = priceAdaOrDollar === 'dollar' ? 'USD' : 'ADA';
 
     return (

@@ -1,36 +1,24 @@
 import EmptyState from '@/components/CampaignId/Sections/EmptyState';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import React, { useEffect } from 'react';
 import styles from './Tokenomics.module.scss';
+import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 interface TokenomicsProps {
     // Define props here
 }
 
 const Tokenomics: React.FC<TokenomicsProps> = (props) => {
-    const { project, fetchAdaPrice, price_ada, isLoadingPrice } = useProjectDetailStore();
-    const goal = project.goal;
-    const cdRequestedMaxADA = project.cdRequestedMaxADA;
+    const { campaign, isLoadingPrice } = useCampaignIdStore();
+    const { requestMaxAda, campaignToken_CS, campaignToken_tn, campaignToken_priceADA, tokenomics_max_supply, tokenomics_description } = campaign
+    const { adaPrice } = useGeneralStore();
 
-    useEffect(() => {
-        fetchAdaPrice();
-    }, [fetchAdaPrice]);
-
-    const valuePerToken =
-        project.cdRequestedMaxADA === null || isNaN(project.cdRequestedMaxADA) || project.goal === null || isNaN(project.goal) || project.goal === 0 ? (
-            'Price per token'
-        ) : (
-            <div className={styles.priceInAda}>
-                <img src={'/img/icons/ADA.svg'} alt="ADA" height={40} width={40} />
-                <span className={styles.strong}>{(project.goal / project.cdRequestedMaxADA / price_ada).toFixed(2)}</span>
-            </div>
-        );
 
     if (isLoadingPrice) {
         return <LoadingPage />;
     }
 
-    if (project.tokenomics_description === '') {
+    if (campaign.tokenomics_description === '') {
         return <EmptyState />;
     }
 
@@ -39,18 +27,18 @@ const Tokenomics: React.FC<TokenomicsProps> = (props) => {
             <div className={styles.headerContainer}>
                 <div className={styles.container}>
                     <label htmlFor="">Token Tick Name</label>
-                    <span className={styles.strong}>{project.cdCampaignToken_TN}</span>
+                    <span className={styles.strong}>{campaignToken_tn}</span>
                 </div>
                 <div className={styles.container}>
                     <label htmlFor="">Quantity</label>
-                    <span className={styles.strong}>{cdRequestedMaxADA}</span>
+                    <span className={styles.strong}>{(tokenomics_max_supply)}</span>
                 </div>
                 <div className={styles.container}>
                     <label htmlFor="">Value per Token</label>
-                    <span className={styles.strong}>{valuePerToken}</span>
+                    <span className={styles.strong}>{Number(campaignToken_priceADA)}</span>
                 </div>
             </div>
-            <div dangerouslySetInnerHTML={{ __html: project.tokenomics_description }} />
+            <div dangerouslySetInnerHTML={tokenomics_description ? { __html: tokenomics_description } : undefined} />
         </div>
     );
 };

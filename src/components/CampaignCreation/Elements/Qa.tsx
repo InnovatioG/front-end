@@ -1,6 +1,6 @@
 import AddMore from '@/components/UI/Buttons/AddMore/AddMore';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import FramerMotionAnimation from '@/utils/framerMotion';
 import React, { useState } from 'react';
 import styles from './Qa.module.scss';
@@ -9,7 +9,7 @@ interface QYAProps {
 }
 
 const QYA: React.FC<QYAProps> = (props) => {
-    const { project, setProject } = useProjectDetailStore();
+    const { project, setProject } = useCampaignIdStore();
     const faqs = project.faqs || []; // Ensure faqs is always an array
     const [viewInputQuestion, setViewInputQuestion] = useState(false);
     const [isOpen, setIsOpen] = useState(false);

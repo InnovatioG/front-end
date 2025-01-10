@@ -1,11 +1,11 @@
 import TextEditor from '@/components/General/Elements/TextEditor/TextEditor';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { inputFieldsToken } from '@/utils/constants';
 import React from 'react';
 import AdminUTXOS from './adminUTXO';
 import styles from './Tokenomics.module.scss';
 const Tokenomics: React.FC = () => {
-    const { project, setProject, price_ada } = useProjectDetailStore();
+    const { project, setProject, price_ada } = useCampaignIdStore();
 
     const handleInputChange = (id: string, value: string, transform: (value: string) => any) => {
         setProject({

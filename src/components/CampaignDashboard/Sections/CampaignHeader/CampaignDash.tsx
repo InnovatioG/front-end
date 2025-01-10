@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/Elements/DefaultAvatar/DefaultAvatar';
 import useDraftCard from '@/hooks/useDraftCard';
 import styles from '@/pages/campaign/[id]/campainPagelayout.module.scss';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { CardInformationByState } from '@/utils/constants';
 import Image from 'next/image';
 import React, { useRef } from 'react';
@@ -13,16 +13,13 @@ interface CampaignDashCreationProps { }
 const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const { project, editionMode, setProject, isProtocolTeam, isAdmin } = useProjectDetailStore();
+    const { campaign, editionMode, setCampaign, isProtocolTeam, isAdmin } = useCampaignIdStore();
 
-    const campaign = {
-        ...project,
-        campaign_type: 'Target' as const, // Garantiza el valor correcto
-    };
+
 
     const { label } = useDraftCard(campaign, isProtocolTeam, isAdmin);
 
-    const state = CardInformationByState(project.state_id);
+    const state = CardInformationByState(campaign.campaign_status_id);
     /*     const label = state.label.toLowerCase().replace(/\s+/g, '-');
      */
 
@@ -31,7 +28,7 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onloadend = () => {
-            setProject({ ...project, banner_url: reader.result as string });
+            setCampaign({ ...campaign, banner_url: reader.result as string });
         };
         reader.readAsDataURL(file);
     };
@@ -83,16 +80,16 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
                         </button>
                     </div>
                 )}
-                <Image src={project.banner_url} alt="Banner" layout="fill" objectFit="cover" />
+                <Image src={campaign.banner_url} alt="Banner" layout="fill" objectFit="cover" />
             </div>
             <div className={styles.avatarContainer}>
                 <Avatar big={true} className={styles.pictureContainer}>
-                    <AvatarImage src={project.logo_url} alt={project.title} />
-                    <AvatarFallback>{project.title[0]}</AvatarFallback>
+                    <AvatarImage src={campaign.logo_url} alt={campaign.name} />
+                    <AvatarFallback>{campaign.name[0]}</AvatarFallback>
                 </Avatar>
             </div>
             <div className={styles.cardContainer}>
-                <CampaignCard status={label} goal={project.goal} min_request={project.min_request} investors={project.investors} startDate={project.start_date} />
+                <CampaignCard status={label} goal={campaign.requestMaxAda} min_request={campaign.requestMinAda} investors={campaign.investors} startDate={campaign.begin_at} />
                 <SocialMediaCardContainer />
             </div>
         </article>

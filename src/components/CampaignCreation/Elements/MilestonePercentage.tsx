@@ -1,6 +1,6 @@
 import type { MilestoneF } from '@/HardCode/databaseType';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { formatMoney } from '@/utils/formats';
 import React, { useEffect, useState } from 'react';
 import styles from './MilestonePercentage.module.scss';
@@ -14,9 +14,9 @@ interface MilestonePercentageProps {
 
 const MilestonePercentage: React.FC<MilestonePercentageProps> = ({ milestone, goal, maxAvailablePercentage, onPercentageChange }) => {
     const [percentage, setPercentage] = useState<number>(milestone.percentage);
-    const { editionMode } = useProjectDetailStore();
+    const { editionMode } = useCampaignIdStore();
     const { priceAdaOrDollar } = usePriceStore();
-    const { price_ada } = useProjectDetailStore();
+    const { price_ada } = useCampaignIdStore();
 
     useEffect(() => {
         setPercentage(milestone.percentage);

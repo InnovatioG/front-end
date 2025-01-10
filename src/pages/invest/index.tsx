@@ -1,7 +1,7 @@
 import JSON from '@/HardCode/campaignId.json';
 import InvestmentForm from '@/components/Invest/Sections/Form';
 import InvestHeader from '@/components/Invest/Sections/InvestHeader';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import styles from './InvestPage.module.scss';
@@ -13,7 +13,7 @@ const InvestPage: React.FC<InvestPageProps> = (props) => {
     const router = useRouter();
 
     const { id } = router.query;
-    const { setProject, project, setIsLoading, isLoading, setMenuView, setEditionMode, fetchAdaPrice } = useProjectDetailStore();
+    const { setProject, project, setIsLoading, isLoading, setMenuView, setEditionMode, fetchAdaPrice } = useCampaignIdStore();
 
     const fetchCampaign = () => {
         setIsLoading(true);
@@ -36,7 +36,7 @@ const InvestPage: React.FC<InvestPageProps> = (props) => {
         return () => clearTimeout(timer);
     };
 
-    const { } = useProjectDetailStore();
+    const { } = useCampaignIdStore();
     const { cdCampaignToken_TN, cdRequestedMaxADA, cdCampaignToken_PriceADA, goal, start_date, title, logo_url } = project;
 
     useEffect(() => {

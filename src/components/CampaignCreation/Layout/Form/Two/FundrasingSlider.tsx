@@ -4,7 +4,7 @@ import styles from "./StepTwo.module.scss";
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import SelectButton from '@/components/UI/Buttons/SelectButton/SelectButton';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import ToolTipInformation from '@/components/General/Elements/TooltipInformation/tooltipInformation';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 interface FundrasingSliderProps {

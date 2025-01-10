@@ -1,20 +1,20 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/Elements/DefaultAvatar/DefaultAvatar';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import React from 'react';
 import styles from './CampaignHeader.module.scss';
 
 interface CampaignHeaderProps { }
 
 const CampaignHeader: React.FC<CampaignHeaderProps> = () => {
-    const { project } = useProjectDetailStore();
+    const { campaign } = useCampaignIdStore();
 
     return (
         <div className={styles.headerCampaignContainer}>
             <Avatar big={true} className={styles.pictureContainer}>
-                <AvatarImage src={project.logo_url} alt={project.title} />
-                <AvatarFallback>{project.title[0]}</AvatarFallback>
+                <AvatarImage src={campaign.logo_url} alt={campaign.name} />
+                <AvatarFallback>{campaign.name[0]}</AvatarFallback>
             </Avatar>
-            <h2 className={styles.title}>{project.title}</h2>
+            <h2 className={styles.title}>{campaign.name}</h2>
         </div>
     );
 };

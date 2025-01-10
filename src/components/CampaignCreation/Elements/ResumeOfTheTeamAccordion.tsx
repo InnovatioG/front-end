@@ -1,14 +1,14 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/Elements/DefaultAvatar/DefaultAvatar';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/UI/Accordion/Accordion';
 import SocialButton from '@/components/UI/Buttons/SocialIcon/SocialButton';
-import { MembersTeam } from '@/HardCode/databaseType';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { socialIcons } from '@/utils/constants';
 import { formatLink } from '@/utils/formats';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './ResumeOftheTeam.module.scss';
+import { MembersTeam } from '@/types/types';
 
 interface ResumeOfTheTeamAccordionProps {
     onEditMember?: (member: MembersTeam) => void;
@@ -22,9 +22,16 @@ type SocialMediaKeys = Extract<
 >;
 
 const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onEditMember }) => {
-    const { project, editionMode } = useProjectDetailStore();
+    const { campaign, editionMode } = useCampaignIdStore();
     const { setSelectedMember, setStep } = useCampaignStore();
     const router = useRouter();
+    const { members_team } = campaign
+
+
+
+    useEffect(() => {
+        console.log(campaign)
+    }, [])
 
     const socialMedia = {
         website: 'Website',
@@ -35,12 +42,7 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
         xs: 'XS',
     };
 
-    /*************  ✨ Codeium Command ⭐  *************/
-    /**
-     * If onEditMember prop is provided, call it with the member object as argument.
-     * @param {MembersTeam} member - The member to be edited.
-     */
-    /******  6b1938ec-983b-425c-b6cc-6c7b12b664bf  *******/
+
     const handleClickEditButton = (member: MembersTeam) => {
         if (onEditMember) {
             onEditMember(member);
@@ -50,14 +52,14 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
     return (
         <div>
             <Accordion type="single" collapsible className={styles.accordionContainer}>
-                {project.members_team.map((member, index) => (
+                {members_team && members_team.map((member, index) => (
                     <AccordionItem key={index} value={`item-${index}`}>
                         <AccordionTrigger open={true} toggleOpen={() => { }}>
                             <div className={styles.faqContainer}>
                                 <Avatar big={true}>
                                     <AvatarImage src={formatLink(member.member_picture || '')} alt={member.name} />
-                                    <AvatarFallback>{member.name.slice(0, 2)}</AvatarFallback>
-                                </Avatar>
+                                    {/*                                     <AvatarFallback>{member.name.slice(0, 2)}</AvatarFallback>
+ */}                                </Avatar>
                                 <span>
                                     {member.name} {member.last_name}
                                 </span>

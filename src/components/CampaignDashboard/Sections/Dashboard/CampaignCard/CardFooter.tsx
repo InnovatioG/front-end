@@ -2,7 +2,7 @@ import React from 'react';
 import useDraftCard from "@/hooks/useDraftCard";
 import styles from "./CardFooter.module.scss";
 import { formatMoney, getOrdinalString } from '@/utils/formats';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import Link from 'next/link';
@@ -18,7 +18,7 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
     //! TODO GET BACK SOLO PARA LOS INVERSORES 
 
     const { label, labelClass, currentMilestone, formatAllTime } = useDraftCard(campaign, false, false);
-    const { setMenuView } = useProjectDetailStore();
+    const { setMenuView } = useCampaignIdStore();
     const { adaPrice } = useGeneralStore();
     const { priceAdaOrDollar } = usePriceStore();
     const { requestMaxAda, cdFundedADA } = campaign;

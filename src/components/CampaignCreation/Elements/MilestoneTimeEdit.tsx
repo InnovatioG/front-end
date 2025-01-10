@@ -1,11 +1,14 @@
-import type { MilestoneF } from '@/HardCode/databaseType';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { formatDateFromString } from '@/utils/formats';
 import React from 'react';
 import styles from './MilestoneTimeEdit.module.scss';
+import { Milestone } from '@/types/types';
+
+
+//! TODO 
 
 interface MilestoneTimeEditProps {
-    milestone: MilestoneF;
+    milestone: Milestone;
 }
 
 const numberToWords: { [key: number]: string } = {
@@ -16,17 +19,18 @@ const numberToWords: { [key: number]: string } = {
 };
 
 const MilestoneTimeEdit: React.FC<MilestoneTimeEditProps> = ({ milestone }) => {
-    const { project, setProject, setMilestone, editionMode } = useProjectDetailStore();
-    const weekOptions = [2, 3, 4, 5];
+    const { campaign, setCampaign, setMilestone, editionMode } = useCampaignIdStore();
+    console.log(milestone)
+    /* const weekOptions = [2, 3, 4, 5];
 
     const handleWeekSelect = (weeks: number) => {
         const updatedMilestone = {
             ...milestone,
             estimatedDeliveryDate: `${numberToWords[weeks]} weeks`,
         };
-        const updatedMilestones = project.milestones.map((m) => (m.id === milestone.id ? updatedMilestone : m));
-        setProject({
-            ...project,
+        const updatedMilestones = campaign.milestones.map((m) => (m.id === milestone.id ? updatedMilestone : m));
+        setCampaign({
+            ...campaign,
             milestones: updatedMilestones,
         });
         setMilestone(updatedMilestone);
@@ -37,17 +41,17 @@ const MilestoneTimeEdit: React.FC<MilestoneTimeEditProps> = ({ milestone }) => {
             ...milestone,
             estimatedDeliveryDate: '',
         };
-        const updatedMilestones = project.milestones.map((m) => (m.id === milestone.id ? updatedMilestone : m));
-        setProject({
-            ...project,
+        const updatedMilestones = campaign.milestones.map((m) => (m.id === milestone.id ? updatedMilestone : m));
+        setCampaign({
+            ...campaign,
             milestones: updatedMilestones,
         });
         setMilestone(updatedMilestone);
     };
-
+ */
     return (
         <div className={styles.general}>
-            {milestone.estimatedDeliveryDate === '' && editionMode ? (
+            {/*      {milestone.estimatedDeliveryDate === '' && editionMode ? (
                 <div className={styles.timeOptionsContainer}>
                     {weekOptions.map((weeks) => (
                         <button key={weeks} className={styles.timeButton} onClick={() => handleWeekSelect(weeks)}>
@@ -64,7 +68,7 @@ const MilestoneTimeEdit: React.FC<MilestoneTimeEditProps> = ({ milestone }) => {
                     )}
                     <span>{formatDateFromString(milestone.estimatedDeliveryDate)}</span>
                 </div>
-            )}
+            )} */}
         </div>
     );
 };

@@ -2,7 +2,7 @@ import SocialButton from '@/components/UI/Buttons/SocialIcon/SocialButton';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
 import { useModal } from '@/contexts/ModalContext';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import type { ButtonConfig } from '@/utils/constants';
 import { ButtonsForCampaignPage, socialIcons } from '@/utils/constants';
 import Image from 'next/image';
@@ -16,19 +16,19 @@ interface SocialMediaCardContainerProps { }
 type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'linkedin' | 'twitter';
 
 const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props) => {
-    const { project, setProject, editionMode, isAdmin, isProtocolTeam } = useProjectDetailStore();
+    const { campaign, setCampaign, editionMode, isAdmin, isProtocolTeam } = useCampaignIdStore();
     const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>('website');
     const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const { openModal } = useModal();
-    const { buttons } = ButtonsForCampaignPage(project.state_id, isProtocolTeam, isAdmin);
+    const { buttons } = ButtonsForCampaignPage(campaign.campaign_status_id, isProtocolTeam, isAdmin);
 
     const editLinkButton = () => {
         setModalOpen(true);
     };
 
     const getPlaceholder = () => {
-        const linkValue = project[selectedLink];
+        const linkValue = campaign[selectedLink];
         return linkValue && linkValue !== '' ? linkValue : `Enter your ${selectedLink} link`;
     };
 
@@ -56,15 +56,15 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
             ) : (
                 <>
                     {buttons.map((button: ButtonConfig, index: number) => (
-                        <Link key={index} href={button.link ? button.link(project.id) : '#'}>
+                        <Link key={index} href={button.link ? button.link(campaign._DB_id) : '#'}>
                             <GeneralButtonUI
                                 text={button.label}
                                 onClick={() => {
                                     if (button.action) {
                                         if (button.classNameType === 'invest') {
-                                            button.action(undefined, project);
+                                            button.action(undefined, campaign);
                                         } else {
-                                            button.action((modalType) => openModal(modalType, { campaign_id: project.id }));
+                                            button.action((modalType) => openModal(modalType, { campaign_id: campaign._DB_id }));
                                         }
                                     }
                                 }}
@@ -77,7 +77,7 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
 
                     <article className={styles.socialContainer}>
                         {socialIcons.map((social) => {
-                            const socialLink = project[social.name as SocialLinkKeys];
+                            const socialLink = campaign[social.name as SocialLinkKeys];
                             if (!editionMode && (!socialLink || socialLink.trim() === '')) return null; // No renderizar si el enlace está vacío y no está en modo edición
                             return (
                                 <a key={social.name} href={!editionMode ? formatSocialLink(socialLink) : '#'} target="_blank" rel="noopener noreferrer">
@@ -95,11 +95,11 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
                     <div className={styles.inputContainer}>
                         <input
                             type="text"
-                            value={project[selectedLink] || ''}
+                            value={campaign[selectedLink] || ''}
                             placeholder={getPlaceholder()}
                             onChange={(e) =>
                                 setProject({
-                                    ...project,
+                                    ...campaign,
                                     [selectedLink]: e.target.value,
                                 })
                             }

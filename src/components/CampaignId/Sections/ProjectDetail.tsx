@@ -1,11 +1,11 @@
 import EmptyState from '@/components/CampaignId/Sections/EmptyState';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import React, { useEffect, useRef, useState } from 'react';
 import styles from './ProjectDetail.module.scss';
 
 const ProjectDetail: React.FC = () => {
-    const { project } = useProjectDetailStore();
-    const campaignContentSorted = [...project.campaign_content].sort((a, b) => a.order - b.order);
+    const { campaign } = useCampaignIdStore();
+    const campaignContentSorted = [...campaign.campaign_content].sort((a, b) => a.order - b.order);
 
     const [activeSection, setActiveSection] = useState<number | null>(null);
     const sectionRefs = useRef<HTMLDivElement[]>([]);

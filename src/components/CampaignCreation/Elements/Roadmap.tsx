@@ -1,5 +1,5 @@
 import { handlePercentageChange } from '@/hooks/projectEditionContainerHandlers';
-import { useProjectDetailStore } from '@/store/projectdetail/useCampaignIdStore';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import React from 'react';
 import MilestoneCardEdit from './MilestoneEdit';
 import styles from './Roadmap.module.scss';
@@ -9,7 +9,7 @@ interface RoadMapYMilestonesProps {
 }
 
 const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
-    const { project, setProject } = useProjectDetailStore();
+    const { project, setProject } = useCampaignIdStore();
 
     const { milestones } = project;
 
