@@ -41,6 +41,10 @@ export const calculatePorcentage = (total: number, porcentage: number) => {
     return (Number(total) * Number(porcentage)) / 100;
 };
 
+export const calculatePorcentagValue = (total: number, amoutCollected: number) => {
+    return ((Number(amoutCollected) / Number(total)) * 100).toFixed(2);
+};
+
 export const formatLink = (link: string) => {
     if (!link.startsWith('http://') && !link.startsWith('https://')) {
         return `http://${link}`;
@@ -77,11 +81,6 @@ export const formatWeekOfMonth = (date: string): string => {
     return `${getOrdinalString(week)} week of ${month}`;
 };
 
-export const formatDateFromString = (date: string) => {
-    if (date.includes('weeks')) {
-        return date;
-    } else {
-        const dateFormatted = parseISO(date);
-        return format(dateFormatted, 'MM/dd/yy');
-    }
+export const formatDateFromString = (date: Date): string => {
+    return format(date, 'MM/dd/yy');
 };

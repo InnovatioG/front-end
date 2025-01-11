@@ -7,6 +7,7 @@ import Image from 'next/image';
 import React, { useRef } from 'react';
 import CampaignCard from '../../../CampaignCreation/Elements/CampaignCard';
 import SocialMediaCardContainer from '../../../CampaignCreation/Elements/SocialMediaCard';
+import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 /*  */
 interface CampaignDashCreationProps { }
 
@@ -14,14 +15,14 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const { campaign, editionMode, setCampaign, isProtocolTeam, isAdmin } = useCampaignIdStore();
+    const { requestMaxAda, requestMinAda, investors, begin_at, cdFundedADA } = campaign
+    const { label, getInternalId } = useDraftCard(campaign, isProtocolTeam, isAdmin);
+    const { campaignStatus } = useGeneralStore()
 
 
 
-    const { label } = useDraftCard(campaign, isProtocolTeam, isAdmin);
+    const state = CardInformationByState(Number(getInternalId(campaign.campaign_status_id)));
 
-    const state = CardInformationByState(campaign.campaign_status_id);
-    /*     const label = state.label.toLowerCase().replace(/\s+/g, '-');
-     */
 
     const handleChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return;
@@ -89,7 +90,7 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
                 </Avatar>
             </div>
             <div className={styles.cardContainer}>
-                <CampaignCard status={label} goal={campaign.requestMaxAda} min_request={campaign.requestMinAda} investors={campaign.investors} startDate={campaign.begin_at} />
+                <CampaignCard status={label} goal={Number(requestMaxAda)} min_request={Number(requestMinAda)} investors={investors} startDate={begin_at} cdFundedADA={cdFundedADA} />
                 <SocialMediaCardContainer />
             </div>
         </article>
@@ -97,3 +98,5 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
 };
 
 export default CampaignDashCreation;
+
+

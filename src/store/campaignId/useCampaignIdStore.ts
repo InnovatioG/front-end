@@ -3,7 +3,7 @@ import axios from 'axios';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { usePriceStore } from '../price/usepriceAdaOrDollar';
-import { Campaign } from '@/HardCode/databaseType';
+import type { Campaign } from '@/types/types';
 
 /* Campaign render */
 

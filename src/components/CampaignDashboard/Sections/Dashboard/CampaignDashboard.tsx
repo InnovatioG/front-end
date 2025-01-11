@@ -3,7 +3,7 @@ import { useDashboardCard } from '@/hooks/useDashboardCard';
 import Link from 'next/link';
 import { useCallback } from 'react';
 import { useWalletStore } from 'smart-db';
-import CampaignCard from './CampaignCard/CampaignCard';
+import CampaignCard from './CampaignCard/CampaignCard_temp';
 import styles from './CampaignDashboard.module.scss';
 import CampaignFilters from './CampaignFilters/CampaignFilters';
 

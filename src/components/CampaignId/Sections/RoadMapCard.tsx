@@ -34,9 +34,7 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
     console.log(icon);
     const milestoneStyle = internalId !== undefined ? stylesByStatus(internalId, styles) : '';
 
-    useEffect(() => {
-        console.log('milestone', milestone);
-    }, []);
+
 
     return (
         <article className={styles.main}>
@@ -54,12 +52,12 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
                     <MilestonePercentage milestone={milestone} goal={goal} maxAvailablePercentage={100} onPercentageChange={() => true} />
                 </div>
             </div>
-            {isAdmin && (
-                <section className={styles.milestoneMessage}>
-                    <MilestoneMessage milestone={milestone} icon={icon} />
-                </section>
-            )}
-            {/*    {report_proof_of_finalization && (
+            {/*             {isAdmin && (
+ */}                <section className={styles.milestoneMessage}>
+                <MilestoneMessage milestone={milestone} icon={icon} />
+            </section>
+            {/*             )}
+ */}            {/*    {report_proof_of_finalization && (
                 <section className={styles.buttonView}>
                     <GeneralButtonUI
                         classNameStyle="fillb"

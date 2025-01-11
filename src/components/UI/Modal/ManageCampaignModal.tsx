@@ -4,7 +4,7 @@ import GeneralButtonUI from '../Buttons/UI/Button';
 import styles from './ManageCampaignModal.module.scss';
 
 interface ManageCampaignModalProps {
-    id: number | null;
+    id: string | null;
 }
 
 /* MODAL PARA LOS PROTOCOL MANAGER PARA QUE PUEDAN ACEPTAR O RECHAZAR EL MILESTONE  */

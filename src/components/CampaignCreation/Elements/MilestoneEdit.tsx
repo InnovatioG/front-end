@@ -1,6 +1,5 @@
 import TextEditor from '@/components/General/Elements/TextEditor/TextEditor';
-import type { MilestoneF } from '@/HardCode/databaseType';
-import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
+import type { Milestone } from '@/types/types'; import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { getOrdinalString } from '@/utils/formats';
 import React from 'react';
 import styles from './MilestoneEdit.module.scss';
@@ -8,28 +7,28 @@ import MilestonePercentage from './MilestonePercentage';
 import MilestoneTimeEdit from './MilestoneTimeEdit';
 
 interface MilestoneCardEditProps {
-    milestone: MilestoneF;
+    milestone: Milestone;
     index: number;
     maxAvailablePercentage: number;
     onPercentageChange: (percentage: number) => boolean;
 }
 
 const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index, maxAvailablePercentage, onPercentageChange }) => {
-    const { project, setProject } = useCampaignIdStore();
+    const { setCampaign, campaign } = useCampaignIdStore();
     const ordinalString = getOrdinalString(index + 1);
 
     const handleDescriptionChange = (content: string) => {
-        const updatedMilestones = project.milestones.map((m) =>
-            m.id === milestone.id && m.milestone_status ? { ...m, milestone_status: { ...m.milestone_status, description: content, id: m.milestone_status.id ?? 0 } } : m
+        const updatedMilestones = campaign.milestones.map((m) =>
+            m._Db_id === milestone._Db_id && m.milestone_status_id ? { ...m, milestone_status: { ...m.milestone_status, description: content, id: m.milestone_status.id ?? 0 } } : m
         );
 
-        setProject({
-            ...project,
+        setCampaign({
+            ...campaign,
             milestones: updatedMilestones,
         });
     };
 
-    const totalGoal = project.goal;
+    const totalGoal = campaign.requestMaxAda;
 
     return (
         <section>

@@ -6,12 +6,12 @@ import GeneralButtonUI from '../Buttons/UI/Button';
 import styles from './ViewReportModal.module.scss';
 
 interface ViewReportModalProps {
-    id: number | null;
+    id: string | null;
 }
 
 const ViewReportModal: React.FC<ViewReportModalProps> = ({ id }) => {
     const { closeModal } = useModal();
-    const { answer, loading, approved } = useSubmissionAnswer({ id: id ?? 0 });
+    const { answer, loading, approved } = useSubmissionAnswer({ id: id ?? undefined });
 
     if (loading) {
         return (

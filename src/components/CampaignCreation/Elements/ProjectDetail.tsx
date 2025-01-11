@@ -3,7 +3,7 @@ import ToolTipInformation from '@/components/General/Elements/TooltipInformation
 import Checkbox from '@/components/UI/Buttons/Checkbox/Checkbox';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
-import { useProjectDetail } from '@/hooks/useProjectDetail';
+import { useCampaignId } from '@/hooks/useProjectDetail';
 import React, { useState } from 'react';
 import styles from './ProjectDetail.module.scss';
 interface ProjectDetailProps {
@@ -27,7 +27,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
         handleCheckboxChange,
         contentReorder,
         draggedIndex,
-    } = useProjectDetail();
+    } = useCampaignId();
 
     const [openModal, setIsOpenModal] = useState(false);
 

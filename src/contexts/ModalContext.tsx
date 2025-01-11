@@ -8,13 +8,13 @@ import ViewReportMilestone from '@/components/UI/Modal/ViewReportMilestone';
 import ViewReportModal from '@/components/UI/Modal/ViewReportModal';
 import WalletInformationModal from '@/components/UI/Modal/WalletInformation';
 import { WalletSelectorModal } from '@/components/UI/Modal/WalletSelectorModal';
-import type { Campaign } from '@/HardCode/databaseType';
+import type { Campaign } from '@/types/types';
 import { createContext, useContext, useState } from 'react';
 
 interface ModalState {
     isOpen: boolean;
     modalType?: string;
-    campaign_id?: number;
+    campaign_id?: string;
     campaign?: Campaign;
     submission?: string;
 }

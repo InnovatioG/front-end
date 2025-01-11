@@ -1,12 +1,13 @@
-import type { MilestoneF } from '@/HardCode/databaseType';
+import type { Milestone } from '@/types/types';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { formatMoney } from '@/utils/formats';
 import React, { useEffect, useState } from 'react';
 import styles from './MilestonePercentage.module.scss';
+import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 
 interface MilestonePercentageProps {
-    milestone: MilestoneF;
+    milestone: Milestone;
     goal: number; // Goal total
     maxAvailablePercentage: number;
     onPercentageChange: (percentage: number) => boolean;
@@ -16,7 +17,7 @@ const MilestonePercentage: React.FC<MilestonePercentageProps> = ({ milestone, go
     const [percentage, setPercentage] = useState<number>(milestone.percentage);
     const { editionMode } = useCampaignIdStore();
     const { priceAdaOrDollar } = usePriceStore();
-    const { price_ada } = useCampaignIdStore();
+    const { adaPrice } = useGeneralStore();
 
     useEffect(() => {
         setPercentage(milestone.percentage);
@@ -33,7 +34,7 @@ const MilestonePercentage: React.FC<MilestonePercentageProps> = ({ milestone, go
         }
     };
 
-    const goalInCurrentCurrency = priceAdaOrDollar === 'dollar' ? goal : goal / price_ada;
+    const goalInCurrentCurrency = priceAdaOrDollar === 'dollar' ? goal : goal / adaPrice;
     const currencySymbol = priceAdaOrDollar === 'dollar' ? 'USD' : 'ADA';
 
     const percentageGoal = (goalInCurrentCurrency * percentage) / 100;

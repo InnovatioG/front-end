@@ -1,5 +1,5 @@
 import { useModal } from '@/contexts/ModalContext';
-import type { Campaign } from '@/HardCode/databaseType';
+import type { Campaign } from '@/types/types';
 import useDraftCard from '@/hooks/useDraftCard';
 import { getOrdinalString } from '@/utils/formats';
 import React, { useState } from 'react';

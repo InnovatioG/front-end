@@ -10,22 +10,14 @@ export const useCampaignId = () => {
     const { campaign, setCampaign, setIsLoading } = useCampaignIdStore();
 
     const transformToBaseCampaign = async (campaign: CampaignEntity): Promise<Campaign> => {
-        // Obtener los milestones de la campaña
         const milestonesEntities: MilestoneEntity[] = await MilestoneApi.getByParamsApi_({ campaign_id: campaign._DB_id });
-
-        // Extraer los IDs de los milestones
         const milestoneIds = milestonesEntities.map((milestone) => milestone._DB_id);
-
-        // Obtener los demás datos asociados a la campaña
         const membersTeamEntities: CampaignMemberEntity[] = await CampaignMemberApi.getByParamsApi_({ campaign_id: campaign._DB_id });
         const campaignContentEntities: CampaignContentEntity[] = await CampaignContentApi.getByParamsApi_({ campaign_id: campaign._DB_id });
         const campaignFaqsEntities: CampaignFaqsEntity[] = await CampaignFaqsApi.getByParamsApi_({ campaign_id: campaign._DB_id });
-
-        // Obtener los submissions asociados a los milestones
-        const milestoneSubmissionEntities: MilestoneSubmissionEntity[] = await Promise.all(
-            milestoneIds.map((id) => MilestoneSubmissionApi.getByParamsApi_({ milestone_id: id }))
-        ).then((results) => results.flat());
-        // Transformar los datos obtenidos
+        const milestoneSubmissionEntities: MilestoneSubmissionEntity[] = (
+            await Promise.all(milestoneIds.map((id) => MilestoneSubmissionApi.getByParamsApi_({ milestone_id: id })))
+        ).flat() as MilestoneSubmissionEntity[];
         const milestone_submissions: MilestoneSubmission[] = milestoneSubmissionEntities.map((milestoneSubmission) => ({
             _DB_id: milestoneSubmission._DB_id,
             milestone_id: milestoneSubmission.milestone_id,
@@ -118,7 +110,10 @@ export const useCampaignId = () => {
     const fetchCampaigns = async (id: string[]) => {
         setIsLoading(true);
         try {
-            const data: CampaignEntity = await CampaignApi.getByIdApi_(String(id));
+            const data: CampaignEntity | undefined = await CampaignApi.getByIdApi_(String(id));
+            if (!data) {
+                throw new Error('Campaign not found');
+            }
             if (data) {
                 setCampaign(await transformToBaseCampaign(data));
             } else {

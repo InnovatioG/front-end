@@ -34,9 +34,8 @@ export interface Milestone {
     order: number;
     goal: number;
 }
-
+/* 
 export interface BaseCampaign {
-    /* Erase xs and all the cd parameters */
 
     id: string;
     creator_wallet_id: string | null;
@@ -72,20 +71,22 @@ export interface BaseCampaign {
     cdCampaignToken_TN: string;
     vizualization?: number;
 }
+ */
 
+/* 
 export interface MilestoneCampaign extends BaseCampaign {}
 
 export interface TargetCampaign extends BaseCampaign {}
 
 export type Campaign = MilestoneCampaign | TargetCampaign;
-
-export interface DatabaseStructure {
+ */
+/* export interface DatabaseStructure {
     version: Version;
     users: User[];
     categories: Category[];
     states: State[];
     campaigns: Campaign[];
-}
+} */
 
 export interface Milestone_submission {
     id_milestione_submission: number;

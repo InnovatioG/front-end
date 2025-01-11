@@ -21,11 +21,9 @@ interface CampaignVisualizationProps {
 }
 
 const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
-    const { data: session } = useSession();
     const router = useRouter();
     const { id } = router.query;
-    const { campaign, setCampaign, setEditionMode, isLoading, setIsLoading, setIsAdmin, isAdmin } = useCampaignIdStore();
-    const { campaignCategories } = useGeneralStore();
+    const { campaign, isLoading, setIsLoading, setIsAdmin, isAdmin } = useCampaignIdStore();
     const { fetchCampaigns } = useCampaignId();
 
     useEffect(() => {
@@ -41,7 +39,7 @@ const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
 
     return (
         <main className={styles.layout}>
-            {campaign._DB_id !== '0' ? (
+            {campaign._DB_id !== undefined ? (
                 <div className={styles.campaignContainerCreator}>
                     <CampaignHeader />
                     <CampaignDashCreation />

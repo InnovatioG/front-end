@@ -1,7 +1,6 @@
-import type { MilestoneF } from '@/HardCode/databaseType';
-
+import type { Milestone } from '@/types/types';
 interface getRemainingPercentageF {
-    (currentmilestone_id: number, milestones: MilestoneF[]): number;
+    (currentmilestone_id: number, milestones: Milestone[]): number;
 }
 
 export const getRemainingPercentage: getRemainingPercentageF = (currentmilestone_id, milestones) => {

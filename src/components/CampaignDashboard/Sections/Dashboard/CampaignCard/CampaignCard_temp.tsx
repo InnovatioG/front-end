@@ -19,7 +19,6 @@ export default function CampaignCard(props: CampaignCardProps) {
     const { campaign } = props;
     const [timeRemaining, setTimeRemaining] = useState(campaign.deadline ? getTimeRemaining(campaign.deadline) : { total: 0, days: 0, totalHours: 0, minutes: 0 });
     const { label, labelClass, currentMilestone, formatAllTime, getInternalId } = useDraftCard(campaign, false, false);
-
     const { campaignCategories } = useGeneralStore();
     const { milestoneStatus, campaignStatus } = useGeneralStore();
     const idInternal = getInternalId(campaign.campaign_status_id);
