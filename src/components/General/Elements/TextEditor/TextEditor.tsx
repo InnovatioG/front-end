@@ -21,12 +21,10 @@ export default function TextEditor({ title, content, onChange, styleOption = 'qu
             setEditorContent(content);
         }
     }, [content]);
-
     const handleEditorChange = (newContent: string) => {
-        if (newContent !== '<p><br></p>') {
-            setEditorContent(newContent);
-            onChange(newContent);
-        }
+        console.log(newContent)
+        setEditorContent(newContent);
+        onChange(newContent);
     };
     const quillModules = {
         toolbar: [

@@ -81,7 +81,7 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
                         </button>
                     </div>
                 )}
-                <Image src={campaign.banner_url} alt="Banner" layout="fill" objectFit="cover" />
+                <Image src={campaign.banner_url ? campaign.banner_url : ''} alt="Banner" layout="fill" objectFit="cover" />
             </div>
             <div className={styles.avatarContainer}>
                 <Avatar big={true} className={styles.pictureContainer}>

@@ -20,7 +20,6 @@ const numberToWords: { [key: number]: string } = {
 
 const MilestoneTimeEdit: React.FC<MilestoneTimeEditProps> = ({ milestone }) => {
     const { campaign, setCampaign, setMilestone, editionMode } = useCampaignIdStore();
-    console.log(milestone)
     /* const weekOptions = [2, 3, 4, 5];
 
     const handleWeekSelect = (weeks: number) => {

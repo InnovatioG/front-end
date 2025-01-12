@@ -9,19 +9,19 @@ interface QYAProps {
 }
 
 const QYA: React.FC<QYAProps> = (props) => {
-    const { project, setProject } = useCampaignIdStore();
-    const faqs = project.faqs || []; // Ensure faqs is always an array
+    const { campaign, setCampaign } = useCampaignIdStore();
+    const faqs = campaign.faqs || []; // Ensure faqs is always an array
     const [viewInputQuestion, setViewInputQuestion] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
-    const [newQa, setNewQa] = useState({ name: '', description: '', order: 0 });
+    const [newQa, setNewQa] = useState({ question: '', answer: '', order: 0 });
 
     const handleNewQa = () => {
-        setProject({
-            ...project,
+        setCampaign({
+            ...campaign,
             faqs: [...faqs, newQa],
         });
-        setNewQa({ name: '', description: '', order: faqs.length + 1 });
+        setNewQa({ question: '', answer: '', order: faqs.length + 1 });
     };
 
     const handleQuestionOpen = () => {
@@ -36,8 +36,8 @@ const QYA: React.FC<QYAProps> = (props) => {
 
     const handleRemoveQa = (index: number) => {
         const newFaqs = faqs.filter((_, i) => i !== index);
-        setProject({
-            ...project,
+        setCampaign({
+            ...campaign,
             faqs: newFaqs,
         });
     };
@@ -47,10 +47,10 @@ const QYA: React.FC<QYAProps> = (props) => {
             {faqs.map((faq, index) => (
                 <div key={index} className={styles.questionContainer}>
                     <div>
-                        <h4 className={styles.questionTitle}>{faq.name}</h4>
+                        <h4 className={styles.questionTitle}>{faq.question}</h4>
                     </div>
                     <div className={styles.container}>
-                        <p className={styles.questionAnswer}>{faq.description}</p>
+                        <p className={styles.questionAnswer}>{faq.answer}</p>
                         <button onClick={() => handleRemoveQa(index)} className={styles.deleteButton}>
                             <img src="/img/icons/delete.svg" alt="deleteIcon" />
                         </button>
@@ -65,8 +65,8 @@ const QYA: React.FC<QYAProps> = (props) => {
 
             <FramerMotionAnimation isVisible={viewInputQuestion}>
                 <div className={styles.textContainer}>
-                    <input type="text" name="name" value={newQa.name} onChange={handleChange} className={styles.input} placeholder="Insert question" />
-                    <textarea name="description" value={newQa.description} onChange={handleChange} className={styles.inputText} placeholder="Describe answer" />
+                    <input type="text" name="question" value={newQa.question} onChange={handleChange} className={styles.input} placeholder="Insert question" />
+                    <textarea name="answer" value={newQa.answer} onChange={handleChange} className={styles.inputText} placeholder="Describe answer" />
                     <div className={styles.saveButtonContainer}>
                         <GeneralButtonUI onClick={handleNewQa} text="Save" classNameStyle="green" />
                     </div>

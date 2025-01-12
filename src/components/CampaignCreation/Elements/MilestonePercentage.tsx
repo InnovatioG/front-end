@@ -34,7 +34,7 @@ const MilestonePercentage: React.FC<MilestonePercentageProps> = ({ milestone, go
         }
     };
 
-    const goalInCurrentCurrency = priceAdaOrDollar === 'dollar' ? goal : goal / adaPrice;
+    const goalInCurrentCurrency = priceAdaOrDollar === 'dollar' ? Number(goal) : Number(goal) / adaPrice;
     const currencySymbol = priceAdaOrDollar === 'dollar' ? 'USD' : 'ADA';
 
     const percentageGoal = (goalInCurrentCurrency * percentage) / 100;

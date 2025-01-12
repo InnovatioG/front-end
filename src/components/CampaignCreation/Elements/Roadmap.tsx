@@ -15,7 +15,6 @@ const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
 
 
     useEffect(() => {
-        console.log(milestones)
     }, [])
 
 
@@ -28,6 +27,9 @@ const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
     };
 
     const totalPercentage = getTotalPercentage();
+
+
+
 
     return (
         <div className={styles.milestoneContainer}>

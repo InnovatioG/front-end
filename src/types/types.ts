@@ -68,7 +68,7 @@ export interface CampaignContent {
 }
 
 export interface FAQ {
-    campaign_id: string;
+    campaign_id?: string;
     question?: string;
     answer?: string;
     order: number;

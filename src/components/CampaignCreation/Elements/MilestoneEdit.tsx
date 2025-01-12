@@ -1,7 +1,8 @@
+import React, { useEffect } from 'react';
 import TextEditor from '@/components/General/Elements/TextEditor/TextEditor';
-import type { Milestone } from '@/types/types'; import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
+import type { Milestone } from '@/types/types';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { getOrdinalString } from '@/utils/formats';
-import React from 'react';
 import styles from './MilestoneEdit.module.scss';
 import MilestonePercentage from './MilestonePercentage';
 import MilestoneTimeEdit from './MilestoneTimeEdit';
@@ -13,29 +14,50 @@ interface MilestoneCardEditProps {
     onPercentageChange: (percentage: number) => boolean;
 }
 
-const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index, maxAvailablePercentage, onPercentageChange }) => {
-    const { setCampaign, campaign } = useCampaignIdStore();
+const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({
+    milestone,
+    index,
+    maxAvailablePercentage,
+    onPercentageChange,
+}) => {
+    const { setMilestone, setCampaign, campaign } = useCampaignIdStore();
     const ordinalString = getOrdinalString(index + 1);
 
-    const handleDescriptionChange = (content: string) => {
-        const updatedMilestones = campaign.milestones.map((m) =>
-            m._Db_id === milestone._Db_id && m.milestone_status_id ? { ...m, milestone_status: { ...m.milestone_status, description: content, id: m.milestone_status.id ?? 0 } } : m
-        );
+    useEffect(() => {
+        console.log('Milestone actualizado:', milestone);
+    }, [milestone]);
 
+    const handleDescriptionChange = (content: string) => {
+        console.log('Nuevo contenido:', content);
         setCampaign({
             ...campaign,
-            milestones: updatedMilestones,
+            milestones: campaign.milestones?.map((item) => {
+                if (item._Db_id === milestone._Db_id) {
+                    return {
+                        ...item,
+                        description: content,
+                    };
+                }
+                return item;
+            }),
         });
     };
-
-    const totalGoal = campaign.requestMaxAda;
 
     return (
         <section>
             <h4 className={styles.milestoneTitle}>{ordinalString} Milestone</h4>
             <article className={styles.milestoneCardLayout}>
-                <div className={styles.textEditorContianer}>
-                    <TextEditor styleOption="quillEditorB" menuOptions={1} content={milestone.milestone_status?.description ?? ''} onChange={handleDescriptionChange} />
+                <div className={styles.textEditorContainer}>
+                    {milestone ? (
+                        <TextEditor
+                            styleOption="quillEditorB"
+                            menuOptions={1}
+                            content={milestone.description ?? ''}
+                            onChange={handleDescriptionChange}
+                        />
+                    ) : (
+                        <p>Loading...</p>
+                    )}
                 </div>
                 <div className={styles.controller}>
                     <label htmlFor="" className={styles.timeLabel}>
@@ -43,7 +65,12 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({ milestone, index,
                     </label>
                     <div className={styles.controllerContainer}>
                         <MilestoneTimeEdit milestone={milestone} />
-                        <MilestonePercentage milestone={milestone} goal={totalGoal} maxAvailablePercentage={maxAvailablePercentage} onPercentageChange={onPercentageChange} />
+                        <MilestonePercentage
+                            milestone={milestone}
+                            goal={100} // Ejemplo: Sustituye por el valor real
+                            maxAvailablePercentage={maxAvailablePercentage}
+                            onPercentageChange={onPercentageChange}
+                        />
                     </div>
                 </div>
             </article>

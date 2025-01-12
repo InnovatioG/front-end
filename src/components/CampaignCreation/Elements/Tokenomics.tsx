@@ -4,27 +4,29 @@ import { inputFieldsToken } from '@/utils/constants';
 import React from 'react';
 import AdminUTXOS from './adminUTXO';
 import styles from './Tokenomics.module.scss';
+import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 const Tokenomics: React.FC = () => {
-    const { project, setProject, price_ada } = useCampaignIdStore();
+    const { campaign, setCampaign } = useCampaignIdStore();
+    const { adaPrice } = useGeneralStore();
 
     const handleInputChange = (id: string, value: string, transform: (value: string) => any) => {
-        setProject({
-            ...project,
+        setCampaign({
+            ...campaign,
             [id]: transform(value),
         });
     };
 
-    const fields = inputFieldsToken(project);
+    const fields = inputFieldsToken(campaign);
 
-    const valuePerToken =
-        project.cdRequestedMaxADA === null || isNaN(project.cdRequestedMaxADA) || project.goal === null || isNaN(project.goal) || project.goal === 0 ? (
-            'Price per token'
-        ) : (
-            <div className={styles.priceInAda}>
-                <img src={'/img/icons/ADA.svg'} alt="ADA" height={12} width={12} />
-                <span>{(project.goal / project.cdRequestedMaxADA / price_ada).toFixed(2)}</span>
-            </div>
-        );
+    /*     const valuePerToken =
+            campaign.requestMaxAda === null || isNaN(campaign.requestMaxAda) ? (
+                'Price per token'
+            ) : (
+                <div className={styles.priceInAda}>
+                    <img src={'/img/icons/ADA.svg'} alt="ADA" height={12} width={12} />
+                    <span>{(campaign.requestMaxAda / project.cdRequestedMaxADA / adaPrice).toFixed(2)}</span>
+                </div>
+            ); */
 
     return (
         <div className={styles.layout}>
@@ -44,15 +46,15 @@ const Tokenomics: React.FC = () => {
                 ))}
             </div>
             <div className={styles.inputTokenContainer}>
-                <div className={styles.inputToken}>{valuePerToken}</div>
-            </div>
+                {/*                 <div className={styles.inputToken}>{valuePerToken}</div>
+ */}            </div>
 
             <br />
 
             <div className={styles.textEditorContainer}>
                 <TextEditor
                     styleOption="quillEditorB"
-                    content={project.tokenomics_description || ''}
+                    content={campaign.tokenomics_description || ''}
                     onChange={(content) => handleInputChange('tokenomics_description', content, (value) => value)}
                 />
             </div>

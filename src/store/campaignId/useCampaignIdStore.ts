@@ -1,9 +1,6 @@
 import { CampaignIdStore, initialState } from '@/store/campaignId/initialState';
-import axios from 'axios';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { usePriceStore } from '../price/usepriceAdaOrDollar';
-import type { Campaign } from '@/types/types';
 
 /* Campaign render */
 
