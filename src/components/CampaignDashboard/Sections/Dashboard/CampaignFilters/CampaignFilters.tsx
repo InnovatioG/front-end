@@ -39,7 +39,7 @@ export default function CampaignFilters(props: CampaignFiltersProps) {
     // Opciones para el filtro de estado
     const stateOptions = [
         { value: '', label: 'All Status' }, // Opción para borrar el filtro
-        ...(campaignStatus?.filter((status) => status.id >= 8 && status.id !== 10)
+        ...(campaignStatus?.filter((status) => Number(status.id) >= 8 && Number(status.id) !== 10)
             .map((state) => ({
                 value: state.id,
                 label: state.name,

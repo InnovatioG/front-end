@@ -11,7 +11,7 @@ import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import type { MembersTeam } from '@/HardCode/databaseType';
 
 
-type SocialLinkKeys = "website" | "facebook" | "instagram" | "discord" | "linkedin" | "twitter";
+type SocialLinkKeys = "website" | "facebook" | "instagram" | "discord" | "twitter";
 
 
 //! TODO: PROBLEM WITH MEMBER ID 
@@ -95,7 +95,7 @@ const StepFour: React.FC = (props) => {
             <article className={styles.permissionContainer}>
                 <div className={styles.input}>
                     <Checkbox
-                        checked={newMember.editor}
+                        checked={newMember.editor || false}
                         onChange={(e) => setNewMemberField('editor', e)}
                         label='Edit Campaign'
                     />

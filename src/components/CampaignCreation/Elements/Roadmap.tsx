@@ -18,15 +18,19 @@ const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
     }, [])
 
 
-    const handlePercentageChangeWrapper = (milestone_id: number, newPercentage: number) => {
-        return handlePercentageChange(milestone_id, newPercentage, milestones, setProject, project);
+    const handlePercentageChangeWrapper = (milestone_id: string | undefined, newPercentage: number) => {
+        if (milestones !== undefined && milestone_id !== undefined) {
+            return handlePercentageChange(milestone_id, newPercentage, milestones, setCampaign, campaign);
+        }
+        return false;
+
     };
 
     const getTotalPercentage = () => {
         return milestones && milestones.reduce((sum, milestone) => sum + milestone.percentage, 0);
     };
 
-    const totalPercentage = getTotalPercentage();
+    const totalPercentage = getTotalPercentage() || 0;
 
 
 
@@ -39,7 +43,7 @@ const RoadMapYMilestones: React.FC<RoadMapYMilestonesProps> = (props) => {
                         milestone={milestone}
                         index={index}
                         maxAvailablePercentage={100 - totalPercentage + milestone.percentage}
-                        onPercentageChange={(newPercentage) => handlePercentageChangeWrapper(milestone.id, newPercentage)}
+                        onPercentageChange={(newPercentage) => handlePercentageChangeWrapper(milestone._Db_id, newPercentage)}
                     />
                 </div>
             ))}

@@ -4,54 +4,18 @@ import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import { memberFields } from '@/utils/constants';
 import React from 'react';
 import styles from './form.module.scss';
+import type { MembersTeam } from '@/types/types';
 
 interface FormNewMemberProps {
-    newMember: {
-        id: string;
-        campaign_id: number;
-        name: string;
-        member_description?: string;
-        last_name: string;
-        role: string;
-        editor: boolean;
-        admin: boolean;
-        email: string;
-        wallet_id?: string;
-        wallet_address?: string;
-        member_picture?: string;
-        member_manage_funds?: boolean;
-        website: string;
-        facebook: string;
-        instagram: string;
-        discord: string;
-        twitter: string;
-    };
+    newMember: MembersTeam;
     setNewMember: React.Dispatch<
-        React.SetStateAction<{
-            id: string;
-            campaign_id: number;
-            name: string;
-            last_name: string;
-            role: string;
-            editor: boolean;
-            admin: boolean;
-            email: string;
-            wallet_id?: string;
-            wallet_address?: string;
-            member_picture?: string;
-            member_manage_funds?: boolean;
-            website: string;
-            facebook: string;
-            instagram: string;
-            discord: string;
-            twitter: string;
-        }>
+        React.SetStateAction<MembersTeam>
     >;
     setNewMemberField: (key: keyof FormNewMemberProps['newMember'], value: any) => void;
 }
 
 const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, setNewMemberField }) => {
-    const socialMedia: Record<Extract<keyof FormNewMemberProps['newMember'], 'website' | 'facebook' | 'instagram' | 'discord' | 'linkedin' | 'twitter'>, string> = {
+    const socialMedia: Record<Extract<keyof FormNewMemberProps['newMember'], 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter'>, string> = {
         website: 'Website',
         facebook: 'Facebook',
         instagram: 'Instagram',
@@ -88,7 +52,7 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
                 </div>
                 <div className={styles.permissionContainer}>
                     <div className={styles.input}>
-                        <Checkbox checked={newMember.admin} onChange={(e) => setNewMemberField('admin', e)} label="Edit Campaign" />
+                        <Checkbox checked={newMember.admin || false} onChange={(e) => setNewMemberField('admin', e)} label="Edit Campaign" />
                     </div>
                     <input type="text" placeholder="Email" value={newMember.email} onChange={(e) => setNewMemberField('email', e.target.value)} className={styles.input} />
                     <div className={styles.input}>
@@ -121,7 +85,7 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
                 </div>
             </article>
             <div className={styles.buttonContainer}>
-                <GeneralButtonUI text="Add Member" onClick={() => {}} />
+                <GeneralButtonUI text="Add Member" onClick={() => { }} />
             </div>
         </section>
     );

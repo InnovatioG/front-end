@@ -1,5 +1,5 @@
-import type { Campaign } from './databaseType';
 import { User } from './databaseType';
+import { Campaign } from '@/types/types';
 
 const LOCAL_STORAGE_KEY = 'campaignData';
 
@@ -93,80 +93,6 @@ export const dataBaseService = {
             return data.campaigns[index];
         }
         return null;
-    },
-    getFilteredData: (filters: {
-        isHomePage: boolean;
-        userId: string | null;
-        isAdmin: boolean;
-        adminView: boolean;
-        searchTerm: string;
-        stateFilter: string;
-        categoryFilter: string;
-        isProtocolTeam: boolean;
-        myProposal: boolean;
-        haveProjects: boolean;
-        setHaveProjects: (haveProjects: boolean) => void;
-    }) => {
-        const data = dataBaseService.getData();
-        if (!data) return { campaigns: [], contracts: [], categories: [], states: [] };
-
-        const { isHomePage, userId, isAdmin, adminView, searchTerm, stateFilter, categoryFilter, isProtocolTeam, myProposal, setHaveProjects } = filters;
-
-        const stateMatches = (campaign: Campaign) => !stateFilter || campaign.state_id === Number(stateFilter);
-
-        const categoryMatches = (campaign: Campaign) => !categoryFilter || campaign.category_id === Number(categoryFilter);
-
-        const searchTermMatches = (campaign: Campaign) => campaign.title.toLowerCase().includes(searchTerm.toLowerCase());
-
-        const userMatches = (campaign: Campaign) => data.users.some((user: User) => user.id === campaign.creator_wallet_id && user.wallet_address === userId);
-
-        const isContractVisible = (campaign: Campaign) => campaign.contract_id === 1 || campaign.contract_id === 2;
-
-        const isVisible = (campaign: Campaign) => isContractVisible(campaign) && (campaign.vizualization === 1 || campaign.vizualization === 2) && userMatches(campaign);
-
-        // Si `isHomePage` es verdadero, incluye lógica de userMatches
-        if (isHomePage) {
-            const filteredCampaigns = data.campaigns.filter((campaign: Campaign) => {
-                const matches = campaign.state_id >= 8 && campaign.state_id !== 10 && stateMatches(campaign) && categoryMatches(campaign) && searchTermMatches(campaign);
-
-                if (userMatches(campaign)) {
-                    setHaveProjects(true);
-                }
-
-                return matches;
-            });
-
-            return {
-                campaigns: filteredCampaigns,
-                contracts: data.contracts || [],
-                states: data.states || [],
-                categories: data.categories || [],
-            };
-        }
-
-        // Lógica de filtrado para otros casos
-        const filteredCampaigns = data.campaigns.filter((campaign: Campaign) => {
-            if (myProposal) {
-                return campaign.creator_wallet_id === parseInt(userId as string);
-            }
-
-            if (isProtocolTeam || (isAdmin && adminView)) {
-                return searchTermMatches(campaign) && stateMatches(campaign) && categoryMatches(campaign);
-            }
-
-            if (userMatches(campaign)) {
-                setHaveProjects(true);
-            }
-
-            return isVisible(campaign) && searchTermMatches(campaign) && stateMatches(campaign) && categoryMatches(campaign);
-        });
-
-        return {
-            campaigns: filteredCampaigns,
-            contracts: data.contracts || [],
-            states: data.states || [],
-            categories: data.categories || [],
-        };
     },
     deleteCampaign: (id: number) => {
         const data = dataBaseService.getData();

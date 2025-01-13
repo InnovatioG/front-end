@@ -1,8 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/Elements/DefaultAvatar/DefaultAvatar';
-import type { MembersTeam } from '@/HardCode/databaseType';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import React from 'react';
 import styles from './MemberControllerCard.module.scss';
+import type { MembersTeam } from '@/types/types';
 
 interface MemberControllerProps {
     // Define props here
@@ -29,7 +29,7 @@ const MemberController: React.FC<MemberControllerProps> = () => {
                                 <div className={styles.avatarContainer}>
                                     <Avatar>
                                         <AvatarImage src={member.member_picture} />
-                                        <AvatarFallback>{member.name.slice(0, 2)}</AvatarFallback>
+                                        <AvatarFallback>{member.name && member.name.slice(0, 2)}</AvatarFallback>
                                     </Avatar>
                                 </div>
                                 <div className={styles.informationContainer}>

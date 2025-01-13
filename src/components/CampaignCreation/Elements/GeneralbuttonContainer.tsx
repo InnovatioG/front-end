@@ -1,5 +1,4 @@
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
-import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import React from 'react';
 import styles from './generalbuttonContainer.module.scss';
 
@@ -8,7 +7,7 @@ interface GeneralButtonContainerProps {
 }
 
 const GeneralButtonContainer: React.FC<GeneralButtonContainerProps> = (props) => {
-    const { project, setProject } = useCampaignIdStore();
+
     return (
         <div className={styles.container}>
             <GeneralButtonUI text="Contact support team" onClick={() => console.log('Save')} classNameStyle="outline" />

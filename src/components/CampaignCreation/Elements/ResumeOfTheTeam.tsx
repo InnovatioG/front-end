@@ -1,5 +1,5 @@
 import AddMore from '@/components/UI/Buttons/AddMore/AddMore';
-import { MembersTeam } from '@/HardCode/databaseType';
+import { MembersTeam } from '@/types/types';
 import FramerMotionAnimation from '@/utils/framerMotion';
 import React, { useEffect, useRef, useState } from 'react';
 import FormNewMember from './FormNewMember';
@@ -10,28 +10,12 @@ interface ResumeOfTheTeamProps {
     // Define props here
 }
 
-/* 
-id: number;
-member_name: string;
-member_description: string;
-member_last_name: string;
-member_role: string;
-member_email: string;
-member_picture: string;
-member_admin: boolean;
-member_wallet_address: string;
-member_manage_funds: boolean;
-website: string;
-facebook: string;
-instagram: string;
-discord: string;
-linkedin: string;
-xs: string; */
+
 const ResumeOfTheTeam: React.FC<ResumeOfTheTeamProps> = (props) => {
     const [addNewMember, setAddNewMember] = useState(false);
     const [newMember, setNewMember] = useState<MembersTeam>({
         id: '',
-        campaign_id: 0,
+        campaign_id: "",
         name: '',
         last_name: '',
         email: '',

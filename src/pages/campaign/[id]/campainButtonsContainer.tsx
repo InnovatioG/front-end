@@ -36,7 +36,7 @@ const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) 
                             openModal('contactSupport', { campaign_id: campaign._DB_id });
                         }}
                     />
-                    {campaign.campaign_status_id <= 3 && (
+                    {campaign.campaign_status_id && Number(campaign.campaign_status_id) <= 3 && (
                         <Link href={`/campaign/edit?id=${campaign._DB_id}`}>
                             <GeneralButtonUI text={'Edit Campaign'} classNameStyle={'outlineb'} onClick={() => { }} />
                         </Link>
@@ -44,7 +44,7 @@ const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) 
                     {filteredButtons.map((button, index) => {
                         if (button.link) {
                             return (
-                                <Link key={index} href={button.link(campaign._DB_id)}>
+                                <Link key={index} href={button.link(Number(campaign._DB_id))}>
                                     <GeneralButtonUI
                                         text={button.label}
                                         onClick={() => button.action && button.action((modalType) => openModal(modalType, { campaign_id: campaign._DB_id }))}
@@ -69,7 +69,7 @@ const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) 
                     })}
                 </div>
             ) : (
-                campaign.campaign_status_id === 9 && (
+                Number(campaign.campaign_status_id) === 9 && (
                     <div className={styles.buttonContainerInvest}>
                         <Link href={'/invest'}>
                             <GeneralButtonUI text="Invest" classNameStyle="invest" onClick={handleClick} />

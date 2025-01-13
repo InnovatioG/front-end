@@ -1,5 +1,5 @@
 import { dataBaseService } from '@/HardCode/dataBaseService';
-import { Campaign, Category, State, User } from '@/HardCode/databaseType';
+import { Category, State, User } from '@/HardCode/databaseType';
 import { useScreenSize } from '@/hooks/useScreenSize';
 import { useRouter } from 'next/router';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';

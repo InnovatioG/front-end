@@ -1,6 +1,6 @@
 import StepController from '@/components/CampaignCreation/Elements/Controller/StepController';
-import FormHeader from "@/components/CampaignCreation/Layout/FormHeader";
-import FormSteps from '@/components/CampaignCreation/Layout/FormSteps';
+import FormHeader from "@/components/CampaignCreation/layout/FormHeader";
+import FormSteps from '@/components/CampaignCreation/layout/FormSteps';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import { dataBaseService } from '@/HardCode/dataBaseService';
 import { Category, User } from '@/HardCode/databaseType';

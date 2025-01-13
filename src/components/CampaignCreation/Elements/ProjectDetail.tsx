@@ -4,37 +4,65 @@ import Checkbox from '@/components/UI/Buttons/Checkbox/Checkbox';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
 import { useCampaignId } from '@/hooks/useProjectDetail';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './ProjectDetail.module.scss';
+import { useCampaignDetail } from "./useProjectDetail"
 interface ProjectDetailProps {
     // Define props here
 }
 
 const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
-    const {
-        textEditorOptions,
-        selectedOption,
-        content,
-        newOptionTitle,
-        checkboxState,
-        setSelectedOption,
-        setNewOptionTitle,
-        handleEditorChange,
-        handleAddOption,
-        handleDragStart,
-        handleDragOver,
-        handleDragEnd,
-        handleCheckboxChange,
-        contentReorder,
-        draggedIndex,
-    } = useCampaignId();
+
 
     const [openModal, setIsOpenModal] = useState(false);
+    const { loading, campaign_content, handleSelectClick, selectedOption } = useCampaignDetail()
+
+
+    console.log(selectedOption)
+
 
     return (
         <article className={styles.generalLayout}>
             <div className={styles.layoutProject}>
-                {/* NAVEGACION  */}
+                <div className={styles.optionsContainer}>
+                    {campaign_content &&
+                        campaign_content.map((option, index) => (
+                            <div
+                                key={option.order}
+
+                            >
+                                <GeneralButtonUI classNameStyle="has" onClick={() => handleSelectClick(index)} text={option.name}
+                                    className={styles.hasContentButton}
+
+                                />
+                            </div>
+                        ))}
+                </div>
+
+                <div>
+                    {selectedOption ? (
+                        <TextEditor
+                            title={selectedOption.name || 'Untitled'}
+                            content={selectedOption.description || ''}
+                            styleOption="quillEditor"
+                            onChange={() => { }}
+                        />
+                    ) : (
+                        <p>Please select an option to edit</p>
+                    )}
+                </div>
+            </div>
+        </article>
+    );
+
+
+}
+
+export default ProjectDetail
+/* 
+    return (
+        <article className={styles.generalLayout}>
+            <div className={styles.layoutProject}>
 
                 <div className={styles.optionsContainer}>
                     {textEditorOptions.map((option, index) => {
@@ -71,7 +99,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
                     />
                 </div>
 
-                {/* EDITOR DE TEXTOS */}
                 <TextEditor title={selectedOption.title} content={content[selectedOption.id] || ''} onChange={handleEditorChange} styleOption="quillEditor" />
                 <div className={styles.addOptionContainer}></div>
             </div>
@@ -79,7 +106,6 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
                 <GeneralButtonUI text="Save" onClick={() => console.log('Save')} classNameStyle="green" />
             </div>
 
-            {/* !! MODAL PARA AGREGAR UN NUEVO INDEX  */}
 
             <ModalTemplate isOpen={openModal} setIsOpen={setIsOpenModal}>
                 <div className={styles.modalContainer}>
@@ -97,9 +123,9 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
                 </div>
             </ModalTemplate>
 
-            {/*  */}
         </article>
     );
 };
 
 export default ProjectDetail;
+ */

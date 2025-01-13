@@ -5,7 +5,8 @@ import styles from './ProjectDetail.module.scss';
 
 const ProjectDetail: React.FC = () => {
     const { campaign } = useCampaignIdStore();
-    const campaignContentSorted = [...campaign.campaign_content].sort((a, b) => a.order - b.order);
+    console.log(campaign.campaign_content)
+    const campaignContentSorted = (campaign.campaign_content || []).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
 
     const [activeSection, setActiveSection] = useState<number | null>(null);
     const sectionRefs = useRef<HTMLDivElement[]>([]);
@@ -24,13 +25,13 @@ const ProjectDetail: React.FC = () => {
                 const sectionHeight = rect.height;
 
                 if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                    currentSectionId = campaignContentSorted[i].id;
+                    currentSectionId = campaignContentSorted[i].order ?? null;
                     break;
                 }
             }
             const bottomThreshold = document.documentElement.scrollHeight - window.innerHeight - 10;
             if (window.scrollY >= bottomThreshold) {
-                currentSectionId = campaignContentSorted[campaignContentSorted.length - 1].id;
+                currentSectionId = campaignContentSorted[campaignContentSorted.length - 1].order ?? null;
             }
 
             if (currentSectionId !== null && currentSectionId !== activeSection) {
@@ -47,7 +48,7 @@ const ProjectDetail: React.FC = () => {
     }, [campaignContentSorted, activeSection]);
 
     const handleClick = (id: number) => {
-        const index = campaignContentSorted.findIndex((content) => content.id === id);
+        const index = campaignContentSorted.findIndex((content) => content.order === id);
         const section = sectionRefs.current[index];
         if (section) {
             section.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -63,7 +64,7 @@ const ProjectDetail: React.FC = () => {
             <div className={styles.sideBarNavagation}>
                 <ul className={styles.listContainer}>
                     {campaignContentSorted.map((content) => (
-                        <li key={content.id} className={`${styles.buttonList} ${activeSection === content.id ? styles.active : ''}`} onClick={() => handleClick(content.id)}>
+                        <li key={content.order} className={`${styles.buttonList} ${activeSection === content.order ? styles.active : ''}`} onClick={() => content.order !== undefined && handleClick(content.order)}>
                             {content.name}
                         </li>
                     ))}
@@ -72,8 +73,8 @@ const ProjectDetail: React.FC = () => {
             <div className={styles.content}>
                 {campaignContentSorted.map((content, index) => (
                     <div
-                        key={content.id}
-                        id={`section-${content.id}`}
+                        key={content.order}
+                        id={`section-${content.order}`}
                         className={styles.container}
                         ref={(el) => {
                             sectionRefs.current[index] = el!;
@@ -83,7 +84,7 @@ const ProjectDetail: React.FC = () => {
                             <h2 className={styles.title}>{content.name}</h2>
                             <div className={styles.divisor}></div>
                         </div>
-                        <div dangerouslySetInnerHTML={{ __html: content.description }} className={styles.content} />
+                        <div dangerouslySetInnerHTML={{ __html: content.description || '' }} className={styles.content} />
                     </div>
                 ))}
             </div>

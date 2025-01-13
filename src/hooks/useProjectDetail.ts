@@ -126,54 +126,70 @@ export const useCampaignId = () => {
             setIsLoading(false);
         }
     };
+    /* 
+    const campaignContent = campaign?.campaign_content || [];
 
-    const campaignContent = campaign?.campaign_content || {};
+    console.log('campaignContent', campaignContent);
 
-    const initialContent = initialTextEditorOptions.reduce((acc: { [key: number]: string }, option) => {
-        const existingContent = campaignContent.find((campaign) => campaign._DB_id === option.id);
-        acc[option.id] = existingContent ? existingContent.description : '';
+    const campaignContentMap = campaignContent.reduce((acc: { [key: string]: any }, content) => {
+        acc[content.campaign_id] = content;
         return acc;
     }, {});
+
+    const initialContent = initialTextEditorOptions.reduce((acc: { [key: number]: string }, option) => {
+        const existingContent = campaignContentMap[option.id.toString()];
+        acc[option.id] = existingContent?.description ?? '';
+        return acc;
+    }, {});
+
+    console.log(initialContent);
+    console.log(initialContent);
 
     const initialContentReorder = initialTextEditorOptions.reduce(
         (
             acc: {
                 [key: number]: {
-                    id: number;
-                    title: string;
-                    content: string;
+                    campaign_id: string;
+                    name: string;
+                    description: string;
                     order: number;
                 };
             },
             option,
             index
         ) => {
-            const existingContent = campaignContent.find((content) => content.id === option.id);
+            const existingContent = campaignContentMap[option.id.toString()];
             acc[option.id] = {
-                id: option.id,
-                title: option.title,
-                content: existingContent ? existingContent.description : '',
-                order: existingContent ? existingContent.order : index,
+                campaign_id: option.id.toString(),
+                name: existingContent?.name ?? option.title, // Usar el título de campaignContent si está disponible
+                description: existingContent?.description ?? '',
+                order: existingContent?.order ?? index,
             };
             return acc;
         },
         {}
     );
-
     const [textEditorOptions, setTextEditorOptions] = useState(
-        initialTextEditorOptions.map((option, index) => ({
-            ...option,
-            order: index * 10,
-        }))
+        initialTextEditorOptions.map((option, index) => {
+            console.log('option', option); // Ahora está dentro de la función de mapeo
+            return {
+                ...option,
+                order: index * 10, // Añadimos el campo order
+            };
+        })
     );
+    console.log(textEditorOptions);
+
     const [selectedOption, setSelectedOption] = useState(initialTextEditorOptions[0]);
+    console.log('initial content', initialContent);
+
     const [content, setContent] = useState<{ [key: number]: string }>(initialContent);
     const [contentReorder, setContentReorder] = useState<{
         [key: number]: {
-            id: number;
-            title: string;
-            content: string;
-            order: number;
+            campaign_id?: string;
+            name?: string;
+            description?: string;
+            order?: number;
         };
     }>(initialContentReorder);
 
@@ -275,11 +291,11 @@ export const useCampaignId = () => {
         });
         setContentReorder(newContentReorder);
         setDraggedIndex(null);
-    };
+    }; */
 
     return {
         fetchCampaigns,
-        textEditorOptions,
+        /*     textEditorOptions,
         selectedOption,
         content,
         newOptionTitle,
@@ -293,7 +309,7 @@ export const useCampaignId = () => {
         handleDragOver,
         handleDragEnd,
         contentReorder,
-        draggedIndex,
+        draggedIndex, */
     };
 };
 

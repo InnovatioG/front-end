@@ -6,11 +6,6 @@ interface CampaignsProps {
 }
 
 const Campaigns: React.FC<CampaignsProps> = (props) => {
-    const { fetchAdaPrice } = useCampaignIdStore();
-
-    useEffect(() => {
-        fetchAdaPrice();
-    }, [fetchAdaPrice]);
 
     return (
         <div>

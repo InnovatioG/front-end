@@ -6,6 +6,8 @@ import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import { useModal } from '@/contexts/ModalContext';
 import useDraftCard from '@/hooks/useDraftCard';
 import type { Campaign } from '@/types/types';
+import { CampaignStatus } from '@/utils/constants/status';
+
 
 interface DraftCardProps {
     campaign: Campaign;
@@ -15,20 +17,23 @@ interface DraftCardProps {
 
 const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin }) => {
     const { openModal } = useModal();
-    const { label, labelClass, buttons, timeRemaining, formatAllTime, currentMilestone } = useDraftCard(campaign, isProtocolTeam, isAdmin);
+    const { label, labelClass, buttons, timeRemaining, formatAllTime, currentMilestone, getInternalId } = useDraftCard(campaign, isProtocolTeam, isAdmin);
 
     const categoriesById = (id: number) => {
         return 'TODO'
     }
+    const idInternal = getInternalId(campaign.campaign_status_id);
+
+
 
     return (
         <div className={styles.campaignCard}>
-            <span>{campaign.id}</span>
+            <span>{campaign._DB_id}</span>
             <div className={styles.headCard}>
                 <Image
                     width={58}
                     height={58}
-                    src={campaign.logo_url}
+                    src={campaign.logo_url && campaign.logo_url || ''}
                     alt="logo-company"
                     className={styles.logoCard}
                 />
@@ -36,25 +41,25 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin
                     <div className={styles.statusContracts}>
                         <div className={`${styles.state} ${styles[labelClass]}`}>
 
-                            {campaign.state_id === 8 ? formatAllTime(timeRemaining) : label}
-                            {campaign.state_id > 9 && campaign.state_id < 12 && ` ${currentMilestone}`}
+                            {idInternal === CampaignStatus.COUNTDOWN ? formatAllTime(timeRemaining) : label}
+                            {Number(campaign.campaign_status_id) > CampaignStatus.FUNDRAISING && Number(campaign.campaign_status_id) < CampaignStatus.FAILED && ` ${currentMilestone}`}
                         </div>
                         <div className={styles.category}>
-                            {categoriesById(campaign.category_id)}
+                            {categoriesById(Number(campaign.campaing_category_id))}
                         </div>
                     </div>
                 </div>
             </div>
-            <h3 className={styles.cardTitle}>{campaign.title}</h3>
+            <h3 className={styles.cardTitle}>{campaign.name}</h3>
             <h3 className={styles.cardDescription}>{campaign.description}</h3>
             <div className={styles.actionsTarget}>
                 {buttons.map((button, index) => {
                     if (button.link) {
                         return (
-                            <Link key={index} href={button.link(campaign._DB_id)}>
+                            <Link key={index} href={button.link(Number(campaign._DB_id))}>
                                 <GeneralButtonUI
                                     text={button.label}
-                                    onClick={() => button.action && button.action((modalType) => openModal(modalType, campaign._DB_id))}
+                                    onClick={() => button.action && button.action((modalType) => openModal(modalType, /* campaign._DB_id */))}
                                     classNameStyle={`${button.classNameType} ${buttons.length === 1 ? 'center' : ''}`}
                                 >
                                     {buttons.length > 1 && <span className={styles[button.classNameType]}>{'>'}</span>}
@@ -66,7 +71,7 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin
                             <GeneralButtonUI
                                 key={index}
                                 text={button.label}
-                                onClick={() => button.action && button.action((modalType) => openModal(modalType, campaign._DB_id, campaign))}
+                                onClick={() => button.action && button.action((modalType) => openModal(modalType, /* campaign._DB_id, campaign */))}
                                 classNameStyle={`${button.classNameType} ${buttons.length === 1 ? 'center' : ''}`}
                             >
                                 {buttons.length > 1 && <span className={styles[button.classNameType]}>{'>'}</span>}

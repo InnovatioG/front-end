@@ -13,19 +13,18 @@ const InvestPage: React.FC<InvestPageProps> = (props) => {
     const router = useRouter();
 
     const { id } = router.query;
-    const { setProject, project, setIsLoading, isLoading, setMenuView, setEditionMode, fetchAdaPrice } = useCampaignIdStore();
+    const { setCampaign, campaign, setIsLoading, isLoading, setMenuView, setEditionMode } = useCampaignIdStore();
 
     const fetchCampaign = () => {
         setIsLoading(true);
         setEditionMode(true);
-        fetchAdaPrice();
 
         if (id) {
             const campaign_id = Number(id);
             const campaign: any = JSON.campaigns.find((camp) => camp.id === campaign_id);
 
             if (campaign) {
-                setProject(campaign);
+                setCampaign(campaign);
             }
         }
 
@@ -37,16 +36,15 @@ const InvestPage: React.FC<InvestPageProps> = (props) => {
     };
 
     const { } = useCampaignIdStore();
-    const { cdCampaignToken_TN, cdRequestedMaxADA, cdCampaignToken_PriceADA, goal, start_date, title, logo_url } = project;
-
+    /*     const { cdCampaignToken_TN, cdRequestedMaxADA, cdCampaignToken_PriceADA, goal, start_date, name, logo_url } = campaign;
+     */
     useEffect(() => {
-        fetchAdaPrice();
         fetchCampaign();
-    }, [fetchAdaPrice, fetchCampaign, id]);
+    }, [fetchCampaign, id]);
 
     return (
         <main className={styles.layout}>
-            <InvestHeader title={project.title} logo_url={project.logo_url} />
+            {/*      <InvestHeader title={campaign.name} logo_url={campaign.logo_url !== undefined ? campaign.logo_url : logo_url} />
             <article>
                 <InvestmentForm
                     cdCampaignToken_PriceADA={cdCampaignToken_PriceADA}
@@ -56,7 +54,7 @@ const InvestPage: React.FC<InvestPageProps> = (props) => {
                     id={id ? Number(id) : 0}
                     deliveryDate={start_date}
                 />
-            </article>
+            </article> */}
         </main>
     );
 };

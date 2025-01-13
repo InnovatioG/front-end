@@ -1,8 +1,8 @@
-import StepFour from '@/components/CampaignCreation/Layout/Form/Four/StepFour';
-import StepThree from '@/components/CampaignCreation/Layout/Form/Three/StepThree';
-import StepTwo from '@/components/CampaignCreation/Layout/Form/Two/StepTwo';
+import StepFour from '@/components/CampaignCreation/layout/form/Four/StepFour';
+import StepThree from '@/components/CampaignCreation/layout/form/Three/StepThree';
+import StepTwo from '@/components/CampaignCreation/layout/form/Two/StepTwo';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
-import StepOne from './Form/One/StepOne';
+import StepOne from '@/components/CampaignCreation/layout/form/one/StepOne'
 
 const stepComponents = {
     1: StepOne,

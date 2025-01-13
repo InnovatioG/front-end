@@ -15,45 +15,45 @@ interface NewDraftDashboardProps {
 const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
 
     const {
-        campaigns,
         filteredCampaigns,
         visibleCampaigns,
         searchTerm,
         categoryFilter,
         categories,
-        adminView,
-        isAdmin,
-        loading,
-        campaignsLoading,
         handleSearchChange,
-        handleStateFilterChange,
-        handleCategoryFilterChange,
-        handleClickAdminView,
+        setStateFilter,
+        setCategoryFilter,
         loadMoreCampaigns,
         screenSize,
-        isProtocolTeam,
         states,
-        stateFilter
+        stateFilter,
+        myProposal,
+        setMyProposal,
+        isHomePage,
+        pathName,
+        isAdmin,
+        isProtocolTeam
     } = useDashboardCard(address);
 
-
+    const handleMyProposalChange = (checked: boolean) => {
+        setMyProposal(checked);
+    };
 
 
     return (
         <div className={styles.draftDashboard}>
             <DraftFilters
+                isHomePage={isHomePage}
                 searchTerm={searchTerm}
-                stateFilter={stateFilter}
+                statusFilter={stateFilter}
                 categoryFilter={categoryFilter}
-                categories={categories}
-                states={states}
-                viewAdmin={adminView}
+                setCategoryFilter={setCategoryFilter}
+                setStateFilter={setStateFilter}
                 onSearchChange={handleSearchChange}
-                onStateFilterChange={handleStateFilterChange}
-                onCategoryFilterChange={handleCategoryFilterChange}
                 screenSize={screenSize}
-                onClickAdminView={handleClickAdminView}
-                isAdmin={isAdmin}
+                isConnected={!!address}
+                myProposal={myProposal}
+                onMyProposalChange={handleMyProposalChange}
             />
             <div className={styles.draftGrid}>
                 <Link href={"./new"}>
@@ -65,7 +65,7 @@ const NewDraftDashboard: React.FC<NewDraftDashboardProps> = ({ address }) => {
                     </div>
                 </Link>
                 {visibleCampaigns.map((campaign) => (
-                    <DraftCard key={campaign.id} campaign={campaign} isProtocolTeam={isProtocolTeam} isAdmin={isAdmin} />
+                    <DraftCard key={campaign._DB_id} campaign={campaign} isProtocolTeam={isProtocolTeam} isAdmin={isAdmin} />
                 ))}
                 <button onClick={loadMoreCampaigns}>Load more</button>
             </div>

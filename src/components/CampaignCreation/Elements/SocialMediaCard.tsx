@@ -3,25 +3,34 @@ import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
 import { useModal } from '@/contexts/ModalContext';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
-import type { ButtonConfig } from '@/utils/constants';
+import type { ButtonType } from '@/utils/constants';
 import { ButtonsForCampaignPage, socialIcons } from '@/utils/constants';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import styles from './SocialMediaCard.module.scss';
-
+import { useEffect } from 'react';
 interface SocialMediaCardContainerProps { }
 
 // Definir un tipo específico para las claves de redes sociales
-type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'linkedin' | 'twitter';
+type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter';
 
 const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props) => {
     const { campaign, setCampaign, editionMode, isAdmin, isProtocolTeam } = useCampaignIdStore();
     const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>('website');
     const [modalOpen, setModalOpen] = useState<boolean>(false);
+    const [buttons, setButtons] = useState<ButtonType[]>([]);
+
 
     const { openModal } = useModal();
-    const { buttons } = ButtonsForCampaignPage(campaign.campaign_status_id, isProtocolTeam, isAdmin);
+
+
+    useEffect(() => {
+        if (campaign._DB_id !== "") {
+            const { buttons } = ButtonsForCampaignPage(Number(campaign.campaign_status_id), isProtocolTeam, isAdmin);
+            setButtons(buttons);
+        }
+    }, [campaign, isProtocolTeam, isAdmin]);
 
     const editLinkButton = () => {
         setModalOpen(true);
@@ -55,8 +64,8 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
                 </div>
             ) : (
                 <>
-                    {buttons.map((button: ButtonConfig, index: number) => (
-                        <Link key={index} href={button.link ? button.link(campaign._DB_id) : '#'}>
+                    {buttons.map((button: ButtonType, index: number) => (
+                        <Link key={index} href={button.link ? button.link(Number(campaign._DB_id)) : '#'}>
                             <GeneralButtonUI
                                 text={button.label}
                                 onClick={() => {
@@ -80,7 +89,7 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
                             const socialLink = campaign[social.name as SocialLinkKeys];
                             if (!editionMode && (!socialLink || socialLink.trim() === '')) return null; // No renderizar si el enlace está vacío y no está en modo edición
                             return (
-                                <a key={social.name} href={!editionMode ? formatSocialLink(socialLink) : '#'} target="_blank" rel="noopener noreferrer">
+                                <a key={social.name} href={!editionMode ? formatSocialLink(socialLink || '') : '#'} target="_blank" rel="noopener noreferrer">
                                     <SocialButton icon={social.icon} name={social.name as SocialLinkKeys} setSocialLink={setSelectedLink} />
                                 </a>
                             );
@@ -98,7 +107,7 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
                             value={campaign[selectedLink] || ''}
                             placeholder={getPlaceholder()}
                             onChange={(e) =>
-                                setProject({
+                                setCampaign({
                                     ...campaign,
                                     [selectedLink]: e.target.value,
                                 })

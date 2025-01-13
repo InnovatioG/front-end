@@ -7,7 +7,7 @@ const QuillEditor = dynamic(() => import('react-quill'), { ssr: false });
 
 interface TextEditorProps {
     title?: string;
-    content: string;
+    content?: string;
     onChange: (newContent: string) => void;
     styleOption: string;
     menuOptions?: number;
