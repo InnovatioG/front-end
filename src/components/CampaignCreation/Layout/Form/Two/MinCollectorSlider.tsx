@@ -12,15 +12,13 @@ const MinCollectorSlider: React.FC<MinCollectorSliderProps> = (props) => {
     const { setRequestMinAda, newCampaign } = useCampaignStore();
     const { requestMinAda, requestMaxAda, } = newCampaign;
 
-
-
-    const min_request = newCampaign.requestMinAda;
-    const porcentage = calculatePorcentage(Number(requestMaxAda), Number(requestMinAda));
+    const porcentage = calculatePorcentage(Number(requestMaxAda), (Number(requestMinAda) * 100) / Number(requestMaxAda));
+    console.log(requestMinAda)
 
     return (
         <div className={styles.minContainer}>
-            <h3>Minimum collection to activate the campaign: {Number(requestMinAda)}% </h3>
-            <PercentageSlider initialLabel={porcentage} setValue={setRequestMinAda} />
+            <h3>Minimum collection to activate the campaign: {(Number(requestMinAda) * 100) / Number(requestMaxAda)}% </h3>
+            <PercentageSlider initialLabel={porcentage} setValue={setRequestMinAda} total={Number(requestMaxAda)} />
         </div>
     );
 }

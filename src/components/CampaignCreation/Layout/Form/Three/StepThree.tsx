@@ -15,8 +15,7 @@ const StepThree: React.FC<StepThreeProps> = (props) => {
         facebook: newCampaign.facebook,
         instagram: newCampaign.instagram,
         discord: newCampaign.discord,
-/*         linkedin: newCampaign.linkedin,
- */        twitter: newCampaign.twitter,
+        twitter: newCampaign.twitter,
     };
 
     const disabledButton = () => {

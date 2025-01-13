@@ -1,0 +1,27 @@
+import { useState, useEffect } from 'react';
+import { useCampaignStore } from '@/store/campaign/useCampaignStore';
+import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
+
+export default function useFundraisingSlider() {
+    const { setMilestones } = useCampaignStore();
+    const { priceAdaOrDollar } = usePriceStore();
+
+    const [selectedMilestones, setSelectedMilestones] = useState<number | null>(null);
+
+    const handleSelect = (numMilestones: number) => {
+        setSelectedMilestones(numMilestones);
+        const milestones = Array.from({ length: numMilestones }, (_, index) => ({
+            order: index + 1,
+            requestMaxAda: 0,
+        }));
+        setMilestones(milestones);
+    };
+    const calculaterequestMaxAda = (requestMaxAda: number, adaPrice: number) => {
+        if (priceAdaOrDollar == 'dollar') {
+            return requestMaxAda / adaPrice;
+        }
+        return requestMaxAda;
+    };
+
+    return { selectedMilestones, handleSelect, calculaterequestMaxAda };
+}

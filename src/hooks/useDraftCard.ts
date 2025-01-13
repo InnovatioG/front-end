@@ -60,9 +60,8 @@ const useDraftCard = (campaign: Campaign, isProtocolTeam: boolean, isAdmin: bool
         ? cardInformationForProtocolTeam(Number(campaign.campaign_status_id))
         : CardInformationByState(Number(idInternal), milestone_status_id, isAdmin);
 
-    const labelClass = label.toLowerCase().replace(/\s+/g, '-');
-
     const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(campaign.begin_at));
+    const labelClass = label.toLowerCase().replace(/\s+/g, '-');
 
     useEffect(() => {
         const timer = setInterval(() => {

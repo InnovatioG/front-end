@@ -280,7 +280,7 @@ export const ButtonsForCampaignPage = (state_id: number, isProtocolTeam: boolean
                 : [buttonTypes.INVEST], // Default Button
         },
     };
-    return state_id !== undefined ? state[state_id] : { label: 'Not Started', buttons: [] };
+    return state[state_id] || { label: 'Not Started', buttons: [] };
 };
 
 export const CardInformationByState = (state_id: number, milestone_status_id?: number, isAdmin?: boolean): StateConfig => {

@@ -14,12 +14,10 @@ const Slider: React.FC<SliderProps> = ({ value, setValue, min, max, step }) => {
 
     useEffect(() => {
         if (sliderRef.current) {
-            // Calcula el porcentaje basado en BigInt
             const range = Number(max) - Number(min);
             const currentValue = Number(value) - Number(min);
             const percentage = (currentValue / range) * 100;
 
-            // Actualiza la propiedad personalizada de CSS
             sliderRef.current.style.setProperty('--value', `${percentage}%`);
         }
     }, [value, min, max]);
@@ -29,12 +27,12 @@ const Slider: React.FC<SliderProps> = ({ value, setValue, min, max, step }) => {
             <input
                 ref={sliderRef}
                 type="range"
-                min={min.toString()} // Convierte BigInt a string para que HTML lo acepte
+                min={min.toString()}
                 max={max.toString()}
                 step={step}
                 value={value.toString()}
-                onChange={(e) => setValue(BigInt(e.target.value))} // Convierte a BigInt al actualizar
-                className={`${styles.slider} ${styles['slider-filled']}`} // Aplica estilos
+                onChange={(e) => setValue(BigInt(e.target.value))}
+                className={`${styles.slider} ${styles['slider-filled']}`}
             />
         </div>
     );

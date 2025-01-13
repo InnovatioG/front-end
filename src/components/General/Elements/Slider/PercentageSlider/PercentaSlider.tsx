@@ -2,29 +2,19 @@ import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 import { formatMoney } from '@/utils/formats';
 import React, { useEffect, useState } from 'react';
 import styles from './PercentaSlider.module.scss';
+import { usePercentaSlider } from "@/components/General/Elements/Slider/PercentageSlider/usePercentaSlider"
 
 interface PercentageSliderProps {
     initialLabel: number; // Assuming you want to pass an initial value
     setValue: (value: BigInt) => void;
+    total: number
+
 }
 
-const PercentageSlider: React.FC<PercentageSliderProps> = ({ initialLabel, setValue }) => {
-    const [label, setLabel] = useState(initialLabel);
+const PercentageSlider: React.FC<PercentageSliderProps> = ({ initialLabel, setValue, total }) => {
+
+    const { label, setLabel, handleSliderChange } = usePercentaSlider(initialLabel, setValue, total);
     const { priceAdaOrDollar } = usePriceStore();
-
-    const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = parseInt(event.target.value);
-        setLabel(newValue);
-        setValue(BigInt(newValue));
-    };
-
-    useEffect(() => {
-        const slider = document.querySelector(`.${styles.slider}`) as HTMLInputElement;
-        if (slider) {
-            const valuePercentage = ((label - 80) / (100 - 80)) * 100;
-            label < 91 ? slider.style.setProperty('--value-percentage', `${valuePercentage + 4}%`) : slider.style.setProperty('--value-percentage', `${valuePercentage - 2}%`);
-        }
-    }, [label]);
 
     return (
         <div className={styles.labelContainer}>

@@ -2,26 +2,13 @@ import CommonsBtn from '@/components/UI/Buttons/CommonsBtn';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import CategoryDropdown from "@/components/CampaignCreation/layout/form/one/CategoryDropdown"
 import styles from './StepOne.module.scss';
-import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
+import useStepOne from './useStepOne';
 
 export default function StepOne() {
-    const { step, newCampaign, setTitle, setDescription, nextStep, setCategoryId } = useCampaignStore();
+    const { newCampaign, setTitle, setDescription, nextStep, setCategoryId } = useCampaignStore();
     const { name, description, campaing_category_id } = newCampaign;
-    const { campaignCategories, campaignStatus } = useGeneralStore();
+    const { categoryOptions, handleDescriptionChange } = useStepOne()
 
-    console.log("campaignCategories", campaignCategories)
-
-    const categoryOptions = campaignCategories.map((category) => ({
-        value: category.id,
-        label: category.name,
-    }));
-
-    const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const value = e.target.value;
-        if (value.length <= 240) {
-            setDescription(value);
-        }
-    };
     return (
         <div className={styles.section}>
             <div className={styles.articleGroup}>

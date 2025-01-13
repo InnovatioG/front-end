@@ -16,7 +16,7 @@ interface SocialMediaCardContainerProps { }
 type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter';
 
 const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props) => {
-    const { campaign, setCampaign, editionMode, isAdmin, isProtocolTeam } = useCampaignIdStore();
+    const { campaign, setCampaign, editionMode, isAdmin, isProtocolTeam, isLoading } = useCampaignIdStore();
     const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>('website');
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [buttons, setButtons] = useState<ButtonType[]>([]);
@@ -24,6 +24,8 @@ const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props
 
     const { openModal } = useModal();
 
+
+    console.log(isLoading)
 
     useEffect(() => {
         if (campaign._DB_id !== "") {
