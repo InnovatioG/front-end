@@ -15,28 +15,34 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
 
 
     const [openModal, setIsOpenModal] = useState(false);
-    const { loading, campaign_content, handleSelectClick, selectedOption } = useCampaignDetail()
+    const { loading, mergedOptions, handleSelectClick, selectedOption, handleAddOption, newOptionTitle, setNewOptionTitle, setSelectedOption, handleDescriptionChange } = useCampaignDetail();
 
-
-    console.log(selectedOption)
-
+    useEffect(() => {
+        setSelectedOption(mergedOptions[0]);
+    }, [])
 
     return (
         <article className={styles.generalLayout}>
             <div className={styles.layoutProject}>
                 <div className={styles.optionsContainer}>
-                    {campaign_content &&
-                        campaign_content.map((option, index) => (
-                            <div
-                                key={option.order}
-
-                            >
-                                <GeneralButtonUI classNameStyle="has" onClick={() => handleSelectClick(index)} text={option.name}
+                    {mergedOptions &&
+                        mergedOptions.map((option, index) => (
+                            <div key={option.order}>
+                                <GeneralButtonUI
+                                    classNameStyle="has"
+                                    onClick={() => handleSelectClick(index)}
+                                    text={option.name}
                                     className={styles.hasContentButton}
-
                                 />
                             </div>
                         ))}
+                    <GeneralButtonUI
+                        text="Add index"
+                        onClick={() => {
+                            setIsOpenModal(true);
+                        }}
+                        classNameStyle="menu-index-selected"
+                    />
                 </div>
 
                 <div>
@@ -45,20 +51,35 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
                             title={selectedOption.name || 'Untitled'}
                             content={selectedOption.description || ''}
                             styleOption="quillEditor"
-                            onChange={() => { }}
+                            onChange={(newContent) => {
+                                handleDescriptionChange(newContent); // Pasa el nuevo contenido al callback
+                            }}
                         />
                     ) : (
                         <p>Please select an option to edit</p>
                     )}
                 </div>
             </div>
+            <ModalTemplate isOpen={openModal} setIsOpen={setIsOpenModal}>
+                <div className={styles.modalContainer}>
+                    <h2 className={styles.modalTitle}>Add Index</h2>
+                    <div className={styles.inputContainer}>
+                        <input type="text" value={newOptionTitle} onChange={(e) => setNewOptionTitle(e.target.value)} placeholder="New section title" className={styles.input} />
+                        <GeneralButtonUI
+                            text="Confirm"
+                            onClick={() => {
+                                handleAddOption();
+                                setIsOpenModal(false);
+                            }}
+                        />
+                    </div>
+                </div>
+            </ModalTemplate>
         </article>
     );
+};
 
-
-}
-
-export default ProjectDetail
+export default ProjectDetail;
 /* 
     return (
         <article className={styles.generalLayout}>

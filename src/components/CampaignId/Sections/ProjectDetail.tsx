@@ -5,8 +5,14 @@ import styles from './ProjectDetail.module.scss';
 
 const ProjectDetail: React.FC = () => {
     const { campaign } = useCampaignIdStore();
-    console.log(campaign.campaign_content)
-    const campaignContentSorted = (campaign.campaign_content || []).sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+    console.log("campaign: ", campaign.campaign_content)
+    /* 
+        const campaignContentSorted = (campaign.campaign_content || []).sort((a, b) => (a.order ?? 0) - (b.order ?? 0)); */
+    const campaignContent = campaign?.campaign_content || [];
+    const campaignContentSorted = [...campaignContent].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+
+
 
     const [activeSection, setActiveSection] = useState<number | null>(null);
     const sectionRefs = useRef<HTMLDivElement[]>([]);

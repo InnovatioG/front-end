@@ -114,3 +114,10 @@ export interface MilestoneStatusGlobal {
     id_internal: number;
     name: string;
 }
+
+export interface initialTextEditorOptionsType {
+    order: number;
+    name: string;
+    description: string;
+    tooltip: string;
+}
