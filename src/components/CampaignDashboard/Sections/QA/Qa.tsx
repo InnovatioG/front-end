@@ -1,46 +1,15 @@
 import AddMore from '@/components/UI/Buttons/AddMore/AddMore';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
-import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import FramerMotionAnimation from '@/utils/framerMotion';
-import React, { useState } from 'react';
-import styles from './Qa.module.scss';
+import React from 'react';
+import styles from "@/components/CampaignCreation/Elements/QA/Qa.module.scss";
+import useQA from '@/components/CampaignDashboard/Sections/QA/useQA'
 interface QYAProps {
     // Define props here
 }
 
-const QYA: React.FC<QYAProps> = (props) => {
-    const { campaign, setCampaign } = useCampaignIdStore();
-    const faqs = campaign.faqs || []; // Ensure faqs is always an array
-    const [viewInputQuestion, setViewInputQuestion] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
-
-    const [newQa, setNewQa] = useState({ question: '', answer: '', order: 0 });
-
-    const handleNewQa = () => {
-        setCampaign({
-            ...campaign,
-            faqs: [...faqs, newQa],
-        });
-        setNewQa({ question: '', answer: '', order: faqs.length + 1 });
-    };
-
-    const handleQuestionOpen = () => {
-        setIsOpen(!isOpen);
-        setViewInputQuestion(!viewInputQuestion);
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setNewQa((prevState) => ({ ...prevState, [name]: value }));
-    };
-
-    const handleRemoveQa = (index: number) => {
-        const newFaqs = faqs.filter((_, i) => i !== index);
-        setCampaign({
-            ...campaign,
-            faqs: newFaqs,
-        });
-    };
+const QYA: React.FC<QYAProps> = () => {
+    const { faqs, viewInputQuestion, isOpen, newQa, handleNewQa, handleQuestionOpen, handleChange, handleRemoveQa, setIsOpen } = useQA();
 
     return (
         <div className={styles.generalContainer}>

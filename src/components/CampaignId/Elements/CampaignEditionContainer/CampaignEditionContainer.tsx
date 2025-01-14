@@ -1,8 +1,8 @@
 import CampaignDetail from '@/components/CampaignId/Elements/CampaignDetail/CampaignDetail';
-import QYA from '@/components/CampaignCreation/Elements/Qa';
-import ResumeOfTheTeam from '@/components/CampaignCreation/Elements/ResumeOfTheTeam';
-import RoadMap from '@/components/CampaignCreation/Elements/Roadmap';
-import Tokenomics from '@/components/CampaignCreation/Elements/Tokenomics';
+import QYA from '@/components/CampaignDashboard/Sections/QA/Qa';
+import ResumeOfTheTeam from '@/components/CampaignCreation/Elements/ResumeOfTheTeam/ResumeOfTheTeam';
+import RoadMap from '@/components/CampaignDashboard/Sections/Roadmap/Roadmap';
+import Tokenomics from '@/components/CampaignCreation/Elements/Tokenomics/Tokenomics';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import React from 'react';
 import NavBarProjectEdition from '@/components/CampaignId/Elements/NavMenuProjectEdition/NavMenuProjectEdition';

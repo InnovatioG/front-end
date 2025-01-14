@@ -1,33 +1,10 @@
 import TextEditor from '@/components/General/Elements/TextEditor/TextEditor';
-import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
-import { inputFieldsToken } from '@/utils/constants';
 import React from 'react';
-import AdminUTXOS from "@/components/CampaignCreation/Elements/AdminUTXO/AdminUTXO"
+import AdminUTXOS from '@/components/CampaignCreation/Elements/AdminUTXO/AdminUTXO';
 import styles from './Tokenomics.module.scss';
-import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
+import useTokenomics from './useTokenomics';
 const Tokenomics: React.FC = () => {
-    const { campaign, setCampaign } = useCampaignIdStore();
-    const { adaPrice } = useGeneralStore();
-
-    const handleInputChange = (id: string, value: string, transform: (value: string) => any) => {
-        setCampaign({
-            ...campaign,
-            [id]: transform(value),
-        });
-    };
-
-    const fields = inputFieldsToken(campaign);
-
-    /*     const valuePerToken =
-            campaign.requestMaxAda === null || isNaN(campaign.requestMaxAda) ? (
-                'Price per token'
-            ) : (
-                <div className={styles.priceInAda}>
-                    <img src={'/img/icons/ADA.svg'} alt="ADA" height={12} width={12} />
-                    <span>{(campaign.requestMaxAda / project.cdRequestedMaxADA / adaPrice).toFixed(2)}</span>
-                </div>
-            ); */
-
+    const { fields, handleInputChange, setCampaign, campaign } = useTokenomics();
     return (
         <div className={styles.layout}>
             <h2 className={styles.title}>Explain your tokenomics, quantity and value</h2>
@@ -47,7 +24,8 @@ const Tokenomics: React.FC = () => {
             </div>
             <div className={styles.inputTokenContainer}>
                 {/*                 <div className={styles.inputToken}>{valuePerToken}</div>
- */}            </div>
+                 */}{' '}
+            </div>
 
             <br />
 

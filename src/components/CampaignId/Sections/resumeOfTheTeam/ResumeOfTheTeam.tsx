@@ -1,5 +1,5 @@
-import ResumeOfTheTeamAccordion from '@/components/CampaignCreation/Elements/ResumeOfTheTeamAccordion';
-import styles from '@/components/CampaignCreation/Elements/ResumeOftheTeam.module.scss';
+import ResumeOfTheTeamAccordion from '@/components/CampaignCreation/Elements/ResumeOfTheTeamAccordion/ResumeOfTheTeamAccordion';
+import styles from "@/components/CampaignId/Sections/resumeOfTheTeam/ResumeOftheTeam.module.scss"
 import React from 'react';
 interface ResumeOfTheTeamProps {
     // Define props here

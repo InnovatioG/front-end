@@ -1,4 +1,4 @@
-import styles from '@/components/CampaignCreation/Elements/Qa.module.scss';
+import styles from "@/components/CampaignId/Sections/QA/Qa.module.scss"
 import EmptyState from '@/components/CampaignId/Sections/empyState/EmptyState';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/UI/Accordion/Accordion';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';

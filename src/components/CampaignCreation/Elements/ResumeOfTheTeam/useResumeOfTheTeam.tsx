@@ -1,17 +1,8 @@
-import AddMore from '@/components/UI/Buttons/AddMore/AddMore';
-import { MembersTeam } from '@/types/types';
-import FramerMotionAnimation from '@/utils/framerMotion';
-import React, { useEffect, useRef, useState } from 'react';
-import FormNewMember from './Form/FormNewMember';
-import styles from './ResumeOftheTeam.module.scss';
-import ResumeOfTheTeamAccordion from './ResumeOfTheTeamAccordion';
-
-interface ResumeOfTheTeamProps {
-    // Define props here
-}
+import React, { useState, useEffect, useRef } from "react"
+import { MembersTeam } from "@/types/types";
 
 
-const ResumeOfTheTeam: React.FC<ResumeOfTheTeamProps> = (props) => {
+const useResumeOfTheTeam = () => {
     const [addNewMember, setAddNewMember] = useState(false);
     const [newMember, setNewMember] = useState<MembersTeam>({
         id: '',
@@ -67,22 +58,17 @@ const ResumeOfTheTeam: React.FC<ResumeOfTheTeamProps> = (props) => {
         }));
     };
 
-    return (
-        <section className={styles.layout}>
-            <span className={styles.title}>Active Members</span>
-            <ResumeOfTheTeamAccordion onEditMember={handleEditMember} />
-            <div className={styles.buttonAddMember}>
-                <AddMore isOpen={addNewMember} setIsOpen={setAddNewMember} handleAddMore={handleAddMore} />
-            </div>
-            {addNewMember && (
-                <FramerMotionAnimation isVisible={addNewMember}>
-                    <div ref={formRef}>
-                        <FormNewMember newMember={newMember} setNewMember={setNewMember} setNewMemberField={setNewMemberField} />
-                    </div>
-                </FramerMotionAnimation>
-            )}
-        </section>
-    );
-};
+    return {
+        addNewMember,
+        newMember,
+        formRef,
+        handleEditMember,
+        handleAddMore,
+        setNewMemberField,
+        setNewMember,
+        setAddNewMember
+    }
+}
 
-export default ResumeOfTheTeam;
+
+export default useResumeOfTheTeam
