@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './CategoryDropdown.module.scss';
 import { CHEVRON_DOWN } from '@/utils/images';
-import useCategoryDropdown from './One/useCategoryDropdown';
+import useCategoryDropdown from './useCategoryDropdown';
 
 interface CategoryDropdownProps {
     options: { value: number; label: string }[];

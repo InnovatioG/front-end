@@ -2,7 +2,7 @@ import StepFour from '@/components/CampaignCreation/Layout/Form/Four/StepFour';
 import StepThree from '@/components/CampaignCreation/Layout/Form/Three/StepThree';
 import StepTwo from '@/components/CampaignCreation/Layout/Form/Two/StepTwo';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
-import StepOne from '@/components/CampaignCreation/Layout/Form/StepOne'
+import StepOne from '@/components/CampaignCreation/Layout/Form/One/StepOne'
 
 const stepComponents = {
     1: StepOne,
