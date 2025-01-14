@@ -8,35 +8,28 @@ import React, { useRef } from 'react';
 import CampaignCard from '../../../CampaignCreation/Elements/CampaignCard/CampaignCard';
 import SocialMediaCardContainer from '../../../CampaignCreation/Elements/SocialMediaCard/SocialMediaCard';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
+import useCampaignDash from "@/components/CampaignDashboard/Sections/CampaignDash/useCampaignDash"
 /*  */
 interface CampaignDashCreationProps { }
 
 const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
-    const fileInputRef = useRef<HTMLInputElement>(null);
-
-    const { campaign, editionMode, setCampaign, isProtocolTeam, isAdmin } = useCampaignIdStore();
-    const { requestMaxAda, requestMinAda, investors, begin_at, cdFundedADA } = campaign
-    const { label, getInternalId } = useDraftCard(campaign, isProtocolTeam, isAdmin);
-    const { campaignStatus } = useGeneralStore()
-
-
-
+    const {
+        requestMaxAda,
+        requestMinAda,
+        investors,
+        begin_at,
+        cdFundedADA,
+        label,
+        handleChangePicture,
+        handleButtonClickFile,
+        fileInputRef,
+        editionMode,
+        campaign,
+        setCampaign,
+        getInternalId
+    } = useCampaignDash();
     const state = CardInformationByState(Number(getInternalId(campaign.campaign_status_id)));
 
-
-    const handleChangePicture = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (!e.target.files) return;
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setCampaign({ ...campaign, banner_url: reader.result as string });
-        };
-        reader.readAsDataURL(file);
-    };
-
-    const handleButtonClickFile = () => {
-        fileInputRef.current?.click();
-    };
 
     return (
         <article className={styles.dashboardCampaignContainer}>
@@ -90,7 +83,14 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
                 </Avatar>
             </div>
             <div className={styles.cardContainer}>
-                <CampaignCard status={label} goal={Number(requestMaxAda)} min_request={Number(requestMinAda)} investors={investors} startDate={begin_at} cdFundedADA={cdFundedADA} />
+                <CampaignCard
+                    status={label}
+                    goal={Number(requestMaxAda)}
+                    min_request={Number(requestMinAda)}
+                    investors={investors}
+                    startDate={begin_at}
+                    cdFundedADA={cdFundedADA}
+                />
                 <SocialMediaCardContainer />
             </div>
         </article>
@@ -98,5 +98,3 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
 };
 
 export default CampaignDashCreation;
-
-

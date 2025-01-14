@@ -1,6 +1,6 @@
 import ButtonSaveDraftContainer from '@/components/General/Elements/GeneralButtonContainer/GeneralbuttonContainer';
 import ProjectEditionContainer from '@/components/CampaignId/Elements/CampaignEditionContainer/CampaignEditionContainer';
-import CampaignDashCreation from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignDash';
+import CampaignDashCreation from '@/components/CampaignDashboard/Sections/CampaignDash/CampaignDash';
 import CampaignHeader from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignHeader';
 import GeneralError from '@/components/General/Elements/Errors/GeneralError';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';

@@ -1,6 +1,7 @@
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import { useState, useEffect } from 'react';
 import type { MembersTeam } from '@/types/types';
+import type { Campaign } from '@/types/types';
 type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter';
 
 export default function useStepFour() {
@@ -24,6 +25,11 @@ export default function useStepFour() {
         }
         resetNewMember();
     };
+
+    const createCampaign = () => {
+        console.log(newCampaign)
+    }
+
     const disabledSaveMember = !newMember.name || !newMember.member_description || !newMember.last_name || !newMember.role || !newMember.email;
 
     return {
@@ -32,5 +38,6 @@ export default function useStepFour() {
         handleSaveMember,
         disabledSaveMember,
         isEditing,
+        createCampaign
     };
 }

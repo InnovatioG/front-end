@@ -1,4 +1,4 @@
-import CampaignDashCreation from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignDash';
+import CampaignDashCreation from '@/components/CampaignDashboard/Sections/CampaignDash/CampaignDash';
 import CampaignHeader from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignHeader';
 import ProjectContainer from '@/components/CampaignId/Sections/projectContainer/ProjectContainer';
 import GeneralError from '@/components/General/Elements/Errors/GeneralError';

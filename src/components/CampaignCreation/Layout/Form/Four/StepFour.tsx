@@ -12,12 +12,12 @@ import useStepFour from '@/components/CampaignCreation/Layout/Form/Four/useStepF
 
 type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter';
 
-//! TODO: PROBLEM WITH MEMBER ID
+//! TODO: CREATE MEMBER PROBLEM WHEN YOU CREATE A PROJECT BUG
 
 const StepFour: React.FC = (props) => {
     const { newMember, setNewMemberField } = useCampaignStore();
 
-    const { selectedLink, setSelectedLink, handleSaveMember, disabledSaveMember, isEditing } = useStepFour();
+    const { selectedLink, setSelectedLink, handleSaveMember, disabledSaveMember, isEditing, createCampaign } = useStepFour();
 
     return (
         <section className={styles.containerLayout}>
@@ -92,7 +92,7 @@ const StepFour: React.FC = (props) => {
                 <GeneralButtonUI onClick={handleSaveMember} disabled={disabledSaveMember} classNameStyle="outlineb">
                     {isEditing ? 'Update member' : 'Add new member'}
                 </GeneralButtonUI>
-                <GeneralButtonUI onClick={() => { }} classNameStyle="fillb" disabled={disabledSaveMember}>
+                <GeneralButtonUI onClick={() => { createCampaign() }} classNameStyle="fillb" disabled={disabledSaveMember}>
                     Create Project
                 </GeneralButtonUI>
             </div>
