@@ -1,5 +1,5 @@
-import MilestonePercentage from '@/components/CampaignCreation/Elements/MilestonePercentage';
-import MilestoneTime from '@/components/CampaignCreation/Elements/MilestoneTimeEdit';
+import MilestonePercentage from '@/components/CampaignCreation/Elements/MilestonePercentage/MilestonePercentage';
+import MilestoneTime from '@/components/CampaignCreation/Elements/MilestoneTimeEdit/MilestoneTimeEdit';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import { useModal } from '@/contexts/ModalContext';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';

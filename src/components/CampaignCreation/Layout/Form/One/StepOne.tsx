@@ -1,6 +1,6 @@
 import CommonsBtn from '@/components/UI/Buttons/CommonsBtn';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
-import CategoryDropdown from "@/components/CampaignCreation/Layout/Form/One/CategoryDropdown"
+import CategoryDropdown from "@/components/CampaignCreation/Elements/CategoryDropdown/CategoryDropdown"
 import styles from './StepOne.module.scss';
 import useStepOne from "@/components/CampaignCreation/Layout/Form/One/useStepOne"
 

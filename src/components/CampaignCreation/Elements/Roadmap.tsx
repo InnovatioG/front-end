@@ -1,7 +1,7 @@
 import { handlePercentageChange } from '@/hooks/projectEditionContainerHandlers';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import React, { useEffect } from 'react';
-import MilestoneCardEdit from './MilestoneEdit';
+import MilestoneCardEdit from './MilestoneEdit/MilestoneEdit';
 import styles from './Roadmap.module.scss';
 
 interface RoadMapYMilestonesProps {

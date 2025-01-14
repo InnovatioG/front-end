@@ -2,7 +2,7 @@ import AddMore from '@/components/UI/Buttons/AddMore/AddMore';
 import { MembersTeam } from '@/types/types';
 import FramerMotionAnimation from '@/utils/framerMotion';
 import React, { useEffect, useRef, useState } from 'react';
-import FormNewMember from './FormNewMember';
+import FormNewMember from './Form/FormNewMember';
 import styles from './ResumeOftheTeam.module.scss';
 import ResumeOfTheTeamAccordion from './ResumeOfTheTeamAccordion';
 

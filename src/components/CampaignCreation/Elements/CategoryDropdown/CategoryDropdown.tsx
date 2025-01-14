@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import styles from './CategoryDropdown.module.scss';
+import styles from "@/components/CampaignCreation/Elements/CategoryDropdown/CategoryDropdown.module.scss"
 import { CHEVRON_DOWN } from '@/utils/images';
-import useCategoryDropdown from './useCategoryDropdown';
+import useCategoryDropdown from "@/components/CampaignCreation/Elements/CategoryDropdown/useCategoryDropdown"
 
 interface CategoryDropdownProps {
     options: { value: number; label: string }[];

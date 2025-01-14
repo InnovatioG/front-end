@@ -12,6 +12,7 @@ import {
 import { TWO_USERS } from '@/utils/images';
 import styles from './CampaignCard.module.scss';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
+import useCampaignCard from "@/components/CampaignCreation/Elements/CampaignCard/useCampaignCard"
 
 interface CampaignCardProps {
     status: string;
@@ -23,36 +24,10 @@ interface CampaignCardProps {
 }
 
 const CampaignCard: React.FC<CampaignCardProps> = ({ status, goal, min_request, investors, startDate, cdFundedADA }) => {
-    const [timeRemaining, setTimeRemaining] = useState(() => getTimeRemaining(startDate));
-    const { adaPrice } = useGeneralStore();
-    const { priceAdaOrDollar } = usePriceStore();
-    const { isAdmin, isProtocolTeam } = useCampaignIdStore();
 
-    const progressPercentage = useMemo(() => calculatePorcentagValue(goal, Number(cdFundedADA)), [goal, cdFundedADA]);
-    const minValuePercantage = useMemo(() => calculatePorcentagValue(goal, min_request), [min_request, goal]);
-    const progressWidth = `${progressPercentage}%`;
-    const stateClass = useMemo(() => status.toLowerCase().replace(/\s+/g, '-'), [status]);
-    const goalInCurrentCurrency = useMemo(
-        () => (priceAdaOrDollar === 'dollar' ? Number(goal) : Number(goal) / adaPrice),
-        [priceAdaOrDollar, goal, adaPrice]
-    );
-    const minValueInCurrentCurrency = useMemo(
-        () => (priceAdaOrDollar === 'dollar' ? Number(min_request) : Number(min_request) / adaPrice),
-        [priceAdaOrDollar, min_request, adaPrice]
-    )
-    const currencySymbol = useMemo(() => (priceAdaOrDollar === 'dollar' ? 'USD' : 'ADA'), [priceAdaOrDollar]);
+    const { timeRemaining, progressPercentage, minValuePercantage, progressWidth, stateClass, goalInCurrentCurrency, minValueInCurrentCurrency, currencySymbol, formatAllTime } = useCampaignCard({ startDate, goal, min_request, investors, cdFundedADA })
 
-    useEffect(() => {
-        const timer = setInterval(() => {
-            setTimeRemaining(getTimeRemaining(startDate));
-        }, 1000);
 
-        return () => clearInterval(timer);
-    }, [startDate]);
-
-    const formatAllTime = (timeRemaining: any) => {
-        return `${timeRemaining.days}:${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}`;
-    };
 
     return (
         <section className={styles.campaignCard}>

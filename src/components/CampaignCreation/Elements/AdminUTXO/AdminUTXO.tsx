@@ -1,6 +1,6 @@
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import React from 'react';
-import styles from './aminUTXO.module.scss';
+import styles from "@/components/CampaignCreation/Elements/AdminUTXO/AdminUTXO.module.scss"
 
 interface AdminUTXOSProps {
     // Define props here

@@ -2,7 +2,7 @@ import TextEditor from '@/components/General/Elements/TextEditor/TextEditor';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { inputFieldsToken } from '@/utils/constants';
 import React from 'react';
-import AdminUTXOS from './adminUTXO';
+import AdminUTXOS from "@/components/CampaignCreation/Elements/AdminUTXO/AdminUTXO"
 import styles from './Tokenomics.module.scss';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 const Tokenomics: React.FC = () => {

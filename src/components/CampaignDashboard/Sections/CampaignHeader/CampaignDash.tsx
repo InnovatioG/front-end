@@ -5,7 +5,7 @@ import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { CardInformationByState } from '@/utils/constants';
 import Image from 'next/image';
 import React, { useRef } from 'react';
-import CampaignCard from '../../../CampaignCreation/Elements/CampaignCard';
+import CampaignCard from '../../../CampaignCreation/Elements/CampaignCard/CampaignCard';
 import SocialMediaCardContainer from '../../../CampaignCreation/Elements/SocialMediaCard';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 /*  */

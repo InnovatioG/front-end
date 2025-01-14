@@ -4,8 +4,9 @@ import type { Milestone } from '@/types/types';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { getOrdinalString } from '@/utils/formats';
 import styles from './MilestoneEdit.module.scss';
-import MilestonePercentage from './MilestonePercentage';
-import MilestoneTimeEdit from './MilestoneTimeEdit';
+import MilestonePercentage from "@/components/CampaignCreation/Elements/MilestonePercentage/MilestonePercentage"
+import MilestoneTimeEdit from '@/components/CampaignCreation/Elements/MilestoneTimeEdit/MilestoneTimeEdit';
+import useMilestoneCardEdit from './useMilestoneEdit';
 
 interface MilestoneCardEditProps {
     milestone: Milestone;
@@ -20,28 +21,12 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({
     maxAvailablePercentage,
     onPercentageChange,
 }) => {
-    const { setMilestone, setCampaign, campaign } = useCampaignIdStore();
-    const ordinalString = getOrdinalString(index + 1);
 
-    useEffect(() => {
-        console.log('Milestone actualizado:', milestone);
-    }, [milestone]);
+    const { ordinalString, handleDescriptionChange } = useMilestoneCardEdit(
+        index,
+        milestone
+    );
 
-    const handleDescriptionChange = (content: string) => {
-        console.log('Nuevo contenido:', content);
-        setCampaign({
-            ...campaign,
-            milestones: campaign.milestones?.map((item) => {
-                if (item._Db_id === milestone._Db_id) {
-                    return {
-                        ...item,
-                        description: content,
-                    };
-                }
-                return item;
-            }),
-        });
-    };
 
     return (
         <section>
