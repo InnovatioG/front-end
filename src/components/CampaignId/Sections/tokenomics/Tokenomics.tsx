@@ -1,4 +1,4 @@
-import EmptyState from '@/components/CampaignId/Sections/EmptyState';
+import EmptyState from '@/components/CampaignId/Sections/empyState/EmptyState';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import React, { useEffect } from 'react';

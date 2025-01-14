@@ -6,7 +6,7 @@ import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { imageByStatus, imageByStatusMilestone, stylesByStatus } from '@/utils/constants/status';
 import { getOrdinalString } from '@/utils/formats';
 import React, { useEffect } from 'react';
-import MilestoneMessage from './MilestoneMessage';
+import MilestoneMessage from "@/components/CampaignId/Sections/milestoneMessage/MilestoneMessage"
 import styles from './RoadMapCard.module.scss';
 import type { Milestone } from '@/types/types';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';

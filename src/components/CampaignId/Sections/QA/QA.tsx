@@ -1,5 +1,5 @@
 import styles from '@/components/CampaignCreation/Elements/Qa.module.scss';
-import EmptyState from '@/components/CampaignId/Sections/EmptyState';
+import EmptyState from '@/components/CampaignId/Sections/empyState/EmptyState';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/UI/Accordion/Accordion';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import React from 'react';

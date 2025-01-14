@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css'; // Import Quill styles
 import { useEffect, useState } from 'react';
 import styles from './TextEditor.module.scss';
+import useTextEditor from '@/components/General/Elements/TextEditor/useTextEditor';
 
 const QuillEditor = dynamic(() => import('react-quill'), { ssr: false });
 
@@ -14,29 +15,7 @@ interface TextEditorProps {
 }
 
 export default function TextEditor({ title, content, onChange, styleOption = 'quillEditor', menuOptions = 0 }: TextEditorProps) {
-    const [editorContent, setEditorContent] = useState(content);
-
-    useEffect(() => {
-        if (content !== '<p><br></p>') {
-            setEditorContent(content);
-        }
-    }, [content]);
-    const handleEditorChange = (newContent: string) => {
-        console.log(newContent)
-        setEditorContent(newContent);
-        onChange(newContent);
-    };
-    const quillModules = {
-        toolbar: [
-            [{ header: [1, 2, 3, false] }],
-            ['bold', 'italic', 'underline'],
-            [{ list: 'ordered' }, { list: 'bullet' }],
-            ...(menuOptions === 0 ? [['link', 'image', 'video']] : []),
-            [{ align: [] }],
-        ],
-    };
-
-    const quillFormats = ['header', 'bold', 'italic', 'underline', 'list', 'bullet', ...(menuOptions === 0 ? ['link', 'image', 'video'] : []), 'align'];
+    const { editorContent, setEditorContent, handleEditorChange, quillModules, quillFormats } = useTextEditor({ content, onChange, menuOptions });
 
     return (
         <main className={styles.main}>

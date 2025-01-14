@@ -1,6 +1,6 @@
 import CampaignDashCreation from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignDash';
 import CampaignHeader from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignHeader';
-import ProjectContainer from '@/components/CampaignId/Sections/ProjectContainer';
+import ProjectContainer from '@/components/CampaignId/Sections/projectContainer/ProjectContainer';
 import GeneralError from '@/components/General/Elements/Errors/GeneralError';
 import LoadingPage from '@/components/LoadingPage/LoadingPage';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';

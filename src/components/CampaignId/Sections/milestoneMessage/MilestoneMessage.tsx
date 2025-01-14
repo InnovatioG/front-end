@@ -4,49 +4,14 @@ import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { formatDateFromString } from '@/utils/formats';
 import React, { useEffect, useState } from 'react';
 import styles from './MilestoneMessage.module.scss';
+import useMilestoneMessage from "@/components/CampaignId/Sections/milestoneMessage/useMilestoneMessage"
 interface MilestoneMessageProps {
     milestone: Milestone;
     icon?: string;
 }
 
 const MilestoneMessage: React.FC<MilestoneMessageProps> = ({ milestone, icon }) => {
-    const [messageType, setMessageType] = useState('');
-    const { openModal } = useModal();
-    const { campaign } = useCampaignIdStore();
-    const { estimate_delivery_date } = milestone
-
-    const today = new Date();
-    const handleSendToRevision = () => {
-        openModal('sendReport', { campaign_id: campaign._DB_id, campaign });
-    };
-    const lastSubmission = milestone.milestone_submissions?.slice(-1)[0];
-
-
-    console.log("milestone estimate_delivery_date: ", estimate_delivery_date)
-
-    useEffect(() => {
-        if (estimate_delivery_date) {
-            const today = new Date();
-            console.log(today)
-            console.log(estimate_delivery_date.getTime())
-            const diffTime = estimate_delivery_date.getTime() - today.getTime();
-            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            console.log(diffDays)
-            if (diffDays > 0 && diffDays <= 7) {
-                setMessageType('expire');
-            } else {
-                setMessageType(''); // Asegura que se resetee si no cumple la condición
-            }
-        }
-
-        if (lastSubmission?.approved_justification) {
-            setMessageType('approved');
-        }
-
-        if (lastSubmission?.rejected_justification) {
-            setMessageType('rejected');
-        }
-    }, [milestone]);
+    const { messageType, handleSendToRevision, lastSubmission } = useMilestoneMessage({ milestone })
 
     return (
         <div>

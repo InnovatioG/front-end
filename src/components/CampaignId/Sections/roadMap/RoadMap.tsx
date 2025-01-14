@@ -1,4 +1,4 @@
-import EmptyState from '@/components/CampaignId/Sections/EmptyState';
+import EmptyState from '@/components/CampaignId/Sections/empyState/EmptyState';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import React, { useEffect } from 'react';
 import RoadMapCard from './RoadMapCard';
