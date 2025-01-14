@@ -1,23 +1,14 @@
 import CommonsBtn from '@/components/UI/Buttons/CommonsBtn';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
-import { categories } from '@/utils/constants';
-import CategoryDropdown from './CategoryDropdown';
+import CategoryDropdown from "@/components/CampaignCreation/Layout/form/one/CategoryDropdown"
 import styles from './StepOne.module.scss';
+import useStepOne from './one/useStepOne';
 
 export default function StepOne() {
-    const { step, name, setTitle, category, setCategory, setDescription, nextStep, description } = useCampaignStore();
+    const { newCampaign, setTitle, setDescription, nextStep, setCategoryId } = useCampaignStore();
+    const { name, description, campaing_category_id } = newCampaign;
+    const { categoryOptions, handleDescriptionChange } = useStepOne()
 
-    const categoryOptions = categories.map((category) => ({
-        value: category,
-        label: category,
-    }));
-
-    const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const value = e.target.value;
-        if (value.length <= 240) {
-            setDescription(value);
-        }
-    };
     return (
         <div className={styles.section}>
             <div className={styles.articleGroup}>
@@ -29,7 +20,7 @@ export default function StepOne() {
                 </div>
                 <div className={styles.article}>
                     <h2 className={styles.title}>Category</h2>
-                    <CategoryDropdown options={categoryOptions} value={category} onChange={(value) => setCategory(value)} />
+                    <CategoryDropdown options={categoryOptions} value={campaing_category_id} onChange={(value) => setCategoryId(value)} />
                 </div>
             </div>
 
@@ -46,7 +37,7 @@ export default function StepOne() {
                 </div>
             </div>
             <div className={styles.btnActions}>
-                <CommonsBtn type="primary" action={() => nextStep()} content="Continue" disabled={name === '' || category === '' || description === ''} />
+                <CommonsBtn type="primary" action={() => nextStep()} content="Continue" disabled={name === '' || campaing_category_id === null || description === ''} />
             </div>
         </div>
     );

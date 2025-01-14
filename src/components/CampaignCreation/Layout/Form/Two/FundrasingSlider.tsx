@@ -7,7 +7,7 @@ import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import ToolTipInformation from '@/components/General/Elements/TooltipInformation/tooltipInformation';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
-import useFundraisingSlider from '@/components/CampaignCreation/layout/form/Two/useFundraisingSlider';
+import useFundraisingSlider from '@/components/CampaignCreation/Layout/form/Two/useFundraisingSlider';
 
 const FundrasingSlider: React.FC = (props) => {
     const { newCampaign, setRequestMaxAda, setMilestones } = useCampaignStore();
