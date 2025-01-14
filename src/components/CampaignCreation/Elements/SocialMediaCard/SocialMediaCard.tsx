@@ -10,45 +10,17 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import styles from './SocialMediaCard.module.scss';
 import { useEffect } from 'react';
+import useSocialMediaCard from './useSocialMediaCard';
 interface SocialMediaCardContainerProps { }
 
 // Definir un tipo específico para las claves de redes sociales
+
 type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter';
 
 const SocialMediaCardContainer: React.FC<SocialMediaCardContainerProps> = (props) => {
-    const { campaign, setCampaign, editionMode, isAdmin, isProtocolTeam, isLoading } = useCampaignIdStore();
-    const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>('website');
-    const [modalOpen, setModalOpen] = useState<boolean>(false);
-    const [buttons, setButtons] = useState<ButtonType[]>([]);
-
-
+    const { selectedLink, setSelectedLink, editLinkButton, getPlaceholder, formatSocialLink, modalOpen, setModalOpen, buttons, campaign, setCampaign, editionMode } =
+        useSocialMediaCard();
     const { openModal } = useModal();
-
-
-    console.log(isLoading)
-
-    useEffect(() => {
-        if (campaign._DB_id !== "") {
-            const { buttons } = ButtonsForCampaignPage(Number(campaign.campaign_status_id), isProtocolTeam, isAdmin);
-            setButtons(buttons);
-        }
-    }, [campaign, isProtocolTeam, isAdmin]);
-
-    const editLinkButton = () => {
-        setModalOpen(true);
-    };
-
-    const getPlaceholder = () => {
-        const linkValue = campaign[selectedLink];
-        return linkValue && linkValue !== '' ? linkValue : `Enter your ${selectedLink} link`;
-    };
-
-    const formatSocialLink = (link: string) => {
-        if (!link.startsWith('http://') && !link.startsWith('https://')) {
-            return `https://${link}`;
-        }
-        return link;
-    };
 
     return (
         <section className={styles.socialMediaCard}>

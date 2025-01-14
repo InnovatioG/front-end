@@ -1,6 +1,6 @@
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import React from 'react';
-import styles from './generalbuttonContainer.module.scss';
+import styles from "@/components/General/Elements/GeneralButtonContainer/generalbuttonContainer.module.scss"
 
 interface GeneralButtonContainerProps {
     // Define props here

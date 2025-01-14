@@ -6,7 +6,7 @@ import { CardInformationByState } from '@/utils/constants';
 import Image from 'next/image';
 import React, { useRef } from 'react';
 import CampaignCard from '../../../CampaignCreation/Elements/CampaignCard/CampaignCard';
-import SocialMediaCardContainer from '../../../CampaignCreation/Elements/SocialMediaCard';
+import SocialMediaCardContainer from '../../../CampaignCreation/Elements/SocialMediaCard/SocialMediaCard';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 /*  */
 interface CampaignDashCreationProps { }

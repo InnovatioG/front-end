@@ -1,8 +1,8 @@
-import useInvestmentForm from '@/hooks/useInvestmentForm';
+import useInvestmentForm from '@/components/Invest/Sections/InvestmentForm/useInvestmentForm';
 import Link from 'next/link';
 import React from 'react';
-import LoaderDots from '../../LoadingPage/LoaderDots';
-import GeneralButtonUI from '../../UI/Buttons/UI/Button';
+import LoaderDots from '../../../LoadingPage/LoaderDots';
+import GeneralButtonUI from '../../../UI/Buttons/UI/Button';
 import styles from './InvestmentForm.module.scss';
 
 interface InvestmentFormProps {
@@ -45,7 +45,7 @@ const InvestmentForm: React.FC<InvestmentFormProps> = ({ cdCampaignToken_PriceAD
                     ))}
                     <div className={styles.buttonContainer}>
                         <Link href={`/campaign/${id}`}>
-                            <GeneralButtonUI text="Back" classNameStyle="outlineb" onClick={() => {}} />
+                            <GeneralButtonUI text="Back" classNameStyle="outlineb" onClick={() => { }} />
                         </Link>
                         <GeneralButtonUI text="Confirm Invest" onClick={handleInvest} classNameStyle="invest" />
                     </div>
@@ -99,7 +99,7 @@ const SuccessMessage: React.FC<{ message: string; id: number }> = ({ message, id
             <p className={styles.successMessage}>{message}</p>
             <div className={styles.buttonContainerMessage}>
                 <Link href={`campaign/${id}`}>
-                    <GeneralButtonUI text="Back to project" classNameStyle="outlineb" onClick={() => {}} />
+                    <GeneralButtonUI text="Back to project" classNameStyle="outlineb" onClick={() => { }} />
                 </Link>
             </div>
         </div>

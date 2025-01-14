@@ -1,6 +1,6 @@
 import JSON from '@/HardCode/campaignId.json';
-import InvestmentForm from '@/components/Invest/Sections/Form';
-import InvestHeader from '@/components/Invest/Sections/InvestHeader';
+import InvestmentForm from '@/components/Invest/Sections/InvestmentForm/InvestmentForm';
+import InvestHeader from '@/components/Invest/Sections/InvestHeader/InvestHeader';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
