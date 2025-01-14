@@ -1,6 +1,5 @@
-import JSON from '@/HardCode/campaignId.json';
 import ButtonSaveDraftContainer from '@/components/CampaignCreation/Elements/GeneralbuttonContainer';
-import ProjectEditionContainer from '@/components/CampaignCreation/Elements/ProjectEditionContainer';
+import ProjectEditionContainer from '@/components/CampaignId/Elements/CampaignEditionContainer/CampaignEditionContainer';
 import CampaignDashCreation from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignDash';
 import CampaignHeader from '@/components/CampaignDashboard/Sections/CampaignHeader/CampaignHeader';
 import GeneralError from '@/components/General/Elements/Errors/GeneralError';

@@ -4,8 +4,8 @@ import type { Milestone } from '@/types/types';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { getOrdinalString } from '@/utils/formats';
 import styles from './MilestoneEdit.module.scss';
-import MilestonePercentage from "@/components/CampaignCreation/Elements/MilestonePercentage/MilestonePercentage"
-import MilestoneTimeEdit from '@/components/CampaignCreation/Elements/MilestoneTimeEdit/MilestoneTimeEdit';
+import MilestonePercentage from "@/components/CampaignId/Elements/MilestonePercentage/MilestonePercentage"
+import MilestoneTimeEdit from '@/components/CampaignId/Elements/MilestoneTimeEdit/MilestoneTimeEdit';
 import useMilestoneCardEdit from './useMilestoneEdit';
 
 interface MilestoneCardEditProps {

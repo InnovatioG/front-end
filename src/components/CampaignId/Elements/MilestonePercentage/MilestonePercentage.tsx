@@ -8,7 +8,7 @@ import { formatMoney } from '@/utils/formats';
 import React, { useEffect, useState } from 'react';
 import styles from './MilestonePercentage.module.scss';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
-import useMilestonePercentage from '@/components/CampaignCreation/Elements/MilestonePercentage/useMilestonePercentage'
+import useMilestonePercentage from '@/components/CampaignId/Elements/MilestonePercentage/useMilestonePercentage'
 interface MilestonePercentageProps {
     milestone: Milestone;
     goal: number; // Goal total

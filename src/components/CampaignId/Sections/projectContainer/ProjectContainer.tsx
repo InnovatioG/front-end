@@ -1,4 +1,4 @@
-import NavBarProjectEdition from '@/components/CampaignCreation/Elements/NavMenuProjectEdition';
+import NavBarProjectEdition from '@/components/CampaignId/Elements/NavMenuProjectEdition/NavMenuProjectEdition';
 import ProjectDetail from '@/components/CampaignId/Sections/projectDetail/ProjectDetail';
 import QA from '@/components/CampaignId/Sections/QA/QA';
 import ResumeOfTheTeam from '@/components/CampaignId/Sections/resumeOfTheTeam/ResumeOfTheTeam';
@@ -13,7 +13,7 @@ const ProjectContainer: React.FC<ProjectContainerProps> = (props) => {
     const { menuView, setEditionMode } = useCampaignIdStore();
 
     const menuComponents: { [key: string]: React.ReactNode } = {
-        'Project Detail': <ProjectDetail />,
+        'Campaign Detail': <ProjectDetail />,
         'Q&A': <QA />,
         'Resume of the team': <ResumeOfTheTeam />,
         'Roadmap & Milestones': <RoadMap />,

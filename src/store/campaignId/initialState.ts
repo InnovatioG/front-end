@@ -3,7 +3,7 @@ import type { Campaign, Milestone, MembersTeam } from '@/types/types';
 export interface CampaignIdStore {
     campaign: Campaign;
     isLoading: boolean;
-    menuView: 'Project Detail' | 'Resume of the team' | 'Roadmap & Milestones' | 'Tokenomics' | 'Q&A';
+    menuView: 'Campaign Detail' | 'Resume of the team' | 'Roadmap & Milestones' | 'Tokenomics' | 'Q&A';
     error: string;
     milestone: Milestone | null; // Add this for active/selected milestone
     editionMode: boolean;
@@ -48,7 +48,7 @@ export const initialState: CampaignIdStore = {
         campaignToken_CS: '',
     },
     price_ada: 0,
-    menuView: 'Project Detail',
+    menuView: 'Campaign Detail',
     isLoading: false,
     error: '',
     milestone: null,

@@ -6,13 +6,10 @@ import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
 import { useCampaignId } from '@/hooks/useProjectDetail';
 import React, { useState, useEffect } from 'react';
 import styles from './ProjectDetail.module.scss';
-import { useCampaignDetail } from "./useProjectDetail"
-interface ProjectDetailProps {
-    // Define props here
-}
+import { useCampaignDetail } from "@/components/CampaignId/Elements/CampaignDetail/useCampaignDetail";
 
-const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
 
+const CampaignDetail: React.FC = (props) => {
 
     const [openModal, setIsOpenModal] = useState(false);
     const { loading, mergedOptions, handleSelectClick, selectedOption, handleAddOption, newOptionTitle, setNewOptionTitle, setSelectedOption, handleDescriptionChange } = useCampaignDetail();
@@ -79,7 +76,7 @@ const ProjectDetail: React.FC<ProjectDetailProps> = (props) => {
     );
 };
 
-export default ProjectDetail;
+export default CampaignDetail;
 /* 
     return (
         <article className={styles.generalLayout}>

@@ -5,23 +5,16 @@ import { navMenu, NavMenuItem } from '@/utils/projectDetailsCreation';
 import Link from 'next/link';
 import React, { useState } from 'react';
 import styles from './NavMenuProjectEdition.module.scss';
+import useNavMenuProjectEdition from '@/components/CampaignId/Elements/NavMenuProjectEdition/useNavMenuProjectEdition';
 
 interface NavBarProjectEditionProps {
     // Define props here
 }
 
 const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
-    const { menuView, setMenuView, editionMode, campaign } = useCampaignIdStore();
+    const { campaign } = useCampaignIdStore();
     const { _DB_id } = campaign;
-    const screenSize = useScreenSize();
-
-    const [isOpen, setIsOpen] = useState(false);
-
-    const handleClickButtonMenuMobile = (item: 'Project Detail' | 'Resume of the team' | 'Roadmap & Milestones' | 'Tokenomics' | 'Q&A') => {
-        setMenuView(item);
-        setIsOpen(!isOpen);
-    };
-
+    const { menuView, setMenuView, editionMode, screenSize, isOpen, setIsOpen, handleClickButtonMenuMobile } = useNavMenuProjectEdition()
     if (screenSize === 'mobile' || screenSize === 'tablet') {
         return (
             <div className={styles.navContainerMobile}>
@@ -50,7 +43,7 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
                                 <GeneralButtonUI
                                     text={item}
                                     classNameStyle={menuView === item ? 'active-nav' : 'passive-nav-transparent'}
-                                    onClick={() => handleClickButtonMenuMobile(item as 'Project Detail' | 'Resume of the team' | 'Roadmap & Milestones' | 'Tokenomics' | 'Q&A')}
+                                    onClick={() => handleClickButtonMenuMobile(item as 'Campaign Detail' | 'Resume of the team' | 'Roadmap & Milestones' | 'Tokenomics' | 'Q&A')}
                                 />
                             </li>
                         ))}
@@ -75,7 +68,7 @@ const NavBarProjectEdition: React.FC<NavBarProjectEditionProps> = (props) => {
                         <GeneralButtonUI
                             text={item}
                             classNameStyle={menuView === item ? 'active-nav' : 'passive-nav'}
-                            onClick={() => setMenuView(item as 'Project Detail' | 'Resume of the team' | 'Roadmap & Milestones' | 'Tokenomics' | 'Q&A')}
+                            onClick={() => setMenuView(item as 'Campaign Detail' | 'Resume of the team' | 'Roadmap & Milestones' | 'Tokenomics' | 'Q&A')}
                         />
                     </li>
                 ))}
