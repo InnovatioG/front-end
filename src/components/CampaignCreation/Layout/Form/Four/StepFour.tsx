@@ -8,7 +8,7 @@ import { memberFields, socialIcons } from '@/utils/constants';
 import Checkbox from '@/components/UI/Buttons/Checkbox/Checkbox';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import type { MembersTeam } from '@/HardCode/databaseType';
-import useStepFour from '@/components/CampaignCreation/Layout/form/Four/useStepFour';
+import useStepFour from '@/components/CampaignCreation/Layout/Form/Four/useStepFour';
 
 type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter';
 

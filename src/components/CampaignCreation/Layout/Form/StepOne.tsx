@@ -1,8 +1,8 @@
 import CommonsBtn from '@/components/UI/Buttons/CommonsBtn';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
-import CategoryDropdown from "@/components/CampaignCreation/Layout/form/one/CategoryDropdown"
+import CategoryDropdown from "@/components/CampaignCreation/Layout/Form/One/CategoryDropdown"
 import styles from './StepOne.module.scss';
-import useStepOne from './one/useStepOne';
+import useStepOne from './One/useStepOne';
 
 export default function StepOne() {
     const { newCampaign, setTitle, setDescription, nextStep, setCategoryId } = useCampaignStore();

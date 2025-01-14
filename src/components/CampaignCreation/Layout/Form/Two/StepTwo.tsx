@@ -1,10 +1,10 @@
-import MinCollectorSlider from '@/components/CampaignCreation/Layout/form/Two/MinCollectorSlider';
+import MinCollectorSlider from '@/components/CampaignCreation/Layout/Form/Two/MinCollectorSlider';
 import DropArchive from '@/components/General/Elements/DropArchive/DropArchive';
 import Avatar from '@/components/General/Elements/PictureUpload/Avatar';
 import CommonsBtn from '@/components/UI/Buttons/CommonsBtn';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import React from 'react';
-import FundrasingSlider from '@/components/CampaignCreation/Layout/form/Two/FundrasingSlider';
+import FundrasingSlider from '@/components/CampaignCreation/Layout/Form/Two/FundrasingSlider';
 import styles from './StepTwo.module.scss';
 interface StepTwoProps {
     // Define props here
