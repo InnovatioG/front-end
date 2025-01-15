@@ -13,15 +13,28 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useWalletStore } from 'smart-db';
-import styles from './CreatorCampaign.module.scss';
+import styles from '@/pages/campaign/new/CreatorCampaign.module.scss';
 
-export default function Home() {
+export default function CreatorCampaign() {
   const screenSize = useScreenSize();
   const { data: session } = useSession();
-  const walletStore = useWalletStore();
-  const address = walletStore.info?.address || '';
+
+
+
+
   const router = useRouter();
   const { step, setStep, setUser, isLoading, setCategoryId, setIsLoading, newCampaign } = useCampaignStore();
+
+
+
+  useEffect(() => {
+    if (!session) {
+      router.push(ROUTES.draft);
+    }
+    const user = session?.user;
+    console.log(user)
+  }, [session])
+
 
   const handleClickBack = () => {
     if (step === 1) {
@@ -31,38 +44,8 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    if (!address) {
-      router.push(ROUTES.draft);
-      return;
-    } else {
-      const users = dataBaseService.getUsers();
-      const foundUser = users.find((u: User) => u.wallet_address === address);
-      if (!foundUser) {
-        router.push(ROUTES.draft);
-        return;
-      }
-      setUser(foundUser);
-    }
 
-    const timeoutId = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
 
-    return () => clearTimeout(timeoutId);
-  }, [address, router]);
-
-  /*     useEffect(() => {
-          if (category !== '') {
-              const categories = dataBaseService.getCategories();
-              const selectedCategory = categories.find((cat: Category) => cat.name === category);
-              const category_id = selectedCategory ? selectedCategory.id : null;
-              setCategoryId(category_id);
-          } else {
-              setCategoryId(null);
-          }
-      }, [category]); */
 
   if (isLoading) {
     return <LoadingPage />;
@@ -89,3 +72,40 @@ export default function Home() {
     </main>
   );
 }
+
+
+
+/*     useEffect(() => {
+        if (category !== '') {
+            const categories = dataBaseService.getCategories();
+            const selectedCategory = categories.find((cat: Category) => cat.name === category);
+            const category_id = selectedCategory ? selectedCategory.id : null;
+            setCategoryId(category_id);
+        } else {
+            setCategoryId(null);
+        }
+    }, [category]); 
+    
+    useEffect(() => {
+    setIsLoading(true);
+    if (!address) {
+      router.push(ROUTES.draft);
+      return;
+    } else {
+      const users = dataBaseService.getUsers();
+      const foundUser = users.find((u: User) => u.wallet_address === address);
+      if (!foundUser) {
+        router.push(ROUTES.draft);
+        return;
+      }
+      setUser(foundUser);
+    }
+
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timeoutId);
+  }, [address, router]);
+    
+    */

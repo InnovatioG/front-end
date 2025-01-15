@@ -15,6 +15,13 @@ const nextConfig = {
     //-------------
     images: {
         domains: ['localhost', 'ipfs.io', 'taptools.io', 'taptools-public.s3.amazonaws.com', 'img.cexplorer.io'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'github.com',
+                pathname: '/**',
+            },
+        ],
     },
     generateBuildId: async () => {
         // Generate your build ID here if needed

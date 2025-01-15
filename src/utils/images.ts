@@ -3,6 +3,8 @@
 export const LOGO_FULL_LIGHT = '/img/logo/logo-full-light.png';
 export const LOGO_FULL_DARK = '/img/logo/logo-full-dark.png';
 export const LOGO = '/img/logo/logo.png';
+export const CARDANO = '/img/logo/cardano.png';
+export const CATALYST = '/img/logo/catalyst.png';
 
 //UI
 

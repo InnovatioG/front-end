@@ -1,5 +1,5 @@
 import CampaignDashboard from '@/components/CampaignDashboard/Sections/Dashboard/CampaignDashboard';
-import CampaignHighLight from '@/components/CampaignDashboard/Sections/Highlight/CampaignHighLight';
+import CampaignHighLight from '@/components/CampaignDashboard/Sections/CampaignHighlight/CampaignHighLight';
 import styles from '@/styles/Home.module.scss';
 import { PEOPLE } from '@/utils/images';
 import Head from 'next/head';

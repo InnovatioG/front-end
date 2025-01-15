@@ -447,8 +447,8 @@ export const cardInformationForProtocolTeam = (state_id: number): StateConfig =>
 };
 
 export const ButtonsByMilestoneStatus = (milestone_status_id: number): StateConfig => {
-    const { setMenuView } = useCampaignIdStore();
-    const state: { [key: number]: StateConfig } = {
+    /*     const { setMenuView } = useCampaignIdStore();
+     */ const state: { [key: number]: StateConfig } = {
         2: {
             label: 'Active',
             buttons: [
@@ -476,7 +476,8 @@ export const ButtonsByMilestoneStatus = (milestone_status_id: number): StateConf
                     id: 3,
                     label: 'View Report',
                     action: () => {
-                        setMenuView('Roadmap & Milestones');
+                        /*                         setMenuView('Roadmap & Milestones');
+                         */
                     },
                     link: (id: number) => `/campaign/${id}`,
                     classNameType: 'fill',
