@@ -15,9 +15,10 @@ type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitte
 //! TODO: CREATE MEMBER PROBLEM WHEN YOU CREATE A PROJECT BUG
 
 const StepFour: React.FC = (props) => {
-    const { newMember, setNewMemberField } = useCampaignStore();
+    const { newMember, setNewMemberField, newCampaign } = useCampaignStore();
 
-    const { selectedLink, setSelectedLink, handleSaveMember, disabledSaveMember, isEditing, createCampaign } = useStepFour();
+    console.log(newCampaign)
+    const { selectedLink, setSelectedLink, handleSaveMember, disabledSaveMember, isEditing, address, handleCreateCampaign } = useStepFour();
 
     return (
         <section className={styles.containerLayout}>
@@ -92,7 +93,7 @@ const StepFour: React.FC = (props) => {
                 <GeneralButtonUI onClick={handleSaveMember} disabled={disabledSaveMember} classNameStyle="outlineb">
                     {isEditing ? 'Update member' : 'Add new member'}
                 </GeneralButtonUI>
-                <GeneralButtonUI onClick={() => { createCampaign() }} classNameStyle="fillb" disabled={disabledSaveMember}>
+                <GeneralButtonUI onClick={handleCreateCampaign} classNameStyle="fillb" disabled={disabledSaveMember}>
                     Create Project
                 </GeneralButtonUI>
             </div>

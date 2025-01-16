@@ -59,10 +59,10 @@ export class MilestoneEntityMongo extends BaseEntityMongo {
             {
                 campaign_id: { type: String, required: true },
                 milestone_status_id: { type: String, required: true },
-                estimate_delivery_days: { type: Number, required: true },
+                estimate_delivery_days: { type: Number, required: false },
                 estimate_delivery_date: { type: Date, required: false },
-                percentage: { type: Number, required: true },
-                description: { type: String, required: true },
+                percentage: { type: Number, required: false },
+                description: { type: String, required: false },
             },
             { timestamps: true }
         );

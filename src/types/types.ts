@@ -1,9 +1,9 @@
 export interface Campaign {
-    _DB_id: string;
-    creator_wallet_id: string;
+    _DB_id?: string;
+    creator_wallet_id?: string;
     name: string;
     description?: string;
-    campaign_status_id?: string;
+    campaign_status_id?: string | null;
     banner_url?: string;
     logo_url?: string;
     createdAt?: Date;
@@ -11,7 +11,7 @@ export interface Campaign {
     investors?: number;
     requestMaxAda: bigint;
     requestMinAda: bigint;
-    campaing_category_id: string;
+    campaing_category_id: string | null;
     website?: string;
     facebook?: string;
     instagram?: string;

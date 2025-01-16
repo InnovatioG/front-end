@@ -1,23 +1,36 @@
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import { useState, useEffect } from 'react';
 import type { MembersTeam } from '@/types/types';
-import type { Campaign } from '@/types/types';
+import { useWalletStore } from 'smart-db';
+import type { MilestoneCreation } from '@/types/types';
+import { createCampaign } from '@/components/CampaignCreation/Services/CampaignCreationServices';
+
 type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter';
 
 export default function useStepFour() {
     const { newCampaign, newMember, addMemberToTeam, resetNewMember, setNewMemberField, updateMemberField } = useCampaignStore();
+
+    /* usar el wallet store para la info del usuario */
+
+    const walletStore = useWalletStore();
+    const address = walletStore.info?.address || '';
+
+    useEffect(() => {
+        console.log(newCampaign.milestones)
+    }, [])
+
+
+
 
     const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>('website');
     const isEditing = newMember.id && newCampaign.members_team.some((m) => m.id === newMember.id);
 
     const handleSaveMember = () => {
         if (isEditing) {
-            // Update existing member
             Object.keys(newMember).forEach((key) => {
                 updateMemberField(key as keyof MembersTeam, newMember[key as keyof MembersTeam]);
             });
         } else {
-            // Add new member with new id
             const memberToAdd = {
                 ...newMember,
             };
@@ -26,9 +39,19 @@ export default function useStepFour() {
         resetNewMember();
     };
 
-    const createCampaign = () => {
-        console.log(newCampaign)
+    const handleCreateCampaign = async () => {
+        handleSaveMember();
+        try {
+            await createCampaign(newCampaign, address);
+        } catch (error) {
+            console.error('Error creating campaign:', error);
+        }
     }
+
+
+
+
+
 
     const disabledSaveMember = !newMember.name || !newMember.member_description || !newMember.last_name || !newMember.role || !newMember.email;
 
@@ -38,6 +61,7 @@ export default function useStepFour() {
         handleSaveMember,
         disabledSaveMember,
         isEditing,
-        createCampaign
+        address,
+        handleCreateCampaign
     };
 }

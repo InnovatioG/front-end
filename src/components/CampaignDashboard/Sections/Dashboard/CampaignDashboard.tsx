@@ -10,6 +10,15 @@ import CampaignFilters from './CampaignFilters/CampaignFilters';
 
 export default function CampaignDashboard() {
     const walletStore = useWalletStore();
+    /*
+    
+    chequea si es
+    para protocol team los flags son: 
+    
+    porotocol team walletStore.isCoreTeam 
+    walletStore.info?.isWalletValidatedWithSignedToken
+     
+    */
     const address = walletStore.info?.address || '';
 
     const {

@@ -20,7 +20,7 @@ interface UseCampaignStore extends CampaignState {
     newMember: MembersTeam;
     setStep: (step: 1 | 2 | 3 | 4) => void;
     setTitle: (name: string) => void;
-    setCategoryId: (campaing_category_id: number | null) => void;
+    setCategoryId: (campaing_category_id: string | null) => void;
     setDescription: (description: string) => void;
     setIsLoading: (isLoading: boolean) => void;
     setUser: (user: User) => void;
@@ -28,9 +28,9 @@ interface UseCampaignStore extends CampaignState {
     prevStep: () => void;
     setCompanyLogo: (companyLogo: string) => void;
     setBanner: (banner: string) => void;
-    setRequestMaxAda: (requestMaxAda: BigInt) => void;
+    setRequestMaxAda: (requestMaxAda: bigint) => void;
     setMilestones: (milestones: MilestoneCreation[]) => void;
-    setRequestMinAda: (requestMinAda: BigInt) => void;
+    setRequestMinAda: (requestMinAda: bigint) => void;
     setBrandField: <K extends keyof CampaignState['newCampaign']>(key: K, value: CampaignState['newCampaign'][K]) => void;
     setMembersTeam: (users: MembersTeam[]) => void;
     addMemberToTeam: (member: MembersTeam) => void;
