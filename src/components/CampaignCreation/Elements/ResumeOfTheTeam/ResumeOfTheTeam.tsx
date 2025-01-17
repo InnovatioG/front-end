@@ -2,9 +2,9 @@ import AddMore from '@/components/UI/Buttons/AddMore/AddMore';
 import { MembersTeam } from '@/types/types';
 import FramerMotionAnimation from '@/utils/framerMotion';
 import React, { useEffect, useRef, useState } from 'react';
-import FormNewMember from '@/components/CampaignCreation/Elements/FormNewMember/FormNewMember';
+import FormNewMember from '@/components/CampaignCreation/Elements/ResumeOfTheTeam/FormNewMember/FormNewMember';
 import styles from '@/components/CampaignCreation/Elements/ResumeOfTheTeam/ResumeOftheTeam.module.scss';
-import ResumeOfTheTeamAccordion from '@/components/CampaignCreation/Elements/ResumeOfTheTeamAccordion/ResumeOfTheTeamAccordion';
+import ResumeOfTheTeamAccordion from '@/components/CampaignCreation/Elements/ResumeOfTheTeam/ResumeOfTheTeamAccordion/ResumeOfTheTeamAccordion';
 import useResumeOfTheTeam from '@/components/CampaignCreation/Elements/ResumeOfTheTeam/useResumeOfTheTeam';
 
 const ResumeOfTheTeam: React.FC = (props) => {

@@ -6,7 +6,7 @@ import Tokenomics from '@/components/CampaignCreation/Elements/Tokenomics/Tokeno
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import React from 'react';
 import NavBarProjectEdition from '@/components/CampaignId/Elements/NavMenuProjectEdition/NavMenuProjectEdition';
-import styles from "@/components/CampaignCreation/Elements/CampaignEditionContainer.module.scss"
+import styles from "./CampaignEditionContainer.module.scss"
 
 
 

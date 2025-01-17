@@ -4,9 +4,9 @@ import SocialButton from '@/components/UI/Buttons/SocialIcon/SocialButton';
 import { socialIcons } from '@/utils/constants';
 import { formatLink } from '@/utils/formats';
 import React from 'react';
-import styles from '@/components/CampaignCreation/Elements/ResumeOfTheTeamAccordion/ResumeOfTheTeam.module.scss';
+import styles from '@/components/CampaignCreation/Elements/ResumeOfTheTeam/ResumeOfTheTeamAccordion/ResumeOfTheTeam.module.scss';
 import { MembersTeam } from '@/types/types';
-import useResumeOfTheTeamAccordion from "@/components/CampaignCreation/Elements/ResumeOfTheTeamAccordion/useResumeOfTheTeamAccordion"
+import useResumeOfTheTeamAccordion from "@/components/CampaignCreation/Elements/ResumeOfTheTeam/ResumeOfTheTeamAccordion/useResumeOfTheTeamAccordion"
 
 interface ResumeOfTheTeamAccordionProps {
     onEditMember?: (member: MembersTeam) => void;

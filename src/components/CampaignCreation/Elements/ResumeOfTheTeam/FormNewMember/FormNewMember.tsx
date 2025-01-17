@@ -5,7 +5,7 @@ import { memberFields } from '@/utils/constants';
 import React from 'react';
 import styles from './form.module.scss';
 import type { MembersTeam } from '@/types/types';
-
+import useResumeOfTheTeam from "@/components/CampaignCreation/Elements/ResumeOfTheTeam/useResumeOfTheTeam"
 interface FormNewMemberProps {
     newMember: MembersTeam;
     setNewMember: React.Dispatch<
@@ -15,6 +15,9 @@ interface FormNewMemberProps {
 }
 
 const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, setNewMemberField }) => {
+
+    console.log(newMember)
+    const { handleMemberCretion } = useResumeOfTheTeam()
     const socialMedia: Record<Extract<keyof FormNewMemberProps['newMember'], 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter'>, string> = {
         website: 'Website',
         facebook: 'Facebook',
@@ -85,7 +88,7 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
                 </div>
             </article>
             <div className={styles.buttonContainer}>
-                <GeneralButtonUI text="Add Member" onClick={() => { }} />
+                <GeneralButtonUI text="Add Member" onClick={() => { handleMemberCretion(newMember) }} />
             </div>
         </section>
     );

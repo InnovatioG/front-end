@@ -68,6 +68,7 @@ export interface CampaignContent {
 }
 
 export interface FAQ {
+    _DB_id?: string;
     campaign_id?: string;
     question?: string;
     answer?: string;

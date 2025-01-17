@@ -34,7 +34,6 @@ export const createCampaignMembers = async (members: MembersTeam[], campaignId: 
     }));
 
     const campaignMemberEntities = membersCreation.map((member) => new CampaignMemberEntity(member));
-
     return await Promise.all(campaignMemberEntities.map((campaignMemberEntity) => CampaignMemberApi.createApi(campaignMemberEntity)));
 };
 

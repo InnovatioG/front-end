@@ -65,6 +65,7 @@ export const useCampaignId = () => {
         }));
 
         const faqs: FAQ[] = campaignFaqsEntities.map((faq) => ({
+            _DB_id: faq._DB_id,
             campaign_id: faq.campaign_id,
             question: faq.question,
             answer: faq.answer,

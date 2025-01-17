@@ -16,8 +16,6 @@ type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitte
 
 const StepFour: React.FC = (props) => {
     const { newMember, setNewMemberField, newCampaign } = useCampaignStore();
-
-    console.log(newCampaign)
     const { selectedLink, setSelectedLink, handleSaveMember, disabledSaveMember, isEditing, address, handleCreateCampaign } = useStepFour();
 
     return (

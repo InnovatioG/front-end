@@ -22,9 +22,8 @@ const errorMessages = {
 
 const CampaignByIndex: React.FC<CampaignByIndexProps> = (props) => {
     const router = useRouter();
-    const { data: session } = useSession();
     const { id, menuview } = router.query;
-    const { setCampaign, campaign, setIsLoading, isLoading, setMenuView, setEditionMode } = useCampaignIdStore();
+    const { isLoading } = useCampaignIdStore();
     const [error, setError] = useState<string | null>(null);
     const { fetchCampaigns } = useCampaignId();
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react"
 import { MembersTeam } from "@/types/types";
-
+import { createCampaignMembers } from "@/components/CampaignId/Services/CampaignMember";
+import { useCampaignIdStore } from "@/store/campaignId/useCampaignIdStore";
 
 const useResumeOfTheTeam = () => {
     const [addNewMember, setAddNewMember] = useState(false);
@@ -25,6 +26,11 @@ const useResumeOfTheTeam = () => {
         wallet_address: '',
         editor: false,
     });
+    console.log(newMember)
+
+
+    const { campaign } = useCampaignIdStore()
+    const { _DB_id } = campaign
 
     const formRef = useRef<HTMLDivElement>(null);
 
@@ -51,6 +57,10 @@ const useResumeOfTheTeam = () => {
         }
     };
 
+    const handleMemberCretion = async (newMember: MembersTeam) => {
+        await createCampaignMembers(newMember, _DB_id);
+    }
+
     const setNewMemberField = (key: keyof typeof newMember, value: any) => {
         setNewMember((prevState) => ({
             ...prevState,
@@ -66,7 +76,8 @@ const useResumeOfTheTeam = () => {
         handleAddMore,
         setNewMemberField,
         setNewMember,
-        setAddNewMember
+        setAddNewMember,
+        handleMemberCretion
     }
 }
 

@@ -2,7 +2,7 @@ import AddMore from '@/components/UI/Buttons/AddMore/AddMore';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import FramerMotionAnimation from '@/utils/framerMotion';
 import React from 'react';
-import styles from "@/components/CampaignCreation/Elements/QA/Qa.module.scss";
+import styles from "@/components/CampaignDashboard/Sections/QA/Qa.module.scss"
 import useQA from '@/components/CampaignDashboard/Sections/QA/useQA'
 interface QYAProps {
     // Define props here

@@ -1,4 +1,4 @@
-import ResumeOfTheTeamAccordion from '@/components/CampaignCreation/Elements/ResumeOfTheTeamAccordion/ResumeOfTheTeamAccordion';
+import ResumeOfTheTeamAccordion from '@/components/CampaignCreation/Elements/ResumeOfTheTeam/ResumeOfTheTeamAccordion/ResumeOfTheTeamAccordion';
 import styles from "@/components/CampaignId/Sections/resumeOfTheTeam/ResumeOftheTeam.module.scss"
 import React from 'react';
 interface ResumeOfTheTeamProps {

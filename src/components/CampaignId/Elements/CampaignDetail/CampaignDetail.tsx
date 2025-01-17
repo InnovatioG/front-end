@@ -5,7 +5,7 @@ import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
 import { useCampaignId } from '@/hooks/useProjectDetail';
 import React, { useState, useEffect } from 'react';
-import styles from './ProjectDetail.module.scss';
+import styles from "@/components/CampaignId/Elements/CampaignDetail/CampaignDetail.module.scss"
 import { useCampaignDetail } from "@/components/CampaignId/Elements/CampaignDetail/useCampaignDetail";
 
 
