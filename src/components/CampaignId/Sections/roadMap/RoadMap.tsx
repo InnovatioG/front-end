@@ -20,7 +20,7 @@ const RoadMap: React.FC<RoadMapProps> = (props) => {
         <article>
             <div id="roadmap">
                 {milestones && milestones.map((milestone) => (
-                    <RoadMapCard key={milestone._Db_id} milestone={milestone} index={milestones.indexOf(milestone)} goal={Number(campaign.requestMaxAda)} />
+                    <RoadMapCard key={milestone._DB_id} milestone={milestone} index={milestones.indexOf(milestone)} goal={Number(campaign.requestMaxAda)} />
                 ))}
             </div>
         </article>

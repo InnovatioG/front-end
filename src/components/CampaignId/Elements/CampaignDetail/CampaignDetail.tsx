@@ -5,18 +5,31 @@ import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
 import { useCampaignId } from '@/hooks/useProjectDetail';
 import React, { useState, useEffect } from 'react';
-import styles from "@/components/CampaignId/Elements/CampaignDetail/CampaignDetail.module.scss"
-import { useCampaignDetail } from "@/components/CampaignId/Elements/CampaignDetail/useCampaignDetail";
-
+import styles from '@/components/CampaignId/Elements/CampaignDetail/CampaignDetail.module.scss';
+import { useCampaignDetail } from '@/components/CampaignId/Elements/CampaignDetail/useCampaignDetail';
 
 const CampaignDetail: React.FC = (props) => {
-
     const [openModal, setIsOpenModal] = useState(false);
-    const { loading, mergedOptions, handleSelectClick, selectedOption, handleAddOption, newOptionTitle, setNewOptionTitle, setSelectedOption, handleDescriptionChange } = useCampaignDetail();
+    const {
+        loading,
+        mergedOptions,
+        handleSelectClick,
+        selectedOption,
+        handleAddOption,
+        newOptionTitle,
+        setNewOptionTitle,
+        setSelectedOption,
+        handleDescriptionChange,
+        setViewOptions,
+        defaultOptions,
+        viewOptions,
+        handleAddOptionMenu,
+        handleUpdateSave
+    } = useCampaignDetail();
 
     useEffect(() => {
         setSelectedOption(mergedOptions[0]);
-    }, [])
+    }, []);
 
     return (
         <article className={styles.generalLayout}>
@@ -25,33 +38,58 @@ const CampaignDetail: React.FC = (props) => {
                     {mergedOptions &&
                         mergedOptions.map((option, index) => (
                             <div key={option.order}>
-                                <GeneralButtonUI
-                                    classNameStyle="has"
-                                    onClick={() => handleSelectClick(index)}
-                                    text={option.name}
-                                    className={styles.hasContentButton}
-                                />
+                                <GeneralButtonUI classNameStyle="has" onClick={() => handleSelectClick(index)} className={styles.hasContentButton}>
+                                    {option.name}
+                                </GeneralButtonUI>
                             </div>
                         ))}
                     <GeneralButtonUI
                         text="Add index"
                         onClick={() => {
-                            setIsOpenModal(true);
+                            setViewOptions(!viewOptions);
                         }}
                         classNameStyle="menu-index-selected"
                     />
+                    {viewOptions && (
+                        <div className={styles.otherOptions}>
+                            {defaultOptions.map((option, index) => (
+                                <div key={option.name}>
+                                    <GeneralButtonUI
+                                        classNameStyle="buttonMenu"
+                                        onClick={() => handleAddOptionMenu(option)}
+                                        text={`${option.name}`}
+                                        className={styles.buttonMenu}
+                                    />
+                                </div>
+                            ))}
+                            <GeneralButtonUI classNameStyle="buttonMenu" onClick={() => setIsOpenModal(true)} text="+ Add free index" className={styles.buttonMenu} />
+                        </div>
+                    )}
+
                 </div>
+
 
                 <div>
                     {selectedOption ? (
-                        <TextEditor
-                            title={selectedOption.name || 'Untitled'}
-                            content={selectedOption.description || ''}
-                            styleOption="quillEditor"
-                            onChange={(newContent) => {
-                                handleDescriptionChange(newContent); // Pasa el nuevo contenido al callback
-                            }}
-                        />
+                        <div>
+                            <TextEditor
+                                title={selectedOption.name || 'Untitled'}
+                                content={selectedOption.description || ''}
+                                styleOption="quillEditor"
+                                onChange={(newContent) => {
+                                    handleDescriptionChange(newContent); // Pasa el nuevo contenido al callback
+                                }}
+                            />
+                            <div className={styles.saveButtonContainer}>
+                                <GeneralButtonUI onClick={handleUpdateSave} classNameStyle="green">
+                                    <span className={styles.saveButton}>
+                                        Save
+                                    </span>
+                                </GeneralButtonUI>
+                            </div>
+
+                        </div>
+
                     ) : (
                         <p>Please select an option to edit</p>
                     )}
@@ -78,52 +116,101 @@ const CampaignDetail: React.FC = (props) => {
 
 export default CampaignDetail;
 /* 
+   
+import TextEditor from '@/components/General/Elements/TextEditor/TextEditor';
+import ToolTipInformation from '@/components/General/Elements/TooltipInformation/tooltipInformation';
+import Checkbox from '@/components/UI/Buttons/Checkbox/Checkbox';
+import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
+import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
+import { useCampaignId } from '@/hooks/useProjectDetail';
+import React, { useState, useEffect } from 'react';
+import styles from '@/components/CampaignId/Elements/CampaignDetail/CampaignDetail.module.scss';
+import { useCampaignDetail } from '@/components/CampaignId/Elements/CampaignDetail/useCampaignDetail';
+
+const CampaignDetail: React.FC = (props) => {
+    const [openModal, setIsOpenModal] = useState(false);
+    const {
+        loading,
+        mergedOptions,
+        handleSelectClick,
+        selectedOption,
+        handleAddOption,
+        newOptionTitle,
+        setNewOptionTitle,
+        setSelectedOption,
+        handleDescriptionChange,
+        setViewOptions,
+        defaultOptions,
+        viewOptions,
+        handleAddOptionMenu,
+    } = useCampaignDetail();
+
+    useEffect(() => {
+        if (mergedOptions.length > 0) {
+            setSelectedOption({ ...mergedOptions[0] }); // Selecciona la primera opción por defecto
+        }
+    }, [mergedOptions]);
+
     return (
         <article className={styles.generalLayout}>
             <div className={styles.layoutProject}>
-
                 <div className={styles.optionsContainer}>
-                    {textEditorOptions.map((option, index) => {
-                        const hasContent = content[option.id] && content[option.id] !== '<p><br></p>';
-                        const isActive = selectedOption.id === option.id;
-                        return (
-                            <div
-                                key={option.id}
-                                draggable
-                                onDragStart={() => handleDragStart(index)}
-                                onDragOver={handleDragOver(index)}
-                                onDragEnd={handleDragEnd}
-                                className={`${styles.draggableItem} ${draggedIndex === index ? styles.dragging : ''}`}
-                            >
-                                <GeneralButtonUI
-                                    key={option.id}
-                                    onClick={() => setSelectedOption(option)}
-                                    classNameStyle={`${isActive ? 'menu-index' : 'menu-index-selected'} ${hasContent ? 'non-empty-content' : ''}`}
-                                    className={`${isActive ? styles.activeButton : ''} ${hasContent ? styles.hasContentButton : ''}`}
-                                >
-                                    <Checkbox variant={true} checked={!!content[option.id]} onChange={() => handleCheckboxChange(option.id)} hasContent={hasContent} />
-                                    <span className={hasContent ? styles.buttonWhite : styles.buttonSpan}>{option.title}</span>
-                                    <ToolTipInformation content={option.tooltip} />
+                    {mergedOptions &&
+                        mergedOptions.map((option, index) => (
+                            <div key={option.order}>
+                                <GeneralButtonUI classNameStyle="has" onClick={() => handleSelectClick(index)} className={styles.hasContentButton}>
+                                    {option.name}
                                 </GeneralButtonUI>
                             </div>
-                        );
-                    })}
+                        ))}
                     <GeneralButtonUI
                         text="Add index"
                         onClick={() => {
-                            setIsOpenModal(true);
+                            setViewOptions(!viewOptions);
                         }}
                         classNameStyle="menu-index-selected"
                     />
+                    {viewOptions && (
+                        <div className={styles.otherOptions}>
+                            {defaultOptions.map((option, index) => (
+                                <div key={option.name}>
+                                    <GeneralButtonUI
+                                        classNameStyle="buttonMenu"
+                                        onClick={() => handleAddOptionMenu(option)}
+                                        text={`${option.name}`}
+                                        className={styles.buttonMenu}
+                                    />
+                                </div>
+                            ))}
+                            <GeneralButtonUI classNameStyle="buttonMenu" onClick={() => setIsOpenModal(true)} text="+ Add free index" className={styles.buttonMenu} />
+                        </div>
+                    )}
                 </div>
 
-                <TextEditor title={selectedOption.title} content={content[selectedOption.id] || ''} onChange={handleEditorChange} styleOption="quillEditor" />
-                <div className={styles.addOptionContainer}></div>
+                <div>
+                    {selectedOption ? (
+                        <div>
+                            <TextEditor
+                                title={selectedOption?.name || 'Untitled'}
+                                content={selectedOption?.description || ''}
+                                styleOption="quillEditor"
+                                onChange={(newContent) => {
+                                    handleDescriptionChange(newContent); // Actualiza en tiempo real
+                                }}
+                            />
+                            <div className={styles.saveButtonContainer}>
+                                <GeneralButtonUI onClick={() => { }} classNameStyle="green">
+                                    <span className={styles.saveButton}>
+                                        Save
+                                    </span>
+                                </GeneralButtonUI>
+                            </div>
+                        </div>
+                    ) : (
+                        <p>Please select an option to edit</p>
+                    )}
+                </div>
             </div>
-            <div className={styles.buttonContainer}>
-                <GeneralButtonUI text="Save" onClick={() => console.log('Save')} classNameStyle="green" />
-            </div>
-
 
             <ModalTemplate isOpen={openModal} setIsOpen={setIsOpenModal}>
                 <div className={styles.modalContainer}>
@@ -140,10 +227,9 @@ export default CampaignDetail;
                     </div>
                 </div>
             </ModalTemplate>
-
         </article>
     );
 };
 
-export default ProjectDetail;
+export default CampaignDetail;
  */

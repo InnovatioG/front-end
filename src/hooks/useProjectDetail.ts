@@ -5,12 +5,16 @@ import { pushWarningNotification } from 'smart-db';
 import { CampaignEntity, MilestoneEntity, CampaignMemberEntity, CampaignContentEntity, CampaignFaqsEntity, MilestoneSubmissionEntity } from '@/lib/SmartDB/Entities';
 import { CampaignApi, MilestoneApi, CampaignMemberApi, CampaignContentApi, CampaignFaqsApi, MilestoneSubmissionApi } from '@/lib/SmartDB/FrontEnd';
 import type { Campaign, Milestone, MembersTeam, CampaignContent, FAQ, MilestoneSubmission } from '@/types/types';
+import { parse } from 'path';
 
 export const useCampaignId = () => {
     const { campaign, setCampaign, setIsLoading } = useCampaignIdStore();
 
     const transformToBaseCampaign = async (campaign: CampaignEntity): Promise<Campaign> => {
-        const milestonesEntities: MilestoneEntity[] = await MilestoneApi.getByParamsApi_({ campaign_id: campaign._DB_id });
+        const milestonesEntities: MilestoneEntity[] = await MilestoneApi.getByParamsApi_({ campaign_id: campaign._DB_id }); /* .sort(
+            (a, b) => parseInt(a._DB_id) - parseInt(b._DB_id)
+        );
+ */
         const milestoneIds = milestonesEntities.map((milestone) => milestone._DB_id);
         const membersTeamEntities: CampaignMemberEntity[] = await CampaignMemberApi.getByParamsApi_({ campaign_id: campaign._DB_id });
         const campaignContentEntities: CampaignContentEntity[] = await CampaignContentApi.getByParamsApi_({ campaign_id: campaign._DB_id });
@@ -45,7 +49,7 @@ export const useCampaignId = () => {
         }));
 
         const milestones: Milestone[] = milestonesEntities.map((milestone) => ({
-            _Db_id: milestone._DB_id,
+            _DB_id: milestone._DB_id,
             campaign_id: milestone.campaign_id,
             milestone_status_id: milestone.milestone_status_id,
             estimate_delivery_days: milestone.estimate_delivery_days,
@@ -348,7 +352,7 @@ export const useCampaignId = () => {
         }));
 
         const milestones: Milestone[] = milestonesEntities.map((milestone) => ({
-            _Db_id: milestone._DB_id,
+            _DB_id: milestone._DB_id,
             campaign_id: milestone.campaign_id,
             milestone_status_id: milestone.milestone_status_id,
             estimate_delivery_days: milestone.estimate_delivery_days,

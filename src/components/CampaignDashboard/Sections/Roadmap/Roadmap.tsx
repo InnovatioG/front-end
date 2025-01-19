@@ -11,12 +11,12 @@ const RoadMapYMilestones: React.FC = (props) => {
         <div className={styles.milestoneContainer}>
             {milestones &&
                 milestones.map((milestone, index) => (
-                    <div key={milestone._Db_id}>
+                    <div key={milestone._DB_id}>
                         <MilestoneCardEdit
                             milestone={milestone}
                             index={index}
                             maxAvailablePercentage={100 - totalPercentage + milestone.percentage}
-                            onPercentageChange={(newPercentage) => handlePercentageChangeWrapper(milestone._Db_id, newPercentage)}
+                            onPercentageChange={(newPercentage) => handlePercentageChangeWrapper(milestone._DB_id, newPercentage)}
                         />
                     </div>
                 ))}

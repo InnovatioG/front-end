@@ -1,4 +1,5 @@
 import { CampaignIdStore, initialState } from '@/store/campaignId/initialState';
+import { parse } from 'path';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
@@ -23,8 +24,12 @@ export const useCampaignIdStore = create<useCampaignIdStore>()(
 
         setCampaign: (campaign) =>
             set((state) => {
-                state.campaign = campaign;
+                state.campaign = {
+                    ...campaign,
+                    milestones: campaign.milestones ? [...campaign.milestones].sort((a, b) => parseInt(a._DB_id ?? '0') - parseInt(b._DB_id ?? '0')) : [],
+                };
             }),
+
         setIsLoading: (isLoading) =>
             set((state) => {
                 state.isLoading = isLoading;

@@ -34,7 +34,7 @@ export interface Campaign {
 }
 
 export interface Milestone {
-    _Db_id?: string;
+    _DB_id?: string;
     campaign_id: string;
     milestone_status_id: string;
     estimate_delivery_days: number;
@@ -119,6 +119,5 @@ export interface MilestoneStatusGlobal {
 export interface initialTextEditorOptionsType {
     order: number;
     name: string;
-    description: string;
     tooltip: string;
 }

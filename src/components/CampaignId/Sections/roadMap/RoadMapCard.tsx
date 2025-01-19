@@ -24,6 +24,8 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
     const { openModal } = useModal();
     const { milestone_status_id, description } = milestone;
 
+    console.log(milestone)
+
     const getInternalId = (milestoneStatusId: string | undefined): number | undefined => {
         const status = milestoneStatus.find((status) => status.id === Number(milestoneStatusId));
         return status?.id_internal;

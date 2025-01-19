@@ -22,15 +22,16 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({
     onPercentageChange,
 }) => {
 
-    const { ordinalString, handleDescriptionChange } = useMilestoneCardEdit(
+    const { ordinalString, handleDescriptionChange, handleUpdateMilestone } = useMilestoneCardEdit(
         index,
         milestone
     );
 
 
+
     return (
         <section>
-            <h4 className={styles.milestoneTitle}>{ordinalString} Milestone</h4>
+            <h4 className={styles.milestoneTitle}>{ordinalString} Milestone {milestone._DB_id}</h4>
             <article className={styles.milestoneCardLayout}>
                 <div className={styles.textEditorContainer}>
                     {milestone ? (
@@ -56,6 +57,7 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({
                             maxAvailablePercentage={maxAvailablePercentage}
                             onPercentageChange={onPercentageChange}
                         />
+                        <button onClick={() => handleUpdateMilestone(milestone)}>Save</button>
                     </div>
                 </div>
             </article>

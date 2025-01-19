@@ -79,6 +79,7 @@
     width: 100%;
     transition: all 0.3s ease;
     border: none;
+    padding: 1rem 2rem;
 }
 
 .greenb {
@@ -316,4 +317,19 @@
     &:hover:before {
         left: 0;
     }
+}
+
+.buttonMenu {
+    background-color: #f4f4f4;
+    border: none;
+    width: 90%;
+}
+
+.span {
+    font-size: 14px;
+}
+
+.has {
+    background-color: colors.$primary-dark-color;
+    color: white;
 }
