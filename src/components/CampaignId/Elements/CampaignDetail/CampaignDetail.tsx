@@ -3,7 +3,7 @@ import ToolTipInformation from '@/components/General/Elements/TooltipInformation
 import Checkbox from '@/components/UI/Buttons/Checkbox/Checkbox';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import ModalTemplate from '@/components/UI/Modal/ModalTemplate';
-import { useCampaignId } from '@/hooks/useProjectDetail';
+import { useCampaignId } from '@/hooks/useCampaignDetail';
 import React, { useState, useEffect } from 'react';
 import styles from '@/components/CampaignId/Elements/CampaignDetail/CampaignDetail.module.scss';
 import { useCampaignDetail } from '@/components/CampaignId/Elements/CampaignDetail/useCampaignDetail';
@@ -24,7 +24,8 @@ const CampaignDetail: React.FC = (props) => {
         defaultOptions,
         viewOptions,
         handleAddOptionMenu,
-        handleUpdateSave
+        handleSaveContent,
+        handleDeleteButton
     } = useCampaignDetail();
 
     useEffect(() => {
@@ -81,7 +82,13 @@ const CampaignDetail: React.FC = (props) => {
                                 }}
                             />
                             <div className={styles.saveButtonContainer}>
-                                <GeneralButtonUI onClick={handleUpdateSave} classNameStyle="green">
+
+
+                                <GeneralButtonUI onClick={() => { selectedOption._DB_id && handleDeleteButton(selectedOption._DB_id) }} classNameStyle="outlineb">
+                                    <span>Delete</span>
+                                </GeneralButtonUI>
+
+                                <GeneralButtonUI onClick={handleSaveContent} classNameStyle="green">
                                     <span className={styles.saveButton}>
                                         Save
                                     </span>

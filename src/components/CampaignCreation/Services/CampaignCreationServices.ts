@@ -51,6 +51,7 @@ export const createMilestones = async (milestones: MilestoneCreation[], campaign
 
 export const createCampaign = async (newCampaign: newCampaign, address: string) => {
     try {
+        console.log(address);
         const campaignEntity = await createCampaignEntity(newCampaign, address);
 
         if (newCampaign.members_team?.length > 0) {

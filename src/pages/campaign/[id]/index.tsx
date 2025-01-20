@@ -14,7 +14,7 @@ import { CampaignEntity } from '@/lib/SmartDB/Entities';
 import { CampaignApi } from '@/lib/SmartDB/FrontEnd';
 import { set } from 'date-fns';
 import { pushWarningNotification } from 'smart-db';
-import { useCampaignId } from '@/hooks/useProjectDetail';
+import { useCampaignId } from '@/hooks/useCampaignDetail';
 
 interface CampaignVisualizationProps {
     // Define props here

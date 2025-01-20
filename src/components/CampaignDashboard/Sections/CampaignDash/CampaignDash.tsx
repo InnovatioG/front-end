@@ -28,7 +28,9 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
         setCampaign,
         getInternalId
     } = useCampaignDash();
-    const state = CardInformationByState(Number(getInternalId(campaign.campaign_status_id)));
+    const state = CardInformationByState(Number(getInternalId(campaign.campaign_status_id ?? undefined)));
+
+
 
 
     return (

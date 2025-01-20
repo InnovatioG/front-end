@@ -61,6 +61,7 @@ export interface MilestoneSubmission {
 }
 
 export interface CampaignContent {
+    _DB_id?: string;
     campaign_id?: string;
     name?: string;
     description?: string;

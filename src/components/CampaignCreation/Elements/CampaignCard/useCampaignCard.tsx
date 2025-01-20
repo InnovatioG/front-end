@@ -26,6 +26,10 @@ const useCampaignCard = ({ startDate, goal, min_request, investors, cdFundedADA 
 
     const progressWidth = `${progressPercentage}%`;
     const stateClass = useMemo(() => status.toLowerCase().replace(/\s+/g, '-'), [status]);
+
+
+    console.log(goal)
+
     const goalInCurrentCurrency = useMemo(
         () => (priceAdaOrDollar === 'dollar' ? Number(goal) : Number(goal) / adaPrice),
         [priceAdaOrDollar, goal, adaPrice]

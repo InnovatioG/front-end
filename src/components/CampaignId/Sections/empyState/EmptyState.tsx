@@ -15,7 +15,11 @@ const EmptyState: React.FC<EmptyStateProps> = (props) => {
             <div className={styles.buttonContainer}>
                 <Link href={`edit?id=${campaign._DB_id}`}>
                     <GeneralButtonUI onClick={() => { }} classNameStyle="outlineb">
-                        Start editing your content!
+
+                        <div className={styles.scontainer}>
+                            Start editing your content!
+                        </div>
+
                     </GeneralButtonUI>
                 </Link>
             </div>

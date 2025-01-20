@@ -10,6 +10,10 @@ const useCampaignDash = () => {
 
     const { campaign, editionMode, setCampaign, isProtocolTeam, isAdmin } = useCampaignIdStore();
     const { requestMaxAda, requestMinAda, investors, begin_at, cdFundedADA } = campaign
+
+
+    console.log(requestMaxAda)
+
     const { label, getInternalId } = useDraftCard(campaign, isProtocolTeam, isAdmin);
 
 

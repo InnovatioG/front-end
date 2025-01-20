@@ -10,7 +10,7 @@ import WalletInformationModal from '@/components/UI/Modal/WalletInformation';
 import { WalletSelectorModal } from '@/components/UI/Modal/WalletSelectorModal';
 import type { Campaign } from '@/types/types';
 import { createContext, useContext, useState } from 'react';
-
+import SuccessAction from '@/components/UI/Modal/SuccesAction';
 interface ModalState {
     isOpen: boolean;
     modalType?: string;
@@ -66,6 +66,7 @@ export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         contactSupport: <ContactSupportModal />,
         walletSelector: <WalletSelectorModal />,
         walletInformation: <WalletInformationModal />,
+        successAction: <SuccessAction />,
     };
 
     return (

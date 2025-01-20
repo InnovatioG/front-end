@@ -9,7 +9,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import styles from '../[id]/campainPagelayout.module.scss';
-import { useCampaignId } from '@/hooks/useProjectDetail';
+import { useCampaignId } from '@/hooks/useCampaignDetail';
 
 interface CampaignByIndexProps {
     // Define props aquí si es necesario

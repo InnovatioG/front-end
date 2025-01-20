@@ -32,7 +32,6 @@ export default function CreatorCampaign() {
       router.push(ROUTES.draft);
     }
     const user = session?.user;
-    console.log(user)
   }, [session])
 
 

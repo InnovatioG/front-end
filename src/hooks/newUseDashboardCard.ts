@@ -8,7 +8,10 @@ import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 import { set } from 'date-fns';
 import { ca } from 'date-fns/locale';
 import { CampaignStatus } from '@/utils/constants/status';
-export const useNewDashboardCard = (address: string | null) => {
+import { transformToBaseCampaign } from '@/utils/constants/transformBaseCampaign';
+import { useRouter } from 'next/router';
+import { useWalletStore } from 'smart-db';
+export const useNewDashboardCard = () => {
     const { campaignStatus } = useGeneralStore();
     const [campaigns, setCampaigns] = useState<Campaign[]>([]);
     const [visibleCampaigns, setVisibleCampaigns] = useState<Campaign[]>([]);
@@ -17,64 +20,10 @@ export const useNewDashboardCard = (address: string | null) => {
     const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [myProposal, setMyProposal] = useState(false);
-    const transformToBaseCampaign = async (campaign: CampaignEntity): Promise<Campaign> => {
-        const milestonesEntities: MilestoneEntity[] = await MilestoneApi.getByParamsApi_({ campaign_id: campaign._DB_id });
-        const membersTeamEntities: CampaignMemberEntity[] = await CampaignMemberApi.getByParamsApi_({ campaign_id: campaign._DB_id });
-        const members_team: MembersTeam[] = membersTeamEntities.map((member) => ({
-            id: member._DB_id,
-            campaign_id: member.campaign_id,
-            name: member.name,
-            last_name: member.last_name,
-            role: member.role,
-            admin: member.admin,
-            email: member.email,
-            wallet_id: member.wallet_id,
-            wallet_address: member.wallet_address,
-            website: member.website,
-            instagram: member.instagram,
-            facebook: member.facebook,
-            discord: member.discord,
-            twitter: member.twitter,
-        }));
+    const walletStore = useWalletStore();
+    const address = walletStore.info?.address || '';
 
-        const milestones: Milestone[] = milestonesEntities.map((milestone) => ({
-            campaign_id: milestone.campaign_id,
-            milestone_status_id: milestone.milestone_status_id,
-            estimate_delivery_days: milestone.estimate_delivery_days,
-            estimate_delivery_date: milestone.estimate_delivery_date,
-            percentage: milestone.percentage,
-            description: milestone.description,
-            createdAt: milestone.createdAt.toISOString(),
-            updatedAt: milestone.updatedAt?.toISOString() || '',
-        }));
-
-        return {
-            _DB_id: campaign._DB_id,
-            creator_wallet_id: campaign.creator_wallet_id,
-            name: campaign.name,
-            description: campaign.description,
-            campaign_status_id: campaign.campaign_status_id,
-            banner_url: campaign.banner_url,
-            logo_url: campaign.logo_url,
-            createdAt: campaign.createdAt,
-            updatedAt: campaign.updatedAt,
-            investors: campaign.investors,
-            requestMaxAda: campaign.requestedMaxADA,
-            campaing_category_id: campaign.campaing_category_id,
-            requestMinAda: campaign.requestedMinADA,
-            website: campaign.website,
-            facebook: campaign.facebook,
-            instagram: campaign.instagram,
-            discord: campaign.discord,
-            twitter: campaign.twitter,
-            milestones,
-            members_team,
-            begin_at: campaign.begin_at,
-            deadline: campaign.deadline,
-            cdFundedADA: campaign.cdFundedADA,
-            tokenomics_description: campaign.tokenomics_description,
-        };
-    };
+    const pathName = useRouter().pathname;
 
     const fetchCampaigns = async () => {
         try {
@@ -93,11 +42,23 @@ export const useNewDashboardCard = (address: string | null) => {
                 campaign_status_id: { $in: campaignStatusIds },
             };
 
-            const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filterData, { limit: 10 });
+            const filterDataManage = {
+                creator_wallet_id: address,
+            };
+            console.log(filterDataManage);
+            if (pathName !== '/campaign/manage') {
+                const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filterData, { limit: 10 });
+                const campaignWithDetails = await Promise.all(data.map((campaign) => transformToBaseCampaign(campaign)));
+                setVisibleCampaigns(campaignWithDetails);
+                setCampaigns(campaignWithDetails);
+            }
 
-            const campaignWithDetails = await Promise.all(data.map((campaign) => transformToBaseCampaign(campaign)));
-            setVisibleCampaigns(campaignWithDetails);
-            setCampaigns(campaignWithDetails);
+            if (pathName === '/campaign/manage') {
+                const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filterDataManage, { limit: 10 });
+                const campaignWithDetails = await Promise.all(data.map((campaign) => transformToBaseCampaign(campaign)));
+                setVisibleCampaigns(campaignWithDetails);
+                setCampaigns(campaignWithDetails);
+            }
         } catch (err) {
             console.error('Error fetching campaigns:', err);
             pushWarningNotification('Error', `Error fetching Campaigns: ${err}`);
@@ -121,8 +82,9 @@ export const useNewDashboardCard = (address: string | null) => {
 
     // Cargar campañas iniciales al montar el componente
     useEffect(() => {
+        if (address === '') return;
         fetchCampaigns();
-    }, []);
+    }, [address]);
 
     useEffect(() => {
         if (stateFilter === null && categoryFilter === null) return;

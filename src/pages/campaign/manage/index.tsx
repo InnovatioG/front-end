@@ -11,9 +11,9 @@ import styles from './Campaign.module.scss';
 export default function Home() {
     const walletStore = useWalletStore();
     const address = walletStore.info?.address || '';
+    console.log(walletStore.info)
     const { data: session } = useSession();
     const screenSize = useScreenSize();
-
     const { isProtocolTeam, campaignsLoading } = useDashboardCard(address);
 
     const title = () => (isProtocolTeam ? 'PROTOCOL TEAM' : 'CAMPAIGN MANAGERS');

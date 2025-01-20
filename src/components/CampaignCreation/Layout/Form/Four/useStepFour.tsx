@@ -16,7 +16,7 @@ export default function useStepFour() {
     const address = walletStore.info?.address || '';
 
     useEffect(() => {
-        console.log(newCampaign.milestones)
+        console.log(newCampaign)
     }, [])
 
 

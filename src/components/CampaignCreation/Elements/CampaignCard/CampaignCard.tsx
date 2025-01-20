@@ -29,6 +29,7 @@ const CampaignCard: React.FC<CampaignCardProps> = ({ status, goal, min_request, 
 
 
 
+
     return (
         <section className={styles.campaignCard}>
             <div className={styles.campaignCardStatus}>

@@ -55,7 +55,7 @@ const useDraftCard = (campaign: Campaign, isProtocolTeam: boolean, isAdmin: bool
         return status?.id_internal;
     };
 
-    const idInternal = getInternalId(campaign.campaign_status_id);
+    const idInternal = getInternalId(campaign.campaign_status_id ?? undefined);
 
     const { label, buttons } = isProtocolTeam
         ? cardInformationForProtocolTeam(Number(campaign.campaign_status_id))

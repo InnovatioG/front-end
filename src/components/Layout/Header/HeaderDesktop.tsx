@@ -12,7 +12,7 @@ export default function HeaderDesktop({ session, setIsOpen, isOpen }: { session:
                 <Link href={''} className={styles.infoLink}>
                     How it works
                 </Link>
-                <Link href={''} className={styles.infoLink}>
+                <Link href={'/about-us'} className={styles.infoLink}>
                     About us
                 </Link>
                 <Link href={'/campaigns'} className={styles.infoLink}>

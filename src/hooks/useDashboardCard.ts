@@ -7,7 +7,7 @@ import { useNewDashboardCard } from './newUseDashboardCard';
 import { useState, useEffect, useCallback } from 'react';
 export const useDashboardCard = (address: string | null) => {
     const { campaigns, filteredCampaigns, stateFilter, categoryFilter, setStateFilter, setCategoryFilter, visibleCampaigns, setVisibleCampaigns, setSearchTerm, searchTerm } =
-        useNewDashboardCard(address);
+        useNewDashboardCard();
     const { campaignStatus, campaignCategories } = useGeneralStore();
     const screenSize = useScreenSize();
     const [adminView, setAdminView] = useState(false);
@@ -21,20 +21,6 @@ export const useDashboardCard = (address: string | null) => {
     const [loadMoreEnabled, setLoadMoreEnabled] = useState(true);
     const [haveProjects, setHaveProjects] = useState(false);
     const pathName = router.pathname;
-
-    useEffect(() => {
-        if (!address) {
-            setLoading(false);
-            return;
-        }
-        const users = dataBaseService.getUsers();
-        const user = users.find((user: User) => user.wallet_address === address);
-        const isAdmin = user?.is_admin || false;
-        setIsAdmin(isAdmin);
-        setAdminView(isAdmin);
-        setIsProtocolTeam(user?.is_protocol_team || false);
-        setLoading(false);
-    }, [address]);
 
     const getInitialLoadCount = useCallback(() => {
         if (screenSize === 'mobile') return 3;

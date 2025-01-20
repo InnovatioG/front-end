@@ -62,6 +62,7 @@ export const useCampaignId = () => {
         }));
 
         const campaignContent: CampaignContent[] = campaignContentEntities.map((content) => ({
+            _DB_id: content._DB_id,
             campaign_id: content.campaign_id,
             name: content.name,
             description: content.description,
