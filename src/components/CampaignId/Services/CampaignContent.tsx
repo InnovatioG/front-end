@@ -5,7 +5,9 @@ import { CampaignContent } from '@/types/types';
 export const postCampaignContent = async (campaignContent: CampaignContent[], campaignID: string | undefined) => {
     try {
         const createdContenet = [];
+
         for (const content of campaignContent) {
+            console.log(content)
             const campaignCreatedContent = new CampaignContentEntity(content);
             if (campaignID !== undefined) {
                 campaignCreatedContent.campaign_id = campaignID;
@@ -26,7 +28,10 @@ export const updateCampaignContent = async (campaignContents: CampaignContent[])
     try {
         const updatedContents = [];
         for (const content of campaignContents) {
+            console.log(content)
+
             const updatedContent = await CampaignContentApi.updateWithParamsApi_(content._DB_id!, content);
+            console.log(updatedContent)
             updatedContents.push(updatedContent);
         }
         return updatedContents;

@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Slider from '@/components/General/Elements/Slider/FundrasingSlider/Slider';
 import styles from './StepTwo.module.scss';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import SelectButton from '@/components/UI/Buttons/SelectButton/SelectButton';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
-import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import ToolTipInformation from '@/components/General/Elements/TooltipInformation/tooltipInformation';
 import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 import useFundraisingSlider from '@/components/CampaignCreation/Layout/Form/Two/useFundraisingSlider';
 
 const FundrasingSlider: React.FC = (props) => {
-    const { newCampaign, setRequestMaxAda, setMilestones } = useCampaignStore();
     const { adaPrice } = useGeneralStore();
     const { priceAdaOrDollar } = usePriceStore();
-    const { selectedMilestones, handleSelect, calculaterequestMaxAda } = useFundraisingSlider();
-    const requestMaxAda = newCampaign.requestMaxAda;
+    const { selectedMilestones, handleSelect, calculaterequestMaxAda, requestMaxAda, requestMinAda, setRequestMaxAda } = useFundraisingSlider();
+
+
 
     return (
         <div className={styles.layout}>

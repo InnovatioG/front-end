@@ -27,11 +27,16 @@ const DropArchive: React.FC<DropArchiveProps> = ({ file, setFile }) => {
         noClick: true,
     });
 
+    const handleContainerClick = (event: React.MouseEvent) => {
+        event.stopPropagation();
+        open();
+    };
+
     return (
         <article {...getRootProps()} className={styles.container} onClick={(e) => e.stopPropagation()}>
             <input {...getInputProps()} />
 
-            <div className={styles.uploadArchiveContainer} onClick={open}>
+            <div className={styles.uploadArchiveContainer} onClick={handleContainerClick}>
                 {file ? (
                     <div className={styles.avatarContainer}>
                         <Image src={file} alt="Banner" layout="fill" objectFit="cover" className={styles.picturePreview} />

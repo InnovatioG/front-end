@@ -6,6 +6,7 @@ import React from 'react';
 import styles from './form.module.scss';
 import type { MembersTeam } from '@/types/types';
 import useResumeOfTheTeam from "@/components/CampaignCreation/Elements/ResumeOfTheTeam/useResumeOfTheTeam"
+import Avatar from '@/components/General/Elements/PictureUpload/Avatar';
 interface FormNewMemberProps {
     newMember: MembersTeam;
     setNewMember: React.Dispatch<
@@ -16,8 +17,7 @@ interface FormNewMemberProps {
 
 const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, setNewMemberField }) => {
 
-    console.log(newMember)
-    const { handleMemberCretion } = useResumeOfTheTeam()
+    const { handleMemberCretion, handleMemberUpdate } = useResumeOfTheTeam()
     const socialMedia: Record<Extract<keyof FormNewMemberProps['newMember'], 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter'>, string> = {
         website: 'Website',
         facebook: 'Facebook',
@@ -26,8 +26,20 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
         twitter: 'XS',
     };
 
+    const handleSaveMember = () => {
+        if (newMember.id) {
+            handleMemberUpdate(newMember);
+        } else {
+            handleMemberCretion(newMember);
+        }
+    };
+
+
     return (
         <section className={styles.formLayout}>
+            <div className={styles.avatarContainer}>
+                <Avatar picture={newMember.member_picture || ''} setPicture={(picture) => setNewMemberField('member_picture', picture)} />
+            </div>
             <div className={styles.inputContainer}>
                 {memberFields.map((field) => (
                     <input
@@ -88,7 +100,7 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
                 </div>
             </article>
             <div className={styles.buttonContainer}>
-                <GeneralButtonUI text="Add Member" onClick={() => { handleMemberCretion(newMember) }} />
+                <GeneralButtonUI text={newMember.id ? "Update Member" : "Add Member"} onClick={handleSaveMember} />
             </div>
         </section>
     );

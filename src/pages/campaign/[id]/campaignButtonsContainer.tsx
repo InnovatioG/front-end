@@ -5,7 +5,7 @@ import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import Link from 'next/link';
 import React from 'react';
 import styles from './campaignButtonContainer.module.scss';
-
+import { CampaignStatus } from '@/utils/constants/status';
 interface CampaignButtonContainerProps { }
 
 const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) => {
@@ -15,15 +15,13 @@ const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) 
             ...project,
             campaign_type: 'Target' as const, // Garantiza el valor correcto
         }; */
-    const { buttons } = useDraftCard(campaign, isProtocolTeam, isAdmin);
+    const { buttons, getInternalId } = useDraftCard(campaign, isProtocolTeam, isAdmin);
 
     const { openModal } = useModal();
 
     const filteredButtons = buttons.filter((button) => button.id !== 1);
+    const interalId = campaign.campaign_status_id ? getInternalId(campaign.campaign_status_id) : undefined;
 
-    const handleClick = () => {
-        localStorage.setItem('project', JSON.stringify(campaign));
-    };
 
     return (
         <div className={styles.buttonContainerLayout}>
@@ -69,10 +67,10 @@ const CampaignButtonContainer: React.FC<CampaignButtonContainerProps> = (props) 
                     })}
                 </div>
             ) : (
-                Number(campaign.campaign_status_id) === 9 && (
+                Number(interalId) === CampaignStatus.FUNDRAISING && (
                     <div className={styles.buttonContainerInvest}>
-                        <Link href={'/invest'}>
-                            <GeneralButtonUI text="Invest" classNameStyle="invest" onClick={handleClick} />
+                        <Link href={`/invest?id=${campaign._DB_id}`}>
+                            <GeneralButtonUI text="Invest" classNameStyle="invest" onClick={() => { }} />
                         </Link>
                     </div>
                 )

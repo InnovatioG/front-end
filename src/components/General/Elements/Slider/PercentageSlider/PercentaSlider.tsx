@@ -6,7 +6,7 @@ import { usePercentaSlider } from "@/components/General/Elements/Slider/Percenta
 
 interface PercentageSliderProps {
     initialLabel: number; // Assuming you want to pass an initial value
-    setValue: (value: BigInt) => void;
+    setValue: (value: bigint) => void;
     total: number
 
 }

@@ -8,7 +8,7 @@ import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 import { set } from 'date-fns';
 import { ca } from 'date-fns/locale';
 import { CampaignStatus } from '@/utils/constants/status';
-import { transformToBaseCampaign } from '@/utils/constants/transformBaseCampaign';
+import { transformToBaseCampaign } from '@/utils/transformBaseCampaign';
 import { useRouter } from 'next/router';
 import { useWalletStore } from 'smart-db';
 export const useNewDashboardCard = () => {
@@ -19,13 +19,16 @@ export const useNewDashboardCard = () => {
     const [stateFilter, setStateFilter] = useState<string | null>(null);
     const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [myProposal, setMyProposal] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
     const walletStore = useWalletStore();
     const address = walletStore.info?.address || '';
 
     const pathName = useRouter().pathname;
 
-    const fetchCampaigns = async () => {
+    console.log(pathName);
+    const fetchCampaigns = async (page = 1) => {
         try {
             const campaignStatusRequiredList = [
                 CampaignStatus.COUNTDOWN,
@@ -45,20 +48,21 @@ export const useNewDashboardCard = () => {
             const filterDataManage = {
                 creator_wallet_id: address,
             };
-            console.log(filterDataManage);
-            if (pathName !== '/campaign/manage') {
-                const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filterData, { limit: 10 });
-                const campaignWithDetails = await Promise.all(data.map((campaign) => transformToBaseCampaign(campaign)));
-                setVisibleCampaigns(campaignWithDetails);
-                setCampaigns(campaignWithDetails);
-            }
+
+            let data: CampaignEntity[] = [];
+            const offset = (page - 1) * itemsPerPage;
 
             if (pathName === '/campaign/manage') {
-                const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filterDataManage, { limit: 10 });
-                const campaignWithDetails = await Promise.all(data.map((campaign) => transformToBaseCampaign(campaign)));
-                setVisibleCampaigns(campaignWithDetails);
-                setCampaigns(campaignWithDetails);
+                data = await CampaignApi.getByParamsApi_(filterDataManage, { limit: 10 });
+            } else if (pathName === '/campaigns') {
+                data = await CampaignApi.getByParamsApi_(filterData, { limit: 40 });
+            } else {
+                data = await CampaignApi.getByParamsApi_(filterData, { limit: 10 });
             }
+
+            const campaignWithDetails = await Promise.all(data.map((campaign) => transformToBaseCampaign(campaign)));
+            setVisibleCampaigns(campaignWithDetails);
+            setCampaigns(campaignWithDetails);
         } catch (err) {
             console.error('Error fetching campaigns:', err);
             pushWarningNotification('Error', `Error fetching Campaigns: ${err}`);

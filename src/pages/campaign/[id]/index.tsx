@@ -8,7 +8,7 @@ import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import CampaignButtonContainer from './campainButtonsContainer';
+import CampaignButtonContainer from './campaignButtonsContainer';
 import styles from './campainPagelayout.module.scss';
 import { CampaignEntity } from '@/lib/SmartDB/Entities';
 import { CampaignApi } from '@/lib/SmartDB/FrontEnd';

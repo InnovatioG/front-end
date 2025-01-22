@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import { MembersTeam } from "@/types/types";
-import { createCampaignMembers } from "@/components/CampaignId/Services/CampaignMember";
+import { createCampaignMembers, updateMember } from "@/components/CampaignId/Services/CampaignMember";
 import { useCampaignIdStore } from "@/store/campaignId/useCampaignIdStore";
 
 const useResumeOfTheTeam = () => {
@@ -26,7 +26,7 @@ const useResumeOfTheTeam = () => {
         wallet_address: '',
         editor: false,
     });
-    console.log(newMember)
+    console.log("newMember", newMember)
 
 
     const { campaign } = useCampaignIdStore()
@@ -52,13 +52,38 @@ const useResumeOfTheTeam = () => {
     const handleAddMore = () => {
         const willOpen = !addNewMember;
         setAddNewMember(willOpen);
-        if (willOpen) {
-            // El efecto se encargará del scroll
+        if (!willOpen) {
+            setNewMember({
+                id: '',
+                campaign_id: "",
+                name: '',
+                last_name: '',
+                email: '',
+                role: '',
+                member_description: '',
+                member_picture: '',
+                website: '',
+                facebook: '',
+                instagram: '',
+                discord: '',
+                linkedin: '',
+                twitter: '',
+                admin: false,
+                member_manage_funds: false,
+                wallet_id: '',
+                wallet_address: '',
+                editor: false,
+            });
         }
     };
 
     const handleMemberCretion = async (newMember: MembersTeam) => {
         await createCampaignMembers(newMember, _DB_id);
+    }
+
+    const handleMemberUpdate = async (newMember: MembersTeam) => {
+        await updateMember(newMember);
+
     }
 
     const setNewMemberField = (key: keyof typeof newMember, value: any) => {
@@ -75,6 +100,7 @@ const useResumeOfTheTeam = () => {
         handleEditMember,
         handleAddMore,
         setNewMemberField,
+        handleMemberUpdate,
         setNewMember,
         setAddNewMember,
         handleMemberCretion

@@ -5,14 +5,14 @@ import useCategoryDropdown from "@/components/CampaignCreation/Elements/Category
 
 interface CategoryDropdownProps {
     options: { value: number; label: string }[];
-    value: number | null;
+    value: string | null;
     onChange: (value: number) => void;
 }
 
 export default function CategoryDropdown(props: CategoryDropdownProps) {
     const { options, value, onChange } = props;
     const { isOpen, setIsOpen, dropDownRef, contentRef, handleOptionClick } = useCategoryDropdown();
-    const selectedLabel = options.find((option) => option.value === value)?.label || 'Select category';
+    const selectedLabel = options.find((option) => option.value === Number(value))?.label || 'Select category';
 
     return (
         <div className={`${styles.btnDropdown} ${isOpen ? styles.open : ''}`} ref={dropDownRef} onClick={() => setIsOpen(!isOpen)}>

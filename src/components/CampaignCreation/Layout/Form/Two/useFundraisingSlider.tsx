@@ -3,11 +3,12 @@ import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
 
 export default function useFundraisingSlider() {
-    const { setMilestones } = useCampaignStore();
+    const { setMilestones, newCampaign, setRequestMaxAda, setRequestMinAda, } = useCampaignStore();
     const { priceAdaOrDollar } = usePriceStore();
 
     const [selectedMilestones, setSelectedMilestones] = useState<number | null>(null);
-
+    const requestMaxAda = newCampaign.requestMaxAda;
+    const requestMinAda = newCampaign.requestMinAda;
     const handleSelect = (numMilestones: number) => {
         setSelectedMilestones(numMilestones);
         const milestones = Array.from({ length: numMilestones }, (_, index) => ({
@@ -23,5 +24,12 @@ export default function useFundraisingSlider() {
         return requestMaxAda;
     };
 
-    return { selectedMilestones, handleSelect, calculaterequestMaxAda };
+    useEffect(() => {
+        if (requestMinAda > requestMaxAda) {
+            setRequestMinAda(requestMaxAda);
+        }
+    }, [requestMaxAda, requestMinAda, setRequestMinAda]);
+
+
+    return { selectedMilestones, handleSelect, calculaterequestMaxAda, requestMaxAda, requestMinAda, setRequestMaxAda };
 }

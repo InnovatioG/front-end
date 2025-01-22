@@ -14,35 +14,10 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useWalletStore } from 'smart-db';
 import styles from '@/pages/campaign/new/CreatorCampaign.module.scss';
+import useNew from './useNew';
 
 export default function CreatorCampaign() {
-  const screenSize = useScreenSize();
-  const { data: session } = useSession();
-
-
-
-
-  const router = useRouter();
-  const { step, setStep, setUser, isLoading, setCategoryId, setIsLoading, newCampaign } = useCampaignStore();
-
-
-
-  useEffect(() => {
-    if (!session) {
-      router.push(ROUTES.draft);
-    }
-    const user = session?.user;
-  }, [session])
-
-
-  const handleClickBack = () => {
-    if (step === 1) {
-      router.push(ROUTES.draft);
-    } else {
-      setStep((step - 1) as 1 | 2 | 3 | 4);
-    }
-  };
-
+  const { step, isLoading, setStep, setUser, setCategoryId, handleClickBack } = useNew()
 
 
 
@@ -53,7 +28,7 @@ export default function CreatorCampaign() {
   return (
     <main className={styles.generalContainer}>
       <section className={styles.layout}>
-        <FormHeader session={session} />
+        <FormHeader />
         <div className={styles.stepController}>
           <h2 className={styles.titleSection}>{titleForCampaignCreation(step) || ''}</h2>
           <StepController step={step} />

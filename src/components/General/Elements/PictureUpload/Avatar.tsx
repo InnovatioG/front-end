@@ -1,6 +1,6 @@
 import UploadFile from '@/components/UI/Buttons/UploadFile/UploadFile';
 import Image from 'next/image';
-import React from 'react';
+import React, { useRef } from 'react';
 import styles from './Avatar.module.scss';
 
 export interface AvatarProps {
@@ -9,10 +9,7 @@ export interface AvatarProps {
 }
 
 const Avatar = ({ setPicture, picture }: AvatarProps) => {
-    /*     const { setCompanyLogo, newCampaign } = useCampaignStore();
-     */
-
-    /* TODO SUBIR LA IMAGEN EN NUESTRA BASE DE DATOS */
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
@@ -25,9 +22,20 @@ const Avatar = ({ setPicture, picture }: AvatarProps) => {
         }
     };
 
+    const handleContainerClick = () => {
+        fileInputRef.current?.click();
+    };
+
     return (
-        <section className={styles.generalContainer}>
-            <input type="file" accept="image/*" onChange={handleFileChange} style={{ display: 'none' }} id="fileInput" />
+        <section className={styles.generalContainer} onClick={handleContainerClick}>
+            <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                style={{ display: 'none' }}
+                ref={fileInputRef}
+                id="fileInput"
+            />
             <div className={styles.containerIcon}>
                 {!picture ? (
                     <UploadFile styleType="black" />

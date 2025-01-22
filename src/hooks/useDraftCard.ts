@@ -47,7 +47,7 @@ const getCurrentMilestone = (campaign: Campaign): string => {
 const useDraftCard = (campaign: Campaign, isProtocolTeam: boolean, isAdmin: boolean) => {
     const milestone_status_id = getmilestone_status_id(campaign);
     const currentMilestone = getCurrentMilestone(campaign);
-    const { campaignStatus } = useGeneralStore();
+    const { campaignStatus, campaignCategories } = useGeneralStore();
     const [timeRemaining, setTimeRemaining] = useState(getTimeRemaining(campaign.begin_at));
 
     const getInternalId = (campaignStatusId: string | undefined): number | undefined => {
@@ -87,6 +87,7 @@ const useDraftCard = (campaign: Campaign, isProtocolTeam: boolean, isAdmin: bool
         formatAllTime,
         currentMilestone,
         getInternalId,
+        campaignCategories,
     };
 };
 

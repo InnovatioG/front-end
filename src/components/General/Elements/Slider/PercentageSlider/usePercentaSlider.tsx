@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './PercentaSlider.module.scss';
 
-export const usePercentaSlider = (initialLabel: number, setValue: (value: BigInt) => void, total: number) => {
+export const usePercentaSlider = (initialLabel: number, setValue: (value: bigint) => void, total: number) => {
     const [label, setLabel] = useState(initialLabel);
 
 

@@ -6,13 +6,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
+
 /*  */
 
 interface FormHeaderProps {
-    session: any;
 }
 
-const FormHeader: React.FC<FormHeaderProps> = ({ session }) => {
+const FormHeader: React.FC<FormHeaderProps> = ({ }) => {
     return (
         <div className={styles.header}>
             <Link href="/">
@@ -20,7 +20,8 @@ const FormHeader: React.FC<FormHeaderProps> = ({ session }) => {
             </Link>
             <div className={styles.containerPrimary}>
                 {/*        <TogglePrice />
-                <BtnConnectWallet type="primary" width={166} /> */}
+                */}
+                <BtnConnectWallet type="primary" width={166} />
             </div>
         </div>
     );

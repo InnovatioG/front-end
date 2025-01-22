@@ -17,10 +17,14 @@ interface DraftCardProps {
 
 const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin }) => {
     const { openModal } = useModal();
-    const { label, labelClass, buttons, timeRemaining, formatAllTime, currentMilestone, getInternalId } = useDraftCard(campaign, isProtocolTeam, isAdmin);
+    const { label, labelClass, buttons, timeRemaining, formatAllTime, currentMilestone, getInternalId, campaignCategories } = useDraftCard(campaign, isProtocolTeam, isAdmin);
+
+
+
 
     const categoriesById = (id: number) => {
-        return 'TODO'
+        return campaignCategories.find((category) => category.id === id)?.name
+
     }
     const idInternal = getInternalId(campaign.campaign_status_id);
 
@@ -28,7 +32,6 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin
 
     return (
         <div className={styles.campaignCard}>
-            <span>{campaign._DB_id}</span>
             <div className={styles.headCard}>
                 <Image
                     width={58}

@@ -20,7 +20,7 @@ export default function StepOne() {
                 </div>
                 <div className={styles.article}>
                     <h2 className={styles.title}>Category</h2>
-                    <CategoryDropdown options={categoryOptions} value={campaing_category_id} onChange={(value) => setCategoryId(value)} />
+                    <CategoryDropdown options={categoryOptions} value={campaing_category_id} onChange={(value) => setCategoryId(value.toString())} />
                 </div>
             </div>
 

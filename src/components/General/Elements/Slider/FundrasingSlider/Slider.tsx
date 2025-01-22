@@ -2,10 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import styles from './Slider.module.scss';
 
 interface SliderProps {
-    value: BigInt;
-    setValue: (value: BigInt) => void;
-    min: BigInt;
-    max: BigInt;
+    value: bigint;
+    setValue: (value: bigint) => void;
+    min: bigint;
+    max: bigint;
     step: number;
 }
 
