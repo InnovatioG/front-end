@@ -5,35 +5,22 @@ import { memberFields } from '@/utils/constants';
 import React from 'react';
 import styles from './form.module.scss';
 import type { MembersTeam } from '@/types/types';
-import useResumeOfTheTeam from "@/components/CampaignCreation/Elements/ResumeOfTheTeam/useResumeOfTheTeam"
 import Avatar from '@/components/General/Elements/PictureUpload/Avatar';
+
 interface FormNewMemberProps {
     newMember: MembersTeam;
-    setNewMember: React.Dispatch<
-        React.SetStateAction<MembersTeam>
-    >;
-    setNewMemberField: (key: keyof FormNewMemberProps['newMember'], value: any) => void;
+    setNewMemberField: (key: keyof MembersTeam, value: any) => void;
+    handleSaveMember: () => void;
 }
 
-const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, setNewMemberField }) => {
-
-    const { handleMemberCretion, handleMemberUpdate } = useResumeOfTheTeam()
-    const socialMedia: Record<Extract<keyof FormNewMemberProps['newMember'], 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter'>, string> = {
+const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMemberField, handleSaveMember }) => {
+    const socialMedia: Record<Extract<keyof MembersTeam, 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter'>, string> = {
         website: 'Website',
         facebook: 'Facebook',
         instagram: 'Instagram',
         discord: 'Discord',
-        twitter: 'XS',
+        twitter: 'Twitter',
     };
-
-    const handleSaveMember = () => {
-        if (newMember.id) {
-            handleMemberUpdate(newMember);
-        } else {
-            handleMemberCretion(newMember);
-        }
-    };
-
 
     return (
         <section className={styles.formLayout}>
@@ -46,8 +33,8 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
                         key={field.key}
                         type="text"
                         placeholder={field.placeholder}
-                        value={String(newMember[field.key as keyof typeof newMember])}
-                        onChange={(e) => setNewMemberField(field.key as keyof typeof newMember, e.target.value)}
+                        value={String(newMember[field.key as keyof MembersTeam])}
+                        onChange={(e) => setNewMemberField(field.key as keyof MembersTeam, e.target.value)}
                         className={styles.input}
                     />
                 ))}
@@ -92,8 +79,8 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMember, 
                             key={key}
                             type="text"
                             placeholder={label}
-                            value={newMember[key as keyof typeof socialMedia]} // Indicamos que es un índice válido
-                            onChange={(e) => setNewMemberField(key as keyof typeof socialMedia, e.target.value)}
+                            value={newMember[key as keyof MembersTeam]} // Indicamos que es un índice válido
+                            onChange={(e) => setNewMemberField(key as keyof MembersTeam, e.target.value)}
                             className={styles.input}
                         />
                     ))}

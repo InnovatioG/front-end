@@ -77,7 +77,7 @@ export const useCampaignId = () => {
             order: faq.order,
         }));
 
-        // Retornar el objeto transformado
+        // TODO Emprolijar, agrupando el campaign en un solo elemento y retornar solo ese campaign, en conjunto al faqs, members_team y milestone.
         return {
             _DB_id: campaign._DB_id,
             creator_wallet_id: campaign.creator_wallet_id,

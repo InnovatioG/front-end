@@ -1,14 +1,16 @@
 import AddMore from '@/components/UI/Buttons/AddMore/AddMore';
-import { MembersTeam } from '@/types/types';
 import FramerMotionAnimation from '@/utils/framerMotion';
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import FormNewMember from '@/components/CampaignCreation/Elements/ResumeOfTheTeam/FormNewMember/FormNewMember';
 import styles from '@/components/CampaignCreation/Elements/ResumeOfTheTeam/ResumeOftheTeam.module.scss';
 import ResumeOfTheTeamAccordion from '@/components/CampaignCreation/Elements/ResumeOfTheTeam/ResumeOfTheTeamAccordion/ResumeOfTheTeamAccordion';
 import useResumeOfTheTeam from '@/components/CampaignCreation/Elements/ResumeOfTheTeam/useResumeOfTheTeam';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 
 const ResumeOfTheTeam: React.FC = (props) => {
-    const { addNewMember, newMember, formRef, handleEditMember, handleAddMore, setNewMemberField, setNewMember, setAddNewMember } = useResumeOfTheTeam();
+    const { addNewMember, newMember, formRef, handleEditMember, handleAddMore, setNewMemberField, setNewMember, setAddNewMember, handleSaveMember } = useResumeOfTheTeam();
+    const { campaign } = useCampaignIdStore()
+
 
     return (
         <section className={styles.layout}>
@@ -20,7 +22,7 @@ const ResumeOfTheTeam: React.FC = (props) => {
             {addNewMember && (
                 <FramerMotionAnimation isVisible={addNewMember}>
                     <div ref={formRef}>
-                        <FormNewMember newMember={newMember} setNewMember={setNewMember} setNewMemberField={setNewMemberField} />
+                        <FormNewMember newMember={newMember} setNewMember={setNewMember} setNewMemberField={setNewMemberField} handleSaveMember={handleSaveMember} />
                     </div>
                 </FramerMotionAnimation>
             )}

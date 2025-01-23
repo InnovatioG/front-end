@@ -1,13 +1,16 @@
-import React, { useState, useEffect, useRef } from "react"
-import { MembersTeam } from "@/types/types";
-import { createCampaignMembers, updateMember } from "@/components/CampaignId/Services/CampaignMember";
-import { useCampaignIdStore } from "@/store/campaignId/useCampaignIdStore";
+import React, { useState, useEffect, useRef } from 'react';
+import { MembersTeam } from '@/types/types';
+import { createCampaignMembers, updateMember } from '@/components/CampaignId/Services/CampaignMember';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
+import { useModal } from '@/contexts/ModalContext';
+import { ca } from 'date-fns/locale';
 
 const useResumeOfTheTeam = () => {
     const [addNewMember, setAddNewMember] = useState(false);
     const [newMember, setNewMember] = useState<MembersTeam>({
         id: '',
-        campaign_id: "",
+        _DB_id: '',
+        campaign_id: '',
         name: '',
         last_name: '',
         email: '',
@@ -26,11 +29,11 @@ const useResumeOfTheTeam = () => {
         wallet_address: '',
         editor: false,
     });
-    console.log("newMember", newMember)
+    console.log('newMember', newMember);
 
-
-    const { campaign } = useCampaignIdStore()
-    const { _DB_id } = campaign
+    const { campaign } = useCampaignIdStore();
+    const { _DB_id } = campaign;
+    const { openModal } = useModal();
 
     const formRef = useRef<HTMLDivElement>(null);
 
@@ -44,6 +47,7 @@ const useResumeOfTheTeam = () => {
     }, [addNewMember]);
 
     const handleEditMember = (member: typeof newMember) => {
+        console.log(member)
         setNewMember(member);
         setAddNewMember(true);
         // No necesitamos shouldScroll; el efecto anterior se encargará del scroll
@@ -55,7 +59,7 @@ const useResumeOfTheTeam = () => {
         if (!willOpen) {
             setNewMember({
                 id: '',
-                campaign_id: "",
+                campaign_id: '',
                 name: '',
                 last_name: '',
                 email: '',
@@ -78,13 +82,30 @@ const useResumeOfTheTeam = () => {
     };
 
     const handleMemberCretion = async (newMember: MembersTeam) => {
-        await createCampaignMembers(newMember, _DB_id);
-    }
+        try {
+            await createCampaignMembers(newMember, campaign._DB_id);
+            openModal('successAction');
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const handleMemberUpdate = async (newMember: MembersTeam) => {
-        await updateMember(newMember);
+        try {
+            await updateMember(newMember);
+            openModal('successAction');
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
-    }
+    const handleSaveMember = () => {
+        if (newMember.id) {
+            handleMemberUpdate(newMember);
+        } else {
+            handleMemberCretion(newMember);
+        }
+    };
 
     const setNewMemberField = (key: keyof typeof newMember, value: any) => {
         setNewMember((prevState) => ({
@@ -103,9 +124,9 @@ const useResumeOfTheTeam = () => {
         handleMemberUpdate,
         setNewMember,
         setAddNewMember,
-        handleMemberCretion
-    }
-}
+        handleMemberCretion,
+        handleSaveMember,
+    };
+};
 
-
-export default useResumeOfTheTeam
+export default useResumeOfTheTeam;

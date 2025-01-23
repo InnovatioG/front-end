@@ -19,6 +19,7 @@ const useResumeOfTheTeamAccordion = (onEditMember?: (member: MembersTeam) => voi
     };
 
     const handleClickEditButton = (member: MembersTeam) => {
+        console.log(member)
         if (onEditMember) {
             onEditMember(member);
         }
