@@ -12,7 +12,7 @@ interface UseInvestmentFormProps {
 
 const useInvestmentForm = ({ cdCampaignToken_PriceADA, cdCampaignToken_TN, cdRequestedMaxADA, goal, id, deliveryDate }: UseInvestmentFormProps) => {
     const [amountInTokens, setAmountInTokens] = useState<number | string>(0);
-    const [amountInAda, setAmountInAda] = useState<number | string>(0);
+    const [amountInADA, setAmountInADA] = useState<number | string>(0);
 
     const [apiCall, setApiCall] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -22,12 +22,12 @@ const useInvestmentForm = ({ cdCampaignToken_PriceADA, cdCampaignToken_TN, cdReq
     const handleTokenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const tokens = parseFloat(e.target.value) || 0;
         setAmountInTokens(tokens);
-        setAmountInAda(tokens * (cdCampaignToken_PriceADA ?? 0));
+        setAmountInADA(tokens * (cdCampaignToken_PriceADA ?? 0));
     };
 
-    const handleAdaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleADAChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const ada = parseFloat(e.target.value) || 0;
-        setAmountInAda(ada);
+        setAmountInADA(ada);
         setAmountInTokens(cdCampaignToken_PriceADA ? ada / cdCampaignToken_PriceADA : 0);
     };
 
@@ -44,19 +44,19 @@ const useInvestmentForm = ({ cdCampaignToken_PriceADA, cdCampaignToken_TN, cdReq
         }, 2000);
     };
 
-    const inputFields = getInputFields(cdCampaignToken_TN, cdRequestedMaxADA, amountInTokens, handleTokenChange, goal, amountInAda, handleAdaChange);
+    const inputFields = getInputFields(cdCampaignToken_TN, cdRequestedMaxADA, amountInTokens, handleTokenChange, goal, amountInADA, handleADAChange);
 
-    const rectangles = getRectangles(cdCampaignToken_TN, amountInTokens, amountInAda, deliveryDate);
+    const rectangles = getRectangles(cdCampaignToken_TN, amountInTokens, amountInADA, deliveryDate);
 
     return {
         amountInTokens,
-        amountInAda,
+        amountInADA,
         apiCall,
         isLoading,
         error,
         success,
         handleTokenChange,
-        handleAdaChange,
+        handleADAChange,
         handleInvest,
         inputFields,
         rectangles,

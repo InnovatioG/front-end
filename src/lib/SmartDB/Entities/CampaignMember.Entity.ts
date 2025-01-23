@@ -18,6 +18,8 @@ export class CampaignMemberEntity extends BaseEntity {
     @Convertible()
     role?: string;
     @Convertible()
+    description?: string;
+    @Convertible()
     editor!: boolean;
     @Convertible()
     admin!: boolean;
@@ -54,6 +56,7 @@ export class CampaignMemberEntity extends BaseEntity {
         name: true,
         last_name: true,
         rol: true,
+        description: true,
         editor: true,
         admin: true,
         email: true,

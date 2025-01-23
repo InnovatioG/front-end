@@ -9,15 +9,15 @@ export interface Campaign {
     createdAt?: Date;
     updatedAt?: Date;
     investors?: number;
-    requestMaxAda: bigint;
-    requestMinAda: bigint;
+    requestMaxADA: bigint;
+    requestMinADA: bigint;
     campaing_category_id: string | null;
     website?: string;
     facebook?: string;
     instagram?: string;
     discord?: string;
     twitter?: string;
-    cdCollecedAda?: bigint;
+    cdCollectedADA?: bigint;
     begin_at?: Date;
     deadline?: Date;
     milestones?: Milestone[];
@@ -48,7 +48,7 @@ export interface Milestone {
 
 export interface MilestoneCreation {
     order: number;
-    requestMaxAda: number;
+    requestMaxADA: number;
 }
 
 export interface MilestoneSubmission {

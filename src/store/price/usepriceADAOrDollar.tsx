@@ -2,19 +2,19 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 interface PriceState {
-    priceAdaOrDollar: 'dollar' | 'ada';
+    priceADAOrDollar: 'dollar' | 'ada';
 }
 
 interface PriceStore extends PriceState {
-    setPriceAdaOrDollar: (price: 'dollar' | 'ada') => void;
+    setPriceADAOrDollar: (price: 'dollar' | 'ada') => void;
 }
 
 export const usePriceStore = create<PriceStore>()(
     immer<PriceStore>((set) => ({
-        priceAdaOrDollar: 'dollar',
-        setPriceAdaOrDollar: (price) =>
+        priceADAOrDollar: 'dollar',
+        setPriceADAOrDollar: (price) =>
             set((state) => {
-                state.priceAdaOrDollar = price;
+                state.priceADAOrDollar = price;
             }),
     }))
 );

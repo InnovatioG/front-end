@@ -15,7 +15,7 @@ interface InvestmentFormProps {
 }
 
 const InvestmentForm: React.FC<InvestmentFormProps> = ({ cdCampaignToken_PriceADA, cdCampaignToken_TN, cdRequestedMaxADA, goal, id, deliveryDate }) => {
-    const { amountInTokens, amountInAda, apiCall, isLoading, error, success, handleTokenChange, handleAdaChange, handleInvest, inputFields, rectangles } = useInvestmentForm({
+    const { amountInTokens, amountInADA, apiCall, isLoading, error, success, handleTokenChange, handleADAChange, handleInvest, inputFields, rectangles } = useInvestmentForm({
         cdCampaignToken_PriceADA,
         cdCampaignToken_TN,
         cdRequestedMaxADA,

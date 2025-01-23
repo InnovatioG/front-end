@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import ToolTipInformation from '@/components/General/Elements/TooltipInformation/tooltipInformation';
-import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
+import { usePriceStore } from '@/store/price/usepriceADAOrDollar';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import {
     calculatePorcentage,

@@ -1,4 +1,4 @@
-import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
+import { usePriceStore } from '@/store/price/usepriceADAOrDollar';
 import { formatMoney } from '@/utils/formats';
 import React, { useEffect, useState } from 'react';
 import styles from './PercentaSlider.module.scss';
@@ -14,12 +14,12 @@ interface PercentageSliderProps {
 const PercentageSlider: React.FC<PercentageSliderProps> = ({ initialLabel, setValue, total }) => {
 
     const { label, setLabel, handleSliderChange } = usePercentaSlider(initialLabel, setValue, total);
-    const { priceAdaOrDollar } = usePriceStore();
+    const { priceADAOrDollar } = usePriceStore();
 
     return (
         <div className={styles.labelContainer}>
             <input type="range" className={styles.slider} min={80} max={100} step={1} value={label} onChange={handleSliderChange} />
-            <label className={styles.label}>{formatMoney(initialLabel, priceAdaOrDollar == 'ada' ? 'ADA' : 'USD')}</label>
+            <label className={styles.label}>{formatMoney(initialLabel, priceADAOrDollar == 'ada' ? 'ADA' : 'USD')}</label>
         </div>
     );
 };

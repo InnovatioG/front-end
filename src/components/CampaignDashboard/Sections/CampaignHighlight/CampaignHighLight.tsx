@@ -26,7 +26,7 @@ export default function CampaignHighLight() {
                     <p className={styles.text}>ADA contribuited</p>
                 </div>
                 <div className={styles.pictureContainer}>
-                    <Image layout="fill" objectFit="contain" src={CONTRIBUITED} alt="Ada-contribuited" className={styles.imageCard} objectPosition={'bottom right'} />
+                    <Image layout="fill" objectFit="contain" src={CONTRIBUITED} alt="ADA-contribuited" className={styles.imageCard} objectPosition={'bottom right'} />
                 </div>
             </div>
             <div className={styles.card}>

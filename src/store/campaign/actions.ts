@@ -38,6 +38,6 @@ export const setPrevStepAction = (state: CampaignState) => {
     state.step = (state.step - 1) as 1 | 2 | 3 | 4;
 };
 
-export const setRequestMaxAda = (state: CampaignState, requestMaxAda: bigint) => {
-    state.newCampaign.requestMaxAda = requestMaxAda;
+export const setRequestMaxADA = (state: CampaignState, requestMaxADA: bigint) => {
+    state.newCampaign.requestMaxADA = requestMaxADA;
 };

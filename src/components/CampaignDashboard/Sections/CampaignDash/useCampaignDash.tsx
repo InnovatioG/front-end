@@ -9,10 +9,10 @@ const useCampaignDash = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const { campaign, editionMode, setCampaign, isProtocolTeam, isAdmin } = useCampaignIdStore();
-    const { requestMaxAda, requestMinAda, investors, begin_at, cdFundedADA } = campaign
+    const { requestMaxADA: requestMaxADA, requestMinADA: requestMinADA, investors, begin_at, cdFundedADA } = campaign
 
 
-    console.log(requestMaxAda)
+    console.log(requestMaxADA)
 
     const { label, getInternalId } = useDraftCard(campaign, isProtocolTeam, isAdmin);
 
@@ -35,8 +35,8 @@ const useCampaignDash = () => {
     };
 
     return {
-        requestMaxAda,
-        requestMinAda,
+        requestMaxADA,
+        requestMinADA,
         investors,
         begin_at,
         cdFundedADA,

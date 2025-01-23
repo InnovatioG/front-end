@@ -14,8 +14,8 @@ interface CampaignDashCreationProps { }
 
 const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
     const {
-        requestMaxAda,
-        requestMinAda,
+        requestMaxADA,
+        requestMinADA,
         investors,
         begin_at,
         cdFundedADA,
@@ -87,8 +87,8 @@ const CampaignDashCreation: React.FC<CampaignDashCreationProps> = ({ }) => {
             <div className={styles.cardContainer}>
                 <CampaignCard
                     status={label}
-                    goal={Number(requestMaxAda)}
-                    min_request={Number(requestMinAda)}
+                    goal={Number(requestMaxADA)}
+                    min_request={Number(requestMinADA)}
                     investors={investors}
                     startDate={begin_at}
                     cdFundedADA={cdFundedADA}

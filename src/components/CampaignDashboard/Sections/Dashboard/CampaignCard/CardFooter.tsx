@@ -3,7 +3,7 @@ import useDraftCard from "@/hooks/useDraftCard";
 import styles from "./CardFooter.module.scss";
 import { formatMoney, getOrdinalString } from '@/utils/formats';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
-import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
+import { usePriceStore } from '@/store/price/usepriceADAOrDollar';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
 import Link from 'next/link';
 import { set } from 'date-fns';
@@ -20,19 +20,19 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
     const { label, labelClass, currentMilestone, formatAllTime } = useDraftCard(campaign, false, false);
     const { setMenuView } = useCampaignIdStore();
     const { adaPrice } = useGeneralStore();
-    const { priceAdaOrDollar } = usePriceStore();
-    const { requestMaxAda, cdFundedADA } = campaign;
+    const { priceADAOrDollar } = usePriceStore();
+    const { requestMaxADA, cdFundedADA } = campaign;
 
 
-    const formatMoneyByAdaOrDollar = (value: number) => {
-        if (priceAdaOrDollar === "dollar") {
+    const formatMoneyByADAOrDollar = (value: number) => {
+        if (priceADAOrDollar === "dollar") {
             return formatMoney(Number(value) / Number(adaPrice), "USD");
         }
         return formatMoney(Number(value), "ADA");
     };
 
     const milestonesQuantity = campaign.milestones.length;
-    const raisePercentage = Math.min(Number(cdFundedADA) / Number(requestMaxAda) * 100, 100);
+    const raisePercentage = Math.min(Number(cdFundedADA) / Number(requestMaxADA) * 100, 100);
     const numberFromCurrentMilestone = getOrdinalString(Number(currentMilestone.charAt(1)));
 
     // Reusable components
@@ -49,7 +49,7 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
         <div>
             {label === "Countdown" && (
                 <div className={styles.container}>
-                    <StateContainer amount={formatMoneyByAdaOrDollar(requestMaxAda)} subtext="Target Raise" classNameStyle='white' />
+                    <StateContainer amount={formatMoneyByADAOrDollar(requestMaxADA)} subtext="Target Raise" classNameStyle='white' />
                     <div className={styles.footer}>
                         <div className={styles.milestonesQuant}>
                             <h4>{milestonesQuantity} {milestonesQuantity === 1 ? "milestone" : "milestones"}</h4>
@@ -64,12 +64,12 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
             {label === "Fundraising" && (
                 <div className={styles.container}>
                     <div className={`${styles.stateContainer} ${styles[labelClass]}`}>
-                        <h4 className={styles.fa}>{formatMoneyByAdaOrDollar(cdFundedADA)}</h4>
+                        <h4 className={styles.fa}>{formatMoneyByADAOrDollar(cdFundedADA)}</h4>
                         <div className={styles.loaderContainer}>
                             <div className={styles.loader} style={{ width: `${raisePercentage}%` }}></div>
                         </div>
                         <span>
-                            Target Raise:  {formatMoneyByAdaOrDollar(requestMaxAda)}
+                            Target Raise:  {formatMoneyByADAOrDollar(requestMaxADA)}
                         </span>
                     </div>
                     < div className={styles.footer} >
@@ -94,7 +94,7 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
             {label === "Active" && (
                 <div className={styles.container}>
                     <div className={styles.flexRow}>
-                        <StateContainer amount={formatMoneyByAdaOrDollar(cdFundedADA)} subtext="Total Raised" classNameSpan='black' />
+                        <StateContainer amount={formatMoneyByADAOrDollar(cdFundedADA)} subtext="Total Raised" classNameSpan='black' />
                         <div className={styles.ordinalString}>
                             <span className={styles.ordinal}>
                                 <p className={styles.goalFundraising}>{numberFromCurrentMilestone}</p>
@@ -126,11 +126,11 @@ const CardFooter: React.FC<CardFooterProps> = ({ campaign }) => {
                 <div className={styles.container}>
                     {label === "Unreached" &&
                         <span>
-                            Target Raise: <span className={styles.strong}>{formatMoneyByAdaOrDollar(requestMaxAda)}</span>
+                            Target Raise: <span className={styles.strong}>{formatMoneyByADAOrDollar(requestMaxADA)}</span>
                         </span>
                     }
                     <div className={styles.flexRow}>
-                        <StateContainer amount={formatMoneyByAdaOrDollar(cdFundedADA)} subtext="Total Money Raised" classNameStyle='white' />
+                        <StateContainer amount={formatMoneyByADAOrDollar(cdFundedADA)} subtext="Total Money Raised" classNameStyle='white' />
                         {label === "Unreached" && (
                             <div className={styles.percentage}>
                                 <span className={styles.goalFundraising}>{raisePercentage}%</span>

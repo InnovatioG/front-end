@@ -49,6 +49,7 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo {
             name: string;
             last_name: string;
             role: string;
+            description: string;
             editor: boolean;
             admin: boolean;
             email: string;
@@ -69,6 +70,7 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo {
                 name: { type: String, required: false },
                 last_name: { type: String, required: false },
                 role: { type: String, required: false },
+                description: { type: String, required: false },
                 editor: { type: Boolean, required: true },
                 admin: { type: Boolean, required: true },
                 email: { type: String, required: false },

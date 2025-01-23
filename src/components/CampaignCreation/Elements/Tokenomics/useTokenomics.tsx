@@ -17,12 +17,12 @@ const useTokenomics = () => {
     const fields = inputFieldsToken(campaign);
 
     /*     const valuePerToken =
-            campaign.requestMaxAda === null || isNaN(campaign.requestMaxAda) ? (
+            campaign.requestMaxADA === null || isNaN(campaign.requestMaxADA) ? (
                 'Price per token'
             ) : (
-                <div className={styles.priceInAda}>
+                <div className={styles.priceInADA}>
                     <img src={'/img/icons/ADA.svg'} alt="ADA" height={12} width={12} />
-                    <span>{(campaign.requestMaxAda / project.cdRequestedMaxADA / adaPrice).toFixed(2)}</span>
+                    <span>{(campaign.requestMaxADA / project.cdRequestedMaxADA / adaPrice).toFixed(2)}</span>
                 </div>
             ); */
 

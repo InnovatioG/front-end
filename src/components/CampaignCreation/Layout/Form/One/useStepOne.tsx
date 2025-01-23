@@ -1,6 +1,6 @@
 import { useCampaignStore } from "@/store/campaign/useCampaignStore";
 import { useGeneralStore } from "@/store/generalConstants/useGeneralConstants";
-import { usePriceStore } from "@/store/price/usepriceAdaOrDollar";
+import { usePriceStore } from "@/store/price/usepriceADAOrDollar";
 import { useEffect } from "react";
 
 
@@ -8,7 +8,7 @@ export default function useStepOne() {
 
     const { setDescription } = useCampaignStore()
     const { campaignCategories } = useGeneralStore()
-    const { setPriceAdaOrDollar } = usePriceStore()
+    const { setPriceADAOrDollar } = usePriceStore()
 
 
     const categoryOptions = campaignCategories.map((category) => ({
@@ -25,7 +25,7 @@ export default function useStepOne() {
 
 
     useEffect(() => {
-        setPriceAdaOrDollar("ada")
+        setPriceADAOrDollar("ada")
     }, [])
 
     return {

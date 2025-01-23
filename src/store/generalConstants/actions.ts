@@ -66,10 +66,10 @@ const fetchCampaignStatus = async () => {
     }
 };
 
-const fetchAdaPrice = async () => {
+const fetchADAPrice = async () => {
     try {
         const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd');
-        useGeneralStore.getState().setAdaPrice(response.data.cardano.usd);
+        useGeneralStore.getState().setADAPrice(response.data.cardano.usd);
         return response.data.cardano.usd;
     } catch (error) {
         console.error('Error fetching ADA price:', error);
@@ -79,7 +79,7 @@ const fetchAdaPrice = async () => {
 
 export const fetchAllData = async () => {
     try {
-        await Promise.all([fetchCampaignCategories(), fetchCampaignStatus(), fetchAdaPrice(), fetchMilestoneStatus()]);
+        await Promise.all([fetchCampaignCategories(), fetchCampaignStatus(), fetchADAPrice(), fetchMilestoneStatus()]);
     } catch (error) {
         console.error('Error fetching all data:', error);
     }

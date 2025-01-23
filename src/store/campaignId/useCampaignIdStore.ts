@@ -60,9 +60,9 @@ export const useCampaignIdStore = create<useCampaignIdStore>()(
             }),
 
         /*         getGoalInCurrentCurrency: () => {
-            const { priceAdaOrDollar } = usePriceStore.getState();
+            const { priceADAOrDollar } = usePriceStore.getState();
             const { campaign } = get();
-            return priceAdaOrDollar === 'dollar' ? campaign.requestMaxAda : campaign.requestMaxAda / price_ada;
+            return priceADAOrDollar === 'dollar' ? campaign.requestMaxADA : campaign.requestMaxADA / price_ada;
         }, */
     }))
 );

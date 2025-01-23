@@ -5,13 +5,13 @@ export interface newCampaign {
     name: string;
     campaign_status_id: string;
     campaing_category_id: string | null;
-    requestMinAda: bigint;
+    requestMinADA: bigint;
     description: string;
     logo_url: string;
     banner_url: string;
     start_date: string;
     end_date: string;
-    requestMaxAda: bigint;
+    requestMaxADA: bigint;
     milestones: MilestoneCreation[];
     balance: number;
     website: string;
@@ -47,12 +47,12 @@ export const initialState: CampaignState = {
         logo_url: '',
         banner_url: '',
         milestones: [],
-        requestMinAda: 0n,
+        requestMinADA: 0n,
         name: '',
         description: '',
         start_date: '',
         end_date: '',
-        requestMaxAda: 20000n,
+        requestMaxADA: 20000n,
         balance: 0,
         website: '',
         facebook: '',

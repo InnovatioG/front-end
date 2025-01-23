@@ -1,6 +1,6 @@
 import Toggle from '@/components/UI/Buttons/Toggle/Toggle';
 import styles from '@/components/UI/Buttons/Toggle/Toggle.module.scss';
-import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
+import { usePriceStore } from '@/store/price/usepriceADAOrDollar';
 import React, { useState } from 'react';
 
 interface TogglePriceProps {
@@ -8,13 +8,13 @@ interface TogglePriceProps {
 }
 
 const TogglePrice: React.FC<TogglePriceProps> = (props) => {
-    const { priceAdaOrDollar, setPriceAdaOrDollar } = usePriceStore();
-    const [isActive, setIsActive] = useState(priceAdaOrDollar === 'dollar');
+    const { priceADAOrDollar, setPriceADAOrDollar } = usePriceStore();
+    const [isActive, setIsActive] = useState(priceADAOrDollar === 'dollar');
 
     const handleClickToggle = () => {
-        const newPrice = priceAdaOrDollar === 'ada' ? 'dollar' : 'ada';
+        const newPrice = priceADAOrDollar === 'ada' ? 'dollar' : 'ada';
         setIsActive(!isActive);
-        setPriceAdaOrDollar(newPrice);
+        setPriceADAOrDollar(newPrice);
     };
 
     return (
@@ -23,12 +23,12 @@ const TogglePrice: React.FC<TogglePriceProps> = (props) => {
             {isActive ? (
                 <div>
                     <span className={styles.symbol}>$</span>
-                    <span className={styles.symbolAdablack}>₳</span>
+                    <span className={styles.symbolADAblack}>₳</span>
                 </div>
             ) : (
                 <div>
                     <span className={styles.symbolblack}>$</span>
-                    <span className={styles.symbolAda}>₳</span>
+                    <span className={styles.symbolADA}>₳</span>
                 </div>
             )}
         </div>

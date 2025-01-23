@@ -15,8 +15,8 @@ export const getInputFields = (
     amountInTokens: number | string,
     handleTokenChange: (event: React.ChangeEvent<HTMLInputElement>) => void,
     goal: number,
-    amountInAda: number | string,
-    handleAdaChange: (event: React.ChangeEvent<HTMLInputElement>) => void
+    amountInADA: number | string,
+    handleADAChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 ): InputField[] => [
     {
         id: 'tokens',
@@ -29,8 +29,8 @@ export const getInputFields = (
         id: 'ada',
         label: 'Total ADA',
         placeholder: `${goal.toString()} $ADA`,
-        value: amountInAda,
-        onChange: handleAdaChange,
+        value: amountInADA,
+        onChange: handleADAChange,
     },
 ];
 
@@ -41,7 +41,7 @@ export interface Rectangle {
     isDate?: boolean;
 }
 
-export const getRectangles = (cdCampaignToken_TN: string, amountInTokens: number | string, amountInAda: number | string, deliveryDate: string): Rectangle[] => [
+export const getRectangles = (cdCampaignToken_TN: string, amountInTokens: number | string, amountInADA: number | string, deliveryDate: string): Rectangle[] => [
     {
         label: `Total ${cdCampaignToken_TN} purchased`,
         information: amountInTokens,
@@ -49,7 +49,7 @@ export const getRectangles = (cdCampaignToken_TN: string, amountInTokens: number
     },
     {
         label: 'Total ADA Paid',
-        information: amountInAda,
+        information: amountInADA,
         img: ADAIC,
     },
     {

@@ -21,6 +21,8 @@ export class CampaignMemberEntityPostgreSQL extends BaseEntityPostgreSQL {
     last_name?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     role?: string;
+    @Column({ type: 'text', nullable: true })
+    description?: string;
     @Column({ type: 'boolean', default: false })
     editor!: boolean;
     @Column({ type: 'boolean', default: false })

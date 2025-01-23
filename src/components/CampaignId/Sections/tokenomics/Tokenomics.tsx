@@ -10,7 +10,7 @@ interface TokenomicsProps {
 
 const Tokenomics: React.FC<TokenomicsProps> = (props) => {
     const { campaign, isLoadingPrice } = useCampaignIdStore();
-    const { requestMaxAda, campaignToken_CS, campaignToken_tn, campaignToken_priceADA, tokenomics_max_supply, tokenomics_description } = campaign
+    const { requestMaxADA: requestMaxADA, campaignToken_CS, campaignToken_tn, campaignToken_priceADA, tokenomics_max_supply, tokenomics_description } = campaign
     const { adaPrice } = useGeneralStore();
 
 

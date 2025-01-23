@@ -2,7 +2,7 @@
 
 
 import type { Milestone } from '@/types/types';
-import { usePriceStore } from '@/store/price/usepriceAdaOrDollar';
+import { usePriceStore } from '@/store/price/usepriceADAOrDollar';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { formatMoney } from '@/utils/formats';
 import React, { useEffect, useState } from 'react';

@@ -3,7 +3,7 @@ import {
     getTimeRemaining, calculatePorcentage, calculatePorcentagValue, formatTime
 } from "@/utils/formats";
 import { useGeneralStore } from "@/store/generalConstants/useGeneralConstants";
-import { usePriceStore } from "@/store/price/usepriceAdaOrDollar";
+import { usePriceStore } from "@/store/price/usepriceADAOrDollar";
 
 interface useCampaignCardProps {
     goal: number;
@@ -16,7 +16,7 @@ interface useCampaignCardProps {
 const useCampaignCard = ({ startDate, goal, min_request, investors, cdFundedADA }: useCampaignCardProps) => {
 
     const { adaPrice } = useGeneralStore()
-    const { priceAdaOrDollar } = usePriceStore()
+    const { priceADAOrDollar } = usePriceStore()
 
     const [timeRemaining, setTimeRemaining] = useState(() => getTimeRemaining(startDate));
 
@@ -31,14 +31,14 @@ const useCampaignCard = ({ startDate, goal, min_request, investors, cdFundedADA 
     console.log(goal)
 
     const goalInCurrentCurrency = useMemo(
-        () => (priceAdaOrDollar === 'dollar' ? Number(goal) : Number(goal) / adaPrice),
-        [priceAdaOrDollar, goal, adaPrice]
+        () => (priceADAOrDollar === 'dollar' ? Number(goal) : Number(goal) / adaPrice),
+        [priceADAOrDollar, goal, adaPrice]
     );
     const minValueInCurrentCurrency = useMemo(
-        () => (priceAdaOrDollar === 'dollar' ? Number(min_request) : Number(min_request) / adaPrice),
-        [priceAdaOrDollar, min_request, adaPrice]
+        () => (priceADAOrDollar === 'dollar' ? Number(min_request) : Number(min_request) / adaPrice),
+        [priceADAOrDollar, min_request, adaPrice]
     )
-    const currencySymbol = useMemo(() => (priceAdaOrDollar === 'dollar' ? 'USD' : 'ADA'), [priceAdaOrDollar]);
+    const currencySymbol = useMemo(() => (priceADAOrDollar === 'dollar' ? 'USD' : 'ADA'), [priceADAOrDollar]);
 
     const formatAllTime = (timeRemaining: any) => {
         return `${timeRemaining.days}:${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}`;

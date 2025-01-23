@@ -28,9 +28,9 @@ interface UseCampaignStore extends CampaignState {
     prevStep: () => void;
     setCompanyLogo: (companyLogo: string) => void;
     setBanner: (banner: string) => void;
-    setRequestMaxAda: (requestMaxAda: bigint) => void;
+    setRequestMaxADA: (requestMaxADA: bigint) => void;
     setMilestones: (milestones: MilestoneCreation[]) => void;
-    setRequestMinAda: (requestMinAda: bigint) => void;
+    setRequestMinADA: (requestMinADA: bigint) => void;
     setBrandField: <K extends keyof CampaignState['newCampaign']>(key: K, value: CampaignState['newCampaign'][K]) => void;
     setMembersTeam: (users: MembersTeam[]) => void;
     addMemberToTeam: (member: MembersTeam) => void;
@@ -110,17 +110,17 @@ export const useCampaignStore = create<UseCampaignStore>()(
             set((state) => {
                 setNestedCampaignStateAction(state, 'banner_url', banner);
             }),
-        setRequestMaxAda: (requestMaxAda) =>
+        setRequestMaxADA: (requestMaxADA) =>
             set((state) => {
-                setNestedCampaignStateAction(state, 'requestMaxAda', requestMaxAda);
+                setNestedCampaignStateAction(state, 'requestMaxADA', requestMaxADA);
             }),
         setMilestones: (milestones) =>
             set((state) => {
                 setNestedCampaignStateAction(state, 'milestones', milestones);
             }),
-        setRequestMinAda: (requestMinAda) =>
+        setRequestMinADA: (requestMinADA) =>
             set((state) => {
-                setNestedCampaignStateAction(state, 'requestMinAda', requestMinAda);
+                setNestedCampaignStateAction(state, 'requestMinADA', requestMinADA);
             }),
         setBrandField: (key, value) =>
             set((state) => {
