@@ -4,6 +4,7 @@ import type { MembersTeam } from '@/types/types';
 import { useWalletStore } from 'smart-db';
 import type { MilestoneCreation } from '@/types/types';
 import { createCampaign } from '@/components/CampaignCreation/Services/CampaignCreationServices';
+import { useRouter } from 'next/router';
 
 type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter';
 
@@ -14,11 +15,7 @@ export default function useStepFour() {
 
     const walletStore = useWalletStore();
     const address = walletStore.info?.address || '';
-
-    useEffect(() => {
-        console.log(newCampaign)
-    }, [])
-
+    const router = useRouter()
 
 
 
@@ -35,6 +32,8 @@ export default function useStepFour() {
                 ...newMember,
             };
             addMemberToTeam(memberToAdd);
+
+
         }
         resetNewMember();
     };
@@ -42,7 +41,13 @@ export default function useStepFour() {
     const handleCreateCampaign = async () => {
         handleSaveMember();
         try {
-            await createCampaign(newCampaign, address);
+            const campaignEntity = await createCampaign(newCampaign, address);
+            if (campaignEntity) {
+                router.push(`/campaign/edit?id=${campaignEntity._DB_id}`);
+            } else {
+                console.error('Campaign entity is undefined');
+            }
+
         } catch (error) {
             console.error('Error creating campaign:', error);
         }

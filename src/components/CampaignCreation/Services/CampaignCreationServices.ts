@@ -61,8 +61,7 @@ export const createCampaign = async (newCampaign: newCampaign, address: string) 
         if (newCampaign.milestones?.length > 0) {
             await createMilestones(newCampaign.milestones, campaignEntity._DB_id);
         }
-
-        console.log('Campaign, milestones, and members created successfully.');
+        return campaignEntity; // Devolver la entidad de la campaña creada
     } catch (error) {
         console.error('Error creating campaign:', error);
     }
