@@ -51,6 +51,7 @@
     font: fonts.$f200-medium;
     background-color: colors.$primary-dark-color;
     color: white;
+    text-wrap: nowrap;
 }
 
 .passive-nav {
@@ -58,6 +59,7 @@
     color: colors.$primary-dark-color;
     border: 1px solid colors.$primary-dark-color;
     font: fonts.$f200-medium;
+    text-wrap: nowrap;
 }
 
 .passive-nav-transparent {
