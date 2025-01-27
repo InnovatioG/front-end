@@ -27,6 +27,7 @@ interface UseCampaignStore extends CampaignState {
     nextStep: () => void;
     prevStep: () => void;
     setCompanyLogo: (companyLogo: string) => void;
+    setDeadline: (deadline_days: number) => void;
     setBanner: (banner: string) => void;
     setRequestMaxADA: (requestMaxADA: bigint) => void;
     setMilestones: (milestones: MilestoneCreation[]) => void;
@@ -81,6 +82,11 @@ export const useCampaignStore = create<UseCampaignStore>()(
         setCategoryId: (campaing_category_id) =>
             set((state) => {
                 setNestedCampaignStateAction(state, 'campaing_category_id', campaing_category_id);
+            }),
+
+        setDeadline: (deadline_days) =>
+            set((state) => {
+                setNestedCampaignStateAction(state, 'deadline_days', deadline_days);
             }),
         setDescription: (description) =>
             set((state) => {

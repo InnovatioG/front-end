@@ -17,7 +17,10 @@ import styles from '@/pages/campaign/new/CreatorCampaign.module.scss';
 import useNew from './useNew';
 
 export default function CreatorCampaign() {
-  const { step, isLoading, setStep, setUser, setCategoryId, handleClickBack } = useNew()
+  const { step, isLoading, handleClickBack, newCampaign } = useNew()
+
+
+  useEffect(() => { console.log(newCampaign) }, [newCampaign])
 
 
 

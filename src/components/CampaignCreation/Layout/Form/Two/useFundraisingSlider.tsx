@@ -6,6 +6,9 @@ export default function useFundraisingSlider() {
     const { setMilestones, newCampaign, setRequestMaxADA, setRequestMinADA, } = useCampaignStore();
     const { priceADAOrDollar } = usePriceStore();
 
+
+
+
     const [selectedMilestones, setSelectedMilestones] = useState<number | null>(null);
     const requestMaxADA = newCampaign.requestMaxADA;
     const requestMinADA = newCampaign.requestMinADA;

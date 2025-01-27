@@ -13,10 +13,11 @@ export const createCampaignEntity = async (newCampaign: newCampaign, address: st
         campaing_category_id: newCampaign.campaing_category_id,
         requestMinADA: newCampaign.requestMinADA,
         description: newCampaign.description,
-        logo_url: 'https://gihutb.com/innovatioG.png',
-        banner_url: 'https://gihutb.com/innovatioG.png',
+        logo_url: 'https://github.com/innovatioG.png',
+        banner_url: 'https://github.com/innovatioG.png',
         requestMaxADA: newCampaign.requestMaxADA,
         website: newCampaign.website,
+        deadline_days: newCampaign.deadline_days,
         facebook: newCampaign.facebook,
         instagram: newCampaign.instagram,
         discord: newCampaign.discord,
@@ -51,7 +52,6 @@ export const createMilestones = async (milestones: MilestoneCreation[], campaign
 
 export const createCampaign = async (newCampaign: newCampaign, address: string) => {
     try {
-        console.log(address);
         const campaignEntity = await createCampaignEntity(newCampaign, address);
 
         if (newCampaign.members_team?.length > 0) {

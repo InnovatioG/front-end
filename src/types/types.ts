@@ -20,6 +20,7 @@ export interface Campaign {
     cdCollectedADA?: bigint;
     begin_at?: Date;
     deadline?: Date;
+    deadline_days?: number;
     milestones?: Milestone[];
     campaign_content?: CampaignContent[];
     members_team?: MembersTeam[];

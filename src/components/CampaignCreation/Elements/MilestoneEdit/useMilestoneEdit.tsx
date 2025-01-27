@@ -16,12 +16,9 @@ const useMilestoneCardEdit = (
     const ordinalString = getOrdinalString(index + 1);
     const { setCampaign, campaign } = useCampaignIdStore();
 
-    useEffect(() => {
-        console.log('Milestone actualizado: ', milestone);
-    }, [milestone]);
+
 
     const handleDescriptionChange = (content: string) => {
-        console.log('Nuevo contenido:', content);
         setCampaign({
             ...campaign,
             milestones: campaign.milestones?.map((item) =>
@@ -34,7 +31,6 @@ const useMilestoneCardEdit = (
 
     const handleUpdateMilestone = async (milestone: Milestone) => {
         try {
-            console.log('Milestone actualizado: ', milestone);
             await updateMilestoneInformation(milestone);
         } catch (error) {
             console.error('Error al actualizar el milestone:', error);

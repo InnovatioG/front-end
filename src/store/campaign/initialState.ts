@@ -19,7 +19,7 @@ export interface newCampaign {
     instagram: string;
     discord: string;
     twitter: string;
-
+    deadline_days: number;
     members_team: MembersTeam[];
     selectedMember: MembersTeam | null; // Fix typo here
 }
@@ -45,6 +45,7 @@ export const initialState: CampaignState = {
         campaign_status_id: '1',
         campaing_category_id: '1',
         logo_url: '',
+        deadline_days: 0,
         banner_url: '',
         milestones: [],
         requestMinADA: 0n,
