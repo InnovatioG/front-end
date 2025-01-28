@@ -21,7 +21,7 @@ export default function CampaignCard(props: CampaignCardProps) {
     const { label, labelClass, currentMilestone, formatAllTime, getInternalId } = useDraftCard(campaign, false, false);
     const { campaignCategories } = useGeneralStore();
     const { milestoneStatus, campaignStatus } = useGeneralStore();
-    const idInternal = getInternalId(campaign.campaign_status_id);
+    const idInternal = getInternalId(campaign.campaign_status_id ?? '');
 
     useEffect(() => {
         const timer = setInterval(() => {

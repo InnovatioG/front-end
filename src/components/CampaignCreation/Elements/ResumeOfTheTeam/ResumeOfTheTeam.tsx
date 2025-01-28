@@ -22,7 +22,7 @@ const ResumeOfTheTeam: React.FC = (props) => {
             {addNewMember && (
                 <FramerMotionAnimation isVisible={addNewMember}>
                     <div ref={formRef}>
-                        <FormNewMember newMember={newMember} setNewMember={setNewMember} setNewMemberField={setNewMemberField} handleSaveMember={handleSaveMember} />
+                        <FormNewMember newMember={newMember} setNewMemberField={setNewMemberField} handleSaveMember={handleSaveMember} />
                     </div>
                 </FramerMotionAnimation>
             )}

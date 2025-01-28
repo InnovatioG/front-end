@@ -9,7 +9,6 @@ const useResumeOfTheTeam = () => {
     const [addNewMember, setAddNewMember] = useState(false);
     const [newMember, setNewMember] = useState<MembersTeam>({
         id: '',
-        _DB_id: '',
         campaign_id: '',
         name: '',
         last_name: '',
@@ -29,7 +28,6 @@ const useResumeOfTheTeam = () => {
         wallet_address: '',
         editor: false,
     });
-    console.log('newMember', newMember);
 
     const { campaign } = useCampaignIdStore();
     const { _DB_id } = campaign;

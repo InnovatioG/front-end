@@ -22,7 +22,11 @@ const useInvestPage = () => {
                 const campaign_id = Number(id);
                 const campaign = await CampaignApi.getByIdApi_(String(campaign_id));
                 console.log(campaign)
-                setCampaign(campaign);
+                if (campaign) {
+                    setCampaign(campaign);
+                } else {
+                    console.error('Campaign is undefined');
+                }
             } catch (error) {
                 console.error('Error fetching campaign:', error);
             }

@@ -79,7 +79,7 @@ const FormNewMember: React.FC<FormNewMemberProps> = ({ newMember, setNewMemberFi
                             key={key}
                             type="text"
                             placeholder={label}
-                            value={newMember[key as keyof MembersTeam]} // Indicamos que es un índice válido
+                            value={typeof newMember[key as keyof MembersTeam] === 'boolean' || newMember[key as keyof MembersTeam] === undefined ? '' : String(newMember[key as keyof MembersTeam])} // Indicamos que es un índice válido
                             onChange={(e) => setNewMemberField(key as keyof MembersTeam, e.target.value)}
                             className={styles.input}
                         />

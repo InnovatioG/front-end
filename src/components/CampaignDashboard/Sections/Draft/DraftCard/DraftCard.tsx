@@ -26,7 +26,7 @@ const DraftCard: React.FC<DraftCardProps> = ({ campaign, isProtocolTeam, isAdmin
         return campaignCategories.find((category) => category.id === id)?.name
 
     }
-    const idInternal = getInternalId(campaign.campaign_status_id);
+    const idInternal = getInternalId(campaign.campaign_status_id ?? undefined);
 
 
 
