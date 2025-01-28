@@ -84,3 +84,7 @@ export const formatWeekOfMonth = (date: string): string => {
 export const formatDateFromString = (date: Date): string => {
     return format(date, 'MM/dd/yy');
 };
+
+export const daysToWeeks = (days: number): number => {
+    return Math.ceil(days / 7);
+};

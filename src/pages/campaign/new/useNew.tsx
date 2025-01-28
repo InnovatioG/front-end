@@ -14,7 +14,6 @@ const useNew = () => {
     const walletStore = useWalletStore();
     const { openModal } = useModal()
 
-    console.log(walletStore.info?.address)
 
 
     useEffect(() => {

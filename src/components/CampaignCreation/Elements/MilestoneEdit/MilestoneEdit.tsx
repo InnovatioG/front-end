@@ -30,8 +30,8 @@ const MilestoneCardEdit: React.FC<MilestoneCardEditProps> = ({
 
 
     return (
-        <section>
-            <h4 className={styles.milestoneTitle}>{ordinalString} Milestone {milestone._DB_id}</h4>
+        <section className={styles.containerMilestone}>
+            <h4 className={styles.milestoneTitle}>{ordinalString} Milestone</h4>
             <article className={styles.milestoneCardLayout}>
                 <div className={styles.textEditorContainer}>
                     {milestone ? (

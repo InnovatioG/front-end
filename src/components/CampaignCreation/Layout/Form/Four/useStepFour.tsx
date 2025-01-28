@@ -11,13 +11,9 @@ type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitte
 export default function useStepFour() {
     const { newCampaign, newMember, addMemberToTeam, resetNewMember, setNewMemberField, updateMemberField } = useCampaignStore();
 
-    /* usar el wallet store para la info del usuario */
-
     const walletStore = useWalletStore();
     const address = walletStore.info?.address || '';
-    const router = useRouter()
-
-
+    const router = useRouter();
 
     const [selectedLink, setSelectedLink] = useState<SocialLinkKeys>('website');
     const isEditing = newMember.id && newCampaign.members_team.some((m) => m.id === newMember.id);
@@ -32,14 +28,14 @@ export default function useStepFour() {
                 ...newMember,
             };
             addMemberToTeam(memberToAdd);
-
-
         }
         resetNewMember();
     };
 
     const handleCreateCampaign = async () => {
-        handleSaveMember();
+        if (newMember.name || newMember.member_description || newMember.last_name || newMember.role || newMember.email) {
+            handleSaveMember();
+        }
         try {
             const campaignEntity = await createCampaign(newCampaign, address);
             if (campaignEntity) {
@@ -47,16 +43,10 @@ export default function useStepFour() {
             } else {
                 console.error('Campaign entity is undefined');
             }
-
         } catch (error) {
             console.error('Error creating campaign:', error);
         }
-    }
-
-
-
-
-
+    };
 
     const disabledSaveMember = !newMember.name || !newMember.member_description || !newMember.last_name || !newMember.role || !newMember.email;
 
@@ -67,6 +57,6 @@ export default function useStepFour() {
         disabledSaveMember,
         isEditing,
         address,
-        handleCreateCampaign
+        handleCreateCampaign,
     };
 }

@@ -50,7 +50,7 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
                 </div>
                 <div className={styles.timesCard}>
                     <label>Time</label>
-                    {/*                     <MilestoneTime milestone={milestone} /> */}
+                    <MilestoneTime milestone={milestone} />
                     <MilestonePercentage milestone={milestone} goal={goal} maxAvailablePercentage={100} onPercentageChange={() => true} />
                 </div>
             </div>

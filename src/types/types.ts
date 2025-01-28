@@ -38,7 +38,7 @@ export interface Milestone {
     _DB_id?: string;
     campaign_id: string;
     milestone_status_id: string;
-    estimate_delivery_days: number;
+    estimate_delivery_days: number | undefined;
     estimate_delivery_date: Date;
     percentage: number;
     description: string;

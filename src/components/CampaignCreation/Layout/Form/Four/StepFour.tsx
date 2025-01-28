@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import styles from './StepFour.module.scss';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import Avatar from '@/components/General/Elements/PictureUpload/Avatar';
@@ -11,8 +10,6 @@ import type { MembersTeam } from '@/HardCode/databaseType';
 import useStepFour from '@/components/CampaignCreation/Layout/Form/Four/useStepFour';
 
 type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter';
-
-//! TODO: CREATE MEMBER PROBLEM WHEN YOU CREATE A PROJECT BUG
 
 const StepFour: React.FC = (props) => {
     const { newMember, setNewMemberField, newCampaign } = useCampaignStore();
@@ -91,7 +88,7 @@ const StepFour: React.FC = (props) => {
                 <GeneralButtonUI onClick={handleSaveMember} disabled={disabledSaveMember} classNameStyle="outlineb">
                     {isEditing ? 'Update member' : 'Add new member'}
                 </GeneralButtonUI>
-                <GeneralButtonUI onClick={handleCreateCampaign} classNameStyle="fillb" disabled={disabledSaveMember}>
+                <GeneralButtonUI onClick={handleCreateCampaign} classNameStyle="fillb" disabled={newCampaign.members_team.length === 0}>
                     Create Project
                 </GeneralButtonUI>
             </div>

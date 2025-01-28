@@ -49,3 +49,9 @@
 .timeLabel {
     font: fonts.$f200-medium;
 }
+
+.containerMilestone {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}

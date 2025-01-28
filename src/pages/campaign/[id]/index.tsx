@@ -23,13 +23,16 @@ interface CampaignVisualizationProps {
 const CampaignVisualization: React.FC<CampaignVisualizationProps> = (props) => {
     const router = useRouter();
     const { id } = router.query;
-    const { campaign, isLoading, setIsLoading, setIsAdmin, isAdmin } = useCampaignIdStore();
+    const { campaign, isLoading, setIsLoading, setIsAdmin, isAdmin, setEditionMode } = useCampaignIdStore();
     const { fetchCampaigns } = useCampaignId();
 
     useEffect(() => {
         if (id) {
             const campaignIds = Array.isArray(id) ? id : [id];
+            setEditionMode(false);
             fetchCampaigns(campaignIds);
+
+
         }
     }, []);
 
