@@ -6,12 +6,17 @@ import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import React from 'react';
 import FundrasingSlider from '@/components/CampaignCreation/Layout/Form/Two/FundrasingSlider';
 import styles from './StepTwo.module.scss';
+import { uploadFileToS3 } from '@/utils/s3Upload';
+
 interface StepTwoProps {
     // Define props here
 }
 
 const StepTwo: React.FC<StepTwoProps> = (props) => {
     const { setBanner, newCampaign, nextStep, setCompanyLogo } = useCampaignStore();
+
+
+
 
 
     const disabledButton = () => {

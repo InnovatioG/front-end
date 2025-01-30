@@ -385,9 +385,9 @@ export default function Campaign() {
                                 <td>{item.mint_CampaignToken ? 'Yes' : 'No'}</td>
                                 <td>{item.campaignToken_CS}</td>
                                 <td>{item.campaignToken_TN}</td>
-                                <td>{item.campaignToken_PriceADA.toString()}</td>
-                                <td>{item.requestedMaxADA.toString()}</td>
-                                <td>{item.requestedMinADA.toString()}</td>
+                                <td>{item.campaignToken_PriceADA?.toString()}</td>
+                                <td>{item.requestedMaxADA?.toString()}</td>
+                                <td>{item.requestedMinADA?.toString()}</td>
 
                                 <td>{item.logo_url}</td>
                                 <td>{item.banner_url}</td>
@@ -409,18 +409,18 @@ export default function Campaign() {
                                 <td>{item.cdMint_CampaignToken ? 'Yes' : 'No'}</td>
                                 <td>{item.cdCampaignToken_CS}</td>
                                 <td>{item.cdCampaignToken_TN}</td>
-                                <td>{item.cdCampaignToken_PriceADA.toString()}</td>
-                                <td>{item.cdRequestedMaxADA.toString()}</td>
-                                <td>{item.cdRequestedMinADA.toString()}</td>
-                                <td>{item.cdFundedADA.toString()}</td>
-                                <td>{item.cdCollectedADA.toString()}</td>
+                                <td>{item.cdCampaignToken_PriceADA?.toString()}</td>
+                                <td>{item.cdRequestedMaxADA?.toString()}</td>
+                                <td>{item.cdRequestedMinADA?.toString()}</td>
+                                <td>{item.cdFundedADA?.toString()}</td>
+                                <td>{item.cdCollectedADA?.toString()}</td>
                                 <td>{item.cdbegin_at?.toString()}</td>
                                 <td>{item.cdDeadline?.toString()}</td>
                                 <td>{item.cdStatus}</td>
                                 <td>{toJson(item.cdMilestones)}</td>
                                 <td>{item.cdFundsCount}</td>
                                 <td>{item.cdFundsIndex}</td>
-                                <td>{item.cdMinADA.toString()}</td>
+                                <td>{item.cdMinADA?.toString()}</td>
 
                                 <td>{item.featured ? 'Yes' : 'No'}</td>
                                 <td>{item.archived ? 'Yes' : 'No'}</td>

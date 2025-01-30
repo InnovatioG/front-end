@@ -1,15 +1,14 @@
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import type { MembersTeam } from '@/types/types';
 import { useWalletStore } from 'smart-db';
-import type { MilestoneCreation } from '@/types/types';
 import { createCampaign } from '@/components/CampaignCreation/Services/CampaignCreationServices';
 import { useRouter } from 'next/router';
 
 type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter';
 
 export default function useStepFour() {
-    const { newCampaign, newMember, addMemberToTeam, resetNewMember, setNewMemberField, updateMemberField } = useCampaignStore();
+    const { newCampaign, newMember, addMemberToTeam, resetNewMember, setNewMemberField, updateMemberField, setSelectedMember } = useCampaignStore();
 
     const walletStore = useWalletStore();
     const address = walletStore.info?.address || '';
@@ -26,6 +25,7 @@ export default function useStepFour() {
         } else {
             const memberToAdd = {
                 ...newMember,
+                id: new Date().getTime().toString(), // Generar un ID único para el nuevo miembro
             };
             addMemberToTeam(memberToAdd);
         }
@@ -58,5 +58,6 @@ export default function useStepFour() {
         isEditing,
         address,
         handleCreateCampaign,
+        setSelectedMember,
     };
 }

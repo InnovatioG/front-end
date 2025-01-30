@@ -58,8 +58,7 @@ const RoadMapCard: React.FC<RoadMapCardProps> = ({ milestone, index, goal }) => 
  */}                <section className={styles.milestoneMessage}>
                 <MilestoneMessage milestone={milestone} icon={icon} />
             </section>
-            {/*             )}
- */}            {/*    {report_proof_of_finalization && (
+            {/*    {report_proof_of_finalization && (
                 <section className={styles.buttonView}>
                     <GeneralButtonUI
                         classNameStyle="fillb"

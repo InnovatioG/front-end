@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './StepFour.module.scss';
 import { useCampaignStore } from '@/store/campaign/useCampaignStore';
 import Avatar from '@/components/General/Elements/PictureUpload/Avatar';
@@ -6,14 +6,13 @@ import SocialButton from '@/components/UI/Buttons/SocialIcon/SocialButton';
 import { memberFields, socialIcons } from '@/utils/constants';
 import Checkbox from '@/components/UI/Buttons/Checkbox/Checkbox';
 import GeneralButtonUI from '@/components/UI/Buttons/UI/Button';
-import type { MembersTeam } from '@/HardCode/databaseType';
 import useStepFour from '@/components/CampaignCreation/Layout/Form/Four/useStepFour';
 
 type SocialLinkKeys = 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter';
 
 const StepFour: React.FC = (props) => {
     const { newMember, setNewMemberField, newCampaign } = useCampaignStore();
-    const { selectedLink, setSelectedLink, handleSaveMember, disabledSaveMember, isEditing, address, handleCreateCampaign } = useStepFour();
+    const { selectedLink, setSelectedLink, handleSaveMember, disabledSaveMember, isEditing, handleCreateCampaign } = useStepFour();
 
     return (
         <section className={styles.containerLayout}>

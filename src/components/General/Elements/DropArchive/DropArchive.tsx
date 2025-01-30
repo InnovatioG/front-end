@@ -3,6 +3,7 @@ import Image from 'next/image';
 import React, { useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import styles from './DropArchive.module.scss';
+import { uploadFileToS3 } from '@/utils/s3Upload';
 
 interface DropArchiveProps {
     file: string | null;
@@ -11,13 +12,18 @@ interface DropArchiveProps {
 
 const DropArchive: React.FC<DropArchiveProps> = ({ file, setFile }) => {
     const onDrop = useCallback(
-        (acceptedFiles: File[]) => {
-            //! TODO SUBIR LA IMAGEN EN NUESTRA BASE DE DATOS
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setFile(reader.result as string);
-            };
-            reader.readAsDataURL(acceptedFiles[0]);
+        async (acceptedFiles: File[]) => {
+            const file = acceptedFiles[0];
+            if (file) {
+                try {
+                    const bucketName = 'innovatio.space/innovatioFounderMVP';
+                    const key = `avatar/${file.name}`;
+                    const fileUrl = await uploadFileToS3(file, bucketName, key);
+                    setFile(fileUrl);
+                } catch (error) {
+                    console.error('Error uploading file:', error);
+                }
+            }
         },
         [setFile]
     );

@@ -2,6 +2,7 @@ import UploadFile from '@/components/UI/Buttons/UploadFile/UploadFile';
 import Image from 'next/image';
 import React, { useRef } from 'react';
 import styles from './Avatar.module.scss';
+import { uploadFileToS3 } from '@/utils/s3Upload';
 
 export interface AvatarProps {
     setPicture: (value: string) => void;
@@ -11,14 +12,17 @@ export interface AvatarProps {
 const Avatar = ({ setPicture, picture }: AvatarProps) => {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPicture(reader.result as string);
-            };
-            reader.readAsDataURL(file);
+            try {
+                const bucketName = 'innovatio.space/innovatioFounderMVP';
+                const key = `avatar/${file.name}`;
+                const fileUrl = await uploadFileToS3(file, bucketName, key);
+                setPicture(fileUrl);
+            } catch (error) {
+                console.error('Error uploading file:', error);
+            }
         }
     };
 

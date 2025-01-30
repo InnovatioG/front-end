@@ -17,14 +17,14 @@ const InvestPage: React.FC<InvestPageProps> = (props) => {
         <main className={styles.layout}>
             <InvestHeader title={campaign.name} logo_url={campaign.logo_url !== undefined ? campaign.logo_url : ''} />
             <article>
-                {/*       <InvestmentForm
+                {/*              <InvestmentForm
                     cdCampaignToken_PriceADA={cdCampaignToken_PriceADA}
                     cdCampaignToken_TN={cdCampaignToken_TN}
                     cdRequestedMaxADA={cdRequestedMaxADA}
                     goal={goal}
                     id={id ? Number(id) : 0}
                     deliveryDate={start_date}
-                /> */}
+                /> * */}
             </article>
         </main>
     );

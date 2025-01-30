@@ -25,8 +25,7 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
                                 <div className={styles.faqContainer}>
                                     <Avatar big={true}>
                                         <AvatarImage src={formatLink(member.member_picture || '')} alt={member.name} />
-                                        {/*                                     <AvatarFallback>{member.name.slice(0, 2)}</AvatarFallback>
-                                         */}{' '}
+                                        <AvatarFallback>{(member?.name || 'NA').slice(0, 2)}</AvatarFallback>
                                     </Avatar>
                                     <span>
                                         {member.name} {member.last_name}
@@ -44,7 +43,6 @@ const ResumeOfTheTeamAccordion: React.FC<ResumeOfTheTeamAccordionProps> = ({ onE
                                         <div className={styles.subContentHeader}>
                                             <span className={styles.spanTitle}>Social Media:</span>
                                             <div className={styles.subContentHeader}>
-                                                <span className={styles.spanTitle}>Social Media:</span>
                                                 <div className={styles.socialMediaContainer}>
                                                     {Object.entries(socialMedia).map(([key, label]) => {
                                                         const link = member[key as keyof MembersTeam]; // Acceso directo

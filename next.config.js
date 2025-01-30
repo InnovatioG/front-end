@@ -14,7 +14,7 @@ const nextConfig = {
     reactStrictMode: false,
     //-------------
     images: {
-        domains: ['localhost', 'ipfs.io', 'taptools.io', 'taptools-public.s3.amazonaws.com', 'img.cexplorer.io', 'github.com'],
+        domains: ['localhost', 'ipfs.io', 'taptools.io', 'taptools-public.s3.amazonaws.com', 'img.cexplorer.io', 'github.com', 's3.amazonaws.com'],
         remotePatterns: [
             {
                 protocol: 'https',
