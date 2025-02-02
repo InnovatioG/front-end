@@ -4,7 +4,7 @@ import styles from './TextEditor.module.scss';
 import useTextEditor from '@/components/General/Elements/TextEditor/useTextEditor';
 import { useCallback } from 'react';
 
-const QuillEditor = dynamic(() => import('react-quill'), { ssr: false });
+const QuillEditor = dynamic(() => import('react-quill').then((mod) => mod.default), { ssr: false });
 
 interface TextEditorProps {
     title?: string;
@@ -40,7 +40,6 @@ export default function TextEditor({ title, content, onChange, styleOption = 'qu
             <div style={{ height: '100%', width: '100%' }}>
                 <h2 className={styles.title}>{title}</h2>
                 <QuillEditor
-                    ref={quillRef}
                     theme="snow"
                     value={editorContent}
                     onChange={memoizedHandleEditorChange}

@@ -6,15 +6,27 @@ import { useGeneralStore } from '@/store/generalConstants/useGeneralConstants';
 import { useNewDashboardCard } from './newUseDashboardCard';
 import { useState, useEffect, useCallback } from 'react';
 export const useDashboardCard = (address: string | null) => {
-    const { campaigns, filteredCampaigns, stateFilter, categoryFilter, setStateFilter, setCategoryFilter, visibleCampaigns, setVisibleCampaigns, setSearchTerm, searchTerm } =
-        useNewDashboardCard();
+    const {
+        campaigns,
+        filteredCampaigns,
+        stateFilter,
+        categoryFilter,
+        setStateFilter,
+        setCategoryFilter,
+        visibleCampaigns,
+        setVisibleCampaigns,
+        setSearchTerm,
+        searchTerm,
+        campaignsLoading,
+        setCampaignsLoading,
+    } = useNewDashboardCard();
     const { campaignStatus, campaignCategories } = useGeneralStore();
     const screenSize = useScreenSize();
     const [adminView, setAdminView] = useState(false);
     const [isAdmin, setIsAdmin] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [campaignsLoading, setCampaignsLoading] = useState(true);
-    const [isProtocolTeam, setIsProtocolTeam] = useState(false);
+    /*     const [campaignsLoading, setCampaignsLoading] = useState(false);
+     */ const [isProtocolTeam, setIsProtocolTeam] = useState(false);
     const [myProposal, setMyProposal] = useState(false);
     const [isHomePage, setIsHomePage] = useState(false);
     const router = useRouter();

@@ -16,19 +16,18 @@ export const useNewDashboardCard = () => {
     const [campaigns, setCampaigns] = useState<Campaign[]>([]);
     const [visibleCampaigns, setVisibleCampaigns] = useState<Campaign[]>([]);
     const [filteredCampaigns, setFilteredCampaigns] = useState<Campaign[]>([]);
+    const [campaignsLoading, setCampaignsLoading] = useState(true);
     const [stateFilter, setStateFilter] = useState<string | null>(null);
     const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState<string>('');
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
-
     const walletStore = useWalletStore();
     const address = walletStore.info?.address || '';
-
     const pathName = useRouter().pathname;
 
-    console.log(pathName);
     const fetchCampaigns = async (page = 1) => {
+        setCampaignsLoading(true);
         try {
             const campaignStatusRequiredList = [
                 CampaignStatus.COUNTDOWN,
@@ -67,6 +66,7 @@ export const useNewDashboardCard = () => {
             console.error('Error fetching campaigns:', err);
             pushWarningNotification('Error', `Error fetching Campaigns: ${err}`);
         }
+        setCampaignsLoading(false);
     };
 
     // Función para obtener campañas filtradas
@@ -108,5 +108,7 @@ export const useNewDashboardCard = () => {
         setVisibleCampaigns,
         searchTerm,
         setSearchTerm,
+        setCampaignsLoading,
+        campaignsLoading,
     };
 };

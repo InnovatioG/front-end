@@ -27,10 +27,15 @@
         font-style: italic;
     }
     ol {
-        list-style-type: decimal-leading-zero;
+        li {
+            list-style-type: decimal;
+        }
     }
-    li {
-        list-style-type: disc;
+
+    ul {
+        li {
+            list-style-type: disc;
+        }
     }
     u {
         text-decoration: underline;
@@ -38,7 +43,8 @@
     s {
         text-decoration: line-through;
     }
-    img {
+    img,
+    iframe {
         width: 100%;
         height: 318px;
         border-radius: 20px;

@@ -32,8 +32,8 @@ export default function Home() {
                 </div>
             ) : (
                 <div className={styles.draftSection}>
-                    {/*                     {campaignsLoading && <LoadingPage />}
- */}                    <h2 className={styles.title}>{title()}</h2>
+                    {campaignsLoading && <LoadingPage />}
+                    <h2 className={styles.title}>{title()}</h2>
                     <NewDraftDashboard address={address} />
                 </div>
             )}

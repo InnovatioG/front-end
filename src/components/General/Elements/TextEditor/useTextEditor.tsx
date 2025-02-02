@@ -23,6 +23,7 @@ export default function useTextEditor({ content, onChange, menuOptions }: useTex
         setEditorContent(newContent);
         onChange(newContent);
     }, [onChange]);
+
     const handleImageUpload = useCallback(() => {
         const input = document.createElement('input');
         input.setAttribute('type', 'file');
