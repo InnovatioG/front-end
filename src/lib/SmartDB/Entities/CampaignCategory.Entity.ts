@@ -9,8 +9,6 @@ export class CampaignCategoryEntity extends BaseEntity {
 
     // #region fields
     @Convertible()
-    id_internal!: number;
-    @Convertible()
     name!: string;
     @Convertible()
     description?: string;
@@ -27,7 +25,6 @@ export class CampaignCategoryEntity extends BaseEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-        internal_id: true,
         name: true,
         description: true,
         createdAt: true,

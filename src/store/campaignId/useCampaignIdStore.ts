@@ -1,33 +1,57 @@
-import { CampaignIdStore, initialState } from '@/store/campaignId/initialState';
-import { parse } from 'path';
+import { CampaignEntity } from '@/lib/SmartDB/Entities';
+import { CampaignApi } from '@/lib/SmartDB/FrontEnd';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
+import { CampaignEX, MilestoneEX } from '@/types/types';
+import { getCampaignEX } from '@/hooks/useCampaingDetails';
+import { CampaignTab } from '@/utils/constants/routes';
 
-/* Campaign render */
+export interface ICampaignIdStoreProps {
+    campaign: CampaignEX | undefined;
+    milestoneCurrent: MilestoneEX | undefined;
+    isLoading: boolean;
+    menuView: CampaignTab;
+    error: string;
+    editionMode: boolean;
+    isAdmin: boolean;
+    isProtocolTeam: boolean;
+}
 
-interface useCampaignIdStore extends CampaignIdStore {
-    setCampaign: (campaign: CampaignIdStore['campaign']) => void;
-    setMenuView: (menuView: CampaignIdStore['menuView']) => void;
-    setMilestone: (milestone: CampaignIdStore['milestone']) => void;
+export const initialState: ICampaignIdStoreProps = {
+    campaign: undefined,
+    milestoneCurrent: undefined,
+    menuView: CampaignTab.DETAILS,
+    isLoading: false,
+    error: '',
+    editionMode: true,
+    isAdmin: false,
+    isProtocolTeam: false,
+};
+
+export interface ICampaignIdStore extends ICampaignIdStoreProps {
+    setCampaignEX: (campaign: CampaignEX | undefined) => void;
+    setMilestoneEX: (milestone: MilestoneEX) => void;
+    setMenuView: (menuView: CampaignTab) => void;
     setIsLoading: (isLoading: boolean) => void;
     setIsAdmin: (isAdmin: boolean) => void;
     setIsProtocolTeam: (isProtocolTeam: boolean) => void;
     setError: (error: string) => void;
     setEditionMode: (editionMode: boolean) => void;
-    /*     getGoalInCurrentCurrency: () => number;
-     */
+    fetchCampaignById: (id: string) => Promise<void>; // New function
 }
 
-export const useCampaignIdStore = create<useCampaignIdStore>()(
-    immer<useCampaignIdStore>((set, get) => ({
+export const useCampaignIdStore = create<ICampaignIdStore>()(
+    immer<ICampaignIdStore>((set, get) => ({
         ...initialState,
 
-        setCampaign: (campaign) =>
+        setCampaignEX: (campaign) =>
             set((state) => {
-                state.campaign = {
-                    ...campaign,
-                    milestones: campaign.milestones ? [...campaign.milestones].sort((a, b) => parseInt(a._DB_id ?? '0') - parseInt(b._DB_id ?? '0')) : [],
-                };
+                state.campaign = campaign;
+            }),
+
+        setMilestoneEX: (milestone) =>
+            set((state) => {
+                state.milestoneCurrent = milestone;
             }),
 
         setIsLoading: (isLoading) =>
@@ -50,19 +74,43 @@ export const useCampaignIdStore = create<useCampaignIdStore>()(
             set((state) => {
                 state.error = error;
             }),
-        setMilestone: (milestone) =>
-            set((state) => {
-                state.milestone = milestone;
-            }),
+        // setMilestone: (milestone) =>
+        //     set((state) => {
+        //         state.milestone = milestone;
+        //     }),
         setEditionMode: (editionMode) =>
             set((state) => {
                 state.editionMode = editionMode;
             }),
 
-        /*         getGoalInCurrentCurrency: () => {
-            const { priceADAOrDollar } = usePriceStore.getState();
-            const { campaign } = get();
-            return priceADAOrDollar === 'dollar' ? campaign.requestMaxADA : campaign.requestMaxADA / price_ada;
-        }, */
+        fetchCampaignById: async (id: string) => {
+            set((state) => {
+                state.isLoading = true;
+                state.error = '';
+            });
+
+            try {
+                const campaignData: CampaignEntity | undefined = await CampaignApi.getByIdApi_(id);
+                if (campaignData === undefined) {
+                    set((state) => {
+                        state.isLoading = false;
+                        state.error = 'Campaign not found';
+                    });
+                    return;
+                }
+                const campaignEX = await getCampaignEX(campaignData);
+
+                set((state) => {
+                    state.campaign = campaignEX;
+                    state.isLoading = false;
+                });
+            } catch (error) {
+                console.error('Error fetching campaign:', error);
+                set((state) => {
+                    state.isLoading = false;
+                    state.error = 'Error fetching campaign';
+                });
+            }
+        },
     }))
 );

@@ -23,6 +23,8 @@ export class CampaignMemberEntityPostgreSQL extends BaseEntityPostgreSQL {
     role?: string;
     @Column({ type: 'text', nullable: true })
     description?: string;
+    @Column({ type: 'varchar', length: 1024, nullable: true })
+    avatar_url?: string;
     @Column({ type: 'boolean', default: false })
     editor!: boolean;
     @Column({ type: 'boolean', default: false })
@@ -42,7 +44,11 @@ export class CampaignMemberEntityPostgreSQL extends BaseEntityPostgreSQL {
     @Column({ type: 'varchar', length: 255, nullable: true })
     discord?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
+    linkedin?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
     facebook?: string;
+    @Column({ type: 'integer' })
+    order!: number;
     @CreateDateColumn()
     createdAt!: Date;
     @UpdateDateColumn()

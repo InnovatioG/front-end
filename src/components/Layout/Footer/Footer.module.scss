@@ -30,15 +30,22 @@
             flex-direction: column;
             gap: 40px;
 
+            .title {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+
+                font: fonts.$f200-bold;
+                color: colors.$primary-font;
+            }
+
             .navItems {
                 display: flex;
                 flex-direction: column;
                 gap: 12px;
 
-                .link {
-                    font: fonts.$f200-medium;
-                    color: colors.$secondary-color;
-                }
+                font: fonts.$f150-medium;
+                color: colors.$secondary-color;
             }
         }
     }

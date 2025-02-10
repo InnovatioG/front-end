@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { pushWarningNotification } from 'smart-db';
 import { CampaignFundsEntity } from '../../../lib/SmartDB/Entities/CampaignFunds.Entity';
 import { CampaignFundsApi } from '../../../lib/SmartDB/FrontEnd/CampaignFunds.FrontEnd.Api.Calls';
@@ -10,7 +10,7 @@ export function useCampaignFunds() {
     const [view, setView] = useState<'list' | 'create' | 'edit' | 'confirmDelete'>('list');
     const [deleteItem, setDeleteItem] = useState<CampaignFundsEntity | null>(null);
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             const fetchedList: CampaignFundsEntity[] = await CampaignFundsApi.getAllApi_();
             setList(fetchedList);
@@ -18,11 +18,11 @@ export function useCampaignFunds() {
             console.error(e);
             pushWarningNotification('Error', `Error fetching CampaignFunds: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {

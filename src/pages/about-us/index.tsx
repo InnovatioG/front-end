@@ -1,12 +1,13 @@
-import styles from '@/pages/about-us/about-us.module.scss';
+import styles from './index.module.scss';
 import React from 'react';
 import { formatLink } from '@/utils/formats';
 import Image from 'next/image';
-import SocialButton from '@/components/UI/Buttons/SocialIcon/SocialButton';
-import { socialIcons } from '@/utils/constants';
-import { CATALYST, CARDANO, LOGO_FULL_DARK } from '@/utils/images';
+import SocialButton from '@/components/General/Buttons/SocialIcon/SocialButton';
+import { CATALYST, CARDANO, LOGO_FULL_DARK } from '@/utils/constants/images';
+import { SocialIcons, SocialOptions } from '@/utils/constants/constants';
 
 const AboutUsPage: React.FC = () => {
+    
     const members_team = [
         {
             name: 'Lorem',
@@ -104,10 +105,10 @@ const AboutUsPage: React.FC = () => {
                                     <div className={styles.socialLinks}>
                                         {Object.entries(member)
                                             .filter(([key]) =>
-                                                ['website', 'facebook', 'instagram', 'discord', 'linkedin', 'twitter'].includes(key)
+                                                Object.values(SocialOptions).includes(key as SocialOptions)
                                             )
                                             .map(([key, link]) => {
-                                                const socialIcon = socialIcons.find((icon) => icon.name === key);
+                                                const socialIcon = SocialIcons.find((icon) => icon.name === key);
                                                 return (
                                                     link &&
                                                     socialIcon && (
@@ -120,7 +121,7 @@ const AboutUsPage: React.FC = () => {
                                                         >
                                                             <SocialButton
                                                                 icon={socialIcon.icon}
-                                                                name={key as 'website' | 'facebook' | 'instagram' | 'discord' | 'twitter'}
+                                                                name={socialIcon.name}
                                                             />
                                                         </a>
                                                     )

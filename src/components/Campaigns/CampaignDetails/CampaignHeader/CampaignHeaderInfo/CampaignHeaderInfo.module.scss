@@ -1,0 +1,174 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+@use '@/styles/components/statuses'; // Importa el nuevo archivo de estados
+
+.campaignCard {
+    border-radius: 1.375rem;
+    border: 1.5px solid #fff;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(25px);
+    padding: 1rem 2rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.campaignCardStatus {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+    height: 100%;
+    align-items: center;
+}
+
+.statusContainer {
+    width: 100%;
+    background-color: #e0ffb1;
+    border-radius: 34px;
+    padding: 0.25rem 1rem;
+    height: 100%;
+    text-transform: capitalize;
+
+    @extend .status;
+}
+
+.status {
+    font: fonts.$f50-medium;
+    color: colors.$primary-font;
+
+    @extend .status;
+}
+
+.investors {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: colors.$secondary-background;
+    height: 100%;
+    padding: 0.5rem 1rem;
+    border-radius: 34px;
+    justify-content: center;
+    .span {
+        color: colors.$white-font;
+        font: fonts.$f50-medium;
+    }
+    .icon {
+        fill: colors.$light-font;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.campaignCardGoal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    p {
+        font: fonts.$f500-medium;
+        color: colors.$primary-font;
+    }
+}
+
+.goal {
+    font: fonts.$goal;
+    color: colors.$primary-font;
+    min-width: 7ch;
+    text-align: right;
+}
+
+.medidor {
+    height: 10px;
+    width: 100%;
+    background-color: black;
+    border-radius: 34px;
+    position: relative;
+}
+
+.campaignCardMinRequest {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.progress {
+    height: 100%;
+    background-color: #76d13e;
+    border-radius: 34px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .campaignCardGoal {
+        flex-direction: column;
+    }
+}
+
+.statusContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+// .draft {
+//     background-color: colors.$blue-color;
+// }
+
+// .submitted,
+// .rejected,
+// .approved,
+// .created,
+// .deploy,
+// .ready {
+//     background: colors.$primary-yellow;
+// }
+
+// .countdown {
+//     background: colors.$blue-dark-color;
+// }
+
+.actionsTarget {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+}
+
+.outline-card {
+    color: colors.$primary-dark-color;
+}
+
+.fill {
+    color: colors.$white-background;
+}
+
+.attempmt-to-launch {
+    background-color: colors.$light-green;
+}
+
+.status {
+    padding: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tooltipContainer {
+    display: flex;
+    align-items: center;
+}
+
+// .countdown {
+//     color: white;
+// }
+
+// .failed {
+//     background-color: #ff4949;
+// }
+
+// .succesfull {
+//     background-color: #76d13e;
+// }

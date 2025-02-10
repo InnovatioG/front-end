@@ -46,7 +46,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
 
     public static MongoModel() {
         interface InterfaceDB extends IBaseSmartDBEntity {
-            campaing_category_id: string;
+            campaign_category_id: string;
             campaign_status_id: string;
             creator_wallet_id: string;
 
@@ -73,6 +73,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             instagram: string;
             twitter: string;
             discord: string;
+            linkedin: string;
             facebook: string;
             visualizations: number;
             investors: number;
@@ -108,7 +109,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
         //TODO: Esto es obligatorio así con SmartDB Entities
         const schemaDB = {
             ...BaseSmartDBEntityMongo.smartDBSchema,
-            campaing_category_id: { type: String, required: true },
+            campaign_category_id: { type: String, required: true },
             campaign_status_id: { type: String, required: true },
             creator_wallet_id: { type: String, required: true },
 
@@ -135,6 +136,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             instagram: { type: String, required: false },
             twitter: { type: String, required: false },
             discord: { type: String, required: false },
+            linkedin: { type: String, required: false },
             facebook: { type: String, required: false },
             visualizations: { type: Number, required: false },
             investors: { type: Number, required: false },

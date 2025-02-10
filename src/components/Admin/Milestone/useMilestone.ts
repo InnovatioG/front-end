@@ -1,6 +1,6 @@
 import { MilestoneStatusEntity } from '@/lib/SmartDB/Entities';
 import { MilestoneStatusApi } from '@/lib/SmartDB/FrontEnd';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { pushWarningNotification } from 'smart-db';
 import { MilestoneEntity } from '../../../lib/SmartDB/Entities/Milestone.Entity';
 import { MilestoneApi } from '../../../lib/SmartDB/FrontEnd/Milestone.FrontEnd.Api.Calls';
@@ -25,7 +25,7 @@ export function useMilestone() {
         return status?.name || 'Unknown';
     };
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             await fetchMilestineExtras();
             const fetchedList: MilestoneEntity[] = await MilestoneApi.getAllApi_();
@@ -34,11 +34,11 @@ export function useMilestone() {
             console.error(e);
             pushWarningNotification('Error', `Error fetching Milestone: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {

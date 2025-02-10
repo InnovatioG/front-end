@@ -1,10 +1,9 @@
-import { Session } from 'next-auth';
-import BtnCampaign from '../../UI/Buttons/Campaign/BtnCampaign';
-import BtnConnectWallet from '../../UI/Buttons/ConnectWallet/BtnConnectWallet';
+import BtnCampaign from '@/components/General/Buttons/Campaign/BtnCampaign';
+import BtnConnectWallet from '@/components/General/Buttons/ConnectWallet/BtnConnectWallet';
 import styles from './HeaderMobile.module.scss';
 import NavMenu from './NavMenu';
 
-export default function HeaderMobile({ session }: { session: Session | null }) {
+export default function HeaderMobile() {
     return (
         <div className={styles.headerMobile}>
             <BtnCampaign type="mobile" />

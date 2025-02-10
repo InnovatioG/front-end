@@ -15,7 +15,7 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     _id!: number; // Auto-generated primary key
 
     @Column({ type: 'varchar', length: 255 })
-    campaing_category_id!: string;
+    campaign_category_id!: string;
     @Column({ type: 'varchar', length: 255 })
     campaign_status_id!: string;
     @Column({ type: 'varchar', length: 255 })
@@ -52,9 +52,9 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'bigint', nullable: true })
     requestedMinADA!: string;
 
-    @Column({ type: 'varchar', length: 255, nullable: true })
+    @Column({ type: 'varchar', length: 1024, nullable: true })
     logo_url?: string;
-    @Column({ type: 'varchar', length: 255, nullable: true })
+    @Column({ type: 'varchar', length: 1024, nullable: true })
     banner_url?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     website?: string;
@@ -64,6 +64,8 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     twitter?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     discord?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
+    linkedin?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     facebook?: string;
     @Column({ type: 'integer', nullable: true })

@@ -65,7 +65,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
     // #region fields
 
     @Convertible({ isDB_id: true })
-    campaing_category_id!: string;
+    campaign_category_id!: string;
     @Convertible({ isDB_id: true })
     campaign_status_id!: string;
     @Convertible({ isDB_id: true })
@@ -115,6 +115,8 @@ export class CampaignEntity extends BaseSmartDBEntity {
     twitter?: string;
     @Convertible()
     discord?: string;
+    @Convertible()
+    linkedin?: string;
     @Convertible()
     facebook?: string;
     @Convertible()
@@ -232,7 +234,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
     };
 
     public static fieldsForHomePage: Record<string, boolean> = {
-        campaing_category_id: true,
+        campaign_category_id: true,
         campaign_status_id: true,
         creator_wallet_id: true,
 
@@ -258,6 +260,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
         instagram: true,
         twitter: true,
         discord: true,
+        linkedin: true,
         facebook: true,
         visualizations: true,
         investors: true,
@@ -271,7 +274,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-        campaing_category_id: true,
+        campaign_category_id: true,
         campaign_status_id: true,
         creator_wallet_id: true,
 

@@ -1,6 +1,6 @@
 import { CampaignCategoryEntity, CampaignStatusEntity } from '@/lib/SmartDB/Entities';
 import { CampaignApi, CampaignCategoryApi, CampaignStatusApi } from '@/lib/SmartDB/FrontEnd';
-import { SetStateAction, useEffect, useState } from 'react';
+import { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { pushWarningNotification } from 'smart-db';
 import { CampaignEntity } from '../../../lib/SmartDB/Entities/Campaign.Entity';
 
@@ -43,7 +43,7 @@ export function useCampaign() {
         return status?.name || 'Unknown';
     };
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             await fetchCampaignsExtras();
             const fetchedList: CampaignEntity[] = await CampaignApi.getAllApi_();
@@ -52,11 +52,11 @@ export function useCampaign() {
             console.error(e);
             pushWarningNotification('Error', `Error fetching Campaign: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {

@@ -367,7 +367,7 @@ export default function Campaign() {
                     <tbody>
                         {list.map((item) => (
                             <tr key={item._DB_id}>
-                                <td>{getCategoryName(item.campaing_category_id)}</td>
+                                <td>{getCategoryName(item.campaign_category_id)}</td>
                                 <td>{getStatusName(item.campaign_status_id)}</td>
                                 <td>{item.creator_wallet_id}</td>
 
@@ -457,7 +457,7 @@ export default function Campaign() {
             {/* General Fields */}
             <div>
                 <label>Campaign Category ID:</label>
-                <input type="text" value={item.campaing_category_id || ''} onChange={(e) => setItem({ ...item, campaing_category_id: e.target.value })} />
+                <input type="text" value={item.campaign_category_id || ''} onChange={(e) => setItem({ ...item, campaign_category_id: e.target.value })} />
             </div>
             <div>
                 <label>Campaign Status ID:</label>

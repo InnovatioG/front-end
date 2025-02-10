@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { pushWarningNotification } from 'smart-db';
 import { MilestoneSubmissionEntity } from '../../../lib/SmartDB/Entities/MilestoneSubmission.Entity';
 import { MilestoneSubmissionApi } from '../../../lib/SmartDB/FrontEnd/MilestoneSubmission.FrontEnd.Api.Calls';
@@ -10,7 +10,7 @@ export function useMilestoneSubmission() {
     const [view, setView] = useState<'list' | 'create' | 'edit' | 'confirmDelete'>('list');
     const [deleteItem, setDeleteItem] = useState<MilestoneSubmissionEntity | null>(null);
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             const fetchedList: MilestoneSubmissionEntity[] = await MilestoneSubmissionApi.getAllApi_();
             setList(fetchedList);
@@ -18,11 +18,11 @@ export function useMilestoneSubmission() {
             console.error(e);
             pushWarningNotification('Error', `Error fetching MilestoneSubmission: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {

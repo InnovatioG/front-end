@@ -1,12 +1,11 @@
-import CampaignDashboard from '@/components/CampaignDashboard/Sections/Dashboard/CampaignDashboard';
-import CampaignHighLight from '@/components/CampaignDashboard/Sections/CampaignHighlight/CampaignHighLight';
+import CampaignsDashboard from '@/components/Campaigns/CampaignsDashboard/CampaignsDashboard';
+import CampaignsHighlights from '@/components/Campaigns/CampaignsHighlights/CampaignsHighlights';
 import styles from '@/styles/Home.module.scss';
-import { PEOPLE } from '@/utils/images';
+import { PEOPLE } from '@/utils/constants/images';
 import Head from 'next/head';
 import Image from 'next/image';
 
 export default function Index() {
-
     return (
         <>
             <Head>
@@ -26,8 +25,8 @@ export default function Index() {
                     </div>
                 </div>
             </main>
-            <CampaignHighLight />
-            <CampaignDashboard />
+            <CampaignsHighlights />
+            <CampaignsDashboard />
         </>
     );
 }

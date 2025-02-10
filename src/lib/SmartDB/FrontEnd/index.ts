@@ -6,7 +6,6 @@ export * from './CampaignFunds.FrontEnd.Api.Calls';
 export * from './CampaignMember.FrontEnd.Api.Calls';
 export * from './CampaignStatus.FrontEnd.Api.Calls';
 export * from './CampaignSubmission.FrontEnd.Api.Calls';
-export * from './CustomWallet.FrontEnd.Api.Calls';
 export * from './Milestone.FrontEnd.Api.Calls';
 export * from './MilestoneStatus.FrontEnd.Api.Calls';
 export * from './MilestoneSubmission.FrontEnd.Api.Calls';

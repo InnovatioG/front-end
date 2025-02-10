@@ -1,17 +1,16 @@
-import CampaignDashboard from '@/components/CampaignDashboard/Sections/Dashboard/CampaignDashboard';
-import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
-import React, { useEffect } from 'react';
-interface CampaignsProps {
+import CampaignsDashboard from '@/components/Campaigns/CampaignsDashboard/CampaignsDashboard';
+import React from 'react';
+
+interface CampaignsPageProps {
     // Define props here
 }
 
-const Campaigns: React.FC<CampaignsProps> = (props) => {
-
+const CampaignsPage: React.FC<CampaignsPageProps> = (props) => {
     return (
         <div>
-            <CampaignDashboard />
+            <CampaignsDashboard />
         </div>
     );
 };
 
-export default Campaigns;
+export default CampaignsPage;

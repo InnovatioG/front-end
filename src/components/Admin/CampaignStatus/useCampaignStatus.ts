@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { pushWarningNotification } from 'smart-db';
 import { CampaignStatusEntity } from '../../../lib/SmartDB/Entities/CampaignStatus.Entity';
 import { CampaignStatusApi } from '../../../lib/SmartDB/FrontEnd/CampaignStatus.FrontEnd.Api.Calls';
@@ -10,7 +10,7 @@ export function useCampaignStatus() {
     const [view, setView] = useState<'list' | 'create' | 'edit' | 'confirmDelete'>('list');
     const [deleteItem, setDeleteItem] = useState<CampaignStatusEntity | null>(null);
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             const fetchedList: CampaignStatusEntity[] = await CampaignStatusApi.getAllApi_();
             setList(fetchedList);
@@ -18,11 +18,11 @@ export function useCampaignStatus() {
             console.error(e);
             pushWarningNotification('Error', `Error fetching CampaignStatus: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {

@@ -1,9 +1,10 @@
-import BtnCampaign from '@/components/UI/Buttons/Campaign/BtnCampaign';
-import BtnConnectWallet from '@/components/UI/Buttons/ConnectWallet/BtnConnectWallet';
-import { CALENDAR } from '@/utils/images';
+import BtnCampaign from '@/components/General/Buttons/Campaign/BtnCampaign';
+import BtnConnectWallet from '@/components/General/Buttons/ConnectWallet/BtnConnectWallet';
+import { CALENDAR } from '@/utils/constants/images';
 import Link from 'next/link';
 import { useState } from 'react';
 import styles from './NavMenu.module.scss';
+import { ROUTES } from '@/utils/constants/routes';
 
 export default function NavMenu() {
     const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
@@ -29,13 +30,13 @@ export default function NavMenu() {
                         </svg>
                     </div>
                     <div className={styles.infoSection}>
-                        <Link href={''} className={styles.infoLink}>
+                        <Link href={ROUTES.campaigns} className={styles.infoLink}>
                             <button onClick={() => setIsOpenMenu(false)}>How it works</button>
                         </Link>
-                        <Link href={''} className={styles.infoLink}>
+                        <Link href={ROUTES.aboutus} className={styles.infoLink}>
                             <button onClick={() => setIsOpenMenu(false)}>About us</button>
                         </Link>
-                        <Link href={'/campaigns'} className={styles.infoLink}>
+                        <Link href={ROUTES.campaigns} className={styles.infoLink}>
                             <button>Campaigns</button>
                         </Link>
                     </div>

@@ -14,8 +14,6 @@ export * from './CampaignStatus.Entity.Mongo';
 export * from './CampaignStatus.Entity.PostgreSQL';
 export * from './CampaignSubmission.Entity.Mongo';
 export * from './CampaignSubmission.Entity.PostgreSQL';
-export * from './CustomWallet.Entity.Mongo';
-export * from './CustomWallet.Entity.PostgreSQL';
 export * from './index';
 export * from './Milestone.Entity.Mongo';
 export * from './Milestone.Entity.PostgreSQL';

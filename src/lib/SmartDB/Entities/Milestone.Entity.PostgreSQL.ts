@@ -25,6 +25,8 @@ export class MilestoneEntityPostgreSQL extends BaseEntityPostgreSQL {
     percentage!: number;
     @Column({ type: 'text', nullable: true })
     description!: string;
+    @Column({ type: 'integer' })
+    order!: number;
     @CreateDateColumn()
     createdAt!: Date;
     @UpdateDateColumn()

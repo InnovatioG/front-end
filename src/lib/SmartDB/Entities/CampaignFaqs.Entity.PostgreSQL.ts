@@ -15,7 +15,7 @@ export class CampaignFaqsEntityPostgreSQL extends BaseEntityPostgreSQL {
 
     @Column({ type: 'varchar', length: 255 })
     campaign_id!: string;
-    @Column({ type: 'varchar', length: 255 })
+    @Column({ type: 'varchar', length: 255, nullable: true })
     question!: string;
     @Column({ type: 'text', nullable: true })
     answer?: string;

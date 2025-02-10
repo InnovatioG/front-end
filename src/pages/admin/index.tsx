@@ -1,4 +1,4 @@
-import Button from '@/components/UI/Buttons/UI/Button';
+import Button from '@/components/General/Buttons/UI/Button';
 import { ProtocolApi } from '@/lib/SmartDB/FrontEnd';
 import styles from '@/styles/Admin.module.scss';
 import type { NextPage } from 'next';
@@ -15,13 +15,13 @@ const AdminDashboard: NextPage = () => {
         { name: 'Campaign Status', path: '/admin/campaign-status' },
         { name: 'Campaign Submission', path: '/admin/campaign-submission' },
         { name: 'Campaign', path: '/admin/campaign' },
-        { name: 'Custom Wallet', path: '/admin/custom-wallet' },
         { name: 'Milestone Status', path: '/admin/milestone-status' },
         { name: 'Milestone Submission', path: '/admin/milestone-submission' },
         { name: 'Milestone', path: '/admin/milestone' },
         { name: 'Protocol Admin Wallet', path: '/admin/protocol-admin-wallet' },
         { name: 'Protocol', path: '/admin/protocol' },
         { name: 'Submission Status', path: '/admin/submission-status' },
+        { name: 'Wallet', path: '/admin/wallet' },
     ];
 
     const walletStore = useWalletStore();

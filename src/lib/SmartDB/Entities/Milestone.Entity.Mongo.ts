@@ -51,6 +51,7 @@ export class MilestoneEntityMongo extends BaseEntityMongo {
             estimate_delivery_date: Date;
             percentage: number;
             description: string;
+            order: number;
             createdAt: Date;
             updatedAt: Date;
         }
@@ -63,6 +64,8 @@ export class MilestoneEntityMongo extends BaseEntityMongo {
                 estimate_delivery_date: { type: Date, required: false },
                 percentage: { type: Number, required: false },
                 description: { type: String, required: false },
+                order: { type: Number, required: true }
+
             },
             { timestamps: true }
         );

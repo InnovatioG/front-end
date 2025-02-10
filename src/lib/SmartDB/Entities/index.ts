@@ -6,7 +6,6 @@ export * from './CampaignFunds.Entity';
 export * from './CampaignMember.Entity';
 export * from './CampaignStatus.Entity';
 export * from './CampaignSubmission.Entity';
-export * from './CustomWallet.Entity';
 export * from './Milestone.Entity';
 export * from './MilestoneStatus.Entity';
 export * from './MilestoneSubmission.Entity';

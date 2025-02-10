@@ -1,5 +1,5 @@
-import { DISCORD, FACEBOOK, INSTAGRAM, LOGO_FULL_LIGHT, XS } from '@/utils/images';
-import { ROUTES } from '@/utils/routes';
+import { DISCORD, FACEBOOK, INSTAGRAM, LOGO_FULL_LIGHT, TWITTER } from '@/utils/constants/images';
+import { ROUTES } from '@/utils/constants/routes';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from './Footer.module.scss';
@@ -11,7 +11,9 @@ export default function Footer() {
                 <div className={styles.logoSection}>
                     <div className={styles.pictureLogoContainer}>
                         <Link href={ROUTES.home}>
-                            <Image layout="fill" objectPosition={'left'} objectFit="contain" src={LOGO_FULL_LIGHT} alt="logo-full" className={styles.logo} priority />
+                            <a>
+                                <Image layout="fill" objectPosition={'left'} objectFit="contain" src={LOGO_FULL_LIGHT} alt="logo-full" className={styles.logo} priority />
+                            </a>
                         </Link>
                     </div>
                     <p className={styles.textFooter}>
@@ -20,29 +22,37 @@ export default function Footer() {
                 </div>
                 <div className={styles.navSection}>
                     <div className={styles.navGroup}>
-                        <h3 className={styles.title}>How it works</h3>
+                        <h3 className={styles.title}>
+                            <Link href={ROUTES.howitworks} className={styles.link}>
+                                How it works
+                            </Link>
+                        </h3>
                         <nav className={styles.navItems}>
-                            <Link href={ROUTES.home} className={styles.link}>
+                            <Link href={ROUTES.investment} className={styles.link}>
                                 Investment
                             </Link>
-                            <Link href={ROUTES.home} className={styles.link}>
+                            <Link href={ROUTES.airdropSale} className={styles.link}>
                                 Airdrop Sale
                             </Link>
-                            <Link href={ROUTES.home} className={styles.link}>
+                            <Link href={ROUTES.airdropResale} className={styles.link}>
                                 Airdrop Resale
                             </Link>
                         </nav>
                     </div>
                     <div className={styles.navGroup}>
-                        <h3 className={styles.title}>About us</h3>
+                        <h3 className={styles.title}>
+                            <Link href={ROUTES.aboutus} className={styles.link}>
+                                About us
+                            </Link>
+                        </h3>
                         <nav className={styles.navItems}>
-                            <Link href={ROUTES.home} className={styles.link}>
+                            <Link href={ROUTES.innovatio} className={styles.link}>
                                 Innovatio
                             </Link>
-                            <Link href={ROUTES.home} className={styles.link}>
+                            <Link href={ROUTES.partnerships} className={styles.link}>
                                 Partnerships
                             </Link>
-                            <Link href={ROUTES.home} className={styles.link}>
+                            <Link href={ROUTES.contact} className={styles.link}>
                                 Contact
                             </Link>
                         </nav>
@@ -50,37 +60,37 @@ export default function Footer() {
                     <div className={styles.navGroup}>
                         <h3 className={styles.title}>Innovatio Community</h3>
                         <nav className={styles.navItems}>
-                            <Link href={ROUTES.home} className={styles.link}>
+                            <Link href={ROUTES.joinUs} className={styles.link}>
                                 Join us
                             </Link>
-                            <Link href={ROUTES.home} className={styles.link}>
+                            <Link href={ROUTES.stakePoolDelegation} className={styles.link}>
                                 Stake Pool Delegation
                             </Link>
-                            <Link href={ROUTES.home} className={styles.link}>
+                            <Link href={ROUTES.discordCommunity} className={styles.link}>
                                 Discord Community
                             </Link>
                         </nav>
                     </div>
                 </div>
                 <div className={styles.socialSection}>
-                    <Link href={ROUTES.home} className={styles.socialItem}>
+                    <Link href={ROUTES.facebook} className={styles.socialItem}>
                         <svg width="20" height="20" className={styles.icon}>
-                            <use href={FACEBOOK}></use>
+                            <use href="#facebook"></use>
                         </svg>
                     </Link>
-                    <Link href={ROUTES.home} className={styles.socialItem}>
+                    <Link href={ROUTES.instagram} className={styles.socialItem}>
                         <svg width="20" height="20" className={styles.icon}>
-                            <use href={INSTAGRAM}></use>
+                            <use href="#instagram"></use>
                         </svg>
                     </Link>
-                    <Link href={ROUTES.home} className={styles.socialItem}>
+                    <Link href={ROUTES.twitter} className={styles.socialItem}>
                         <svg width="20" height="20" className={styles.icon}>
-                            <use href={XS} />
+                            <use href="#twitter"></use>
                         </svg>
                     </Link>
-                    <Link href={ROUTES.home} className={styles.socialItem}>
+                    <Link href={ROUTES.discord} className={styles.socialItem}>
                         <svg width="20" height="20" className={styles.icon}>
-                            <use href={DISCORD}></use>
+                            <use href="#discord"></use>
                         </svg>
                     </Link>
                 </div>

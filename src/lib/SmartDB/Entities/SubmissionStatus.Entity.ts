@@ -9,7 +9,7 @@ export class SubmissionStatusEntity extends BaseEntity {
 
     // #region fields
     @Convertible()
-    id_internal!: number;
+    code_id!: number;
     @Convertible()
     name!: string;
     @Convertible()
@@ -27,7 +27,7 @@ export class SubmissionStatusEntity extends BaseEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-        id_internal: true,
+        code_id: true,
         name: true,
         description: true,
         createdAt: true,

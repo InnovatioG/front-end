@@ -1,21 +1,21 @@
-import BtnCampaign from '@/components/UI/Buttons/Campaign/BtnCampaign';
-import BtnConnectWallet from '@/components/UI/Buttons/ConnectWallet/BtnConnectWallet';
-import TogglePrice from '@/components/UI/Buttons/Toggle/TogglePrice';
-import { Session } from 'next-auth';
+import BtnCampaign from '@/components/General/Buttons/Campaign/BtnCampaign';
+import BtnConnectWallet from '@/components/General/Buttons/ConnectWallet/BtnConnectWallet';
+import TogglePrice from '@/components/General/Buttons/Toggle/TogglePrice';
 import Link from 'next/link';
 import styles from './HeaderDesktop.module.scss';
+import { ROUTES } from '@/utils/constants/routes';
 
-export default function HeaderDesktop({ session, setIsOpen, isOpen }: { session: Session | null; setIsOpen: (isOpen: boolean) => void; isOpen: boolean }) {
+export default function HeaderDesktop() {
     return (
         <div className={styles.headerDesktop}>
             <nav className={styles.navSection}>
-                <Link href={''} className={styles.infoLink}>
+                <Link href={ROUTES.howitworks} className={styles.infoLink}>
                     How it works
                 </Link>
-                <Link href={'/about-us'} className={styles.infoLink}>
+                <Link href={ROUTES.aboutus} className={styles.infoLink}>
                     About us
                 </Link>
-                <Link href={'/campaigns'} className={styles.infoLink}>
+                <Link href={ROUTES.campaigns} className={styles.infoLink}>
                     Campaigns
                 </Link>
             </nav>

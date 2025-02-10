@@ -1,4 +1,4 @@
-import { CAMPAIGN_VERSION, EMERGENCY_ADMIN_TOKEN_POLICY_CS } from '@/utils/constants/contracts';
+import { CAMPAIGN_VERSION, EMERGENCY_ADMIN_TOKEN_POLICY_CS } from '@/utils/constants/on-chain';
 import {
     CampaignCategoryDefault,
     CampaignCategoryDefaultNames,
@@ -6,8 +6,8 @@ import {
     MilestoneStatusDefaultNames,
     protocolDefault,
     SubmissionStatusDefaultNames,
-} from '@/utils/constants/populate';
-import { CampaignDatumStatus, CampaignStatus, MilestoneDatumStatus, MilestoneStatus, SubmissionStatus } from '@/utils/constants/status';
+} from '@/utils/populate/defaults';
+import { CampaignDatumStatus_Code_Id, CampaignStatus_Code_Id, MilestoneDatumStatus_Code_Id, MilestoneStatus_Code_Id, SubmissionStatus } from '@/utils/constants/status';
 import { applyParamsToScript, Data, Lucid, MintingPolicy, UTxO, Validator } from 'lucid-cardano';
 import { NextApiResponse } from 'next';
 import { User } from 'next-auth';
@@ -228,18 +228,6 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         //--------------------------------------
         await this.populateAll(lucid, walletTxParams);
         //--------------------------------------
-
-        // const CampaignBackEndApplied = (await import('./Campaign.BackEnd.Api.Handlers')).CampaignBackEndApplied;
-        // const CampaignContentBackEndApplied = (await import('./CampaignContent.BackEnd.Api.Handlers')).CampaignContentBackEndApplied;
-        // const CampaignFaqsBackEndApplied = (await import('./CampaignFaqs.BackEnd.Api.Handlers')).CampaignFaqsBackEndApplied;
-        // const CampaignFundsBackEndApplied = (await import('./CampaignFunds.BackEnd.Api.Handlers')).CampaignFundsBackEndApplied;
-        // const CampaignMemberBackEndApplied = (await import('./CampaignMember.BackEnd.Api.Handlers')).CampaignMemberBackEndApplied;
-        // const CampaignSubmissionBackEndApplied = (await import('./CampaignSubmission.BackEnd.Api.Handlers')).CampaignSubmissionBackEndApplied;
-        // const CustomWalletBackEndApplied = (await import('./CustomWallet.BackEnd.Api.Handlers')).CustomWalletBackEndApplied;
-        // const MilestoneBackEndApplied = (await import('./Milestone.BackEnd.Api.Handlers')).MilestoneBackEndApplied;
-        // const MilestoneSubmissionBackEndApplied = (await import('./MilestoneSubmission.BackEnd.Api.Handlers')).MilestoneSubmissionBackEndApplied;
-
-        //--------------------------------------
         console_log(0, this._Entity.className(), `populate - End`);
         //--------------------------------------
         return true;
@@ -289,7 +277,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
                 stakePKH,
                 name: 'populated',
                 email: '',
-                isCoreTeam: false,
+                isCoreTeam: true,
                 testnet_address,
                 mainnet_address,
             });
@@ -323,7 +311,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         let protocol: ProtocolEntity | undefined = undefined;
         //--------------------------------------
         if (!(await this.checkIfExists_({ name: protocolDefault.name }))) {
-            protocol = await this.createWithScripts(lucid, { name: protocolDefault.name, configJson: toJson(protocolDefault.configJson), uTxO });
+            protocol = await this.createWithScripts(lucid, { name: protocolDefault.name, configJson: toJson(protocolDefault.deployJson), uTxO });
         } else {
             protocol = await this.getOneByParams_({ name: protocolDefault.name });
         }
@@ -348,14 +336,14 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         //--------------------------------------
         const CampaignStatusBackEndApplied = (await import('./CampaignStatus.BackEnd.Api.Handlers')).CampaignStatusBackEndApplied;
         //--------------------------------------
-        const campaignStatuses = Object.values(CampaignStatus).filter((value) => typeof value === 'number') as CampaignStatus[];
+        const campaignStatuses = Object.values(CampaignStatus_Code_Id).filter((value) => typeof value === 'number') as CampaignStatus_Code_Id[];
         //--------------------------------------
         for (const status of campaignStatuses) {
             console.log(`State: ${status}, Description: ${CampaignStatusDefaultNames[status]}`);
             let campaignStatus: CampaignStatusEntity = new CampaignStatusEntity();
-            campaignStatus.id_internal = status;
+            campaignStatus.code_id = status;
             campaignStatus.name = CampaignStatusDefaultNames[status];
-            if (!(await CampaignStatusBackEndApplied.checkIfExists_({ id_internal: campaignStatus.id_internal }))) {
+            if (!(await CampaignStatusBackEndApplied.checkIfExists_({ code_id: campaignStatus.code_id }))) {
                 campaignStatus = await CampaignStatusBackEndApplied.create(campaignStatus);
             }
         }
@@ -371,14 +359,14 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         //--------------------------------------
         const MilestoneStatusBackEndApplied = (await import('./MilestoneStatus.BackEnd.Api.Handlers')).MilestoneStatusBackEndApplied;
         //--------------------------------------
-        const milestoneStatuses = Object.values(MilestoneStatus).filter((value) => typeof value === 'number') as MilestoneStatus[];
+        const milestoneStatuses = Object.values(MilestoneStatus_Code_Id).filter((value) => typeof value === 'number') as MilestoneStatus_Code_Id[];
         //--------------------------------------
         for (const status of milestoneStatuses) {
             console.log(`State: ${status}, Description: ${MilestoneStatusDefaultNames[status]}`);
             let milestoneStatus: MilestoneStatusEntity = new MilestoneStatusEntity();
-            milestoneStatus.id_internal = status;
+            milestoneStatus.code_id = status;
             milestoneStatus.name = MilestoneStatusDefaultNames[status];
-            if (!(await MilestoneStatusBackEndApplied.checkIfExists_({ id_internal: milestoneStatus.id_internal }))) {
+            if (!(await MilestoneStatusBackEndApplied.checkIfExists_({ code_id: milestoneStatus.code_id }))) {
                 milestoneStatus = await MilestoneStatusBackEndApplied.create(milestoneStatus);
             }
         }
@@ -399,9 +387,8 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         for (const category of campaignCategories) {
             console.log(`Category: ${category}, Description: ${CampaignCategoryDefaultNames[category]}`);
             let campaignCategory: CampaignCategoryEntity = new CampaignCategoryEntity();
-            campaignCategory.id_internal = category;
             campaignCategory.name = CampaignCategoryDefaultNames[category];
-            if (!(await CampaignCategoryBackEndApplied.checkIfExists_({ id_internal: campaignCategory.id_internal }))) {
+            if (!(await CampaignCategoryBackEndApplied.checkIfExists_({ name: campaignCategory.name }))) {
                 campaignCategory = await CampaignCategoryBackEndApplied.create(campaignCategory);
             }
         }
@@ -422,9 +409,9 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         for (const status of submissionStatuses) {
             console.log(`State: ${status}, Description: ${SubmissionStatusDefaultNames[status]}`);
             let submissionStatus: SubmissionStatusEntity = new SubmissionStatusEntity();
-            submissionStatus.id_internal = status;
+            submissionStatus.code_id = status;
             submissionStatus.name = SubmissionStatusDefaultNames[status];
-            if (!(await SubmissionStatusBackEndApplied.checkIfExists_({ id_internal: submissionStatus.id_internal }))) {
+            if (!(await SubmissionStatusBackEndApplied.checkIfExists_({ code_id: submissionStatus.code_id }))) {
                 submissionStatus = await SubmissionStatusBackEndApplied.create(submissionStatus);
             }
         }
@@ -437,7 +424,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
     private static async populateCampaigns(lucid: Lucid, walletTxParams: WalletTxParams, protocol: ProtocolEntity, wallet: WalletEntity): Promise<boolean> {
         console_log(0, this._Entity.className(), `populateCampaigns - INIT`);
         const CampaignBackEndApplied = (await import('./Campaign.BackEnd.Api.Handlers')).CampaignBackEndApplied;
-        const campaignsData = protocolDefault.campaignsJson.campaigns;
+        const campaignsData = protocolDefault.campaignsPopulateJson.campaigns;
         let campaign: CampaignEntity | undefined;
         for (const campaignData of campaignsData) {
             try {
@@ -454,11 +441,11 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
                 const campaignWallets = await this.getOrCreateCampaignWallets(campaignData);
 
                 // Fetch reference IDs
-                const categoryId = await this.getCampaignCategoryId(campaignData.campaing_category_id_as_string);
-                const statusId = await this.getCampaignStatusId(campaignData.campaign_status_id_as_string);
+                const categoryId = await this.getCampaign_Category_DB_Id(campaignData.campaign_category_id_as_string);
+                const code_id = await this.getCampaign_Status_DB_id(campaignData.campaign_status_id_as_string);
 
                 // Create campaign
-                campaign = await this.createCampaign(campaignData, categoryId, statusId, campaignWallets);
+                campaign = await this.createCampaign(campaignData, categoryId, code_id, campaignWallets);
 
                 // Create related records
                 await this.createCampaignContents(campaign._DB_id, campaignData.contents);
@@ -524,73 +511,77 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         }
     }
 
-    private static async getCampaignCategoryId(categoryName: string): Promise<string> {
+    private static async getCampaign_Category_DB_Id(categoryName: string): Promise<string> {
         const CampaignCategoryBackEndApplied = (await import('./CampaignCategory.BackEnd.Api.Handlers')).CampaignCategoryBackEndApplied;
 
         // Get enum value from category name
-        const categoryId = CampaignCategoryDefault[categoryName as keyof typeof CampaignCategoryDefault];
-        if (categoryId === undefined) {
+        const code_id = CampaignCategoryDefault[categoryName as keyof typeof CampaignCategoryDefault];
+        if (code_id === undefined) {
+            throw new Error(`Invalid category name: ${categoryName}`);
+        }
+        const categoryNameOk = CampaignCategoryDefaultNames[code_id as keyof typeof CampaignCategoryDefaultNames];
+        if (categoryNameOk === undefined) {
             throw new Error(`Invalid category name: ${categoryName}`);
         }
 
-        // Query by internal_id
-        const category = await CampaignCategoryBackEndApplied.getOneByParams_({ id_internal: categoryId });
+        // Query by code_id
+        const category = await CampaignCategoryBackEndApplied.getOneByParams_({ name: categoryNameOk });
         if (!category) {
-            throw new Error(`Category not found for internal_id: ${categoryId}`);
+            throw new Error(`Category not found for name: ${categoryNameOk}`);
         }
 
         return category._DB_id;
     }
 
-    private static async getCampaignStatusId(statusName: string): Promise<string> {
+    private static async getCampaign_Status_DB_id(statusName: string): Promise<string> {
         const CampaignStatusBackEndApplied = (await import('./CampaignStatus.BackEnd.Api.Handlers')).CampaignStatusBackEndApplied;
 
         // Get enum value from status name
-        const statusId = CampaignStatus[statusName as keyof typeof CampaignStatus];
-        if (statusId === undefined) {
+        const code_id = CampaignStatus_Code_Id[statusName as keyof typeof CampaignStatus_Code_Id];
+        if (code_id === undefined) {
             throw new Error(`Invalid status name: ${statusName}`);
         }
 
-        // Query by internal_id
-        const status = await CampaignStatusBackEndApplied.getOneByParams_({ id_internal: statusId });
+        // Query by code_id
+        const status = await CampaignStatusBackEndApplied.getOneByParams_({ code_id: code_id });
         if (!status) {
-            throw new Error(`Status not found for internal_id: ${statusId}`);
+            throw new Error(`Status not found for code_id: ${code_id}`);
         }
 
         return status._DB_id;
     }
 
-    private static async getMilestoneStatusId(statusName: string): Promise<string> {
+    private static async getMilestone_Status_DB_id(statusName: string): Promise<string> {
         const MilestoneStatusBackEndApplied = (await import('./MilestoneStatus.BackEnd.Api.Handlers')).MilestoneStatusBackEndApplied;
 
         // Get enum value from status name
-        const statusId = MilestoneStatus[statusName as keyof typeof MilestoneStatus];
-        if (statusId === undefined) {
+        const code_id = MilestoneStatus_Code_Id[statusName as keyof typeof MilestoneStatus_Code_Id];
+        if (code_id === undefined) {
             throw new Error(`Invalid milestone status name: ${statusName}`);
         }
 
-        // Query by internal_id
-        const status = await MilestoneStatusBackEndApplied.getOneByParams_({ id_internal: statusId });
+        // Query by code_id
+        const status = await MilestoneStatusBackEndApplied.getOneByParams_({ code_id: code_id });
         if (!status) {
-            throw new Error(`Milestone status not found for internal_id: ${statusId}`);
+            throw new Error(`Milestone status not found for code_id: ${code_id}`);
         }
 
         return status._DB_id;
     }
 
-    private static async getSubmissionStatusId(statusName: string): Promise<string> {
+    private static async getSubmission_Status_DB_id(statusName: string): Promise<string> {
         const SubmissionStatusBackEndApplied = (await import('./SubmissionStatus.BackEnd.Api.Handlers')).SubmissionStatusBackEndApplied;
 
         // Get enum value from status name
-        const statusId = SubmissionStatus[statusName as keyof typeof SubmissionStatus];
-        if (statusId === undefined) {
+        const code_id = SubmissionStatus[statusName as keyof typeof SubmissionStatus];
+        if (code_id === undefined) {
             throw new Error(`Invalid submission status name: ${statusName}`);
         }
 
-        // Query by internal_id
-        const status = await SubmissionStatusBackEndApplied.getOneByParams_({ id_internal: statusId });
+        // Query by code_id
+        const status = await SubmissionStatusBackEndApplied.getOneByParams_({ code_id: code_id });
         if (!status) {
-            throw new Error(`Submission status not found for internal_id: ${statusId}`);
+            throw new Error(`Submission status not found for code_id: ${code_id}`);
         }
 
         return status._DB_id;
@@ -645,77 +636,79 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         return wallets;
     }
 
-    private static async createCampaign(campaignData: any, categoryId: string, statusId: string, wallets: Record<string, WalletEntity>): Promise<CampaignEntity> {
+    private static async createCampaign(campaignData: any, categoryId: string, code_id: string, wallets: Record<string, WalletEntity>): Promise<CampaignEntity> {
         const CampaignBackEndApplied = (await import('./Campaign.BackEnd.Api.Handlers')).CampaignBackEndApplied;
 
         const currentDate = new Date();
 
         const getCampaignDeployedStatus = (statusStr: string): boolean => {
             // First get the numeric status ID
-            const statusId = CampaignStatus[statusStr as keyof typeof CampaignStatus];
+            const code_id = CampaignStatus_Code_Id[statusStr as keyof typeof CampaignStatus_Code_Id];
 
             return [
-                CampaignStatus.CONTRACT_STARTED,
-                CampaignStatus.COUNTDOWN,
-                CampaignStatus.FUNDRAISING,
-                CampaignStatus.FINISHING,
-                CampaignStatus.ACTIVE,
-                CampaignStatus.SUCCESS,
-                CampaignStatus.FAILED,
-                CampaignStatus.UNREACHED,
-            ].includes(statusId);
+                CampaignStatus_Code_Id.CONTRACT_STARTED,
+                CampaignStatus_Code_Id.COUNTDOWN,
+                CampaignStatus_Code_Id.FUNDRAISING,
+                CampaignStatus_Code_Id.FINISHING,
+                CampaignStatus_Code_Id.ACTIVE,
+                CampaignStatus_Code_Id.SUCCESS,
+                CampaignStatus_Code_Id.FAILED,
+                CampaignStatus_Code_Id.UNREACHED,
+            ].includes(code_id);
         };
 
         const getCampaignActiveStatus = (statusStr: string): boolean => {
-            const statusId = CampaignStatus[statusStr as keyof typeof CampaignStatus];
+            const code_id = CampaignStatus_Code_Id[statusStr as keyof typeof CampaignStatus_Code_Id];
 
-            return [CampaignStatus.ACTIVE, CampaignStatus.SUCCESS, CampaignStatus.FAILED].includes(statusId);
+            return [CampaignStatus_Code_Id.ACTIVE, CampaignStatus_Code_Id.SUCCESS, CampaignStatus_Code_Id.FAILED].includes(code_id);
         };
 
-        const getCampaignDatumStatus = (statusStr: string): CampaignDatumStatus => {
-            const statusId = CampaignStatus[statusStr as keyof typeof CampaignStatus];
+        const getCampaignDatumStatus = (statusStr: string): CampaignDatumStatus_Code_Id => {
+            const code_id = CampaignStatus_Code_Id[statusStr as keyof typeof CampaignStatus_Code_Id];
 
             // Map Campaign Status to Datum Status
-            switch (statusId) {
-                case CampaignStatus.NOT_STARTED:
-                case CampaignStatus.CREATED:
-                case CampaignStatus.SUBMITTED:
-                case CampaignStatus.REJECTED:
-                case CampaignStatus.APPROVED:
-                case CampaignStatus.CONTRACT_CREATED:
-                case CampaignStatus.CONTRACT_PUBLISHED:
-                case CampaignStatus.CONTRACT_STARTED:
-                    return CampaignDatumStatus.CsCreated;
-                case CampaignStatus.COUNTDOWN:
-                case CampaignStatus.FUNDRAISING:
-                case CampaignStatus.FINISHING:
-                    return CampaignDatumStatus.CsInitialized;
-                case CampaignStatus.ACTIVE:
-                case CampaignStatus.SUCCESS:
-                    return CampaignDatumStatus.CsReached;
-                case CampaignStatus.UNREACHED:
-                    return CampaignDatumStatus.CsNotReached;
-                case CampaignStatus.FAILED:
-                    return CampaignDatumStatus.CsFailedMilestone;
+            switch (code_id) {
+                case CampaignStatus_Code_Id.NOT_STARTED:
+                case CampaignStatus_Code_Id.CREATED:
+                case CampaignStatus_Code_Id.SUBMITTED:
+                case CampaignStatus_Code_Id.REJECTED:
+                case CampaignStatus_Code_Id.APPROVED:
+                case CampaignStatus_Code_Id.CONTRACT_CREATED:
+                case CampaignStatus_Code_Id.CONTRACT_PUBLISHED:
+                case CampaignStatus_Code_Id.CONTRACT_STARTED:
+                    return CampaignDatumStatus_Code_Id.CsCreated;
+                case CampaignStatus_Code_Id.COUNTDOWN:
+                case CampaignStatus_Code_Id.FUNDRAISING:
+                case CampaignStatus_Code_Id.FINISHING:
+                    return CampaignDatumStatus_Code_Id.CsInitialized;
+                case CampaignStatus_Code_Id.ACTIVE:
+                case CampaignStatus_Code_Id.SUCCESS:
+                    return CampaignDatumStatus_Code_Id.CsReached;
+                case CampaignStatus_Code_Id.UNREACHED:
+                    return CampaignDatumStatus_Code_Id.CsNotReached;
+                case CampaignStatus_Code_Id.FAILED:
+                    return CampaignDatumStatus_Code_Id.CsFailedMilestone;
                 default:
                     throw new Error(`Invalid campaign status: ${statusStr}`);
             }
         };
 
-        const getMilestoneDatumStatus = (statusStr: string): MilestoneDatumStatus => {
-            const statusId = MilestoneStatus[statusStr as keyof typeof MilestoneStatus];
+        const getMilestoneDatumStatus = (statusStr: string): MilestoneDatumStatus_Code_Id => {
+            const code_id = MilestoneStatus_Code_Id[statusStr as keyof typeof MilestoneStatus_Code_Id];
 
             // Map Milestone Status to Datum Status
-            switch (statusId) {
-                case MilestoneStatus.NOT_STARTED:
-                case MilestoneStatus.STARTED:
-                case MilestoneStatus.SUBMITTED:
-                case MilestoneStatus.REJECTED:
-                    return MilestoneDatumStatus.MsCreated;
-                case MilestoneStatus.FINISHED:
-                    return MilestoneDatumStatus.MsSuccess;
-                case MilestoneStatus.FAILED:
-                    return MilestoneDatumStatus.MsFailed;
+            switch (code_id) {
+                case MilestoneStatus_Code_Id.NOT_STARTED:
+                case MilestoneStatus_Code_Id.STARTED:
+                case MilestoneStatus_Code_Id.SUBMITTED:
+                case MilestoneStatus_Code_Id.REJECTED:
+                    return MilestoneDatumStatus_Code_Id.MsCreated;
+                case MilestoneStatus_Code_Id.COLLECT:
+                    return MilestoneDatumStatus_Code_Id.MsSuccess;
+                case MilestoneStatus_Code_Id.FINISHED:
+                    return MilestoneDatumStatus_Code_Id.MsSuccess;
+                case MilestoneStatus_Code_Id.FAILED:
+                    return MilestoneDatumStatus_Code_Id.MsFailed;
                 default:
                     throw new Error(`Invalid milestone status: ${statusStr}`);
             }
@@ -758,8 +751,8 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         const campaign = new CampaignEntity({
             isDeployed,
 
-            campaing_category_id: categoryId,
-            campaign_status_id: statusId,
+            campaign_category_id: categoryId,
+            campaign_status_id: code_id,
             creator_wallet_id: wallets[campaignData.creator_wallet_id_as_string]._DB_id,
 
             name: campaignData.name,
@@ -802,6 +795,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             // Campaign details
             logo_url: campaignData.logo_url,
             banner_url: campaignData.banner_url,
+
             website: campaignData.website,
             instagram: campaignData.instagram,
             twitter: campaignData.twitter,
@@ -851,7 +845,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
 
     private static async createCampaignMembers(campaignId: string, members: any[], wallets: Record<string, WalletEntity>): Promise<void> {
         const CampaignMemberBackEndApplied = (await import('./CampaignMember.BackEnd.Api.Handlers')).CampaignMemberBackEndApplied;
-
+        let order = 0;
         for (const memberData of members) {
             const member = new CampaignMemberEntity({
                 campaign_id: campaignId,
@@ -860,13 +854,17 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
                 description: memberData.description,
                 editor: memberData.editor || false,
                 admin: memberData.admin || false,
+                name: memberData.name || wallets[memberData.wallet_id_as_string].name || memberData.wallet_id_as_string || '',
+                last_name: memberData.last_name || '',
                 email: memberData.email || wallets[memberData.wallet_id_as_string].email || '',
                 wallet_address: memberData.wallet_address || wallets[memberData.wallet_id_as_string].mainnet_address || '',
                 website: memberData.socials?.website,
                 instagram: memberData.socials?.instagram,
                 twitter: memberData.socials?.twitter,
                 discord: memberData.socials?.discord,
+                linkedin: memberData.socials?.linkedin,
                 facebook: memberData.socials?.facebook,
+                order: order++,
             });
 
             await CampaignMemberBackEndApplied.create(member);
@@ -879,7 +877,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         for (const submissionData of submissionsData) {
             const submission = new CampaignSubmissionEntity({
                 campaign_id: campaignId,
-                submission_status_id: await this.getSubmissionStatusId(submissionData.submission_status_id_as_string),
+                submission_status_id: await this.getSubmission_Status_DB_id(submissionData.submission_status_id_as_string),
                 submitted_by_wallet_id: wallets[submissionData.submitted_by_wallet_id_as_string]._DB_id,
                 revised_by_wallet_id: submissionData.revised_by_wallet_id_as_string ? wallets[submissionData.revised_by_wallet_id_as_string]._DB_id : undefined,
                 approved_justification: submissionData.approved_justification,
@@ -908,15 +906,17 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             throw new Error('Campaign status not found');
         }
 
-        const getCampaignActiveStatus = (statusId: number): boolean => {
-            return [CampaignStatus.ACTIVE, CampaignStatus.SUCCESS, CampaignStatus.FAILED].includes(statusId);
+        const getCampaignActiveStatus = (code_id: number): boolean => {
+            return [CampaignStatus_Code_Id.ACTIVE, CampaignStatus_Code_Id.SUCCESS, CampaignStatus_Code_Id.FAILED].includes(code_id);
         };
 
-        const isActive = getCampaignActiveStatus(statusEntity.id_internal);
+        const isActive = getCampaignActiveStatus(statusEntity.code_id);
 
         const currentDate = new Date();
 
+        let milestoneIndex = 0;
         for (const milestoneData of milestonesData) {
+            milestoneIndex++;
             // Calculate milestone date if campaign is active
             let estimateDeliveryDate;
             if (isActive) {
@@ -926,11 +926,12 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             // Create milestone
             const milestone = new MilestoneEntity({
                 campaign_id: campaignId,
-                milestone_status_id: await this.getMilestoneStatusId(milestoneData.milestone_status_id_as_string),
+                milestone_status_id: await this.getMilestone_Status_DB_id(milestoneData.milestone_status_id_as_string),
                 estimate_delivery_days: milestoneData.estimatedDeliveryDays,
                 estimate_delivery_date: estimateDeliveryDate,
                 percentage: milestoneData.perncentage,
                 description: milestoneData.description,
+                order: milestoneIndex,
             });
 
             const createdMilestone = await MilestoneBackEndApplied.create(milestone);
@@ -940,7 +941,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
                 for (const submissionData of milestoneData.submissions) {
                     const submission = new MilestoneSubmissionEntity({
                         milestone_id: createdMilestone._DB_id,
-                        submission_status_id: await this.getSubmissionStatusId(submissionData.submission_status_id_as_string),
+                        submission_status_id: await this.getSubmission_Status_DB_id(submissionData.submission_status_id_as_string),
                         submitted_by_wallet_id: campaignWallets[submissionData.submitted_by_wallet_id_as_string]._DB_id,
                         report_proof_of_finalization: submissionData.ReportProofOfFinalization,
                         revised_by_wallet_id: submissionData.revised_by_wallet_id_as_string ? campaignWallets[submissionData.revised_by_wallet_id_as_string]._DB_id : undefined,

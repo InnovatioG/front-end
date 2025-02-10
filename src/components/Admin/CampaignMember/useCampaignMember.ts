@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { pushWarningNotification } from 'smart-db';
 import { CampaignMemberEntity } from '../../../lib/SmartDB/Entities/CampaignMember.Entity';
 import { CampaignMemberApi } from '../../../lib/SmartDB/FrontEnd/CampaignMember.FrontEnd.Api.Calls';
@@ -10,7 +10,7 @@ export function useCampaignMember() {
     const [view, setView] = useState<'list' | 'create' | 'edit' | 'confirmDelete'>('list');
     const [deleteItem, setDeleteItem] = useState<CampaignMemberEntity | null>(null);
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             const fetchedList: CampaignMemberEntity[] = await CampaignMemberApi.getAllApi_();
             setList(fetchedList);
@@ -18,11 +18,11 @@ export function useCampaignMember() {
             console.error(e);
             pushWarningNotification('Error', `Error fetching CampaignMember: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {

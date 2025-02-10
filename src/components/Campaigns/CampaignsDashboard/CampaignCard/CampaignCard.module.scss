@@ -1,0 +1,115 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+@use '@/styles/components/statuses'; // Importa el nuevo archivo de estados
+
+.campaignCard {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background: colors.$white-color;
+    border-radius: 20px;
+    border: 1px, solid colors.$border-light-color;
+    gap: 14px;
+    height: 100%;
+    min-height: 422px;
+    justify-content: space-between;
+    max-width: 400px;
+    .headCard {
+        display: flex;
+        justify-content: space-between;
+
+        .cardDetails {
+            display: flex;
+            height: 30px;
+            gap: 10px;
+
+            .statusContainer {
+                display: flex;
+                height: 100%;
+
+                .status {
+                    @extend .status;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100%;
+                    padding-inline: 18px 30px;
+                    border-radius: 30px;
+                    font: fonts.$f50-medium;
+                }
+                .category {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100%;
+                    padding-inline: 18px;
+                    margin-left: -18px;
+                    background: colors.$primary-light-color;
+                    border-radius: 30px;
+                    font: fonts.$f50-medium;
+                }
+            }
+
+            .investors {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                background: colors.$secondary-background;
+                height: 100%;
+                padding-inline: 10px;
+                border-radius: 30px;
+                .cant {
+                    color: colors.$white-font;
+                    font: fonts.$f50-medium;
+                }
+                .icon {
+                    fill: colors.$light-font;
+                }
+            }
+        }
+    }
+
+    .cardTitle {
+        width: 100%;
+        font: fonts.$f500-medium;
+    }
+    .cardDescription {
+        width: 100%;
+        font: fonts.$f50-regular;
+        color: colors.$secondary-font;
+    }
+
+    .cardButtons {
+        display: flex;
+        flex-direction: row;
+        height: 40px;
+        gap: 1rem;
+        min-height: 40px;
+
+        // .outline-card {
+        //     color: colors.$primary-dark-color;
+        // }
+
+        // .fill,
+        // .fillb,
+        // .invest {
+        //     color: colors.$white-background;
+        // }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .campaignCard {
+        width: 550px;
+        max-width: 100%;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+}
+
+@media screen and (min-width: 1025px) and (max-width: 1570px) {
+}
+
+@media screen and (min-width: 1571px) {
+}

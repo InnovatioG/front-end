@@ -4,6 +4,7 @@ export function formatAddress(address: string): string {
     if (!address) return '';
     return `${address.slice(0, 4)}...${address.slice(-4)}`;
 }
+
 export function formatMoney(amount: number, currency: string): string {
     if (currency === 'ADA') {
         return `₳${new Intl.NumberFormat('en-US', {
@@ -18,6 +19,7 @@ export function formatMoney(amount: number, currency: string): string {
         maximumFractionDigits: 0,
     }).format(amount);
 }
+
 export function getTimeRemaining(date: Date | undefined) {
     if (date === undefined) return { total: 0, days: 0, totalHours: 0, minutes: 0, seconds: 0 };
     const dat = new Date(date);
@@ -37,11 +39,17 @@ export const formatTime = (time: number) => time.toString().padStart(2, '0');
 
 /* Funcion para calcular el porcentaje en base a un total y el % a aplicar */
 
-export const calculatePorcentage = (total: number, porcentage: number) => {
+export const calculateePercentage = (total: number | bigint, porcentage: number | bigint) => {
     return (Number(total) * Number(porcentage)) / 100;
 };
 
-export const calculatePorcentagValue = (total: number, amoutCollected: number) => {
+export const calculatePercentageValue = (total: number | bigint, amoutCollected: number | bigint) => {
+    if (typeof total !== 'number' && total !== undefined) {
+        total = Number(total);
+    }
+    if (typeof amoutCollected !== 'number' && amoutCollected !== undefined) {
+        amoutCollected = Number(amoutCollected);
+    }
     return ((Number(amoutCollected) / Number(total)) * 100).toFixed(2);
 };
 
@@ -50,12 +58,6 @@ export const formatLink = (link: string) => {
         return `http://${link}`;
     }
     return link;
-};
-
-export const getOrdinalString = (n: number): string => {
-    const s = ['th', 'st', 'nd', 'rd'];
-    const v = n % 100;
-    return n + (s[(v - 20) % 10] || s[v] || s[0]);
 };
 
 export const formatDate = (date: string) => {
@@ -71,7 +73,7 @@ export const getMonthName = (date: string): string => {
 
 export const getWeekOfMonth = (date: string): number => {
     const dateFormatted = parseISO(date);
-    const week = Math.ceil((dateFormatted.getDate() + 1) / 7);
+    const week = Math.ceil((dateFormatted.getUTCDate() + 1) / 7);
     return week;
 };
 
@@ -87,4 +89,15 @@ export const formatDateFromString = (date: Date): string => {
 
 export const daysToWeeks = (days: number): number => {
     return Math.ceil(days / 7);
+};
+
+export const getOrdinalString = (num: number): string => {
+    const suffixes = ['th', 'st', 'nd', 'rd'];
+    const mod10 = num % 10;
+    const mod100 = num % 100;
+
+    if (mod10 >= 1 && mod10 <= 3 && !(mod100 >= 11 && mod100 <= 13)) {
+        return `${num}${suffixes[mod10]}`;
+    }
+    return `${num}${suffixes[0]}`;
 };

@@ -1,121 +1,16 @@
-export interface Campaign {
-    _DB_id?: string;
-    creator_wallet_id?: string;
-    name: string;
-    description?: string;
-    campaign_status_id?: string | null;
-    banner_url?: string;
-    logo_url?: string;
-    createdAt?: Date;
-    updatedAt?: Date;
-    investors?: number;
-    requestMaxADA: bigint;
-    requestMinADA: bigint;
-    campaing_category_id: string | null;
-    website?: string;
-    facebook?: string;
-    instagram?: string;
-    discord?: string;
-    twitter?: string;
-    cdCollectedADA?: bigint;
-    begin_at?: Date;
-    deadline?: Date;
-    deadline_days?: number;
-    milestones?: Milestone[];
-    campaign_content?: CampaignContent[];
-    members_team?: MembersTeam[];
-    faqs?: FAQ[];
-    cdFundedADA?: bigint;
-    tokenomics_description?: string;
-    campaignToken_tn?: string;
-    campaignToken_priceADA?: bigint;
-    mint_campaignToken?: boolean;
-    tokenomics_max_supply?: string;
-    campaignToken_CS?: string;
+import { CampaignContentEntity, CampaignEntity, CampaignFaqsEntity, CampaignMemberEntity, MilestoneEntity, MilestoneSubmissionEntity } from "@/lib/SmartDB/Entities";
+
+export interface CampaignEX {
+    campaign: CampaignEntity;
+    milestones?: MilestoneEX[];
+    contents?: CampaignContentEntity[];
+    members?: CampaignMemberEntity[];
+    faqs?: CampaignFaqsEntity[];
 }
 
-export interface Milestone {
-    _DB_id?: string;
-    campaign_id: string;
-    milestone_status_id: string;
-    estimate_delivery_days: number | undefined;
-    estimate_delivery_date: Date;
-    percentage: number;
-    description: string;
-    createdAt: string;
-    updatedAt: string;
-    milestone_submissions?: MilestoneSubmission[];
-}
-
-export interface MilestoneCreation {
-    order: number;
-    requestMaxADA: number;
-}
-
-export interface MilestoneSubmission {
-    _DB_id: string;
-    milestone_id: string;
-    submission_status_id?: string;
-    report_proof_of_finalization?: string;
-    approved_justification?: string;
-    rejected_justification?: string;
-}
-
-export interface CampaignContent {
-    _DB_id?: string;
-    campaign_id?: string;
-    name?: string;
-    description?: string;
-    order?: number;
-}
-
-export interface FAQ {
-    _DB_id?: string;
-    campaign_id?: string;
-    question?: string;
-    answer?: string;
-    order: number;
-}
-
-export interface MembersTeam {
-    id: string;
-    campaign_id: string;
-    name: string | undefined;
-    last_name: string | undefined;
-    role?: string;
-    editor?: boolean;
-    admin?: boolean;
-    email?: string;
-    wallet_id?: string;
-    wallet_address?: string;
-    website?: string;
-    instagram?: string;
-    facebook?: string;
-    linkedin?: string;
-    discord?: string;
-    member_description?: string;
-    twitter?: string;
-    member_picture?: string;
-    member_manage_funds?: boolean;
-}
-
-export interface CampaignCategory {
-    id: number;
-    name: string;
-    description: string | undefined;
-}
-
-export interface CampaignStatusGlobal {
-    id: string;
-    id_internal: number;
-    name: string;
-    description: string | undefined;
-}
-
-export interface MilestoneStatusGlobal {
-    id: number;
-    id_internal: number;
-    name: string;
+export interface MilestoneEX {
+    milestone: MilestoneEntity;
+    milestone_submissions?: MilestoneSubmissionEntity[];
 }
 
 export interface initialTextEditorOptionsType {

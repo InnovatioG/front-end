@@ -2,11 +2,11 @@ import { createContext, useCallback, useContext, useEffect, useState } from 'rea
 
 export type ScreenSize = 'mobile' | 'tablet' | 'tablet-large' | 'desktop';
 
-interface ResponsiveContextType {
+interface IResponsiveContext {
     screenSize: ScreenSize;
 }
 
-const ResponsiveContext = createContext<ResponsiveContextType | undefined>(undefined);
+const ResponsiveContext = createContext<IResponsiveContext | undefined>(undefined);
 
 export const useResponsiveContext = () => {
     const context = useContext(ResponsiveContext);

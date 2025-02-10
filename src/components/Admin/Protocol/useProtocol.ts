@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { isNullOrBlank, pushWarningNotification, toJson, useWalletStore } from 'smart-db';
 import { ProtocolEntity } from '../../../lib/SmartDB/Entities/Protocol.Entity';
 import { ProtocolApi } from '../../../lib/SmartDB/FrontEnd/Protocol.FrontEnd.Api.Calls';
@@ -13,7 +13,7 @@ export function useProtocol() {
 
     const walletStore = useWalletStore();
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             const fetchedList: ProtocolEntity[] = await ProtocolApi.getAllApi_();
             setList(fetchedList);
@@ -21,11 +21,11 @@ export function useProtocol() {
             console.error(e);
             pushWarningNotification('Error', `Error fetching Protocol: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         const id = await ProtocolApi.handleBtnCreate(walletStore, newItem.name!, configJson);

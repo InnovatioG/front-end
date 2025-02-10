@@ -14,7 +14,7 @@ export class MilestoneStatusEntityPostgreSQL extends BaseEntityPostgreSQL {
     _id!: number; // Auto-generated primary key
 
     @Column({ type: 'integer' })
-    id_internal!: number;
+    code_id!: number;
     @Column({ type: 'varchar', length: 255 })
     name!: string;
     @Column({ type: 'text', nullable: true })
