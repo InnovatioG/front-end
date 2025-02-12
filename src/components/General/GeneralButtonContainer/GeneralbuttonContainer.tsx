@@ -1,18 +1,18 @@
-import styles from '@/components/General/GeneralButtonContainer/generalbuttonContainer.module.scss';
-import GeneralButtonUI from '@/components/General/Buttons/UI/Button';
+import styles from '@/components/General/BtnGeneralContainer/generalbuttonContainer.module.scss';
+import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 import React from 'react';
 
-interface GeneralButtonContainerProps {
+interface BtnGeneralContainerProps {
     // Define props here
 }
 
-const GeneralButtonContainer: React.FC<GeneralButtonContainerProps> = (props) => {
+const BtnGeneralContainer: React.FC<BtnGeneralContainerProps> = (props) => {
     return (
         <div className={styles.container}>
-            <GeneralButtonUI text="Contact support team" onClick={() => console.log('Save')} classNameStyle="outline" />
-            <GeneralButtonUI text="Save Draft" onClick={() => console.log('Cancel')} />
+            <BtnGeneral text="Contact support team" onClick={() => console.log('Save')} classNameStyle="outline" />
+            <BtnGeneral text="Save Draft" onClick={() => console.log('Cancel')} />
         </div>
     );
 };
 
-export default GeneralButtonContainer;
+export default BtnGeneralContainer;

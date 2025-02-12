@@ -1,18 +1,11 @@
-import type { CampaignEX } from '@/types/types';
-import { createContext, useContext } from 'react';
+import { ModalEnums } from '@/utils/constants/constants';
+import { createContext, ReactNode, useContext } from 'react';
 
-export interface IModalState {
-    isOpen: boolean;
-    modalType?: string;
-    campaign_id?: string;
-    campaign?: CampaignEX;
-    submission?: string;
-}
-
-export interface IModalContext extends IModalState {
-    openModal: (modalType: string, options?: Partial<Omit<IModalState, 'modalType'>>) => void;
+export interface IModalContext  {
+    activeModal: ModalEnums | null;
+    modalData?: Record<string, any> ;
+    openModal: (modal: ModalEnums, data?: Record<string, any>, component?: ReactNode) => void;
     closeModal: () => void;
-    setIsOpen: (isOpen: boolean) => void;
 }
 
 export const ModalContext = createContext<IModalContext | undefined>(undefined);

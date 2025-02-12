@@ -1,24 +1,22 @@
-import { CampaignContentEntity, CampaignEntity, CampaignFaqsEntity, CampaignMemberEntity, MilestoneEntity, MilestoneSubmissionEntity } from '@/lib/SmartDB/Entities';
+import {
+    CampaignContentEntity,
+    CampaignEntity,
+    CampaignFaqsEntity,
+    CampaignMemberEntity,
+    CampaignSubmissionEntity,
+    MilestoneEntity,
+    MilestoneSubmissionEntity,
+} from '@/lib/SmartDB/Entities';
 import { CampaignContentApi, CampaignFaqsApi, CampaignMemberApi, MilestoneApi, MilestoneSubmissionApi } from '@/lib/SmartDB/FrontEnd';
 import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 import { CampaignEX, MilestoneEX } from '@/types/types';
-import { MilestoneStatus_Code_Id } from '@/utils/constants/status';
-import { CampaignStatusConfig, CardInformationForInvestors, CardInformationForManagers, cardInformationForProtocolTeam } from '@/utils/constants/stylesAndButtonsByStatusCodeId';
+import { CampaignViewForEnums } from '@/utils/constants/constants';
+import { MilestoneStatus_Code_Id_Enums } from '@/utils/constants/status';
+import { CampaignStatusConfig, campaignConfig } from '@/utils/constants/stylesAndButtonsByStatusCodeId';
 import { calculatePercentageValue, formatMoney, formatTime, getOrdinalString, getTimeRemaining } from '@/utils/formats';
-import { useRouter } from 'next/router';
+import { bool } from 'aws-sdk/clients/signer';
 import { useEffect, useMemo, useState } from 'react';
 import { useWalletStore } from 'smart-db';
-
-interface getRemainingPercentageProps {
-    (currentmilestone_id: number, milestones: MilestoneEX[]): number;
-}
-
-export const getRemainingPercentage: getRemainingPercentageProps = (currentmilestone_id, milestones) => {
-    const totalUsed = milestones
-        .filter((milestone) => Number(milestone.milestone._DB_id) !== currentmilestone_id)
-        .reduce((sum, milestone) => sum + milestone.milestone.percentage, 0);
-    return 100 - totalUsed;
-};
 
 export const getCampaignEX = async (campaign: CampaignEntity): Promise<CampaignEX> => {
     const milestonesEntities: MilestoneEntity[] = await MilestoneApi.getByParamsApi_({ campaign_id: campaign._DB_id }, { sort: { order: 1 } });
@@ -46,6 +44,101 @@ export const getMilestonesEX = async (milestone: MilestoneEntity): Promise<Miles
     };
 };
 
+export const saveEntityList = async <T extends { _DB_id?: string }>(
+    list: T[] | undefined,
+    deletedList: T[] | undefined,
+    updateApi: (id: string, entity: T) => Promise<T>,
+    createApi: (entity: T) => Promise<T>,
+    deleteApi: (id: string) => Promise<boolean>
+): Promise<T[]> => {
+    const savedEntities: T[] = [];
+
+    console.log(`saveEntityList`);
+
+    // 🔹 Update existing & create new items
+    if (list) {
+        for (const item of list) {
+            if (item._DB_id) {
+                const updatedEntity = await updateApi(item._DB_id, item);
+                savedEntities.push(updatedEntity);
+            } else {
+                const createdEntity = await createApi(item);
+                savedEntities.push(createdEntity);
+            }
+        }
+    }
+
+    // 🔹 Delete removed items
+    if (deletedList) {
+        for (const item of deletedList) {
+            if (item._DB_id) {
+                await deleteApi(item._DB_id);
+            }
+        }
+    }
+
+    return savedEntities;
+};
+
+// Deep copies a `CampaignEX` object, ensuring all nested entities are properly instantiated.
+export const cloneCampaignEX = (campaign: CampaignEX | undefined): CampaignEX | undefined => {
+    if (!campaign) return undefined;
+
+    return {
+        campaign: new CampaignEntity({ ...campaign.campaign }), // Ensure new instance
+        campaign_submissions: campaign.campaign_submissions
+            ? campaign.campaign_submissions.map((s) => new CampaignSubmissionEntity({ ...s })) // Ensure deep copy
+            : undefined,
+        campaign_submissions_deleted: campaign.campaign_submissions_deleted
+            ? campaign.campaign_submissions_deleted.map((s) => new CampaignSubmissionEntity({ ...s })) // Ensure deep copy
+            : undefined,
+        milestones: campaign.milestones
+            ? campaign.milestones.map((m) => cloneMilestoneEX(m)) // Clone each milestone
+            : undefined,
+        milestones_deleted: campaign.milestones_deleted
+            ? campaign.milestones_deleted.map((m) => cloneMilestoneEX(m)) // Clone each milestone
+            : undefined,
+        contents: campaign.contents
+            ? campaign.contents.map((c) => new CampaignContentEntity({ ...c })) // Ensure deep copy
+            : undefined,
+        contents_deleted: campaign.contents_deleted
+            ? campaign.contents_deleted.map((c) => new CampaignContentEntity({ ...c })) // Ensure deep copy
+            : undefined,
+        members: campaign.members
+            ? campaign.members.map((m) => new CampaignMemberEntity({ ...m })) // Ensure deep copy
+            : undefined,
+        members_deleted: campaign.members_deleted
+            ? campaign.members_deleted.map((m) => new CampaignMemberEntity({ ...m })) // Ensure deep copy
+            : undefined,
+        faqs: campaign.faqs
+            ? campaign.faqs.map((f) => new CampaignFaqsEntity({ ...f })) // Ensure deep copy
+            : undefined,
+        faqs_deleted: campaign.faqs_deleted
+            ? campaign.faqs_deleted.map((f) => new CampaignFaqsEntity({ ...f })) // Ensure deep copy
+            : undefined,
+    };
+};
+
+// Deep copies a `MilestoneEX` object.
+export const cloneMilestoneEX = (milestone: MilestoneEX): MilestoneEX => {
+    return {
+        milestone: new MilestoneEntity({ ...milestone.milestone }), // Ensure new instance
+        milestone_submissions: milestone.milestone_submissions
+            ? milestone.milestone_submissions.map((s) => new MilestoneSubmissionEntity({ ...s })) // Ensure deep copy
+            : undefined,
+        milestone_submissions_deleted: milestone.milestone_submissions_deleted
+            ? milestone.milestone_submissions_deleted.map((s) => new MilestoneSubmissionEntity({ ...s })) // Ensure deep copy
+            : undefined,
+    };
+};
+
+export const getRemainingPercentage = (currentmilestone_id: number, milestones: MilestoneEX[]): number => {
+    const totalUsed = milestones
+        .filter((milestone) => Number(milestone.milestone._DB_id) !== currentmilestone_id)
+        .reduce((sum, milestone) => sum + milestone.milestone.percentage, 0);
+    return 100 - totalUsed;
+};
+
 export const getCampaignCategory_Name_By_Db_Id = (id: string) => {
     const category = useGeneralStore.getState().campaignCategories.find((category) => category._DB_id === id);
     if (!category) {
@@ -71,6 +164,10 @@ export const getMilestoneStatus_Code_Id_By_Db_Id = (id: string) => {
 };
 
 export interface ICampaignDetails extends CampaignStatusConfig {
+    isAdmin: boolean;
+    isEditor: boolean;
+    isProtocolTeam: boolean;
+    campaignViewFor: CampaignViewForEnums;
     campaign_category_name: string;
     campaign_status_code_id: number;
     timeRemainingBeginAt: { total: number; days: number; totalHours: number; minutes: number };
@@ -90,28 +187,46 @@ export interface ICampaignDetails extends CampaignStatusConfig {
     currencySymbol: string;
 }
 
-export const useCampaignDetails = (campaign: CampaignEX): ICampaignDetails => {
-    const router = useRouter();
-    const pathName = router.pathname;
-
+export const useCampaignDetails = ({
+    campaign,
+    campaignViewFor,
+    isEditMode,
+}: {
+    campaign: CampaignEX;
+    campaignViewFor: CampaignViewForEnums;
+    isEditMode: boolean;
+}): ICampaignDetails => {
     const walletStore = useWalletStore();
-    const { wallet, adaPrice, priceADAOrDollar } = useGeneralStore();
-
+    const { wallet, adaPrice, priceADAOrDollar, isProtocolTeam, _DebugIsAdmin, _DebugIsEditor } = useGeneralStore();
     const { requestedMaxADA, requestedMinADA, cdFundedADA } = campaign.campaign;
+    const [isAdmin, setIsAdmin] = useState(false);
+    const [isEditor, setIsEditor] = useState(false);
+
+    useEffect(() => {
+        //TODO: revisar mejor como saber si es admin o es editor de una campana
+        if (_DebugIsAdmin !== undefined) {
+            setIsAdmin(_DebugIsAdmin);
+        } else {
+            setIsAdmin(
+                walletStore.isConnected === true &&
+                    walletStore.info?.isWalletValidatedWithSignedToken === true &&
+                    wallet !== undefined &&
+                    campaign.campaign.creator_wallet_id === wallet._DB_id
+            );
+        }
+        if (_DebugIsEditor !== undefined) {
+            setIsEditor(_DebugIsEditor);
+        } else {
+            setIsEditor(
+                walletStore.isConnected === true &&
+                    walletStore.info?.isWalletValidatedWithSignedToken === true &&
+                    wallet !== undefined &&
+                    campaign.campaign.creator_wallet_id === wallet._DB_id
+            );
+        }
+    }, [walletStore.isConnected, walletStore.info, wallet, campaign, _DebugIsAdmin, _DebugIsEditor]);
 
     // const { openModal } = useModal(); // pathName === ROUTES.manage &&
-
-    const isProtocolTeam = walletStore.isConnected === true && walletStore.info!.isWalletValidatedWithSignedToken === true && walletStore.isCoreTeam();
-
-    // const isProtocolTeam = true; pathName === ROUTES.manage &&
-
-    const isAdmin =
-        walletStore.isConnected === true &&
-        walletStore.info!.isWalletValidatedWithSignedToken === true &&
-        wallet !== undefined &&
-        campaign.campaign.creator_wallet_id === wallet._DB_id;
-
-    // const isAdmin = true;
 
     const getCurrentMilestoneIndex = (campaign: CampaignEX): number | undefined => {
         // console.log('getCurrentMilestoneIndex', toJson(campaign));
@@ -128,11 +243,11 @@ export const useCampaignDetails = (campaign: CampaignEX): ICampaignDetails => {
             const milestone = campaign.milestones[i];
             const code_id = getMilestoneStatus_Code_Id_By_Db_Id(milestone.milestone.milestone_status_id);
 
-            if (code_id === MilestoneStatus_Code_Id.NOT_STARTED) {
+            if (code_id === MilestoneStatus_Code_Id_Enums.NOT_STARTED) {
                 if (firstNotStartedIndex === -1) {
                     firstNotStartedIndex = i;
                 }
-            } else if (code_id === MilestoneStatus_Code_Id.FINISHED) {
+            } else if (code_id === MilestoneStatus_Code_Id_Enums.FINISHED) {
                 lastFinishedIndex = i;
             } else {
                 // If milestone is STARTED, SUBMITTED, REJECTED, or FAILED, return it as the current active
@@ -155,7 +270,7 @@ export const useCampaignDetails = (campaign: CampaignEX): ICampaignDetails => {
         if (lastFinishedIndex !== -1) {
             for (let i = lastFinishedIndex + 1; i < campaign.milestones.length; i++) {
                 const code_id = getMilestoneStatus_Code_Id_By_Db_Id(campaign.milestones[i].milestone.milestone_status_id);
-                if (code_id === MilestoneStatus_Code_Id.NOT_STARTED) {
+                if (code_id === MilestoneStatus_Code_Id_Enums.NOT_STARTED) {
                     return i;
                 }
             }
@@ -184,12 +299,6 @@ export const useCampaignDetails = (campaign: CampaignEX): ICampaignDetails => {
     const [timeRemainingDeadline, setTimeRemainingDeadline] = useState(
         campaign.campaign.deadline ? getTimeRemaining(campaign.campaign.deadline) : { total: 0, days: 0, totalHours: 0, minutes: 0 }
     );
-
-    const { label, labelClass, buttonsForCards, buttonsForHeader, buttonsForDetails }: CampaignStatusConfig = isProtocolTeam
-        ? cardInformationForProtocolTeam(campaign_status_code_id, totalMilestones, currentMilestoneIndex, milestone_status_code_id)
-        : isAdmin
-        ? CardInformationForManagers(campaign_status_code_id, totalMilestones, currentMilestoneIndex, milestone_status_code_id)
-        : CardInformationForInvestors(campaign_status_code_id, totalMilestones, currentMilestoneIndex, milestone_status_code_id);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -250,7 +359,32 @@ export const useCampaignDetails = (campaign: CampaignEX): ICampaignDetails => {
         setCurrencySymbol(priceADAOrDollar === 'dollar' ? 'USD' : 'ADA');
     }, [priceADAOrDollar]);
 
+    // if (campaignViewFor === CampaignViewForEnums.manage && isProtocolTeam === false && isAdmin === false && isEditor === false) {
+    //     throw new Error('User is not allowed to view this campaign');
+    // }
+    // TODO : esa validacion se hace en los index de las paginas
+
+    if (campaignViewFor !== CampaignViewForEnums.home && campaignViewFor !== CampaignViewForEnums.campaigns && campaignViewFor !== CampaignViewForEnums.manage) {
+        throw new Error('Invalid campaign view');
+    }
+
+    const { label, labelClass, buttonsForCards, buttonsForHeader, buttonsForDetails }: CampaignStatusConfig = campaignConfig(
+        campaign,
+        isProtocolTeam,
+        isAdmin,
+        isEditor,
+        isEditMode,
+        campaignViewFor,
+        campaign_status_code_id,
+        totalMilestones,
+        currentMilestoneIndex,
+        milestone_status_code_id
+    );
     return {
+        isAdmin,
+        isEditor,
+        isProtocolTeam,
+        campaignViewFor,
         campaign_category_name,
         campaign_status_code_id,
         label,

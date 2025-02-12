@@ -1,25 +1,33 @@
-import GeneralButtonUI from '@/components/General/Buttons/UI/Button';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/DefaultAvatar/DefaultAvatar';
+import { BtnCampaignActions } from '@/components/GeneralOK/Buttons/Buttons/BtnCampaignActions/BtnCampaignActions';
+import { useModal } from '@/contexts/ModalContext';
 import { useCampaignDetails } from '@/hooks/useCampaingDetails';
 import type { CampaignEX } from '@/types/types';
+import { CampaignViewForEnums } from '@/utils/constants/constants';
 import { TWO_USERS } from '@/utils/constants/images';
-import { CampaignStatus_Code_Id } from '@/utils/constants/status';
-import Image from 'next/image';
-import Link from 'next/link';
-import { isNullOrBlank } from 'smart-db';
+import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status';
+import { ButtonType } from '@/utils/constants/stylesAndButtonsByStatusCodeId';
+import { useRouter } from 'next/router';
 import styles from './CampaignCard.module.scss';
 import CampaingCardInfo from './CampaingCardInfo/CampaingCardInfo';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/DefaultAvatar/DefaultAvatar';
 
 interface CampaignCardProps {
     campaign: CampaignEX;
+    campaignViewFor: CampaignViewForEnums;
 }
 
 export default function CampaignCard(props: CampaignCardProps) {
     const { campaign } = props;
 
-    const propsCampaignDetails = useCampaignDetails(campaign);
+    const propsCampaignDetails = useCampaignDetails({ isEditMode: false, ...props });
+    const { openModal } = useModal();
+    const router = useRouter();
 
     const {
+        isProtocolTeam,
+        isAdmin,
+        isEditor,
+        campaignViewFor,
         campaign_category_name,
         campaign_status_code_id,
         label,
@@ -34,7 +42,7 @@ export default function CampaignCard(props: CampaignCardProps) {
         totalMilestones,
         formatMoneyByADAOrDollar,
         fundedPercentage,
-    } = propsCampaignDetails
+    } = propsCampaignDetails;
 
     return (
         <div className={styles.campaignCard}>
@@ -43,11 +51,10 @@ export default function CampaignCard(props: CampaignCardProps) {
                     <AvatarImage src={campaign.campaign.logo_url} alt={campaign.campaign.name} />
                     <AvatarFallback>{campaign.campaign.name.slice(0, 2)}</AvatarFallback>
                 </Avatar>
-              
                 <div className={styles.cardDetails}>
                     <div className={styles.statusContainer}>
                         <div className={`${styles.status} ${styles[labelClass]}`}>
-                            {campaign_status_code_id === CampaignStatus_Code_Id.COUNTDOWN ? formatAllTime(timeRemainingBeginAt) : label}
+                            {campaign_status_code_id === CampaignStatus_Code_Id_Enums.COUNTDOWN ? formatAllTime(timeRemainingBeginAt) : label}
                         </div>
                         <div className={styles.category}>{campaign_category_name}</div>
                     </div>
@@ -61,35 +68,34 @@ export default function CampaignCard(props: CampaignCardProps) {
             </div>
             <h3 className={styles.cardTitle}>{campaign.campaign.name}</h3>
             <p className={styles.cardDescription}>{campaign.campaign.description}</p>
-            <CampaingCardInfo
-                campaign={campaign}
-                {...propsCampaignDetails}
-            />
+            {`DEBUG - isAdmin: ${isAdmin} - isEditor: ${isEditor}`}
+            <CampaingCardInfo campaign={campaign} {...propsCampaignDetails} />
             <div className={styles.cardButtons}>
-                {buttonsForCards.map((button, index) => {
-                    if (button.link) {
-                        return (
-                            <Link key={index} href={button.link(campaign.campaign._DB_id)}>
-                                <GeneralButtonUI
-                                    text={`${button.label} >`}
-                                    onClick={() => null}
-                                    // onClick={() => button.action && button.action((modalType) => openModal(modalType /* campaign._DB_id */))}
-                                    classNameStyle={`${button.classNameType}`}
-                                ></GeneralButtonUI>
-                            </Link>
-                        );
-                    } else {
-                        return (
-                            <GeneralButtonUI
-                                key={index}
-                                text={`${button.label} >`}
-                                onClick={() => null}
-                                // onClick={() => button.action && button.action((modalType) => openModal(modalType /* campaign._DB_id, campaign */))}
-                                classNameStyle={`${button.classNameType}`}
-                            ></GeneralButtonUI>
-                        );
-                    }
-                })}
+                {buttonsForCards.map((button: ButtonType, index: number) => (
+                    <BtnCampaignActions key={index} button={button} data={{ id: campaign.campaign._DB_id }} navigate={router.push} openModal={openModal} handles={undefined} />
+                    // if (button.link) {
+                    //     return (
+                    //         <Link key={index} href={button.link(campaign.campaign._DB_id)}>
+                    //             <BtnGeneral
+                    //                 text={`${button.label} >`}
+                    //                 onClick={() => null}
+                    //                 // onClick={() => button.action && button.action((modalType) => openModal(modalType /* campaign._DB_id */))}
+                    //                 classNameStyle={`${button.classNameType}`}
+                    //             ></BtnGeneral>
+                    //         </Link>
+                    //     );
+                    // } else {
+                    //     return (
+                    //         <BtnGeneral
+                    //             key={index}
+                    //             text={`${button.label} >`}
+                    //             onClick={() => null}
+                    //             // onClick={() => button.action && button.action((modalType) => openModal(modalType /* campaign._DB_id, campaign */))}
+                    //             classNameStyle={`${button.classNameType}`}
+                    //         ></BtnGeneral>
+                    //     );
+                    // }
+                ))}
             </div>
         </div>
     );

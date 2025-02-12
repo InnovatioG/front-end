@@ -1,9 +1,9 @@
-import BtnCampaign from '@/components/General/Buttons/Campaign/BtnCampaign';
-import BtnConnectWallet from '@/components/General/Buttons/ConnectWallet/BtnConnectWallet';
+import BtnHeaderCampaignNewOrManage from '@/components/GeneralOK/Buttons/Buttons/BtnHeaderCampaignNewOrManage/BtnHeaderCampaignNewOrManage';
 import TogglePrice from '@/components/General/Buttons/Toggle/TogglePrice';
 import Link from 'next/link';
 import styles from './HeaderDesktop.module.scss';
 import { ROUTES } from '@/utils/constants/routes';
+import BtnConnectWallet from '@/components/GeneralOK/Buttons/Buttons/BtnConnectWallet/BtnConnectWallet';
 
 export default function HeaderDesktop() {
     return (
@@ -23,7 +23,7 @@ export default function HeaderDesktop() {
                 <div className={styles.togglePriceContainer}>
                     <TogglePrice />
                 </div>
-                <BtnCampaign type="primary" width={210} />
+                <BtnHeaderCampaignNewOrManage type="primary" width={210} />
                 <BtnConnectWallet type="primary" width={166} />
             </div>
         </div>

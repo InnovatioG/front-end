@@ -1,7 +1,7 @@
 @use '@/styles/settings/colors';
 @use '@/styles/settings/fonts';
 
-.status {
+.campaingStatus {
     &.draft {
         background: colors.$blue-color;
         color: colors.$light-font;
@@ -54,5 +54,27 @@
     &.success {
         background: colors.$primary-green;
         color: colors.$primary-font;
+    }
+}
+
+.milestoneStatus {
+    
+    &.notStarted {
+        color: colors.$yellow-color !important;
+        font-size: large;
+    }
+
+    &.rejected,
+    &.failed {
+        color: colors.$red-color !important;
+    }
+
+    &.started,&.submitted,
+    &.collect {
+        color: colors.$blue-color !important;
+    }
+
+    &.finished {
+        color: colors.$green-color !important;
     }
 }

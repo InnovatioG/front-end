@@ -1,5 +1,5 @@
 import { CampaignEX } from '@/types/types';
-import { CampaignStatus_Code_Id } from '@/utils/constants/status';
+import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status';
 import React from 'react';
 import styles from './CampaingCardInfo.module.scss';
 import { ICampaignDetails } from '@/hooks/useCampaingDetails';
@@ -21,7 +21,7 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
 
     return (
         <div>
-            {campaign_status_code_id === CampaignStatus_Code_Id.COUNTDOWN && (
+            {campaign_status_code_id === CampaignStatus_Code_Id_Enums.COUNTDOWN && (
                 <div className={styles.container}>
                     <div className={styles.flexRow}>
                         <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.requestedMaxADA)} subtext="Target Raise" classNameStyle="white" />
@@ -37,7 +37,7 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
                 </div>
             )}
 
-            {campaign_status_code_id === CampaignStatus_Code_Id.FUNDRAISING && (
+            {campaign_status_code_id === CampaignStatus_Code_Id_Enums.FUNDRAISING && (
                 <div className={styles.container}>
                     <div className={styles.flexRow}>
                         <div className={`${styles.status} ${styles.light}`}>
@@ -51,7 +51,7 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
                 </div>
             )}
 
-            {campaign_status_code_id === CampaignStatus_Code_Id.ACTIVE && (
+            {campaign_status_code_id === CampaignStatus_Code_Id_Enums.ACTIVE && (
                 <div className={styles.container}>
                     <div className={`${styles.flexRow} ${styles.flexRow2}`}>
                         <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.cdFundedADA)} subtext="Total Raised" classNameStyle="black" />
@@ -65,7 +65,7 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
                 </div>
             )}
 
-            {campaign_status_code_id === CampaignStatus_Code_Id.SUCCESS && (
+            {campaign_status_code_id === CampaignStatus_Code_Id_Enums.SUCCESS && (
                 <div className={styles.container}>
                     <div className={`${styles.flexRow} ${styles.flexRow2}`}>
                         <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.cdFundedADA)} subtext="Total Raised" classNameStyle="black" />
@@ -79,16 +79,16 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
                 </div>
             )}
 
-            {(campaign_status_code_id === CampaignStatus_Code_Id.UNREACHED || campaign_status_code_id === CampaignStatus_Code_Id.FAILED) && (
+            {(campaign_status_code_id === CampaignStatus_Code_Id_Enums.UNREACHED || campaign_status_code_id === CampaignStatus_Code_Id_Enums.FAILED) && (
                 <div className={styles.container}>
-                    {campaign_status_code_id === CampaignStatus_Code_Id.UNREACHED && (
+                    {campaign_status_code_id === CampaignStatus_Code_Id_Enums.UNREACHED && (
                         <div className={styles.header}>
                             Target Raise: <span className={styles.strong}>{formatMoneyByADAOrDollar(campaign.campaign.requestedMaxADA)}</span>
                         </div>
                     )}
                     <div className={`${styles.flexRow} ${styles.flexRow2}`}>
                         <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.cdFundedADA)} subtext="Total Raised" classNameStyle="white" />
-                        {campaign_status_code_id === CampaignStatus_Code_Id.UNREACHED && (
+                        {campaign_status_code_id === CampaignStatus_Code_Id_Enums.UNREACHED && (
                             <div className={styles.ordinalString}>
                                 <span className={styles.ordinal}>
                                     <span className={styles.milestone}>{fundedPercentage}%</span>
@@ -96,7 +96,7 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
                                 </span>
                             </div>
                         )}
-                        {campaign_status_code_id === CampaignStatus_Code_Id.FAILED && (
+                        {campaign_status_code_id === CampaignStatus_Code_Id_Enums.FAILED && (
                             <div className={styles.ordinalString}>
                                 <span className={styles.ordinal}>
                                     <p className={styles.milestone}>{currentMilestoneStringOrdinal}</p>
@@ -108,12 +108,12 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
                 </div>
             )}
 
-            {campaign_status_code_id !== CampaignStatus_Code_Id.COUNTDOWN &&
-                campaign_status_code_id !== CampaignStatus_Code_Id.FUNDRAISING &&
-                campaign_status_code_id !== CampaignStatus_Code_Id.ACTIVE &&
-                campaign_status_code_id !== CampaignStatus_Code_Id.SUCCESS &&
-                campaign_status_code_id !== CampaignStatus_Code_Id.UNREACHED &&
-                campaign_status_code_id !== CampaignStatus_Code_Id.FAILED && (
+            {campaign_status_code_id !== CampaignStatus_Code_Id_Enums.COUNTDOWN &&
+                campaign_status_code_id !== CampaignStatus_Code_Id_Enums.FUNDRAISING &&
+                campaign_status_code_id !== CampaignStatus_Code_Id_Enums.ACTIVE &&
+                campaign_status_code_id !== CampaignStatus_Code_Id_Enums.SUCCESS &&
+                campaign_status_code_id !== CampaignStatus_Code_Id_Enums.UNREACHED &&
+                campaign_status_code_id !== CampaignStatus_Code_Id_Enums.FAILED && (
                     <div className={styles.container}>
                         <div className={`${styles.flexRow} `}>
                             <div className={`${styles.status} ${styles.transparemt}`}>

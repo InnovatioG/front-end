@@ -3,90 +3,82 @@ import { CampaignApi } from '@/lib/SmartDB/FrontEnd';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { CampaignEX, MilestoneEX } from '@/types/types';
-import { getCampaignEX } from '@/hooks/useCampaingDetails';
-import { CampaignTab } from '@/utils/constants/routes';
+import { cloneCampaignEX, cloneMilestoneEX, getCampaignEX } from '@/hooks/useCampaingDetails';
+import { CampaignTabEnum } from '@/utils/constants/routes';
 
 export interface ICampaignIdStoreProps {
     campaign: CampaignEX | undefined;
     milestoneCurrent: MilestoneEX | undefined;
     isLoading: boolean;
-    menuView: CampaignTab;
+    campaignTab?: CampaignTabEnum;
     error: string;
-    editionMode: boolean;
-    isAdmin: boolean;
-    isProtocolTeam: boolean;
+    isEditMode: boolean;
 }
 
 export const initialState: ICampaignIdStoreProps = {
     campaign: undefined,
     milestoneCurrent: undefined,
-    menuView: CampaignTab.DETAILS,
+    campaignTab: undefined,
+    isEditMode: true,
     isLoading: false,
     error: '',
-    editionMode: true,
-    isAdmin: false,
-    isProtocolTeam: false,
 };
 
 export interface ICampaignIdStore extends ICampaignIdStoreProps {
-    setCampaignEX: (campaign: CampaignEX | undefined) => void;
-    setMilestoneEX: (milestone: MilestoneEX) => void;
-    setMenuView: (menuView: CampaignTab) => void;
+    setCampaignEX: (campaignEX: CampaignEX | undefined) => void;
+    setCampaign: (campaign: CampaignEntity) => void;
+    setMilestoneEX: (milestoneEX: MilestoneEX) => void;
+    setCampaignTab: (campaignTab?: CampaignTabEnum) => void;
+    setIsEditMode: (isEditMode: boolean) => void;
     setIsLoading: (isLoading: boolean) => void;
-    setIsAdmin: (isAdmin: boolean) => void;
-    setIsProtocolTeam: (isProtocolTeam: boolean) => void;
     setError: (error: string) => void;
-    setEditionMode: (editionMode: boolean) => void;
     fetchCampaignById: (id: string) => Promise<void>; // New function
 }
 
 export const useCampaignIdStore = create<ICampaignIdStore>()(
     immer<ICampaignIdStore>((set, get) => ({
         ...initialState,
-
-        setCampaignEX: (campaign) =>
+        setCampaignEX: (campaignEX) =>
             set((state) => {
-                state.campaign = campaign;
+                state.campaign = cloneCampaignEX(campaignEX); // Use deep clone helper
             }),
 
-        setMilestoneEX: (milestone) =>
+        setCampaign: (campaign) =>
             set((state) => {
-                state.milestoneCurrent = milestone;
+                if (state.campaign !== undefined) state.campaign.campaign = new CampaignEntity({ ...campaign });
+            }),
+
+        setMilestoneEX: (milestoneEX) =>
+            set((state) => {
+                state.milestoneCurrent = cloneMilestoneEX(milestoneEX);
             }),
 
         setIsLoading: (isLoading) =>
             set((state) => {
                 state.isLoading = isLoading;
             }),
-        setIsAdmin: (isAdmin) =>
+
+        setCampaignTab: (campaignTab) =>
             set((state) => {
-                state.isAdmin = isAdmin;
-            }),
-        setIsProtocolTeam: (isProtocolTeam) =>
-            set((state) => {
-                state.isProtocolTeam = isProtocolTeam;
-            }),
-        setMenuView: (menuView) =>
-            set((state) => {
-                state.menuView = menuView;
+                state.campaignTab = campaignTab;
             }),
         setError: (error) =>
             set((state) => {
                 state.error = error;
             }),
-        // setMilestone: (milestone) =>
-        //     set((state) => {
-        //         state.milestone = milestone;
-        //     }),
-        setEditionMode: (editionMode) =>
+        setIsEditMode: (isEditMode) =>
             set((state) => {
-                state.editionMode = editionMode;
+                state.isEditMode = isEditMode;
             }),
 
         fetchCampaignById: async (id: string) => {
             set((state) => {
                 state.isLoading = true;
                 state.error = '';
+                state.campaign = undefined;
+                state.milestoneCurrent = undefined;
+                state.campaignTab = undefined;
+                state.isEditMode = false;
             });
 
             try {
@@ -101,7 +93,7 @@ export const useCampaignIdStore = create<ICampaignIdStore>()(
                 const campaignEX = await getCampaignEX(campaignData);
 
                 set((state) => {
-                    state.campaign = campaignEX;
+                    state.campaign = cloneCampaignEX(campaignEX);
                     state.isLoading = false;
                 });
             } catch (error) {

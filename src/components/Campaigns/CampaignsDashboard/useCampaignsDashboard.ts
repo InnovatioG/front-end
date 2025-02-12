@@ -1,19 +1,21 @@
-import { useScreenSize } from '@/hooks/useScreenSize';
-import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
-import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
-import { ROUTES } from '@/utils/constants/routes';
-import { pushWarningNotification, useWalletStore } from 'smart-db';
-import { CampaignEX } from '@/types/types';
-import { CampaignsStatus_Code_Ids_For_Investors, CampaignStatus_Code_Id } from '@/utils/constants/status';
+import { getCampaignEX } from '@/hooks/useCampaingDetails';
+import { useResponsive } from '@/contexts/ResponsiveContext';
 import { CampaignEntity } from '@/lib/SmartDB/Entities';
 import { CampaignApi } from '@/lib/SmartDB/FrontEnd';
-import { getCampaignEX } from '@/hooks/useCampaingDetails';
+import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
+import { CampaignEX } from '@/types/types';
+import { CampaignViewForEnums } from '@/utils/constants/constants';
+import { CampaignsStatus_Code_Ids_For_Investors } from '@/utils/constants/status';
+import { useCallback, useEffect, useState } from 'react';
+import { pushWarningNotification, useWalletStore } from 'smart-db';
 
-export const useCampaignsDashboard = () => {
-    const router = useRouter();
-    const pathName = router.pathname;
-    const screenSize = useScreenSize();
+export interface CampaignDashboardProps {
+    campaignViewFor: CampaignViewForEnums;
+
+}
+
+export const useCampaignsDashboard = (props: CampaignDashboardProps) => {
+    const { screenSize } = useResponsive();
 
     const walletStore = useWalletStore();
 
@@ -44,18 +46,19 @@ export const useCampaignsDashboard = () => {
 
     const fetchCampaigns = useCallback(async () => {
         // TODO: falta ver quienes son editores o managers, etc, ahora solo uso creator_wallet_id: walletStore.info!.address
+        //TODO: falta verificar signed wallet
         console.log(
-            `fetchCampaigns: ${pathName} - ${campaignStatus}- ${myProposal} - ${statusFilter} - ${categoryFilter} - ${searchTerm} - ${walletStore.isConnected} - ${wallet}`
+            `fetchCampaigns: ${props.campaignViewFor} - ${campaignStatus}- ${myProposal} - ${statusFilter} - ${categoryFilter} - ${searchTerm} - ${walletStore.isConnected} - ${wallet}`
         );
 
         setCampaignsLoading(true);
         try {
-            const limit = pathName === ROUTES.home ? 10 : 20;
+            const limit = props.campaignViewFor === CampaignViewForEnums.home ? 10 : 20;
 
             let filterConditions: any[] = [];
 
-            if (pathName === ROUTES.manage) {
-                if (!walletStore.isConnected || wallet === undefined) {
+            if (props.campaignViewFor === CampaignViewForEnums.manage) {
+                if (walletStore.isConnected === false || wallet === undefined) {
                     setCampaigns([]);
                     setCampaignsLoading(false);
                     return;
@@ -91,7 +94,7 @@ export const useCampaignsDashboard = () => {
                 filterConditions.push({ $or: [{ name: { $regex: searchTerm, $options: 'i' } }, { description: { $regex: searchTerm, $options: 'i' } }] });
             }
 
-            if (pathName === ROUTES.home || pathName === ROUTES.campaigns) {
+            if (props.campaignViewFor === CampaignViewForEnums.home || props.campaignViewFor === CampaignViewForEnums.campaigns) {
                 setShowMyProposalButton(true);
 
                 const campaignStatusIdsForInvestors = campaignStatus
@@ -116,14 +119,14 @@ export const useCampaignsDashboard = () => {
         }
         setCampaignsLoading(false);
     }, [
-        pathName,
+        props.campaignViewFor,
         campaignStatus,
         myProposal,
         statusFilter,
         categoryFilter,
         searchTerm,
         // Solo incluir la billetera si estamos en "manage" o "myProposal"
-        ...(pathName === ROUTES.manage || myProposal ? [walletStore.isConnected, wallet] : []),
+        ...(props.campaignViewFor === CampaignViewForEnums.manage || myProposal ? [walletStore.isConnected, wallet] : []),
     ]);
 
     useEffect(() => {
@@ -131,10 +134,10 @@ export const useCampaignsDashboard = () => {
     }, [fetchCampaigns]);
 
     useEffect(() => {
-        if (pathName === ROUTES.home || pathName === ROUTES.campaigns) {
+        if (props.campaignViewFor === CampaignViewForEnums.home || props.campaignViewFor === CampaignViewForEnums.campaigns) {
             setCampaignStatusFilterd(campaignStatus.filter((status) => CampaignsStatus_Code_Ids_For_Investors.includes(status.code_id)));
         }
-    }, [pathName, campaignStatus]);
+    }, [props.campaignViewFor, campaignStatus]);
 
     return {
         campaignsLoading,
@@ -142,7 +145,6 @@ export const useCampaignsDashboard = () => {
         searchTerm,
         campaigns,
         hasMore,
-        pathName,
         campaignStatus: campaignStatusFilterd,
         statusFilter,
         setStatusFilter,

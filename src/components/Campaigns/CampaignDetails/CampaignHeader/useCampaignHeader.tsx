@@ -4,7 +4,7 @@ import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe'
 import { useRef } from 'react';
 
 const useCampaignHeader = (props: ICampaignIdStoreSafe & ICampaignDetails) => {
-    const { campaign, setCampaignEX } = props;
+    const { campaign, setCampaign } = props;
 
     const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -13,10 +13,13 @@ const useCampaignHeader = (props: ICampaignIdStoreSafe & ICampaignDetails) => {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onloadend = () => {
-            setCampaignEX({
-                ...campaign,
-                campaign: new CampaignEntity({ ...campaign.campaign, banner_url: e.target.value }),
-            });
+            // setCampaignEX({
+            //     ...campaign,
+            //     campaign: new CampaignEntity({ ...campaign.campaign, banner_url: e.target.value }),
+            // });
+            let entity = campaign.campaign;
+            entity.banner_url = e.target.value;
+            setCampaign(entity);
         };
         reader.readAsDataURL(file);
     };

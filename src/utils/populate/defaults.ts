@@ -1,41 +1,41 @@
-import { CampaignStatus_Code_Id, MilestoneStatus_Code_Id, SubmissionStatus } from '../constants/status';
+import { CampaignStatus_Code_Id_Enums, MilestoneStatus_Code_Id_Enums, SubmissionStatus_Enums } from '../constants/status';
 
 import campaignsPopulateJson from './campaigns-populate.json';
 import deployJson from '../../../_smart_contracts/deploy.json';
 
-export const CampaignStatusDefaultNames: Record<CampaignStatus_Code_Id, string> = {
-    [CampaignStatus_Code_Id.NOT_STARTED]: 'Not Started',
-    [CampaignStatus_Code_Id.CREATED]: 'Created',
-    [CampaignStatus_Code_Id.SUBMITTED]: 'Submitted',
-    [CampaignStatus_Code_Id.REJECTED]: 'Rejected',
-    [CampaignStatus_Code_Id.APPROVED]: 'Approved',
-    [CampaignStatus_Code_Id.CONTRACT_CREATED]: 'Contract Created',
-    [CampaignStatus_Code_Id.CONTRACT_PUBLISHED]: 'Contract Published',
-    [CampaignStatus_Code_Id.CONTRACT_STARTED]: 'Contract Started',
-    [CampaignStatus_Code_Id.COUNTDOWN]: 'Countdown',
-    [CampaignStatus_Code_Id.FUNDRAISING]: 'Fundraising',
-    [CampaignStatus_Code_Id.FINISHING]: 'Finishing',
-    [CampaignStatus_Code_Id.ACTIVE]: 'Active',
-    [CampaignStatus_Code_Id.FAILED]: 'Failed',
-    [CampaignStatus_Code_Id.UNREACHED]: 'Unreached',
-    [CampaignStatus_Code_Id.SUCCESS]: 'Success',
+export const CampaignStatusDefaultNames: Record<CampaignStatus_Code_Id_Enums, string> = {
+    [CampaignStatus_Code_Id_Enums.NOT_STARTED]: 'Not Started',
+    [CampaignStatus_Code_Id_Enums.CREATED]: 'Created',
+    [CampaignStatus_Code_Id_Enums.SUBMITTED]: 'Submitted',
+    [CampaignStatus_Code_Id_Enums.REJECTED]: 'Rejected',
+    [CampaignStatus_Code_Id_Enums.APPROVED]: 'Approved',
+    [CampaignStatus_Code_Id_Enums.CONTRACT_CREATED]: 'Contract Created',
+    [CampaignStatus_Code_Id_Enums.CONTRACT_PUBLISHED]: 'Contract Published',
+    [CampaignStatus_Code_Id_Enums.CONTRACT_STARTED]: 'Contract Started',
+    [CampaignStatus_Code_Id_Enums.COUNTDOWN]: 'Countdown',
+    [CampaignStatus_Code_Id_Enums.FUNDRAISING]: 'Fundraising',
+    [CampaignStatus_Code_Id_Enums.FINISHING]: 'Finishing',
+    [CampaignStatus_Code_Id_Enums.ACTIVE]: 'Active',
+    [CampaignStatus_Code_Id_Enums.FAILED]: 'Failed',
+    [CampaignStatus_Code_Id_Enums.UNREACHED]: 'Unreached',
+    [CampaignStatus_Code_Id_Enums.SUCCESS]: 'Success',
 };
 
-export const MilestoneStatusDefaultNames: Record<MilestoneStatus_Code_Id, string> = {
-    [MilestoneStatus_Code_Id.NOT_STARTED]: 'Not Started',
-    [MilestoneStatus_Code_Id.STARTED]: 'Started',
-    [MilestoneStatus_Code_Id.SUBMITTED]: 'Submitted',
-    [MilestoneStatus_Code_Id.REJECTED]: 'Rejected',
-    [MilestoneStatus_Code_Id.COLLECT]: 'Collect',
-    [MilestoneStatus_Code_Id.FINISHED]: 'Finished',
-    [MilestoneStatus_Code_Id.FAILED]: 'Failed',
+export const MilestoneStatusDefaultNames: Record<MilestoneStatus_Code_Id_Enums, string> = {
+    [MilestoneStatus_Code_Id_Enums.NOT_STARTED]: 'Not Started',
+    [MilestoneStatus_Code_Id_Enums.STARTED]: 'Started',
+    [MilestoneStatus_Code_Id_Enums.SUBMITTED]: 'Submitted',
+    [MilestoneStatus_Code_Id_Enums.REJECTED]: 'Rejected',
+    [MilestoneStatus_Code_Id_Enums.COLLECT]: 'Collect',
+    [MilestoneStatus_Code_Id_Enums.FINISHED]: 'Finished',
+    [MilestoneStatus_Code_Id_Enums.FAILED]: 'Failed',
 };
 
-export const SubmissionStatusDefaultNames: Record<SubmissionStatus, string> = {
-    [SubmissionStatus.SUBMITTED]: 'Submitted',
-    [SubmissionStatus.APPROVED]: 'Approved',
-    [SubmissionStatus.REJECTED]: 'Rejected',
-    [SubmissionStatus.FAILED]: 'Failed',
+export const SubmissionStatusDefaultNames: Record<SubmissionStatus_Enums, string> = {
+    [SubmissionStatus_Enums.SUBMITTED]: 'Submitted',
+    [SubmissionStatus_Enums.APPROVED]: 'Approved',
+    [SubmissionStatus_Enums.REJECTED]: 'Rejected',
+    [SubmissionStatus_Enums.FAILED]: 'Failed',
 };
 
 export enum CampaignCategoryDefault {

@@ -1,6 +1,6 @@
 //--------------------------------------------------------------
 
-export enum CampaignDatumStatus_Code_Id {
+export enum CampaignDatumStatus_Code_Id_Enums {
     CsCreated = 1,
     CsInitialized = 2,
     CsReached = 3,
@@ -8,13 +8,13 @@ export enum CampaignDatumStatus_Code_Id {
     CsFailedMilestone = 5,
 }
 
-export enum MilestoneDatumStatus_Code_Id {
+export enum MilestoneDatumStatus_Code_Id_Enums {
     MsCreated = 1,
     MsSuccess = 2,
     MsFailed = 3,
 }
 
-export enum CampaignStatus_Code_Id {
+export enum CampaignStatus_Code_Id_Enums {
     NOT_STARTED = 0,
     CREATED = 1,
     SUBMITTED = 2,
@@ -33,15 +33,15 @@ export enum CampaignStatus_Code_Id {
 }
 
 export const CampaignsStatus_Code_Ids_For_Investors = [
-    CampaignStatus_Code_Id.COUNTDOWN,
-    CampaignStatus_Code_Id.FUNDRAISING,
-    CampaignStatus_Code_Id.ACTIVE,
-    CampaignStatus_Code_Id.FAILED,
-    CampaignStatus_Code_Id.UNREACHED,
-    CampaignStatus_Code_Id.SUCCESS,
+    CampaignStatus_Code_Id_Enums.COUNTDOWN,
+    CampaignStatus_Code_Id_Enums.FUNDRAISING,
+    CampaignStatus_Code_Id_Enums.ACTIVE,
+    CampaignStatus_Code_Id_Enums.FAILED,
+    CampaignStatus_Code_Id_Enums.UNREACHED,
+    CampaignStatus_Code_Id_Enums.SUCCESS,
 ];
 
-export enum MilestoneStatus_Code_Id {
+export enum MilestoneStatus_Code_Id_Enums {
     NOT_STARTED = 1,
     STARTED = 2,
     SUBMITTED = 3,
@@ -51,7 +51,7 @@ export enum MilestoneStatus_Code_Id {
     FAILED = 7,
 }
 
-export enum SubmissionStatus {
+export enum SubmissionStatus_Enums {
     SUBMITTED = 1,
     APPROVED = 2,
     REJECTED = 3,

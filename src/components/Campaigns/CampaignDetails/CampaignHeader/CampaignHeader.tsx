@@ -2,15 +2,18 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/Defaul
 import { ICampaignDetails } from '@/hooks/useCampaingDetails';
 import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './CampaignHeader.module.scss';
 import CampaignHeaderInfo from './CampaignHeaderInfo/CampaignHeaderInfo';
-import CampaignHeaderSocialAndButton from './CampaignHeaderSocialAndButton/CampaignHeaderSocialAndButton';
+import CampaignSocialLinksAndActions from './CampaignSocialLinksAndActions/CampaignSocialLinksAndActions';
 import useCampaignHeader from './useCampaignHeader';
 import { isNullOrBlank } from 'smart-db';
+import Link from 'next/link';
+import { ROUTES } from '@/utils/constants/routes';
+import { CampaignViewForEnums } from '@/utils/constants/constants';
 
 const CampaignHeader: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props: ICampaignIdStoreSafe & ICampaignDetails) => {
-    const { campaign, editionMode } = props;
+    const { campaign, isEditMode, isProtocolTeam, isAdmin, isEditor, campaignViewFor, campaignTab } = props;
     const { handleChangePicture, handleButtonClickFile, fileInputRef } = useCampaignHeader(props);
 
     return (
@@ -21,7 +24,17 @@ const CampaignHeader: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props
                     <AvatarFallback>{campaign.campaign.name.slice(0, 2)}</AvatarFallback>
                 </Avatar>
                 <h2 className={styles.title}>{campaign.campaign.name}</h2>
-                <p className={styles.description}>{campaign.campaign.description}</p>
+                {/* {(campaignViewFor === CampaignViewForEnums.home || campaignViewFor === CampaignViewForEnums.campaigns) &&
+                    (isProtocolTeam === true || isAdmin === true || isEditor === true) && (
+                        <p>
+                            <Link href={ROUTES.campaignManage(campaign.campaign._DB_id, campaignTab)}>Manage</Link>
+                        </p>
+                    )}
+                {campaignViewFor === CampaignViewForEnums.manage && (isProtocolTeam === true || isAdmin === true || isEditor === true) && isEditMode === false && (
+                    <p>
+                        <Link href={ROUTES.campaignEdit(campaign.campaign._DB_id, campaignTab)}>Edit</Link>
+                    </p>
+                )} */}
             </div>
             <article className={styles.dashboardCampaignContainer}>
                 <div className={styles.imagenContainer}>
@@ -29,7 +42,7 @@ const CampaignHeader: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props
                 </div>
 
                 <div className={styles.imageBannerContainer}>
-                    {editionMode === true && (
+                    {isEditMode === true && (
                         <div
                             className={styles.fileContainer}
                             style={{
@@ -66,12 +79,17 @@ const CampaignHeader: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props
                         </div>
                     )}
 
-                    <Image src={isNullOrBlank(campaign.campaign.banner_url) ? '/img/ui/campaign_generic_banner.jpg' : campaign.campaign.banner_url!} alt="Banner" layout="fill" objectFit="cover" />
+                    <Image
+                        src={isNullOrBlank(campaign.campaign.banner_url) ? '/img/ui/campaign_generic_banner.jpg' : campaign.campaign.banner_url!}
+                        alt="Banner"
+                        layout="fill"
+                        objectFit="cover"
+                    />
                 </div>
 
                 <div className={styles.cardContainer}>
                     <CampaignHeaderInfo {...props} />
-                    <CampaignHeaderSocialAndButton {...props} />
+                    <CampaignSocialLinksAndActions {...props} />
                 </div>
             </article>
         </>

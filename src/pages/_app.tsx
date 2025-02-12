@@ -3,7 +3,7 @@ import Footer from '@/components/Layout/Footer/Footer';
 import Header from '@/components/Layout/Header/Header';
 import LoadingPage from '@/components//General/LoadingPage/LoadingPage';
 import { ModalProvider } from '@/contexts/ModalProvider';
-import { ResponsiveProvider } from '@/contexts/ResponsiveContext';
+import { ResponsiveProvider } from '@/contexts/ResponsiveProvider';
 import '@/styles/globals.scss';
 import * as Images from '@/utils/constants/images';
 import { ROUTES } from '@/utils/constants/routes';
@@ -18,7 +18,7 @@ import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import { AppGeneral, globalStore } from 'smart-db';
 import 'smart-db/dist/styles.css';
-import { fetchGeneralStoreData } from '@/store/generalStore/useGeneralStore';
+import { fetchGeneralStoreData, useGeneralStore } from '@/store/generalStore/useGeneralStore';
 
 type ImageType = string | { [key: string]: string };
 
@@ -41,7 +41,7 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
     const [isLoadingApp, setIsLoadingApp] = useState(true);
 
     const router = useRouter();
-    
+
     useEffect(() => {
         const initialize = async () => {
             await fetchGeneralStoreData();
@@ -51,6 +51,28 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
             initialize();
         }
     }, [isLoadingApp]);
+
+    const { isProtocolTeam, _DebugIsProtocolTeam, _DebugIsAdmin,  _DebugIsEditor, setDebugIsAdmin, setDebugIsEditor, setDebugIsProtocolTeam } = useGeneralStore();
+
+    useEffect(() => {
+        const { isAdmin, isEditor, isProtocolTeam } = router.query;
+
+        if (isAdmin === 'true' || isAdmin === 'false') {
+            setDebugIsAdmin(isAdmin === 'true');
+        }
+
+        if (isEditor === 'true' || isEditor === 'false') {
+            setDebugIsEditor(isEditor === 'true');
+        }
+
+        if (isProtocolTeam === 'true' || isProtocolTeam === 'false') {
+            setDebugIsProtocolTeam(isProtocolTeam === 'true');
+        }
+
+        console.log('isAdmin', isAdmin);
+        console.log('isEditor', isEditor);
+        console.log('isProtocolTeam', isProtocolTeam);
+    }, [router.query]); // Se ejecuta cuando los parámetros de la URL cambian
 
     return (
         <>
@@ -74,9 +96,10 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
                         ) : (
                             <ResponsiveProvider>
                                 <ModalProvider>
-                                    {router.pathname !== ROUTES.campaignNew && <Header />}
+                                    {router.pathname !== ROUTES.campaignCreation && <Header />}
+                                    {`DEBUG - isProtocolTeam: ${isProtocolTeam}`} - {`_DebugIsProtocolTeam: ${_DebugIsProtocolTeam}`} - {`_DebugIsAdmin: ${_DebugIsAdmin}`} - {`_DebugIsEditor: ${_DebugIsEditor}`}
                                     <Component {...pageProps} />
-                                    {router.pathname !== ROUTES.campaignNew && <Footer />}
+                                    {router.pathname !== ROUTES.campaignCreation && <Footer />}
                                 </ModalProvider>
                             </ResponsiveProvider>
                         )}

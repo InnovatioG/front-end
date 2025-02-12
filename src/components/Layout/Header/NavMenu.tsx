@@ -1,10 +1,10 @@
-import BtnCampaign from '@/components/General/Buttons/Campaign/BtnCampaign';
-import BtnConnectWallet from '@/components/General/Buttons/ConnectWallet/BtnConnectWallet';
+import BtnHeaderCampaignNewOrManage from '@/components/GeneralOK/Buttons/Buttons/BtnHeaderCampaignNewOrManage/BtnHeaderCampaignNewOrManage';
 import { CALENDAR } from '@/utils/constants/images';
 import Link from 'next/link';
 import { useState } from 'react';
 import styles from './NavMenu.module.scss';
 import { ROUTES } from '@/utils/constants/routes';
+import BtnConnectWallet from '@/components/GeneralOK/Buttons/Buttons/BtnConnectWallet/BtnConnectWallet';
 
 export default function NavMenu() {
     const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
@@ -44,7 +44,7 @@ export default function NavMenu() {
                         <div onClick={() => setIsOpenMenu(false)}>
                             <BtnConnectWallet type="secondary" width={230} />
                         </div>
-                        <BtnCampaign type="secondary" width={230} closeMenu={() => setIsOpenMenu(false)} />
+                        <BtnHeaderCampaignNewOrManage type="secondary" width={230} closeMenu={() => setIsOpenMenu(false)} />
                     </div>
                 </div>
             </div>

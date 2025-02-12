@@ -1,61 +1,66 @@
-import CalendarModal from '@/components/General/Modal/CalendarModal';
-// import ContactSupportModal from '@/components/General/Modal/ContactSupportModal';
-// import SingleQuestionModal from '@/components/General/Modal/InitializeCampaignModal';
-// import ManageCampaignModal from '@/components/General/Modal/ManageCampaignModal';
-import ModalTemplate from '@/components/General/Modal/ModalTemplate';
-// import SendReport from '@/components/General/Modal/SendReport';
-// import ViewReportMilestone from '@/components/General/Modal/ViewReportMilestone';
-// import ViewReportModal from '@/components/General/Modal/ViewReportModal';
-import WalletInformationModal from '@/components/General/Modal/WalletInformation';
-import { WalletSelectorModal } from '@/components/General/Modal/WalletSelectorModal';
-import { useState } from 'react';
-import { IModalState, ModalContext } from './ModalContext';
-// import SuccessAction from '@/components/General/Modal/SuccesAction';
+import { ModalEnums } from '@/utils/constants/constants';
+import { ReactNode, useState } from 'react';
+import { ModalContext } from './ModalContext';
+import ModalTemplate from '@/components/GeneralOK/Modals/ModalTemplate/ModalTemplate';
+import WalletConnectorModal from '@/components/GeneralOK/Modals/Modals/WalletConnectorModal/WalletConnectorModal';
+import LaunchCampaignModal from '@/components/GeneralOK/Modals/Modals/LaunchCampaignModal/LaunchCampaignModal';
+import ContactSupportModal from '@/components/GeneralOK/Modals/Modals/ContactSupportModal/ContactSupportModal';
 
-export const ModalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const [modalState, setModalState] = useState<IModalState>({ isOpen: false });
+export const ModalProvider = ({ children }: { children: ReactNode }) => {
+    const [activeModal, setActiveModal] = useState<ModalEnums | null>(null);
+    const [modalData, setModalData] = useState<Record<string, any> | undefined>(undefined);
+    const [dynamicModal, setDynamicModal] = useState<ReactNode | null>(null);
 
-    const openModal = (modalType: string, options?: Partial<Omit<IModalState, 'modalType'>>) => {
-        setModalState({ ...options, modalType, isOpen: true });
+    const openModal = (modal: ModalEnums, data?: Record<string, any>, component?: ReactNode) => {
+        setActiveModal(modal);
+        setModalData(data || undefined);
+        setDynamicModal(component || null);
     };
 
     const closeModal = () => {
-        setModalState({ isOpen: false });
+        setActiveModal(null);
+        setModalData(undefined);
+        setDynamicModal(null);
     };
-
-    const setIsOpen = (isOpen: boolean) => {
-        setModalState({ ...modalState, isOpen });
-    };
-
-    // Map of modal types to components
-    const modalComponents: Record<string, JSX.Element | null> = {
-        launchCampaign: <CalendarModal />,
-        // initializeCampaign: <SingleQuestionModal modalType="initializeCampaign" />,
-        // createSmartContract: <SingleQuestionModal modalType="createSmartContract" />,
-        // publishSmartContract: <SingleQuestionModal modalType="publishSmartContract" />,
-        // withdrawTokens: <SingleQuestionModal modalType="withdrawTokens" />,
-        // collect: <SingleQuestionModal modalType="collect" />,
-        // validateFundraisingStatus: <SingleQuestionModal modalType="validateFundraisingStatus" />,
-        // manageCampaign: <ManageCampaignModal id={modalState.campaign_id!} />,
-        // sendReport: <SendReport campaign={modalState.campaign} />,
-        // viewReport: <ViewReportModal id={modalState.campaign_id!} />,
-        // viewReportMilestone: <ViewReportMilestone submission={modalState.submission} />,
-        // contactSupport: <ContactSupportModal />,
-        walletSelector: <WalletSelectorModal />,
-        walletInformation: <WalletInformationModal />,
-        // successAction: <SuccessAction />,
+    // Predefined modals
+    const modalComponents: Partial<Record<ModalEnums, JSX.Element>> = {
+        [ModalEnums.walletConnect]: <WalletConnectorModal />,
+        [ModalEnums.deleteCampaign]: undefined,
+        [ModalEnums.submitCampaign]: undefined,
+        // [ModalEnums.manageCampaignSubmissions]: <ManageCampaignModal  />,
+        // [ModalEnums.viewCampaignSubmissions]: undefined,
+        // [ModalEnums.createSmartContracts]: <SingleQuestionModal modalType="createSmartContract" />,
+        // [ModalEnums.publishSmartContracts]: <SingleQuestionModal modalType="publishSmartContract" />,
+        // [ModalEnums.initializeCampaign]: <SingleQuestionModal modalType="initializeCampaign" />,
+        // [ModalEnums.manageCampaignUTXOs]: undefined,
+        [ModalEnums.launchCampaign]: <LaunchCampaignModal />,
+        // [ModalEnums.validateFundraisingStatus]: <SingleQuestionModal modalType="validateFundraisingStatus" />,
+        // [ModalEnums.withdrawTokensFailed]: <SingleQuestionModal modalType="withdrawTokens" />,
+        // [ModalEnums.withdrawTokensUnreached]: <SingleQuestionModal modalType="withdrawTokens" />,
+        // [ModalEnums.submitMilestone]: <SendReport campaign={modalState.campaign} />,
+        // [ModalEnums.manageMilestoneSubmissions]: <ViewReportModal id={modalState.campaign_id!} />,
+        // [ModalEnums.viewMilestoneSubmissions]: <ViewReportMilestone submission={modalState.submission} />,
+        // [ModalEnums.collectFunds]: <SingleQuestionModal modalType="collect" />,
+        [ModalEnums.contactSupport]: <ContactSupportModal />,
     };
 
     return (
-        <>
-            <ModalContext.Provider value={{ ...modalState, openModal, closeModal, setIsOpen }}>
-                {modalState.modalType !== undefined && (
-                    <ModalTemplate isOpen={modalState.isOpen} setIsOpen={setIsOpen}>
-                        {modalComponents[modalState.modalType] || undefined}
-                    </ModalTemplate>
-                )}
-                {children}
-            </ModalContext.Provider>
-        </>
+        <ModalContext.Provider
+            value={{
+                activeModal,
+                modalData,
+                openModal,
+                closeModal,
+            }}
+        >
+            {activeModal !== null && (
+                <ModalTemplate active={activeModal}>
+                    {/* Use predefined modal if available, otherwise fallback to dynamic modal */}
+                    {modalComponents[activeModal] || dynamicModal || <>Modal {activeModal} Not Implemented</>}
+                </ModalTemplate>
+            )}
+
+            {children}
+        </ModalContext.Provider>
     );
 };

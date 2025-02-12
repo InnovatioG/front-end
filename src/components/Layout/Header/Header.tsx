@@ -1,4 +1,4 @@
-import { useScreenSize } from '@/hooks/useScreenSize';
+import { useResponsive } from '@/contexts/ResponsiveContext';
 import { LOGO_FULL_LIGHT } from '@/utils/constants/images';
 import { ROUTES } from '@/utils/constants/routes';
 import Image from 'next/image';
@@ -12,18 +12,26 @@ import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 
 export default function Header() {
     const walletStore = useWalletStore();
-    const screenSize = useScreenSize();
+    const { screenSize } = useResponsive();
     //--------------------------------------
     // para que cargue la sesion del wallet
     useWalletSession();
     //--------------------------------------
+    const { setWallet, refreshHaveCampaigns, setIsProtocolTeam, _DebugIsProtocolTeam } = useGeneralStore();
+    //--------------------------------------
     useEffect(() => {
-        if(walletStore.isConnected === true) {
-            useGeneralStore.getState().setWallet(walletStore.info);
-            useGeneralStore.getState().refreshHaveCampaigns(walletStore.info);
-        }else{
-            useGeneralStore.getState().setWallet(undefined);
-            useGeneralStore.getState().refreshHaveCampaigns(undefined);
+        if (walletStore.isConnected === true) {
+            setWallet(walletStore.info);
+            refreshHaveCampaigns(walletStore.info);
+            const isProtocolTeam =
+                _DebugIsProtocolTeam !== undefined
+                    ? _DebugIsProtocolTeam
+                    : walletStore.isConnected === true && walletStore.info?.isWalletValidatedWithSignedToken === true && walletStore.isCoreTeam();
+            setIsProtocolTeam(isProtocolTeam);
+        } else {
+            setWallet(undefined);
+            refreshHaveCampaigns(undefined);
+            setIsProtocolTeam(false);
         }
     }, [walletStore.isConnected, walletStore.info]);
     //--------------------------------------

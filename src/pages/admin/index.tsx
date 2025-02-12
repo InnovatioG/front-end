@@ -1,4 +1,4 @@
-import Button from '@/components/General/Buttons/UI/Button';
+import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 import { ProtocolApi } from '@/lib/SmartDB/FrontEnd';
 import styles from '@/styles/Admin.module.scss';
 import type { NextPage } from 'next';
@@ -35,7 +35,7 @@ const AdminDashboard: NextPage = () => {
             if (response === false) {
                 throw 'Failed to populate database';
             }
-            pushSucessNotification('Success', 'Database populated successfully');
+            pushSucessNotification('Success', 'Database populated successfully', false);
         } catch (error) {
             pushWarningNotification('Error', `Failed to populate database: ${error}`);
         }
@@ -45,9 +45,9 @@ const AdminDashboard: NextPage = () => {
         <main className={styles.dashboard}>
             <h1>Admin Dashboard</h1>
             <div className="mb-6">
-                <Button onClick={handlePopulateDB} className="bg-blue-600 hover:bg-blue-700">
+                <BtnGeneral onClick={handlePopulateDB} className="bg-blue-600 hover:bg-blue-700">
                     Populate Database
-                </Button>
+                </BtnGeneral>
             </div>
             <ul className={styles.pageList}>
                 {pages.map((page) => (

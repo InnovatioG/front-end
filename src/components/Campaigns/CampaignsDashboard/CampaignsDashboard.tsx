@@ -1,21 +1,21 @@
-import GeneralButtonUI from '@/components/General/Buttons/UI/Button';
+import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 import LoaderDots from '@/components/General/LoadingPage/LoaderDots';
+import { PLUS_ICON } from '@/utils/constants/images';
 import { ROUTES } from '@/utils/constants/routes';
 import Link from 'next/link';
 import CampaignCard from './CampaignCard/CampaignCard';
 import CampaignFilters from './CampaignFilters/CampaignFilters';
 import styles from './CampaignsDashboard.module.scss';
-import { useCampaignsDashboard } from './useCampaignsDashboard';
-import { PLUS_ICON } from '@/utils/constants/images';
+import { CampaignDashboardProps, useCampaignsDashboard } from './useCampaignsDashboard';
+import { CampaignViewForEnums } from '@/utils/constants/constants';
 
-export default function CampaignDashboard() {
+export default function CampaignDashboard(props: CampaignDashboardProps) {
     const {
         walletStore,
         searchTerm,
         campaignsLoading,
         campaigns,
         hasMore,
-        pathName,
         campaignStatus,
         statusFilter,
         setStatusFilter,
@@ -27,7 +27,7 @@ export default function CampaignDashboard() {
         myProposal,
         handleMyProposalChange,
         showMyProposalButton,
-    } = useCampaignsDashboard();
+    } = useCampaignsDashboard(props);
 
     return (
         <div className={styles.campaignDashboard}>
@@ -53,12 +53,14 @@ export default function CampaignDashboard() {
                 </>
             ) : (
                 <>
-                    {campaigns.length === 0 && pathName !== ROUTES.manage ? (
+                    {`DEBUG - campaignViewFor: ${props.campaignViewFor}`}
+                    
+                    {campaigns.length === 0 && props.campaignViewFor !== CampaignViewForEnums.manage ? (
                         <p className={styles.notFound}>No Campaigns Found</p>
                     ) : (
                         <div className={styles.campaignGrid}>
-                            {pathName === ROUTES.manage && (
-                                <Link href={ROUTES.campaignNew}>
+                            {props.campaignViewFor === CampaignViewForEnums.manage && (
+                                <Link href={ROUTES.campaignCreation}>
                                     <div className={styles.newCampaign}>
                                         <svg width="24" height="24" className={styles.icon}>
                                             <use href={PLUS_ICON}></use>
@@ -68,21 +70,20 @@ export default function CampaignDashboard() {
                                 </Link>
                             )}
                             {campaigns.map((campaign) => (
-                                <CampaignCard key={campaign.campaign._DB_id} campaign={campaign} />
+                                <CampaignCard key={campaign.campaign._DB_id} campaign={campaign} {...props} />
                             ))}
                         </div>
                     )}
-
                     {hasMore &&
-                        (pathName === ROUTES.home ? (
+                        (props.campaignViewFor === CampaignViewForEnums.home ? (
                             <Link href={ROUTES.campaigns}>
                                 <div className={styles.buttonContainer}>
-                                    <GeneralButtonUI onClick={() => {}} classNameStyle="outlineb" text="Explore more campaigns" />
+                                    <BtnGeneral onClick={() => {}} classNameStyle="outlineb" text="Explore more campaigns" />
                                 </div>
                             </Link>
                         ) : (
                             <div className={styles.buttonContainer}>
-                                {/* <GeneralButtonUI onClick={loadMoreCampaigns} classNameStyle="outlineb" text="Explore more campaigns" /> */}
+                                {/* <BtnGeneral onClick={loadMoreCampaigns} classNameStyle="outlineb" text="Explore more campaigns" /> */}
                                 PAGINATION
                             </div>
                         ))}

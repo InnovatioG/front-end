@@ -7,7 +7,7 @@ import {
     protocolDefault,
     SubmissionStatusDefaultNames,
 } from '@/utils/populate/defaults';
-import { CampaignDatumStatus_Code_Id, CampaignStatus_Code_Id, MilestoneDatumStatus_Code_Id, MilestoneStatus_Code_Id, SubmissionStatus } from '@/utils/constants/status';
+import { CampaignDatumStatus_Code_Id_Enums, CampaignStatus_Code_Id_Enums, MilestoneDatumStatus_Code_Id_Enums, MilestoneStatus_Code_Id_Enums, SubmissionStatus_Enums } from '@/utils/constants/status';
 import { applyParamsToScript, Data, Lucid, MintingPolicy, UTxO, Validator } from 'lucid-cardano';
 import { NextApiResponse } from 'next';
 import { User } from 'next-auth';
@@ -336,7 +336,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         //--------------------------------------
         const CampaignStatusBackEndApplied = (await import('./CampaignStatus.BackEnd.Api.Handlers')).CampaignStatusBackEndApplied;
         //--------------------------------------
-        const campaignStatuses = Object.values(CampaignStatus_Code_Id).filter((value) => typeof value === 'number') as CampaignStatus_Code_Id[];
+        const campaignStatuses = Object.values(CampaignStatus_Code_Id_Enums).filter((value) => typeof value === 'number') as CampaignStatus_Code_Id_Enums[];
         //--------------------------------------
         for (const status of campaignStatuses) {
             console.log(`State: ${status}, Description: ${CampaignStatusDefaultNames[status]}`);
@@ -359,7 +359,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         //--------------------------------------
         const MilestoneStatusBackEndApplied = (await import('./MilestoneStatus.BackEnd.Api.Handlers')).MilestoneStatusBackEndApplied;
         //--------------------------------------
-        const milestoneStatuses = Object.values(MilestoneStatus_Code_Id).filter((value) => typeof value === 'number') as MilestoneStatus_Code_Id[];
+        const milestoneStatuses = Object.values(MilestoneStatus_Code_Id_Enums).filter((value) => typeof value === 'number') as MilestoneStatus_Code_Id_Enums[];
         //--------------------------------------
         for (const status of milestoneStatuses) {
             console.log(`State: ${status}, Description: ${MilestoneStatusDefaultNames[status]}`);
@@ -404,7 +404,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         //--------------------------------------
         const SubmissionStatusBackEndApplied = (await import('./SubmissionStatus.BackEnd.Api.Handlers')).SubmissionStatusBackEndApplied;
         //--------------------------------------
-        const submissionStatuses = Object.values(SubmissionStatus).filter((value) => typeof value === 'number') as SubmissionStatus[];
+        const submissionStatuses = Object.values(SubmissionStatus_Enums).filter((value) => typeof value === 'number') as SubmissionStatus_Enums[];
         //--------------------------------------
         for (const status of submissionStatuses) {
             console.log(`State: ${status}, Description: ${SubmissionStatusDefaultNames[status]}`);
@@ -537,7 +537,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         const CampaignStatusBackEndApplied = (await import('./CampaignStatus.BackEnd.Api.Handlers')).CampaignStatusBackEndApplied;
 
         // Get enum value from status name
-        const code_id = CampaignStatus_Code_Id[statusName as keyof typeof CampaignStatus_Code_Id];
+        const code_id = CampaignStatus_Code_Id_Enums[statusName as keyof typeof CampaignStatus_Code_Id_Enums];
         if (code_id === undefined) {
             throw new Error(`Invalid status name: ${statusName}`);
         }
@@ -555,7 +555,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         const MilestoneStatusBackEndApplied = (await import('./MilestoneStatus.BackEnd.Api.Handlers')).MilestoneStatusBackEndApplied;
 
         // Get enum value from status name
-        const code_id = MilestoneStatus_Code_Id[statusName as keyof typeof MilestoneStatus_Code_Id];
+        const code_id = MilestoneStatus_Code_Id_Enums[statusName as keyof typeof MilestoneStatus_Code_Id_Enums];
         if (code_id === undefined) {
             throw new Error(`Invalid milestone status name: ${statusName}`);
         }
@@ -573,7 +573,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         const SubmissionStatusBackEndApplied = (await import('./SubmissionStatus.BackEnd.Api.Handlers')).SubmissionStatusBackEndApplied;
 
         // Get enum value from status name
-        const code_id = SubmissionStatus[statusName as keyof typeof SubmissionStatus];
+        const code_id = SubmissionStatus_Enums[statusName as keyof typeof SubmissionStatus_Enums];
         if (code_id === undefined) {
             throw new Error(`Invalid submission status name: ${statusName}`);
         }
@@ -643,72 +643,72 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
 
         const getCampaignDeployedStatus = (statusStr: string): boolean => {
             // First get the numeric status ID
-            const code_id = CampaignStatus_Code_Id[statusStr as keyof typeof CampaignStatus_Code_Id];
+            const code_id = CampaignStatus_Code_Id_Enums[statusStr as keyof typeof CampaignStatus_Code_Id_Enums];
 
             return [
-                CampaignStatus_Code_Id.CONTRACT_STARTED,
-                CampaignStatus_Code_Id.COUNTDOWN,
-                CampaignStatus_Code_Id.FUNDRAISING,
-                CampaignStatus_Code_Id.FINISHING,
-                CampaignStatus_Code_Id.ACTIVE,
-                CampaignStatus_Code_Id.SUCCESS,
-                CampaignStatus_Code_Id.FAILED,
-                CampaignStatus_Code_Id.UNREACHED,
+                CampaignStatus_Code_Id_Enums.CONTRACT_STARTED,
+                CampaignStatus_Code_Id_Enums.COUNTDOWN,
+                CampaignStatus_Code_Id_Enums.FUNDRAISING,
+                CampaignStatus_Code_Id_Enums.FINISHING,
+                CampaignStatus_Code_Id_Enums.ACTIVE,
+                CampaignStatus_Code_Id_Enums.SUCCESS,
+                CampaignStatus_Code_Id_Enums.FAILED,
+                CampaignStatus_Code_Id_Enums.UNREACHED,
             ].includes(code_id);
         };
 
         const getCampaignActiveStatus = (statusStr: string): boolean => {
-            const code_id = CampaignStatus_Code_Id[statusStr as keyof typeof CampaignStatus_Code_Id];
+            const code_id = CampaignStatus_Code_Id_Enums[statusStr as keyof typeof CampaignStatus_Code_Id_Enums];
 
-            return [CampaignStatus_Code_Id.ACTIVE, CampaignStatus_Code_Id.SUCCESS, CampaignStatus_Code_Id.FAILED].includes(code_id);
+            return [CampaignStatus_Code_Id_Enums.ACTIVE, CampaignStatus_Code_Id_Enums.SUCCESS, CampaignStatus_Code_Id_Enums.FAILED].includes(code_id);
         };
 
-        const getCampaignDatumStatus = (statusStr: string): CampaignDatumStatus_Code_Id => {
-            const code_id = CampaignStatus_Code_Id[statusStr as keyof typeof CampaignStatus_Code_Id];
+        const getCampaignDatumStatus = (statusStr: string): CampaignDatumStatus_Code_Id_Enums => {
+            const code_id = CampaignStatus_Code_Id_Enums[statusStr as keyof typeof CampaignStatus_Code_Id_Enums];
 
             // Map Campaign Status to Datum Status
             switch (code_id) {
-                case CampaignStatus_Code_Id.NOT_STARTED:
-                case CampaignStatus_Code_Id.CREATED:
-                case CampaignStatus_Code_Id.SUBMITTED:
-                case CampaignStatus_Code_Id.REJECTED:
-                case CampaignStatus_Code_Id.APPROVED:
-                case CampaignStatus_Code_Id.CONTRACT_CREATED:
-                case CampaignStatus_Code_Id.CONTRACT_PUBLISHED:
-                case CampaignStatus_Code_Id.CONTRACT_STARTED:
-                    return CampaignDatumStatus_Code_Id.CsCreated;
-                case CampaignStatus_Code_Id.COUNTDOWN:
-                case CampaignStatus_Code_Id.FUNDRAISING:
-                case CampaignStatus_Code_Id.FINISHING:
-                    return CampaignDatumStatus_Code_Id.CsInitialized;
-                case CampaignStatus_Code_Id.ACTIVE:
-                case CampaignStatus_Code_Id.SUCCESS:
-                    return CampaignDatumStatus_Code_Id.CsReached;
-                case CampaignStatus_Code_Id.UNREACHED:
-                    return CampaignDatumStatus_Code_Id.CsNotReached;
-                case CampaignStatus_Code_Id.FAILED:
-                    return CampaignDatumStatus_Code_Id.CsFailedMilestone;
+                case CampaignStatus_Code_Id_Enums.NOT_STARTED:
+                case CampaignStatus_Code_Id_Enums.CREATED:
+                case CampaignStatus_Code_Id_Enums.SUBMITTED:
+                case CampaignStatus_Code_Id_Enums.REJECTED:
+                case CampaignStatus_Code_Id_Enums.APPROVED:
+                case CampaignStatus_Code_Id_Enums.CONTRACT_CREATED:
+                case CampaignStatus_Code_Id_Enums.CONTRACT_PUBLISHED:
+                case CampaignStatus_Code_Id_Enums.CONTRACT_STARTED:
+                    return CampaignDatumStatus_Code_Id_Enums.CsCreated;
+                case CampaignStatus_Code_Id_Enums.COUNTDOWN:
+                case CampaignStatus_Code_Id_Enums.FUNDRAISING:
+                case CampaignStatus_Code_Id_Enums.FINISHING:
+                    return CampaignDatumStatus_Code_Id_Enums.CsInitialized;
+                case CampaignStatus_Code_Id_Enums.ACTIVE:
+                case CampaignStatus_Code_Id_Enums.SUCCESS:
+                    return CampaignDatumStatus_Code_Id_Enums.CsReached;
+                case CampaignStatus_Code_Id_Enums.UNREACHED:
+                    return CampaignDatumStatus_Code_Id_Enums.CsNotReached;
+                case CampaignStatus_Code_Id_Enums.FAILED:
+                    return CampaignDatumStatus_Code_Id_Enums.CsFailedMilestone;
                 default:
                     throw new Error(`Invalid campaign status: ${statusStr}`);
             }
         };
 
-        const getMilestoneDatumStatus = (statusStr: string): MilestoneDatumStatus_Code_Id => {
-            const code_id = MilestoneStatus_Code_Id[statusStr as keyof typeof MilestoneStatus_Code_Id];
+        const getMilestoneDatumStatus = (statusStr: string): MilestoneDatumStatus_Code_Id_Enums => {
+            const code_id = MilestoneStatus_Code_Id_Enums[statusStr as keyof typeof MilestoneStatus_Code_Id_Enums];
 
             // Map Milestone Status to Datum Status
             switch (code_id) {
-                case MilestoneStatus_Code_Id.NOT_STARTED:
-                case MilestoneStatus_Code_Id.STARTED:
-                case MilestoneStatus_Code_Id.SUBMITTED:
-                case MilestoneStatus_Code_Id.REJECTED:
-                    return MilestoneDatumStatus_Code_Id.MsCreated;
-                case MilestoneStatus_Code_Id.COLLECT:
-                    return MilestoneDatumStatus_Code_Id.MsSuccess;
-                case MilestoneStatus_Code_Id.FINISHED:
-                    return MilestoneDatumStatus_Code_Id.MsSuccess;
-                case MilestoneStatus_Code_Id.FAILED:
-                    return MilestoneDatumStatus_Code_Id.MsFailed;
+                case MilestoneStatus_Code_Id_Enums.NOT_STARTED:
+                case MilestoneStatus_Code_Id_Enums.STARTED:
+                case MilestoneStatus_Code_Id_Enums.SUBMITTED:
+                case MilestoneStatus_Code_Id_Enums.REJECTED:
+                    return MilestoneDatumStatus_Code_Id_Enums.MsCreated;
+                case MilestoneStatus_Code_Id_Enums.COLLECT:
+                    return MilestoneDatumStatus_Code_Id_Enums.MsSuccess;
+                case MilestoneStatus_Code_Id_Enums.FINISHED:
+                    return MilestoneDatumStatus_Code_Id_Enums.MsSuccess;
+                case MilestoneStatus_Code_Id_Enums.FAILED:
+                    return MilestoneDatumStatus_Code_Id_Enums.MsFailed;
                 default:
                     throw new Error(`Invalid milestone status: ${statusStr}`);
             }
@@ -907,7 +907,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         }
 
         const getCampaignActiveStatus = (code_id: number): boolean => {
-            return [CampaignStatus_Code_Id.ACTIVE, CampaignStatus_Code_Id.SUCCESS, CampaignStatus_Code_Id.FAILED].includes(code_id);
+            return [CampaignStatus_Code_Id_Enums.ACTIVE, CampaignStatus_Code_Id_Enums.SUCCESS, CampaignStatus_Code_Id_Enums.FAILED].includes(code_id);
         };
 
         const isActive = getCampaignActiveStatus(statusEntity.code_id);

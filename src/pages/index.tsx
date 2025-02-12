@@ -1,6 +1,7 @@
 import CampaignsDashboard from '@/components/Campaigns/CampaignsDashboard/CampaignsDashboard';
 import CampaignsHighlights from '@/components/Campaigns/CampaignsHighlights/CampaignsHighlights';
 import styles from '@/styles/Home.module.scss';
+import { CampaignViewForEnums } from '@/utils/constants/constants';
 import { PEOPLE } from '@/utils/constants/images';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -26,7 +27,7 @@ export default function Index() {
                 </div>
             </main>
             <CampaignsHighlights />
-            <CampaignsDashboard />
+            <CampaignsDashboard campaignViewFor={CampaignViewForEnums.home} />
         </>
     );
 }

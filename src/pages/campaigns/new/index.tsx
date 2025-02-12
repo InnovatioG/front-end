@@ -1,19 +1,18 @@
-import CampaignsDashboard from '@/components/Campaigns/CampaignsDashboard/CampaignsDashboard';
+import BtnConnectWallet from '@/components/GeneralOK/Buttons/Buttons/BtnConnectWallet/BtnConnectWallet';
+import { useResponsive } from '@/contexts/ResponsiveContext';
 import React from 'react';
 import { useWalletStore } from 'smart-db';
 import styles from './index.module.scss';
-import BtnConnectWallet from '@/components/General/Buttons/ConnectWallet/BtnConnectWallet';
-import { useScreenSize } from '@/hooks/useScreenSize';
 
-interface CampaignsManagePageProps {
+interface CampaignsCreationPageProps {
     // Define props here
 }
 
-const CampaignsManagePage: React.FC<CampaignsManagePageProps> = (props) => {
+const CampaignsCreationPage: React.FC<CampaignsCreationPageProps> = (props) => {
     const walletStore = useWalletStore();
-    const screenSize = useScreenSize();
+    const { screenSize } = useResponsive();
 
-    const title = () => (walletStore.isConnected && walletStore.isCoreTeam() ? 'PROTOCOL TEAM' : 'CAMPAIGN MANAGERS');
+    const title = () => (walletStore.isConnected && walletStore.isCoreTeam() ? 'PROTOCOL TEAM' : 'CAMPAIGN MANAGER');
 
     return (
         <>
@@ -29,11 +28,11 @@ const CampaignsManagePage: React.FC<CampaignsManagePageProps> = (props) => {
             ) : (
                 <div className={styles.draftSection}>
                     <h2 className={styles.title}>{title()}</h2>
-                    
+                    AQUI VA EL FORM
                 </div>
             )}
         </>
     );
 };
 
-export default CampaignsManagePage;
+export default CampaignsCreationPage;

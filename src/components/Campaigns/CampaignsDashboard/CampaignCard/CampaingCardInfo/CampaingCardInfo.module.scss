@@ -24,7 +24,7 @@
             padding: 2rem 2rem;
             height: 8.625rem;
 
-            @extend .status;
+            @extend .campaingStatus;
 
             &.light {
                 background-color: colors.$light-color;

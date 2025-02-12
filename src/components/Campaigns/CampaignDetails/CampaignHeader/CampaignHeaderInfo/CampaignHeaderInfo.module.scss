@@ -30,14 +30,14 @@
     height: 100%;
     text-transform: capitalize;
 
-    @extend .status;
+    @extend .campaingStatus;
 }
 
 .status {
     font: fonts.$f50-medium;
     color: colors.$primary-font;
 
-    @extend .status;
+    @extend .campaingStatus;
 }
 
 .investors {

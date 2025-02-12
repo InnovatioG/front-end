@@ -21,6 +21,14 @@ interface IGeneralStore {
     setPriceADAOrDollar: (price: 'dollar' | 'ada') => void;
     setWallet: (info?: ConnectedWalletInfo) => void;
     refreshHaveCampaigns: (info?: ConnectedWalletInfo) => Promise<void>;
+    _DebugIsAdmin?: boolean;
+    _DebugIsEditor?: boolean;
+    _DebugIsProtocolTeam?: boolean;
+    isProtocolTeam: boolean;
+    setDebugIsAdmin: (isAdmin?: boolean) => void;
+    setDebugIsEditor: (isEditor?: boolean) => void;
+    setDebugIsProtocolTeam: (isProtocolTeam?: boolean) => void;
+    setIsProtocolTeam: (isProtocolTeam: boolean) => void;
 }
 
 export const useGeneralStore = create<IGeneralStore>()(
@@ -32,6 +40,26 @@ export const useGeneralStore = create<IGeneralStore>()(
         wallet: undefined,
         haveCampaigns: false,
         priceADAOrDollar: 'dollar',
+        _DebugIsAdmin: undefined,
+        _DebugIsEditor: undefined,
+        _DebugIsProtocolTeam: undefined,
+        isProtocolTeam: false,
+        setDebugIsAdmin: (isAdmin) =>
+            set((state) => {
+                state._DebugIsAdmin = isAdmin;
+            }),
+        setDebugIsEditor: (isEditor) =>
+            set((state) => {
+                state._DebugIsEditor = isEditor;
+            }),
+        setDebugIsProtocolTeam: (isProtocolTeam) =>
+            set((state) => {
+                state._DebugIsProtocolTeam = isProtocolTeam;
+            }),
+        setIsProtocolTeam: (isProtocolTeam) =>
+            set((state) => {
+                state.isProtocolTeam = isProtocolTeam;
+            }),
         setPriceADAOrDollar: (price) =>
             set((state) => {
                 state.priceADAOrDollar = price;
