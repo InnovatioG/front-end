@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import styles from './BtnGeneral.module.scss';
 
 interface BtnGeneralProps {
@@ -12,22 +12,26 @@ interface BtnGeneralProps {
     className?: string;
 }
 
-const BtnGeneral: React.FC<BtnGeneralProps> = ({ text, onClick, disabled, classNameStyle, type = 'button', loading = false, children }) => {
-   
-    return (
-        <button
-            type={type}
-            className={`${styles.generalButton} ${classNameStyle
-                ?.split(' ')
-                .map((cls) => styles[cls])
-                .join(' ')}`}
-            onClick={onClick}
-            disabled={disabled || loading}
-        >
-            <span className={styles.span}>{text}</span>
-            {children}
-        </button>
-    );
-};
+const BtnGeneral = forwardRef<HTMLButtonElement, BtnGeneralProps>(
+    ({ text, onClick, disabled, classNameStyle, type = 'button', loading = false, children }, ref) => {
+        return (
+            <button
+                ref={ref} // ✅ Pass the ref to the button
+                type={type}
+                className={`${styles.generalButton} ${classNameStyle
+                    ?.split(' ')
+                    .map((cls) => styles[cls])
+                    .join(' ')}`}
+                onClick={onClick}
+                disabled={disabled || loading}
+            >
+                <span className={styles.span}>{text}</span>
+                {children}
+            </button>
+        );
+    }
+);
+
+BtnGeneral.displayName = 'BtnGeneral';
 
 export default BtnGeneral;

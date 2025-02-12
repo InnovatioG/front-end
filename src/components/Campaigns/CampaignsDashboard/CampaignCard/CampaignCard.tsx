@@ -73,28 +73,6 @@ export default function CampaignCard(props: CampaignCardProps) {
             <div className={styles.cardButtons}>
                 {buttonsForCards.map((button: ButtonType, index: number) => (
                     <BtnCampaignActions key={index} button={button} data={{ id: campaign.campaign._DB_id }} navigate={router.push} openModal={openModal} handles={undefined} />
-                    // if (button.link) {
-                    //     return (
-                    //         <Link key={index} href={button.link(campaign.campaign._DB_id)}>
-                    //             <BtnGeneral
-                    //                 text={`${button.label} >`}
-                    //                 onClick={() => null}
-                    //                 // onClick={() => button.action && button.action((modalType) => openModal(modalType /* campaign._DB_id */))}
-                    //                 classNameStyle={`${button.classNameType}`}
-                    //             ></BtnGeneral>
-                    //         </Link>
-                    //     );
-                    // } else {
-                    //     return (
-                    //         <BtnGeneral
-                    //             key={index}
-                    //             text={`${button.label} >`}
-                    //             onClick={() => null}
-                    //             // onClick={() => button.action && button.action((modalType) => openModal(modalType /* campaign._DB_id, campaign */))}
-                    //             classNameStyle={`${button.classNameType}`}
-                    //         ></BtnGeneral>
-                    //     );
-                    // }
                 ))}
             </div>
         </div>

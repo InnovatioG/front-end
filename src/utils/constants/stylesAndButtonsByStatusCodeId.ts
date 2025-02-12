@@ -7,7 +7,7 @@ export interface ButtonType {
     label: string;
     action: (
         data?: Record<string, any>,
-        navigate?: (url: string) => void,
+        navigate?: (url: string, as?: string, options?: any) => void,
         openModal?: (modal: ModalEnums, data?: Record<string, any>) => void,
         handles?: Partial<Record<HandleEnums, (data?: Record<string, any>) => Promise<void>>>
     ) => Promise<void>;
@@ -118,7 +118,7 @@ export enum ButtonTypeEnum {
     VIEW_CAMPAIGN = 'VIEW_CAMPAIGN',
     VIEW_CAMPAIGN_BLACK = 'VIEW_CAMPAIGN_BLACK',
     LEARN_MORE = 'LEARN_MORE',
-    RENDER_CAMPAIGN = 'RENDER_CAMPAIGN',
+    RENDER_CAMPAIGN_FOR_MANAGE = 'RENDER_CAMPAIGN',
 
     MANAGE_CAMPAIGN_FOR_CARD = 'MANAGE_CAMPAIGN_FOR_CARD',
     MANAGE_CAMPAIGN_FOR_DETAILS = 'MANAGE_CAMPAIGN_FOR_DETAILS',
@@ -191,10 +191,10 @@ export const ButtonTypes: Record<ButtonTypeEnum, ButtonType> = {
         },
         classNameType: 'fill center',
     },
-    [ButtonTypeEnum.RENDER_CAMPAIGN]: {
+    [ButtonTypeEnum.RENDER_CAMPAIGN_FOR_MANAGE]: {
         label: 'View',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignView(data.id)}`);
+            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignView(data.id)}`, undefined, { scroll: false });
         },
         classNameType: 'outline-card center',
     },
@@ -209,7 +209,7 @@ export const ButtonTypes: Record<ButtonTypeEnum, ButtonType> = {
     [ButtonTypeEnum.MANAGE_CAMPAIGN_FOR_DETAILS]: {
         label: 'Manage Campaign',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignManage(data.id)}`);
+            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignManage(data.id)}`, undefined, { scroll: false });
         },
         classNameType: 'fill center',
     },
@@ -217,7 +217,7 @@ export const ButtonTypes: Record<ButtonTypeEnum, ButtonType> = {
     [ButtonTypeEnum.EDIT_CAMPAIGN]: {
         label: 'Edit',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignEdit(data.id)}`);
+            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignEdit(data.id)}`, undefined, { scroll: false });
         },
         classNameType: 'fill center',
     },
@@ -226,7 +226,7 @@ export const ButtonTypes: Record<ButtonTypeEnum, ButtonType> = {
         action: async (data, navigate) => {
             // agregar confirm cancel edit
             if (confirm('Are you sure you want to cancel the edition?')) {
-                if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignManage(data.id)}`);
+                if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignManage(data.id)}`, undefined, { scroll: false });
             }
         },
         classNameType: 'fill center',
@@ -240,7 +240,7 @@ export const ButtonTypes: Record<ButtonTypeEnum, ButtonType> = {
                 } else {
                     alert(`No handle ${HandleEnums.saveCampaign} provided`);
                 }
-                if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignManage(data.id)}`);
+                if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignManage(data.id)}`, undefined, { scroll: false });
             }
         },
         classNameType: 'fill center',
@@ -507,7 +507,7 @@ export const campaignConfig = (
             ? [ButtonTypes[ButtonTypeEnum.MANAGE_CAMPAIGN_FOR_DETAILS], ...buttonsNotInManage, ...(swAddContact === true ? [CONTACT] : [])]
             : isEditMode === false
             ? [
-                  ButtonTypes[ButtonTypeEnum.RENDER_CAMPAIGN],
+                  ButtonTypes[ButtonTypeEnum.RENDER_CAMPAIGN_FOR_MANAGE],
                   ButtonTypes[ButtonTypeEnum.EDIT_CAMPAIGN],
                   ...buttonsInManageAndNotInEditMode,
                   ...(swAddContact === true ? [CONTACT] : []),
@@ -519,14 +519,14 @@ export const campaignConfig = (
         return isManagePage === false
             ? [ButtonTypes[ButtonTypeEnum.MANAGE_CAMPAIGN_FOR_DETAILS], ...buttonsNotInManage, ...(swAddContact === true ? [CONTACT] : [])]
             : isEditMode === false
-            ? [ButtonTypes[ButtonTypeEnum.RENDER_CAMPAIGN], ...buttonsInManageAndNotInEditMode, ...(swAddContact === true ? [CONTACT] : [])]
+            ? [ButtonTypes[ButtonTypeEnum.RENDER_CAMPAIGN_FOR_MANAGE], ...buttonsInManageAndNotInEditMode, ...(swAddContact === true ? [CONTACT] : [])]
             : [ButtonTypes[ButtonTypeEnum.CANCEL_EDIT_CAMPAIGN], ButtonTypes[ButtonTypeEnum.SAVE_CAMPAIGN]];
     };
 
     const MANAGE = (buttonsInManageAndNotInEditMode: ButtonType[], buttonsNotInManage: ButtonType[] = [], swAddContact: boolean = false) => {
         return isManagePage === false
             ? [ButtonTypes[ButtonTypeEnum.MANAGE_CAMPAIGN_FOR_DETAILS], ...buttonsNotInManage, ...(swAddContact === true ? [CONTACT] : [])]
-            : [ButtonTypes[ButtonTypeEnum.RENDER_CAMPAIGN], ...buttonsInManageAndNotInEditMode, ...(swAddContact === true ? [CONTACT] : [])];
+            : [ButtonTypes[ButtonTypeEnum.RENDER_CAMPAIGN_FOR_MANAGE], ...buttonsInManageAndNotInEditMode, ...(swAddContact === true ? [CONTACT] : [])];
     };
 
     const VIEW_OR_MANAGE_FOR_CARD = isManagePage === false ? ButtonTypes[ButtonTypeEnum.VIEW_CAMPAIGN] : ButtonTypes[ButtonTypeEnum.MANAGE_CAMPAIGN_FOR_CARD];
@@ -1016,7 +1016,7 @@ export const milestoneConfig = (
             ? [ButtonTypes[ButtonTypeEnum.MANAGE_CAMPAIGN_FOR_DETAILS], ...buttonsNotInManage, ...(swAddContact === true ? [CONTACT] : [])]
             : isEditMode === false
             ? [
-                  ButtonTypes[ButtonTypeEnum.RENDER_CAMPAIGN],
+                  ButtonTypes[ButtonTypeEnum.RENDER_CAMPAIGN_FOR_MANAGE],
                   ButtonTypes[ButtonTypeEnum.EDIT_CAMPAIGN],
                   ...buttonsInManageAndNotInEditMode,
                   ...(swAddContact === true ? [CONTACT] : []),
@@ -1028,14 +1028,14 @@ export const milestoneConfig = (
         return isManagePage === false
             ? [ButtonTypes[ButtonTypeEnum.MANAGE_CAMPAIGN_FOR_DETAILS], ...buttonsNotInManage, ...(swAddContact === true ? [CONTACT] : [])]
             : isEditMode === false
-            ? [ButtonTypes[ButtonTypeEnum.RENDER_CAMPAIGN], ...buttonsInManageAndNotInEditMode, ...(swAddContact === true ? [CONTACT] : [])]
+            ? [ButtonTypes[ButtonTypeEnum.RENDER_CAMPAIGN_FOR_MANAGE], ...buttonsInManageAndNotInEditMode, ...(swAddContact === true ? [CONTACT] : [])]
             : [ButtonTypes[ButtonTypeEnum.SAVE_CAMPAIGN]];
     };
 
     const MANAGE = (buttonsInManageAndNotInEditMode: ButtonType[], buttonsNotInManage: ButtonType[] = [], swAddContact: boolean = false) => {
         return isManagePage === false
             ? [ButtonTypes[ButtonTypeEnum.MANAGE_CAMPAIGN_FOR_DETAILS], ...buttonsNotInManage, ...(swAddContact === true ? [CONTACT] : [])]
-            : [ButtonTypes[ButtonTypeEnum.RENDER_CAMPAIGN], ...buttonsInManageAndNotInEditMode, ...(swAddContact === true ? [CONTACT] : [])];
+            : [ButtonTypes[ButtonTypeEnum.RENDER_CAMPAIGN_FOR_MANAGE], ...buttonsInManageAndNotInEditMode, ...(swAddContact === true ? [CONTACT] : [])];
     };
 
     const VIEW_OR_MANAGE_FOR_CARDS = isManagePage === false ? ButtonTypes[ButtonTypeEnum.VIEW_CAMPAIGN] : ButtonTypes[ButtonTypeEnum.MANAGE_CAMPAIGN_FOR_DETAILS];

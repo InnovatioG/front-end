@@ -68,10 +68,6 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
         if (isProtocolTeam === 'true' || isProtocolTeam === 'false') {
             setDebugIsProtocolTeam(isProtocolTeam === 'true');
         }
-
-        console.log('isAdmin', isAdmin);
-        console.log('isEditor', isEditor);
-        console.log('isProtocolTeam', isProtocolTeam);
     }, [router.query]); // Se ejecuta cuando los parámetros de la URL cambian
 
     return (

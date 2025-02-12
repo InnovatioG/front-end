@@ -12,7 +12,7 @@ const EmptyState: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props: IC
         <article className={styles.emptyStateContainer}>
             <h2 className={styles.emptyStateText}>No content available</h2>
             <div className={styles.buttonContainer}>
-                <Link href={ROUTES.campaignDynamicTab(campaign.campaign._DB_id, campaignTab, campaignViewFor, isEditMode)}>
+                <Link href={ROUTES.campaignDynamicTab(campaign.campaign._DB_id, campaignTab, campaignViewFor, true)}>
                     <BtnGeneral onClick={() => {}} classNameStyle="outlineb">
                         <div className={styles.scontainer}>Start editing your content!</div>
                     </BtnGeneral>

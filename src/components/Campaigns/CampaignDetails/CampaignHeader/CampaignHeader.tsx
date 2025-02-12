@@ -35,6 +35,30 @@ const CampaignHeader: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props
                         <Link href={ROUTES.campaignEdit(campaign.campaign._DB_id, campaignTab)}>Edit</Link>
                     </p>
                 )} */}
+
+                {campaignViewFor === CampaignViewForEnums.manage && isEditMode === false && (
+                    <p>
+                        {isProtocolTeam === true
+                            ? `- PROTOCOL TEAM - MANAGE CAMPAIGN`
+                            : isAdmin === true
+                            ? `- ADMIN - MANAGE CAMPAIGN`
+                            : isEditor === true
+                            ? `- EDITOR - MANAGE CAMPAIGN`
+                            : null}
+                    </p>
+                )}
+
+                {campaignViewFor === CampaignViewForEnums.manage && isEditMode === true && (
+                    <p>
+                        {isProtocolTeam === true
+                            ? `- PROTOCOL TEAM - EDIT CAMPAIGN`
+                            : isAdmin === true
+                            ? `- ADMIN - EDIT CAMPAIGN`
+                            : isEditor === true
+                            ? `- EDITOR - EDIT CAMPAIGN`
+                            : null}
+                    </p>
+                )}
             </div>
             <article className={styles.dashboardCampaignContainer}>
                 <div className={styles.imagenContainer}>

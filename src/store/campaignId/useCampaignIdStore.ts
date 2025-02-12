@@ -75,10 +75,6 @@ export const useCampaignIdStore = create<ICampaignIdStore>()(
             set((state) => {
                 state.isLoading = true;
                 state.error = '';
-                state.campaign = undefined;
-                state.milestoneCurrent = undefined;
-                state.campaignTab = undefined;
-                state.isEditMode = false;
             });
 
             try {

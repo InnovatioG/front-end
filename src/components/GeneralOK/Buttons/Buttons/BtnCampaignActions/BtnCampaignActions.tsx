@@ -7,7 +7,7 @@ import { HandleEnums, ModalEnums } from '@/utils/constants/constants';
 interface BtnCampaignActionsProps {
     button: ButtonType;
     data?: Record<string, any>;
-    navigate?: (url: string) => void;
+    navigate?: (url: string, as?: string, options?: any) => void;
     openModal?: (modal: ModalEnums, data?: Record<string, any>) => void,
     handles?: Partial<Record<HandleEnums, (data?: Record<string, any>) => Promise<void>>>;
 }

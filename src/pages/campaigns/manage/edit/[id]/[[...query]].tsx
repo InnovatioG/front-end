@@ -73,7 +73,7 @@ const CampaignsManageEditPage: React.FC<CampaignsManageEditPageProps> = (props) 
     } else {
         return (
             <div className={styles.draftSection}>
-                <h2 className={styles.title}>{title()}</h2>
+                {/* <h2 className={styles.title}>{title()}</h2> */}
                 <CampaignsDetails campaignViewFor={CampaignViewForEnums.manage} />
             </div>
         );

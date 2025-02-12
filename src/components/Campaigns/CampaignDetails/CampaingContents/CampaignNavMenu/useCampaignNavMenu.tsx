@@ -14,12 +14,10 @@ const useCampaignNavMenu = (props: ICampaignIdStoreSafe & ICampaignDetails) => {
 
     const handleTabChangeMobile = (tab: CampaignTabEnum) => {
         setIsOpen(!isOpen);
-        // setCampaignTab(tab);
         router.push(ROUTES.campaignDynamicTab(campaign.campaign._DB_id, tab, campaignViewFor, isEditMode), undefined, { shallow: true });
     };
 
     const handleTabChange = (tab: CampaignTabEnum) => {
-        // setCampaignTab(tab);
         router.push(ROUTES.campaignDynamicTab(campaign.campaign._DB_id, tab, campaignViewFor, isEditMode), undefined, { shallow: true });
     };
   

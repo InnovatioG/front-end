@@ -73,7 +73,7 @@ const CampaignsManageDetailsPage: React.FC<CampaignsManageDetailsPageProps> = (p
     } else {
         return (
             <div className={styles.draftSection}>
-                <h2 className={styles.title}>{title()}</h2>
+                {/* <h2 className={styles.title}>{title()}</h2> */}
                 <CampaignsDetails campaignViewFor={CampaignViewForEnums.manage} />
             </div>
         );

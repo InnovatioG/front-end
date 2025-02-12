@@ -19,7 +19,8 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ children, ...props }) => 
     return (
         <AccordionPrimitive.Item {...props}>
             {React.Children.map(children, (child) => {
-                if (React.isValidElement(child)) {
+                if (React.isValidElement(child) && child.type === AccordionTrigger) {
+                    // ✅ Only pass to AccordionTrigger
                     return React.cloneElement(child as React.ReactElement<any>, { open, toggleOpen });
                 }
                 return child;
