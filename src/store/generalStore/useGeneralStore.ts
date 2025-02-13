@@ -5,6 +5,7 @@ import { ConnectedWalletInfo, isNullOrBlank, WalletEntity, WalletFrontEndApiCall
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import axios from 'axios';
+import { formatMoney } from '@/utils/formats';
 
 interface IGeneralStore {
     campaignCategories: CampaignCategoryEntity[];
@@ -21,10 +22,12 @@ interface IGeneralStore {
     setPriceADAOrDollar: (price: 'dollar' | 'ada') => void;
     setWallet: (info?: ConnectedWalletInfo) => void;
     refreshHaveCampaigns: (info?: ConnectedWalletInfo) => Promise<void>;
+    showDebug?: boolean;
     _DebugIsAdmin?: boolean;
     _DebugIsEditor?: boolean;
     _DebugIsProtocolTeam?: boolean;
     isProtocolTeam: boolean;
+    setShowDebug: (showDebug: boolean) => void;
     setDebugIsAdmin: (isAdmin?: boolean) => void;
     setDebugIsEditor: (isEditor?: boolean) => void;
     setDebugIsProtocolTeam: (isProtocolTeam?: boolean) => void;
@@ -44,6 +47,11 @@ export const useGeneralStore = create<IGeneralStore>()(
         _DebugIsEditor: undefined,
         _DebugIsProtocolTeam: undefined,
         isProtocolTeam: false,
+        showDebug: false,
+        setShowDebug: (showDebug) =>
+            set((state) => {
+                state.showDebug = showDebug;
+            }),
         setDebugIsAdmin: (isAdmin) =>
             set((state) => {
                 state._DebugIsAdmin = isAdmin;
@@ -208,4 +216,15 @@ export const fetchGeneralStoreData = async () => {
     } catch (error) {
         console.error('Error fetching all data:', error);
     }
+};
+
+export const formatMoneyByADAOrDollar = (value: number | bigint) => {
+    if (typeof value !== 'number' && value !== undefined) {
+        value = Number(value);
+    }
+    if (useGeneralStore.getState().priceADAOrDollar === 'dollar') {
+        if (!useGeneralStore.getState().adaPrice) return formatMoney(Number(value), 'ADA');
+        return formatMoney(Number(value) / Number(useGeneralStore.getState().adaPrice), 'USD');
+    }
+    return formatMoney(Number(value), 'ADA');
 };

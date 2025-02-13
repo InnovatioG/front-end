@@ -9,16 +9,16 @@ import AddMore from '@/components/General/Buttons/AddMore/AddMore';
 import FramerMotionAnimation from '@/utils/framerMotion';
 import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 import Image from 'next/image';
-import { CampaignViewForEnums } from '@/utils/constants/constants';
+import { PageViewEnums } from '@/utils/constants/routes';
 
 const CampaignFaqsTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props) => {
     const { faqs, isOpen, newQa, handleNewQa, handleQuestionOpen, handleChange, handleRemoveQa, setIsOpen } = useCampaignFaqsTab(props);
 
-    if ((faqs === undefined || faqs.length === 0) && props.campaignViewFor === CampaignViewForEnums.manage && props.isEditMode === false) {
+    if ((faqs === undefined || faqs.length === 0) && props.pageView === PageViewEnums.MANAGE && props.isEditMode === false) {
         return <EmptyState {...props} />;
     }
 
-    if (props.campaignViewFor === CampaignViewForEnums.manage && props.isEditMode === true) {
+    if (props.pageView === PageViewEnums.MANAGE && props.isEditMode === true) {
         return (
             <div className={styles.generalContainer}>
                 {faqs?.map((faq, index) => (

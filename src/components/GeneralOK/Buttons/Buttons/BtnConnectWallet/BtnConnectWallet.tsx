@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { useWalletActions } from 'smart-db';
 import styles from './BtnConnectWallet.module.scss';
-import { ModalEnums } from '@/utils/constants/constants';
+import { ModalsEnums } from '@/utils/constants/constants';
 
 interface BtnConnectProps {
     type: 'mobile' | 'primary' | 'secondary';
@@ -30,7 +30,7 @@ const BtnConnectMobile: React.FC<SubComponentProps> = () => {
     //--------------------------------------
     const handleClick = () => {
         if (walletStore.isConnected !== true) {
-            openModal(ModalEnums.walletConnect);
+            openModal(ModalsEnums.WALLET_CONNECT);
         } else {
             setShowDisconnect(!showDisconnect);
         }
@@ -57,7 +57,7 @@ const BtnConnectPrimary: React.FC<SubComponentProps> = ({ width }) => {
     const { openModal } = useModal();
     //--------------------------------------
     const handleClick = () => {
-        openModal(ModalEnums.walletConnect);
+        openModal(ModalsEnums.WALLET_CONNECT);
     };
     return (
         <button
@@ -84,7 +84,7 @@ const BtnConnectSecondary: React.FC<SecondarySubComponentProps> = ({ width }) =>
     const { openModal } = useModal();
     //--------------------------------------
     const handleClick = () => {
-        openModal(ModalEnums.walletConnect);
+        openModal(ModalsEnums.WALLET_CONNECT);
     };
 
     return (

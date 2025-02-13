@@ -18,6 +18,10 @@
         display: flex;
         justify-content: space-between;
 
+        .pictureContainer {
+            cursor: pointer;
+        }
+
         .cardDetails {
             display: flex;
             height: 30px;
@@ -72,6 +76,7 @@
     .cardTitle {
         width: 100%;
         font: fonts.$f500-medium;
+        cursor: pointer;
     }
     .cardDescription {
         width: 100%;

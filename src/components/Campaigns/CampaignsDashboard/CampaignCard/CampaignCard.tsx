@@ -1,33 +1,35 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/DefaultAvatar/DefaultAvatar';
 import { BtnCampaignActions } from '@/components/GeneralOK/Buttons/Buttons/BtnCampaignActions/BtnCampaignActions';
-import { useModal } from '@/contexts/ModalContext';
 import { useCampaignDetails } from '@/hooks/useCampaingDetails';
+import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 import type { CampaignEX } from '@/types/types';
-import { CampaignViewForEnums } from '@/utils/constants/constants';
+import { ButtonType } from '@/utils/constants/buttons';
 import { TWO_USERS } from '@/utils/constants/images';
-import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status';
-import { ButtonType } from '@/utils/constants/stylesAndButtonsByStatusCodeId';
-import { useRouter } from 'next/router';
+import { CampaignTabEnum, PageViewEnums, ROUTES } from '@/utils/constants/routes';
+import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status/status';
+import { formatAllTime } from '@/utils/formats';
+import Link from 'next/link';
 import styles from './CampaignCard.module.scss';
 import CampaingCardInfo from './CampaingCardInfo/CampaingCardInfo';
 
 interface CampaignCardProps {
     campaign: CampaignEX;
-    campaignViewFor: CampaignViewForEnums;
+    pageView: PageViewEnums;
+    fetchCampaignsEX: () => Promise<void>;
 }
 
 export default function CampaignCard(props: CampaignCardProps) {
+    const { showDebug } = useGeneralStore();
+
     const { campaign } = props;
 
     const propsCampaignDetails = useCampaignDetails({ isEditMode: false, ...props });
-    const { openModal } = useModal();
-    const router = useRouter();
 
     const {
         isProtocolTeam,
         isAdmin,
         isEditor,
-        campaignViewFor,
+        pageView,
         campaign_category_name,
         campaign_status_code_id,
         label,
@@ -35,22 +37,23 @@ export default function CampaignCard(props: CampaignCardProps) {
         buttonsForCards,
         timeRemainingBeginAt,
         timeRemainingDeadline,
-        formatAllTime,
         currentMilestoneIndex,
         currentMilestoneString,
         currentMilestoneStringOrdinal,
         totalMilestones,
-        formatMoneyByADAOrDollar,
         fundedPercentage,
+        handles,
     } = propsCampaignDetails;
 
     return (
         <div className={styles.campaignCard}>
             <div className={styles.headCard}>
-                <Avatar big={false} className={styles.pictureContainer}>
-                    <AvatarImage src={campaign.campaign.logo_url} alt={campaign.campaign.name} />
-                    <AvatarFallback>{campaign.campaign.name.slice(0, 2)}</AvatarFallback>
-                </Avatar>
+                <Link href={`${ROUTES.campaignViewTab(campaign.campaign._DB_id, CampaignTabEnum.DETAILS)}`}>
+                    <Avatar big={false} className={styles.pictureContainer}>
+                        <AvatarImage src={campaign.campaign.logo_url} alt={campaign.campaign.name} />
+                        <AvatarFallback>{campaign.campaign.name.slice(0, 2)}</AvatarFallback>
+                    </Avatar>
+                </Link>
                 <div className={styles.cardDetails}>
                     <div className={styles.statusContainer}>
                         <div className={`${styles.status} ${styles[labelClass]}`}>
@@ -66,13 +69,15 @@ export default function CampaignCard(props: CampaignCardProps) {
                     </div>
                 </div>
             </div>
-            <h3 className={styles.cardTitle}>{campaign.campaign.name}</h3>
+            <Link href={`${ROUTES.campaignViewTab(campaign.campaign._DB_id, CampaignTabEnum.DETAILS)}`}>
+                <h3 className={styles.cardTitle}>{campaign.campaign.name}</h3>
+            </Link>
             <p className={styles.cardDescription}>{campaign.campaign.description}</p>
-            {`DEBUG - isAdmin: ${isAdmin} - isEditor: ${isEditor}`}
+            {showDebug && `DEBUG - isAdmin: ${isAdmin} - isEditor: ${isEditor}`}
             <CampaingCardInfo campaign={campaign} {...propsCampaignDetails} />
             <div className={styles.cardButtons}>
                 {buttonsForCards.map((button: ButtonType, index: number) => (
-                    <BtnCampaignActions key={index} button={button} data={{ id: campaign.campaign._DB_id }} navigate={router.push} openModal={openModal} handles={undefined} />
+                    <BtnCampaignActions key={index} button={button} data={{ id: campaign.campaign._DB_id }} handles={handles} />
                 ))}
             </div>
         </div>

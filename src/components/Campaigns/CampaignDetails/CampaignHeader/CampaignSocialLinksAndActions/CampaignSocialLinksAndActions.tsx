@@ -4,8 +4,8 @@ import { BtnCampaignActions } from '@/components/GeneralOK/Buttons/Buttons/BtnCa
 import ModalTemplate from '@/components/GeneralOK/Modals/ModalTemplate/ModalTemplate';
 import { ICampaignDetails } from '@/hooks/useCampaingDetails';
 import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
-import { ModalEnums, SocialIcons } from '@/utils/constants/constants';
-import { ButtonType } from '@/utils/constants/stylesAndButtonsByStatusCodeId';
+import { ModalsEnums, SocialLinksIcons } from '@/utils/constants/constants';
+import { ButtonType } from '@/utils/constants/buttons';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -13,23 +13,14 @@ import styles from './CampaignSocialLinksAndActions.module.scss';
 import useCampaignSocialLinksAndActions from './useCampaignSocialLinksAndActions';
 
 const CampaignSocialLinksAndActions: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props: ICampaignIdStoreSafe & ICampaignDetails) => {
-    const { campaign, setCampaign, isEditMode, buttonsForHeader } = props;
+    const { campaign, setCampaign, isEditMode, buttonsForHeader, handles } = props;
 
-    const router = useRouter();
-
-    const { selectedLink, setSelectedLink, getPlaceholder, formatSocialLink, editLinkButton, openModal, closeModal } = useCampaignSocialLinksAndActions(props);
+    const { selectedLink, setSelectedLink, getPlaceholder, formatSocialLink, editLinkButton, closeModal } = useCampaignSocialLinksAndActions(props);
 
     const EditSocialLinkModal = () => {
         const [inputValue, setInputValue] = useState(campaign?.campaign[selectedLink] || '');
 
         const handleConfirm = () => {
-            // setCampaignEX({
-            //     ...campaign,
-            //     campaign: new CampaignEntity({
-            //         ...campaign.campaign,
-            //         [selectedLink]: inputValue,
-            //     }),
-            // });
             let entity = campaign.campaign;
             entity[selectedLink] = inputValue;
             setCampaign(entity);
@@ -42,7 +33,7 @@ const CampaignSocialLinksAndActions: React.FC<ICampaignIdStoreSafe & ICampaignDe
         };
 
         return (
-            <ModalTemplate active={ModalEnums.editSocialLink}>
+            <ModalTemplate active={ModalsEnums.EDIT_SOCIAL_LINK}>
                 <div className={styles.modalContainer}>
                     <h2 className={styles.modalTitle}>Edit {selectedLink}</h2>
                     <div className={styles.inputContainer}>
@@ -68,7 +59,7 @@ const CampaignSocialLinksAndActions: React.FC<ICampaignIdStoreSafe & ICampaignDe
                         <Image src={'/img/icons/right-arrow.svg'} alt="next" width={10} height={10} />
                     </button>
                     <article className={styles.socialContainer}>
-                        {SocialIcons.map((social) => {
+                        {SocialLinksIcons.map((social) => {
                             return <SocialButton key={social.name} icon={social.icon} name={social.name} setSocialLink={setSelectedLink} />;
                         })}
                     </article>
@@ -76,11 +67,11 @@ const CampaignSocialLinksAndActions: React.FC<ICampaignIdStoreSafe & ICampaignDe
             ) : (
                 <>
                     {buttonsForHeader.map((button: ButtonType, index: number) => (
-                        <BtnCampaignActions key={index} button={button} data={{ id: campaign.campaign._DB_id }} navigate={router.push} openModal={openModal} handles={undefined} />
+                        <BtnCampaignActions key={index} button={button} data={{ id: campaign.campaign._DB_id }} handles={handles} />
                     ))}
 
                     <article className={styles.socialContainer}>
-                        {SocialIcons.map((social) => {
+                        {SocialLinksIcons.map((social) => {
                             const socialLink = campaign.campaign[social.name];
                             if (!isEditMode && (!socialLink || socialLink.trim() === '')) return null; // No renderizar si el enlace está vacío y no está en modo edición
                             return (

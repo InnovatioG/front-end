@@ -1,23 +1,24 @@
-import React from 'react';
-import styles from './BtnCampaignActions.module.scss';
-import { ButtonType } from '@/utils/constants/stylesAndButtonsByStatusCodeId';
 import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
-import { HandleEnums, ModalEnums } from '@/utils/constants/constants';
+import { useModal } from '@/contexts/ModalContext';
+import { ButtonType } from '@/utils/constants/buttons';
+import { HandlesEnums } from '@/utils/constants/constants';
+import { useRouter } from 'next/router';
+import React from 'react';
 
 interface BtnCampaignActionsProps {
     button: ButtonType;
     data?: Record<string, any>;
-    navigate?: (url: string, as?: string, options?: any) => void;
-    openModal?: (modal: ModalEnums, data?: Record<string, any>) => void,
-    handles?: Partial<Record<HandleEnums, (data?: Record<string, any>) => Promise<void>>>;
+    handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<void>>>;
 }
 
-export const BtnCampaignActions: React.FC<BtnCampaignActionsProps> = ({ button, data, navigate, openModal, handles }) => {
+export const BtnCampaignActions: React.FC<BtnCampaignActionsProps> = ({ button, data, handles }) => {
+    const { openModal } = useModal();
+    const router = useRouter();
     return (
         <BtnGeneral
-            text={`${button.label} >`}
+            text={`${button.label}`}
             onClick={() => {
-                button.action(data, navigate, openModal, handles);
+                button.action(data, router.push, openModal, handles);
             }}
             classNameStyle={button.classNameType}
         ></BtnGeneral>

@@ -8,8 +8,9 @@
     }
 
     &.attempt-to-launch {
-        background: colors.$intermediate-green;
+        background-color: colors.$light-green;
         color: colors.$primary-font;
+        
     }
     &.created,
     &.submitted,

@@ -14,6 +14,8 @@ export enum MilestoneDatumStatus_Code_Id_Enums {
     MsFailed = 3,
 }
 
+//--------------------------------------------------------------
+
 export enum CampaignStatus_Code_Id_Enums {
     NOT_STARTED = 0,
     CREATED = 1,
@@ -41,6 +43,8 @@ export const CampaignsStatus_Code_Ids_For_Investors = [
     CampaignStatus_Code_Id_Enums.SUCCESS,
 ];
 
+//--------------------------------------------------------------
+
 export enum MilestoneStatus_Code_Id_Enums {
     NOT_STARTED = 1,
     STARTED = 2,
@@ -59,3 +63,4 @@ export enum SubmissionStatus_Enums {
 }
 
 
+//--------------------------------------------------------------

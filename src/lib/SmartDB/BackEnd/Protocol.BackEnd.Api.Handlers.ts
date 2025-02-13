@@ -7,7 +7,7 @@ import {
     protocolDefault,
     SubmissionStatusDefaultNames,
 } from '@/utils/populate/defaults';
-import { CampaignDatumStatus_Code_Id_Enums, CampaignStatus_Code_Id_Enums, MilestoneDatumStatus_Code_Id_Enums, MilestoneStatus_Code_Id_Enums, SubmissionStatus_Enums } from '@/utils/constants/status';
+import { CampaignDatumStatus_Code_Id_Enums, CampaignStatus_Code_Id_Enums, MilestoneDatumStatus_Code_Id_Enums, MilestoneStatus_Code_Id_Enums, SubmissionStatus_Enums } from '@/utils/constants/status/status';
 import { applyParamsToScript, Data, Lucid, MintingPolicy, UTxO, Validator } from 'lucid-cardano';
 import { NextApiResponse } from 'next';
 import { User } from 'next-auth';

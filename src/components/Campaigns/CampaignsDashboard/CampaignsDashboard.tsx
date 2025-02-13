@@ -7,7 +7,7 @@ import CampaignCard from './CampaignCard/CampaignCard';
 import CampaignFilters from './CampaignFilters/CampaignFilters';
 import styles from './CampaignsDashboard.module.scss';
 import { CampaignDashboardProps, useCampaignsDashboard } from './useCampaignsDashboard';
-import { CampaignViewForEnums } from '@/utils/constants/constants';
+import { PageViewEnums } from '@/utils/constants/routes';
 
 export default function CampaignDashboard(props: CampaignDashboardProps) {
     const {
@@ -27,6 +27,7 @@ export default function CampaignDashboard(props: CampaignDashboardProps) {
         myProposal,
         handleMyProposalChange,
         showMyProposalButton,
+        fetchCampaignsEX,
     } = useCampaignsDashboard(props);
 
     return (
@@ -53,13 +54,11 @@ export default function CampaignDashboard(props: CampaignDashboardProps) {
                 </>
             ) : (
                 <>
-                    {`DEBUG - campaignViewFor: ${props.campaignViewFor}`}
-                    
-                    {campaigns.length === 0 && props.campaignViewFor !== CampaignViewForEnums.manage ? (
+                    {campaigns.length === 0 && props.pageView !== PageViewEnums.MANAGE ? (
                         <p className={styles.notFound}>No Campaigns Found</p>
                     ) : (
                         <div className={styles.campaignGrid}>
-                            {props.campaignViewFor === CampaignViewForEnums.manage && (
+                            {props.pageView === PageViewEnums.MANAGE && (
                                 <Link href={ROUTES.campaignCreation}>
                                     <div className={styles.newCampaign}>
                                         <svg width="24" height="24" className={styles.icon}>
@@ -70,12 +69,12 @@ export default function CampaignDashboard(props: CampaignDashboardProps) {
                                 </Link>
                             )}
                             {campaigns.map((campaign) => (
-                                <CampaignCard key={campaign.campaign._DB_id} campaign={campaign} {...props} />
+                                <CampaignCard key={campaign.campaign._DB_id} campaign={campaign} fetchCampaignsEX={fetchCampaignsEX} {...props} />
                             ))}
                         </div>
                     )}
                     {hasMore &&
-                        (props.campaignViewFor === CampaignViewForEnums.home ? (
+                        (props.pageView === PageViewEnums.HOME ? (
                             <Link href={ROUTES.campaigns}>
                                 <div className={styles.buttonContainer}>
                                     <BtnGeneral onClick={() => {}} classNameStyle="outlineb" text="Explore more campaigns" />

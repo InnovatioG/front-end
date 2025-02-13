@@ -1,12 +1,12 @@
 import { Drawer, DrawerContent } from '@/components/General/Drawer/Drawer';
 import { useModal } from '@/contexts/ModalContext';
 import { useResponsive } from '@/contexts/ResponsiveContext';
-import { ModalEnums } from '@/utils/constants/constants';
+import { ModalsEnums } from '@/utils/constants/constants';
 import Modal from 'react-modal';
 import styles from './ModalTemplate.module.scss';
 
 interface ModalProps {
-    active: ModalEnums | null; 
+    active: ModalsEnums | null; 
     children: React.ReactNode;
 }
 

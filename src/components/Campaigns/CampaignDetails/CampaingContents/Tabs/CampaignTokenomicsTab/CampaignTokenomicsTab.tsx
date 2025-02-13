@@ -3,9 +3,10 @@ import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe'
 import React from 'react';
 import EmptyState from '../EmpyState/EmptyState';
 import styles from './CampaignTokenomicsTab.module.scss';
+import { formatMoneyByADAOrDollar } from '@/store/generalStore/useGeneralStore';
 
 const CampaignTokenomicsTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props) => {
-    const { campaign, formatMoneyByADAOrDollar } = props;
+    const { campaign } = props;
     const { requestedMaxADA, campaignToken_CS, campaignToken_TN, campaignToken_PriceADA, tokenomics_max_supply, tokenomics_description } = campaign.campaign;
 
     if (tokenomics_description === '') {

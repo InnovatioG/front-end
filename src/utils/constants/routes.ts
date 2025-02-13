@@ -1,4 +1,5 @@
-import { CampaignViewForEnums } from "./constants";
+
+//--------------------------------------------------------------
 
 export const ROUTES = {
     home: '/',
@@ -13,10 +14,10 @@ export const ROUTES = {
     campaignDynamicTab: (
         id: string,
         tab: CampaignTabEnum = CampaignTabEnum.DETAILS,
-        campaignViewFor: CampaignViewForEnums,
+        pageView: PageViewEnums,
         isEditMode: boolean
     ): string => {
-        if (campaignViewFor === CampaignViewForEnums.manage) {
+        if (pageView === PageViewEnums.MANAGE) {
             return isEditMode
                 ? ROUTES.campaignEditTab(id, tab)
                 : ROUTES.campaignManageTab(id, tab);
@@ -42,6 +43,8 @@ export const ROUTES = {
     discord: '/',
 };
 
+//--------------------------------------------------------------
+
 export enum CampaignTabEnum {
     DETAILS = 'Campaign Detail',
     MEMBERS = 'Resume of the team',
@@ -57,3 +60,13 @@ export const CampaignTabUrls: Record<CampaignTabEnum, string> = {
     [CampaignTabEnum.TOKENOMICS]: 'tokenomics',
     [CampaignTabEnum.FAQS]: 'faqs',
 };
+
+//--------------------------------------------------------------
+
+export enum PageViewEnums {
+    HOME = 'HOME',
+    CAMPAIGNS = 'CAMPAIGNS',
+    MANAGE = 'MANAGE'
+}
+
+//--------------------------------------------------------------

@@ -1,10 +1,16 @@
-import { ModalEnums } from '@/utils/constants/constants';
+import { HandlesEnums, ModalsEnums } from '@/utils/constants/constants';
 import { createContext, ReactNode, useContext } from 'react';
 
-export interface IModalContext  {
-    activeModal: ModalEnums | null;
-    modalData?: Record<string, any> ;
-    openModal: (modal: ModalEnums, data?: Record<string, any>, component?: ReactNode) => void;
+export interface IModalContext {
+    activeModal: ModalsEnums | null;
+    modalData?: Record<string, any>;
+    handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<void>>>,
+    openModal: (
+        modal: ModalsEnums,
+        data?: Record<string, any>,
+        handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<void>>>,
+        component?: ReactNode
+    ) => void;
     closeModal: () => void;
 }
 

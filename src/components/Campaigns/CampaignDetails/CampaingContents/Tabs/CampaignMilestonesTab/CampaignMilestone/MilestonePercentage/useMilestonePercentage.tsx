@@ -1,5 +1,6 @@
 import { ICampaignDetails } from '@/hooks/useCampaingDetails';
 import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
+import { formatMoneyByADAOrDollar } from '@/store/generalStore/useGeneralStore';
 import type { MilestoneEX } from '@/types/types';
 import { useEffect, useState } from 'react';
 
@@ -10,7 +11,7 @@ export interface MilestonePercentageProps {
 }
 
 const useMilestonePercentage = (props: MilestonePercentageProps & ICampaignIdStoreSafe & ICampaignDetails) => {
-    const { campaign, milestone, onPercentageChange, formatMoneyByADAOrDollar } = props;
+    const { campaign, milestone, onPercentageChange } = props;
     const [percentage, setPercentage] = useState<number>(milestone.milestone.percentage);
 
     useEffect(() => {

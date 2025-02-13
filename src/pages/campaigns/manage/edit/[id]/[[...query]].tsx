@@ -2,7 +2,7 @@ import CampaignsDetails from '@/components/Campaigns/CampaignDetails/CampaignDet
 import GeneralError from '@/components/General/Errors/GeneralError';
 import LoadingPage from '@/components/General/LoadingPage/LoadingPage';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
-import { CampaignViewForEnums } from '@/utils/constants/constants';
+import { PageViewEnums } from '@/utils/constants/routes';
 import { CampaignTabEnum, CampaignTabUrls, ROUTES } from '@/utils/constants/routes';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -19,6 +19,8 @@ const CampaignsManageEditPage: React.FC<CampaignsManageEditPageProps> = (props) 
     const walletStore = useWalletStore();
     const { screenSize } = useResponsive();
     const title = () => (walletStore.isConnected && walletStore.isCoreTeam() ? 'PROTOCOL TEAM EDIT' : 'CAMPAIGN EDIT');
+    const isEditMode = true;
+    const pageView = PageViewEnums.MANAGE;
 
     const router = useRouter();
     const { id, query } = router.query;
@@ -29,11 +31,11 @@ const CampaignsManageEditPage: React.FC<CampaignsManageEditPageProps> = (props) 
     useEffect(() => {
         if (id) {
             const campaignId = id as string;
-            setIsEditMode(true);
+            setIsEditMode(isEditMode);
             // TODO: checkear si el usuario tiene permisos para buscar esa id
             fetchCampaignById(campaignId);
         }
-    }, [id, fetchCampaignById, setIsEditMode]);
+    }, [id, fetchCampaignById, setIsEditMode, isEditMode]);
 
     useEffect(() => {
         // tomo tab de url primero y updato store si es diferente
@@ -43,9 +45,9 @@ const CampaignsManageEditPage: React.FC<CampaignsManageEditPageProps> = (props) 
         }
         // tomo tab de store y updato url si es diferente
         if (campaign?.campaign?._DB_id !== undefined && campaignTab !== undefined && tab !== campaignTab) {
-            router.replace(ROUTES.campaignDynamicTab(campaign.campaign._DB_id, campaignTab, CampaignViewForEnums.manage, true), undefined, { shallow: true });
+            router.replace(ROUTES.campaignDynamicTab(campaign.campaign._DB_id, campaignTab, pageView, isEditMode), undefined, { shallow: true });
         }
-    }, [campaign?.campaign?._DB_id, tab, campaignTab, setCampaignTab]);
+    }, [campaign?.campaign?._DB_id, tab, campaignTab, setCampaignTab, router, isEditMode, pageView]);
 
     if (walletStore.isConnected === false || walletStore.info?.isWalletValidatedWithSignedToken === false) {
         return (
@@ -74,7 +76,7 @@ const CampaignsManageEditPage: React.FC<CampaignsManageEditPageProps> = (props) 
         return (
             <div className={styles.draftSection}>
                 {/* <h2 className={styles.title}>{title()}</h2> */}
-                <CampaignsDetails campaignViewFor={CampaignViewForEnums.manage} />
+                <CampaignsDetails pageView={pageView} />
             </div>
         );
     }

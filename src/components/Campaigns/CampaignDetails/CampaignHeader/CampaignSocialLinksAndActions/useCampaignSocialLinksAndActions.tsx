@@ -1,15 +1,15 @@
 import { useModal } from '@/contexts/ModalContext';
 import { ICampaignDetails } from '@/hooks/useCampaingDetails';
 import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
-import { ModalEnums, SocialOptionsEnums } from '@/utils/constants/constants';
+import { ModalsEnums, SocialLinksEnums } from '@/utils/constants/constants';
 import { ReactNode, useState } from 'react';
 
 const useCampaignSocialLinksAndActions = (props: ICampaignIdStoreSafe & ICampaignDetails) => {
     const { campaign } = props;
-    const [selectedLink, setSelectedLink] = useState<SocialOptionsEnums>(SocialOptionsEnums.WEBSITE);
+    const [selectedLink, setSelectedLink] = useState<SocialLinksEnums>(SocialLinksEnums.WEBSITE);
 
     const { openModal, closeModal } = useModal();
-    
+
     const getPlaceholder = () => {
         const linkValue = campaign.campaign[selectedLink];
         return linkValue && linkValue !== '' ? linkValue : `Enter your ${selectedLink} link`;
@@ -23,7 +23,7 @@ const useCampaignSocialLinksAndActions = (props: ICampaignIdStoreSafe & ICampaig
     };
 
     const editLinkButton = (modal: ReactNode) => {
-        openModal(ModalEnums.editSocialLink, {}, modal);
+        openModal(ModalsEnums.EDIT_SOCIAL_LINK, undefined, undefined, modal);
     };
 
     return {
@@ -31,7 +31,10 @@ const useCampaignSocialLinksAndActions = (props: ICampaignIdStoreSafe & ICampaig
         setSelectedLink,
 
         getPlaceholder,
-        formatSocialLink,editLinkButton, openModal, closeModal
+        formatSocialLink,
+        editLinkButton,
+        openModal,
+        closeModal,
     };
 };
 

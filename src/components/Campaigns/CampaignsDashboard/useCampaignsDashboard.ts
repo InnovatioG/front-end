@@ -1,16 +1,16 @@
-import { getCampaignEX } from '@/hooks/useCampaingDetails';
+import { getCampaignEX } from '@/utils/campaignHelpers';
 import { useResponsive } from '@/contexts/ResponsiveContext';
 import { CampaignEntity } from '@/lib/SmartDB/Entities';
 import { CampaignApi } from '@/lib/SmartDB/FrontEnd';
 import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 import { CampaignEX } from '@/types/types';
-import { CampaignViewForEnums } from '@/utils/constants/constants';
-import { CampaignsStatus_Code_Ids_For_Investors } from '@/utils/constants/status';
+import { PageViewEnums } from '@/utils/constants/routes';
+import { CampaignsStatus_Code_Ids_For_Investors } from '@/utils/constants/status/status';
 import { useCallback, useEffect, useState } from 'react';
 import { pushWarningNotification, useWalletStore } from 'smart-db';
 
 export interface CampaignDashboardProps {
-    campaignViewFor: CampaignViewForEnums;
+    pageView: PageViewEnums;
 
 }
 
@@ -44,20 +44,20 @@ export const useCampaignsDashboard = (props: CampaignDashboardProps) => {
         setSearchTerm(event.target.value);
     };
 
-    const fetchCampaigns = useCallback(async () => {
+    const fetchCampaignsEX = useCallback(async () => {
         // TODO: falta ver quienes son editores o managers, etc, ahora solo uso creator_wallet_id: walletStore.info!.address
         //TODO: falta verificar signed wallet
         console.log(
-            `fetchCampaigns: ${props.campaignViewFor} - ${campaignStatus}- ${myProposal} - ${statusFilter} - ${categoryFilter} - ${searchTerm} - ${walletStore.isConnected} - ${wallet}`
+            `fetchCampaigns: ${props.pageView} - ${campaignStatus}- ${myProposal} - ${statusFilter} - ${categoryFilter} - ${searchTerm} - ${walletStore.isConnected} - ${wallet}`
         );
 
         setCampaignsLoading(true);
         try {
-            const limit = props.campaignViewFor === CampaignViewForEnums.home ? 10 : 20;
+            const limit = props.pageView === PageViewEnums.HOME ? 10 : 20;
 
             let filterConditions: any[] = [];
 
-            if (props.campaignViewFor === CampaignViewForEnums.manage) {
+            if (props.pageView === PageViewEnums.MANAGE) {
                 if (walletStore.isConnected === false || wallet === undefined) {
                     setCampaigns([]);
                     setCampaignsLoading(false);
@@ -94,7 +94,7 @@ export const useCampaignsDashboard = (props: CampaignDashboardProps) => {
                 filterConditions.push({ $or: [{ name: { $regex: searchTerm, $options: 'i' } }, { description: { $regex: searchTerm, $options: 'i' } }] });
             }
 
-            if (props.campaignViewFor === CampaignViewForEnums.home || props.campaignViewFor === CampaignViewForEnums.campaigns) {
+            if (props.pageView === PageViewEnums.HOME || props.pageView === PageViewEnums.CAMPAIGNS) {
                 setShowMyProposalButton(true);
 
                 const campaignStatusIdsForInvestors = campaignStatus
@@ -108,7 +108,7 @@ export const useCampaignsDashboard = (props: CampaignDashboardProps) => {
 
             const filter = filterConditions.length > 0 ? { $and: filterConditions } : {};
 
-            const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filter, { limit });
+            const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filter, { limit, sort: { updatedAt: -1 } });
             const count = await CampaignApi.getCountApi_(filter);
 
             setHasMore(count > limit);
@@ -119,25 +119,25 @@ export const useCampaignsDashboard = (props: CampaignDashboardProps) => {
         }
         setCampaignsLoading(false);
     }, [
-        props.campaignViewFor,
+        props.pageView,
         campaignStatus,
         myProposal,
         statusFilter,
         categoryFilter,
         searchTerm,
         // Solo incluir la billetera si estamos en "manage" o "myProposal"
-        ...(props.campaignViewFor === CampaignViewForEnums.manage || myProposal ? [walletStore.isConnected, wallet] : []),
+        ...(props.pageView === PageViewEnums.MANAGE || myProposal ? [walletStore.isConnected, wallet] : []),
     ]);
 
     useEffect(() => {
-        fetchCampaigns();
-    }, [fetchCampaigns]);
+        fetchCampaignsEX();
+    }, [fetchCampaignsEX]);
 
     useEffect(() => {
-        if (props.campaignViewFor === CampaignViewForEnums.home || props.campaignViewFor === CampaignViewForEnums.campaigns) {
+        if (props.pageView === PageViewEnums.HOME || props.pageView === PageViewEnums.CAMPAIGNS) {
             setCampaignStatusFilterd(campaignStatus.filter((status) => CampaignsStatus_Code_Ids_For_Investors.includes(status.code_id)));
         }
-    }, [props.campaignViewFor, campaignStatus]);
+    }, [props.pageView, campaignStatus]);
 
     return {
         campaignsLoading,
@@ -156,5 +156,6 @@ export const useCampaignsDashboard = (props: CampaignDashboardProps) => {
         myProposal,
         handleMyProposalChange,
         showMyProposalButton,
+        fetchCampaignsEX,
     };
 };

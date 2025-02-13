@@ -114,23 +114,6 @@
     justify-content: space-between;
 }
 
-// .draft {
-//     background-color: colors.$blue-color;
-// }
-
-// .submitted,
-// .rejected,
-// .approved,
-// .created,
-// .deploy,
-// .ready {
-//     background: colors.$primary-yellow;
-// }
-
-// .countdown {
-//     background: colors.$blue-dark-color;
-// }
-
 .actionsTarget {
     display: flex;
     flex-direction: row;
@@ -145,10 +128,6 @@
     color: colors.$white-background;
 }
 
-.attempmt-to-launch {
-    background-color: colors.$light-green;
-}
-
 .status {
     padding: 0.5rem;
     display: flex;
@@ -161,14 +140,3 @@
     align-items: center;
 }
 
-// .countdown {
-//     color: white;
-// }
-
-// .failed {
-//     background-color: #ff4949;
-// }
-
-// .succesfull {
-//     background-color: #76d13e;
-// }

@@ -14,9 +14,14 @@
 }
 
 .buttonContainer {
-    width: 50%;
+    width: 100%;
     align-self: flex-end;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: space-between;
 }
+
 .hourMinutContainer {
     input[type='time']::-webkit-calendar-picker-indicator {
         display: none;

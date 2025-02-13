@@ -1,27 +1,15 @@
 import ToolTipInformation from '@/components/General/TooltipInformation/tooltipInformation';
 import { ICampaignDetails } from '@/hooks/useCampaingDetails';
 import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
+import { formatMoneyByADAOrDollar } from '@/store/generalStore/useGeneralStore';
 import { TWO_USERS } from '@/utils/constants/images';
-import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status';
+import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status/status';
+import { formatAllTime } from '@/utils/formats';
 import React from 'react';
 import styles from './CampaignHeaderInfo.module.scss';
 
 const CampaignHeaderInfo: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props: ICampaignIdStoreSafe & ICampaignDetails) => {
-    const {
-        campaign,
-        label,
-        labelClass,
-        campaign_status_code_id,
-        timeRemainingBeginAt,
-        formatAllTime,
-        currentMilestoneStringOrdinal,
-        requestedMinPercentage,
-        progressWidth,
-        requestedMaxInCurrentCurrency,
-        currencySymbol,
-        formatMoneyByADAOrDollar,
-    } = props;
-
+    const { campaign, label, labelClass, campaign_status_code_id, timeRemainingBeginAt, currentMilestoneStringOrdinal, requestedMinPercentage, progressWidth } = props;
     return (
         <section className={styles.campaignCard}>
             <div className={styles.campaignCardStatus}>

@@ -3,7 +3,7 @@ import { useModal } from '@/contexts/ModalContext';
 import { MilestoneEX } from '@/types/types';
 import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
 import { ICampaignDetails } from '@/hooks/useCampaingDetails';
-import { ModalEnums } from '@/utils/constants/constants';
+import { ModalsEnums } from '@/utils/constants/constants';
 
 export interface MilestoneMessageProps {
     milestone: MilestoneEX;
@@ -20,7 +20,7 @@ export default function useMilestoneMessage(props: MilestoneMessageProps & ICamp
     const { openModal } = useModal();
 
     const handleSendToRevision = () => {
-        openModal(ModalEnums.submitMilestone, { campaign_id: campaign.campaign._DB_id, campaign });
+        openModal(ModalsEnums.SUBMIT_MILESTONE, { campaign_id: campaign.campaign._DB_id, campaign });
     };
 
     useEffect(() => {

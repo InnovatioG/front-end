@@ -4,11 +4,10 @@ import { TimeInput } from '@/components/General/TimePicker/TimePicker';
 import styles from './LaunchCampaignModal.module.scss';
 import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 import { useModal } from '@/contexts/ModalContext';
+import { HandlesEnums } from '@/utils/constants/constants';
 interface LaunchCampaignModalProps {}
 
 const LaunchCampaignModal: React.FC<LaunchCampaignModalProps> = ({}) => {
-    const { closeModal } = useModal();
-
     const [dateRange, setDateRange] = React.useState<{ from: Date | undefined; to?: Date | undefined }>({ from: new Date() });
     const [time, setTime] = useState('');
 
@@ -21,6 +20,19 @@ const LaunchCampaignModal: React.FC<LaunchCampaignModalProps> = ({}) => {
 
         setTime(value);
     };
+
+    const { closeModal, handles, modalData } = useModal();
+
+    const handleClick = async () => {
+        console.log(`handleClick: ${HandlesEnums.LAUNCH_CAMPAIGN}`);
+        if (handles && handles[HandlesEnums.LAUNCH_CAMPAIGN]) {
+            await handles[HandlesEnums.LAUNCH_CAMPAIGN](modalData);
+        } else {
+            alert(`No handle ${HandlesEnums.LAUNCH_CAMPAIGN} provided`);
+        }
+        // NOTE: no lo cierro, por que se abre otro modal, el de success
+        // closeModal();
+    };
     return (
         <div className={styles.layout}>
             <h1>Select range date</h1>
@@ -29,7 +41,8 @@ const LaunchCampaignModal: React.FC<LaunchCampaignModalProps> = ({}) => {
                 <TimeInput id="time-input" value={time} onChange={handleTimeChange} maxLength={5} />
             </div>
             <div className={styles.buttonContainer}>
-                <BtnGeneral onClick={() => closeModal()} classNameStyle="fillb">
+                <BtnGeneral text="Cancel" onClick={() => closeModal()} classNameStyle="outlineb" />
+                <BtnGeneral onClick={() => handleClick()} classNameStyle="fillb">
                     Confirm
                 </BtnGeneral>
             </div>

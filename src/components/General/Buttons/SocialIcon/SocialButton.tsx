@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './SocialButton.module.scss';
-import { SocialOptionsEnums } from '@/utils/constants/constants';
+import { SocialLinksEnums } from '@/utils/constants/constants';
 
 interface SocialButtonProps {
     icon: string;
-    name?: SocialOptionsEnums;
-    setSocialLink?: React.Dispatch<React.SetStateAction<SocialOptionsEnums>>;
+    name?: SocialLinksEnums;
+    setSocialLink?: React.Dispatch<React.SetStateAction<SocialLinksEnums>>;
 }
 
 const SocialButton: React.FC<SocialButtonProps> = ({ icon, name, setSocialLink }) => {

@@ -10,10 +10,10 @@ import useCampaignHeader from './useCampaignHeader';
 import { isNullOrBlank } from 'smart-db';
 import Link from 'next/link';
 import { ROUTES } from '@/utils/constants/routes';
-import { CampaignViewForEnums } from '@/utils/constants/constants';
+import { PageViewEnums } from '@/utils/constants/routes';
 
 const CampaignHeader: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props: ICampaignIdStoreSafe & ICampaignDetails) => {
-    const { campaign, isEditMode, isProtocolTeam, isAdmin, isEditor, campaignViewFor, campaignTab } = props;
+    const { campaign, isEditMode, isProtocolTeam, isAdmin, isEditor, pageView, campaignTab } = props;
     const { handleChangePicture, handleButtonClickFile, fileInputRef } = useCampaignHeader(props);
 
     return (
@@ -24,19 +24,7 @@ const CampaignHeader: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props
                     <AvatarFallback>{campaign.campaign.name.slice(0, 2)}</AvatarFallback>
                 </Avatar>
                 <h2 className={styles.title}>{campaign.campaign.name}</h2>
-                {/* {(campaignViewFor === CampaignViewForEnums.home || campaignViewFor === CampaignViewForEnums.campaigns) &&
-                    (isProtocolTeam === true || isAdmin === true || isEditor === true) && (
-                        <p>
-                            <Link href={ROUTES.campaignManage(campaign.campaign._DB_id, campaignTab)}>Manage</Link>
-                        </p>
-                    )}
-                {campaignViewFor === CampaignViewForEnums.manage && (isProtocolTeam === true || isAdmin === true || isEditor === true) && isEditMode === false && (
-                    <p>
-                        <Link href={ROUTES.campaignEdit(campaign.campaign._DB_id, campaignTab)}>Edit</Link>
-                    </p>
-                )} */}
-
-                {campaignViewFor === CampaignViewForEnums.manage && isEditMode === false && (
+                {pageView === PageViewEnums.MANAGE && isEditMode === false && (
                     <p>
                         {isProtocolTeam === true
                             ? `- PROTOCOL TEAM - MANAGE CAMPAIGN`
@@ -47,8 +35,7 @@ const CampaignHeader: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props
                             : null}
                     </p>
                 )}
-
-                {campaignViewFor === CampaignViewForEnums.manage && isEditMode === true && (
+                {pageView === PageViewEnums.MANAGE && isEditMode === true && (
                     <p>
                         {isProtocolTeam === true
                             ? `- PROTOCOL TEAM - EDIT CAMPAIGN`

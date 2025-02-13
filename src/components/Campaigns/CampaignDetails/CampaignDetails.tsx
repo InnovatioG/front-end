@@ -1,25 +1,31 @@
 import { useCampaignDetails } from '@/hooks/useCampaingDetails';
 import { useCampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
-import { CampaignViewForEnums } from '@/utils/constants/constants';
-import React, { useEffect } from 'react';
-import { toJson } from 'smart-db';
+import { PageViewEnums } from '@/utils/constants/routes';
+import React from 'react';
 import CampaignActions from './CampaignActions/CampaignActions';
 import styles from './CampaignDetails.module.scss';
 import CampaignHeader from './CampaignHeader/CampaignHeader';
 import CampaingContents from './CampaingContents/CampaingContents';
+import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 
 export interface CampaignsDetailsProps {
-    campaignViewFor: CampaignViewForEnums;
+    pageView: PageViewEnums;
 }
 
 const CampaignsDetails: React.FC<CampaignsDetailsProps> = (props) => {
     const propsCampaignIdStoreSafe = useCampaignIdStoreSafe();
-    const propsCampaignDetails = useCampaignDetails({ campaign: propsCampaignIdStoreSafe.campaign, campaignViewFor: props.campaignViewFor, isEditMode: propsCampaignIdStoreSafe.isEditMode });
-
+    const propsCampaignDetails = useCampaignDetails({
+        campaign: propsCampaignIdStoreSafe.campaign,
+        pageView: props.pageView,
+        isEditMode: propsCampaignIdStoreSafe.isEditMode,
+        setCampaignEX: propsCampaignIdStoreSafe.setCampaignEX,
+        setCampaign: propsCampaignIdStoreSafe.setCampaign,
+    });
+    const { showDebug } = useGeneralStore();
     return (
         <main className={styles.layout}>
             <div className={styles.campaignContainerCreator}>
-            {`DEBUG - isAdmin: ${propsCampaignDetails.isAdmin } - isEditMode: ${propsCampaignIdStoreSafe.isEditMode }`}
+                {showDebug && `DEBUG - isAdmin: ${propsCampaignDetails.isAdmin} - isEditMode: ${propsCampaignIdStoreSafe.isEditMode}`}
                 <CampaignHeader {...propsCampaignIdStoreSafe} {...propsCampaignDetails} />
                 <CampaingContents {...propsCampaignIdStoreSafe} {...propsCampaignDetails} />
                 <CampaignActions {...propsCampaignIdStoreSafe} {...propsCampaignDetails} />

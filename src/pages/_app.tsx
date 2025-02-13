@@ -52,10 +52,11 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
         }
     }, [isLoadingApp]);
 
-    const { isProtocolTeam, _DebugIsProtocolTeam, _DebugIsAdmin,  _DebugIsEditor, setDebugIsAdmin, setDebugIsEditor, setDebugIsProtocolTeam } = useGeneralStore();
+    const { isProtocolTeam, _DebugIsProtocolTeam, _DebugIsAdmin, _DebugIsEditor, setDebugIsAdmin, setDebugIsEditor, setDebugIsProtocolTeam, setShowDebug, showDebug } =
+        useGeneralStore();
 
     useEffect(() => {
-        const { isAdmin, isEditor, isProtocolTeam } = router.query;
+        const { isAdmin, isEditor, isProtocolTeam, showDebug } = router.query;
 
         if (isAdmin === 'true' || isAdmin === 'false') {
             setDebugIsAdmin(isAdmin === 'true');
@@ -68,8 +69,12 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
         if (isProtocolTeam === 'true' || isProtocolTeam === 'false') {
             setDebugIsProtocolTeam(isProtocolTeam === 'true');
         }
-    }, [router.query]); // Se ejecuta cuando los parámetros de la URL cambian
 
+        if (showDebug === 'true' || showDebug === 'false') {
+            setShowDebug(showDebug === 'true');
+        }
+    }, [router.query, setDebugIsAdmin, setDebugIsEditor, setDebugIsProtocolTeam, setShowDebug]); 
+    
     return (
         <>
             <Head>
@@ -93,7 +98,8 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
                             <ResponsiveProvider>
                                 <ModalProvider>
                                     {router.pathname !== ROUTES.campaignCreation && <Header />}
-                                    {`DEBUG - isProtocolTeam: ${isProtocolTeam}`} - {`_DebugIsProtocolTeam: ${_DebugIsProtocolTeam}`} - {`_DebugIsAdmin: ${_DebugIsAdmin}`} - {`_DebugIsEditor: ${_DebugIsEditor}`}
+                                    {showDebug &&
+                                        `DEBUG - isProtocolTeam: ${isProtocolTeam} - _DebugIsProtocolTeam: ${_DebugIsProtocolTeam} -_DebugIsAdmin: ${_DebugIsAdmin} - _DebugIsEditor: ${_DebugIsEditor}`}
                                     <Component {...pageProps} />
                                     {router.pathname !== ROUTES.campaignCreation && <Footer />}
                                 </ModalProvider>

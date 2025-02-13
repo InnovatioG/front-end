@@ -4,7 +4,7 @@ import { useWalletStore } from 'smart-db';
 import styles from './index.module.scss';
 import BtnConnectWallet from '@/components/GeneralOK/Buttons/Buttons/BtnConnectWallet/BtnConnectWallet';
 import { useResponsive } from '@/contexts/ResponsiveContext';
-import { CampaignViewForEnums } from '@/utils/constants/constants';
+import { PageViewEnums } from '@/utils/constants/routes';
 
 interface CampaignsManagePageProps {
     // Define props here
@@ -30,7 +30,7 @@ const CampaignsManagePage: React.FC<CampaignsManagePageProps> = (props) => {
             ) : (
                 <div className={styles.draftSection}>
                     <h2 className={styles.title}>{title()}</h2>
-                    <CampaignsDashboard campaignViewFor={CampaignViewForEnums.manage} />
+                    <CampaignsDashboard pageView={PageViewEnums.MANAGE} />
                 </div>
             )}
         </>

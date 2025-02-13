@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/Defaul
 import { ICampaignDetails } from '@/hooks/useCampaingDetails';
 import { CampaignMemberEntity } from '@/lib/SmartDB/Entities';
 import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
-import { SocialIcons } from '@/utils/constants/constants';
+import { SocialLinksIcons } from '@/utils/constants/constants';
 import { formatLink } from '@/utils/formats';
 import React from 'react';
 import useCampaignMembersTabAccordion, { CampaignMembersTabAccordionProps } from './useCampaignMembersTabAccordion';
@@ -42,7 +42,7 @@ const CampaignMembersTabAccordion: React.FC<CampaignMembersTabAccordionProps & I
                                             <span className={styles.spanTitle}>Social Media:</span>
                                             <div className={styles.subContentHeader}>
                                                 <div className={styles.socialMediaContainer}>
-                                                    {SocialIcons.map((social) => {
+                                                    {SocialLinksIcons.map((social) => {
                                                         const link = member[social.name as keyof CampaignMemberEntity]; // Acceso directo
                                                         return (
                                                             link &&

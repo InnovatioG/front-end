@@ -1,4 +1,4 @@
-import { CampaignStatus_Code_Id_Enums, MilestoneStatus_Code_Id_Enums, SubmissionStatus_Enums } from '../constants/status';
+import { CampaignStatus_Code_Id_Enums, MilestoneStatus_Code_Id_Enums, SubmissionStatus_Enums } from '../constants/status/status';
 
 import campaignsPopulateJson from './campaigns-populate.json';
 import deployJson from '../../../_smart_contracts/deploy.json';

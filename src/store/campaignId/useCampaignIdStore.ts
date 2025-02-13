@@ -3,7 +3,7 @@ import { CampaignApi } from '@/lib/SmartDB/FrontEnd';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { CampaignEX, MilestoneEX } from '@/types/types';
-import { cloneCampaignEX, cloneMilestoneEX, getCampaignEX } from '@/hooks/useCampaingDetails';
+import { cloneCampaignEX, cloneMilestoneEX, getCampaignEX } from '@/utils/campaignHelpers';
 import { CampaignTabEnum } from '@/utils/constants/routes';
 
 export interface ICampaignIdStoreProps {

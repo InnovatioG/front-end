@@ -5,7 +5,10 @@ export function formatAddress(address: string): string {
     return `${address.slice(0, 4)}...${address.slice(-4)}`;
 }
 
-export function formatMoney(amount: number, currency: string): string {
+export function formatMoney(amount: number | bigint, currency: string): string {
+    if (typeof amount !== 'number' && amount !== undefined) {
+        amount = Number(amount);
+    }
     if (currency === 'ADA') {
         return `₳${new Intl.NumberFormat('en-US', {
             minimumFractionDigits: 0,
@@ -36,6 +39,14 @@ export function getTimeRemaining(date: Date | undefined) {
 }
 
 export const formatTime = (time: number) => time.toString().padStart(2, '0');
+
+export const formatAllTime = (timeRemaining: any) => {
+    if (timeRemaining.days >= 4) {
+        return `${timeRemaining.days} days`;
+    } else {
+        return `${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}: ${formatTime(timeRemaining.seconds)}`;
+    }
+};
 
 /* Funcion para calcular el porcentaje en base a un total y el % a aplicar */
 

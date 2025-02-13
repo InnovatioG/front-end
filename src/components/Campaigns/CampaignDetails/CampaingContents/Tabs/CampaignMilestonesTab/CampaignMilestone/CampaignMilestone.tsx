@@ -1,7 +1,8 @@
-import { getMilestoneStatus_Code_Id_By_Db_Id, ICampaignDetails } from '@/hooks/useCampaingDetails';
+import { ICampaignDetails } from '@/hooks/useCampaingDetails';
+import { getMilestoneStatus_Code_Id_By_Db_Id } from '@/utils/campaignHelpers';
 import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
 import { MilestoneEX } from '@/types/types';
-import { ImageByMilestoneStatus_Code_Id, StylesByMilestoneStatus_Code_Id } from '@/utils/constants/stylesAndButtonsByStatusCodeId';
+import { ImageByMilestoneStatus_Code_Id, StylesByMilestoneStatus_Code_Id } from '@/utils/constants/status/styles';
 import { getOrdinalString } from '@/utils/formats';
 import Image from 'next/image';
 import React from 'react';

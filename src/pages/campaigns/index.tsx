@@ -1,5 +1,5 @@
 import CampaignsDashboard from '@/components/Campaigns/CampaignsDashboard/CampaignsDashboard';
-import { CampaignViewForEnums } from '@/utils/constants/constants';
+import { PageViewEnums } from '@/utils/constants/routes';
 import React from 'react';
 
 interface CampaignsPageProps {
@@ -9,7 +9,7 @@ interface CampaignsPageProps {
 const CampaignsPage: React.FC<CampaignsPageProps> = (props) => {
     return (
         <div>
-            <CampaignsDashboard campaignViewFor={CampaignViewForEnums.campaigns} />
+            <CampaignsDashboard pageView={PageViewEnums.CAMPAIGNS} />
         </div>
     );
 };

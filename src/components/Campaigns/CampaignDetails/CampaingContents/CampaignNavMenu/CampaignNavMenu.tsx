@@ -6,9 +6,12 @@ import styles from './CampaignNavMenu.module.scss';
 import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 import useCampaignNavMenu from './useCampaignNavMenu';
 import { CampaignTabEnum } from '@/utils/constants/routes';
+import { PageViewEnums } from '@/utils/constants/routes';
+import { BtnCampaignActions } from '@/components/GeneralOK/Buttons/Buttons/BtnCampaignActions/BtnCampaignActions';
+import { ButtonsForCardsEnum, ButtonForDetails, ButtonsForDetailsEnum } from '@/utils/constants/buttons';
 
 const CampaignNavMenu: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props: ICampaignIdStoreSafe & ICampaignDetails) => {
-    const { campaign, campaignTab, isEditMode } = props;
+    const { campaign, campaignTab, isEditMode, pageView } = props;
     const { screenSize, isOpen, setIsOpen, handleTabChangeMobile, handleTabChange } = useCampaignNavMenu(props);
     if (screenSize === 'mobile' || screenSize === 'tablet') {
         return (
@@ -43,13 +46,9 @@ const CampaignNavMenu: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (prop
                             </li>
                         ))}
                     </ul>
-                    {isEditMode && (
-                        <Link href={`./${campaign.campaign._DB_id}`}>
-                            <div>
-                                <BtnGeneral text="Overview" classNameStyle="overview" onClick={() => {}} />
-                            </div>
-                        </Link>
-                    )}
+                    {/* {pageView === PageViewEnums.MANAGE && isEditMode === false && (
+                        <BtnCampaignActions button={ButtonForDetails[ButtonsForDetailsEnum.RENDER_CAMPAIGN_FOR_PAGE]} data={{ id: campaign.campaign._DB_id }} />
+                    )} */}
                 </div>
             </div>
         );
@@ -64,13 +63,9 @@ const CampaignNavMenu: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (prop
                     </li>
                 ))}
             </ul>
-            {isEditMode && (
-                <Link href={`./${campaign.campaign._DB_id}`}>
-                    <div>
-                        <BtnGeneral text="Overview" classNameStyle="overview" onClick={() => {}} />
-                    </div>
-                </Link>
-            )}
+            {/* {pageView === PageViewEnums.MANAGE && isEditMode === false && (
+                <BtnCampaignActions button={ButtonForDetails[ButtonsForDetailsEnum.RENDER_CAMPAIGN_FOR_PAGE]} data={{ id: campaign.campaign._DB_id }} />
+            )} */}
         </div>
     );
 };

@@ -4,7 +4,7 @@ import { formatLink } from '@/utils/formats';
 import Image from 'next/image';
 import SocialButton from '@/components/General/Buttons/SocialIcon/SocialButton';
 import { CATALYST, CARDANO, LOGO_FULL_DARK } from '@/utils/constants/images';
-import { SocialIcons, SocialOptionsEnums } from '@/utils/constants/constants';
+import { SocialLinksIcons, SocialLinksEnums } from '@/utils/constants/constants';
 
 const AboutUsPage: React.FC = () => {
     
@@ -105,10 +105,10 @@ const AboutUsPage: React.FC = () => {
                                     <div className={styles.socialLinks}>
                                         {Object.entries(member)
                                             .filter(([key]) =>
-                                                Object.values(SocialOptionsEnums).includes(key as SocialOptionsEnums)
+                                                Object.values(SocialLinksEnums).includes(key as SocialLinksEnums)
                                             )
                                             .map(([key, link]) => {
-                                                const socialIcon = SocialIcons.find((icon) => icon.name === key);
+                                                const socialIcon = SocialLinksIcons.find((icon) => icon.name === key);
                                                 return (
                                                     link &&
                                                     socialIcon && (

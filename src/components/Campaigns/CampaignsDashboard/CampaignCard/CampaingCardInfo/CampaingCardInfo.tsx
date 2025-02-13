@@ -1,16 +1,18 @@
 import { CampaignEX } from '@/types/types';
-import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status';
+import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status/status';
 import React from 'react';
 import styles from './CampaingCardInfo.module.scss';
 import { ICampaignDetails } from '@/hooks/useCampaingDetails';
+import { CampaignTabEnum, ROUTES } from '@/utils/constants/routes';
+import Link from 'next/link';
+import { formatMoneyByADAOrDollar } from '@/store/generalStore/useGeneralStore';
 
 interface CampaingCardInfoProps {
     campaign: CampaignEX;
 }
 
 const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> = (props: CampaingCardInfoProps & ICampaignDetails) => {
-    
-    const { campaign, label, labelClass, campaign_status_code_id, currentMilestoneStringOrdinal, totalMilestones, fundedPercentage, formatMoneyByADAOrDollar } = props;
+    const { campaign, label, labelClass, campaign_status_code_id, currentMilestoneStringOrdinal, totalMilestones, fundedPercentage } = props;
 
     const StateContainer = ({ amount, subtext, classNameStyle }: { amount: string; subtext: string; classNameStyle?: string }) => (
         <div className={`${styles.status} ${styles[labelClass]}`}>
@@ -26,14 +28,15 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
                     <div className={styles.flexRow}>
                         <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.requestedMaxADA)} subtext="Target Raise" classNameStyle="white" />
                     </div>
-
-                    <div className={styles.footer}>
-                        <div className={styles.milestonesQuant}>
-                            <h4>
-                                {totalMilestones} {totalMilestones === 1 ? 'milestone' : 'milestones'}
-                            </h4>
+                    <Link href={`${ROUTES.campaignViewTab(campaign.campaign._DB_id, CampaignTabEnum.ROADMAP)}`}>
+                        <div className={`${styles.footer} ${styles.link}`}>
+                            <div className={styles.milestonesQuant}>
+                                <h4>
+                                    {totalMilestones} {totalMilestones === 1 ? 'milestone' : 'milestones'}
+                                </h4>
+                            </div>
                         </div>
-                    </div>
+                    </Link>
                 </div>
             )}
 
@@ -55,12 +58,14 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
                 <div className={styles.container}>
                     <div className={`${styles.flexRow} ${styles.flexRow2}`}>
                         <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.cdFundedADA)} subtext="Total Raised" classNameStyle="black" />
-                        <div className={styles.ordinalString}>
-                            <span className={styles.ordinal}>
-                                <p className={styles.milestone}>{currentMilestoneStringOrdinal}</p>
-                                milestone
-                            </span>
-                        </div>
+                        <Link href={`${ROUTES.campaignViewTab(campaign.campaign._DB_id, CampaignTabEnum.ROADMAP)}`}>
+                            <div className={`${styles.ordinalString} ${styles.link}`}>
+                                <span className={styles.ordinal}>
+                                    <p className={styles.milestone}>{currentMilestoneStringOrdinal}</p>
+                                    milestone
+                                </span>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             )}
@@ -69,12 +74,14 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
                 <div className={styles.container}>
                     <div className={`${styles.flexRow} ${styles.flexRow2}`}>
                         <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.cdFundedADA)} subtext="Total Raised" classNameStyle="black" />
-                        <div className={styles.ordinalString}>
-                            <span className={styles.ordinal}>
-                                <p className={styles.milestone}>{currentMilestoneStringOrdinal}</p>
-                                milestone
-                            </span>
-                        </div>
+                        <Link href={`${ROUTES.campaignViewTab(campaign.campaign._DB_id, CampaignTabEnum.ROADMAP)}`}>
+                            <div className={`${styles.ordinalString} ${styles.link}`}>
+                                <span className={styles.ordinal}>
+                                    <p className={styles.milestone}>{currentMilestoneStringOrdinal}</p>
+                                    milestone
+                                </span>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             )}
@@ -97,12 +104,14 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
                             </div>
                         )}
                         {campaign_status_code_id === CampaignStatus_Code_Id_Enums.FAILED && (
-                            <div className={styles.ordinalString}>
-                                <span className={styles.ordinal}>
-                                    <p className={styles.milestone}>{currentMilestoneStringOrdinal}</p>
-                                    milestone
-                                </span>
-                            </div>
+                            <Link href={`${ROUTES.campaignViewTab(campaign.campaign._DB_id, CampaignTabEnum.ROADMAP)}`}>
+                                <div className={`${styles.ordinalString} ${styles.link}`}>
+                                    <span className={styles.ordinal}>
+                                        <p className={styles.milestone}>{currentMilestoneStringOrdinal}</p>
+                                        milestone
+                                    </span>
+                                </div>
+                            </Link>
                         )}
                     </div>
                 </div>

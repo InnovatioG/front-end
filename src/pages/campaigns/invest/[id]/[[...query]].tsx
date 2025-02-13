@@ -2,7 +2,7 @@ import CampaignsDetails from '@/components/Campaigns/CampaignDetails/CampaignDet
 import GeneralError from '@/components/General/Errors/GeneralError';
 import LoadingPage from '@/components/General/LoadingPage/LoadingPage';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
-import { CampaignViewForEnums } from '@/utils/constants/constants';
+import { PageViewEnums } from '@/utils/constants/routes';
 import { CampaignTabEnum, CampaignTabUrls } from '@/utils/constants/routes';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -47,7 +47,7 @@ const CampaignsInvestDetailsPage: React.FC<CampaignsInvestDetailsPageProps> = (p
         return (
             <div>
                 INVEST
-                {/* <CampaignsDetails campaignViewFor={CampaignViewForEnums.campaigns} /> */}
+                {/* <CampaignsDetails pageView={PageViewEnums.campaigns} /> */}
             </div>
         );
     }
