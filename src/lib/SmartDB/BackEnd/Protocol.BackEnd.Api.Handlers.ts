@@ -805,6 +805,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             visualizations: campaignData.visualizations,
             investors: campaignData.investors,
             tokenomics_max_supply: campaignData.tokenomics_max_supply,
+            tokenomics_for_campaign: campaignData.tokenomics_max_supply,
             tokenomics_description: campaignData.tokenomics_description,
             featured: campaignData.featured,
             archived: campaignData.archived,

@@ -1,23 +1,43 @@
 import { CampaignEntity, CampaignStatusEntity, MilestoneEntity } from '@/lib/SmartDB/Entities';
 import { CampaignApi, CampaignFaqsApi, CampaignContentApi, CampaignMemberApi, MilestoneSubmissionApi, MilestoneApi } from '@/lib/SmartDB/FrontEnd';
 import { CampaignEX, MilestoneEX } from '@/types/types';
-import { pushSucessNotification, pushWarningNotification } from 'smart-db';
+import { isNullOrBlank, pushSucessNotification, pushWarningNotification, toJson } from 'smart-db';
 import { CampaignStatus_Code_Id_Enums } from './constants/status/status';
+import { deleteFileFromS3, uploadFileToS3, uploadMemberAvatarToS3 } from './s3Upload';
+import { isBlobURL } from './utils';
 
 export const saveEntityList = async <T extends { _DB_id?: string }>(
     list: T[] | undefined,
     deletedList: T[] | undefined,
     updateApi: (id: string, entity: T) => Promise<T>,
     createApi: (entity: T) => Promise<T>,
-    deleteApi: (id: string) => Promise<boolean>
-): Promise<T[]> => {
+    deleteApi: (id: string) => Promise<boolean>,
+    imageFields: string[] = [] // Fields that store images
+): Promise<{ savedEntities: T[]; filesToDelete: string[] }> => {
     const savedEntities: T[] = [];
+    let filesToDelete: string[] = [];
 
     console.log(`saveEntityList`);
 
-    // 🔹 Update existing & create new items
+    // 🔹 **Upload images before saving entities**
     if (list) {
         for (const item of list) {
+            // Process image fields
+            for (const field of imageFields) {
+                const imageUrl = (item as any)[field];
+
+                if (!isNullOrBlank(imageUrl) && isBlobURL(imageUrl)) {
+                    try {
+                        const newImageUrl = await uploadMemberAvatarToS3(imageUrl);
+                        (item as any)[field] = newImageUrl; // Update entity with new S3 URL
+                        URL.revokeObjectURL(imageUrl); // Revoke previous picture
+                    } catch (error) {
+                        console.error(`Error uploading image for field "${field}" in entity ${item._DB_id}:`, error);
+                    }
+                }
+            }
+
+            // Save entity
             if (item._DB_id) {
                 const updatedEntity = await updateApi(item._DB_id, item);
                 savedEntities.push(updatedEntity);
@@ -28,49 +48,85 @@ export const saveEntityList = async <T extends { _DB_id?: string }>(
         }
     }
 
-    // 🔹 Delete removed items
+    // 🔹 **Delete entities & collect image URLs to delete**
     if (deletedList) {
         for (const item of deletedList) {
             if (item._DB_id) {
+                // Collect image URLs from deleted entities
+                for (const field of imageFields) {
+                    const imageUrl = (item as any)[field];
+                    if (!isNullOrBlank(imageUrl) && !isBlobURL(imageUrl)) {
+                        filesToDelete.push(imageUrl);
+                    }
+                }
                 await deleteApi(item._DB_id);
             }
         }
     }
 
-    return savedEntities;
+    return { savedEntities, filesToDelete };
 };
 
 export async function serviceSaveCampaign(campaign: CampaignEX, data?: Record<string, any>, onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>) {
     try {
         let entity = campaign.campaign;
+        let allFilesToDelete: string[] = campaign.files_to_delete ? [...campaign.files_to_delete] : [];
+
         console.log(`handleSaveCampaign`);
 
-        entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
-        console.log(`handleSaveCampaign ${campaign.faqs_deleted?.length}`);
+        // SAVE CAMPAIGN
 
-        const savedFaqs = await saveEntityList(
+        const imageFields = ['banner_url', 'logo_url'];
+
+        for (const field of imageFields) {
+            const imageUrl = (entity as any)[field];
+            if (!isNullOrBlank(imageUrl) && isBlobURL(imageUrl)) {
+                try {
+                    const newImageUrl = await uploadMemberAvatarToS3(imageUrl);
+                    (entity as any)[field] = newImageUrl; // Update entity with new S3 URL
+                    URL.revokeObjectURL(imageUrl); // Revoke previous picture
+                } catch (error) {
+                    console.error(`Error uploading image for field "${field}" in entity ${entity._DB_id}:`, error);
+                }
+            }
+        }
+
+        entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
+
+        // 🔹 Save FAQs
+
+        const { savedEntities: savedFaqs, filesToDelete: faqFiles } = await saveEntityList(
             campaign.faqs,
             campaign.faqs_deleted,
             CampaignFaqsApi.updateWithParamsApi_.bind(CampaignFaqsApi),
             CampaignFaqsApi.createApi.bind(CampaignFaqsApi),
-            CampaignFaqsApi.deleteByIdApi_.bind(CampaignFaqsApi)
+            CampaignFaqsApi.deleteByIdApi_.bind(CampaignFaqsApi),
+            []
         );
 
-        const savedContents = await saveEntityList(
+        allFilesToDelete.push(...faqFiles);
+
+        // 🔹 Save Contents
+        const { savedEntities: savedContents, filesToDelete: contentFiles } = await saveEntityList(
             campaign.contents,
             campaign.contents_deleted,
             CampaignContentApi.updateWithParamsApi_.bind(CampaignContentApi),
             CampaignContentApi.createApi.bind(CampaignContentApi),
-            CampaignContentApi.deleteByIdApi_.bind(CampaignContentApi)
+            CampaignContentApi.deleteByIdApi_.bind(CampaignContentApi),
+            ['']
         );
+        allFilesToDelete.push(...contentFiles);
 
-        const savedMembers = await saveEntityList(
+        // 🔹 Save Members
+        const { savedEntities: savedMembers, filesToDelete: memberFiles } = await saveEntityList(
             campaign.members,
             campaign.members_deleted,
             CampaignMemberApi.updateWithParamsApi_.bind(CampaignMemberApi),
             CampaignMemberApi.createApi.bind(CampaignMemberApi),
-            CampaignMemberApi.deleteByIdApi_.bind(CampaignMemberApi)
+            CampaignMemberApi.deleteByIdApi_.bind(CampaignMemberApi),
+            ['avatar_url']
         );
+        allFilesToDelete.push(...memberFiles);
 
         if (campaign.milestones_deleted) {
             await Promise.all(
@@ -88,13 +144,15 @@ export async function serviceSaveCampaign(campaign: CampaignEX, data?: Record<st
             );
         }
 
-        const savedMilestoneEntities: MilestoneEntity[] = await saveEntityList(
+        const { savedEntities: savedMilestoneEntities, filesToDelete: milestoneFiles } = await saveEntityList(
             campaign.milestones?.map((m) => m.milestone),
             campaign.milestones_deleted?.map((m) => m.milestone),
             MilestoneApi.updateWithParamsApi_.bind(MilestoneApi),
             MilestoneApi.createApi.bind(MilestoneApi),
-            MilestoneApi.deleteByIdApi_.bind(MilestoneApi)
+            MilestoneApi.deleteByIdApi_.bind(MilestoneApi),
+            []
         );
+        allFilesToDelete.push(...milestoneFiles);
 
         const milestoneMap = new Map((campaign.milestones || []).filter((m) => m.milestone._DB_id).map((m) => [m.milestone._DB_id!, m.milestone_submissions]));
 
@@ -102,6 +160,21 @@ export async function serviceSaveCampaign(campaign: CampaignEX, data?: Record<st
             milestone: milestoneEntity,
             milestone_submissions: milestoneMap.get(milestoneEntity._DB_id!) || [],
         }));
+
+        // 🔹 **Final Cleanup: Delete All Files from S3**
+        if (allFilesToDelete.length > 0) {
+            console.log('Deleting files from S3:', allFilesToDelete);
+            await Promise.all(
+                allFilesToDelete.map(async (fileKey) => {
+                    try {
+                        const bucketName = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME!;
+                        await deleteFileFromS3(bucketName, fileKey);
+                    } catch (error) {
+                        console.error(`Error deleting file from S3: ${fileKey}`, error);
+                    }
+                })
+            );
+        }
 
         pushSucessNotification('Success', 'Updated successfully', false);
 

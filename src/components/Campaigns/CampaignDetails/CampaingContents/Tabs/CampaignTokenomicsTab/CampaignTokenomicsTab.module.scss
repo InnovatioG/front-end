@@ -2,27 +2,111 @@
 @use '@/styles/settings/colors';
 .layout {
     padding: 2rem;
-}
 
-.priceInADA {
-    display: flex;
-    flex-direction: row;
-    gap: 1rem;
-}
+    .tokenomicsContainer {
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+        justify-content: space-between;
+        padding: 2rem 0;
+        gap: 1.5rem;
 
-.headerContainer {
-    display: flex;
-    flex-direction: row;
-    width: 75%;
-    justify-content: space-between;
-    padding: 2rem 0;
-}
+        .title {
+            font: fonts.$f800-medium;
+            color: colors.$primary-dark-color;
+            margin-bottom: 1rem;
+        }
 
-.container {
-    display: flex;
-    flex-direction: column;
-}
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
 
-.strong {
-    font: fonts.$f400-bold;
+            .title {
+                font: fonts.$f400-regular;
+            }
+            .strong {
+                font: fonts.$f400-bold;
+            }
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+
+            .container {
+                display: flex;
+                flex-direction: column;
+                gap: 0.75rem;
+
+                .title {
+                    font: fonts.$f400-regular;
+                }
+                .strong {
+                    font: fonts.$f400-bold;
+                }
+            }
+        }
+
+        .description {
+            font: fonts.$f400-regular;
+            color: colors.$primary-dark-color;
+        }
+    }
+
+    .formContainer {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 1rem;
+        margin-bottom: 2rem;
+        flex-direction: column;
+
+        .title {
+            font: fonts.$f800-medium;
+            color: colors.$primary-dark-color;
+            margin-bottom: 1rem;
+        }
+
+        // .layout {
+        //     margin-top: 2rem;
+        //     margin-bottom: 2rem;
+        //     padding: 2rem;
+        //     display: flex;
+        //     flex-direction: column;
+        //     gap: 0.5rem;
+        // }
+        .singleInputContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+
+            .strong {
+                font: fonts.$f400-bold;
+            }
+        }
+
+        .fullWidth {
+            grid-column: span 2;
+        }
+
+        .multi {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            gap: 0.5rem;
+        }
+
+        .input,
+        .inputToken {
+            padding: 1rem 1rem;
+            background-color: #f9f9f9;
+            border-radius: 1rem;
+        }
+
+        .icon {
+            fill: colors.$primary-dark-color;
+        }
+    }
 }

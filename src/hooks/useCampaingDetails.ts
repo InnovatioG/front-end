@@ -56,9 +56,20 @@ interface useCampaignDetailsProps {
     setCampaignEX?: (campaignEX: CampaignEX | undefined) => void;
     setCampaign?: (campaign: CampaignEntity) => void;
     fetchCampaignsEX?: () => Promise<void>;
+    isValidEdit?: boolean;
+    setIsValidEdit?: (isValidEdit: boolean) => void;
 }
 
-export const useCampaignDetails = ({ campaign, pageView, isEditMode, setCampaignEX, setCampaign, fetchCampaignsEX }: useCampaignDetailsProps): ICampaignDetails => {
+export const useCampaignDetails = ({
+    campaign,
+    pageView,
+    isEditMode,
+    setCampaignEX,
+    setCampaign,
+    fetchCampaignsEX,
+    isValidEdit,
+    setIsValidEdit,
+}: useCampaignDetailsProps): ICampaignDetails => {
     //----------------------------------------------
 
     const walletStore = useWalletStore();
@@ -178,6 +189,7 @@ export const useCampaignDetails = ({ campaign, pageView, isEditMode, setCampaign
                 isAdmin,
                 isEditor,
                 isEditMode,
+                isValidEdit ?? true,
                 pageView,
                 campaign_status_code_id,
                 totalMilestones,

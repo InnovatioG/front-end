@@ -63,6 +63,7 @@ export enum ButtonsForDetailsEnum {
     EDIT_CAMPAIGN = 'EDIT_CAMPAIGN',
     CANCEL_EDIT_CAMPAIGN = 'CANCEL_EDIT_CAMPAIGN',
     SAVE_CAMPAIGN = 'SAVE_CAMPAIGN',
+    SAVE_DISABLED_CAMPAIGN = 'SAVE_DISABLED_CAMPAIGN',
 
     FEATURE_CAMPAIGN = 'FEATURE_CAMPAIGN',
     UNFEATURE_CAMPAIGN = 'UNFEATURE_CAMPAIGN',
@@ -340,6 +341,13 @@ export const ButtonForDetails: Record<ButtonsForDetailsEnum, ButtonType> = {
             }
         },
         classNameType: 'green center',
+    },
+    [ButtonsForDetailsEnum.SAVE_DISABLED_CAMPAIGN]: {
+        label: 'Save',
+        action: async (data, navigate, _openModal, handles) => {
+            alert(`There are errors in the form, please fix them before saving`);
+        },
+        classNameType: 'gray center',
     },
 
     [ButtonsForDetailsEnum.FEATURE_CAMPAIGN]: {

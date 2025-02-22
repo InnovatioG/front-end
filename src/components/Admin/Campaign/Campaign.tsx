@@ -334,6 +334,7 @@ export default function Campaign() {
                             <th>Visualizations</th>
                             <th>Investors</th>
                             <th>Tokenomics Max Supply</th>
+                            <th>Tokenomics For Campaign</th>
                             <th>Tokenomics Description</th>
 
                             <th>Campaign Version (Datum)</th>
@@ -398,7 +399,8 @@ export default function Campaign() {
                                 <td>{item.facebook}</td>
                                 <td>{item.visualizations}</td>
                                 <td>{item.investors}</td>
-                                <td>{item.tokenomics_max_supply}</td>
+                                <td>{item.tokenomics_max_supply?.toString()}</td>
+                                <td>{item.tokenomics_for_campaign?.toString()}</td>
                                 <td>{item.tokenomics_description}</td>
 
                                 <td>{item.cdCampaignVersion}</td>
@@ -621,7 +623,27 @@ export default function Campaign() {
             </div>
             <div>
                 <label>Tokenomics Max Supply:</label>
-                <input type="text" value={item.tokenomics_max_supply || ''} onChange={(e) => setItem({ ...item, tokenomics_max_supply: e.target.value })} />
+                <input
+                    type="text"
+                    value={item.tokenomics_max_supply?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cdCampaignToken_PriceADA: BigInt(e.target.value) });
+                        }
+                    }}
+                />
+            </div>
+            <div>
+                <label>Tokenomics For Campaign:</label>
+                <input
+                    type="text"
+                    value={item.tokenomics_for_campaign?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, tokenomics_for_campaign: BigInt(e.target.value) });
+                        }
+                    }}
+                />
             </div>
             <div>
                 <label>Tokenomics Description:</label>

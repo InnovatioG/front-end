@@ -1,7 +1,7 @@
-import PreLoadingPage from '@/components/General/LoadingPage/PreLoadingPage';
+import PreLoadingPage from '@/components/GeneralOK/LoadingPage/PreLoadingPage';
 import Footer from '@/components/Layout/Footer/Footer';
 import Header from '@/components/Layout/Header/Header';
-import LoadingPage from '@/components//General/LoadingPage/LoadingPage';
+import LoadingPage from '@/components/GeneralOK/LoadingPage/LoadingPage';
 import { ModalProvider } from '@/contexts/ModalProvider';
 import { ResponsiveProvider } from '@/contexts/ResponsiveProvider';
 import '@/styles/globals.scss';

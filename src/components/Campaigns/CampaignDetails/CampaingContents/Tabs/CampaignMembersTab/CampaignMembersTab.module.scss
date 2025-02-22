@@ -27,6 +27,18 @@
 
 .contentLayoutHeader {
     gap: 1rem;
+
+    .containerBtns {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+       justify-content: flex-end;
+
+
+        .deleteButton {
+            background-color: transparent;
+        }
+    }
 }
 .subContentHeader {
     width: 50%;
@@ -65,6 +77,34 @@
     gap: 2rem;
     margin-top: 1rem;
     padding: 2rem 6rem;
+
+    .memeberContainer {
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+
+        .dragButton {
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: grab;
+            text-align: center;
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            align-items: center;
+        }
+
+        .memeberDetails {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+    }
+
+    // <div className={styles.memeberContainer}>
+    // <div className={styles.dragButton}>⠿</div>
+    // <div className={styles.memeberDetails
 }
 
 .editButton {

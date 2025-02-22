@@ -1,5 +1,5 @@
 import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
-import LoaderDots from '@/components/General/LoadingPage/LoaderDots';
+import LoaderDots from '@/components/GeneralOK/LoadingPage/LoaderDots';
 import { PLUS_ICON } from '@/utils/constants/images';
 import { ROUTES } from '@/utils/constants/routes';
 import Link from 'next/link';

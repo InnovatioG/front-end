@@ -1,0 +1,26 @@
+@use '@/styles/settings/colors';
+
+.imageBannerContainer {
+    position: relative;
+    width: 100%;
+    height: 355px;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.bannerImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+@media screen and (max-width: 768px) {
+
+
+    .imageBannerContainer {
+        height: 200px;
+    }
+
+    
+}

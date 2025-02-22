@@ -1,6 +1,6 @@
 import CampaignsDetails from '@/components/Campaigns/CampaignDetails/CampaignDetails';
 import GeneralError from '@/components/General/Errors/GeneralError';
-import LoadingPage from '@/components/General/LoadingPage/LoadingPage';
+import LoadingPage from '@/components/GeneralOK/LoadingPage/LoadingPage';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { PageViewEnums } from '@/utils/constants/routes';
 import { CampaignTabEnum, CampaignTabUrls } from '@/utils/constants/routes';

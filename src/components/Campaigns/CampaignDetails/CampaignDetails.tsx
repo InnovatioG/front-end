@@ -7,6 +7,7 @@ import styles from './CampaignDetails.module.scss';
 import CampaignHeader from './CampaignHeader/CampaignHeader';
 import CampaingContents from './CampaingContents/CampaingContents';
 import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
+import { toJson } from 'smart-db';
 
 export interface CampaignsDetailsProps {
     pageView: PageViewEnums;
@@ -18,6 +19,8 @@ const CampaignsDetails: React.FC<CampaignsDetailsProps> = (props) => {
         campaign: propsCampaignIdStoreSafe.campaign,
         pageView: props.pageView,
         isEditMode: propsCampaignIdStoreSafe.isEditMode,
+        isValidEdit: propsCampaignIdStoreSafe.isValidEdit,
+        setIsValidEdit: propsCampaignIdStoreSafe.setIsValidEdit,
         setCampaignEX: propsCampaignIdStoreSafe.setCampaignEX,
         setCampaign: propsCampaignIdStoreSafe.setCampaign,
     });

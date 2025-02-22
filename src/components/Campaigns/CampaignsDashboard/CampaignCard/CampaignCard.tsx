@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/DefaultAvatar/DefaultAvatar';
+import { AvatarDisplay, AvatarFallback, AvatarImage } from '@/components/GeneralOK/Avatar/AvatarDisplay/AvatarDisplay';
 import { BtnCampaignActions } from '@/components/GeneralOK/Buttons/Buttons/BtnCampaignActions/BtnCampaignActions';
 import { useCampaignDetails } from '@/hooks/useCampaingDetails';
 import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
@@ -49,10 +49,10 @@ export default function CampaignCard(props: CampaignCardProps) {
         <div className={styles.campaignCard}>
             <div className={styles.headCard}>
                 <Link href={`${ROUTES.campaignViewTab(campaign.campaign._DB_id, CampaignTabEnum.DETAILS)}`}>
-                    <Avatar big={false} className={styles.pictureContainer}>
+                    <AvatarDisplay big={false} className={styles.pictureContainer}>
                         <AvatarImage src={campaign.campaign.logo_url} alt={campaign.campaign.name} />
                         <AvatarFallback>{campaign.campaign.name.slice(0, 2)}</AvatarFallback>
-                    </Avatar>
+                    </AvatarDisplay>
                 </Link>
                 <div className={styles.cardDetails}>
                     <div className={styles.statusContainer}>

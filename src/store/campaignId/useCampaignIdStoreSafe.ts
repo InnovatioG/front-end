@@ -9,10 +9,6 @@ export interface ICampaignIdStoreSafe extends ICampaignIdStore {
 export const useCampaignIdStoreSafe = (): ICampaignIdStoreSafe => {
     const { campaign, ...rest } = useCampaignIdStore();
 
-    // useEffect(() => {
-    //     alert(campaign?.campaign.featured);
-    // }, [campaign?.campaign.featured]);
-
     if (!campaign) {
         throw new Error('Campaign is undefined but expected to be defined.');
     }

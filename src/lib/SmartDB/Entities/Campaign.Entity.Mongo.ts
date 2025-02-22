@@ -77,7 +77,8 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             facebook: string;
             visualizations: number;
             investors: number;
-            tokenomics_max_supply: string;
+            tokenomics_max_supply: bigint;
+            tokenomics_for_campaign: bigint;
             tokenomics_description: string;
 
             fdpCampaignVersion: number;
@@ -126,9 +127,9 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             mint_CampaignToken: { type: Boolean, required: false },
             campaignToken_CS: { type: String, required: false },
             campaignToken_TN: { type: String, required: false },
-            campaignToken_PriceADA: { type: Number, required: false },
-            requestedMaxADA: { type: Number, required: false },
-            requestedMinADA: { type: Number, required: false },
+            campaignToken_PriceADA: { type: String, required: false },
+            requestedMaxADA: { type: String, required: false },
+            requestedMinADA: { type: String, required: false },
 
             logo_url: { type: String, required: false },
             banner_url: { type: String, required: false },
@@ -141,6 +142,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             visualizations: { type: Number, required: false },
             investors: { type: Number, required: false },
             tokenomics_max_supply: { type: String, required: false },
+            tokenomics_for_campaign: { type: String, required: false },
             tokenomics_description: { type: String, required: false },
 
             fdpCampaignVersion: { type: Number, required: false },

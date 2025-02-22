@@ -4,11 +4,10 @@ import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 
 interface AddMoreProps {
     isOpen: boolean;
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
     handleAddMore: () => void;
 }
 
-const AddMore: React.FC<AddMoreProps> = ({ isOpen, setIsOpen, handleAddMore }) => {
+const AddMore: React.FC<AddMoreProps> = ({ isOpen, handleAddMore }) => {
     return (
         <div>
             <BtnGeneral onClick={handleAddMore} classNameStyle="menu-index">

@@ -18,6 +18,7 @@ export const campaignStatusConfigs = (
     isAdmin: boolean,
     isEditor: boolean,
     isEditMode: boolean,
+    isValidEdit: boolean,
     pageView: PageViewEnums,
     campaign_status_code_id: number,
     totalMilestones: number,
@@ -36,7 +37,7 @@ export const campaignStatusConfigs = (
                   ...buttonsInManageAndNotInEditMode,
                   ...(swAddContact === true ? [CONTACT] : []),
               ]
-            : [ButtonForDetails[ButtonsForDetailsEnum.CANCEL_EDIT_CAMPAIGN], ButtonForDetails[ButtonsForDetailsEnum.SAVE_CAMPAIGN]];
+            : [ButtonForDetails[ButtonsForDetailsEnum.CANCEL_EDIT_CAMPAIGN], isValidEdit ? ButtonForDetails[ButtonsForDetailsEnum.SAVE_CAMPAIGN] : ButtonForDetails[ButtonsForDetailsEnum.SAVE_DISABLED_CAMPAIGN]];
     };
 
     const MANAGE_OR_SAVE = (buttonsInManageAndNotInEditMode: ButtonType[], buttonsNotInManage: ButtonType[] = [], swAddContact: boolean = false) => {
@@ -44,7 +45,7 @@ export const campaignStatusConfigs = (
             ? [ButtonForDetails[ButtonsForDetailsEnum.MANAGE_CAMPAIGN], ...buttonsNotInManage, ...(swAddContact === true ? [CONTACT] : [])]
             : isEditMode === false
             ? [ButtonForDetails[ButtonsForDetailsEnum.RENDER_CAMPAIGN_FOR_MANAGE], ...buttonsInManageAndNotInEditMode, ...(swAddContact === true ? [CONTACT] : [])]
-            : [ButtonForDetails[ButtonsForDetailsEnum.CANCEL_EDIT_CAMPAIGN], ButtonForDetails[ButtonsForDetailsEnum.SAVE_CAMPAIGN]];
+            : [ButtonForDetails[ButtonsForDetailsEnum.CANCEL_EDIT_CAMPAIGN], isValidEdit ? ButtonForDetails[ButtonsForDetailsEnum.SAVE_CAMPAIGN] : ButtonForDetails[ButtonsForDetailsEnum.SAVE_DISABLED_CAMPAIGN]];
     };
 
     const MANAGE = (buttonsInManageAndNotInEditMode: ButtonType[], buttonsNotInManage: ButtonType[] = [], swAddContact: boolean = false) => {

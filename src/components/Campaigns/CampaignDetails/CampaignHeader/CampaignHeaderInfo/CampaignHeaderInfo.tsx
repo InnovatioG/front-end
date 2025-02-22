@@ -1,4 +1,4 @@
-import ToolTipInformation from '@/components/General/TooltipInformation/tooltipInformation';
+import ToolTipInformation from '@/components/General/ToolTipInformation/ToolTipInformation';
 import { ICampaignDetails } from '@/hooks/useCampaingDetails';
 import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
 import { formatMoneyByADAOrDollar } from '@/store/generalStore/useGeneralStore';

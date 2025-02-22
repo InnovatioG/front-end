@@ -1,15 +1,15 @@
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import * as React from 'react';
-import styles from './DefaultAvatar.module.scss';
+import styles from './AvatarDisplay.module.scss';
 
-interface AvatarProps extends React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> {
+interface AvatarDisplayProps extends React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> {
     big?: boolean;
 }
 
-const Avatar = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Root>, AvatarProps>(({ className, big = false, ...props }, ref) => (
+const AvatarDisplay = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Root>, AvatarDisplayProps>(({ className, big = false, ...props }, ref) => (
     <AvatarPrimitive.Root ref={ref} className={`${styles.avatarRoot} ${big ? styles.big : ''} ${className}`} {...props} />
 ));
-Avatar.displayName = AvatarPrimitive.Root.displayName;
+AvatarDisplay.displayName = AvatarPrimitive.Root.displayName;
 
 const AvatarImage = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Image>, React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Image>>(
     ({ className, ...props }, ref) => <AvatarPrimitive.Image ref={ref} className={`${styles.avatarImage} ${className}`} {...props} />
@@ -21,4 +21,4 @@ const AvatarFallback = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.
 );
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
-export { Avatar, AvatarFallback, AvatarImage };
+export { AvatarDisplay, AvatarFallback, AvatarImage };

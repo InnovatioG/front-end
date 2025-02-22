@@ -124,7 +124,9 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible()
     investors!: number;
     @Convertible()
-    tokenomics_max_supply!: string;
+    tokenomics_max_supply!: bigint;
+    @Convertible()
+    tokenomics_for_campaign!: bigint;
     @Convertible()
     tokenomics_description!: string;
 
@@ -265,6 +267,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
         visualizations: true,
         investors: true,
         tokenomics_max_supply: true,
+        tokenomics_for_campaign: true,
         tokenomics_description: true,
         featured: true,
         archived: true,
@@ -304,6 +307,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
         visualizations: true,
         investors: true,
         tokenomics_max_supply: true,
+        tokenomics_for_campaign: true,
         tokenomics_description: true,
 
         cdCampaignVersion: true,

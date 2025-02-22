@@ -13,6 +13,7 @@ export interface ICampaignIdStoreProps {
     campaignTab?: CampaignTabEnum;
     error: string;
     isEditMode: boolean;
+    isValidEdit: boolean;
 }
 
 export const initialState: ICampaignIdStoreProps = {
@@ -22,6 +23,7 @@ export const initialState: ICampaignIdStoreProps = {
     isEditMode: true,
     isLoading: false,
     error: '',
+    isValidEdit: true,
 };
 
 export interface ICampaignIdStore extends ICampaignIdStoreProps {
@@ -33,6 +35,7 @@ export interface ICampaignIdStore extends ICampaignIdStoreProps {
     setIsLoading: (isLoading: boolean) => void;
     setError: (error: string) => void;
     fetchCampaignById: (id: string) => Promise<void>; // New function
+    setIsValidEdit: (isValidEdit: boolean) => void;
 }
 
 export const useCampaignIdStore = create<ICampaignIdStore>()(
@@ -69,6 +72,11 @@ export const useCampaignIdStore = create<ICampaignIdStore>()(
         setIsEditMode: (isEditMode) =>
             set((state) => {
                 state.isEditMode = isEditMode;
+            }),
+
+        setIsValidEdit: (isValidEdit) =>
+            set((state) => {
+                state.isValidEdit = isValidEdit;
             }),
 
         fetchCampaignById: async (id: string) => {

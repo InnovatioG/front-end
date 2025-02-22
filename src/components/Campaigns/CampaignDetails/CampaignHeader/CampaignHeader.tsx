@@ -1,28 +1,25 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/General/DefaultAvatar/DefaultAvatar';
+import Avatar from '@/components/GeneralOK/Avatar/Avatar';
+import BannerCampaign from '@/components/GeneralOK/BannerCampaign/BannerCampaign';
 import { ICampaignDetails } from '@/hooks/useCampaingDetails';
 import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
+import { PageViewEnums } from '@/utils/constants/routes';
 import Image from 'next/image';
-import React, { useEffect } from 'react';
+import React from 'react';
 import styles from './CampaignHeader.module.scss';
 import CampaignHeaderInfo from './CampaignHeaderInfo/CampaignHeaderInfo';
 import CampaignSocialLinksAndActions from './CampaignSocialLinksAndActions/CampaignSocialLinksAndActions';
 import useCampaignHeader from './useCampaignHeader';
-import { isNullOrBlank } from 'smart-db';
-import Link from 'next/link';
-import { ROUTES } from '@/utils/constants/routes';
-import { PageViewEnums } from '@/utils/constants/routes';
 
 const CampaignHeader: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props: ICampaignIdStoreSafe & ICampaignDetails) => {
-    const { campaign, isEditMode, isProtocolTeam, isAdmin, isEditor, pageView, campaignTab } = props;
-    const { handleChangePicture, handleButtonClickFile, fileInputRef } = useCampaignHeader(props);
+    const { campaign, isProtocolTeam, isEditMode, isAdmin, isEditor, pageView, campaignTab } = props;
+    const { handleChangeAvatar, handleChangeBanner } = useCampaignHeader(props);
+
+    const isEditing = props.pageView === PageViewEnums.MANAGE && props.isEditMode === true;
 
     return (
         <>
             <div className={styles.headerCampaignContainer}>
-                <Avatar big={true} className={styles.pictureContainer}>
-                    <AvatarImage src={campaign.campaign.logo_url} alt={campaign.campaign.name} />
-                    <AvatarFallback>{campaign.campaign.name.slice(0, 2)}</AvatarFallback>
-                </Avatar>
+                <Avatar name={campaign.campaign.name} picture={campaign.campaign.logo_url || ''} setPicture={(picture) => handleChangeAvatar(picture)} isEditing={isEditing} />
                 <h2 className={styles.title}>{campaign.campaign.name}</h2>
                 {pageView === PageViewEnums.MANAGE && isEditMode === false && (
                     <p>
@@ -52,51 +49,7 @@ const CampaignHeader: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props
                     <Image src={'/img/ui/cohete.webp'} alt="cohete" layout="fill" objectFit="cover" />
                 </div>
 
-                <div className={styles.imageBannerContainer}>
-                    {isEditMode === true && (
-                        <div
-                            className={styles.fileContainer}
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                position: 'absolute',
-                                bottom: 15,
-                                right: 15,
-                                zIndex: 1,
-                                cursor: 'pointer',
-                            }}
-                        >
-                            <input type="file" ref={fileInputRef} onChange={handleChangePicture} style={{ display: 'none' }} />
-                            <button
-                                onClick={handleButtonClickFile}
-                                style={{
-                                    backgroundColor: 'rgba(125, 125, 125, 0.15)',
-                                    padding: '0.5rem',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    color: 'white',
-                                    fontSize: 30,
-                                    fontWeight: 100,
-                                    width: '3rem',
-                                    borderRadius: '0.4375rem',
-                                    height: '3rem',
-                                    border: '1px solid rgba(255, 255, 255, 0.5)',
-                                }}
-                            >
-                                +
-                            </button>
-                        </div>
-                    )}
-
-                    <Image
-                        src={isNullOrBlank(campaign.campaign.banner_url) ? '/img/ui/campaign_generic_banner.jpg' : campaign.campaign.banner_url!}
-                        alt="Banner"
-                        layout="fill"
-                        objectFit="cover"
-                    />
-                </div>
+                <BannerCampaign picture={campaign.campaign.banner_url || ''} setPicture={(picture) => handleChangeBanner(picture)} isEditing={isEditing} />
 
                 <div className={styles.cardContainer}>
                     <CampaignHeaderInfo {...props} />

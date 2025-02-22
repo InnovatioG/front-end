@@ -16,6 +16,8 @@ export interface CampaignEX {
 
     faqs?: CampaignFaqsEntity[];
     faqs_deleted?: CampaignFaqsEntity[];
+
+    files_to_delete?: string[];
 }
 
 export interface MilestoneEX {
@@ -24,8 +26,3 @@ export interface MilestoneEX {
     milestone_submissions_deleted?: MilestoneSubmissionEntity[];
 }
 
-export interface initialTextEditorOptionsType {
-    order: number;
-    name: string;
-    tooltip: string;
-}

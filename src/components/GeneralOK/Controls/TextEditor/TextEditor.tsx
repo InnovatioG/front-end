@@ -1,4 +1,4 @@
-import useTextEditor from '@/components/General/TextEditor/useTextEditor';
+import useTextEditor from './useTextEditor';
 import dynamic from 'next/dynamic';
 import 'quill/dist/quill.snow.css'; // Import Quill styles
 import { useCallback } from 'react';

@@ -4,10 +4,10 @@ import { BtnCampaignActions } from '@/components/GeneralOK/Buttons/Buttons/BtnCa
 import ModalTemplate from '@/components/GeneralOK/Modals/ModalTemplate/ModalTemplate';
 import { ICampaignDetails } from '@/hooks/useCampaingDetails';
 import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
-import { ModalsEnums, SocialLinksIcons } from '@/utils/constants/constants';
 import { ButtonType } from '@/utils/constants/buttons';
+import { ModalsEnums, SocialLinksIcons } from '@/utils/constants/constants';
+import { formatLink } from '@/utils/formats';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styles from './CampaignSocialLinksAndActions.module.scss';
 import useCampaignSocialLinksAndActions from './useCampaignSocialLinksAndActions';
@@ -15,7 +15,7 @@ import useCampaignSocialLinksAndActions from './useCampaignSocialLinksAndActions
 const CampaignSocialLinksAndActions: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props: ICampaignIdStoreSafe & ICampaignDetails) => {
     const { campaign, setCampaign, isEditMode, buttonsForHeader, handles } = props;
 
-    const { selectedLink, setSelectedLink, getPlaceholder, formatSocialLink, editLinkButton, closeModal } = useCampaignSocialLinksAndActions(props);
+    const { selectedLink, setSelectedLink, getPlaceholder, editLinkButton, closeModal } = useCampaignSocialLinksAndActions(props);
 
     const EditSocialLinkModal = () => {
         const [inputValue, setInputValue] = useState(campaign?.campaign[selectedLink] || '');
@@ -75,7 +75,7 @@ const CampaignSocialLinksAndActions: React.FC<ICampaignIdStoreSafe & ICampaignDe
                             const socialLink = campaign.campaign[social.name];
                             if (!isEditMode && (!socialLink || socialLink.trim() === '')) return null; // No renderizar si el enlace está vacío y no está en modo edición
                             return (
-                                <a key={social.name} href={!isEditMode ? formatSocialLink(socialLink || '') : '#'} target="_blank" rel="noopener noreferrer">
+                                <a key={social.name} href={!isEditMode ? formatLink(socialLink || '') : '#'} target="_blank" rel="noopener noreferrer">
                                     <SocialButton icon={social.icon} name={social.name} setSocialLink={setSelectedLink} />
                                 </a>
                             );

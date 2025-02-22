@@ -24,6 +24,8 @@ export const SocialLinksIcons = [
 
 export enum ModalsEnums {
     WALLET_CONNECT = 'Wallet Connect',
+    EDIT_CONTENTS = 'Edit Contents',
+    EDIT_MEMBERS = 'Edit Members',
     EDIT_SOCIAL_LINK = 'Edit Social Link',
     DELETE_CAMPAIGN = 'Delete Campaign',
     SUBMIT_CAMPAIGN = 'Submit Campaign',

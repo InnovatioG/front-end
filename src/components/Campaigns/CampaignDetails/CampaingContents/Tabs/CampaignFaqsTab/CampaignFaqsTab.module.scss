@@ -58,16 +58,6 @@
     outline: none;
 }
 
-.container {
-    position: relative;
-}
-.deleteButton {
-    background-color: transparent;
-    position: absolute;
-    bottom: 0px;
-    right: -10px;
-}
-
 .plus {
     border: 1px solid black;
     border-radius: 0.2rem;
@@ -106,8 +96,37 @@
 
 .questionContainer {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 1rem;
+    justify-content: space-between;
+
+    .containerDetails {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 100%;
+    }
+    .containerBtns {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+
+        .dragButton {
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            cursor: grab;
+            text-align: center;
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            align-items: center;
+        }
+
+        .deleteButton {
+            background-color: transparent;
+        }
+    }
 }
 
 .buttonGeneral {

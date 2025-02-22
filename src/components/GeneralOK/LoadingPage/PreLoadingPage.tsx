@@ -1,4 +1,4 @@
-import LoadingPage from '@/components//General/LoadingPage/LoadingPage';
+import LoadingPage from './LoadingPage';
 import { useEffect } from 'react';
 
 interface LoadingPageProps {

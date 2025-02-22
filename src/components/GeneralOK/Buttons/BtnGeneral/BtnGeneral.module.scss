@@ -82,6 +82,17 @@
     transition: all 0.3s ease;
     border: none;
     padding: 1rem 2rem;
+
+ 
+}
+
+.gray {
+    background: colors.$light-gray-span;
+    font: fonts.$f200-medium;
+    width: 100%;
+    transition: all 0.3s ease;
+    border: none;
+    padding: 1rem 2rem;
 }
 
 .greenb {
@@ -125,7 +136,7 @@
 
 .menu-index {
     border: 1px solid colors.$primary-dark-color;
-    scale: 1.1;
+    // scale: 1.1;
 }
 
 .hasContentButton {

@@ -1,6 +1,6 @@
 {
   "name": "innovatio",
-  "version": "0.2.2", 
+  "version": "0.2.2",
   "private": true,
   "scripts": {
     "dev": "node --max-old-space-size=8192 node_modules/.bin/next dev -p 3000",
@@ -51,6 +51,7 @@
     "postcss": "^8.4.49",
     "quill": "^2.0.2",
     "react": "18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "18.2.0",
     "react-dropzone": "^14.3.5",
@@ -75,6 +76,7 @@
     "@types/jest": "^29.5.12",
     "@types/node": "20.5.9",
     "@types/react": "18.2.21",
+    "@types/react-beautiful-dnd": "^13.1.8",
     "@types/react-dom": "18.2.7",
     "@types/react-modal": "^3.16.3",
     "@types/supertest": "^6.0.2",

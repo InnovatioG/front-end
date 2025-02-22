@@ -67,6 +67,7 @@ export const cloneCampaignEX = (campaign: CampaignEX | undefined): CampaignEX | 
         faqs_deleted: campaign.faqs_deleted
             ? campaign.faqs_deleted.map((f) => new CampaignFaqsEntity({ ...f })) // Ensure deep copy
             : undefined,
+        files_to_delete: campaign.files_to_delete ? [...campaign.files_to_delete] : undefined,
     };
 };
 // Deep copies a `MilestoneEX` object.

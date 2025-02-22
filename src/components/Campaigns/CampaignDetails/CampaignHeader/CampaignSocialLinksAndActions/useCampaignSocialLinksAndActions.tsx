@@ -15,13 +15,6 @@ const useCampaignSocialLinksAndActions = (props: ICampaignIdStoreSafe & ICampaig
         return linkValue && linkValue !== '' ? linkValue : `Enter your ${selectedLink} link`;
     };
 
-    const formatSocialLink = (link: string) => {
-        if (!link.startsWith('http://') && !link.startsWith('https://')) {
-            return `https://${link}`;
-        }
-        return link;
-    };
-
     const editLinkButton = (modal: ReactNode) => {
         openModal(ModalsEnums.EDIT_SOCIAL_LINK, undefined, undefined, modal);
     };
@@ -31,7 +24,6 @@ const useCampaignSocialLinksAndActions = (props: ICampaignIdStoreSafe & ICampaig
         setSelectedLink,
 
         getPlaceholder,
-        formatSocialLink,
         editLinkButton,
         openModal,
         closeModal,

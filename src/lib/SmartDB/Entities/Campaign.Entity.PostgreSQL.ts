@@ -72,8 +72,10 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     visualizations!: number;
     @Column({ type: 'integer', nullable: true })
     investors!: number;
-    @Column({ type: 'varchar', length: 255, nullable: true })
+    @Column({ type: 'bigint', nullable: true })
     tokenomics_max_supply!: string;
+    @Column({ type: 'bigint', nullable: true })
+    tokenomics_for_campaign!: string;
     @Column({ type: 'text', nullable: true })
     tokenomics_description!: string;
 

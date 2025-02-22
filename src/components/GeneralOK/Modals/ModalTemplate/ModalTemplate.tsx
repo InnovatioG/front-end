@@ -1,4 +1,4 @@
-import { Drawer, DrawerContent } from '@/components/General/Drawer/Drawer';
+import { Drawer, DrawerContent } from '@/components/GeneralOK/Controls/Drawer/Drawer';
 import { useModal } from '@/contexts/ModalContext';
 import { useResponsive } from '@/contexts/ResponsiveContext';
 import { ModalsEnums } from '@/utils/constants/constants';
