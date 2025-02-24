@@ -1,4 +1,4 @@
-@use '../FormSteps.module.scss';
+@use '@/styles/InputStyle';
 
 .containerLayout {
     display: flex;
@@ -9,7 +9,7 @@
 }
 
 .textarea {
-    @include FormSteps.inputStyles;
+    @include InputStyle.inputStyles;
     padding: 1rem 1rem;
     /* quiero que sea 10 rengoles la altura minima */
     min-height: 15rem;
@@ -28,7 +28,7 @@
 }
 
 .input {
-    @include FormSteps.inputStyles;
+    @include InputStyle.inputStyles;
     padding: 1rem 1rem;
     width: 100%;
 }

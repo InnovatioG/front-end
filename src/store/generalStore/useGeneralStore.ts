@@ -1,5 +1,5 @@
-import { CampaignCategoryEntity, CampaignStatusEntity, MilestoneStatusEntity } from '@/lib/SmartDB/Entities';
-import { CampaignApi, CampaignCategoryApi, CampaignStatusApi, MilestoneStatusApi } from '@/lib/SmartDB/FrontEnd';
+import { CampaignCategoryEntity, CampaignStatusEntity, MilestoneStatusEntity, SubmissionStatusEntity } from '@/lib/SmartDB/Entities';
+import { CampaignApi, CampaignCategoryApi, CampaignStatusApi, MilestoneStatusApi, SubmissionStatusApi } from '@/lib/SmartDB/FrontEnd';
 import { WritableDraft } from 'immer';
 import { ConnectedWalletInfo, isNullOrBlank, WalletEntity, WalletFrontEndApiCalls } from 'smart-db';
 import { create } from 'zustand';
@@ -11,6 +11,7 @@ interface IGeneralStore {
     campaignCategories: CampaignCategoryEntity[];
     campaignStatus: CampaignStatusEntity[];
     milestoneStatus: MilestoneStatusEntity[];
+    submissionStatus: SubmissionStatusEntity[];
     priceADAOrDollar: 'dollar' | 'ada';
     adaPrice: number;
     wallet: WalletEntity | undefined;
@@ -18,6 +19,7 @@ interface IGeneralStore {
     setCampaignCategories: (categories: CampaignCategoryEntity[]) => void;
     setCampaignStatus: (statuses: CampaignStatusEntity[]) => void;
     setMilestoneStatus: (statuses: MilestoneStatusEntity[]) => void;
+    setSubmissionStatus: (statuses: SubmissionStatusEntity[]) => void;
     setADAPrice: (price: number) => void;
     setPriceADAOrDollar: (price: 'dollar' | 'ada') => void;
     setWallet: (info?: ConnectedWalletInfo) => void;
@@ -39,6 +41,7 @@ export const useGeneralStore = create<IGeneralStore>()(
         campaignCategories: [],
         campaignStatus: [],
         milestoneStatus: [],
+        submissionStatus: [],
         adaPrice: 0,
         wallet: undefined,
         haveCampaigns: false,
@@ -85,6 +88,11 @@ export const useGeneralStore = create<IGeneralStore>()(
         setMilestoneStatus: (statuses) => {
             set((state) => {
                 state.milestoneStatus = statuses;
+            });
+        },
+        setSubmissionStatus: (statuses) => {
+            set((state) => {
+                state.submissionStatus = statuses;
             });
         },
         setADAPrice: (price) => {
@@ -199,6 +207,17 @@ const fetchCampaignStatus = async () => {
     }
 };
 
+const fetchSubmissionStatus = async () => {
+    try {
+        const fetchedData: SubmissionStatusEntity[] = await SubmissionStatusApi.getAllApi_();
+        useGeneralStore.getState().setSubmissionStatus(fetchedData);
+        return fetchedData;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return [];
+    }
+};
+
 const fetchADAPrice = async () => {
     try {
         const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd');
@@ -212,7 +231,7 @@ const fetchADAPrice = async () => {
 
 export const fetchGeneralStoreData = async () => {
     try {
-        await Promise.all([fetchCampaignCategories(), fetchCampaignStatus(), fetchADAPrice(), fetchMilestoneStatus()]);
+        await Promise.all([fetchCampaignCategories(), fetchCampaignStatus(), fetchADAPrice(), fetchMilestoneStatus(), fetchSubmissionStatus()]);
     } catch (error) {
         console.error('Error fetching all data:', error);
     }

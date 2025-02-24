@@ -149,7 +149,7 @@ export default function Campaign() {
 
         const addMilestone = () => {
             const newMilestone: CampaignMilestoneDatum = {
-                cmPerncentage: 0,
+                cmPerncentage: 0n,
                 cmStatus: 0, // Default status
             };
             const newMilestoneIndex = localMilestones.length; // Index of the new milestone
@@ -191,7 +191,7 @@ export default function Campaign() {
                                 {editingIndex === index ? (
                                     <input
                                         type="number"
-                                        value={milestone.cmPerncentage}
+                                        value={milestone.cmPerncentage.toString()}
                                         min="0"
                                         max="100"
                                         onChange={(e) => updateMilestone(index, 'cmPerncentage', e.target.value)}

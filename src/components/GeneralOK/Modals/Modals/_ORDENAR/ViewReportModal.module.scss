@@ -1,7 +1,6 @@
 @use '@/styles/settings/fonts';
 @use '@/styles/settings/colors';
-@use '@/components/CampaignCreation/Layout/Form/FormSteps.module.scss';
-
+@use '@/styles/InputStyle';
 .modalLayout {
     display: flex;
     flex-direction: column;
@@ -47,7 +46,7 @@
     width: 100%;
 }
 .textArea {
-    @include FormSteps.inputStyles;
+    @include InputStyle.inputStyles;
     padding: 1rem 1rem;
     background-color: white;
     min-width: 100%;

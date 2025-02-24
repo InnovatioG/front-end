@@ -1,9 +1,9 @@
 @use '@/styles/settings/fonts';
 @use '@/styles/settings/colors';
-@use '../FormSteps.module.scss';
+@use '@/styles/InputStyle';
 
 .input {
-    @include FormSteps.inputStyles;
+    @include InputStyle.inputStyles;
     padding: 1rem 1rem;
 }
 

@@ -1,8 +1,8 @@
-import { CampaignStatusEntity } from '@/lib/SmartDB/Entities';
-import { CampaignApi, CampaignContentApi, CampaignFaqsApi, CampaignMemberApi, MilestoneApi, MilestoneSubmissionApi } from '@/lib/SmartDB/FrontEnd';
+import { CampaignStatusEntity, CampaignSubmissionEntity, SubmissionStatusEntity } from '@/lib/SmartDB/Entities';
+import { CampaignApi, CampaignContentApi, CampaignFaqsApi, CampaignMemberApi, CampaignSubmissionApi, MilestoneApi, MilestoneSubmissionApi } from '@/lib/SmartDB/FrontEnd';
 import { CampaignEX, MilestoneEX } from '@/types/types';
 import { isNullOrBlank, pushSucessNotification, pushWarningNotification } from 'smart-db';
-import { CampaignStatus_Code_Id_Enums } from './constants/status/status';
+import { CampaignStatus_Code_Id_Enums, SubmissionStatus_Enums } from './constants/status/status';
 import { deleteFileFromS3, uploadMemberAvatarToS3 } from './s3Upload';
 import { isBlobURL } from './utils';
 import { getCampaignStatus_Db_Id_By_Code_Id } from './campaignHelpers';
@@ -292,6 +292,7 @@ export async function serviceUnArchiveCampaign(campaign: CampaignEX, data?: Reco
 export async function serviceSubmitCampaign(
     campaign: CampaignEX,
     campaignStatus: CampaignStatusEntity[],
+    submissionStatus: SubmissionStatusEntity[],
     data?: Record<string, any>,
     onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
 ) {
@@ -308,10 +309,24 @@ export async function serviceSubmitCampaign(
             throw new Error(`Status SUBMITTED code-id: ${CampaignStatus_Code_Id_Enums.SUBMITTED} not found`);
         }
 
+        const statusSubmission = submissionStatus.find((status) => status.code_id === SubmissionStatus_Enums.SUBMITTED);
+
+        if (!statusSubmission) {
+            throw new Error(`Status SUBMITTED code-id: ${SubmissionStatus_Enums.SUBMITTED} not found`);
+        }
+
         let entity = campaign.campaign;
         entity.campaign_status_id = status._DB_id;
 
         entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
+
+        let submission: CampaignSubmissionEntity = new CampaignSubmissionEntity({
+            campaign_id: campaign.campaign._DB_id,
+            submission_status_id: statusSubmission?._DB_id,
+            submitted_by_wallet_id: data?.submitted_by_wallet_id,
+        });
+
+        submission = await CampaignSubmissionApi.createApi(submission);
 
         pushSucessNotification('Success', 'Updated successfully', false);
 
@@ -327,6 +342,7 @@ export async function serviceSubmitCampaign(
 export async function serviceApproveCampaign(
     campaign: CampaignEX,
     campaignStatus: CampaignStatusEntity[],
+    submissionStatus: SubmissionStatusEntity[],
     data?: Record<string, any>,
     onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
 ) {
@@ -343,10 +359,28 @@ export async function serviceApproveCampaign(
             throw new Error(`Status APPROVED code-id: ${CampaignStatus_Code_Id_Enums.APPROVED} not found`);
         }
 
+        const statusSubmission = submissionStatus.find((status) => status.code_id === SubmissionStatus_Enums.APPROVED);
+
+        if (!statusSubmission) {
+            throw new Error(`Status APPROVED code-id: ${SubmissionStatus_Enums.APPROVED} not found`);
+        }
+
         let entity = campaign.campaign;
         entity.campaign_status_id = status._DB_id;
 
         entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
+
+        const submission: CampaignSubmissionEntity | undefined = await CampaignSubmissionApi.getOneByParamsApi_({ campaign_id: campaign.campaign._DB_id });
+        if (!submission) {
+            throw new Error(`Submission not found for campaign_id: ${campaign.campaign._DB_id}`);
+        }
+
+        await CampaignSubmissionApi.updateWithParamsApi_(submission._DB_id, {
+            ...submission,
+            submission_status_id: statusSubmission._DB_id,
+            revised_by_wallet_id: data?.revised_by_wallet_id,
+            approved_justification: data?.justification,
+        });
 
         pushSucessNotification('Success', 'Updated successfully', false);
 
@@ -362,6 +396,7 @@ export async function serviceApproveCampaign(
 export async function serviceRejectCampaign(
     campaign: CampaignEX,
     campaignStatus: CampaignStatusEntity[],
+    submissionStatus: SubmissionStatusEntity[],
     data?: Record<string, any>,
     onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
 ) {
@@ -378,10 +413,28 @@ export async function serviceRejectCampaign(
             throw new Error(`Status REJECTED code-id: ${CampaignStatus_Code_Id_Enums.REJECTED} not found`);
         }
 
+        const statusSubmission = submissionStatus.find((status) => status.code_id === SubmissionStatus_Enums.REJECTED);
+
+        if (!statusSubmission) {
+            throw new Error(`Status REJECTED code-id: ${SubmissionStatus_Enums.REJECTED} not found`);
+        }
+
         let entity = campaign.campaign;
         entity.campaign_status_id = status._DB_id;
 
         entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
+
+        const submission: CampaignSubmissionEntity | undefined = await CampaignSubmissionApi.getOneByParamsApi_({ campaign_id: campaign.campaign._DB_id });
+        if (!submission) {
+            throw new Error(`Submission not found for campaign_id: ${campaign.campaign._DB_id}`);
+        }
+
+        await CampaignSubmissionApi.updateWithParamsApi_(submission._DB_id, {
+            ...submission,
+            submission_status_id: statusSubmission._DB_id,
+            revised_by_wallet_id: data?.revised_by_wallet_id,
+            rejected_justification: data?.justification,
+        });
 
         pushSucessNotification('Success', 'Updated successfully', false);
 

@@ -1,6 +1,6 @@
 @use '@/styles/settings/colors';
 @use '@/styles/settings/fonts';
-
+@use '@/styles/InputStyle';
 .socialMediaCard {
     border-radius: 1.375rem;
     border: 1.5px solid #fff;
@@ -64,7 +64,7 @@
 }
 
 .input {
-    // @include FormSteps.inputStyles;
+    // @include InputStyle.inputStyles;
     padding: 1rem;
     min-width: 318px;
 }

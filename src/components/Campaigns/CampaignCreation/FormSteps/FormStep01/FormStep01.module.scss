@@ -1,7 +1,6 @@
 @use '@/styles/settings/fonts';
 @use '@/styles/settings/colors';
-@use '../FormSteps.module.scss';
-
+@use '@/styles/InputStyle';
 .section {
     display: flex;
     flex-direction: column;
@@ -29,7 +28,7 @@
             width: 100%;
             height: 50px;
             .input {
-                @include FormSteps.inputStyles;
+                @include InputStyle.inputStyles;
             }
         }
         .areaGroup {
@@ -39,7 +38,7 @@
             flex-direction: column;
             gap: 10px;
             .textarea {
-                @include FormSteps.inputStyles;
+                @include InputStyle.inputStyles;
                 padding: 20px 30px;
             }
             .characterCount {

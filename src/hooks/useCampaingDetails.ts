@@ -73,7 +73,7 @@ export const useCampaignDetails = ({
     //----------------------------------------------
 
     const walletStore = useWalletStore();
-    const { wallet, isProtocolTeam, _DebugIsAdmin, _DebugIsEditor, campaignStatus } = useGeneralStore();
+    const { wallet, isProtocolTeam, _DebugIsAdmin, _DebugIsEditor, campaignStatus, submissionStatus } = useGeneralStore();
     const { openModal } = useModal();
 
     //----------------------------------------------
@@ -198,9 +198,9 @@ export const useCampaignDetails = ({
     const handleUnFeatureCampaign = (data?: Record<string, any>) => serviceUnFeatureCampaign(campaign, data, onFinish);
     const handleArchiveCampaign = (data?: Record<string, any>) => serviceArchiveCampaign(campaign, data, onFinish);
     const handleUnArchiveCampaign = (data?: Record<string, any>) => serviceUnArchiveCampaign(campaign, data, onFinish);
-    const handleSubmitCampaign = (data?: Record<string, any>) => serviceSubmitCampaign(campaign, campaignStatus, data, onFinish);
-    const handleApproveCampaign = (data?: Record<string, any>) => serviceApproveCampaign(campaign, campaignStatus, data, onFinish);
-    const handleRejectCampaign = (data?: Record<string, any>) => serviceRejectCampaign(campaign, campaignStatus, data, onFinish);
+    const handleSubmitCampaign = (data?: Record<string, any>) => serviceSubmitCampaign(campaign, campaignStatus, submissionStatus, data, onFinish);
+    const handleApproveCampaign = (data?: Record<string, any>) => serviceApproveCampaign(campaign, campaignStatus, submissionStatus, data, onFinish);
+    const handleRejectCampaign = (data?: Record<string, any>) => serviceRejectCampaign(campaign, campaignStatus, submissionStatus, data, onFinish);
     const handleCreateSmartContracts = (data?: Record<string, any>) => serviceCreateSmartContracts(campaign, campaignStatus, data, onFinish);
     const handlePublishSmartContracts = (data?: Record<string, any>) => servicePublishSmartContracts(campaign, campaignStatus, data, onFinish);
     const handleInitializeCampaign = (data?: Record<string, any>) => serviceInitializeCampaign(campaign, campaignStatus, data, onFinish);

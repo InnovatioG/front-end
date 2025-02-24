@@ -7,6 +7,7 @@ import LaunchCampaignModal from '@/components/GeneralOK/Modals/Modals/LaunchCamp
 import ContactSupportModal from '@/components/GeneralOK/Modals/Modals/ContactSupportModal/ContactSupportModal';
 import SingleQuestionModal from '@/components/GeneralOK/Modals/Modals/SingleQuestionModal/SingleQuestionModal';
 import SuccessModal from '@/components/GeneralOK/Modals/Modals/SuccessModal/SuccessModal';
+import ManageCampaignSubmissionModal from '@/components/GeneralOK/Modals/Modals/ManageCampaignSubmissionModal/ManageCampaignSubmissionModal';
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
     const [activeModal, setActiveModal] = useState<ModalsEnums | null>(null);
@@ -39,7 +40,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         [ModalsEnums.EDIT_SOCIAL_LINK]: undefined,
         [ModalsEnums.DELETE_CAMPAIGN]: undefined,
         [ModalsEnums.SUBMIT_CAMPAIGN]: <SingleQuestionModal modalType={ModalsEnums.SUBMIT_CAMPAIGN} handleType={HandlesEnums.SUBMIT_CAMPAIGN} />,
-        [ModalsEnums.MANAGE_CAMPAIGN_SUBMISSIONS]: undefined,
+        [ModalsEnums.MANAGE_CAMPAIGN_SUBMISSIONS]: <ManageCampaignSubmissionModal />,
         [ModalsEnums.VIEW_CAMPAIGN_SUBMISSIONS]: undefined,
         [ModalsEnums.CREATE_SMART_CONTRACTS]: <SingleQuestionModal modalType={ModalsEnums.CREATE_SMART_CONTRACTS} handleType={HandlesEnums.CREATE_SMART_CONTRACTS} />,
         [ModalsEnums.PUBLISH_SMART_CONTRACTS]: <SingleQuestionModal modalType={ModalsEnums.PUBLISH_SMART_CONTRACTS} handleType={HandlesEnums.PUBLISH_SMART_CONTRACTS} />,

@@ -1,16 +1,39 @@
 import { useModal } from '@/contexts/ModalContext';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './SingleQuestionModal.module.scss';
 import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 import { HandlesEnums, ModalsEnums } from '@/utils/constants/constants';
-
+import { toJson } from 'smart-db';
+import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 
 interface SingleQuestionModalProps {
-    modalType: ModalsEnums.SUBMIT_CAMPAIGN | ModalsEnums.CREATE_SMART_CONTRACTS | ModalsEnums.PUBLISH_SMART_CONTRACTS | ModalsEnums.INITIALIZE_CAMPAIGN | ModalsEnums.VALIDATE_FUNDRAISING_STATUS;
-    handleType: HandlesEnums.SUBMIT_CAMPAIGN | HandlesEnums.CREATE_SMART_CONTRACTS | HandlesEnums.PUBLISH_SMART_CONTRACTS | HandlesEnums.INITIALIZE_CAMPAIGN | HandlesEnums.SET_REACHED_STATUS;
+    modalType:
+        | ModalsEnums.SUBMIT_CAMPAIGN
+        | ModalsEnums.CREATE_SMART_CONTRACTS
+        | ModalsEnums.PUBLISH_SMART_CONTRACTS
+        | ModalsEnums.INITIALIZE_CAMPAIGN
+        | ModalsEnums.VALIDATE_FUNDRAISING_STATUS;
+    handleType:
+        | HandlesEnums.SUBMIT_CAMPAIGN
+        | HandlesEnums.CREATE_SMART_CONTRACTS
+        | HandlesEnums.PUBLISH_SMART_CONTRACTS
+        | HandlesEnums.INITIALIZE_CAMPAIGN
+        | HandlesEnums.SET_REACHED_STATUS;
 }
 
 const SingleQuestionModal: React.FC<SingleQuestionModalProps> = ({ modalType, handleType }) => {
+    const { wallet } = useGeneralStore();
+    const [isValidEdit, setIsValidEdit] = useState(false);
+    useEffect(() => {
+        if (wallet !== undefined) {
+            setIsValidEdit(true);
+        } else if (wallet !== undefined) {
+            setIsValidEdit(true);
+        } else {
+            setIsValidEdit(false);
+        }
+    }, [wallet]);
+
     const informationByType = {
         [ModalsEnums.SUBMIT_CAMPAIGN]: {
             title: 'Submit Campaign',
@@ -75,11 +98,16 @@ const SingleQuestionModal: React.FC<SingleQuestionModalProps> = ({ modalType, ha
     const handleClick = async () => {
         console.log(`handleClick: ${handleType}`);
         if (handles && handles[handleType]) {
-            await handles[handleType](modalData);
+            let data = { ...modalData };
+            if (handleType === HandlesEnums.SUBMIT_CAMPAIGN) {
+                if (wallet === undefined) return;
+                data = { ...modalData, submitted_by_wallet_id: wallet._DB_id };
+            }
+            await handles[handleType](data);
         } else {
             alert(`No handle ${handleType} provided`);
         }
-        // NOTE: no lo cierro, por que se abre otro modal, el de success 
+        // NOTE: no lo cierro, por que se abre otro modal, el de success
         // closeModal();
     };
 
@@ -91,7 +119,7 @@ const SingleQuestionModal: React.FC<SingleQuestionModalProps> = ({ modalType, ha
             </h2>
             <div className={styles.buttonContainer}>
                 <BtnGeneral text="No" onClick={() => closeModal()} classNameStyle="outlineb" />
-                <BtnGeneral text="Yes" onClick={() => handleClick()} classNameStyle="fillb" />
+                <BtnGeneral text="Yes" onClick={() => handleClick()} classNameStyle="fillb" disabled={!isValidEdit} />
             </div>
         </div>
     );
