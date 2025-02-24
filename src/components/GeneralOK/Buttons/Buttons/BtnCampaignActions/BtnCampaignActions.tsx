@@ -8,7 +8,7 @@ import React from 'react';
 interface BtnCampaignActionsProps {
     button: ButtonType;
     data?: Record<string, any>;
-    handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<void>>>;
+    handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | undefined | void>>>;
 }
 
 export const BtnCampaignActions: React.FC<BtnCampaignActionsProps> = ({ button, data, handles }) => {

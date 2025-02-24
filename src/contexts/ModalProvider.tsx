@@ -11,13 +11,13 @@ import SuccessModal from '@/components/GeneralOK/Modals/Modals/SuccessModal/Succ
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
     const [activeModal, setActiveModal] = useState<ModalsEnums | null>(null);
     const [modalData, setModalData] = useState<Record<string, any> | undefined>(undefined);
-    const [handles, setHandles] = useState<Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<void>>> | undefined>(undefined);
+    const [handles, setHandles] = useState<Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | undefined | void>>> | undefined>(undefined);
     const [dynamicModal, setDynamicModal] = useState<ReactNode | null>(null);
 
     const openModal = (
         modal: ModalsEnums,
         data?: Record<string, any>,
-        handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<void>>>,
+        handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | undefined | void>>>,
         component?: ReactNode
     ) => {
         setActiveModal(modal);

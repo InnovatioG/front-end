@@ -9,8 +9,9 @@ import { isNullOrBlank } from 'smart-db';
 import TextEditor from '@/components/GeneralOK/Controls/TextEditor/TextEditor';
 import { CampaignEntity } from '@/lib/SmartDB/Entities';
 import Checkbox from '@/components/General/Buttons/Checkbox/Checkbox';
-import Slider from '@/components/General/Slider/FundrasingSlider/Slider';
+import Slider from '@/components/General/Slider/Slider/Slider';
 import { formatMoney } from '@/utils/formats';
+import { REQUESTED_MAX_ADA, REQUESTED_MIN_ADA } from '@/utils/constants/constants';
 
 interface IInputField {
     id: string;
@@ -43,10 +44,6 @@ const CampaignTokenomicsTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> =
         isNullOrBlank(campaignToken_TN) &&
         isNullOrBlank(campaignToken_CS) &&
         isNullOrBlank(tokenomics_description);
-
-    if (conditionsToPrompForEdit && props.pageView === PageViewEnums.MANAGE && props.isEditMode === false) {
-        return <EmptyState {...props} />;
-    }
 
     const isEditing = props.pageView === PageViewEnums.MANAGE && props.isEditMode === true;
 
@@ -105,28 +102,6 @@ const CampaignTokenomicsTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> =
         );
     }, [tokenomics_for_campaign]);
 
-    // useEffect(() => {
-    //     let newTokenomics_for_campaign = 0;
-    //     let validPrice = false;
-    //     if (requestedMaxADA > 0n && campaignToken_PriceADA > 0n) {
-    //         newTokenomics_for_campaign = Number(requestedMaxADA) / Number(campaignToken_PriceADA);
-    //         validPrice = Number(requestedMaxADA) % Number(campaignToken_PriceADA) === 0;
-    //         validPrice = validPrice && Number(requestedMinADA) % Number(campaignToken_PriceADA) === 0;
-    //     }
-    //     if (validPrice) {
-    //         setIsValidEdit(true);
-    //         setCampaign(
-    //             new CampaignEntity({
-    //                 ...campaign.campaign,
-    //                 tokenomics_for_campaign: BigInt(newTokenomics_for_campaign),
-    //                 tokenomics_max_supply: tokenomics_for_campaign > tokenomics_max_supply ? BigInt(newTokenomics_for_campaign) : tokenomics_max_supply,
-    //             })
-    //         );
-    //     } else{
-    //         setIsValidEdit(false);
-    //     }
-    // }, [campaignToken_PriceADA]);
-
     const handleInputChange = (id: string, value: string, transform: (value: string) => any) => {
         setCampaign(
             new CampaignEntity({
@@ -177,17 +152,21 @@ const CampaignTokenomicsTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> =
 
     const fields = mint_CampaignToken ? inputFieldsTokenWhenMinting(campaign.campaign) : inputFieldsTokenWhenProviding(campaign.campaign);
 
+    if (conditionsToPrompForEdit && props.pageView === PageViewEnums.MANAGE && props.isEditMode === false) {
+        return <EmptyState {...props} />;
+    }
+
     if (isEditing) {
         return (
             <div className={styles.layout}>
                 <div className={styles.formContainer}>
-                    <h2 className={styles.title}>Explain your tokenomics, quantity and value</h2>
+                    <h2 className={styles.title}>Explain your tokenomics:</h2>
                     <div className={`${styles.singleInputContainer}`}>
-                        <label className={styles.label}>Tokens for the Campaign</label>
+                        <label className={styles.label}>Token Supply for This Campaign</label>
                         <Checkbox
                             checked={mint_CampaignToken || false}
                             onChange={(e) => handleInputChange('mint_CampaignToken', e === true ? 'Y' : 'N', (v) => v === 'Y')}
-                            label="The campaign will mint its own tokens"
+                            label="This campaign will mint its own tokens"
                         />
                     </div>
                     {fields.map((field, index) => (
@@ -203,47 +182,53 @@ const CampaignTokenomicsTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> =
                         </div>
                     ))}
                     <div className={`${styles.singleInputContainer}`}>
-                        <label className={styles.label}>Requested Max ADA</label>
+                        <label className={styles.label}>Target Amount ADA (Fundraise Goal)</label>
                         <input
                             className={styles.input}
                             type="number"
                             value={requestedMaxADA?.toString() || ''}
-                            placeholder={'Requested Max ADA'}
+                            placeholder={'Target Amount ADA'}
                             onChange={(e) => handleInputChange('requestedMaxADA', e.target.value, (s) => BigInt(s))}
                         />
-                        <Slider value={requestedMaxADA} setValue={(v) => handleBigIntChange('requestedMaxADA', v)} min={20000n} max={1000000n} step={1000} />
+                        <Slider value={requestedMaxADA} setValue={(v) => handleBigIntChange('requestedMaxADA', v)} min={REQUESTED_MIN_ADA} max={REQUESTED_MAX_ADA} step={1000} />
                     </div>
                     <div className={`${styles.singleInputContainer}`}>
-                        <label className={styles.label}>Requested Min ADA</label>
+                        <label className={styles.label}>Minimum Requested ADA</label>
                         <input
                             className={styles.input}
                             type="number"
                             value={requestedMinADA?.toString() || ''}
-                            placeholder={'Requested Min ADA'}
+                            placeholder={'Minimum Requested ADA'}
                             onChange={(e) => handleInputChange('requestedMinADA', e.target.value, (s) => BigInt(s))}
                         />
-                        <Slider value={requestedMinADA} setValue={(v) => handleBigIntChange('requestedMinADA', v)} min={20000n} max={requestedMaxADA} step={1000} />
+                        <Slider value={requestedMinADA} setValue={(v) => handleBigIntChange('requestedMinADA', v)} min={REQUESTED_MIN_ADA} max={requestedMaxADA} step={1000} />
                     </div>
                     {mint_CampaignToken === false && (
                         <div className={`${styles.singleInputContainer}`}>
-                            <label className={styles.label}>Tokens Max Supply</label>
+                            <label className={styles.label}>Total Token Supply</label>
                             <input
                                 className={styles.input}
                                 type="number"
                                 value={tokenomics_max_supply?.toString() || ''}
-                                placeholder={'Tokens Max Supply'}
+                                placeholder={'Total Token Supply'}
                                 onChange={(e) => handleInputChange('tokenomics_max_supply', e.target.value, (s) => BigInt(s))}
                             />
-                            <Slider value={tokenomics_max_supply} setValue={(v) => handleBigIntChange('tokenomics_max_supply', v)} min={20000n} max={1000000n} step={1000} />
+                            <Slider
+                                value={tokenomics_max_supply}
+                                setValue={(v) => handleBigIntChange('tokenomics_max_supply', v)}
+                                min={REQUESTED_MIN_ADA}
+                                max={REQUESTED_MAX_ADA}
+                                step={1000}
+                            />
                         </div>
                     )}
                     <div className={`${styles.singleInputContainer}`}>
-                        <label className={styles.label}>{mint_CampaignToken ? 'Quantity to Mint' : 'Tokens For Campaign'}</label>
+                        <label className={styles.label}>{mint_CampaignToken ? 'Total Tokens to Mint' : 'Tokens Allocated to Campaign'}</label>
                         <input
                             className={styles.input}
                             type="number"
                             value={tokenomics_for_campaign?.toString() || ''}
-                            placeholder={mint_CampaignToken ? 'Quantity to Mint' : 'Tokens For Campaign'}
+                            placeholder={mint_CampaignToken ? 'Total Tokens to Mint' : 'Tokens Allocated to Campaign'}
                             onChange={(e) => handleInputChange('tokenomics_for_campaign', e.target.value, (s) => BigInt(s))}
                         />
                         <Slider
@@ -284,32 +269,32 @@ const CampaignTokenomicsTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> =
             <div className={styles.tokenomicsContainer}>
                 <div className={styles.row}>
                     <div className={styles.container}>
-                        <span className={styles.title}>Token Policy</span>
+                        <span className={styles.title}>Token Policy:</span>
                         <span className={styles.strong}>{campaignToken_CS}</span>
                     </div>
                     <div className={styles.container}>
-                        <span className={styles.title}>Token Tick Name</span>
+                        <span className={styles.title}>Token Tick Name:</span>
                         <span className={styles.strong}>{campaignToken_TN}</span>
                     </div>
                 </div>
                 <div className={styles.container}>
-                    <span className={styles.title}>The campaign will mint its own tokens?</span>
-                    <span className={styles.strong}>{mint_CampaignToken === true ? 'Yes' : 'No'}</span>
+                    <span className={styles.title}>Token Supply for This Campaign:</span>
+                    <span className={styles.strong}>{mint_CampaignToken === true ? 'This campaign will mint its own tokens' : 'This campaign will use an existing token'}</span>
                 </div>
                 {mint_CampaignToken ? (
                     <div className={styles.container}>
-                        <span className={styles.title}>Quantity to Mint</span>
+                        <span className={styles.title}>Total Tokens to Mint:</span>
                         <span className={styles.strong}>{tokenomics_for_campaign.toLocaleString()}</span>
                     </div>
                 ) : (
                     <>
                         <div className={styles.row}>
                             <div className={styles.container}>
-                                <span className={styles.title}>Tokens Max Supply</span>
+                                <span className={styles.title}>Total Token Supply:</span>
                                 <span className={styles.strong}>{tokenomics_max_supply.toLocaleString()}</span>
                             </div>
                             <div className={styles.container}>
-                                <span className={styles.title}>Tokens For Campaign</span>
+                                <span className={styles.title}>Tokens Allocated to Campaign:</span>
                                 <span className={styles.strong}>{tokenomics_for_campaign.toLocaleString()}</span>
                             </div>
                         </div>
@@ -317,16 +302,16 @@ const CampaignTokenomicsTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> =
                 )}
                 <div className={styles.row}>
                     <div className={styles.container}>
-                        <span className={styles.title}>Requested Max ADA</span>
+                        <span className={styles.title}>Target Amount ADA (Fundraise Goal):</span>
                         <span className={styles.strong}>{requestedMaxADA.toLocaleString()}</span>
                     </div>
                     <div className={styles.container}>
-                        <span className={styles.title}>Requested Min ADA</span>
+                        <span className={styles.title}>Minimum Requested ADA:</span>
                         <span className={styles.strong}>{requestedMinADA.toLocaleString()}</span>
                     </div>
                 </div>
                 <div className={styles.container}>
-                    <span className={styles.title}>Token Price</span>
+                    <span className={styles.title}>Token Price:</span>
                     <span className={styles.strong}>{formatMoneyByADAOrDollar(Number(campaignToken_PriceADA) / 1000000)}</span>
                 </div>
             </div>

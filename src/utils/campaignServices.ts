@@ -1,12 +1,14 @@
-import { CampaignEntity, CampaignStatusEntity, MilestoneEntity } from '@/lib/SmartDB/Entities';
-import { CampaignApi, CampaignFaqsApi, CampaignContentApi, CampaignMemberApi, MilestoneSubmissionApi, MilestoneApi } from '@/lib/SmartDB/FrontEnd';
+import { CampaignStatusEntity } from '@/lib/SmartDB/Entities';
+import { CampaignApi, CampaignContentApi, CampaignFaqsApi, CampaignMemberApi, MilestoneApi, MilestoneSubmissionApi } from '@/lib/SmartDB/FrontEnd';
 import { CampaignEX, MilestoneEX } from '@/types/types';
-import { isNullOrBlank, pushSucessNotification, pushWarningNotification, toJson } from 'smart-db';
+import { isNullOrBlank, pushSucessNotification, pushWarningNotification } from 'smart-db';
 import { CampaignStatus_Code_Id_Enums } from './constants/status/status';
-import { deleteFileFromS3, uploadFileToS3, uploadMemberAvatarToS3 } from './s3Upload';
+import { deleteFileFromS3, uploadMemberAvatarToS3 } from './s3Upload';
 import { isBlobURL } from './utils';
+import { getCampaignStatus_Db_Id_By_Code_Id } from './campaignHelpers';
 
-export const saveEntityList = async <T extends { _DB_id?: string }>(
+export const saveEntityList = async <T extends { _DB_id?: string; campaign_id?: string }>(
+    campaign_id: string,
     list: T[] | undefined,
     deletedList: T[] | undefined,
     updateApi: (id: string, entity: T) => Promise<T>,
@@ -38,6 +40,8 @@ export const saveEntityList = async <T extends { _DB_id?: string }>(
             }
 
             // Save entity
+
+            item.campaign_id = campaign_id;
             if (item._DB_id) {
                 const updatedEntity = await updateApi(item._DB_id, item);
                 savedEntities.push(updatedEntity);
@@ -67,7 +71,11 @@ export const saveEntityList = async <T extends { _DB_id?: string }>(
     return { savedEntities, filesToDelete };
 };
 
-export async function serviceSaveCampaign(campaign: CampaignEX, data?: Record<string, any>, onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>) {
+export async function serviceSaveCampaign(
+    campaign: CampaignEX,
+    data?: Record<string, any>,
+    onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
+): Promise<string | undefined> {
     try {
         let entity = campaign.campaign;
         let allFilesToDelete: string[] = campaign.files_to_delete ? [...campaign.files_to_delete] : [];
@@ -91,11 +99,19 @@ export async function serviceSaveCampaign(campaign: CampaignEX, data?: Record<st
             }
         }
 
-        entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
+        let campaign_id = campaign.campaign._DB_id;
+        if (isNullOrBlank(campaign.campaign._DB_id)) {
+            // entity.campaign_status_id = getCampaignStatus_Db_Id_By_Code_Id(CampaignStatus_Code_Id_Enums.CREATED);
+            entity = await CampaignApi.createApi(entity);
+            campaign_id = entity._DB_id;
+        } else {
+            entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
+        }
 
         // 🔹 Save FAQs
 
         const { savedEntities: savedFaqs, filesToDelete: faqFiles } = await saveEntityList(
+            campaign_id,
             campaign.faqs,
             campaign.faqs_deleted,
             CampaignFaqsApi.updateWithParamsApi_.bind(CampaignFaqsApi),
@@ -108,6 +124,7 @@ export async function serviceSaveCampaign(campaign: CampaignEX, data?: Record<st
 
         // 🔹 Save Contents
         const { savedEntities: savedContents, filesToDelete: contentFiles } = await saveEntityList(
+            campaign_id,
             campaign.contents,
             campaign.contents_deleted,
             CampaignContentApi.updateWithParamsApi_.bind(CampaignContentApi),
@@ -119,6 +136,7 @@ export async function serviceSaveCampaign(campaign: CampaignEX, data?: Record<st
 
         // 🔹 Save Members
         const { savedEntities: savedMembers, filesToDelete: memberFiles } = await saveEntityList(
+            campaign_id,
             campaign.members,
             campaign.members_deleted,
             CampaignMemberApi.updateWithParamsApi_.bind(CampaignMemberApi),
@@ -145,6 +163,7 @@ export async function serviceSaveCampaign(campaign: CampaignEX, data?: Record<st
         }
 
         const { savedEntities: savedMilestoneEntities, filesToDelete: milestoneFiles } = await saveEntityList(
+            campaign_id,
             campaign.milestones?.map((m) => m.milestone),
             campaign.milestones_deleted?.map((m) => m.milestone),
             MilestoneApi.updateWithParamsApi_.bind(MilestoneApi),
@@ -176,7 +195,7 @@ export async function serviceSaveCampaign(campaign: CampaignEX, data?: Record<st
             );
         }
 
-        pushSucessNotification('Success', 'Updated successfully', false);
+        pushSucessNotification('Success', 'Saved successfully', false);
 
         const campaignEX: CampaignEX = {
             campaign: entity,
@@ -190,9 +209,11 @@ export async function serviceSaveCampaign(campaign: CampaignEX, data?: Record<st
         if (onFinish !== undefined) {
             await onFinish(campaignEX, data);
         }
+
+        return entity._DB_id;
     } catch (e) {
         console.error(e);
-        pushWarningNotification('Error', `Error updating: ${e}`);
+        pushWarningNotification('Error', `Error saving: ${e}`);
     }
 }
 

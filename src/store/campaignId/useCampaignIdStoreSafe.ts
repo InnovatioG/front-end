@@ -1,6 +1,5 @@
 import { CampaignEX } from '@/types/types';
 import { ICampaignIdStore, useCampaignIdStore } from './useCampaignIdStore';
-import { useEffect } from 'react';
 
 export interface ICampaignIdStoreSafe extends ICampaignIdStore {
     campaign: CampaignEX;

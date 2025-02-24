@@ -1,12 +1,12 @@
+import LoadingPage from '@/components/GeneralOK/LoadingPage/LoadingPage';
 import PreLoadingPage from '@/components/GeneralOK/LoadingPage/PreLoadingPage';
 import Footer from '@/components/Layout/Footer/Footer';
 import Header from '@/components/Layout/Header/Header';
-import LoadingPage from '@/components/GeneralOK/LoadingPage/LoadingPage';
 import { ModalProvider } from '@/contexts/ModalProvider';
 import { ResponsiveProvider } from '@/contexts/ResponsiveProvider';
+import { fetchGeneralStoreData, useGeneralStore } from '@/store/generalStore/useGeneralStore';
 import '@/styles/globals.scss';
 import * as Images from '@/utils/constants/images';
-import { ROUTES } from '@/utils/constants/routes';
 import { StoreProvider } from 'easy-peasy';
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
@@ -18,7 +18,6 @@ import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 import { AppGeneral, globalStore } from 'smart-db';
 import 'smart-db/dist/styles.css';
-import { fetchGeneralStoreData, useGeneralStore } from '@/store/generalStore/useGeneralStore';
 
 type ImageType = string | { [key: string]: string };
 
@@ -73,8 +72,8 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
         if (showDebug === 'true' || showDebug === 'false') {
             setShowDebug(showDebug === 'true');
         }
-    }, [router.query, setDebugIsAdmin, setDebugIsEditor, setDebugIsProtocolTeam, setShowDebug]); 
-    
+    }, [router.query, setDebugIsAdmin, setDebugIsEditor, setDebugIsProtocolTeam, setShowDebug]);
+
     return (
         <>
             <Head>
@@ -97,11 +96,11 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
                         ) : (
                             <ResponsiveProvider>
                                 <ModalProvider>
-                                    {router.pathname !== ROUTES.campaignCreation && <Header />}
+                                    <Header />
                                     {showDebug &&
                                         `DEBUG - isProtocolTeam: ${isProtocolTeam} - _DebugIsProtocolTeam: ${_DebugIsProtocolTeam} -_DebugIsAdmin: ${_DebugIsAdmin} - _DebugIsEditor: ${_DebugIsEditor}`}
                                     <Component {...pageProps} />
-                                    {router.pathname !== ROUTES.campaignCreation && <Footer />}
+                                    <Footer />
                                 </ModalProvider>
                             </ResponsiveProvider>
                         )}

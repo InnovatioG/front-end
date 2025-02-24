@@ -1,18 +1,21 @@
 import { useResponsive } from '@/contexts/ResponsiveContext';
+import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 import { LOGO_FULL_LIGHT } from '@/utils/constants/images';
 import { ROUTES } from '@/utils/constants/routes';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useWalletSession, useWalletStore } from 'smart-db';
 import styles from './Header.module.scss';
 import HeaderDesktop from './HeaderDesktop';
 import HeaderMobile from './HeaderMobile';
-import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 
 export default function Header() {
     const walletStore = useWalletStore();
     const { screenSize } = useResponsive();
+    //--------------------------------------
+    const router = useRouter();
     //--------------------------------------
     // para que cargue la sesion del wallet
     useWalletSession();
@@ -34,6 +37,10 @@ export default function Header() {
             setIsProtocolTeam(false);
         }
     }, [walletStore.isConnected, walletStore.info]);
+    //--------------------------------------
+    if (router.pathname === ROUTES.campaignCreation) {
+        return null;
+    }
     //--------------------------------------
     return (
         <div className={styles.header}>

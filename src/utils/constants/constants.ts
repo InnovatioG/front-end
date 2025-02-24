@@ -77,3 +77,9 @@ export enum HandlesEnums {
 }
 
 //--------------------------------------------------------------
+
+
+export const REQUESTED_MAX_ADA = 1000000n;
+export const REQUESTED_MIN_PERCENTAGE_FROM_MAX = 0.8;
+export const REQUESTED_DEFAULT_ADA = 150000n;
+export const REQUESTED_MIN_ADA = 20000n;

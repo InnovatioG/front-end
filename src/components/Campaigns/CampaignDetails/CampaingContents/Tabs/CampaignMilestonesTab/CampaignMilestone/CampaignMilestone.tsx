@@ -1,34 +1,78 @@
-import { ICampaignDetails } from '@/hooks/useCampaingDetails';
-import { getMilestoneStatus_Code_Id_By_Db_Id } from '@/utils/campaignHelpers';
-import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
-import { MilestoneEX } from '@/types/types';
-import { ImageByMilestoneStatus_Code_Id, StylesByMilestoneStatus_Code_Id } from '@/utils/constants/status/styles';
-import { getOrdinalString } from '@/utils/formats';
-import Image from 'next/image';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './CampaignMilestone.module.scss';
-import MilestoneMessage from './MilestoneMessage/MilestoneMessage';
+import { MilestoneEX } from '@/types/types';
+import TextEditor from '@/components/GeneralOK/Controls/TextEditor/TextEditor';
+import { getOrdinalString } from '@/utils/formats';
+import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
+import { ICampaignDetails } from '@/hooks/useCampaingDetails';
+import { MilestoneEntity } from '@/lib/SmartDB/Entities';
 import MilestonePercentage from './MilestonePercentage/MilestonePercentage';
+import { getMilestoneStatus_Code_Id_By_Db_Id } from '@/utils/campaignHelpers';
+import { ImageByMilestoneStatus_Code_Id, StylesByMilestoneStatus_Code_Id } from '@/utils/constants/status/styles';
+import Image from 'next/image';
 import MilestoneTime from './MilestoneTime/MilestoneTime';
 
 interface CampaignMilestoneProps {
     milestone: MilestoneEX;
-    index: number;
+    handleUpdateMilestone: (updatedMilestone: MilestoneEntity) => void;
+    handleRemoveMilestone: (uremoveMilestone: MilestoneEntity) => void;
 }
 
 const CampaignMilestone: React.FC<CampaignMilestoneProps & ICampaignIdStoreSafe & ICampaignDetails> = (props) => {
-    const { milestone, index } = props;
-    const milestoneStatus_Code_Id = getMilestoneStatus_Code_Id_By_Db_Id(milestone.milestone.milestone_status_id);
-    const ordinalString = getOrdinalString(index + 1);
-    // const { openModal } = useModal();
+    const { campaign, milestone, handleUpdateMilestone, handleRemoveMilestone, isEditMode } = props;
+
+    const ordinalString = getOrdinalString(milestone.milestone.order);
     const { description } = milestone.milestone;
 
+    const milestoneStatus_Code_Id = getMilestoneStatus_Code_Id_By_Db_Id(milestone.milestone.milestone_status_id);
     const milestoneIcon = ImageByMilestoneStatus_Code_Id(milestoneStatus_Code_Id);
     const milestoneStyle = StylesByMilestoneStatus_Code_Id(milestoneStatus_Code_Id);
 
+    const handleDescriptionChange = (content: string) => {
+        milestone.milestone.description = content;
+        handleUpdateMilestone(milestone.milestone);
+    };
+
+    const handleEstimateDeliveryDaysChange = (days: number) => {
+        milestone.milestone.estimate_delivery_days = days;
+        handleUpdateMilestone(milestone.milestone);
+    };
+
+    const handlePercentageChange = (percentage: number) => {
+        milestone.milestone.percentage = percentage;
+        handleUpdateMilestone(milestone.milestone);
+    };
+
+    if (isEditMode) {
+        return (
+            <section className={styles.containerMilestoneEdit}>
+                <div className={styles.header}>
+                    <h4 className={styles.milestoneTitle}>{ordinalString} Milestone</h4>{' '}
+                    <button onClick={() => handleRemoveMilestone(milestone.milestone)} className={styles.deleteButton}>
+                        <Image src="/img/icons/delete.svg" alt="deleteIcon" width={18} height={18} />
+                    </button>
+                </div>
+                <article className={styles.milestoneCardLayout}>
+                    <div className={styles.textEditorContainer}>
+                        <TextEditor styleOption="quillEditorB" menuOptions={1} content={milestone.milestone.description ?? ''} onChange={handleDescriptionChange} />
+                    </div>
+                    <div className={styles.controller}>
+                        <label htmlFor="" className={styles.timeLabel}>
+                            Time
+                        </label>
+                        <div className={styles.controllerContainer}>
+                            <MilestoneTime milestone={milestone} isEditMode={isEditMode} onChange={handleEstimateDeliveryDaysChange} />
+                            <MilestonePercentage campaign={campaign} milestone={milestone} isEditMode={isEditMode} onChange={handlePercentageChange} />
+                        </div>
+                    </div>
+                </article>
+            </section>
+        );
+    }
+
     return (
         <article className={styles.main}>
-            <div className={styles.layout}>
+            <div className={styles.containerMilestoneView}>
                 <div className={styles.descriptionContainer}>
                     <div className={styles.titleContainer}>
                         <h4 className={`${styles.milestoneTitle} ${styles[milestoneStyle]}`}>{ordinalString} Milestone</h4>
@@ -42,26 +86,26 @@ const CampaignMilestone: React.FC<CampaignMilestoneProps & ICampaignIdStoreSafe 
                 </div>
                 <div className={styles.timesCard}>
                     <label>Time</label>
-                    <MilestoneTime {...props} />
-                    <MilestonePercentage maxAvailablePercentage={100} onPercentageChange={() => true} {...props} />
+                    <MilestoneTime milestone={milestone} isEditMode={isEditMode} onChange={handleEstimateDeliveryDaysChange} />
+                    <MilestonePercentage campaign={campaign} milestone={milestone} isEditMode={isEditMode} onChange={handlePercentageChange} />
                 </div>
             </div>
 
-            <section className={styles.milestoneMessage}>
+            {/* <section className={styles.milestoneMessage}>
                 <MilestoneMessage icon={milestoneIcon} {...props} />
-            </section>
+            </section> */}
             {/*    {report_proof_of_finalization && (
-                <section className={styles.buttonView}>
-                    <BtnGeneral
-                        classNameStyle="fillb"
-                        onClick={() => {
-                            openModal('viewReportMilestone', { campaign_id: 0, campaign: undefined, submission: report_proof_of_finalization });
-                        }}
-                    >
-                        View Reprt Submitted
-                    </BtnGeneral>
-                </section>
-            )} */}
+                    <section className={styles.buttonView}>
+                        <BtnGeneral
+                            classNameStyle="fillb"
+                            onClick={() => {
+                                openModal('viewReportMilestone', { campaign_id: 0, campaign: undefined, submission: report_proof_of_finalization });
+                            }}
+                        >
+                            View Reprt Submitted
+                        </BtnGeneral>
+                    </section>
+                )} */}
         </article>
     );
 };

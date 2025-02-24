@@ -2,14 +2,14 @@ import { type Script } from 'lucid-cardano';
 import 'reflect-metadata';
 import { BaseSmartDBEntity, Convertible, LucidLUCID_NETWORK_MAINNET_NAME, asSmartDBEntity, type CS, type POSIXTime } from 'smart-db';
 
-export interface CampaignMilestone {
-    cmPerncentage: number;
+export interface CampaignMilestoneDatum {
+    cmPerncentage: bigint;
     cmStatus: number;
 }
 
-export const deserealizeCampaignMilestone = (value: any | undefined): CampaignMilestone | undefined => {
+export const deserealizeCampaignMilestone = (value: any | undefined): CampaignMilestoneDatum | undefined => {
     if (value === undefined) return undefined;
-    const deserialized: CampaignMilestone = {
+    const deserialized: CampaignMilestoneDatum = {
         cmPerncentage: value.cmPerncentage,
         cmStatus: value.cmStatus,
     };
@@ -20,8 +20,8 @@ export const campaignMilestonefromPlutusData = (lucidDataForDatum: any | undefin
     if (lucidDataForDatum?.index === 0) {
         const lucidDataForConstr0 = lucidDataForDatum.fields;
         if (lucidDataForConstr0.length === 2) {
-            const objectInstance: CampaignMilestone = {
-                cmPerncentage: Number(lucidDataForConstr0[0]),
+            const objectInstance: CampaignMilestoneDatum = {
+                cmPerncentage: BigInt(lucidDataForConstr0[0]),
                 cmStatus: Number(lucidDataForConstr0[1]),
             };
             return objectInstance;
@@ -47,7 +47,7 @@ export interface CampaignDatum {
     cdbegin_at: POSIXTime;
     cdDeadline: POSIXTime;
     cdStatus: number;
-    cdMilestones: CampaignMilestone[];
+    cdMilestones: CampaignMilestoneDatum[];
     cdFundsCount: number;
     cdFundsIndex: number;
     cdMinADA: bigint;
@@ -168,7 +168,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
         fromPlainObject: deserealizeCampaignMilestone,
         fromPlutusData: campaignMilestonefromPlutusData,
     })
-    cdMilestones!: CampaignMilestone[];
+    cdMilestones!: CampaignMilestoneDatum[];
     @Convertible({ isForDatum: true })
     cdFundsCount!: number;
     @Convertible({ isForDatum: true })

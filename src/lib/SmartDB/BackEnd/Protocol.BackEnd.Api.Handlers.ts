@@ -39,7 +39,7 @@ import {
     CampaignEntity,
     CampaignFaqsEntity,
     CampaignMemberEntity,
-    CampaignMilestone,
+    CampaignMilestoneDatum,
     CampaignStatusEntity,
     CampaignSubmissionEntity,
     MilestoneEntity,
@@ -714,7 +714,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             }
         };
 
-        const getDatumsMilestone = (milestones: any[]): CampaignMilestone[] => {
+        const getDatumsMilestone = (milestones: any[]): CampaignMilestoneDatum[] => {
             return milestones.map((m) => ({
                 cmPerncentage: m.perncentage,
                 cmStatus: getMilestoneDatumStatus(m.milestone_status_id_as_string),

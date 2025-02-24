@@ -30,7 +30,7 @@ import { getCampaignCategory_Name_By_Db_Id, getCampaignStatus_Code_Id_By_Db_Id, 
 import { useModal } from '@/contexts/ModalContext';
 
 export interface ICampaignDetails extends CampaignStatusConfigs {
-    handles: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<void>>>;
+    handles: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | undefined | void>>>;
     isAdmin: boolean;
     isEditor: boolean;
     isProtocolTeam: boolean;
@@ -149,26 +149,6 @@ export const useCampaignDetails = ({
 
     //----------------------------------------------
 
-    // const [requestedMaxInCurrentCurrency, setRequestedMaxInCurrentCurrency] = useState(0);
-    // const [requestedMinADAInCurrentCurrency, setRequestedMinADAInCurrentCurrency] = useState(0);
-    // const [currencySymbol, setCurrencySymbol] = useState('ADA');
-
-    // useEffect(() => {
-    //     if (!adaPrice || adaPrice === 0) return;
-    //     setRequestedMaxInCurrentCurrency(priceADAOrDollar === 'dollar' ? Number(requestedMaxADA) : Number(requestedMaxADA) / adaPrice);
-    // }, [priceADAOrDollar, requestedMaxADA, adaPrice]);
-
-    // useEffect(() => {
-    //     if (!adaPrice || adaPrice === 0) return;
-    //     setRequestedMinADAInCurrentCurrency(priceADAOrDollar === 'dollar' ? Number(requestedMinADA) : Number(requestedMinADA) / adaPrice);
-    // }, [priceADAOrDollar, requestedMinADA, adaPrice]);
-
-    // useEffect(() => {
-    //     setCurrencySymbol(priceADAOrDollar === 'dollar' ? 'USD' : 'ADA');
-    // }, [priceADAOrDollar]);
-
-    //----------------------------------------------
-
     // if (pageView === PageViewEnums.manage && isProtocolTeam === false && isAdmin === false && isEditor === false) {
     //     throw new Error('User is not allowed to view this campaign');
     // }
@@ -196,7 +176,7 @@ export const useCampaignDetails = ({
                 currentMilestoneIndex,
                 milestone_status_code_id
             ),
-        [campaign, isProtocolTeam, isAdmin, isEditor, isEditMode, pageView, campaign_status_code_id, totalMilestones, currentMilestoneIndex, milestone_status_code_id]
+        [campaign, isProtocolTeam, isAdmin, isEditor, isEditMode, pageView, campaign_status_code_id, totalMilestones, currentMilestoneIndex, milestone_status_code_id, isValidEdit]
     );
 
     //----------------------------------------------

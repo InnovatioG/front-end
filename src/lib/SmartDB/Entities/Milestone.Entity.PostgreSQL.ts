@@ -21,7 +21,7 @@ export class MilestoneEntityPostgreSQL extends BaseEntityPostgreSQL {
     estimate_delivery_days!: number;
     @Column({ type: 'date', nullable: true })
     estimate_delivery_date!: Date;
-    @Column({ type: 'integer', nullable: true })
+    @Column({ type: 'real', nullable: true })
     percentage!: number;
     @Column({ type: 'text', nullable: true })
     description!: string;

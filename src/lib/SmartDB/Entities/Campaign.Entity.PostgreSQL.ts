@@ -2,7 +2,7 @@ import { type Script } from 'lucid-cardano';
 import { type CS, PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
 import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { CampaignEntity, CampaignMilestone } from './Campaign.Entity';
+import { CampaignEntity, CampaignMilestoneDatum } from './Campaign.Entity';
 
 @PostgreSQLAppliedFor([CampaignEntity])
 @Entity({ name: getPostgreSQLTableName(CampaignEntity.className()) })
@@ -115,7 +115,7 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
         type: 'jsonb',
         nullable: true,
         transformer: {
-            to: (value: CampaignMilestone[]) => value,
+            to: (value: CampaignMilestoneDatum[]) => value,
             from: (value: any) =>
                 value
                     ? value.map((m: { cmPerncentage: number; cmStatus: number }) => ({
@@ -125,7 +125,7 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
                     : [],
         },
     })
-    cdMilestones!: CampaignMilestone[];
+    cdMilestones!: CampaignMilestoneDatum[];
     @Column({ type: 'integer', nullable: true })
     cdFundsCount!: number;
     @Column({ type: 'integer', nullable: true })

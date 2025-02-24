@@ -1,4 +1,4 @@
-import { CampaignEntity, CampaignMilestone } from '@/lib/SmartDB/Entities';
+import { CampaignEntity, CampaignMilestoneDatum } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { toJson } from 'smart-db';
 import styles from './Campaign.module.scss';
@@ -140,7 +140,7 @@ export default function Campaign() {
     };
 
     const MilestoneForm: React.FC<MilestoneFormProps> = ({ item, setItem }) => {
-        const [localMilestones, setLocalMilestones] = useState<CampaignMilestone[]>(item.cdMilestones || []);
+        const [localMilestones, setLocalMilestones] = useState<CampaignMilestoneDatum[]>(item.cdMilestones || []);
         const [editingIndex, setEditingIndex] = useState<number | null>(null); // Track the currently edited row
 
         useEffect(() => {
@@ -148,7 +148,7 @@ export default function Campaign() {
         }, [item.cdMilestones]);
 
         const addMilestone = () => {
-            const newMilestone: CampaignMilestone = {
+            const newMilestone: CampaignMilestoneDatum = {
                 cmPerncentage: 0,
                 cmStatus: 0, // Default status
             };
@@ -169,7 +169,7 @@ export default function Campaign() {
             setEditingIndex(null); // Exit editing mode
         };
 
-        const updateMilestone = (index: number, field: keyof CampaignMilestone, value: string | number | bigint) => {
+        const updateMilestone = (index: number, field: keyof CampaignMilestoneDatum, value: string | number | bigint) => {
             const parsedValue = Number(value);
             const updatedMilestones = localMilestones.map((m, i) => (i === index ? { ...m, [field]: parsedValue } : m));
             setLocalMilestones(updatedMilestones); // Update local state

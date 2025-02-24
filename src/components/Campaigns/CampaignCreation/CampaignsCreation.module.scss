@@ -1,0 +1,86 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
+.layout {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100dvh;
+    margin: 0 -2rem;
+    @media screen and (max-width: 748px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.header {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 40px);
+    padding: 0 5dvw;
+    left: 20px;
+    height: 90px;
+    @media screen and (max-width: 748px) {
+    }
+}
+
+.icon {
+    transform: rotate(180deg);
+    cursor: pointer;
+}
+
+.stepController {
+    background: colors.$secondary-background;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 25dvh;
+    padding-left: 15%;
+    .titleSection {
+        color: colors.$white-color;
+        font: fonts.$f1200-medium;
+        max-width: 400px;
+        user-select: none;
+    }
+}
+
+.containerPrimary {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.stepContent {
+    padding-top: calc(25dvh - 28px);
+    padding-right: 15%;
+    padding-left: 15%;
+    padding-bottom: 2rem;
+}
+
+@media screen and (max-width: 1024px) {
+    .stepController {
+        .titleSection {
+            font: fonts.$f1000-medium;
+            max-width: 280px;
+        }
+        .titleSection {
+            font: fonts.$f1000-medium;
+            max-width: 280px;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .stepController {
+        padding: 5rem 1rem 1rem 1rem;
+    }
+    .stepContent {
+        padding: 1rem;
+    }
+}
+
+.backContainer {
+    margin-bottom: 2rem;
+}

@@ -1,0 +1,78 @@
+@use '../FormSteps.module.scss';
+
+.containerLayout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+}
+
+.textarea {
+    @include FormSteps.inputStyles;
+    padding: 1rem 1rem;
+    /* quiero que sea 10 rengoles la altura minima */
+    min-height: 15rem;
+    line-height: 1.5rem; /* Ajusta esto según tu diseño */
+}
+
+.inputContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    width: 100%;
+
+    & > :nth-child(2n + 1):last-child {
+        grid-column: span 2;
+    }
+}
+
+.input {
+    @include FormSteps.inputStyles;
+    padding: 1rem 1rem;
+    width: 100%;
+}
+
+.socialContainer {
+    display: flex;
+    gap: 1rem;
+    align-self: flex-start;
+    padding-left: 0.5rem;
+}
+
+.permissionContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    gap: 1rem;
+}
+
+.buttonContainer {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    width: 75%;
+    min-height: 60px;
+}
+
+@media screen and (max-width: 768px) {
+    .inputContainer {
+        grid-template-columns: 1fr;
+
+        & > :nth-child(2n + 1):last-child {
+            grid-column: span 1;
+        }
+    }
+
+    .permissionContainer,
+    .buttonContainer {
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+    }
+    .containerLayout {
+        padding-bottom: 2rem;
+    }
+}

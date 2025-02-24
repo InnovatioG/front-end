@@ -34,11 +34,11 @@ const CampaignMembersTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (p
         setCampaignEX,
     } = useCampaignMembersTab(props);
 
+    const isEditing = props.pageView === PageViewEnums.MANAGE && props.isEditMode === true;
+
     if ((members === undefined || members.length === 0) && props.pageView === PageViewEnums.MANAGE && props.isEditMode === false) {
         return <EmptyState {...props} />;
     }
-
-    const isEditing = props.pageView === PageViewEnums.MANAGE && props.isEditMode === true
 
     return (
         <section className={styles.layout}>
@@ -142,13 +142,25 @@ const CampaignMembersTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (p
                     </DragDropContext>
                 )}
 
+{/* isNewMember
+member
+handleSaveMember
+handleCancel
+showCancelGoBack
+showCancelEdit
+showDelete
+onChanges
+handleRemove */}
+
                 {editingMember !== undefined && (
                     <FormCreateOrEditMember
+                        isNewMember={false}
                         member={members.find((member) => member.order === editingMember)}
                         handleSaveMember={(updatedMember) => {
                             handleUpdateMember(updatedMember);
                         }}
                         handleCancel={() => handleCancelEditMember()}
+                        showCancelGoBack={true}
                     />
                 )}
             </div>
@@ -161,10 +173,12 @@ const CampaignMembersTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (p
 
             {isOpenAddMore && (
                 <FormCreateOrEditMember
+                    isNewMember={true}
                     handleSaveMember={(newMember) => {
                         handleAddMember(newMember);
                     }}
                     handleCancel={() => handleCancelEditMember()}
+                    showCancelGoBack={true}
                 />
             )}
         </section>

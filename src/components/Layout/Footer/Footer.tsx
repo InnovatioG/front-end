@@ -1,10 +1,18 @@
-import { DISCORD, FACEBOOK, INSTAGRAM, LOGO_FULL_LIGHT, TWITTER } from '@/utils/constants/images';
+import { LOGO_FULL_LIGHT } from '@/utils/constants/images';
 import { ROUTES } from '@/utils/constants/routes';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styles from './Footer.module.scss';
 
 export default function Footer() {
+    //--------------------------------------
+    const router = useRouter();
+    //--------------------------------------
+    if (router.pathname === ROUTES.campaignCreation) {
+        return null;
+    }
+    //--------------------------------------
     return (
         <>
             <div className={styles.footer}>

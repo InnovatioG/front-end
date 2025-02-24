@@ -26,11 +26,14 @@
 }
 
 .percentageTotal {
-    background-color: transparent;
-    border: none;
+    // background-color: transparent;
+    // border: 1px solid colors.$light-color;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
     display: flex;
     text-align: center;
-    color: black;
+    color: rgb(194, 194, 194);
+   
     font: fonts.$f800-medium;
     width: 100%;
     cursor: pointer;
@@ -41,7 +44,7 @@
 
 .percentageTotal:focus {
     outline: none;
-    color: rgb(194, 194, 194);
+    color: black;
 }
 
 .percContainer {

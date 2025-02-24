@@ -8,8 +8,8 @@ export interface ButtonType {
     action: (
         data?: Record<string, any>,
         navigate?: (url: string, as?: string, options?: any) => void,
-        openModal?: (modal: ModalsEnums, data?: Record<string, any>, handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<void>>>) => void,
-        handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<void>>>
+        openModal?: (modal: ModalsEnums, data?: Record<string, any>, handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | undefined | void>>>) => void,
+        handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | undefined | void>>>
     ) => Promise<void>;
     classNameType: string;
 }

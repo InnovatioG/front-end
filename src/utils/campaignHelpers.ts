@@ -162,10 +162,27 @@ export const getCampaignStatus_Code_Id_By_Db_Id = (id: string) => {
     return status.code_id;
 };
 
+export const getCampaignStatus_Db_Id_By_Code_Id = (code_id: number) => {
+    const status = useGeneralStore.getState().campaignStatus.find((status) => status.code_id === code_id);
+    if (!status) {
+        throw new Error(`Campaign status with code_id ${code_id} not found`);
+    }
+    return status._DB_id;
+};
+
 export const getMilestoneStatus_Code_Id_By_Db_Id = (id: string) => {
-    const milestone = useGeneralStore.getState().milestoneStatus.find((milestone) => milestone._DB_id === id);
+    const milestone = useGeneralStore.getState().milestoneStatus.find((status) => status._DB_id === id);
     if (!milestone) {
         throw new Error(`Milestone status with id ${id} not found`);
     }
     return milestone.code_id;
+};
+
+
+export const getMilestoneStatus_Db_Id_By_Code_Id = (code_id: number) => {
+    const milestone = useGeneralStore.getState().milestoneStatus.find((status) => status.code_id === code_id);
+    if (!milestone) {
+        throw new Error(`Milestone status with code_id ${code_id} not found`);
+    }
+    return milestone._DB_id;
 };
