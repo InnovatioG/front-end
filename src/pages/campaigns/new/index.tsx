@@ -1,16 +1,17 @@
 import CampaignsCreation from '@/components/Campaigns/CampaignCreation/CampaignsCreation';
 import BtnConnectWallet from '@/components/GeneralOK/Buttons/Buttons/BtnConnectWallet/BtnConnectWallet';
+import LoadingPage from '@/components/GeneralOK/LoadingPage/LoadingPage';
 import { useResponsive } from '@/contexts/ResponsiveContext';
 import { CampaignEntity, MilestoneEntity } from '@/lib/SmartDB/Entities';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
+import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
+import { MilestoneEX } from '@/types/types';
 import { getCampaignEX, getCampaignStatus_Db_Id_By_Code_Id, getMilestoneStatus_Db_Id_By_Code_Id } from '@/utils/campaignHelpers';
+import { REQUESTED_DEFAULT_ADA, REQUESTED_MAX_ADA, REQUESTED_MIN_PERCENTAGE_FROM_MAX } from '@/utils/constants/constants';
 import { CampaignStatus_Code_Id_Enums, MilestoneStatus_Code_Id_Enums } from '@/utils/constants/status/status';
 import React, { useEffect } from 'react';
 import { useWalletStore } from 'smart-db';
 import styles from './index.module.scss';
-import { REQUESTED_DEFAULT_ADA, REQUESTED_MAX_ADA, REQUESTED_MIN_ADA, REQUESTED_MIN_PERCENTAGE_FROM_MAX } from '@/utils/constants/constants';
-import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
-import { MilestoneEX } from '@/types/types';
 
 interface CampaignsCreationPageProps {
     // Define props here
@@ -19,12 +20,25 @@ interface CampaignsCreationPageProps {
 const CampaignsCreationPage: React.FC<CampaignsCreationPageProps> = (props) => {
     const walletStore = useWalletStore();
     const { screenSize } = useResponsive();
-    const { campaign, isLoading, setIsLoading, setIsEditMode, fetchCampaignById, setCampaignTab, campaignTab, setCampaignEX } = useCampaignIdStore();
+    const {
+        campaign,
+        isLoading: isLoadingStore,
+        setIsLoading: setIsLoadingStore,
+        setIsEditMode,
+        fetchCampaignById,
+        setCampaignTab,
+        campaignTab,
+        setCampaignEX,
+    } = useCampaignIdStore();
 
     const { wallet } = useGeneralStore();
 
+    const [isLoading, setIsLoading] = React.useState<boolean>(true);
+
     useEffect(() => {
-        setIsLoading(true);
+        setIsLoading(false);
+        setIsLoadingStore(true);
+        setCampaignEX(undefined);
     }, []);
 
     useEffect(() => {
@@ -96,7 +110,7 @@ const CampaignsCreationPage: React.FC<CampaignsCreationPageProps> = (props) => {
 
             setCampaignEX(campaignEX);
 
-            setIsLoading(false);
+            setIsLoadingStore(false);
         };
         if (wallet !== undefined) {
             fetch();
@@ -107,8 +121,10 @@ const CampaignsCreationPage: React.FC<CampaignsCreationPageProps> = (props) => {
 
     return (
         <>
-            {isLoading === true ? (
-                <>Loading...</>
+            {isLoading === true || isLoadingStore === true ? (
+                <>
+                    <LoadingPage />
+                </>
             ) : walletStore.isConnected === false || (walletStore.info?.isWalletValidatedWithSignedToken === false && wallet === undefined) ? (
                 <div className={styles.campaignSection}>
                     <div className={styles.mainSection}>

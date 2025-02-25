@@ -186,3 +186,29 @@ export const getMilestoneStatus_Db_Id_By_Code_Id = (code_id: number) => {
     }
     return milestone._DB_id;
 };
+
+export const getSubmissionStatus_Name_By_Db_Id = (id: string) => {
+    const status = useGeneralStore.getState().submissionStatus.find((status) => status._DB_id === id);
+        if (!status) {
+            throw new Error(`Submission status with id ${id} not found`);
+        }
+    return status.name;
+};
+
+
+export const getSubmissionStatus_Code_Id_By_Db_Id = (id: string) => {
+    const status = useGeneralStore.getState().submissionStatus.find((status) => status._DB_id === id);
+    if (!status) {
+        throw new Error(`Submission status with id ${id} not found`);
+    }
+    return status.code_id;
+};
+
+
+export const getSubmissionStatus_Db_Id_By_Code_Id = (code_id: number) => {
+    const status = useGeneralStore.getState().submissionStatus.find((status) => status.code_id === code_id);
+    if (!status) {
+        throw new Error(`Submission status with code_id ${code_id} not found`);
+    }
+    return status._DB_id;
+};

@@ -47,7 +47,7 @@ const CampaignNavMenu: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (prop
                         ))}
                     </ul>
                     {/* {pageView === PageViewEnums.MANAGE && isEditMode === false && (
-                        <BtnCampaignActions button={ButtonForDetails[ButtonsForDetailsEnum.RENDER_CAMPAIGN_FOR_PAGE]} data={{ id: campaign.campaign._DB_id }} />
+                        <BtnCampaignActions button={ButtonForDetails[ButtonsForDetailsEnum.RENDER_CAMPAIGN_FOR_PAGE]} data={{ campaign_id: campaign.campaign._DB_id }} />
                     )} */}
                 </div>
             </div>
@@ -64,7 +64,7 @@ const CampaignNavMenu: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (prop
                 ))}
             </ul>
             {/* {pageView === PageViewEnums.MANAGE && isEditMode === false && (
-                <BtnCampaignActions button={ButtonForDetails[ButtonsForDetailsEnum.RENDER_CAMPAIGN_FOR_PAGE]} data={{ id: campaign.campaign._DB_id }} />
+                <BtnCampaignActions button={ButtonForDetails[ButtonsForDetailsEnum.RENDER_CAMPAIGN_FOR_PAGE]} data={{ campaign_id: campaign.campaign._DB_id }} />
             )} */}
         </div>
     );

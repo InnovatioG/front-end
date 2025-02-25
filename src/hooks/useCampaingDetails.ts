@@ -74,6 +74,7 @@ export const useCampaignDetails = ({
 
     const walletStore = useWalletStore();
     const { wallet, isProtocolTeam, _DebugIsAdmin, _DebugIsEditor, campaignStatus, submissionStatus } = useGeneralStore();
+    
     const { openModal } = useModal();
 
     //----------------------------------------------

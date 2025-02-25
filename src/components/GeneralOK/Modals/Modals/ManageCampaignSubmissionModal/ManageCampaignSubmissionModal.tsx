@@ -1,10 +1,9 @@
+import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 import { useModal } from '@/contexts/ModalContext';
+import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
+import { HandlesEnums } from '@/utils/constants/constants';
 import React, { useEffect, useState } from 'react';
 import styles from './ManageCampaignSubmissionModal.module.scss';
-import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
-import { HandlesEnums } from '@/utils/constants/constants';
-import { toJson } from 'smart-db';
-import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 
 interface ManageCampaignModalProps {}
 

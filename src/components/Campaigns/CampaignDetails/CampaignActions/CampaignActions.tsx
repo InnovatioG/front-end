@@ -11,7 +11,7 @@ const CampaignActions: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (prop
     return (
         <div className={styles.buttonContainer}>
             {buttonsForDetails.map((button: ButtonType, index: number) => (
-                <BtnCampaignActions key={index} button={button} data={{ id: campaign.campaign._DB_id }} handles={handles} />
+                <BtnCampaignActions key={index} button={button} data={{ campaign_id: campaign.campaign._DB_id }} handles={handles} />
             ))}
         </div>
     );

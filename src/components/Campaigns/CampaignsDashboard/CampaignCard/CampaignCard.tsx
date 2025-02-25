@@ -77,7 +77,7 @@ export default function CampaignCard(props: CampaignCardProps) {
             <CampaingCardInfo campaign={campaign} {...propsCampaignDetails} />
             <div className={styles.cardButtons}>
                 {buttonsForCards.map((button: ButtonType, index: number) => (
-                    <BtnCampaignActions key={index} button={button} data={{ id: campaign.campaign._DB_id }} handles={handles} />
+                    <BtnCampaignActions key={index} button={button} data={{ campaign_id: campaign.campaign._DB_id }} handles={handles} />
                 ))}
             </div>
         </div>

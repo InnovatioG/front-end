@@ -27,7 +27,7 @@ const CampaignsCreation: React.FC<CampaignsCreationProps> = (props) => {
     const [editingMember, setEditingMember] = useState<number | undefined>(undefined);
 
     useEffect(() => {
-        propsCampaignIdStoreSafe.setIsLoading(false);
+        // propsCampaignIdStoreSafe.setIsLoading(false);
         propsCampaignIdStoreSafe.setIsValidEdit(false);
     }, []);
 
@@ -59,7 +59,7 @@ const CampaignsCreation: React.FC<CampaignsCreationProps> = (props) => {
                     router.push(`${ROUTES.campaignManage(id)}`, undefined, { scroll: false });
                 }
             } finally {
-                propsCampaignIdStoreSafe.setIsLoading(false);
+                // propsCampaignIdStoreSafe.setIsLoading(false);
             }
         }
     };
