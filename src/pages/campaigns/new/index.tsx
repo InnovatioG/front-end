@@ -10,7 +10,7 @@ import { getCampaignEX, getCampaignStatus_Db_Id_By_Code_Id, getMilestoneStatus_D
 import { REQUESTED_DEFAULT_ADA, REQUESTED_MAX_ADA, REQUESTED_MIN_PERCENTAGE_FROM_MAX } from '@/utils/constants/constants';
 import { CampaignStatus_Code_Id_Enums, MilestoneStatus_Code_Id_Enums } from '@/utils/constants/status/status';
 import React, { useEffect } from 'react';
-import { useWalletStore } from 'smart-db';
+import { toJson, useWalletStore } from 'smart-db';
 import styles from './index.module.scss';
 
 interface CampaignsCreationPageProps {
@@ -121,8 +121,9 @@ const CampaignsCreationPage: React.FC<CampaignsCreationPageProps> = (props) => {
 
     return (
         <>
-            {isLoading === true || isLoadingStore === true ? (
+            {isLoading === true || (isLoadingStore === true && wallet !== undefined) ? (
                 <>
+                    {toJson({ isLoading, isLoadingStore })}
                     <LoadingPage />
                 </>
             ) : walletStore.isConnected === false || (walletStore.info?.isWalletValidatedWithSignedToken === false && wallet === undefined) ? (
