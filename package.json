@@ -11,6 +11,7 @@
     "clean": "rm -fr ./.next",
     "cleanAll": "rm -fr ./node_modules ./.next",
     "lint": "next lint",
+    "kill": "npx kill-port 3000",
     "smartDBInstall": "npm run dev:stop && npm install ./smart-db.tgz --force",
     "watchSmartDBAndInstall": "chokidar \"./smart-db.tgz\" -c \"npm run smartDBInstall\"",
     "watchOriginSmartDBAndInstall": "chokidar \"/home/manuelpadilla/sources/reposUbuntu/PROTOFIRE/Cardano-SmartDB-v1.1.0/smart-db.tgz\" -c \"cp /home/manuelpadilla/sources/reposUbuntu/PROTOFIRE/Cardano-SmartDB-v1.1.0/smart-db.tgz ./ && npm run smartDBInstall\"",

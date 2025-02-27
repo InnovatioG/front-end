@@ -42,7 +42,7 @@
             "facebook": "",
             "visualizations": 0,
             "investors": 0,
-            "tokenomics_max_supply": "",
+            "tokenomics_max_supply": 0,
             "tokenomics_description": "",
             "featured": false,
             "archived": false
@@ -122,7 +122,7 @@
             "facebook": "https://facebook.com/techlaunchcampaign",
             "visualizations": 25,
             "investors": 0,
-            "tokenomics_max_supply": "1,000,000",
+            "tokenomics_max_supply": 1000000,
             "tokenomics_description": "Our token will power a new tech-driven economy.",
             "featured": true,
             "archived": false
@@ -221,7 +221,7 @@
             "facebook": "",
             "visualizations": 100,
             "investors": 0,
-            "tokenomics_max_supply": "500,000",
+            "tokenomics_max_supply": 500000,
             "tokenomics_description": "This token will revolutionize access to educational resources.",
             "featured": false,
             "archived": false
@@ -320,7 +320,7 @@
             "facebook": "",
             "visualizations": 250,
             "investors": 0,
-            "tokenomics_max_supply": "",
+            "tokenomics_max_supply": 0,
             "tokenomics_description": "",
             "featured": false,
             "archived": false
@@ -408,7 +408,7 @@
             "facebook": "https://facebook.com/techrevolutioncampaign",
             "visualizations": 500,
             "investors": 50,
-            "tokenomics_max_supply": "2,000,000",
+            "tokenomics_max_supply": 2000000,
             "tokenomics_description": "This token will facilitate a tech-based ecosystem for developers and users.",
             "featured": true,
             "archived": false
@@ -486,7 +486,7 @@
             "facebook": "",
             "visualizations": 350,
             "investors": 10,
-            "tokenomics_max_supply": "1,000,000",
+            "tokenomics_max_supply": 1000000,
             "tokenomics_description": "Token supports participation in the blockchain ecosystem.",
             "featured": true,
             "archived": false
@@ -599,7 +599,7 @@
             "facebook": "",
             "visualizations": 500,
             "investors": 20,
-            "tokenomics_max_supply": "5,000,000",
+            "tokenomics_max_supply": 5000000,
             "tokenomics_description": "The token incentivizes smart farming practices.",
             "featured": false,
             "archived": false
@@ -716,7 +716,7 @@
             "facebook": "",
             "visualizations": 800,
             "investors": 35,
-            "tokenomics_max_supply": "10,000,000",
+            "tokenomics_max_supply": 10000000,
             "tokenomics_description": "Tokens will fund renewable energy systems in underserved regions.",
             "featured": true,
             "archived": false
@@ -826,7 +826,7 @@
             "facebook": "",
             "visualizations": 150,
             "investors": 0,
-            "tokenomics_max_supply": "2,000,000",
+            "tokenomics_max_supply": 2000000,
             "tokenomics_description": "Tokens enable users to participate in the tech revolution.",
             "featured": true,
             "archived": false
@@ -929,7 +929,7 @@
             "facebook": "",
             "visualizations": 500,
             "investors": 25,
-            "tokenomics_max_supply": "1,500,000",
+            "tokenomics_max_supply": 1500000,
             "tokenomics_description": "Tokens ensure transparency in fund allocation for clean water access.",
             "featured": false,
             "archived": false
@@ -1040,7 +1040,7 @@
             "facebook": "",
             "visualizations": 750,
             "investors": 100,
-            "tokenomics_max_supply": "2,000,000",
+            "tokenomics_max_supply": 2000000,
             "tokenomics_description": "Tokens ensure sustainable housing projects.",
             "featured": true,
             "archived": false
@@ -1151,7 +1151,7 @@
             "facebook": "",
             "visualizations": 1200,
             "investors": 150,
-            "tokenomics_max_supply": "3,000,000",
+            "tokenomics_max_supply": 3000000,
             "tokenomics_description": "Tokens promote clean energy initiatives worldwide.",
             "featured": true,
             "archived": false
@@ -1284,7 +1284,7 @@
             "facebook": "",
             "visualizations": 350,
             "investors": 45,
-            "tokenomics_max_supply": "3,000,000",
+            "tokenomics_max_supply": 3000000,
             "tokenomics_description": "Tokens enable participation in global health initiatives.",
             "featured": true,
             "archived": false
@@ -1402,7 +1402,7 @@
             "facebook": "",
             "visualizations": 300,
             "investors": 40,
-            "tokenomics_max_supply": "2,000,000",
+            "tokenomics_max_supply": 2000000,
             "tokenomics_description": "Tokens enable participation in community development initiatives.",
             "featured": true,
             "archived": false
@@ -1519,7 +1519,7 @@
             "facebook": "",
             "visualizations": 450,
             "investors": 55,
-            "tokenomics_max_supply": "5,000,000",
+            "tokenomics_max_supply": 5000000,
             "tokenomics_description": "Tokens enable participation in renewable energy systems.",
             "featured": false,
             "archived": false
@@ -1651,7 +1651,7 @@
             "facebook": "",
             "visualizations": 850,
             "investors": 60,
-            "tokenomics_max_supply": "2,500,000",
+            "tokenomics_max_supply": 2500000,
             "tokenomics_description": "Tokens incentivize the development of literacy initiatives.",
             "featured": true,
             "archived": false
@@ -1793,7 +1793,7 @@
             "facebook": "",
             "visualizations": 1000,
             "investors": 120,
-            "tokenomics_max_supply": "3,000,000",
+            "tokenomics_max_supply": 3000000,
             "tokenomics_description": "Tokens empower communities with access to cutting-edge technology.",
             "featured": true,
             "archived": false
@@ -1909,7 +1909,7 @@
             "facebook": "",
             "visualizations": 300,
             "investors": 50,
-            "tokenomics_max_supply": "1,500,000",
+            "tokenomics_max_supply": 1500000,
             "tokenomics_description": "Tokens promote sustainability initiatives in urban areas.",
             "featured": false,
             "archived": false
@@ -2017,7 +2017,7 @@
             "facebook": "",
             "visualizations": 600,
             "investors": 70,
-            "tokenomics_max_supply": "1,000,000",
+            "tokenomics_max_supply": 1000000,
             "tokenomics_description": "Tokens empower rural communities through tech education.",
             "featured": false,
             "archived": false

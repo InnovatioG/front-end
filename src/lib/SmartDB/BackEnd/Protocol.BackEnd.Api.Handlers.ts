@@ -7,7 +7,13 @@ import {
     protocolDefault,
     SubmissionStatusDefaultNames,
 } from '@/utils/populate/defaults';
-import { CampaignDatumStatus_Code_Id_Enums, CampaignStatus_Code_Id_Enums, MilestoneDatumStatus_Code_Id_Enums, MilestoneStatus_Code_Id_Enums, SubmissionStatus_Enums } from '@/utils/constants/status/status';
+import {
+    CampaignDatumStatus_Code_Id_Enums,
+    CampaignStatus_Code_Id_Enums,
+    MilestoneDatumStatus_Code_Id_Enums,
+    MilestoneStatus_Code_Id_Enums,
+    SubmissionStatus_Enums,
+} from '@/utils/constants/status/status';
 import { applyParamsToScript, Data, Lucid, MintingPolicy, UTxO, Validator } from 'lucid-cardano';
 import { NextApiResponse } from 'next';
 import { User } from 'next-auth';
@@ -804,8 +810,8 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
 
             visualizations: campaignData.visualizations,
             investors: campaignData.investors,
-            tokenomics_max_supply: campaignData.tokenomics_max_supply,
-            tokenomics_for_campaign: campaignData.tokenomics_max_supply,
+            tokenomics_max_supply: BigInt(campaignData.tokenomics_max_supply || 0),
+            tokenomics_for_campaign: BigInt(campaignData.tokenomics_max_supply || 0),
             tokenomics_description: campaignData.tokenomics_description,
             featured: campaignData.featured,
             archived: campaignData.archived,
