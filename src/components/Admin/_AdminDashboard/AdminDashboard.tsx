@@ -23,6 +23,7 @@ import ProtocolAdminWallet from '@/components/Admin/ProtocolAdminWallet/Protocol
 import Protocol from '@/components/Admin/Protocol/Protocol';
 import SubmissionStatus from '@/components/Admin/SubmissionStatus/SubmissionStatus';
 import Wallet from '@/components/Admin/Wallet/Wallet';
+import { fetchGeneralStoreData } from '@/store/generalStore/useGeneralStore';
 
 const AdminDashboard = () => {
     const router = useRouter();
@@ -77,6 +78,7 @@ const AdminDashboard = () => {
             if (confirm('Are you sure you want to populate the database?')) {
                 const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
                 const response = await ProtocolApi.populateApi(walletTxParams);
+                await fetchGeneralStoreData();
                 if (response === false) throw 'Failed to populate database';
                 pushSucessNotification('Success', 'Database populated successfully', false);
             }

@@ -34,6 +34,10 @@ interface IGeneralStore {
     setDebugIsEditor: (isEditor?: boolean) => void;
     setDebugIsProtocolTeam: (isProtocolTeam?: boolean) => void;
     setIsProtocolTeam: (isProtocolTeam: boolean) => void;
+    isLoadingStoreData: boolean;
+    isLoadedStoreData: boolean;
+    setIsLoadingStoreData: (isLoadingStoreData: boolean) => void;
+    setIsLoadedStoreData: (isLoadedStoreData: boolean) => void;
 }
 
 export const useGeneralStore = create<IGeneralStore>()(
@@ -51,6 +55,16 @@ export const useGeneralStore = create<IGeneralStore>()(
         _DebugIsProtocolTeam: undefined,
         isProtocolTeam: false,
         showDebug: false,
+        isLoadingStoreData: true,
+        isLoadedStoreData: false,
+        setIsLoadingStoreData: (isLoadingStoreData) =>
+            set((state) => {
+                state.isLoadingStoreData = isLoadingStoreData;
+            }),
+        setIsLoadedStoreData: (isLoadedStoreData) =>
+            set((state) => {
+                state.isLoadedStoreData = isLoadedStoreData;
+            }),
         setShowDebug: (showDebug) =>
             set((state) => {
                 state.showDebug = showDebug;
@@ -231,7 +245,11 @@ const fetchADAPrice = async () => {
 
 export const fetchGeneralStoreData = async () => {
     try {
+        useGeneralStore.getState().setIsLoadingStoreData(true);
+        useGeneralStore.getState().setIsLoadedStoreData(false);
         await Promise.all([fetchCampaignCategories(), fetchCampaignStatus(), fetchADAPrice(), fetchMilestoneStatus(), fetchSubmissionStatus()]);
+        useGeneralStore.getState().setIsLoadingStoreData(false);
+        useGeneralStore.getState().setIsLoadedStoreData(true);
     } catch (error) {
         console.error('Error fetching all data:', error);
     }

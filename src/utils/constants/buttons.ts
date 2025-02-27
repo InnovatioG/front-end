@@ -108,21 +108,21 @@ export const ButtonForCards: Record<ButtonsForCardsEnum, ButtonType> = {
     [ButtonsForCardsEnum.VIEW_CAMPAIGN]: {
         label: 'View Campaign >',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.id, CampaignTabEnum.DETAILS)}`);
+            if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.campaign_id, CampaignTabEnum.DETAILS)}`);
         },
         classNameType: 'fill center',
     },
     // [ButtonsForCardsEnum.VIEW_CAMPAIGN_BLACK]: {
     //     label: 'View Campaign >',
     //     action: async (data, navigate) => {
-    //         if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.id, CampaignTabEnum.DETAILS)}`);
+    //         if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.campaign_id, CampaignTabEnum.DETAILS)}`);
     //     },
     //     classNameType: 'fill center',
     // },
     [ButtonsForCardsEnum.LEARN_MORE]: {
         label: 'Learn More >',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.id, CampaignTabEnum.DETAILS)}`);
+            if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.campaign_id, CampaignTabEnum.DETAILS)}`);
         },
         classNameType: 'fill center',
     },
@@ -130,7 +130,7 @@ export const ButtonForCards: Record<ButtonsForCardsEnum, ButtonType> = {
     [ButtonsForCardsEnum.MANAGE_CAMPAIGN]: {
         label: 'Manage Campaign >',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignManageTab(data.id, CampaignTabEnum.DETAILS)}`);
+            if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignManageTab(data.campaign_id, CampaignTabEnum.DETAILS)}`);
         },
         classNameType: 'fill center',
     },
@@ -187,35 +187,35 @@ export const ButtonForCards: Record<ButtonsForCardsEnum, ButtonType> = {
     [ButtonsForCardsEnum.VIEW_MILESTONES]: {
         label: 'View Milestones >',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.id, CampaignTabEnum.ROADMAP)}`);
+            if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.campaign_id, CampaignTabEnum.ROADMAP)}`);
         },
         classNameType: 'outline-card center',
     },
     [ButtonsForCardsEnum.VIEW_TOKENOMICS]: {
         label: 'View Tokenomics >',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.id, CampaignTabEnum.TOKENOMICS)}`);
+            if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.campaign_id, CampaignTabEnum.TOKENOMICS)}`);
         },
         classNameType: 'outline-card center',
     },
     [ButtonsForCardsEnum.VIEW_MEMBERS]: {
         label: 'View Members >',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.id, CampaignTabEnum.MEMBERS)}`);
+            if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.campaign_id, CampaignTabEnum.MEMBERS)}`);
         },
         classNameType: 'outline-card center',
     },
     [ButtonsForCardsEnum.VIEW_FAQS]: {
         label: 'View Q & A >',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.id, CampaignTabEnum.FAQS)}`);
+            if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignViewTab(data.campaign_id, CampaignTabEnum.FAQS)}`);
         },
         classNameType: 'outline-card center',
     },
     [ButtonsForCardsEnum.INVEST]: {
         label: 'Invest >',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignInvest(data.id)}`);
+            if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignInvest(data.campaign_id)}`);
         },
         classNameType: 'invest center',
     },
@@ -291,14 +291,14 @@ export const ButtonForDetails: Record<ButtonsForDetailsEnum, ButtonType> = {
     [ButtonsForDetailsEnum.RENDER_CAMPAIGN_FOR_MANAGE]: {
         label: 'Overview >',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignView(data.id)}`, undefined, { scroll: false });
+            if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignView(data.campaign_id)}`, undefined, { scroll: false });
         },
         classNameType: 'overview center',
     },
     [ButtonsForDetailsEnum.RENDER_CAMPAIGN_FOR_PAGE]: {
         label: 'Overview >',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignView(data.id)}`, undefined, { scroll: false });
+            if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignView(data.campaign_id)}`, undefined, { scroll: false });
         },
         classNameType: 'overview center',
     },
@@ -306,7 +306,7 @@ export const ButtonForDetails: Record<ButtonsForDetailsEnum, ButtonType> = {
     [ButtonsForDetailsEnum.MANAGE_CAMPAIGN]: {
         label: 'Manage',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignManage(data.id)}`, undefined, { scroll: false });
+            if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignManage(data.campaign_id)}`, undefined, { scroll: false });
         },
         classNameType: 'outline-card center',
     },
@@ -314,7 +314,7 @@ export const ButtonForDetails: Record<ButtonsForDetailsEnum, ButtonType> = {
     [ButtonsForDetailsEnum.EDIT_CAMPAIGN]: {
         label: 'Edit',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignEdit(data.id)}`, undefined, { scroll: false });
+            if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignEdit(data.campaign_id)}`, undefined, { scroll: false });
         },
         classNameType: 'outline-card center',
     },
@@ -323,7 +323,7 @@ export const ButtonForDetails: Record<ButtonsForDetailsEnum, ButtonType> = {
         action: async (data, navigate) => {
             // agregar confirm cancel edit
             if (confirm('Are you sure you want to cancel the edition?')) {
-                if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignManage(data.id)}`, undefined, { scroll: false });
+                if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignManage(data.campaign_id)}`, undefined, { scroll: false });
             }
         },
         classNameType: 'red center',
@@ -337,7 +337,7 @@ export const ButtonForDetails: Record<ButtonsForDetailsEnum, ButtonType> = {
                 } else {
                     alert(`No handle ${HandlesEnums.SAVE_CAMPAIGN} provided`);
                 }
-                if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignManage(data.id)}`, undefined, { scroll: false });
+                if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignManage(data.campaign_id)}`, undefined, { scroll: false });
             }
         },
         classNameType: 'green center',
@@ -482,7 +482,7 @@ export const ButtonForDetails: Record<ButtonsForDetailsEnum, ButtonType> = {
     [ButtonsForDetailsEnum.INVEST]: {
         label: 'Invest',
         action: async (data, navigate) => {
-            if (data !== undefined && data.id !== undefined && navigate) navigate(`${ROUTES.campaignInvest(data.id)}`);
+            if (data !== undefined && data.campaign_id !== undefined && navigate) navigate(`${ROUTES.campaignInvest(data.campaign_id)}`);
         },
         classNameType: 'invest center',
     },

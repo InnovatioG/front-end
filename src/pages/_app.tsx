@@ -36,7 +36,6 @@ const resourcesToPreload = getResourcesFromImages(Images);
 
 export default function App({ Component, pageProps }: AppProps<{ session?: Session }>) {
     const [isLoadingResources, setIsLoadingResources] = useState(true);
-    const [isLoadingGeneralStore, setIsLoadingGeneralStore] = useState(true);
     const [isLoadingApp, setIsLoadingApp] = useState(true);
 
     const router = useRouter();
@@ -44,7 +43,6 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
     useEffect(() => {
         const initialize = async () => {
             await fetchGeneralStoreData();
-            setIsLoadingGeneralStore(false);
         };
         if (isLoadingApp === false) {
             initialize();
@@ -91,7 +89,7 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
             <SessionProvider session={pageProps.session} refetchInterval={0}>
                 <StoreProvider store={globalStore}>
                     <AppGeneral loader={<LoadingPage />} onLoadComplete={() => setIsLoadingApp(false)}>
-                        {isLoadingApp || isLoadingResources || isLoadingGeneralStore ? (
+                        {isLoadingApp || isLoadingResources || useGeneralStore.getState().isLoadingStoreData === true ? (
                             <PreLoadingPage onLoadComplete={() => setIsLoadingResources(false)} resources={resourcesToPreload} />
                         ) : (
                             <ResponsiveProvider>

@@ -89,7 +89,9 @@ const CampaignTokenomicsTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> =
             newPrice = 0;
         }
 
-        if (validPrice) {
+        // const conditionsToValidate = !isNullOrBlank(campaignToken_TN) && !isNullOrBlank(campaignToken_CS) 
+        // && conditionsToValidate
+        if (validPrice ) {
             setIsValidEdit(true);
         } else {
             setIsValidEdit(false);

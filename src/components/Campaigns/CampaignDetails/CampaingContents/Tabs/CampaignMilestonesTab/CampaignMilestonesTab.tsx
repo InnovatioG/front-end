@@ -27,7 +27,7 @@ const CampaignMilestonesTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> =
         if (milestones.length > 0) {
             validPercentage =
                 milestones.reduce((sum, milestone) => sum + milestone.milestone.percentage, 0) === 100 &&
-                milestones.every((milestone) => milestone.milestone.percentage > 0 && milestone.milestone.percentage < 100);
+                milestones.every((milestone) => milestone.milestone.percentage > 0 && milestone.milestone.percentage <= 100);
             validDays = milestones.every((milestone) => milestone.milestone.estimate_delivery_days > 0);
         }
         setIsValidEdit(validPercentage && validDays);
