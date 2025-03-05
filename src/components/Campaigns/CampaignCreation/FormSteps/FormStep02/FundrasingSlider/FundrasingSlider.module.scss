@@ -3,6 +3,20 @@
 
 .layout {
     z-index: 0;
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    gap: 0.5rem;
+    width: 100%;
+
+    @media screen and (max-width: 1300px) {
+        grid-template-columns: 1fr;
+    }
+
+    @media screen and (max-width: 768px) {
+        .buttonContainerLayout {
+            width: 100%;
+        }
+    }
 }
 
 .articleContainer {
@@ -10,8 +24,17 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
+
     .title {
         font: fonts.$f600-medium;
+    }
+
+    @media screen and (max-width: 1300px) {
+        padding: 0 1rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        padding: 0 1rem;
     }
 }
 
@@ -21,7 +44,13 @@
     flex-direction: column;
     gap: 0.5rem;
     z-index: -1;
+
+    @media screen and (max-width: 1300px) {
+        flex-direction: row;
+        justify-content: center;
+    }
 }
+
 .imagenContainer {
     display: flex;
     flex-direction: row;
@@ -32,12 +61,29 @@
     justify-self: flex-start;
     cursor: pointer;
     align-items: center;
+
     .spanContainer {
         max-width: 15.8125rem;
         gap: 0.5rem;
+
         .span {
             font: fonts.$f50-medium;
             color: colors.$light-gray-span;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        gap: 1rem;
+
+        .spanContainer {
+            max-width: 100%;
+            gap: 0.5rem;
+
+            .span {
+                font: fonts.$f50-medium;
+                color: colors.$light-gray-span;
+            }
         }
     }
 }
@@ -47,6 +93,10 @@
     grid-template-columns: 3fr 1fr;
     width: 100%;
     height: 100%;
+
+    @media screen and (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
 }
 
 .foundraisingController {
@@ -71,69 +121,26 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
+
+        h3 {
+            font: fonts.$f500-medium;
+            color: colors.$primary-font;
+        }
+
+        h2 {
+            font: fonts.$f1100-regular;
+            color: colors.$primary-font;
+        }
     }
-    h3 {
-        font: fonts.$f500-medium;
-        color: colors.$primary-font;
-    }
-    h2 {
-        font: fonts.$f1100-regular;
-        color: colors.$primary-font;
+
+    @media screen and (max-width: 768px) {
+        padding: 1rem 1rem 1rem 1rem;
     }
 }
 
 .buttonContainerLayout {
     width: 246px;
     align-self: flex-end;
-}
-
-.layout {
-    display: grid;
-    grid-template-columns: 5fr 1fr;
-    gap: 0.5rem;
-    width: 100%;
-}
-
-@media screen and (max-width: 1300px) {
-    .articleContainer {
-        padding: 0 1rem;
-    }
-    .layout {
-        grid-template-columns: 1fr;
-    }
-    .buttonContainer {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    .articleContainer {
-        padding: 0 1rem;
-    }
-
-    .buttonContainerLayout {
-        width: 100%;
-    }
-    .imagenContainer {
-        flex-direction: column;
-        gap: 1rem;
-        .spanContainer {
-            max-width: 100%;
-            gap: 0.5rem;
-            .span {
-                font: fonts.$f50-medium;
-                color: colors.$light-gray-span;
-            }
-        }
-    }
-    .foundRasingContainer {
-        grid-template-columns: 1fr;
-    }
-    .sliderContainer {
-        padding: 1rem 1rem 1rem 1rem;
-    }
 }
 
 .tooltipContainer {
@@ -143,11 +150,3 @@
     right: 15px;
     z-index: 3;
 }
-
-/* font-family: DM Sans;
-font-size: 20px;
-font-weight: 500;
-line-height: 26.04px;
-letter-spacing: -0.05em;
-text-align: left;
- */

@@ -5,27 +5,32 @@
     outline: none;
 }
 
-.toolbar button {
-    margin-right: 5px;
-    padding: 5px;
-    border-radius: 3px;
-    border: 1px solid #ccc;
-    background: #f4f4f4;
-    cursor: pointer;
-}
+.toolbar {
+    button {
+        margin-right: 5px;
+        padding: 5px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        background: #f4f4f4;
+        cursor: pointer;
 
-.toolbar button:hover {
-    background-color: #ddd;
+        &:hover {
+            background-color: #ddd;
+        }
+    }
 }
 
 .main {
     position: relative;
+
     strong {
         font-weight: bold;
     }
+
     em {
         font-style: italic;
     }
+
     ol {
         li {
             list-style-type: decimal;
@@ -37,12 +42,15 @@
             list-style-type: disc;
         }
     }
+
     u {
         text-decoration: underline;
     }
+
     s {
         text-decoration: line-through;
     }
+
     img,
     iframe {
         width: 100%;
@@ -57,22 +65,23 @@
 .quillEditorB {
     display: flex;
     flex-direction: column;
-    gap: 5rem;
     position: relative;
-}
 
-.quillEditorB {
-    gap: 1rem;
+    &.quillEditor {
+        gap: 5rem;
+    }
+
+    &.quillEditorB {
+        gap: 1rem;
+    }
 }
 
 .title {
     position: absolute;
     top: 60px;
     font: fonts.$text-edit;
-}
 
-@media screen and (max-width: 768px) {
-    .title {
+    @media screen and (max-width: 768px) {
         top: 90px;
     }
 }

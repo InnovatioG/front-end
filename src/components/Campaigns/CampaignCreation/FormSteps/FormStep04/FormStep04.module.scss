@@ -6,6 +6,10 @@
     align-items: center;
     width: 100%;
     gap: 1rem;
+
+    @media screen and (max-width: 768px) {
+        padding-bottom: 2rem;
+    }
 }
 
 .textarea {
@@ -24,6 +28,14 @@
 
     & > :nth-child(2n + 1):last-child {
         grid-column: span 2;
+    }
+
+    @media screen and (max-width: 768px) {
+        grid-template-columns: 1fr;
+
+        & > :nth-child(2n + 1):last-child {
+            grid-column: span 1;
+        }
     }
 }
 
@@ -46,6 +58,12 @@
     justify-content: space-between;
     width: 100%;
     gap: 1rem;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        width: 100%;
+        gap: 1rem;
+    }
 }
 
 .buttonContainer {
@@ -55,24 +73,10 @@
     margin-top: 1rem;
     width: 75%;
     min-height: 60px;
-}
 
-@media screen and (max-width: 768px) {
-    .inputContainer {
-        grid-template-columns: 1fr;
-
-        & > :nth-child(2n + 1):last-child {
-            grid-column: span 1;
-        }
-    }
-
-    .permissionContainer,
-    .buttonContainer {
+    @media screen and (max-width: 768px) {
         flex-direction: column;
         width: 100%;
         gap: 1rem;
-    }
-    .containerLayout {
-        padding-bottom: 2rem;
     }
 }

@@ -11,100 +11,108 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
-}
 
-.campaignCardStatus {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 1rem;
-    height: 100%;
-    align-items: center;
-}
+    .campaignCardStatus {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 1rem;
+        height: 100%;
+        align-items: center;
 
-.statusContainer {
-    width: 100%;
-    background-color: #e0ffb1;
-    border-radius: 34px;
-    padding: 0.25rem 1rem;
-    height: 100%;
-    text-transform: capitalize;
+        .statusContainer {
+            width: 100%;
+            background-color: #e0ffb1;
+            border-radius: 34px;
+            padding: 0.25rem 1rem;
+            height: 100%;
+            text-transform: capitalize;
 
-    @extend .campaingStatus;
-}
+            @extend .campaingStatus;
 
-.status {
-    font: fonts.$f50-medium;
-    color: colors.$primary-font;
+            .status {
+                font: fonts.$f50-medium;
+                color: colors.$primary-font;
 
-    @extend .campaingStatus;
-}
+                @extend .campaingStatus;
+            }
+        }
 
-.investors {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    background: colors.$secondary-background;
-    height: 100%;
-    padding: 0.5rem 1rem;
-    border-radius: 34px;
-    justify-content: center;
-    .span {
-        color: colors.$white-font;
-        font: fonts.$f50-medium;
+        .investors {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: colors.$secondary-background;
+            height: 100%;
+            padding: 0.5rem 1rem;
+            border-radius: 34px;
+            justify-content: center;
+
+            .span {
+                color: colors.$white-font;
+                font: fonts.$f50-medium;
+            }
+
+            .icon {
+                fill: colors.$light-font;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
     }
-    .icon {
-        fill: colors.$light-font;
+
+    .campaignCardGoal {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        p {
+            font: fonts.$f500-medium;
+            color: colors.$primary-font;
+        }
+
+        .goal {
+            font: fonts.$goal;
+            color: colors.$primary-font;
+            min-width: 7ch;
+            text-align: right;
+        }
+    }
+
+    .campaignCardMinRequest {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .medidor {
+            height: 10px;
+            width: 100%;
+            background-color: black;
+            border-radius: 34px;
+            position: relative;
+
+            .progress {
+                height: 100%;
+                background-color: #76d13e;
+                border-radius: 34px;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+        }
+    }
+
+    .tooltipContainer {
         display: flex;
         align-items: center;
-        justify-content: center;
     }
-}
 
-.campaignCardGoal {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    p {
-        font: fonts.$f500-medium;
-        color: colors.$primary-font;
-    }
-}
-
-.goal {
-    font: fonts.$goal;
-    color: colors.$primary-font;
-    min-width: 7ch;
-    text-align: right;
-}
-
-.medidor {
-    height: 10px;
-    width: 100%;
-    background-color: black;
-    border-radius: 34px;
-    position: relative;
-}
-
-.campaignCardMinRequest {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.progress {
-    height: 100%;
-    background-color: #76d13e;
-    border-radius: 34px;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-@media screen and (max-width: 768px) {
-    .campaignCardGoal {
-        flex-direction: column;
+    @media screen and (max-width: 768px) {
+        .campaignCardGoal {
+            flex-direction: column;
+        }
     }
 }
 
@@ -134,9 +142,3 @@
     justify-content: center;
     align-items: center;
 }
-
-.tooltipContainer {
-    display: flex;
-    align-items: center;
-}
-

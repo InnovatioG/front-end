@@ -82,8 +82,6 @@
     transition: all 0.3s ease;
     border: none;
     padding: 1rem 2rem;
-
- 
 }
 
 .gray {
@@ -217,7 +215,8 @@
     justify-content: center;
 }
 
-.failed, .red {
+.failed,
+.red {
     background-color: colors.$primary-red;
     border: none;
     color: white;
@@ -267,7 +266,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background-color: colors.$primary-dark-color; // Color de la cortina
+        background-color: colors.$primary-dark-color;
         transition: left 0.3s ease;
         z-index: 1;
     }
@@ -290,8 +289,8 @@
     }
 }
 
-
-.invest, .green {
+.invest,
+.green {
     position: relative;
     overflow: hidden;
     background-color: colors.$primary-green;
@@ -311,7 +310,7 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background-color: colors.$primary-dark-color; // Color de la cortina
+        background-color: colors.$primary-dark-color;
         transition: left 0.3s ease;
         z-index: 1;
     }
@@ -321,11 +320,10 @@
     }
 }
 
-
 .span {
     position: relative;
     z-index: 2;
-    color: inherit; // Hereda el color del botón
+    color: inherit;
 }
 
 .buttonMenu {

@@ -6,11 +6,11 @@
     flex-shrink: 0;
     overflow: hidden;
     border-radius: 50%;
-}
 
-.big {
-    height: 85px;
-    width: 85px;
+    &.big {
+        height: 85px;
+        width: 85px;
+    }
 }
 
 .avatarImage {
