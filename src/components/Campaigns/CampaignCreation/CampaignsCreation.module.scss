@@ -1,3 +1,6 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
 .layout {
     position: relative;
     display: grid;
@@ -7,8 +10,12 @@
 
     @media screen and (max-width: 748px) {
         grid-template-columns: 1fr;
+        max-width: 100dvw;
+        overflow: hidden;
+        margin: 0;
     }
 
+    // Opcional: si el componente FormHeader utiliza la clase .header internamente
     .header {
         position: absolute;
         display: flex;
@@ -20,14 +27,11 @@
         height: 90px;
 
         @media screen and (max-width: 748px) {
+            // ajustes si fueran necesarios
         }
     }
 
-    .icon {
-        transform: rotate(180deg);
-        cursor: pointer;
-    }
-
+    // Contenedor de información para la descripción y control de pasos
     .stepController {
         background: colors.$secondary-background;
         display: flex;
@@ -44,18 +48,28 @@
         }
     }
 
-    .containerPrimary {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 1rem;
-    }
-
+    // Contenedor donde se muestra el contenido de cada paso
     .stepContent {
         padding-top: calc(25dvh - 28px);
         padding-right: 15%;
         padding-left: 15%;
         padding-bottom: 2rem;
+
+        .backContainer {
+            margin-bottom: 2rem;
+
+            .icon {
+                transform: rotate(180deg);
+                cursor: pointer;
+            }
+        }
+    }
+
+    .containerPrimary {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 1rem;
     }
 
     @media screen and (max-width: 1024px) {
@@ -69,15 +83,10 @@
 
     @media screen and (max-width: 768px) {
         .stepController {
-            padding: 5rem 1rem 1rem 1rem;
+            padding: 7rem 1rem 1rem 1rem;
         }
-
         .stepContent {
             padding: 1rem;
         }
-    }
-
-    .backContainer {
-        margin-bottom: 2rem;
     }
 }

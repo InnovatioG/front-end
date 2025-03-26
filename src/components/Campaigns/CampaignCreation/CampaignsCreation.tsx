@@ -14,7 +14,7 @@ import { serviceSaveCampaign } from '@/utils/campaignServices';
 import { Router, useRouter } from 'next/router';
 import { ROUTES } from '@/utils/constants/routes';
 
-export interface CampaignsCreationProps {}
+export interface CampaignsCreationProps { }
 
 const CampaignsCreation: React.FC<CampaignsCreationProps> = (props) => {
     const propsCampaignIdStoreSafe = useCampaignIdStoreSafe();
