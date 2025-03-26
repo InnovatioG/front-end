@@ -158,7 +158,7 @@ const FormCreateOrEditMember: React.FC<FormCreateOrEditMemberProps> = ({
             </article>
             <div className={styles.buttonContainer}>
                 {showCancelEdit === true && initialMember !== undefined && isNewMember === false && (
-                    <BtnGeneral text={'Cancel'} onClick={() => handleCancel()} disabled={!isChanged} />
+                    <BtnGeneral text={'Cancel'} onClick={() => handleCancel()} disabled={!isChanged} classNameStyle='outlineb' />
                 )}
                 {showCancelGoBack === true && <BtnGeneral text={'Cancel'} onClick={() => handleCancel()} />}
                 <BtnGeneral

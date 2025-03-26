@@ -1,15 +1,16 @@
 @use '@/styles/settings/fonts';
 @use '@/styles/settings/colors';
 
-.layout,
-.header {
+.layout {
     display: flex;
     flex-direction: column;
     align-items: center;
-    h1 {
+
+    .title {
         font: fonts.$f1100-bold;
         margin-top: 10dvh;
     }
+
     span {
         font: fonts.$text-edit;
         font-size: 1.25rem;
@@ -18,37 +19,6 @@
         margin: 0 auto 2rem auto;
         color: #4b5563;
     }
-    .textContainer {
-        font: fonts.$f600-medium;
-    }
-}
-
-.container {
-    border-radius: 0.75rem; /* rounded-xl */
-    padding: 1.5rem; /* p-6 */
-    max-width: 64rem; /* max-w-4xl */
-    margin: 0 auto; /* mx-auto */
-
-    /* Adjust padding for larger screens (md:p-8) */
-    @media (min-width: 768px) {
-        padding: 2rem;
-    }
-}
-
-.paragraph {
-    font-size: 1.125rem; /* text-lg */
-    line-height: 1.75rem; /* leading-relaxed */
-    margin-bottom: 1.5rem; /* mb-6 */
-
-    /* Remove bottom margin from the last paragraph */
-    &:last-child {
-        margin-bottom: 0;
-    }
-}
-
-.title {
-    font: fonts.$f1100-bold;
-    margin-top: 10dvh;
 }
 
 .faqContainer {
@@ -58,42 +28,95 @@
     align-items: center;
     gap: 2rem;
     margin-top: 2rem;
-}
 
-.faqList {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-}
+    .faqList {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        align-items: center;
 
-.faqItem {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-}
+        .faqItem {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            justify-content: space-between;
 
-.faqImageContainer {
-    flex-shrink: 0;
-}
+            .faqContent {
+                flex: 1;
+                max-width: 70%;
+                display: flex;
+                flex-direction: row;
+                gap: 2rem;
 
-.faqImage {
-    border-radius: 10px;
-}
+                .number {
+                    color: #000;
+                    font-family: 'DM Sans';
+                    font-size: 39.76px;
+                    font-style: normal;
+                    font-weight: 200;
+                    line-height: 122%; /* 48.507px */
+                }
 
-.faqContent {
-    flex: 1;
-}
+                .divitionLineContainer {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
 
-.faqTitle {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
+                    .divitionLine {
+                        width: 5px;
+                        height: 79px;
+                        background: #000;
+                    }
+                    .divitionLineOrange {
+                        width: 2px;
+                        height: 155px;
+                        background-color: #f1a500;
+                    }
+                }
 
-.faqDescription {
-    font-size: 16px;
-    color: #444;
+                .textContent {
+                    width: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 2rem;
+                }
+                .faqTitle {
+                    color: #292929;
+                    font-family: 'DM Sans';
+                    font-size: 24px;
+                    font-style: normal;
+                    font-weight: 900;
+                    line-height: 122%;
+                }
+
+                .faqDescription {
+                    font-size: 16px;
+                    color: #444;
+                    font-family: 'DM Sans';
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 122%;
+                }
+            }
+
+            .faqImageContainer {
+                flex-shrink: 0;
+
+                .faqImage {
+                    border-radius: 10px;
+                }
+            }
+            .divisorLine {
+                width: 700px;
+                height: 1px;
+                background-color: #292929;
+                justify-content: flex-end;
+                place-self: flex-end;
+                margin-top: 3rem;
+            }
+        }
+    }
 }
