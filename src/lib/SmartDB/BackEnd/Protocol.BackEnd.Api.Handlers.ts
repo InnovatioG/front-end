@@ -281,7 +281,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         await this.populateCampaignCategory();
         await this.populateMilestoneStatus();
         await this.populateSubmissionStatus();
-        // await this.populateCampaigns(lucid, walletTxParams, protocol, wallet);
+        await this.populateCampaigns(lucid, walletTxParams, protocol, wallet);
     }
 
     private static async populateUser(walletTxParams: WalletTxParams): Promise<WalletEntity> {
