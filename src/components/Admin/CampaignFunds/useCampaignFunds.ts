@@ -28,7 +28,7 @@ export function useCampaignFunds() {
         try {
             newItem._NET_address = 'test address';
             newItem._NET_id_CS = 'test CS';
-            newItem._NET_id_TN = 'test TN';
+            newItem._NET_id_TN_Str = 'test TN';
             newItem._isDeployed = false;
             let entity: CampaignFundsEntity = new CampaignFundsEntity(newItem);
             entity = await CampaignFundsApi.createApi(entity);

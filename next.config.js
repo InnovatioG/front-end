@@ -2,6 +2,8 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const { join } = require('path');
+const { access, symlink } = require('fs/promises');
 
 const nextConfig = {
     //-------------
@@ -34,13 +36,14 @@ const nextConfig = {
         esmExternals: true, // <-- add this for mongoose and next13
         // serverComponentsExternalPackages:['mongoose'] // <-- add this for mongoose and next13 '@typegoose/typegoose'
     },
-    webpack: (config, { isServer }) => {
+    webpack: (config, { dev, isServer }) => {
         // or 'errors-only', 'minimal', etc.
         config.resolve.alias['@'] = path.resolve(__dirname, './src/');
 
         config.stats = 'verbose';
         config.experiments = {
             asyncWebAssembly: true,
+            syncWebAssembly: true,
             topLevelAwait: true,
             layers: true, // optional, with some bundlers/frameworks it doesn't work without
         };
@@ -85,6 +88,37 @@ const nextConfig = {
             };
         }
 
+        if (dev && isServer) {
+            config.devtool = 'source-map';
+        }
+        config.plugins.push(
+            //NOTE: para que anda cardano serialization lib browser y se agregue wasm en next static server
+            new (class {
+                apply(compiler) {
+                    compiler.hooks.afterEmit.tapPromise('SymlinkWebpackPlugin', async (compiler) => {
+                        if (isServer) {
+                            const from = join(compiler.options.output.path, '../static');
+                            const to = join(compiler.options.output.path, 'static');
+
+                            try {
+                                await access(from);
+                                // console.log(`${from} already exists`);
+                                return;
+                            } catch (error) {
+                                if (error.code === 'ENOENT') {
+                                    // No link exists
+                                } else {
+                                    throw error;
+                                }
+                            }
+
+                            await symlink(to, from, 'junction');
+                            console.log(`created symlink ${from} -> ${to}`);
+                        }
+                    });
+                }
+            })()
+        );
         return config;
     },
     async headers() {

@@ -109,7 +109,7 @@ export const useCampaignsDashboard = (props: CampaignDashboardProps) => {
             const filter = filterConditions.length > 0 ? { $and: filterConditions } : {};
 
             const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filter, { limit, sort: { updatedAt: -1 } });
-            const count = await CampaignApi.getCountApi_(filter);
+            const {count} = await CampaignApi.getCountApi_(filter);
 
             setHasMore(count > limit);
             setCampaigns(await Promise.all(data.map(getCampaignEX)));

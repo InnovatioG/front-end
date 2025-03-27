@@ -18,7 +18,7 @@ export const SCRIPT_VERSION = mkVersionWithDependency([PROTOCOL_BASE_VERSION, CA
 
 export const TRANSACTION_UNKNOWN = 'Unknown';
 
-// export const PROTOCOL_DEPLOY = 'Protocol - Deploy';
+export const PROTOCOL_DEPLOY = 'Protocol - Deploy';
 // export const PROTOCOL_UPDATE = 'Protocol - Update';
 // export const PROTOCOL_UPDATE_MIN_ADA = 'Protocol - Update Min ADA';
 // export const PROTOCOL_EMERGENCY = 'Protocol - Emergency';
@@ -38,7 +38,7 @@ export const TRANSACTION_UNKNOWN = 'Unknown';
 // export const CAMPAIGN_FUNDS_UPDATE_MIN_ADA = 'Fund Holding - Update Min ADA';
 // export const CAMPAIGN_FUNDS_DELETE = 'Fund Holding - Delete';
 
-// export const SCRIPTS_ADD = 'Scripts - Add';
+export const SCRIPTS_ADD = 'Scripts - Add';
 
 // //----------------------------------------------------------------------
 
@@ -51,6 +51,7 @@ export const TRANSACTION_UNKNOWN = 'Unknown';
 //----------------------------------------------------------------------
 
 export const EMERGENCY_ADMIN_TOKEN_POLICY_CS = process.env.NEXT_PUBLIC_EMERGENCY_ADMIN_TOKEN_POLICY_CS!;
+export const ADMIN_TOKEN_POLICY_CS = process.env.NEXT_PUBLIC_ADMIN_TOKEN_POLICY_CS!;
 
 export const PROTOCOL_ID_TN = 'ProtocolID';
 export const CAMPAIGN_ID_TN = 'CampaignID';

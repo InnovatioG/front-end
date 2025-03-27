@@ -43,7 +43,7 @@ export class CampaignCategoryEntityMongo extends BaseEntityMongo {
 
     // #region mongo db
 
-    public static MongoModel() {
+    public static DBModel() {
         interface Interface {
             name: string;
             description: string;

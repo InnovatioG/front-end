@@ -169,7 +169,7 @@ export const useGeneralStore = create<IGeneralStore>()(
                 }
                 //--------------------
                 // TODO : hay que buscar si es editor, no solo creador...
-                const count = await CampaignApi.getCountApi_({ creator_wallet_id: wallet._DB_id });
+                const {count} = await CampaignApi.getCountApi_({ creator_wallet_id: wallet._DB_id });
                 //--------------------
                 set((state: WritableDraft<IGeneralStore>) => {
                     state.haveCampaigns = count > 0;

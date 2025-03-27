@@ -1,0 +1,57 @@
+@forward  '@/styles/components/modalTemplate';
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
+@use '@/styles/InputStyle';
+
+
+.headerModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+    width: 100%;
+    gap: 16px;
+    // Title Modal and Icon include in mixin
+}
+
+.txContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 24px;
+
+    .textPart {
+        display: flex;
+        gap: 16px;
+        flex-direction: column;
+
+        .text {
+            font: fonts.$f200-medium;
+            text-align: center;
+        }
+
+        .txHash {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            justify-content: center;
+
+            .linkHash {
+                font: fonts.$f200-medium;
+                // @include mix.underline();
+            }
+            .hash {
+                font: fonts.$f200-medium;
+            }
+        }
+    }
+
+    .btnGroup {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        width: 100%;
+    }
+}

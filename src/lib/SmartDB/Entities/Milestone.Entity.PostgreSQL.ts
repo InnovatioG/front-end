@@ -1,10 +1,10 @@
-import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
+import { PostgreSQLAppliedFor} from 'smart-db';
+import { BaseEntityPostgreSQL, PostgreSQLDatabaseService } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { MilestoneEntity } from './Milestone.Entity';
 
 @PostgreSQLAppliedFor([MilestoneEntity])
-@Entity({ name: getPostgreSQLTableName(MilestoneEntity.className()) })
+@Entity({ name: PostgreSQLDatabaseService.getTableName(MilestoneEntity.className()) })
 export class MilestoneEntityPostgreSQL extends BaseEntityPostgreSQL {
     protected static Entity = MilestoneEntity;
 

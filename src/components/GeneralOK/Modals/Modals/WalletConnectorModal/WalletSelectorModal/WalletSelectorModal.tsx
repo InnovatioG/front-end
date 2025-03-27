@@ -2,13 +2,15 @@ import Toggle from '@/components/General/Buttons/Toggle/Toggle';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { CardanoWallet, LoadingSpinner, isEmulator, useWalletActions } from 'smart-db';
+import { CardanoWallet, LoadingSpinner, isEmulator, useAppStore, useWalletActions } from 'smart-db';
 import styles from './WalletSelectorModal.module.scss';
 
 export const WalletSelectorModal: React.FC = () => {
     //--------------------------------------
     // const { closeModal } = useModal();
     const closeModal = undefined;
+    //--------------------------------------
+    const appStore = useAppStore();
     //--------------------------------------
     const [availableWallets, setAvailableWallets] = useState<CardanoWallet[]>([]);
     const [unAvailableWallets, setUnAvailableWallets] = useState<CardanoWallet[]>([]);
@@ -86,7 +88,7 @@ export const WalletSelectorModal: React.FC = () => {
         );
     }
     //--------------------------------------
-    function showWalletsFromSeedButton() {
+    function showWalletsFromSeedButtons() {
         return (
             <>
                 {Object.entries(availableWalletsSeeds).map(([name, seed]) => (
@@ -144,7 +146,7 @@ export const WalletSelectorModal: React.FC = () => {
                         ) : (
                             <>
                                 {showWalletButtons()}
-                                {showWalletsFromSeedButton()}
+                                {appStore.siteSettings?.debug === true ? <>{showWalletsFromSeedButtons()}</> : null}
                             </>
                         )}
                     </ul>

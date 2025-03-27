@@ -1,6 +1,6 @@
 {
   "name": "innovatio",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "private": true,
   "scripts": {
     "dev": "node --max-old-space-size=8192 node_modules/.bin/next dev -p 3000",
@@ -19,6 +19,7 @@
     "swagger-start": "NODE_ENV=production ts-node -P tsconfig.server.json ./_swagger/server.ts"
   },
   "dependencies": {
+    "@lucid-evolution/lucid": "^0.4.24",
     "@radix-ui/react-accordion": "^1.2.1",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-dialog": "^1.1.2",
@@ -43,7 +44,6 @@
     "filepond-plugin-image-resize": "^2.0.10",
     "filepond-plugin-image-transform": "^3.8.7",
     "immer": "^10.1.1",
-    "lucid-cardano": "^0.10.10",
     "lucide-react": "^0.460.0",
     "motion": "^11.11.17",
     "multer-s3": "^3.0.1",

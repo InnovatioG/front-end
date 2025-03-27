@@ -1,4 +1,4 @@
-import { Script } from 'lucid-cardano';
+import { Script } from '@lucid-evolution/lucid';
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
 import { MongoAppliedFor } from 'smart-db';
@@ -44,7 +44,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
 
     // #region mongo db
 
-    public static MongoModel() {
+    public static DBModel() {
         interface InterfaceDB extends IBaseSmartDBEntity {
             campaign_category_id: string;
             campaign_status_id: string;

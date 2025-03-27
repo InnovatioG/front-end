@@ -20,7 +20,7 @@ export default function CampaignHighlights() {
             filterConditions.push({ campaign_status_id: { $in: campaignStatusIdsForInvestors } });
         }
         const filter = filterConditions.length > 0 ? { $and: filterConditions } : {};
-        const launchedCampaigns = await CampaignApi.getCountApi_(filter);
+        const {count: launchedCampaigns} = await CampaignApi.getCountApi_(filter);
         const campaigns: CampaignEntity[] = await CampaignApi.getByParamsApi_(filter, { fieldsForSelect: { cdFundedADA: true, investors: true } });
         setLaunchedCampaigns(launchedCampaigns);
         const contribuitedADA = campaigns.reduce((acc, campaign) => acc + (campaign.cdFundedADA ?? 0n), 0n);

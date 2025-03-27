@@ -1,10 +1,10 @@
-import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
+import { PostgreSQLAppliedFor} from 'smart-db';
+import { BaseEntityPostgreSQL, PostgreSQLDatabaseService } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CampaignCategoryEntity } from './CampaignCategory.Entity';
 
 @PostgreSQLAppliedFor([CampaignCategoryEntity])
-@Entity({ name: getPostgreSQLTableName(CampaignCategoryEntity.className()) })
+@Entity({ name: PostgreSQLDatabaseService.getTableName(CampaignCategoryEntity.className()) })
 export class CampaignCategoryEntityPostgreSQL extends BaseEntityPostgreSQL {
     protected static Entity = CampaignCategoryEntity;
 

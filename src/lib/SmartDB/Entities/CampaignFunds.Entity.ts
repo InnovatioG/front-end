@@ -19,7 +19,7 @@ export class CampaignFundsEntity extends BaseSmartDBEntity {
 
     protected static _plutusDataIsSubType = true;
     protected static _is_NET_id_Unique = false;
-    // _NET_id_TN: string = 'CampaignFundsID';
+    // _NET_id_TN_Str: string = 'CampaignFundsID';
 
     // #region fields
     @Convertible({ isForDatum: true })
@@ -70,8 +70,8 @@ export class CampaignFundsEntity extends BaseSmartDBEntity {
 
     // #region class methods
 
-    public getNET_id_TN(): string {
-        if (isNullOrBlank(super.getNET_id_TN()) === false) return super.getNET_id_TN();
+    public getNET_id_TN_Str(): string {
+        if (isNullOrBlank(super.getNET_id_TN_Str()) === false) return super.getNET_id_TN_Str();
         if (this.smartUTxO !== undefined) {
             const assetsCS = getAssetsFromCS(this.smartUTxO?.assets, this.getNET_id_CS());
             const pid = Object.keys(assetsCS);

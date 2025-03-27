@@ -1,11 +1,11 @@
-import { type Script } from 'lucid-cardano';
-import { type CS, PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
+import { type Script } from '@lucid-evolution/lucid';
+import { type CS, PostgreSQLAppliedFor} from 'smart-db';
+import { BaseSmartDBEntityPostgreSQL, PostgreSQLDatabaseService } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CampaignEntity, CampaignMilestoneDatum } from './Campaign.Entity';
 
 @PostgreSQLAppliedFor([CampaignEntity])
-@Entity({ name: getPostgreSQLTableName(CampaignEntity.className()) })
+@Entity({ name: PostgreSQLDatabaseService.getTableName(CampaignEntity.className()) })
 export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     protected static Entity = CampaignEntity;
 

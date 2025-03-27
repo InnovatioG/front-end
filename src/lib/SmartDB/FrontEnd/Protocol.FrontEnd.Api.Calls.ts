@@ -39,7 +39,7 @@ export class ProtocolApi extends BaseSmartDBFrontEndTxApiCalls {
                 throw 'You need at least one utxo to be used to mint Fund ID';
             }
             //--------------------------------------
-            const protocol_id = await ProtocolApi.createWithScriptsApi(walletTxParams, { name, configJson, uTxO: uTxOsAtWalleet[0] });
+            const protocol_id = await ProtocolApi.createWithScriptsApi(walletTxParams, { name, configJson, uTxO: uTxOsAtWalleet[0], creator: walletStore.info!.pkh});
             const protocol: ProtocolEntity | undefined = await ProtocolApi.getByIdApi_(protocol_id);
             if (protocol === undefined) {
                 throw `Protocol not found with id: ${protocol_id}`;

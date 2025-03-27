@@ -43,7 +43,7 @@ export class ScriptEntityMongo extends BaseSmartDBEntityMongo {
 
     // #region mongo db
 
-    public static MongoModel() {
+    public static DBModel() {
         interface InterfaceDB extends IBaseSmartDBEntity {}
 
         interface Interface extends InterfaceDB, ScriptDatum {}

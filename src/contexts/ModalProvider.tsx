@@ -9,6 +9,8 @@ import SingleQuestionModal from '@/components/GeneralOK/Modals/Modals/SingleQues
 import SuccessModal from '@/components/GeneralOK/Modals/Modals/SuccessModal/SuccessModal';
 import ManageCampaignSubmissionModal from '@/components/GeneralOK/Modals/Modals/ManageCampaignSubmissionModal/ManageCampaignSubmissionModal';
 import ViewCampaignSubmissionModal from '@/components/GeneralOK/Modals/Modals/ViewCampaignSubmissionModal/ViewCampaignSubmissionModal';
+import TxUserConfirmationModal from '@/components/GeneralOK/Modals/Modals/TxUserConfirmationModal/TxUserConfirmationModal';
+import TxProcessingModal from '@/components/GeneralOK/Modals/Modals/TxProcessingModal/TxProcessingModal';
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
     const [activeModal, setActiveModal] = useState<ModalsEnums | null>(null);
@@ -42,15 +44,13 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         [ModalsEnums.DELETE_CAMPAIGN]: undefined,
         [ModalsEnums.SUBMIT_CAMPAIGN]: <SingleQuestionModal modalType={ModalsEnums.SUBMIT_CAMPAIGN} handleType={HandlesEnums.SUBMIT_CAMPAIGN} />,
         [ModalsEnums.MANAGE_CAMPAIGN_SUBMISSIONS]: <ManageCampaignSubmissionModal />,
-        [ModalsEnums.VIEW_CAMPAIGN_SUBMISSIONS]:<ViewCampaignSubmissionModal />,
+        [ModalsEnums.VIEW_CAMPAIGN_SUBMISSIONS]: <ViewCampaignSubmissionModal />,
         [ModalsEnums.CREATE_SMART_CONTRACTS]: <SingleQuestionModal modalType={ModalsEnums.CREATE_SMART_CONTRACTS} handleType={HandlesEnums.CREATE_SMART_CONTRACTS} />,
         [ModalsEnums.PUBLISH_SMART_CONTRACTS]: <SingleQuestionModal modalType={ModalsEnums.PUBLISH_SMART_CONTRACTS} handleType={HandlesEnums.PUBLISH_SMART_CONTRACTS} />,
         [ModalsEnums.INITIALIZE_CAMPAIGN]: <SingleQuestionModal modalType={ModalsEnums.INITIALIZE_CAMPAIGN} handleType={HandlesEnums.INITIALIZE_CAMPAIGN} />,
         [ModalsEnums.MANAGE_CAMPAIGN_UTXOS]: undefined,
         [ModalsEnums.LAUNCH_CAMPAIGN]: <LaunchCampaignModal />,
-        [ModalsEnums.VALIDATE_FUNDRAISING_STATUS]: (
-            <SingleQuestionModal modalType={ModalsEnums.VALIDATE_FUNDRAISING_STATUS} handleType={HandlesEnums.SET_REACHED_STATUS} />
-        ),
+        [ModalsEnums.VALIDATE_FUNDRAISING_STATUS]: <SingleQuestionModal modalType={ModalsEnums.VALIDATE_FUNDRAISING_STATUS} handleType={HandlesEnums.SET_REACHED_STATUS} />,
         [ModalsEnums.WITHDRAW_TOKENS_FAILED]: undefined,
         [ModalsEnums.WITHDRAW_TOKENS_UNREACHED]: undefined,
         [ModalsEnums.GETBACK_TOKENS_FAILED]: undefined,
@@ -62,6 +62,9 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         [ModalsEnums.CONTACT_SUPPORT]: <ContactSupportModal />,
 
         [ModalsEnums.SUCCESS]: <SuccessModal />,
+
+        [ModalsEnums.CONFIRM_TX]: <TxUserConfirmationModal />,
+        [ModalsEnums.PROCESSING_TX]: <TxProcessingModal />,
 
         // [ModalEnums.manageCampaignSubmissions]: <ManageCampaignModal  />,
         // [ModalEnums.submitMilestone]: <SendReport campaign={modalState.campaign} />,

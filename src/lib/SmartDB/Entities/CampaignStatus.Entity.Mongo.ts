@@ -43,7 +43,7 @@ export class CampaignStatusEntityMongo extends BaseEntityMongo {
 
     // #region mongo db
 
-    public static MongoModel() {
+    public static DBModel() {
         interface Interface {
             code_id: number;
             name: string;

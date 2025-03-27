@@ -2,9 +2,10 @@ import { ProtocolEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styles from './Protocol.module.scss';
 import { useProtocol } from './useProtocol';
+import { ADMIN_TOKEN_POLICY_CS } from '@/utils/constants/on-chain';
 
 export default function Protocol() {
-    const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove, configJson, setConfigJson } = useProtocol();
+    const { list, editItem, view, setEditItem, setView, deploy, addScripts, sync } = useProtocol();
 
     const AdminsForm: React.FC<{
         item: Partial<ProtocolEntity>;
@@ -140,9 +141,6 @@ export default function Protocol() {
 
     const renderList = () => (
         <div>
-            <div className={styles.listHeader}>
-                <button onClick={() => setView('create')}>Create New Item</button>
-            </div>
             {list.length === 0 ? (
                 <p>No Protocol found.</p>
             ) : (
@@ -163,7 +161,7 @@ export default function Protocol() {
                     <tbody>
                         {list.map((item) => (
                             <tr key={item._DB_id}>
-                                <td>{item.pdProtocolVersion}</td>
+                                <td>{item.fdpProtocolVersion}</td>
                                 <td>{item.name}</td>
                                 <td>{item.pdAdmins?.join(', ')}</td>
                                 <td>{item.pdTokenAdminPolicy_CS}</td>
@@ -172,22 +170,32 @@ export default function Protocol() {
                                 <td>{item.createdAt.toISOString()}</td>
                                 <td>{item.updatedAt?.toISOString()}</td>
                                 <td>
-                                    <button
-                                        onClick={() => {
-                                            setEditItem(item);
-                                            setView('edit');
-                                        }}
-                                    >
-                                        Edit
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            setDeleteItem(item);
-                                            setView('confirmDelete');
-                                        }}
-                                    >
-                                        Delete
-                                    </button>
+                                    {item._isDeployed === true ? (
+                                        <button
+                                            onClick={() => {
+                                                setEditItem(item);
+                                                setView('addscripts');
+                                            }}
+                                        >
+                                            Add Scripts
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={() => {
+                                                setEditItem(item);
+                                                setView('deploy');
+                                            }}
+                                        >
+                                            Deploy
+                                        </button>
+                                    )}
+                                     <button
+                                            onClick={() => {
+                                                sync(item)
+                                            }}
+                                        >
+                                            Sync
+                                        </button>
                                 </td>
                             </tr>
                         ))}
@@ -197,29 +205,16 @@ export default function Protocol() {
         </div>
     );
 
-    const renderForm = (item: Partial<ProtocolEntity>, setItem: Dispatch<SetStateAction<Partial<ProtocolEntity>>> | Dispatch<SetStateAction<Partial<ProtocolEntity> | null>>) => (
+    const renderDeploy = () => (
         <form className={styles.form}>
-            <div>
-                <label>Protocol Version:</label>
-                <input
-                    type="number"
-                    value={item.pdProtocolVersion || ''}
-                    onChange={(e) =>
-                        setItem({
-                            ...item,
-                            pdProtocolVersion: Number(e.target.value),
-                        })
-                    }
-                />
-            </div>
             <div>
                 <label>Name:</label>
                 <input
                     type="text"
-                    value={item.name || ''}
+                    value={editItem!.name || ''}
                     onChange={(e) =>
-                        setItem({
-                            ...item,
+                        setEditItem({
+                            ...editItem!,
                             name: e.target.value,
                         })
                     }
@@ -227,96 +222,49 @@ export default function Protocol() {
             </div>
             <div>
                 <label>Admins:</label>
-                <AdminsForm item={item} setItem={(value) => setItem(typeof value === 'function' ? (prev: any) => value(prev) : value)} />
+                <AdminsForm item={editItem!} setItem={(value) => setEditItem(typeof value === 'function' ? (prev: any) => value(prev) : value)} />
             </div>
             <div>
                 <label>Token Admin Policy:</label>
                 <input
                     type="text"
-                    value={item.pdTokenAdminPolicy_CS || ''}
+                    value={editItem?.pdTokenAdminPolicy_CS || ''}
                     onChange={(e) =>
-                        setItem({
-                            ...item,
+                        setEditItem({
+                            ...editItem!,
                             pdTokenAdminPolicy_CS: e.target.value,
                         })
                     }
                 />
             </div>
-            <div>
-                <label>Min ADA:</label>
-                <input
-                    type="text"
-                    value={item.pdMinADA?.toString() || ''}
-                    onChange={(e) => {
-                        if (!isNaN(Number(e.target.value))) {
-                            setItem({
-                                ...item,
-                                pdMinADA: BigInt(e.target.value),
-                            });
-                        }
-                    }}
-                />
-            </div>
-            {view === 'create' && (
-                <div>
-                    <label>Contracts:</label>
-                    <textarea rows={10} cols={50} value={configJson || ''} onChange={(e) => setConfigJson(e.target.value)} />
-                </div>
-            )}
-            <div>
-                <label>Created At:</label>
-                <input
-                    type="datetime-local"
-                    value={item.createdAt ? new Date(item.createdAt).toISOString().slice(0, -1) : ''}
-                    onChange={(e) => {
-                        const selectedDate = new Date(e.target.value);
-                        setItem({ ...item, createdAt: selectedDate });
-                    }}
-                    disabled={true}
-                />
-            </div>
-            <div>
-                <label>Updated At:</label>
-                <input
-                    type="datetime-local"
-                    value={item.updatedAt ? new Date(item.updatedAt).toISOString().slice(0, -1) : ''}
-                    onChange={(e) => {
-                        const selectedDate = new Date(e.target.value);
-                        setItem({ ...item, updatedAt: selectedDate });
-                    }}
-                    disabled={true}
-                />
-            </div>
-            {view === 'create' ? (
-                <button type="button" onClick={create}>
-                    Create
-                </button>
-            ) : (
-                <button type="button" onClick={update}>
-                    Update
-                </button>
-            )}
+
+            <button type="button" onClick={deploy}>
+                Deploy
+            </button>
+
             <button type="button" onClick={() => setView('list')}>
                 Cancel
             </button>
         </form>
     );
 
-    const renderConfirmDelete = () => (
-        <div className={styles.confirmDelete}>
-            <p>Are you sure you want to delete this item?</p>
-            {deleteItem && <pre>{deleteItem.show()}</pre>}
-            <button onClick={remove}>Confirm</button>
-            <button onClick={() => setView('list')}>Cancel</button>
-        </div>
+    const renderAddScripts = () => (
+        <form className={styles.form}>
+            <button type="button" onClick={() => addScripts(editItem! as ProtocolEntity)}>
+                Add Scripts
+            </button>
+
+            <button type="button" onClick={() => setView('list')}>
+                Cancel
+            </button>
+        </form>
     );
 
     return (
         <div className={styles.content}>
             {view === 'list' && renderList()}
-            {view === 'create' && renderForm(newItem, setNewItem)}
-            {view === 'edit' && editItem !== null && renderForm(editItem, setEditItem)}
-            {view === 'confirmDelete' && renderConfirmDelete()}
+            {view === 'deploy' && editItem !== null && renderDeploy()}
+            {view === 'addscripts' && editItem !== null && renderAddScripts()}
         </div>
     );
 }

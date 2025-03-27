@@ -49,6 +49,11 @@ export enum ModalsEnums {
 
     SUCCESS = 'Success',
 
+    CONFIRM_TX = 'ConfirmTx',
+    PROCESSING_TX = 'Processing',
+
+
+
 }
 //--------------------------------------------------------------
 

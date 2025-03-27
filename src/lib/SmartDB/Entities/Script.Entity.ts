@@ -1,4 +1,4 @@
-import { type PaymentKeyHash } from 'lucid-cardano';
+import { type PaymentKeyHash } from '@lucid-evolution/lucid';
 import 'reflect-metadata';
 import { asSmartDBEntity, BaseSmartDBEntity, Convertible, Maybe, SmartUTxOEntity, StakeCredentialPubKeyHash } from 'smart-db';
 
@@ -59,7 +59,7 @@ export class ScriptEntity extends BaseSmartDBEntity {
 
     // #region class methods
 
-    public getNET_id_TN(): string {
+    public getNET_id_TN_Str(): string {
         return this.sdScriptHash;
     }
 

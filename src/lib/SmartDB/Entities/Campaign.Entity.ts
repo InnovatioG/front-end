@@ -1,6 +1,7 @@
-import { type Script } from 'lucid-cardano';
+import { CAMPAIGN_ID_TN } from '@/utils/constants/on-chain';
+import { type Script } from '@lucid-evolution/lucid';
 import 'reflect-metadata';
-import { BaseSmartDBEntity, Convertible, LucidLUCID_NETWORK_MAINNET_NAME, asSmartDBEntity, type CS, type POSIXTime } from 'smart-db';
+import { BaseSmartDBEntity, Convertible, LUCID_NETWORK_MAINNET_NAME, asSmartDBEntity, type CS, type POSIXTime } from 'smart-db';
 
 export interface CampaignMilestoneDatum {
     cmPerncentage: bigint;
@@ -59,8 +60,10 @@ export class CampaignEntity extends BaseSmartDBEntity {
     protected static _className: string = 'Campaign';
 
     protected static _plutusDataIsSubType = true;
-    protected static _is_NET_id_Unique = true;
-    _NET_id_TN: string = 'campaign_id';
+
+    protected static _isOnlyDatum = false;
+
+    _NET_id_TN_Str: string = CAMPAIGN_ID_TN;
 
     // #region fields
 
@@ -355,12 +358,24 @@ export class CampaignEntity extends BaseSmartDBEntity {
         updatedAt: true,
     };
 
+    public static defaultFieldsAddScriptsTxScript: Record<string, boolean> = {
+        fdpCampaignPolicyPolicyID_CS: true,
+        fdpCampaignPolicy_Script: true,
+        fdpCampaignValidator_Hash: true,
+        fdpCampaignValidator_Script: true,
+        fdpCampaignFundsPolicyID_CS: true,
+        fdpCampaignFundsPolicyID_Script: true,
+        fdpCampaignFundsValidator_Hash: true,
+        fdpCampaignFundsValidator_Script: true,
+    };
+
+
     // #endregion db
 
     // #region class methods
 
     public getNet_Address(): string {
-        if (process.env.NEXT_PUBLIC_CARDANO_NET === LucidLUCID_NETWORK_MAINNET_NAME) {
+        if (process.env.NEXT_PUBLIC_CARDANO_NET === LUCID_NETWORK_MAINNET_NAME) {
             return this.fdpCampaignValidator_AddressMainnet;
         } else {
             return this.fdpCampaignValidator_AddressTestnet;
@@ -376,7 +391,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
     }
 
     public getNet_FundHolding_Validator_Address(): string {
-        if (process.env.NEXT_PUBLIC_CARDANO_NET === LucidLUCID_NETWORK_MAINNET_NAME) {
+        if (process.env.NEXT_PUBLIC_CARDANO_NET === LUCID_NETWORK_MAINNET_NAME) {
             return this.fdpCampaignFundsValidator_AddressMainnet;
         } else {
             return this.fdpCampaignFundsValidator_AddressTestnet;

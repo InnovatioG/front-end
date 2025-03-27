@@ -1,4 +1,4 @@
-import { CAMPAIGN_VERSION, EMERGENCY_ADMIN_TOKEN_POLICY_CS } from '@/utils/constants/on-chain';
+import { CAMPAIGN_VERSION, EMERGENCY_ADMIN_TOKEN_POLICY_CS, PROTOCOL_DEPLOY, PROTOCOL_VERSION } from '@/utils/constants/on-chain';
 import {
     CampaignCategoryDefault,
     CampaignCategoryDefaultNames,
@@ -14,31 +14,65 @@ import {
     MilestoneStatus_Code_Id_Enums,
     SubmissionStatus_Enums,
 } from '@/utils/constants/status/status';
-import { applyParamsToScript, Data, Lucid, MintingPolicy, UTxO, Validator } from 'lucid-cardano';
+import {
+    Address,
+    applyParamsToScript,
+    Assets,
+    Data,
+    Lucid,
+    LucidEvolution,
+    MintingPolicy,
+    mintingPolicyToId,
+    PaymentKeyHash,
+    TxBuilder,
+    UTxO,
+    Validator,
+    validatorToAddress,
+    validatorToScriptHash,
+} from '@lucid-evolution/lucid';
 import { NextApiResponse } from 'next';
 import { User } from 'next-auth';
 import {
+    addAssetsList,
+    addressToPubKeyHash,
     BackEndApiHandlersFor,
     BackEndAppliedFor,
     BaseEntity,
     BaseSmartDBBackEndApiHandlers,
     BaseSmartDBBackEndApplied,
     BaseSmartDBBackEndMethods,
+    calculateMinAdaOfUTxO,
     console_error,
     console_log,
+    convertMillisToTime,
+    find_TxOutRef_In_UTxOs,
+    fixUTxOList,
     getScriptFromJson,
-    LucidLUCID_NETWORK_MAINNET_NAME,
+    getTxRedeemersDetailsAndResources,
+    isEmulator,
+    LUCID_NETWORK_MAINNET_ID,
+    LUCID_NETWORK_MAINNET_NAME,
+    LUCID_NETWORK_PREVIEW_NAME,
     LucidToolsBackEnd,
     NextApiRequestAuthenticated,
+    objToCborHex,
     sanitizeForDatabase,
     showData,
+    TimeBackEnd,
     toJson,
+    TRANSACTION_STATUS_CREATED,
+    TRANSACTION_STATUS_PENDING,
+    TransactionBackEndApplied,
+    TransactionDatum,
+    TransactionEntity,
+    TransactionRedeemer,
+    TxOutRef,
     WALLET_CREATEDBY_LOGIN,
     WalletBackEndApplied,
     WalletEntity,
     WalletTxParams,
 } from 'smart-db/backEnd';
-import { ProtocolCreateParams } from '../Commons/Params';
+import { ProtocolCreateParams, ProtocolDeployTxParams } from '../Commons/Params';
 import {
     CampaignCategoryEntity,
     CampaignContentEntity,
@@ -55,7 +89,8 @@ import {
     ScriptEntity,
     SubmissionStatusEntity,
 } from '../Entities';
-import { CampaignFactory, ProtocolEntity } from '../Entities/Protocol.Entity';
+import { CampaignFactory, ProtocolDatum, ProtocolEntity } from '../Entities/Protocol.Entity';
+import { ProtocolPolicyRedeemerMintID } from '../Entities/Redeemers/Protocol.Redeemer';
 
 @BackEndAppliedFor(ProtocolEntity)
 export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
@@ -64,7 +99,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
 
     // #region class methods
 
-    public static async createWithScripts(lucid: Lucid, params: ProtocolCreateParams): Promise<ProtocolEntity> {
+    public static async createWithScripts(lucid: LucidEvolution, params: ProtocolCreateParams): Promise<ProtocolEntity> {
         //--------------------------------------
         const uTxO: UTxO = params.uTxO;
         //--------------------------------------
@@ -108,7 +143,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             ),
         };
         //--------------------------------------
-        const fdpProtocolPolicyID_CS = lucid.utils.mintingPolicyToId(fdpProtocolPolicyID_Script);
+        const fdpProtocolPolicyID_CS = mintingPolicyToId(fdpProtocolPolicyID_Script);
         console.log(`fdpProtocolPolicyID_CS ${fdpProtocolPolicyID_CS}`);
         //--------------------------------------
         // Protocol Validator
@@ -129,14 +164,12 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             ),
         };
         //--------------------------------------
-        const fdpProtocolValidator_Hash = lucid.utils.validatorToScriptHash(fdpProtocolValidator_Script);
+        const fdpProtocolValidator_Hash = validatorToScriptHash(fdpProtocolValidator_Script);
         console.log(`fdpProtocolValidator_Hash ${fdpProtocolValidator_Hash}`);
         //--------------------------------------
-        lucid.network = 'Preview';
-        const fdpProtocolValidator_AddressTestnet = lucid.utils.validatorToAddress(fdpProtocolValidator_Script);
+        const fdpProtocolValidator_AddressTestnet = validatorToAddress(LUCID_NETWORK_PREVIEW_NAME, fdpProtocolValidator_Script);
         console.log(`fdpProtocolValidator_AddressTestnet ${fdpProtocolValidator_AddressTestnet}`);
-        lucid.network = 'Mainnet';
-        const fdpProtocolValidator_AddressMainnet = lucid.utils.validatorToAddress(fdpProtocolValidator_Script);
+        const fdpProtocolValidator_AddressMainnet = validatorToAddress(LUCID_NETWORK_MAINNET_NAME, fdpProtocolValidator_Script);
         console.log(`fdpProtocolValidator_AddressMainnet ${fdpProtocolValidator_AddressMainnet}`);
         //--------------------------------------
         // Script Policy
@@ -156,7 +189,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             ),
         };
         //--------------------------------------
-        const fdpScriptPolicyID_CS = lucid.utils.mintingPolicyToId(fdpScriptPolicyID_Script);
+        const fdpScriptPolicyID_CS = mintingPolicyToId(fdpScriptPolicyID_Script);
         console.log(`fdpScriptPolicyID_CS ${fdpScriptPolicyID_CS}`);
         //--------------------------------------
         // Script Validator
@@ -177,14 +210,12 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             ),
         };
         //--------------------------------------
-        const fdpScriptValidator_Hash = lucid.utils.validatorToScriptHash(fdpScriptValidator_Script);
+        const fdpScriptValidator_Hash = validatorToScriptHash(fdpScriptValidator_Script);
         console.log(`fdpScriptValidator_Hash ${fdpScriptValidator_Hash}`);
         //--------------------------------------
-        lucid.network = 'Preview';
-        const fdpScriptValidator_AddressTestnet = lucid.utils.validatorToAddress(fdpScriptValidator_Script);
+        const fdpScriptValidator_AddressTestnet = validatorToAddress(LUCID_NETWORK_PREVIEW_NAME, fdpScriptValidator_Script);
         console.log(`fdpScriptValidator_AddressTestnet ${fdpScriptValidator_AddressTestnet}`);
-        lucid.network = 'Mainnet';
-        const fdpScriptValidator_AddressMainnet = lucid.utils.validatorToAddress(fdpScriptValidator_Script);
+        const fdpScriptValidator_AddressMainnet = validatorToAddress(LUCID_NETWORK_MAINNET_NAME, fdpScriptValidator_Script);
         console.log(`fdpScriptValidator_AddressMainnet ${fdpScriptValidator_AddressMainnet}`);
         //--------------------------------------
         const campaignFactory: CampaignFactory = {
@@ -220,6 +251,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             // _NET_id_CS: 'use getNET_id_CS()',
             _isDeployed: false,
         });
+        protocol._creator = params!.creator;
         const protocol_ = await this.create(protocol);
         //--------------------------------------
         await this._BackEndMethods.createHook<ProtocolEntity>(ProtocolEntity, protocol.getNet_Address(), protocol.fdpProtocolPolicyID_CS);
@@ -228,7 +260,9 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         return protocol_;
     }
 
-    public static async populate(lucid: Lucid, walletTxParams: WalletTxParams): Promise<boolean> {
+    // #region populate
+
+    public static async populate(lucid: LucidEvolution, walletTxParams: WalletTxParams): Promise<boolean> {
         //--------------------------------------
         console_log(0, this._Entity.className(), `populate - Init`);
         //--------------------------------------
@@ -240,14 +274,14 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         //--------------------------------------
     }
 
-    public static async populateAll(lucid: Lucid, walletTxParams: WalletTxParams) {
+    public static async populateAll(lucid: LucidEvolution, walletTxParams: WalletTxParams) {
         const wallet = await this.populateUser(walletTxParams);
         const protocol = await this.populateProtocol(lucid, walletTxParams, wallet);
         await this.populateCampaignStatus();
         await this.populateCampaignCategory();
         await this.populateMilestoneStatus();
         await this.populateSubmissionStatus();
-        await this.populateCampaigns(lucid, walletTxParams, protocol, wallet);
+        // await this.populateCampaigns(lucid, walletTxParams, protocol, wallet);
     }
 
     private static async populateUser(walletTxParams: WalletTxParams): Promise<WalletEntity> {
@@ -268,7 +302,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             let testnet_address,
                 mainnet_address = undefined;
             //--------------------------------------
-            if (process.env.NEXT_PUBLIC_CARDANO_NET === LucidLUCID_NETWORK_MAINNET_NAME) {
+            if (process.env.NEXT_PUBLIC_CARDANO_NET === LUCID_NETWORK_MAINNET_NAME) {
                 mainnet_address = walletTxParams.address;
             } else {
                 testnet_address = walletTxParams.address;
@@ -302,7 +336,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         return wallet;
     }
 
-    private static async populateProtocol(lucid: Lucid, walletTxParams: WalletTxParams, wallet: WalletEntity): Promise<ProtocolEntity> {
+    private static async populateProtocol(lucid: LucidEvolution, walletTxParams: WalletTxParams, wallet: WalletEntity): Promise<ProtocolEntity> {
         //--------------------------------------
         console_log(0, this._Entity.className(), `populateProtocol - INIT`);
         //--------------------------------------
@@ -317,7 +351,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         let protocol: ProtocolEntity | undefined = undefined;
         //--------------------------------------
         if (!(await this.checkIfExists_({ name: protocolDefault.name }))) {
-            protocol = await this.createWithScripts(lucid, { name: protocolDefault.name, configJson: toJson(protocolDefault.deployJson), uTxO });
+            protocol = await this.createWithScripts(lucid, { name: protocolDefault.name, configJson: toJson(protocolDefault.deployJson), uTxO, creator: wallet.paymentPKH });
         } else {
             protocol = await this.getOneByParams_({ name: protocolDefault.name });
         }
@@ -427,7 +461,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         return true;
     }
 
-    private static async populateCampaigns(lucid: Lucid, walletTxParams: WalletTxParams, protocol: ProtocolEntity, wallet: WalletEntity): Promise<boolean> {
+    private static async populateCampaigns(lucid: LucidEvolution, walletTxParams: WalletTxParams, protocol: ProtocolEntity, wallet: WalletEntity): Promise<boolean> {
         console_log(0, this._Entity.className(), `populateCampaigns - INIT`);
         const CampaignBackEndApplied = (await import('./Campaign.BackEnd.Api.Handlers')).CampaignBackEndApplied;
         const campaignsData = protocolDefault.campaignsPopulateJson.campaigns;
@@ -962,7 +996,34 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         }
     }
 
+    // #endregion populate
+
     // #endregion class methods
+
+    private static sortDatum(datum: ProtocolDatum) {
+        datum.pdAdmins = datum.pdAdmins.sort((a: PaymentKeyHash, b: PaymentKeyHash) => {
+            if (a < b) return -1;
+            return 1;
+        });
+    }
+
+    public static mkNew_ProtocolDatum(protocol: ProtocolEntity, txParams: ProtocolDeployTxParams, mindAda: bigint): ProtocolDatum {
+        // usado para que los campos del datum tengan las clases y tipos bien
+        // txParams trae los campos pero estan plain, no son clases ni tipos
+
+        const datumPlainObject: ProtocolDatum = {
+            pdProtocolVersion: PROTOCOL_VERSION,
+            pdAdmins: txParams.pdAdmins,
+            pdTokenAdminPolicy_CS: txParams.pdTokenAdminPolicy_CS,
+            pdMinADA: mindAda,
+        };
+
+        let datum: ProtocolDatum = ProtocolEntity.mkDatumFromPlainObject(datumPlainObject) as ProtocolDatum;
+
+        this.sortDatum(datum);
+
+        return datum;
+    }
 }
 
 @BackEndApiHandlersFor(ProtocolEntity)
@@ -1085,9 +1146,10 @@ export class ProtocolApiHandlers extends BaseSmartDBBackEndApiHandlers {
         if (this._ApiHandlers.includes(command) && query !== undefined) {
             if (query[0] === 'tx') {
                 if (query.length === 2) {
-                    // if (query[1] === 'create-tx') {
-                    //     return await this.createTxApiHandler(req, res);
-                    // } else if (query[1] === 'claim-tx') {
+                    if (query[1] === 'deploy-tx') {
+                        return await this.protocolDeployTxApiHandler(req, res);
+                    }
+                    //else if (query[1] === 'claim-tx') {
                     //     return await this.claimTxApiHandler(req, res);
                     // } else if (query[1] === 'update-tx') {
                     //     return await this.updateTxApiHandler(req, res);
@@ -1169,6 +1231,298 @@ export class ProtocolApiHandlers extends BaseSmartDBBackEndApiHandlers {
             return res.status(405).json({ error: `Method not allowed` });
         }
     }
+
+    // #region transactions
+
+    public static async protocolDeployTxApiHandler(req: NextApiRequestAuthenticated, res: NextApiResponse) {
+        //--------------------
+        if (req.method === 'POST') {
+            console_log(1, this._Entity.className(), `Deploy Tx - POST - Init`);
+            try {
+                //-------------------------
+                const sanitizedBody = sanitizeForDatabase(req.body);
+                //-------------------------
+                const { walletTxParams, txParams }: { walletTxParams: WalletTxParams; txParams: ProtocolDeployTxParams } = sanitizedBody;
+                //--------------------------------------
+                console_log(0, this._Entity.className(), `Deploy Tx - txParams: ${showData(txParams)}`);
+                //--------------------------------------
+                if (isEmulator) {
+                    // solo en emulator. Me aseguro de setear el emulador al tiempo real del server. Va a saltear los slots necesarios.
+                    // await TimeBackEnd.syncBlockChainWithServerTime()
+                }
+                //--------------------------------------
+                const { lucid } = await LucidToolsBackEnd.prepareLucidBackEndForTx(walletTxParams);
+                //--------------------------------------
+                walletTxParams.utxos = fixUTxOList(walletTxParams?.utxos ?? []);
+                //--------------------------------------
+                const protocol = await this._BackEndApplied.getById_<ProtocolEntity>(txParams.protocol_id, { fieldsForSelect: {} });
+                if (protocol === undefined) {
+                    throw `Invalid protocol id`;
+                }
+                //--------------------------------------
+                const protocolPolicyID_Script = protocol.fdpProtocolPolicyID_Script;
+                //--------------------------------------
+                const protocolPolicyID_AC_Lucid = protocol.getNet_id_AC_Lucid();
+                //--------------------------------------
+                const protocolValidator_Address: Address = protocol.getNet_Address();
+                //--------------------------------------
+                const protocolID_TxOutRef = new TxOutRef(
+                    (protocol.fdpProtocolPolicyID_Params as any).protocol_TxHash,
+                    Number((protocol.fdpProtocolPolicyID_Params as any).protocol_TxOutputIndex)
+                );
+                //--------------------------------------
+                const uTxOsAtWallet = walletTxParams.utxos; // await lucid.utxosAt(params.address);
+                const protocolID_UTxO = find_TxOutRef_In_UTxOs(protocolID_TxOutRef, uTxOsAtWallet);
+                if (protocolID_UTxO === undefined) {
+                    throw "Can't find UTxO (" + toJson(protocolID_TxOutRef) + ') for Mint ProtocolID';
+                }
+                //--------------------------------------
+                const valueFor_Mint_ProtocolID: Assets = { [protocolPolicyID_AC_Lucid]: 1n };
+                console_log(0, this._Entity.className(), `Deploy Tx - valueFor_Mint_ProtocolID: ${showData(valueFor_Mint_ProtocolID)}`);
+                //--------------------------------------
+                const protocolDatum_Out_ForCalcMinADA = this._BackEndApplied.mkNew_ProtocolDatum(protocol, txParams, 0n);
+                const protocolDatum_Out_Hex_ForCalcMinADA = ProtocolEntity.datumToCborHex(protocolDatum_Out_ForCalcMinADA);
+                //--------------------------------------
+                let valueFor_ProtocolDatum_Out: Assets = valueFor_Mint_ProtocolID;
+                const minADA_For_ProtocolDatum = calculateMinAdaOfUTxO({ datum: protocolDatum_Out_Hex_ForCalcMinADA, assets: valueFor_ProtocolDatum_Out });
+                const value_MinAda_For_ProtocolDatum: Assets = { lovelace: minADA_For_ProtocolDatum };
+                valueFor_ProtocolDatum_Out = addAssetsList([value_MinAda_For_ProtocolDatum, valueFor_ProtocolDatum_Out]);
+                console_log(0, this._Entity.className(), `Deploy Tx - valueFor_ProtocolDatum_Out: ${showData(valueFor_ProtocolDatum_Out, false)}`);
+                //--------------------------------------
+                const protocolDatum_Out = this._BackEndApplied.mkNew_ProtocolDatum(protocol, txParams, minADA_For_ProtocolDatum);
+                console_log(0, this._Entity.className(), `Deploy Tx - protocolDatum_Out: ${showData(protocolDatum_Out, false)}`);
+                const protocolDatum_Out_Hex = ProtocolEntity.datumToCborHex(protocolDatum_Out);
+                console_log(0, this._Entity.className(), `Deploy Tx - protocolDatum_Out_Hex: ${showData(protocolDatum_Out_Hex, false)}`);
+                //--------------------------------------
+                const protocolPolicyRedeemerMintID = new ProtocolPolicyRedeemerMintID(); // new Array()
+                console_log(0, this._Entity.className(), `Deploy Tx - protocolPolicyRedeemerMintID: ${showData(protocolPolicyRedeemerMintID, false)}`);
+                const protocolPolicyRedeemerMintID_Hex = objToCborHex(protocolPolicyRedeemerMintID);
+                console_log(0, this._Entity.className(), `Deploy Tx - protocolPolicyRedeemerMintID_Hex: ${showData(protocolPolicyRedeemerMintID_Hex, false)}`);
+                //--------------------------------------
+                const { from, until } = await TimeBackEnd.getTxTimeRange();
+                //--------------------------------------
+                const flomSlot = lucid.unixTimeToSlot(from);
+                const untilSlot = lucid.unixTimeToSlot(until);
+                //--------------------------------------
+                console_log(
+                    0,
+                    this._Entity.className(),
+                    `Deploy Tx - currentSlot: ${lucid.currentSlot()} - from ${from} to ${until} - from ${convertMillisToTime(from)} to ${convertMillisToTime(
+                        until
+                    )} - fromSlot ${flomSlot} to ${untilSlot}`
+                );
+                //--------------------------------------
+                let transaction: TransactionEntity | undefined = undefined;
+                //--------------------------------------
+                try {
+                    const transaction_ = new TransactionEntity({
+                        paymentPKH: walletTxParams.pkh,
+                        date: new Date(from),
+                        type: PROTOCOL_DEPLOY,
+                        status: TRANSACTION_STATUS_CREATED,
+                        reading_UTxOs: [],
+                        consuming_UTxOs: [],
+                        valid_from: from,
+                        valid_until: until,
+                    });
+                    //--------------------------------------
+                    transaction = await TransactionBackEndApplied.create(transaction_);
+                    //--------------------------------------
+                    let tx: TxBuilder = lucid.newTx();
+                    //--------------------------------------
+                    tx = tx
+                        .collectFrom([protocolID_UTxO])
+                        .attach.MintingPolicy(protocolPolicyID_Script)
+                        .mintAssets(valueFor_Mint_ProtocolID, protocolPolicyRedeemerMintID_Hex)
+                        .pay.ToAddressWithData(protocolValidator_Address, { kind: 'inline', value: protocolDatum_Out_Hex }, valueFor_ProtocolDatum_Out)
+                        .addSigner(walletTxParams.address)
+                        .validFrom(from)
+                        .validTo(until);
+                    //--------------------------------------
+                    const txComplete = await tx.complete();
+                    //--------------------------------------
+                    const txCborHex = txComplete.toCBOR();
+                    //--------------------------------------
+                    const txHash = txComplete.toHash();
+                    //--------------------------------------
+                    const resources = getTxRedeemersDetailsAndResources(txComplete);
+                    //--------------------------------------
+                    console_log(0, this._Entity.className(), `Deploy Tx - Tx Resources: ${showData({ redeemers: resources.redeemersLogs, tx: resources.tx })}`);
+                    //--------------------------------------
+                    const transactionProtocolPolicyRedeemerMintID: TransactionRedeemer = {
+                        tx_index: 0,
+                        purpose: 'mint',
+                        redeemerObj: protocolPolicyRedeemerMintID,
+                        unit_mem: resources.redeemers[0]?.MEM,
+                        unit_steps: resources.redeemers[0]?.CPU,
+                    };
+                    const transactionProtocolDatum_Out: TransactionDatum = {
+                        address: protocolValidator_Address,
+                        datumType: ProtocolEntity.className(),
+                        datumObj: protocolDatum_Out,
+                    };
+                    //--------------------------------------
+                    await TransactionBackEndApplied.setPendingTransaction(transaction, {
+                        hash: txHash,
+                        ids: { protocol_id: protocol._DB_id },
+                        redeemers: { protocolPolicyRedeemerMintID: transactionProtocolPolicyRedeemerMintID },
+                        datums: { protocolDatum_Out: transactionProtocolDatum_Out },
+                        reading_UTxOs: [],
+                        consuming_UTxOs: [protocolID_UTxO],
+                        unit_mem: resources.tx[0]?.MEM,
+                        unit_steps: resources.tx[0]?.CPU,
+                        fee: resources.tx[0]?.FEE,
+                        size: resources.tx[0]?.SIZE,
+                        CBORHex: txCborHex,
+                    });
+                    //--------------------------------------
+                    console_log(-1, this._Entity.className(), `Deploy Tx - txCborHex: ${showData(txCborHex)}`);
+                    return res.status(200).json({ txHash, txCborHex });
+                } catch (error) {
+                    if (transaction !== undefined) {
+                        await TransactionBackEndApplied.setFailedTransaction(transaction, { error, walletInfo: walletTxParams, txInfo: txParams });
+                    }
+                    throw error;
+                }
+            } catch (error) {
+                console_error(-1, this._Entity.className(), `Deploy Tx - Error: ${error}`);
+                return res.status(500).json({ error: `An error occurred while creating the ${this._Entity.className()} Deploy Tx: ${error}` });
+            }
+        } else {
+            console_error(-1, this._Entity.className(), `Deploy Tx - Error: Method not allowed`);
+            return res.status(405).json({ error: `Method not allowed` });
+        }
+    }
+
+    // public static async deployTxApiHandler(req: NextApiRequestAuthenticated, res: NextApiResponse) {
+    //     if (req.method === 'POST') {
+    //         console_log(1, this._Entity.className(), `Deploy Tx - POST - Init`);
+    //         try {
+    //             const sanitizedBody = sanitizeForDatabase(req.body);
+
+    //             // Destructure required parameters from the request body
+    //             const {
+    //                 walletTxParams,
+    //                 txParams,
+    //             }: {
+    //                 walletTxParams: WalletTxParams;
+    //                 txParams: SellMarketNFTTxParams;
+    //             } = sanitizedBody;
+
+    //             console_log(0, this._Entity.className(), `Sell Tx - txParams: ${showData(txParams)}`);
+
+    //             // Emulator sync for development environment only
+    //             if (isEmulator) {
+    //                 // await TimeBackEnd.syncBlockChainWithServerTime()
+    //             }
+
+    //             // Prepare Lucid for transaction handling and wallet info
+    //             const { lucid } = await LucidToolsBackEnd.prepareLucidBackEndForTx(walletTxParams);
+    //             const { utxos: uTxOsAtWallet, address } = walletTxParams;
+
+    //             // Extract transaction parameters related to the asset for sale
+    //             const { priceOfAsset, token_TN, token_CS, datumID_CS, datumID_TN, validatorAddress, mintingPolicyID } = txParams;
+
+    //             const paymentPKH = addressToPubKeyHash(address);
+
+    //             // Generate datum object with relevant sale data and no min ADA yet
+    //             const datumPlainObject_NoMinADA = {
+    //                 version: marketPlaceVersion,
+    //                 sellerPaymentPKH: paymentPKH,
+    //                 policyID_CS: datumID_CS,
+    //                 sellingToken_CS: token_CS,
+    //                 sellingToken_TN: strToHex(token_TN),
+    //                 priceOfAsset: BigInt(priceOfAsset),
+    //                 minADA: BigInt(0),
+    //             };
+
+    //             const lucidAC_MintID = datumID_CS + strToHex(datumID_TN);
+    //             const valueFor_Mint_ID: Assets = { [lucidAC_MintID]: 1n };
+
+    //             let valueFor_MarketNFTDatum_Out: Assets = valueFor_Mint_ID;
+    //             const lucidAC_sellerToken = token_CS + strToHex(token_TN);
+    //             const valueOfSellerToken: Assets = { [lucidAC_sellerToken]: 1n };
+
+    //             // Add additional values to the transaction, including minimum ADA requirement
+    //             valueFor_MarketNFTDatum_Out = addAssetsList([valueOfSellerToken, valueFor_MarketNFTDatum_Out]);
+    //             const minADA_For_MarketNFTDatum = calculateMinAdaOfUTxO({
+    //                 datum: MarketNFTEntity.datumToCborHex(datumPlainObject_NoMinADA),
+    //                 assets: valueFor_MarketNFTDatum_Out,
+    //             });
+    //             const value_MinAda_For_MarketNFTDatum: Assets = {
+    //                 lovelace: minADA_For_MarketNFTDatum,
+    //             };
+    //             valueFor_MarketNFTDatum_Out = addAssetsList([value_MinAda_For_MarketNFTDatum, valueFor_MarketNFTDatum_Out]);
+
+    //             // Generate datum object with min ADA calculated
+    //             const datumPlainObject = {
+    //                 ...datumPlainObject_NoMinADA,
+    //                 minADA: BigInt(minADA_For_MarketNFTDatum),
+    //             };
+
+    //             // Create and encode the datum for the transaction
+    //             let marketNftDatum_Out = MarketNFTEntity.mkDatumFromPlainObject(datumPlainObject);
+    //             const marketNftDatum_Out_Hex = MarketNFTEntity.datumToCborHex(marketNftDatum_Out);
+
+    //             // Create minting policy and redeemers for the sale transaction
+    //             const marketNftPolicyRedeemerMintID = new PolicyRedeemerMintID();
+    //             const marketNftPolicyRedeemerMintID_Hex = objToCborHex(marketNftPolicyRedeemerMintID);
+
+    //             // Time range setup for the transaction
+    //             const { now, from, until } = await TimeBackEnd.getTxTimeRange();
+
+    //             let tx: Tx = lucid.newTx();
+    //             tx = tx
+    //                 .mintAssets(valueFor_Mint_ID, marketNftPolicyRedeemerMintID_Hex)
+    //                 .payToContract(validatorAddress, { inline: marketNftDatum_Out_Hex }, valueFor_MarketNFTDatum_Out)
+    //                 .attachMintingPolicy(mintingPolicyID);
+
+    //             const txComplete = await tx.complete();
+    //             const txCborHex = txComplete.toCBOR();
+    //             const txHash = txComplete.toHash();
+
+    //             // Create and save transaction entity in the Smart DB
+    //             const transactionMarketNFTPolicyRedeemerMintID: TransactionRedeemer = {
+    //                 tx_index: 0,
+    //                 purpose: 'mint',
+    //                 redeemerObj: marketNftPolicyRedeemerMintID,
+    //             };
+
+    //             const transactionMarketNFTDatum_Out: TransactionDatum = {
+    //                 address: validatorAddress,
+    //                 datumType: MarketNFTEntity.className(),
+    //                 datumObj: marketNftDatum_Out,
+    //             };
+
+    //             const transaction: TransactionEntity = new TransactionEntity({
+    //                 paymentPKH: walletTxParams.pkh,
+    //                 date: new Date(now),
+    //                 type: MARKET_SELL,
+    //                 hash: txHash,
+    //                 status: TRANSACTION_STATUS_PENDING,
+    //                 ids: {},
+    //                 redeemers: {
+    //                     marketNftPolicyRedeemerMintID: transactionMarketNFTPolicyRedeemerMintID,
+    //                 },
+    //                 datums: { marketNftDatum_Out: transactionMarketNFTDatum_Out },
+    //                 consuming_UTxOs: [],
+    //             });
+    //             await TransactionBackEndApplied.create(transaction);
+
+    //             return res.status(200).json({ txCborHex, txHash });
+    //         } catch (error) {
+    //             console_error(-1, this._Entity.className(), `Sell Tx - Error: ${error}`);
+    //             return res.status(500).json({
+    //                 error: `An error occurred while creating the ${this._Entity.apiRoute()} Sell Tx: ${error}`,
+    //             });
+    //         }
+    //     } else {
+    //         console_error(-1, this._Entity.className(), `Sell Tx - Error: Method not allowed`);
+    //         return res.status(405).json({ error: `Method not allowed` });
+    //     }
+    // }
+
+    // #endregion transactions
 
     // #endregion custom api handlers
 }
