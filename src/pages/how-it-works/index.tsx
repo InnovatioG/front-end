@@ -36,6 +36,27 @@ const HowItWorksPage: React.FC = () => {
         },
     ];
 
+    const investCampaign = [
+        {
+            number: 1,
+            title: "Connect your wallet with ADA.",
+            description: "Connect your wallet and make sure you have ADA funds available to purchase utility tokens from a campaign and support its funding.",
+            image: "/img/ui/howitworks/how-it-works-1.webp",
+        },
+        {
+            number: 2,
+            title: "Fund a campaign by purchasing its utility tokens.",
+            description: `Discover campaigns, explore projects, and invest in their utility tokens to unlock future rewards.`,
+            image: "/img/ui/howitworks/how-it-works-2.webp",
+        },
+        {
+            number: 3,
+            title: "Receive and redeem your campaign rewards.",
+            description: `Once the campaign successfully reaches its final deadline, redeem your rewards on its website and enjoy the benefits.`,
+            image: '/img/ui/howitworks/how-it-works-3.webp',
+        }
+    ]
+
     return (
         <main className={styles.layout}>
 
@@ -63,7 +84,36 @@ const HowItWorksPage: React.FC = () => {
                                 </div>
                             </div>
                             <div className={styles.faqImageContainer}>
-                                <Image src={faq.image} alt={faq.title} width={300} height={200} className={styles.faqImage} />
+                                <Image src={faq.image} alt={faq.title} className={styles.faqImage} layout="fill" objectFit='cover' />
+                            </div>
+
+                        </article>
+                    ))}
+                </div>
+            </section>
+
+            <section className={styles.faqContainerB}>
+                <h2 className={styles.title}>Invest Campaigns</h2>
+                <div className={styles.faqList}>
+                    {investCampaign.map((faq, index) => (
+                        <article className={styles.faqItemB} key={index}>
+                            <div className={styles.faqContent}>
+                                <div className={styles.number}>
+                                    {faq.number}
+                                </div>
+                                <div className={styles.divitionLineContainer}>
+                                    <div className={styles.divitionLine}></div>
+                                    <div className={styles.divitionLineOrange}></div>
+                                </div>
+                                <div className={styles.textContent}>
+
+                                    <h3 className={styles.faqTitle}>{faq.title}</h3>
+                                    <p className={styles.faqDescription}>{faq.description}</p>
+                                    <div className={styles.divisorLine}></div>
+                                </div>
+                            </div>
+                            <div className={styles.faqImageContainer}>
+                                <Image src={faq.image} alt={faq.title} className={styles.faqImage} layout="fill" objectFit='contain' />
                             </div>
 
                         </article>
