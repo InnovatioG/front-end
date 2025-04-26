@@ -1,12 +1,30 @@
-import { CAMPAIGN_ID_TN } from '@/utils/constants/on-chain';
-import { type Script } from '@lucid-evolution/lucid';
+import { CAMPAIGN_ID_TN_Str } from '@/utils/constants/on-chain';
+import { CampaignDatumStatus_Code_Id_Enums, MilestoneDatumStatus_Code_Id_Enums } from '@/utils/constants/status/status';
+import { Constr, Data, type Script } from '@lucid-evolution/lucid';
 import 'reflect-metadata';
 import { BaseSmartDBEntity, Convertible, LUCID_NETWORK_MAINNET_NAME, asSmartDBEntity, type CS, type POSIXTime } from 'smart-db';
 
 export interface CampaignMilestoneDatum {
     cmPerncentage: bigint;
-    cmStatus: number;
+    cmStatus: MilestoneDatumStatus_Code_Id_Enums;
 }
+
+export const toPlutusDataMilestoneStatus = (status: MilestoneDatumStatus_Code_Id_Enums): Data => {
+    return new Constr(status, []);
+};
+
+export const fromPlutusDataMilestoneStatus = (data: any): MilestoneDatumStatus_Code_Id_Enums => {
+    if (data?.index === undefined || data.fields?.length !== 0) {
+        throw `Invalid Constr for MilestoneStatus`;
+    }
+
+    const index = data.index;
+    if (index !== MilestoneDatumStatus_Code_Id_Enums.MsCreated && index !== MilestoneDatumStatus_Code_Id_Enums.MsSuccess && index !== MilestoneDatumStatus_Code_Id_Enums.MsFailed) {
+        throw `Unknown MilestoneStatus index: ${index}`;
+    }
+
+    return index as MilestoneDatumStatus_Code_Id_Enums;
+};
 
 export const deserealizeCampaignMilestone = (value: any | undefined): CampaignMilestoneDatum | undefined => {
     if (value === undefined) return undefined;
@@ -17,18 +35,26 @@ export const deserealizeCampaignMilestone = (value: any | undefined): CampaignMi
     return deserialized;
 };
 
-export const campaignMilestonefromPlutusData = (lucidDataForDatum: any | undefined) => {
+export const campaignMilestonefromPlutusData = (lucidDataForDatum: any | undefined): CampaignMilestoneDatum => {
     if (lucidDataForDatum?.index === 0) {
-        const lucidDataForConstr0 = lucidDataForDatum.fields;
-        if (lucidDataForConstr0.length === 2) {
-            const objectInstance: CampaignMilestoneDatum = {
-                cmPerncentage: BigInt(lucidDataForConstr0[0]),
-                cmStatus: Number(lucidDataForConstr0[1]),
-            };
-            return objectInstance;
+        const fields = lucidDataForDatum.fields;
+        if (fields.length === 2) {
+            const cmPerncentage = BigInt(fields[0]);
+            const cmStatus = fromPlutusDataMilestoneStatus(fields[1]); // ← AQUÍ se interpreta como enum
+            return { cmPerncentage, cmStatus };
         }
     }
     throw `CampaignMilestone - Can't get from Datum`;
+};
+
+export const toPlutusDataCampaignMilestones = (milestones: CampaignMilestoneDatum[] | undefined): Data[] => {
+    if (!milestones) throw `CampaignMilestone is undefined`;
+    return milestones.map((m) =>
+        new Constr(0, [
+            BigInt(m.cmPerncentage),
+            toPlutusDataMilestoneStatus(m.cmStatus),
+        ])
+    );
 };
 
 export interface CampaignDatum {
@@ -45,14 +71,37 @@ export interface CampaignDatum {
     cdRequestedMinADA: bigint;
     cdFundedADA: bigint;
     cdCollectedADA: bigint;
-    cdbegin_at: POSIXTime;
+    cdBegin_at: POSIXTime;
     cdDeadline: POSIXTime;
-    cdStatus: number;
+    cdStatus: CampaignDatumStatus_Code_Id_Enums;
     cdMilestones: CampaignMilestoneDatum[];
     cdFundsCount: number;
     cdFundsIndex: number;
     cdMinADA: bigint;
 }
+
+export const toPlutusDataCampaignStatus = (status: CampaignDatumStatus_Code_Id_Enums): Data => {
+    return new Constr(status, []);
+};
+
+export const fromPlutusDataCampaignStatus = (data: any): CampaignDatumStatus_Code_Id_Enums => {
+    if (data?.index === undefined || data.fields?.length !== 0) {
+        throw `Invalid Constr for CampaignStatus`;
+    }
+
+    const index = data.index;
+    if (
+        index !== CampaignDatumStatus_Code_Id_Enums.CsCreated &&
+        index !== CampaignDatumStatus_Code_Id_Enums.CsInitialized &&
+        index !== CampaignDatumStatus_Code_Id_Enums.CsReached &&
+        index !== CampaignDatumStatus_Code_Id_Enums.CsNotReached &&
+        index !== CampaignDatumStatus_Code_Id_Enums.CsFailedMilestone
+    ) {
+        throw `Unknown CampaignStatus index: ${index}`;
+    }
+
+    return index as CampaignDatumStatus_Code_Id_Enums;
+};
 
 @asSmartDBEntity()
 export class CampaignEntity extends BaseSmartDBEntity {
@@ -63,7 +112,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
 
     protected static _isOnlyDatum = false;
 
-    _NET_id_TN_Str: string = CAMPAIGN_ID_TN;
+    _NET_id_TN_Str: string = CAMPAIGN_ID_TN_Str;
 
     // #region fields
 
@@ -80,13 +129,13 @@ export class CampaignEntity extends BaseSmartDBEntity {
     description?: string;
 
     @Convertible()
-    begin_at_days?: number;
+    begin_at_days!: number;
     @Convertible()
-    deadline_days?: number;
+    deadline_days!: number;
     @Convertible()
-    campaign_deployed_date!: Date;
+    campaign_deployed_date?: Date;
     @Convertible()
-    campaign_actived_date!: Date;
+    campaign_actived_date?: Date;
 
     @Convertible()
     begin_at?: Date;
@@ -160,16 +209,22 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible({ isForDatum: true })
     cdCollectedADA!: bigint;
     @Convertible({ isForDatum: true, type: BigInt })
-    cdbegin_at!: POSIXTime;
+    cdBegin_at!: POSIXTime;
     @Convertible({ isForDatum: true, type: BigInt })
     cdDeadline!: POSIXTime;
-    @Convertible({ isForDatum: true })
-    cdStatus!: number;
+    @Convertible({
+        type: Number,
+        isForDatum: true,
+        toPlutusData: toPlutusDataCampaignStatus,
+        fromPlutusData: fromPlutusDataCampaignStatus,
+    })
+    cdStatus!: CampaignDatumStatus_Code_Id_Enums;
     @Convertible({
         isForDatum: true,
         type: Object,
         fromPlainObject: deserealizeCampaignMilestone,
         fromPlutusData: campaignMilestonefromPlutusData,
+        toPlutusData: toPlutusDataCampaignMilestones,
     })
     cdMilestones!: CampaignMilestoneDatum[];
     @Convertible({ isForDatum: true })
@@ -326,7 +381,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
         cdRequestedMinADA: true,
         cdFundedADA: true,
         cdCollectedADA: true,
-        cdbegin_at: true,
+        cdBegin_at: true,
         cdDeadline: true,
         cdStatus: true,
         cdMilestones: true,
@@ -359,7 +414,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
     };
 
     public static defaultFieldsAddScriptsTxScript: Record<string, boolean> = {
-        fdpCampaignPolicyPolicyID_CS: true,
+        fdpCampaignPolicy_CS: true,
         fdpCampaignPolicy_Script: true,
         fdpCampaignValidator_Hash: true,
         fdpCampaignValidator_Script: true,
@@ -368,7 +423,6 @@ export class CampaignEntity extends BaseSmartDBEntity {
         fdpCampaignFundsValidator_Hash: true,
         fdpCampaignFundsValidator_Script: true,
     };
-
 
     // #endregion db
 

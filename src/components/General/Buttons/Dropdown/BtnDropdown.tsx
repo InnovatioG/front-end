@@ -1,4 +1,4 @@
-import { CHEVRON_DOWN } from '@/utils/constants/images';
+import { CHEVRON_DOWN_ICON } from '@/utils/constants/images';
 import { useEffect, useRef, useState } from 'react';
 import styles from './BtnDropdown.module.scss';
 
@@ -62,7 +62,7 @@ export default function BtnDropdown(props: CustomDropdownProps) {
             <div className={styles.btnHeader}>
                 <p className={styles.label}>{getDisplayLabel()}</p>
                 <svg width="14" height="14" className={`${styles.icon} ${isOpen ? styles.open : ''}`}>
-                    <use href={CHEVRON_DOWN}></use>
+                    <use href={CHEVRON_DOWN_ICON}></use>
                 </svg>
             </div>
 

@@ -1,7 +1,7 @@
 import LoaderDots from '@/components/GeneralOK/LoadingPage/LoaderDots';
 import { useModal } from '@/contexts/ModalContext';
 import React, { useEffect, useState } from 'react';
-import { CLOSE, formatAmountWithUnit, Token_With_Metadata_And_Amount, useTokensStore, useTokensStoreGeneral, useWalletStore } from 'smart-db';
+import { CLOSE, formatAmountWithUnit, Token_With_Metadata_And_Amount, useAppStore, useTokensStore, useTokensStoreGeneral, useWalletStore } from 'smart-db';
 import TokenLogo from 'smart-db/dist/Components/TokenLogoWithCircle/TokenLogoWithCircle';
 import styles from './TxUserConfirmationModal.module.scss';
 import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
@@ -14,8 +14,6 @@ export interface TxUserConfirmationModalData {
     title?: string;
     isValidTx: boolean;
     btnTxInvalidName?: string;
-    tokensGive: Token_With_Metadata_And_Amount[];
-    tokensGet: Token_With_Metadata_And_Amount[];
     showExtraInfo?: boolean;
     extraInfo?: React.ReactNode;
     onConfirm: () => Promise<void>;
@@ -25,15 +23,13 @@ export interface TxUserConfirmationModalData {
 const TxUserConfirmationModal: React.FC<TxUserConfirmationModalProps> = (props) => {
     const { closeModal, modalData } = useModal();
     const data = modalData as TxUserConfirmationModalData;
-    const { title, isValidTx, btnTxInvalidName, tokensGive, tokensGet, showExtraInfo, extraInfo, onConfirm, onCancel } = data;
+    const { title, isValidTx, btnTxInvalidName, showExtraInfo, extraInfo, onConfirm, onCancel } = data;
     //--------------------------------------
     const tokensStore = useTokensStore();
     const walletStore = useWalletStore();
+    const appStore = useAppStore();
     //--------------------------------------
     const [isConfirming, setIsConfirming] = useState(false);
-    //--------------------------------------
-    const [tokensGiveWithMetadata, setTokensGiveWithMetadata] = useState<Token_With_Metadata_And_Amount[]>([]);
-    const [tokensGetWithMetadata, setTokensGetWithMetadata] = useState<Token_With_Metadata_And_Amount[]>([]);
     //--------------------------------------
     const { isTokensStoreReady, isTokensStoreLoading, setTokensToGet, tokensFromStore } = useTokensStoreGeneral({
         name: 'TxUserConfirmation',
@@ -52,25 +48,25 @@ const TxUserConfirmationModal: React.FC<TxUserConfirmationModalProps> = (props) 
     //--------------------------------------
     useEffect(() => {
         //--------------------------------------
-        const tokensAll = [...tokensGive, ...tokensGet];
+        const tokensAll = [...appStore.tokensGiveWithMetadata, ...appStore.tokensGetWithMetadata];
         //--------------------------------------
         setTokensToGet(tokensAll);
         //--------------------------------------
-    }, [tokensGive, tokensGet]);
+    }, [appStore.tokensGiveWithMetadata, appStore.tokensGetWithMetadata]);
     //--------------------------------------
     useEffect(() => {
         if (isTokensStoreReady === true) {
-            const tokensGiveWithMetadata = tokensGive.map((token) => {
+            const tokensGiveWithMetadata = appStore.tokensGiveWithMetadata.map((token) => {
                 const tokenWithMetadata = tokensStore.getTokenPriceAndMetadata(token.CS, token.TN_Hex);
                 return { ...tokenWithMetadata, ...token };
             });
-            setTokensGiveWithMetadata(tokensGiveWithMetadata);
+            appStore.setTokensGiveWithMetadata(tokensGiveWithMetadata);
             //--------------------------------------
-            const tokensGetWithMetadata = tokensGet.map((token) => {
+            const tokensGetWithMetadata = appStore.tokensGetWithMetadata.map((token) => {
                 const tokenWithMetadata = tokensStore.getTokenPriceAndMetadata(token.CS, token.TN_Hex);
                 return { ...tokenWithMetadata, ...token };
             });
-            setTokensGetWithMetadata(tokensGetWithMetadata);
+            appStore.setTokensGetWithMetadata(tokensGetWithMetadata);
             //--------------------------------------
         }
     }, [isTokensStoreReady]);
@@ -107,14 +103,14 @@ const TxUserConfirmationModal: React.FC<TxUserConfirmationModalProps> = (props) 
                                 </h3>
                             </div>
                         )} */}
-                {((tokensGiveWithMetadata !== undefined && tokensGiveWithMetadata.length > 0) || (tokensGetWithMetadata !== undefined && tokensGetWithMetadata.length > 0)) && (
+                {((appStore.tokensGiveWithMetadata !== undefined && appStore.tokensGiveWithMetadata.length > 0) || (appStore.tokensGetWithMetadata !== undefined && appStore.tokensGetWithMetadata.length > 0)) && (
                     <div className={styles.txContainerTokenAndInfoPart}>
-                        {isTokensStoreLoading === false && tokensGiveWithMetadata !== undefined && tokensGiveWithMetadata.length > 0 ? (
+                        {isTokensStoreLoading === false && appStore.tokensGiveWithMetadata !== undefined && appStore.tokensGiveWithMetadata.length > 0 ? (
                             <div className={styles.tokensSection}>
                                 <div className={styles.valueGroup}>
                                     <h3 className={styles.valueTitle}>Tokens you give:</h3>
-                                    <div className={`${styles.tokensContainer} ${tokensGiveWithMetadata.length > 2 && styles.needScroll}`}>
-                                        {tokensGiveWithMetadata.map((token, index) => (
+                                    <div className={`${styles.tokensContainer} ${appStore.tokensGiveWithMetadata.length > 2 && styles.needScroll}`}>
+                                        {appStore.tokensGiveWithMetadata.map((token, index) => (
                                             <div className={styles.inputGroup} key={index}>
                                                 <div className={styles.token}>
                                                     {isTokensStoreReady === false ? (
@@ -132,7 +128,7 @@ const TxUserConfirmationModal: React.FC<TxUserConfirmationModalProps> = (props) 
                                     </div>
                                 </div>
                             </div>
-                        ) : isTokensStoreLoading === true && tokensGive.length > 0 ? (
+                        ) : isTokensStoreLoading === true && appStore.tokensGiveWithMetadata.length > 0 ? (
                             <div className={styles.tokensSection}>
                                 <div className={styles.valueGroup}>
                                     <h3 className={styles.valueTitle}>Tokens you give:</h3>
@@ -140,12 +136,12 @@ const TxUserConfirmationModal: React.FC<TxUserConfirmationModalProps> = (props) 
                                 </div>
                             </div>
                         ) : null}
-                        {isTokensStoreLoading === false && tokensGetWithMetadata !== undefined && tokensGetWithMetadata.length > 0 ? (
+                        {isTokensStoreLoading === false && appStore.tokensGetWithMetadata !== undefined && appStore.tokensGetWithMetadata.length > 0 ? (
                             <div className={styles.tokensSection}>
                                 <div className={styles.valueGroup}>
                                     <h3 className={styles.valueTitle}>Tokens you get:</h3>
-                                    <div className={`${styles.tokensContainer} ${tokensGetWithMetadata.length > 2 && styles.needScroll}`}>
-                                        {tokensGetWithMetadata.map((token, index) => (
+                                    <div className={`${styles.tokensContainer} ${appStore.tokensGetWithMetadata.length > 2 && styles.needScroll}`}>
+                                        {appStore.tokensGetWithMetadata.map((token, index) => (
                                             <div className={styles.inputGroup} key={index}>
                                                 <div className={styles.token}>
                                                     {isTokensStoreReady === false ? (
@@ -163,7 +159,7 @@ const TxUserConfirmationModal: React.FC<TxUserConfirmationModalProps> = (props) 
                                     </div>
                                 </div>
                             </div>
-                        ) : isTokensStoreLoading === true && tokensGet.length > 0 ? (
+                        ) : isTokensStoreLoading === true && appStore.tokensGetWithMetadata.length > 0 ? (
                             <div className={styles.tokensSection}>
                                 <div className={styles.valueGroup}>
                                     <h3 className={styles.valueTitle}>Tokens you get:</h3>
@@ -175,10 +171,10 @@ const TxUserConfirmationModal: React.FC<TxUserConfirmationModalProps> = (props) 
                 )}
                 {showExtraInfo === true && <div className={styles.extraInfo}>{extraInfo}</div>}
                 {isTokensStoreLoading === false &&
-                    tokensGiveWithMetadata !== undefined &&
-                    tokensGiveWithMetadata.length === 0 &&
-                    tokensGetWithMetadata !== undefined &&
-                    tokensGetWithMetadata.length === 0 && (
+                    appStore.tokensGiveWithMetadata !== undefined &&
+                    appStore.tokensGiveWithMetadata.length === 0 &&
+                    appStore.tokensGetWithMetadata !== undefined &&
+                    appStore.tokensGetWithMetadata.length === 0 && (
                         <>
                             <div className={styles.infoText}>
                                 This transaction does not involve token transfers. It is solely responsible for updating, consuming, or deleting a datum.

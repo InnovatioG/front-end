@@ -1,4 +1,4 @@
-import { SCRIPTS_ADD, SCRIPT_VERSION } from '@/utils/constants/on-chain';
+import { SCRIPT_VERSION, TxEnums } from '@/utils/constants/on-chain';
 import { Address, Assets, TxBuilder } from '@lucid-evolution/lucid';
 import { NextApiResponse } from 'next';
 import {
@@ -248,11 +248,6 @@ export class ScriptApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 //--------------------------------------
                 console_log(0, this._Entity.className(), `Add Protocol Script Tx - txParams: ${showData(txParams)}`);
                 //--------------------------------------
-                if (isEmulator) {
-                    // solo en emulator. Me aseguro de setear el emulador al tiempo real del server. Va a saltear los slots necesarios.
-                    // await TimeBackEnd.syncBlockChainWithServerTime()
-                }
-                //--------------------------------------
                 const { lucid } = await LucidToolsBackEnd.prepareLucidBackEndForTx(walletTxParams);
                 //--------------------------------------
                 const protocol = await ProtocolBackEndApplied.getById_<ProtocolEntity>(txParams.protocol_id, {
@@ -306,7 +301,7 @@ export class ScriptApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 const scriptPolicyRedeemerMintID_Hex = objToCborHex(scriptPolicyRedeemerMintID);
                 console_log(0, this._Entity.className(), `Add Protocol Script Tx - scriptPolicyRedeemerMintID_Hex: ${showData(scriptPolicyRedeemerMintID_Hex, false)}`);
                 //--------------------------------------
-                const { from, until } = await TimeBackEnd.getTxTimeRange();
+                const { from, until } = await TimeBackEnd.getTxTimeRange(lucid);
                 //--------------------------------------
                 const flomSlot = lucid.unixTimeToSlot(from);
                 const untilSlot = lucid.unixTimeToSlot(until);
@@ -314,9 +309,9 @@ export class ScriptApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 console_log(
                     0,
                     this._Entity.className(),
-                    `Add Protocol Script Tx - currentSlot: ${lucid.currentSlot()} - from ${from} to ${until} - from ${convertMillisToTime(from)} to ${convertMillisToTime(
+                    `Add Protocol Script Tx - currentSlot: ${lucid.currentSlot()} - fromSlot ${flomSlot} to ${untilSlot} - from UnixTime ${from} to ${until} - from Date ${convertMillisToTime(from)} to ${convertMillisToTime(
                         until
-                    )} - fromSlot ${flomSlot} to ${untilSlot}`
+                    )} `
                 );
                 //--------------------------------------
                 let transaction: TransactionEntity | undefined = undefined;
@@ -325,7 +320,7 @@ export class ScriptApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     const transaction_ = new TransactionEntity({
                         paymentPKH: walletTxParams.pkh,
                         date: new Date(from),
-                        type: SCRIPTS_ADD,
+                        type: TxEnums.SCRIPTS_ADD,
                         status: TRANSACTION_STATUS_CREATED,
                         reading_UTxOs: [],
                         consuming_UTxOs: [],
@@ -425,11 +420,6 @@ export class ScriptApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 //--------------------------------------
                 console_log(0, this._Entity.className(), `Add Campaign Script Tx - txParams: ${showData(txParams)}`);
                 //--------------------------------------
-                if (isEmulator) {
-                    // solo en emulator. Me aseguro de setear el emulador al tiempo real del server. Va a saltear los slots necesarios.
-                    // await TimeBackEnd.syncBlockChainWithServerTime()
-                }
-                //--------------------------------------
                 const { lucid } = await LucidToolsBackEnd.prepareLucidBackEndForTx(walletTxParams);
                 //--------------------------------------
                 const protocol = await ProtocolBackEndApplied.getById_<ProtocolEntity>(txParams.protocol_id, { fieldsForSelect: {} });
@@ -493,7 +483,7 @@ export class ScriptApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 const scriptPolicyRedeemerMintID_Hex = objToCborHex(scriptPolicyRedeemerMintID);
                 console_log(0, this._Entity.className(), `Add Campaign Script Tx - scriptPolicyRedeemerMintID_Hex: ${showData(scriptPolicyRedeemerMintID_Hex, false)}`);
                 //--------------------------------------
-                const { from, until } = await TimeBackEnd.getTxTimeRange();
+                const { from, until } = await TimeBackEnd.getTxTimeRange(lucid);
                 //--------------------------------------
                 const flomSlot = lucid.unixTimeToSlot(from);
                 const untilSlot = lucid.unixTimeToSlot(until);
@@ -501,9 +491,9 @@ export class ScriptApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 console_log(
                     0,
                     this._Entity.className(),
-                    `Add Campaign Script Tx - currentSlot: ${lucid.currentSlot()} - from ${from} to ${until} - from ${convertMillisToTime(from)} to ${convertMillisToTime(
+                    `Add Campaign Script Tx - currentSlot: ${lucid.currentSlot()} - fromSlot ${flomSlot} to ${untilSlot} - from UnixTime ${from} to ${until} - from Date ${convertMillisToTime(from)} to ${convertMillisToTime(
                         until
-                    )} - fromSlot ${flomSlot} to ${untilSlot}`
+                    )} `
                 );
                 //--------------------------------------
                 let transaction: TransactionEntity | undefined = undefined;
@@ -512,7 +502,7 @@ export class ScriptApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     const transaction_ = new TransactionEntity({
                         paymentPKH: walletTxParams.pkh,
                         date: new Date(from),
-                        type: SCRIPTS_ADD,
+                        type: TxEnums.SCRIPTS_ADD,
                         status: TRANSACTION_STATUS_CREATED,
                         reading_UTxOs: [],
                         consuming_UTxOs: [],

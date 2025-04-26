@@ -1,0 +1,103 @@
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
+@use '@/styles/InputStyle'; // lo dejo si vas a usar formularios
+@forward '@/styles/components/modalTemplate';
+
+.modalQuestionLayout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 50dvw;
+    padding: 2rem;
+    background: colors.$primary-background;
+    border-radius: 16px;
+    gap: 2rem;
+}
+
+.headerModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 1rem;
+
+    .titleModal {
+        font: fonts.$f900-medium;
+        color: colors.$primary-dark-color;
+        text-align: center;
+    }
+
+    .icon {
+        cursor: pointer;
+        align-self: flex-end;
+        fill: colors.$primary-dark-color;
+
+        &:hover {
+            fill: colors.$primary-color;
+        }
+    }
+}
+
+.txContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+
+    .textPart {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        text-align: center;
+
+        .text {
+            font: fonts.$f300-medium;
+            color: colors.$primary-dark-color;
+        }
+
+        .txHash {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            justify-content: center;
+
+            .linkHash {
+                font: fonts.$f300-medium;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+
+            .hash {
+                font: fonts.$f300-medium;
+                word-break: break-all;
+            }
+        }
+    }
+
+    .btnGroup {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+        width: 100%;
+    }
+}
+
+/* TABLET Y DESKTOP */
+@media (width >= 640px) {
+    .modalQuestionLayout {
+        padding: 3rem;
+    }
+
+    .btnGroup {
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .textPart {
+        max-width: 600px;
+    }
+}

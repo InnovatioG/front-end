@@ -7,11 +7,10 @@ import { CampaignEX } from '@/types/types';
 import { PageViewEnums } from '@/utils/constants/routes';
 import { CampaignsStatus_Code_Ids_For_Investors } from '@/utils/constants/status/status';
 import { useCallback, useEffect, useState } from 'react';
-import { pushWarningNotification, useWalletStore } from 'smart-db';
+import { PROYECT_NAME, pushWarningNotification, useWalletStore } from 'smart-db';
 
 export interface CampaignDashboardProps {
     pageView: PageViewEnums;
-
 }
 
 export const useCampaignsDashboard = (props: CampaignDashboardProps) => {
@@ -108,14 +107,14 @@ export const useCampaignsDashboard = (props: CampaignDashboardProps) => {
 
             const filter = filterConditions.length > 0 ? { $and: filterConditions } : {};
 
-            const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filter, { limit, sort: { updatedAt: -1 } });
-            const {count} = await CampaignApi.getCountApi_(filter);
+            const data: CampaignEntity[] = await CampaignApi.getByParamsApi_(filter, { limit, sort: { updatedAt: -1 }, doCallbackAfterLoad: true });
+            const { count } = await CampaignApi.getCountApi_(filter);
 
             setHasMore(count > limit);
             setCampaigns(await Promise.all(data.map(getCampaignEX)));
         } catch (err) {
             console.error('Error fetching campaigns:', err);
-            pushWarningNotification('Error', `Error fetching Campaigns: ${err}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching Campaigns: ${err}`);
         }
         setCampaignsLoading(false);
     }, [

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { CampaignFaqsEntity } from '../../../lib/SmartDB/Entities/CampaignFaqs.Entity';
 import { CampaignFaqsApi } from '../../../lib/SmartDB/FrontEnd/CampaignFaqs.FrontEnd.Api.Calls';
 
@@ -16,7 +16,7 @@ export function useCampaignFaqs() {
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching CampaignFaqs: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching CampaignFaqs: ${e}`);
         }
     }, []); 
 
@@ -33,7 +33,7 @@ export function useCampaignFaqs() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating CampaignFaqs: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating CampaignFaqs: ${e}`);
         }
     };
 
@@ -47,7 +47,7 @@ export function useCampaignFaqs() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating CampaignFaqs: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating CampaignFaqs: ${e}`);
             }
         }
     };
@@ -64,7 +64,7 @@ export function useCampaignFaqs() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting CampaignFaqs: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting CampaignFaqs: ${e}`);
             }
         }
     };

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { pushWarningNotification, WalletEntity, WalletFrontEndApiCalls } from 'smart-db';
+import { PROYECT_NAME, pushWarningNotification, WalletEntity, WalletFrontEndApiCalls } from 'smart-db';
 
 export function useWallet() {
     const [list, setList] = useState<WalletEntity[]>([]);
@@ -14,7 +14,7 @@ export function useWallet() {
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching Wallet: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching Wallet: ${e}`);
         }
     }, []); 
 
@@ -32,7 +32,7 @@ export function useWallet() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating Wallet: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating Wallet: ${e}`);
         }
     };
 
@@ -46,7 +46,7 @@ export function useWallet() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating Wallet: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating Wallet: ${e}`);
             }
         }
     };
@@ -63,7 +63,7 @@ export function useWallet() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting Wallet: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting Wallet: ${e}`);
             }
         }
     };

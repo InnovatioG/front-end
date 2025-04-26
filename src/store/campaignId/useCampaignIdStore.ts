@@ -34,7 +34,7 @@ export interface ICampaignIdStore extends ICampaignIdStoreProps {
     setIsEditMode: (isEditMode: boolean) => void;
     setIsLoading: (isLoading: boolean) => void;
     setError: (error: string) => void;
-    fetchCampaignById: (id: string) => Promise<void>; // New function
+    fetchCampaignById: (id: string) => Promise<CampaignEX | undefined>; // New function
     setIsValidEdit: (isValidEdit: boolean) => void;
 }
 
@@ -86,7 +86,7 @@ export const useCampaignIdStore = create<ICampaignIdStore>()(
             });
 
             try {
-                const campaignData: CampaignEntity | undefined = await CampaignApi.getByIdApi_(id);
+                const campaignData: CampaignEntity | undefined = await CampaignApi.getByIdApi_(id, { doCallbackAfterLoad: true });
                 if (campaignData === undefined) {
                     set((state) => {
                         state.isLoading = false;
@@ -100,6 +100,8 @@ export const useCampaignIdStore = create<ICampaignIdStore>()(
                     state.campaign = cloneCampaignEX(campaignEX);
                     state.isLoading = false;
                 });
+
+                return campaignEX;
             } catch (error) {
                 console.error('Error fetching campaign:', error);
                 set((state) => {

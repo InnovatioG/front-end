@@ -12,10 +12,9 @@ export class ScriptPolicyRedeemerBurnID extends BaseTxRedeemer {
     protected static _plutusDataIsSubType = true;
 }
 
-export type  ScriptValidatorRedeemer = ScriptValidatorRedeemerScriptDelete ;
+export type ScriptValidatorRedeemer = ScriptValidatorRedeemerScriptDelete;
 
 export class ScriptValidatorRedeemerScriptDelete extends BaseTxRedeemer {
     protected static _plutusDataIndex = 0;
     protected static _plutusDataIsSubType = true;
 }
-

@@ -1,13 +1,14 @@
-import { CampaignCategoryEntity, CampaignStatusEntity, MilestoneStatusEntity, SubmissionStatusEntity } from '@/lib/SmartDB/Entities';
-import { CampaignApi, CampaignCategoryApi, CampaignStatusApi, MilestoneStatusApi, SubmissionStatusApi } from '@/lib/SmartDB/FrontEnd';
+import { CampaignCategoryEntity, CampaignStatusEntity, MilestoneStatusEntity, ProtocolEntity, SubmissionStatusEntity } from '@/lib/SmartDB/Entities';
+import { CampaignApi, CampaignCategoryApi, CampaignStatusApi, MilestoneStatusApi, ProtocolApi, SubmissionStatusApi } from '@/lib/SmartDB/FrontEnd';
+import { formatMoney } from '@/utils/formats';
+import axios from 'axios';
 import { WritableDraft } from 'immer';
 import { ConnectedWalletInfo, isNullOrBlank, WalletEntity, WalletFrontEndApiCalls } from 'smart-db';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import axios from 'axios';
-import { formatMoney } from '@/utils/formats';
 
 interface IGeneralStore {
+    protocol?: ProtocolEntity;
     campaignCategories: CampaignCategoryEntity[];
     campaignStatus: CampaignStatusEntity[];
     milestoneStatus: MilestoneStatusEntity[];
@@ -16,6 +17,7 @@ interface IGeneralStore {
     adaPrice: number;
     wallet: WalletEntity | undefined;
     haveCampaigns: boolean;
+    setProtocol: (protocol?: ProtocolEntity) => void;
     setCampaignCategories: (categories: CampaignCategoryEntity[]) => void;
     setCampaignStatus: (statuses: CampaignStatusEntity[]) => void;
     setMilestoneStatus: (statuses: MilestoneStatusEntity[]) => void;
@@ -42,6 +44,7 @@ interface IGeneralStore {
 
 export const useGeneralStore = create<IGeneralStore>()(
     immer((set) => ({
+        protocol: undefined,
         campaignCategories: [],
         campaignStatus: [],
         milestoneStatus: [],
@@ -57,64 +60,92 @@ export const useGeneralStore = create<IGeneralStore>()(
         showDebug: false,
         isLoadingStoreData: true,
         isLoadedStoreData: false,
-        setIsLoadingStoreData: (isLoadingStoreData) =>
+        setProtocol: (protocol?: ProtocolEntity) => {
+                console.log('setProtocol', protocol);
+            set((state) => {
+                state.protocol = protocol;
+            });
+        },
+        setIsLoadingStoreData: (isLoadingStoreData) => {
+                console.log('setIsLoadingStoreData', isLoadingStoreData);
             set((state) => {
                 state.isLoadingStoreData = isLoadingStoreData;
-            }),
-        setIsLoadedStoreData: (isLoadedStoreData) =>
+            });
+        },
+        setIsLoadedStoreData: (isLoadedStoreData) => {
+                console.log('setIsLoadedStoreData', isLoadedStoreData);
             set((state) => {
                 state.isLoadedStoreData = isLoadedStoreData;
-            }),
-        setShowDebug: (showDebug) =>
+            });
+        },
+        setShowDebug: (showDebug) => {
+                console.log('setShowDebug', showDebug);
             set((state) => {
                 state.showDebug = showDebug;
-            }),
-        setDebugIsAdmin: (isAdmin) =>
+            });
+        },
+        setDebugIsAdmin: (isAdmin) => {
+                console.log('setDebugIsAdmin', isAdmin);
             set((state) => {
                 state._DebugIsAdmin = isAdmin;
-            }),
-        setDebugIsEditor: (isEditor) =>
+            });
+        },
+        setDebugIsEditor: (isEditor) => {
+                console.log('setDebugIsEditor', isEditor);
             set((state) => {
                 state._DebugIsEditor = isEditor;
-            }),
-        setDebugIsProtocolTeam: (isProtocolTeam) =>
+            });
+        },
+        setDebugIsProtocolTeam: (isProtocolTeam) => {
+                console.log('setDebugIsProtocolTeam', isProtocolTeam);
             set((state) => {
                 state._DebugIsProtocolTeam = isProtocolTeam;
-            }),
-        setIsProtocolTeam: (isProtocolTeam) =>
+            });
+        },
+        setIsProtocolTeam: (isProtocolTeam) => {
+            console.log('setIsProtocolTeam', isProtocolTeam);
             set((state) => {
                 state.isProtocolTeam = isProtocolTeam;
-            }),
-        setPriceADAOrDollar: (price) =>
+            });
+        },
+        setPriceADAOrDollar: (price) => {
+            console.log('setPriceADAOrDollar', price);
             set((state) => {
                 state.priceADAOrDollar = price;
-            }),
+            });
+        },
         setCampaignCategories: (categories) => {
+            console.log('setCampaignCategories', categories);
             set((state) => {
                 state.campaignCategories = categories;
             });
         },
         setCampaignStatus: (statuses) => {
+            console.log('setCampaignStatus', statuses);
             set((state) => {
                 state.campaignStatus = statuses;
             });
         },
         setMilestoneStatus: (statuses) => {
+            console.log('setMilestoneStatus', statuses);
             set((state) => {
                 state.milestoneStatus = statuses;
             });
         },
         setSubmissionStatus: (statuses) => {
+            console.log('setSubmissionStatus', statuses);
             set((state) => {
                 state.submissionStatus = statuses;
             });
         },
         setADAPrice: (price) => {
+            console.log('setADAPrice', price);
             set((state) => {
                 state.adaPrice = price;
             });
         },
         setWallet: async (info?: ConnectedWalletInfo) => {
+            console.log('setWallet', info);
             try {
                 if (!info || isNullOrBlank(info.pkh)) {
                     set((state) => {
@@ -142,6 +173,7 @@ export const useGeneralStore = create<IGeneralStore>()(
         },
 
         refreshHaveCampaigns: async (info?: ConnectedWalletInfo) => {
+            console.log('refreshHaveCampaigns', info);
             try {
                 if (info === undefined || info.isWalletValidatedWithSignedToken === false) {
                     set((state) => {
@@ -169,7 +201,7 @@ export const useGeneralStore = create<IGeneralStore>()(
                 }
                 //--------------------
                 // TODO : hay que buscar si es editor, no solo creador...
-                const {count} = await CampaignApi.getCountApi_({ creator_wallet_id: wallet._DB_id });
+                const { count } = await CampaignApi.getCountApi_({ creator_wallet_id: wallet._DB_id });
                 //--------------------
                 set((state: WritableDraft<IGeneralStore>) => {
                     state.haveCampaigns = count > 0;
@@ -181,13 +213,30 @@ export const useGeneralStore = create<IGeneralStore>()(
     }))
 );
 
+const fetchProtocol = async () => {
+    try {
+        console.log('Fetching protocol...');
+        // Example: fetch your protocol entity from SmartDB
+        const protocol: ProtocolEntity | undefined = await ProtocolApi.getOneByParamsApi_(); // You must define this function
+        useGeneralStore.getState().setProtocol(protocol);
+        if (!protocol) {
+            console.warn('No protocol found');
+            return undefined;
+        }
+        console.log('Protocol fetched successfully');
+        return protocol;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return undefined;
+    }
+};
+
 // Función para CampaignCategories
 const fetchCampaignCategories = async () => {
+    console.log('Fetching campaign categories...');
     try {
         const fetchedData: CampaignCategoryEntity[] = await CampaignCategoryApi.getAllApi_();
-
         useGeneralStore.getState().setCampaignCategories(fetchedData);
-
         return fetchedData;
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -196,11 +245,10 @@ const fetchCampaignCategories = async () => {
 };
 
 const fetchMilestoneStatus = async () => {
+    console.log('Fetching milestone status...');
     try {
         const fetchData: MilestoneStatusEntity[] = await MilestoneStatusApi.getAllApi_();
-
         useGeneralStore.getState().setMilestoneStatus(fetchData);
-
         return fetchData;
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -209,11 +257,10 @@ const fetchMilestoneStatus = async () => {
 };
 
 const fetchCampaignStatus = async () => {
+    console.log('Fetching campaign status...');
     try {
         const fetchedData: CampaignStatusEntity[] = await CampaignStatusApi.getAllApi_();
-
         useGeneralStore.getState().setCampaignStatus(fetchedData);
-
         return fetchedData;
     } catch (error) {
         console.error('Error fetching data:', error);
@@ -222,6 +269,7 @@ const fetchCampaignStatus = async () => {
 };
 
 const fetchSubmissionStatus = async () => {
+    console.log('Fetching submission status...');
     try {
         const fetchedData: SubmissionStatusEntity[] = await SubmissionStatusApi.getAllApi_();
         useGeneralStore.getState().setSubmissionStatus(fetchedData);
@@ -233,6 +281,7 @@ const fetchSubmissionStatus = async () => {
 };
 
 const fetchADAPrice = async () => {
+    console.log('Fetching ADA price...');
     try {
         const response = await axios.get('https://api.coingecko.com/api/v3/simple/price?ids=cardano&vs_currencies=usd');
         useGeneralStore.getState().setADAPrice(response.data.cardano.usd);
@@ -244,10 +293,11 @@ const fetchADAPrice = async () => {
 };
 
 export const fetchGeneralStoreData = async () => {
+    console.log('Fetching all data for general store...');
     try {
         useGeneralStore.getState().setIsLoadingStoreData(true);
         useGeneralStore.getState().setIsLoadedStoreData(false);
-        await Promise.all([fetchCampaignCategories(), fetchCampaignStatus(), fetchADAPrice(), fetchMilestoneStatus(), fetchSubmissionStatus()]);
+        await Promise.all([fetchProtocol(), fetchCampaignCategories(), fetchCampaignStatus(), fetchADAPrice(), fetchMilestoneStatus(), fetchSubmissionStatus()]);
         useGeneralStore.getState().setIsLoadingStoreData(false);
         useGeneralStore.getState().setIsLoadedStoreData(true);
     } catch (error) {
@@ -256,6 +306,7 @@ export const fetchGeneralStoreData = async () => {
 };
 
 export const formatMoneyByADAOrDollar = (value: number | bigint) => {
+    console.log('formatMoneyByADAOrDollar', value);
     if (typeof value !== 'number' && value !== undefined) {
         value = Number(value);
     }

@@ -12,21 +12,34 @@ export function mkVersionWithDependency(xs: number[], ownVersion: number): numbe
 
 export const PROTOCOL_VERSION = mkVersionWithDependency([], PROTOCOL_BASE_VERSION);
 export const CAMPAIGN_VERSION = mkVersionWithDependency([PROTOCOL_BASE_VERSION], CAMPAIGN_BASE_VERSION);
+export const CAMPAIGN_FUNDS_VERSION = mkVersionWithDependency([PROTOCOL_BASE_VERSION], CAMPAIGN_BASE_VERSION);
 export const SCRIPT_VERSION = mkVersionWithDependency([PROTOCOL_BASE_VERSION, CAMPAIGN_BASE_VERSION], SCRIPT_BASE_VERSION);
 
 //----------------------------------------------------------------------
 
 export const TRANSACTION_UNKNOWN = 'Unknown';
 
-export const PROTOCOL_DEPLOY = 'Protocol - Deploy';
-// export const PROTOCOL_UPDATE = 'Protocol - Update';
-// export const PROTOCOL_UPDATE_MIN_ADA = 'Protocol - Update Min ADA';
+export enum TxEnums {
+    SCRIPTS_ADD = 'Scripts - Add',
+
+    PROTOCOL_DEPLOY = 'Protocol - Deploy',
+    PROTOCOL_UPDATE = 'Protocol - Update',
+    PROTOCOL_UPDATE_MIN_ADA = 'Protocol - Update Min ADA',
+
+
+    CAMPAIG_DEPLOY = 'Campaign - Deploy',
+    CAMPAIG_LAUNCH = 'Campaign - Launch',
+
+    CAMPAIGN_ADD_FUND = 'Campaign - Add Fund',
+    CAMPAIGN_FUNDS_DEPOSIT = 'Campaign - Fund - Deposit',
+
+}
+
+
 // export const PROTOCOL_EMERGENCY = 'Protocol - Emergency';
 
-// export const CAMPAIGN_DEPLOY = 'Fund - Deploy';
 // export const CAMPAIGN_UPDATE = 'Fund - Update';
 // export const CAMPAIGN_UPDATE_MIN_ADA = 'Fund - Update Min ADA';
-// export const CAMPAIGN_ADD_FUNDHOLDING = 'Fund - Add Fund Holding';
 // export const CAMPAIGN_DELETE_FUNDHOLDING = 'Fund - Delete Fund Holding';
 // export const CAMPAIGN_EMERGENCY = 'Fund - Emergency';
 // export const CAMPAIGN_FINISH = 'Fund - Finish';
@@ -37,8 +50,6 @@ export const PROTOCOL_DEPLOY = 'Protocol - Deploy';
 
 // export const CAMPAIGN_FUNDS_UPDATE_MIN_ADA = 'Fund Holding - Update Min ADA';
 // export const CAMPAIGN_FUNDS_DELETE = 'Fund Holding - Delete';
-
-export const SCRIPTS_ADD = 'Scripts - Add';
 
 // //----------------------------------------------------------------------
 
@@ -53,8 +64,10 @@ export const SCRIPTS_ADD = 'Scripts - Add';
 export const EMERGENCY_ADMIN_TOKEN_POLICY_CS = process.env.NEXT_PUBLIC_EMERGENCY_ADMIN_TOKEN_POLICY_CS!;
 export const ADMIN_TOKEN_POLICY_CS = process.env.NEXT_PUBLIC_ADMIN_TOKEN_POLICY_CS!;
 
-export const PROTOCOL_ID_TN = 'ProtocolID';
-export const CAMPAIGN_ID_TN = 'CampaignID';
-export const CAMPAIGN__FUNDSID_TN_basename = 'CampaignFUndID';
+export const PROTOCOL_ID_TN_Str = 'ProtocolID';
+export const CAMPAIGN_ID_TN_Str = 'CampaignID';
+export const CAMPAIGN_FUNDSID_TN_Str_basename = 'CampaignFundsID';
+
+export const CAMPAIGN_TOKEN_DEFAULT_TN_Str = 'INNO';
 
 //----------------------------------------------------------------------

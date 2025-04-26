@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { CampaignStatusEntity } from '../../../lib/SmartDB/Entities/CampaignStatus.Entity';
 import { CampaignStatusApi } from '../../../lib/SmartDB/FrontEnd/CampaignStatus.FrontEnd.Api.Calls';
 
@@ -16,7 +16,7 @@ export function useCampaignStatus() {
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching CampaignStatus: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching CampaignStatus: ${e}`);
         }
     }, []); 
 
@@ -33,7 +33,7 @@ export function useCampaignStatus() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating CampaignStatus: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating CampaignStatus: ${e}`);
         }
     };
 
@@ -47,7 +47,7 @@ export function useCampaignStatus() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating CampaignStatus: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating CampaignStatus: ${e}`);
             }
         }
     };
@@ -64,7 +64,7 @@ export function useCampaignStatus() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting CampaignStatus: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting CampaignStatus: ${e}`);
             }
         }
     };

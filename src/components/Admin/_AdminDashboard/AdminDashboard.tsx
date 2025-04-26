@@ -1,11 +1,11 @@
-import { useRouter } from 'next/router';
-import { useState, useMemo } from 'react';
 import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 import BtnConnectWallet from '@/components/GeneralOK/Buttons/Buttons/BtnConnectWallet/BtnConnectWallet';
 import { useResponsive } from '@/contexts/ResponsiveContext';
 import { ProtocolApi } from '@/lib/SmartDB/FrontEnd';
+import { useRouter } from 'next/router';
+import { useMemo, useState } from 'react';
+import { LucidToolsFrontEnd, PROYECT_NAME, pushSucessNotification, pushWarningNotification, useAppStore, useWalletStore } from 'smart-db';
 import styles from './AdminDashboard.module.scss';
-import { LucidToolsFrontEnd, pushSucessNotification, pushWarningNotification, useWalletStore } from 'smart-db';
 
 // Import admin components
 import Campaign from '@/components/Admin/Campaign/Campaign';
@@ -19,19 +19,27 @@ import CampaignSubmission from '@/components/Admin/CampaignSubmission/CampaignSu
 import Milestone from '@/components/Admin/Milestone/Milestone';
 import MilestoneStatus from '@/components/Admin/MilestoneStatus/MilestoneStatus';
 import MilestoneSubmission from '@/components/Admin/MilestoneSubmission/MilestoneSubmission';
-import ProtocolAdminWallet from '@/components/Admin/ProtocolAdminWallet/ProtocolAdminWallet';
 import Protocol from '@/components/Admin/Protocol/Protocol';
+import ProtocolAdminWallet from '@/components/Admin/ProtocolAdminWallet/ProtocolAdminWallet';
 import SubmissionStatus from '@/components/Admin/SubmissionStatus/SubmissionStatus';
 import Wallet from '@/components/Admin/Wallet/Wallet';
+import { useModal } from '@/contexts/ModalContext';
 import { fetchGeneralStoreData } from '@/store/generalStore/useGeneralStore';
+import { ModalsEnums, TaskEnums } from '@/utils/constants/constants';
 
 const AdminDashboard = () => {
+    //------------------------------------
     const router = useRouter();
     const { entity } = router.query;
+    //------------------------------------
     const walletStore = useWalletStore();
+    const appStore = useAppStore();
+    //------------------------------------
     const { screenSize } = useResponsive();
     const [sidebarOpen, setSidebarOpen] = useState(true); // Toggle sidebar visibility
-
+    //-------------------------
+    const { openModal } = useModal();
+    //------------------------------------
     // Admin sections
     const pages = [
         { name: 'Protocol', entity: 'protocol' },
@@ -50,7 +58,7 @@ const AdminDashboard = () => {
         { name: 'Milestone Submission', entity: 'milestone-submission' },
         { name: 'Protocol Admin Wallet', entity: 'protocol-admin-wallet' },
     ];
-
+    //------------------------------------
     // Map entity names to components
     const entityComponents: Record<string, JSX.Element> = useMemo(
         () => ({
@@ -72,25 +80,55 @@ const AdminDashboard = () => {
         }),
         []
     );
-
+    //------------------------------------
     const handlePopulateDB = async () => {
-        try {
-            if (confirm('Are you sure you want to populate the database?')) {
+        if (appStore.isProcessingTx === true) {
+            openModal(ModalsEnums.PROCESSING_TX);
+            return;
+        }
+        if (appStore.isProcessingTask === true) {
+            openModal(ModalsEnums.PROCESSING_TASK);
+            return;
+        }
+        if (confirm('Are you sure you want to populate the database?')) {
+            //--------------------------------------
+            appStore.setProcessingTaskName(TaskEnums.CREATE_PROTOCOL);
+            appStore.setShowProcessingTask(true);
+            appStore.setIsProcessingTask(true);
+            appStore.setIsConfirmedTask(false);
+            appStore.setIsFaildedTask(false);
+            //--------------------------------------
+            appStore.setProcessingTaskMessage('Creating Protocol...');
+            openModal(ModalsEnums.PROCESSING_TASK);
+            //--------------------------------------
+            try {
                 const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
                 const response = await ProtocolApi.populateApi(walletTxParams);
-                await fetchGeneralStoreData();
+
                 if (response === false) throw 'Failed to populate database';
-                pushSucessNotification('Success', 'Database populated successfully', false);
+                pushSucessNotification(`${PROYECT_NAME}`, 'Database populated successfully', false);
+                //--------------------------------------
+                appStore.setIsConfirmedTask(true);
+                //--------------------------------------
+                // TODO revisar como meter esto mejor
+                await fetchGeneralStoreData();
+                //--------------------------------------
+            } catch (error) {
+                console.log(`[${PROYECT_NAME}] - handleBtnProtocolCreate - Error: ${error}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error creating Protocol: ${error}`);
+                appStore.setIsFaildedTask(true);
+                return undefined;
+            } finally {
+                appStore.setIsProcessingTask(false);
+                appStore.setProcessingTaskMessage('');
             }
-        } catch (error) {
-            pushWarningNotification('Error', `Failed to populate database: ${error}`);
         }
     };
-
+    //------------------------------------
     const handleNavigate = (entityName: string) => {
         router.push({ pathname: '/admin', query: { entity: entityName } }, undefined, { shallow: true });
     };
-
+    //------------------------------------
     if (!walletStore.isConnected || !walletStore.info?.isWalletValidatedWithSignedToken) {
         return (
             <div className={styles.campaignSection}>
@@ -103,7 +141,7 @@ const AdminDashboard = () => {
             </div>
         );
     }
-
+    //------------------------------------
     return (
         <div className={styles.adminDashboard}>
             <aside className={`${styles.sidebar} ${sidebarOpen ? styles.open : styles.closed}`}>

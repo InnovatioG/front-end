@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { toJson } from 'smart-db';
 import styles from './Campaign.module.scss';
 import { MilestoneFormProps, useCampaign } from './useCampaign';
+import { MilestoneDatumStatus_Code_Id_Enums } from '@/utils/constants/status/status';
 
 export default function Campaign() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove, getCategoryName, getStatusName } = useCampaign();
@@ -150,7 +151,7 @@ export default function Campaign() {
         const addMilestone = () => {
             const newMilestone: CampaignMilestoneDatum = {
                 cmPerncentage: 0n,
-                cmStatus: 0, // Default status
+                cmStatus: MilestoneDatumStatus_Code_Id_Enums.MsCreated, // Default status
             };
             const newMilestoneIndex = localMilestones.length; // Index of the new milestone
             setLocalMilestones((prev) => [...prev, newMilestone]); // Add a new milestone row
@@ -208,9 +209,9 @@ export default function Campaign() {
                                         <option value="1">Success</option>
                                         <option value="2">Failed</option>
                                     </select>
-                                ) : milestone.cmStatus === 0 ? (
+                                ) : milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsCreated ? (
                                     'Created'
-                                ) : milestone.cmStatus === 1 ? (
+                                ) : milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsSuccess ? (
                                     'Success'
                                 ) : (
                                     'Failed'
@@ -416,7 +417,7 @@ export default function Campaign() {
                                 <td>{item.cdRequestedMinADA?.toString()}</td>
                                 <td>{item.cdFundedADA?.toString()}</td>
                                 <td>{item.cdCollectedADA?.toString()}</td>
-                                <td>{item.cdbegin_at?.toString()}</td>
+                                <td>{item.cdBegin_at?.toString()}</td>
                                 <td>{item.cdDeadline?.toString()}</td>
                                 <td>{item.cdStatus}</td>
                                 <td>{toJson(item.cdMilestones)}</td>
@@ -747,10 +748,10 @@ export default function Campaign() {
                 <label>Begin At (POSIXTime) (Datum):</label>
                 <input
                     type="text"
-                    value={item.cdbegin_at?.toString() || ''}
+                    value={item.cdBegin_at?.toString() || ''}
                     onChange={(e) => {
                         if (!isNaN(Number(e.target.value))) {
-                            setItem({ ...item, cdbegin_at: BigInt(e.target.value) });
+                            setItem({ ...item, cdBegin_at: BigInt(e.target.value) });
                         }
                     }}
                 />

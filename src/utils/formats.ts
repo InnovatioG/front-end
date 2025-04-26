@@ -30,6 +30,10 @@ export function getTimeRemaining(date: Date | undefined) {
 
     const total = dat.getTime() - now.getTime();
 
+    if (total <= 0) {
+        return { total: 0, days: 0, totalHours: 0, minutes: 0, seconds: 0 };
+    }
+
     const days = Math.floor(total / (1000 * 60 * 60 * 24));
     const totalHours = Math.floor(total / (1000 * 60 * 60));
     const minutes = Math.floor((total / 1000 / 60) % 60);

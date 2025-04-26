@@ -11,12 +11,39 @@ import {
     console_error,
     console_log,
 } from 'smart-db/backEnd';
-import { CampaignFundsEntity } from '../Entities/CampaignFunds.Entity';
+import { CampaignFundsDatum, CampaignFundsEntity } from '../Entities/CampaignFunds.Entity';
+import { CampaignEntity } from '../Entities/Campaign.Entity';
+import { CAMPAIGN_FUNDS_VERSION } from '@/utils/constants/on-chain';
 
 @BackEndAppliedFor(CampaignFundsEntity)
 export class CampaignFundsBackEndApplied extends BaseSmartDBBackEndApplied {
     protected static _Entity = CampaignFundsEntity;
     protected static _BackEndMethods = BaseSmartDBBackEndMethods;
+
+    // #region datum methods
+
+    public static mkNew_CampaignFundsDatum(campaign: CampaignEntity, mindAda: bigint): CampaignFundsDatum {
+        // usado para que los campos del datum tengan las clases y tipos bien
+        // txParams trae los campos pero estan plain, no son clases ni tipos
+
+        const datumPlainObject: CampaignFundsDatum = {
+            cfdVersion: CAMPAIGN_FUNDS_VERSION,
+            cfdIndex: campaign.cdFundsIndex,
+            cfdCampaignPolicy_CS: campaign.getNET_id_CS(),
+            cfdCampaignFundsPolicyID_CS: campaign.getNet_FundHoldingPolicyID_CS(),
+            cfdSubtotal_Avalaible_CampaignToken: 0n,
+            cfdSubtotal_Sold_CampaignToken: 0n,
+            cfdSubtotal_Avalaible_ADA: 0n,
+            cfdSubtotal_Collected_ADA: 0n,
+            cfdMinADA: mindAda,
+        };
+
+        let datum: CampaignFundsDatum = CampaignFundsEntity.mkDatumFromPlainObject(datumPlainObject) as CampaignFundsDatum;
+
+        return datum;
+    }
+
+    // #endregion datum methods
 }
 
 @BackEndApiHandlersFor(CampaignFundsEntity)

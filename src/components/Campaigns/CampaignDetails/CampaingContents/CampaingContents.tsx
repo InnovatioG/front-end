@@ -23,9 +23,9 @@ const CampaingContents: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (pro
 
     return (
         <>
-            <section className={styles.generalContainer}>
+            {/* <section className={styles.generalContainer}>
                 <p className={styles.description}>{campaign.campaign.description}</p>
-            </section>
+            </section> */}
 
             <section className={styles.generalContainer} id={'nav-project'}>
                 <CampaignNavMenu {...props} />

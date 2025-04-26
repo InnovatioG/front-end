@@ -56,6 +56,7 @@ const FormStep04: React.FC<FormStep04Props & ICampaignIdStoreSafe> = (props: For
                         name: wallet.name,
                         email: wallet.email,
                         admin: true,
+                        editor: false
                     })
                 );
             } else {

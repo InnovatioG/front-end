@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { ProtocolAdminWalletEntity } from '../../../lib/SmartDB/Entities/ProtocolAdminWallet.Entity';
 import { ProtocolAdminWalletApi } from '../../../lib/SmartDB/FrontEnd/ProtocolAdminWallet.FrontEnd.Api.Calls';
 
@@ -16,7 +16,7 @@ export function useProtocolAdminWallet() {
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching ProtocolAdminWallet: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching ProtocolAdminWallet: ${e}`);
         }
     }, []); 
 
@@ -33,7 +33,7 @@ export function useProtocolAdminWallet() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating ProtocolAdminWallet: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating ProtocolAdminWallet: ${e}`);
         }
     };
 
@@ -47,7 +47,7 @@ export function useProtocolAdminWallet() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating ProtocolAdminWallet: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating ProtocolAdminWallet: ${e}`);
             }
         }
     };
@@ -64,7 +64,7 @@ export function useProtocolAdminWallet() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting ProtocolAdminWallet: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting ProtocolAdminWallet: ${e}`);
             }
         }
     };

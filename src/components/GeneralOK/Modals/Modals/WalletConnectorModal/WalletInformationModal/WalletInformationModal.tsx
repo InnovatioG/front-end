@@ -1,5 +1,5 @@
 import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
-import { HIDE, REFRESH, SHOW } from '@/utils/constants/images';
+import { HIDE_ICON, REFRESH_ICON, SHOW_ICON } from '@/utils/constants/images';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { CARDANO_WALLETS, useWalletActions } from 'smart-db';
@@ -55,7 +55,7 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                         }}
                     >
                         <svg width="24" height="24" className={styles.icon}>
-                            <use href={REFRESH}></use>
+                            <use href={REFRESH_ICON}></use>
                         </svg>
                         <span>Refresh</span>
                     </div>
@@ -66,7 +66,7 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                         }}
                     >
                         <svg width="24" height="24" className={styles.icon}>
-                            <use href={show ? HIDE : SHOW}></use>
+                            <use href={show ? HIDE_ICON : SHOW_ICON}></use>
                         </svg>
                         <span>{show ? 'Hide Balance' : 'Show Balance'}</span>
                     </div>

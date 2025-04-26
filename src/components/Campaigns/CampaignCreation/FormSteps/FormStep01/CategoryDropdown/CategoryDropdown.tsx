@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import useCategoryDropdown from './useCategoryDropdown';
 import styles from './CategoryDropdown.module.scss';
-import { CHEVRON_DOWN } from '@/utils/constants/images';
+import { CHEVRON_DOWN_ICON } from '@/utils/constants/images';
 
 interface CategoryDropdownProps {
     options: { value: string; label: string }[];
@@ -19,7 +19,7 @@ export default function CategoryDropdown(props: CategoryDropdownProps) {
             <div className={styles.btnHeader}>
                 <p className={`${styles.label} ${value !== null ? styles.selected : ''}`}>{selectedLabel}</p>{' '}
                 <svg width="14" height="14" className={`${styles.icon} ${isOpen ? styles.open : ''}`}>
-                    <use href={CHEVRON_DOWN}></use>
+                    <use href={CHEVRON_DOWN_ICON}></use>
                 </svg>
             </div>
 

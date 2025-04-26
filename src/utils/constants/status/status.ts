@@ -23,8 +23,12 @@ export enum CampaignStatus_Code_Id_Enums {
     REJECTED = 3,
     APPROVED = 4,
     CONTRACT_CREATED = 5,
-    CONTRACT_PUBLISHED = 6,
+
     CONTRACT_STARTED = 7,
+
+    CONTRACT_PUBLISHED = 6,
+
+    
     COUNTDOWN = 8,
     FUNDRAISING = 9,
     FINISHING = 10,

@@ -37,7 +37,10 @@ export const campaignStatusConfigs = (
                   ...buttonsInManageAndNotInEditMode,
                   ...(swAddContact === true ? [CONTACT] : []),
               ]
-            : [ButtonForDetails[ButtonsForDetailsEnum.CANCEL_EDIT_CAMPAIGN], isValidEdit ? ButtonForDetails[ButtonsForDetailsEnum.SAVE_CAMPAIGN] : ButtonForDetails[ButtonsForDetailsEnum.SAVE_DISABLED_CAMPAIGN]];
+            : [
+                  ButtonForDetails[ButtonsForDetailsEnum.CANCEL_EDIT_CAMPAIGN],
+                  isValidEdit ? ButtonForDetails[ButtonsForDetailsEnum.SAVE_CAMPAIGN] : ButtonForDetails[ButtonsForDetailsEnum.SAVE_DISABLED_CAMPAIGN],
+              ];
     };
 
     const MANAGE_OR_SAVE = (buttonsInManageAndNotInEditMode: ButtonType[], buttonsNotInManage: ButtonType[] = [], swAddContact: boolean = false) => {
@@ -45,7 +48,10 @@ export const campaignStatusConfigs = (
             ? [ButtonForDetails[ButtonsForDetailsEnum.MANAGE_CAMPAIGN], ...buttonsNotInManage, ...(swAddContact === true ? [CONTACT] : [])]
             : isEditMode === false
             ? [ButtonForDetails[ButtonsForDetailsEnum.RENDER_CAMPAIGN_FOR_MANAGE], ...buttonsInManageAndNotInEditMode, ...(swAddContact === true ? [CONTACT] : [])]
-            : [ButtonForDetails[ButtonsForDetailsEnum.CANCEL_EDIT_CAMPAIGN], isValidEdit ? ButtonForDetails[ButtonsForDetailsEnum.SAVE_CAMPAIGN] : ButtonForDetails[ButtonsForDetailsEnum.SAVE_DISABLED_CAMPAIGN]];
+            : [
+                  ButtonForDetails[ButtonsForDetailsEnum.CANCEL_EDIT_CAMPAIGN],
+                  isValidEdit ? ButtonForDetails[ButtonsForDetailsEnum.SAVE_CAMPAIGN] : ButtonForDetails[ButtonsForDetailsEnum.SAVE_DISABLED_CAMPAIGN],
+              ];
     };
 
     const MANAGE = (buttonsInManageAndNotInEditMode: ButtonType[], buttonsNotInManage: ButtonType[] = [], swAddContact: boolean = false) => {
@@ -256,9 +262,9 @@ export const campaignStatusConfigs = (
                 return {
                     label: 'Created',
                     labelClass: 'created',
-                    buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.PUBLISH_CONTRACTS], VIEW_OR_MANAGE_FOR_CARD],
-                    buttonsForHeader: MANAGE_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.PUBLISH_CONTRACTS]]),
-                    buttonsForDetails: MANAGE_EDIT_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.PUBLISH_CONTRACTS], ...FOR_PROTOCOL_ARCHIVE_AND_DELETE]),
+                    buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.INITIALIZE_CAMPAIGN], VIEW_OR_MANAGE_FOR_CARD],
+                    buttonsForHeader: MANAGE_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.INITIALIZE_CAMPAIGN]]),
+                    buttonsForDetails: MANAGE_EDIT_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.INITIALIZE_CAMPAIGN], ...FOR_PROTOCOL_ARCHIVE_AND_DELETE]),
                 };
             } else if (isAdmin === true) {
                 return {
@@ -286,69 +292,70 @@ export const campaignStatusConfigs = (
                 };
             }
 
-        case CampaignStatus_Code_Id_Enums.CONTRACT_PUBLISHED:
+        case CampaignStatus_Code_Id_Enums.CONTRACT_STARTED:
             if (isProtocolTeam === true) {
                 return {
-                    label: 'Deploy',
-                    labelClass: 'deploy',
-                    buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.INITIALIZE_CAMPAIGN], VIEW_OR_MANAGE_FOR_CARD],
-                    buttonsForHeader: MANAGE_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.INITIALIZE_CAMPAIGN]]),
-                    buttonsForDetails: MANAGE_EDIT_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.INITIALIZE_CAMPAIGN], ...FOR_PROTOCOL_ARCHIVE_AND_DELETE]),
+                    label: 'Ready',
+                    labelClass: 'ready',
+                    buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.PUBLISH_CONTRACTS], VIEW_OR_MANAGE_FOR_CARD],
+                    buttonsForHeader: MANAGE_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.PUBLISH_CONTRACTS]]),
+                    buttonsForDetails: MANAGE_EDIT_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.PUBLISH_CONTRACTS], ...FOR_PROTOCOL_ARCHIVE_AND_DELETE]),
                 };
             } else if (isAdmin === true) {
                 return {
-                    label: 'Deploy',
-                    labelClass: 'deploy',
-                    buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_CAMPAIGN_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
-                    buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS]]),
-                    buttonsForDetails: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS]], [], true),
+                    label: 'Ready',
+                    labelClass: 'ready',
+                    buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.PUBLISH_CONTRACTS], VIEW_OR_MANAGE_FOR_CARD],
+                    buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.PUBLISH_CONTRACTS]]),
+                    buttonsForDetails: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.PUBLISH_CONTRACTS], UTXO], [], true),
                 };
             } else if (isEditor === true) {
                 return {
-                    label: 'Deploy',
-                    labelClass: 'deploy',
+                    label: 'Ready',
+                    labelClass: 'ready',
                     buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_CAMPAIGN_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
                     buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS]]),
                     buttonsForDetails: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS]], [], true),
                 };
             } else {
                 return {
-                    label: 'Deploy',
-                    labelClass: 'deploy',
+                    label: 'Ready',
+                    labelClass: 'ready',
                     buttonsForCards: [],
                     buttonsForHeader: [],
                     buttonsForDetails: [],
                 };
             }
-        case CampaignStatus_Code_Id_Enums.CONTRACT_STARTED:
+
+        case CampaignStatus_Code_Id_Enums.CONTRACT_PUBLISHED:
             if (isProtocolTeam === true) {
                 return {
-                    label: 'Ready',
-                    labelClass: 'ready',
+                    label: 'Deploy',
+                    labelClass: 'deploy',
                     buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.LAUNCH_CAMPAIGN], VIEW_OR_MANAGE_FOR_CARD],
                     buttonsForHeader: MANAGE_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.LAUNCH_CAMPAIGN]]),
                     buttonsForDetails: MANAGE_EDIT_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.LAUNCH_CAMPAIGN], ...FOR_PROTOCOL_UTXOS_ARCHIVE_AND_DELETE]),
                 };
             } else if (isAdmin === true) {
                 return {
-                    label: 'Ready',
-                    labelClass: 'ready',
-                    buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.LAUNCH_CAMPAIGN], VIEW_OR_MANAGE_FOR_CARD],
-                    buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.LAUNCH_CAMPAIGN]]),
-                    buttonsForDetails: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.LAUNCH_CAMPAIGN], UTXO], [], true),
+                    label: 'Deploy',
+                    labelClass: 'deploy',
+                    buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_CAMPAIGN_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
+                    buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS]]),
+                    buttonsForDetails: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS]], [], true),
                 };
             } else if (isEditor === true) {
                 return {
-                    label: 'Ready',
-                    labelClass: 'ready',
-                    buttonsForCards: [LEARN_FOR_CARD],
-                    buttonsForHeader: [CONTACT],
-                    buttonsForDetails: [CONTACT],
+                    label: 'Deploy',
+                    labelClass: 'deploy',
+                    buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_CAMPAIGN_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
+                    buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS]]),
+                    buttonsForDetails: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS]], [], true),
                 };
             } else {
                 return {
-                    label: 'Ready',
-                    labelClass: 'ready',
+                    label: 'Deploy',
+                    labelClass: 'deploy',
                     buttonsForCards: [],
                     buttonsForHeader: [],
                     buttonsForDetails: [],

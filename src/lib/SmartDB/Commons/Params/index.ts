@@ -26,3 +26,28 @@ export interface CampaignAddScriptsTxParams {
 export interface AddScriptTxParams {
     script_Hash: ScriptHash;
 }
+
+
+export interface CampaignDeployTxParams {
+    protocol_id: string;
+    campaign_id: string;
+    cdTokenAdminPolicy_CS: string;
+}
+
+export interface CampaignFundsAddTxParams {
+    protocol_id: string;
+    campaign_id: string;
+}
+
+export interface CampaignFundsMintDepositTxParams {
+    protocol_id: string;
+    campaign_id: string;
+}
+
+
+export interface CampaignLaunchTxParams {
+    protocol_id: string;
+    campaign_id: string;
+}
+
+

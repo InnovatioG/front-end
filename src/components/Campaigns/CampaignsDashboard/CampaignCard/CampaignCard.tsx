@@ -4,7 +4,7 @@ import { useCampaignDetails } from '@/hooks/useCampaingDetails';
 import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 import type { CampaignEX } from '@/types/types';
 import { ButtonType } from '@/utils/constants/buttons';
-import { TWO_USERS } from '@/utils/constants/images';
+import { TWO_USERS_ICON } from '@/utils/constants/images';
 import { CampaignTabEnum, PageViewEnums, ROUTES } from '@/utils/constants/routes';
 import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status/status';
 import { formatAllTime } from '@/utils/formats';
@@ -19,6 +19,9 @@ interface CampaignCardProps {
 }
 
 export default function CampaignCard(props: CampaignCardProps) {
+
+    console.log ('CampaignCard', props.campaign.campaign._DB_id, props.campaign.campaign.name);
+    
     const { showDebug } = useGeneralStore();
 
     const { campaign } = props;
@@ -63,7 +66,7 @@ export default function CampaignCard(props: CampaignCardProps) {
                     </div>
                     <div className={styles.investors}>
                         <svg width="12" height="12" className={styles.icon}>
-                            <use href={TWO_USERS}></use>
+                            <use href={TWO_USERS_ICON}></use>
                         </svg>
                         <p className={styles.cant}>{campaign.campaign.investors}</p>
                     </div>

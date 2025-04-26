@@ -106,7 +106,7 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'bigint', nullable: true })
     cdCollectedADA!: string;
     @Column({ type: 'bigint', nullable: true })
-    cdbegin_at!: string;
+    cdBegin_at!: string;
     @Column({ type: 'bigint', nullable: true })
     cdDeadline!: string;
     @Column({ type: 'integer', nullable: true })
@@ -207,11 +207,4 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
 
     // #endregion internal class methods
 
-    // #region posgresql db
-
-    public static PostgreSQLModel() {
-        return this;
-    }
-
-    // #endregion posgresql db
 }

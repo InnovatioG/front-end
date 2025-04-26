@@ -84,7 +84,6 @@ const CampaignTokenomicsTab: React.FC<ICampaignIdStoreSafe & ICampaignDetails> =
         if (requestedMaxADA > 0n && tokenomics_for_campaign > 0n) {
             newPrice = Number(requestedMaxADA * 1000000n) / Number(tokenomics_for_campaign);
             validPrice = Number(requestedMaxADA * 1000000n) % Number(tokenomics_for_campaign) === 0;
-            validPrice = validPrice && Number(requestedMinADA * 1000000n) % Number(tokenomics_for_campaign) === 0;
         } else {
             newPrice = 0;
         }

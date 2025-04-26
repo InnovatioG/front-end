@@ -2,113 +2,113 @@ import { BaseTxRedeemer, Convertible } from 'smart-db';
 
 // Campaign Redeemers
 
-export type CampaignPolicyRedeemer = PolicyRedeemerMintID | PolicyRedeemerBurnID | PolicyRedeemerMintCampaignToken | PolicyRedeemerBurnCampaignToken;
+export type CampaignPolicyRedeemer = CampaignPolicyRedeemerMintID | CampaignPolicyRedeemerBurnID | CampaignPolicyRedeemerMintCampaignToken | CampaignPolicyRedeemerBurnCampaignToken;
 
-export class PolicyRedeemerMintID extends BaseTxRedeemer {
+export class CampaignPolicyRedeemerMintID extends BaseTxRedeemer {
     protected static _plutusDataIndex = 0;
     protected static _plutusDataIsSubType = true;
 }
 
-export class PolicyRedeemerBurnID extends BaseTxRedeemer {
+export class CampaignPolicyRedeemerBurnID extends BaseTxRedeemer {
     protected static _plutusDataIndex = 1;
     protected static _plutusDataIsSubType = true;
 }
 
-export class PolicyRedeemerMintCampaignToken extends BaseTxRedeemer {
+export class CampaignPolicyRedeemerMintCampaignToken extends BaseTxRedeemer {
     protected static _plutusDataIndex = 2;
     protected static _plutusDataIsSubType = true;
 }
 
-export class PolicyRedeemerBurnCampaignToken extends BaseTxRedeemer {
+export class CampaignPolicyRedeemerBurnCampaignToken extends BaseTxRedeemer {
     protected static _plutusDataIndex = 3;
     protected static _plutusDataIsSubType = true;
 }
 
 export type CampaignValidatorRedeemer =
-    | ValidatorRedeemerDatumUpdate
-    | ValidatorRedeemerUpdateMinADA
-    | ValidatorRedeemerFundsAdd
-    | ValidatorRedeemerFundsMerge
-    | ValidatorRedeemerFundsDelete
-    | ValidatorRedeemerFundsCollect
-    | ValidatorRedeemerInitializeCampaign
-    | ValidatorRedeemerReachedCampaign
-    | ValidatorRedeemerNotReachedCampaign
-    | ValidatorRedeemerMilestoneAprobe
-    | ValidatorRedeemerMilestoneReprobe
-    | ValidatorRedeemerEmergency
-    | ValidatorRedeemerDelete;
+    | CampaignValidatorRedeemerDatumUpdate
+    | CampaignValidatorRedeemerUpdateMinADA
+    | CampaignValidatorRedeemerFundsAdd
+    | CampaignValidatorRedeemerFundsMerge
+    | CampaignValidatorRedeemerFundsDelete
+    | CampaignValidatorRedeemerFundsCollect
+    | CampaignValidatorRedeemerInitializeCampaign
+    | CampaignValidatorRedeemerReachedCampaign
+    | CampaignValidatorRedeemerNotReachedCampaign
+    | CampaignValidatorRedeemerMilestoneAprobe
+    | CampaignValidatorRedeemerMilestoneReprobe
+    | CampaignValidatorRedeemerEmergency
+    | CampaignValidatorRedeemerDelete;
 
-export class ValidatorRedeemerDatumUpdate extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerDatumUpdate extends BaseTxRedeemer {
     protected static _plutusDataIndex = 0;
     protected static _plutusDataIsSubType = true;
 }
 
-export class ValidatorRedeemerUpdateMinADA extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerUpdateMinADA extends BaseTxRedeemer {
     protected static _plutusDataIndex = 1;
     protected static _plutusDataIsSubType = true;
 }
 
-export class ValidatorRedeemerFundsAdd extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerFundsAdd extends BaseTxRedeemer {
     protected static _plutusDataIndex = 2;
     protected static _plutusDataIsSubType = true;
 }
 
-export class ValidatorRedeemerFundsMerge extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerFundsMerge extends BaseTxRedeemer {
     protected static _plutusDataIndex = 4;
     protected static _plutusDataIsSubType = true;
     @Convertible({ isForRedeemer: true })
     quantity!: number;
 }
 
-export class ValidatorRedeemerFundsDelete extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerFundsDelete extends BaseTxRedeemer {
     protected static _plutusDataIndex = 3;
     protected static _plutusDataIsSubType = true;
     quantity!: number;
 }
 
-export class ValidatorRedeemerFundsCollect extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerFundsCollect extends BaseTxRedeemer {
     protected static _plutusDataIndex = 12;
     protected static _plutusDataIsSubType = true;
     @Convertible({ isForRedeemer: true })
     amount!: number;
 }
 
-export class ValidatorRedeemerInitializeCampaign extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerInitializeCampaign extends BaseTxRedeemer {
     protected static _plutusDataIndex = 9;
     protected static _plutusDataIsSubType = true;
 }
 
-export class ValidatorRedeemerReachedCampaign extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerReachedCampaign extends BaseTxRedeemer {
     protected static _plutusDataIndex = 10;
     protected static _plutusDataIsSubType = true;
 }
 
-export class ValidatorRedeemerNotReachedCampaign extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerNotReachedCampaign extends BaseTxRedeemer {
     protected static _plutusDataIndex = 11;
     protected static _plutusDataIsSubType = true;
 }
 
-export class ValidatorRedeemerMilestoneAprobe extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerMilestoneAprobe extends BaseTxRedeemer {
     protected static _plutusDataIndex = 5;
     protected static _plutusDataIsSubType = true;
     @Convertible({ isForRedeemer: true })
     milestoneIndex!: number;
 }
 
-export class ValidatorRedeemerMilestoneReprobe extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerMilestoneReprobe extends BaseTxRedeemer {
     protected static _plutusDataIndex = 6;
     protected static _plutusDataIsSubType = true;
     @Convertible({ isForRedeemer: true })
     milestoneIndex!: number;
 }
 
-export class ValidatorRedeemerEmergency extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerEmergency extends BaseTxRedeemer {
     protected static _plutusDataIndex = 7;
     protected static _plutusDataIsSubType = true;
 }
 
-export class ValidatorRedeemerDelete extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerDelete extends BaseTxRedeemer {
     protected static _plutusDataIndex = 8;
     protected static _plutusDataIsSubType = true;
 }

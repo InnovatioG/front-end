@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { CampaignFundsEntity } from '../../../lib/SmartDB/Entities/CampaignFunds.Entity';
 import { CampaignFundsApi } from '../../../lib/SmartDB/FrontEnd/CampaignFunds.FrontEnd.Api.Calls';
 
@@ -16,7 +16,7 @@ export function useCampaignFunds() {
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching CampaignFunds: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching CampaignFunds: ${e}`);
         }
     }, []); 
 
@@ -37,7 +37,7 @@ export function useCampaignFunds() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating CampaignFunds: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating CampaignFunds: ${e}`);
         }
     };
 
@@ -52,7 +52,7 @@ export function useCampaignFunds() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating CampaignFunds: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating CampaignFunds: ${e}`);
             }
         }
     };
@@ -69,7 +69,7 @@ export function useCampaignFunds() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting CampaignFunds: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting CampaignFunds: ${e}`);
             }
         }
     };

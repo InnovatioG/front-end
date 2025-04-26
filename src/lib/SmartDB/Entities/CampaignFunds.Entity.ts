@@ -2,6 +2,7 @@ import 'reflect-metadata';
 import { BaseSmartDBEntity, Convertible, asSmartDBEntity, getAssetsFromCS, hexToStr, isNullOrBlank, type CS } from 'smart-db';
 
 export interface CampaignFundsDatum {
+    cfdVersion: number;
     cfdIndex: number;
     cfdCampaignPolicy_CS: CS;
     cfdCampaignFundsPolicyID_CS: CS;

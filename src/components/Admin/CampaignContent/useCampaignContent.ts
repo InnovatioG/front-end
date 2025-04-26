@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { CampaignContentEntity } from '../../../lib/SmartDB/Entities/CampaignContent.Entity';
 import { CampaignContentApi } from '../../../lib/SmartDB/FrontEnd/CampaignContent.FrontEnd.Api.Calls';
 
@@ -16,7 +16,7 @@ export function useCampaignContent() {
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching CampaignContent: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching CampaignContent: ${e}`);
         }
     }, []); 
 
@@ -33,7 +33,7 @@ export function useCampaignContent() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating CampaignContent: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating CampaignContent: ${e}`);
         }
     };
 
@@ -47,7 +47,7 @@ export function useCampaignContent() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating CampaignContent: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating CampaignContent: ${e}`);
             }
         }
     };
@@ -64,7 +64,7 @@ export function useCampaignContent() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting CampaignContent: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting CampaignContent: ${e}`);
             }
         }
     };

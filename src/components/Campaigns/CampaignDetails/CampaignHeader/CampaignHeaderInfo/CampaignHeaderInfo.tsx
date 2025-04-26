@@ -2,7 +2,7 @@ import ToolTipInformation from '@/components/General/ToolTipInformation/ToolTipI
 import { ICampaignDetails } from '@/hooks/useCampaingDetails';
 import { ICampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
 import { formatMoneyByADAOrDollar } from '@/store/generalStore/useGeneralStore';
-import { TWO_USERS } from '@/utils/constants/images';
+import { TWO_USERS_ICON } from '@/utils/constants/images';
 import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status/status';
 import { formatAllTime } from '@/utils/formats';
 import React from 'react';
@@ -23,7 +23,7 @@ const CampaignHeaderInfo: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (p
                 </div>
                 <div className={styles.investors}>
                     <svg width="15" height="10" className={styles.icon}>
-                        <use href={TWO_USERS}></use>
+                        <use href={TWO_USERS_ICON}></use>
                     </svg>
                     <span className={styles.span}>{campaign.campaign.investors}</span>
                 </div>

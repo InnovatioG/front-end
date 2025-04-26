@@ -62,7 +62,7 @@ const ViewCampaignSubmissionModal: React.FC<ViewCampaignSubmissionModalProps> = 
         const status_code_id = getSubmissionStatus_Code_Id_By_Db_Id(submission.submission_status_id);
         switch (status_code_id) {
             case SubmissionStatus_Enums.SUBMITTED:
-                return <p>Su camapaña ha sido enviada para su revisión. Por favor espere.</p>;
+                return <p>Your campaign has been sent for review. Please wait.</p>;
             case SubmissionStatus_Enums.APPROVED:
                 return (
                     <>

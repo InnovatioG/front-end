@@ -1,4 +1,4 @@
-import { CHART, COLABORATORS, CONTRIBUITED, LAUNCHED, USER, USERS } from '@/utils/constants/images';
+import { CHART_ICON, COLABORATORS, CONTRIBUITED, LAUNCHED, USER_ICON, USERS_ICON } from '@/utils/constants/images';
 import Image from 'next/image';
 import styles from './CampaignsHighlights.module.scss';
 import { useCallback, useEffect, useState } from 'react';
@@ -20,8 +20,8 @@ export default function CampaignHighlights() {
             filterConditions.push({ campaign_status_id: { $in: campaignStatusIdsForInvestors } });
         }
         const filter = filterConditions.length > 0 ? { $and: filterConditions } : {};
-        const {count: launchedCampaigns} = await CampaignApi.getCountApi_(filter);
-        const campaigns: CampaignEntity[] = await CampaignApi.getByParamsApi_(filter, { fieldsForSelect: { cdFundedADA: true, investors: true } });
+        const { count: launchedCampaigns } = await CampaignApi.getCountApi_(filter);
+        const campaigns: CampaignEntity[] = await CampaignApi.getByParamsApi_(filter, { fieldsForSelect: { cdFundedADA: true, investors: true }, doCallbackAfterLoad: true });
         setLaunchedCampaigns(launchedCampaigns);
         const contribuitedADA = campaigns.reduce((acc, campaign) => acc + (campaign.cdFundedADA ?? 0n), 0n);
         setContribuitedADA(Number(contribuitedADA));
@@ -36,7 +36,7 @@ export default function CampaignHighlights() {
         <div className={styles.cardSection}>
             <div className={styles.card}>
                 <svg width="18" height="18" className={styles.icon}>
-                    <use href={USERS}></use>
+                    <use href={USERS_ICON}></use>
                 </svg>
                 <div className={styles.dataCard}>
                     <p className={styles.data}>{launchedCampaigns}</p>
@@ -48,7 +48,7 @@ export default function CampaignHighlights() {
             </div>
             <div className={styles.card}>
                 <svg width="18" height="18" className={styles.icon}>
-                    <use href={CHART}></use>
+                    <use href={CHART_ICON}></use>
                 </svg>
                 <div className={styles.dataCard}>
                     <p className={styles.data}>{formatMoneyByADAOrDollar(contribuitedADA)}</p>
@@ -60,7 +60,7 @@ export default function CampaignHighlights() {
             </div>
             <div className={styles.card}>
                 <svg width="18" height="18" className={styles.icon}>
-                    <use href={USER}></use>
+                    <use href={USER_ICON}></use>
                 </svg>
                 <div className={styles.dataCard}>
                     <p className={styles.data}>{colaborators}</p>

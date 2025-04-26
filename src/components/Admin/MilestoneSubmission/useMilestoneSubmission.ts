@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { MilestoneSubmissionEntity } from '../../../lib/SmartDB/Entities/MilestoneSubmission.Entity';
 import { MilestoneSubmissionApi } from '../../../lib/SmartDB/FrontEnd/MilestoneSubmission.FrontEnd.Api.Calls';
 
@@ -16,7 +16,7 @@ export function useMilestoneSubmission() {
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching MilestoneSubmission: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching MilestoneSubmission: ${e}`);
         }
     }, []); 
 
@@ -33,7 +33,7 @@ export function useMilestoneSubmission() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating MilestoneSubmission: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating MilestoneSubmission: ${e}`);
         }
     };
 
@@ -47,7 +47,7 @@ export function useMilestoneSubmission() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating MilestoneSubmission: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating MilestoneSubmission: ${e}`);
             }
         }
     };
@@ -64,7 +64,7 @@ export function useMilestoneSubmission() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting MilestoneSubmission: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting MilestoneSubmission: ${e}`);
             }
         }
     };

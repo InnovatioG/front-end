@@ -1,4 +1,4 @@
-import { CAMPAIGN_VERSION, EMERGENCY_ADMIN_TOKEN_POLICY_CS, PROTOCOL_DEPLOY, PROTOCOL_VERSION } from '@/utils/constants/on-chain';
+import { CAMPAIGN_VERSION, EMERGENCY_ADMIN_TOKEN_POLICY_CS, PROTOCOL_VERSION, TxEnums } from '@/utils/constants/on-chain';
 import {
     CampaignCategoryDefault,
     CampaignCategoryDefaultNames,
@@ -281,7 +281,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         await this.populateCampaignCategory();
         await this.populateMilestoneStatus();
         await this.populateSubmissionStatus();
-        await this.populateCampaigns(lucid, walletTxParams, protocol, wallet);
+        // await this.populateCampaigns(lucid, walletTxParams, protocol, wallet);
     }
 
     private static async populateUser(walletTxParams: WalletTxParams): Promise<WalletEntity> {
@@ -772,8 +772,8 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
             const deadlineDate = new Date(currentDate.getTime() + campaignData.deadline_days * 24 * 60 * 60 * 1000);
 
             dateFields = {
-                cdbegin_at: BigInt(Math.floor(beginAtDate.getTime() / 1000)),
-                cdDeadline: BigInt(Math.floor(deadlineDate.getTime() / 1000)),
+                cdBegin_at: BigInt(beginAtDate.getTime()),
+                cdDeadline: BigInt(deadlineDate.getTime()),
                 begin_at: beginAtDate,
                 deadline: deadlineDate,
                 campaign_deployed_date: currentDate,
@@ -789,7 +789,7 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         }
 
         const campaign = new CampaignEntity({
-            isDeployed,
+            _isDeployed: isDeployed,
 
             campaign_category_id: categoryId,
             campaign_status_id: code_id,
@@ -998,8 +998,6 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
 
     // #endregion populate
 
-    // #endregion class methods
-
     private static sortDatum(datum: ProtocolDatum) {
         datum.pdAdmins = datum.pdAdmins.sort((a: PaymentKeyHash, b: PaymentKeyHash) => {
             if (a < b) return -1;
@@ -1024,6 +1022,8 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
 
         return datum;
     }
+
+    // #endregion class methods
 }
 
 @BackEndApiHandlersFor(ProtocolEntity)
@@ -1246,11 +1246,6 @@ export class ProtocolApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 //--------------------------------------
                 console_log(0, this._Entity.className(), `Deploy Tx - txParams: ${showData(txParams)}`);
                 //--------------------------------------
-                if (isEmulator) {
-                    // solo en emulator. Me aseguro de setear el emulador al tiempo real del server. Va a saltear los slots necesarios.
-                    // await TimeBackEnd.syncBlockChainWithServerTime()
-                }
-                //--------------------------------------
                 const { lucid } = await LucidToolsBackEnd.prepareLucidBackEndForTx(walletTxParams);
                 //--------------------------------------
                 walletTxParams.utxos = fixUTxOList(walletTxParams?.utxos ?? []);
@@ -1299,7 +1294,7 @@ export class ProtocolApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 const protocolPolicyRedeemerMintID_Hex = objToCborHex(protocolPolicyRedeemerMintID);
                 console_log(0, this._Entity.className(), `Deploy Tx - protocolPolicyRedeemerMintID_Hex: ${showData(protocolPolicyRedeemerMintID_Hex, false)}`);
                 //--------------------------------------
-                const { from, until } = await TimeBackEnd.getTxTimeRange();
+                const { from, until } = await TimeBackEnd.getTxTimeRange(lucid);
                 //--------------------------------------
                 const flomSlot = lucid.unixTimeToSlot(from);
                 const untilSlot = lucid.unixTimeToSlot(until);
@@ -1307,9 +1302,9 @@ export class ProtocolApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 console_log(
                     0,
                     this._Entity.className(),
-                    `Deploy Tx - currentSlot: ${lucid.currentSlot()} - from ${from} to ${until} - from ${convertMillisToTime(from)} to ${convertMillisToTime(
-                        until
-                    )} - fromSlot ${flomSlot} to ${untilSlot}`
+                    `Deploy Tx - currentSlot: ${lucid.currentSlot()} - fromSlot ${flomSlot} to ${untilSlot} - from UnixTime ${from} to ${until} - from Date ${convertMillisToTime(
+                        from
+                    )} to ${convertMillisToTime(until)} `
                 );
                 //--------------------------------------
                 let transaction: TransactionEntity | undefined = undefined;
@@ -1318,7 +1313,7 @@ export class ProtocolApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     const transaction_ = new TransactionEntity({
                         paymentPKH: walletTxParams.pkh,
                         date: new Date(from),
-                        type: PROTOCOL_DEPLOY,
+                        type: TxEnums.PROTOCOL_DEPLOY,
                         status: TRANSACTION_STATUS_CREATED,
                         reading_UTxOs: [],
                         consuming_UTxOs: [],
@@ -1393,134 +1388,6 @@ export class ProtocolApiHandlers extends BaseSmartDBBackEndApiHandlers {
             return res.status(405).json({ error: `Method not allowed` });
         }
     }
-
-    // public static async deployTxApiHandler(req: NextApiRequestAuthenticated, res: NextApiResponse) {
-    //     if (req.method === 'POST') {
-    //         console_log(1, this._Entity.className(), `Deploy Tx - POST - Init`);
-    //         try {
-    //             const sanitizedBody = sanitizeForDatabase(req.body);
-
-    //             // Destructure required parameters from the request body
-    //             const {
-    //                 walletTxParams,
-    //                 txParams,
-    //             }: {
-    //                 walletTxParams: WalletTxParams;
-    //                 txParams: SellMarketNFTTxParams;
-    //             } = sanitizedBody;
-
-    //             console_log(0, this._Entity.className(), `Sell Tx - txParams: ${showData(txParams)}`);
-
-    //             // Emulator sync for development environment only
-    //             if (isEmulator) {
-    //                 // await TimeBackEnd.syncBlockChainWithServerTime()
-    //             }
-
-    //             // Prepare Lucid for transaction handling and wallet info
-    //             const { lucid } = await LucidToolsBackEnd.prepareLucidBackEndForTx(walletTxParams);
-    //             const { utxos: uTxOsAtWallet, address } = walletTxParams;
-
-    //             // Extract transaction parameters related to the asset for sale
-    //             const { priceOfAsset, token_TN, token_CS, datumID_CS, datumID_TN, validatorAddress, mintingPolicyID } = txParams;
-
-    //             const paymentPKH = addressToPubKeyHash(address);
-
-    //             // Generate datum object with relevant sale data and no min ADA yet
-    //             const datumPlainObject_NoMinADA = {
-    //                 version: marketPlaceVersion,
-    //                 sellerPaymentPKH: paymentPKH,
-    //                 policyID_CS: datumID_CS,
-    //                 sellingToken_CS: token_CS,
-    //                 sellingToken_TN: strToHex(token_TN),
-    //                 priceOfAsset: BigInt(priceOfAsset),
-    //                 minADA: BigInt(0),
-    //             };
-
-    //             const lucidAC_MintID = datumID_CS + strToHex(datumID_TN);
-    //             const valueFor_Mint_ID: Assets = { [lucidAC_MintID]: 1n };
-
-    //             let valueFor_MarketNFTDatum_Out: Assets = valueFor_Mint_ID;
-    //             const lucidAC_sellerToken = token_CS + strToHex(token_TN);
-    //             const valueOfSellerToken: Assets = { [lucidAC_sellerToken]: 1n };
-
-    //             // Add additional values to the transaction, including minimum ADA requirement
-    //             valueFor_MarketNFTDatum_Out = addAssetsList([valueOfSellerToken, valueFor_MarketNFTDatum_Out]);
-    //             const minADA_For_MarketNFTDatum = calculateMinAdaOfUTxO({
-    //                 datum: MarketNFTEntity.datumToCborHex(datumPlainObject_NoMinADA),
-    //                 assets: valueFor_MarketNFTDatum_Out,
-    //             });
-    //             const value_MinAda_For_MarketNFTDatum: Assets = {
-    //                 lovelace: minADA_For_MarketNFTDatum,
-    //             };
-    //             valueFor_MarketNFTDatum_Out = addAssetsList([value_MinAda_For_MarketNFTDatum, valueFor_MarketNFTDatum_Out]);
-
-    //             // Generate datum object with min ADA calculated
-    //             const datumPlainObject = {
-    //                 ...datumPlainObject_NoMinADA,
-    //                 minADA: BigInt(minADA_For_MarketNFTDatum),
-    //             };
-
-    //             // Create and encode the datum for the transaction
-    //             let marketNftDatum_Out = MarketNFTEntity.mkDatumFromPlainObject(datumPlainObject);
-    //             const marketNftDatum_Out_Hex = MarketNFTEntity.datumToCborHex(marketNftDatum_Out);
-
-    //             // Create minting policy and redeemers for the sale transaction
-    //             const marketNftPolicyRedeemerMintID = new PolicyRedeemerMintID();
-    //             const marketNftPolicyRedeemerMintID_Hex = objToCborHex(marketNftPolicyRedeemerMintID);
-
-    //             // Time range setup for the transaction
-    //             const { now, from, until } = await TimeBackEnd.getTxTimeRange();
-
-    //             let tx: Tx = lucid.newTx();
-    //             tx = tx
-    //                 .mintAssets(valueFor_Mint_ID, marketNftPolicyRedeemerMintID_Hex)
-    //                 .payToContract(validatorAddress, { inline: marketNftDatum_Out_Hex }, valueFor_MarketNFTDatum_Out)
-    //                 .attachMintingPolicy(mintingPolicyID);
-
-    //             const txComplete = await tx.complete();
-    //             const txCborHex = txComplete.toCBOR();
-    //             const txHash = txComplete.toHash();
-
-    //             // Create and save transaction entity in the Smart DB
-    //             const transactionMarketNFTPolicyRedeemerMintID: TransactionRedeemer = {
-    //                 tx_index: 0,
-    //                 purpose: 'mint',
-    //                 redeemerObj: marketNftPolicyRedeemerMintID,
-    //             };
-
-    //             const transactionMarketNFTDatum_Out: TransactionDatum = {
-    //                 address: validatorAddress,
-    //                 datumType: MarketNFTEntity.className(),
-    //                 datumObj: marketNftDatum_Out,
-    //             };
-
-    //             const transaction: TransactionEntity = new TransactionEntity({
-    //                 paymentPKH: walletTxParams.pkh,
-    //                 date: new Date(now),
-    //                 type: MARKET_SELL,
-    //                 hash: txHash,
-    //                 status: TRANSACTION_STATUS_PENDING,
-    //                 ids: {},
-    //                 redeemers: {
-    //                     marketNftPolicyRedeemerMintID: transactionMarketNFTPolicyRedeemerMintID,
-    //                 },
-    //                 datums: { marketNftDatum_Out: transactionMarketNFTDatum_Out },
-    //                 consuming_UTxOs: [],
-    //             });
-    //             await TransactionBackEndApplied.create(transaction);
-
-    //             return res.status(200).json({ txCborHex, txHash });
-    //         } catch (error) {
-    //             console_error(-1, this._Entity.className(), `Sell Tx - Error: ${error}`);
-    //             return res.status(500).json({
-    //                 error: `An error occurred while creating the ${this._Entity.apiRoute()} Sell Tx: ${error}`,
-    //             });
-    //         }
-    //     } else {
-    //         console_error(-1, this._Entity.className(), `Sell Tx - Error: Method not allowed`);
-    //         return res.status(405).json({ error: `Method not allowed` });
-    //     }
-    // }
 
     // #endregion transactions
 

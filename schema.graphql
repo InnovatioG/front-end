@@ -82,7 +82,7 @@ type Campaign @smartDBEntity(plutusDataIsSubType: false, isNETIdUnique: false, t
  cdRequestedMinADA: String @convertible(params:["isForDatum: true"])
  cdFundedADA: String @convertible(params:["isForDatum: true"])
  cdCollectedADA: String @convertible(params:["isForDatum: true"])
- cdbegin_at: String @specialType(typeName:"Date") @convertible(params:["isForDatum: true"])
+ cdBegin_at: String @specialType(typeName:"Date") @convertible(params:["isForDatum: true"])
  cdDeadline: String @specialType(typeName:"Date") @convertible(params:["isForDatum: true"])
  cdStatus: Int @convertible(params:["isForDatum: true"])
  cdMilestones: String @convertible(params:["isForDatum: true"])

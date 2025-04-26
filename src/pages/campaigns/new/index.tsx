@@ -10,8 +10,9 @@ import { getCampaignEX, getCampaignStatus_Db_Id_By_Code_Id, getMilestoneStatus_D
 import { REQUESTED_DEFAULT_ADA, REQUESTED_MAX_ADA, REQUESTED_MIN_PERCENTAGE_FROM_MAX } from '@/utils/constants/constants';
 import { CampaignStatus_Code_Id_Enums, MilestoneStatus_Code_Id_Enums } from '@/utils/constants/status/status';
 import React, { useEffect } from 'react';
-import { toJson, useWalletStore } from 'smart-db';
+import { strToHex, toJson, useWalletStore } from 'smart-db';
 import styles from './index.module.scss';
+import { CAMPAIGN_TOKEN_DEFAULT_TN_Str } from '@/utils/constants/on-chain';
 
 interface CampaignsCreationPageProps {
     // Define props here
@@ -45,7 +46,7 @@ const CampaignsCreationPage: React.FC<CampaignsCreationPageProps> = (props) => {
         const fetch = async () => {
             setIsEditMode(true);
             const campaign = new CampaignEntity();
-            const now = new Date();
+            // const now = new Date();
 
             campaign.campaign_category_id = '';
 
@@ -55,14 +56,14 @@ const CampaignsCreationPage: React.FC<CampaignsCreationPageProps> = (props) => {
             campaign.description = '';
             campaign.begin_at_days = 0;
             campaign.deadline_days = 90;
-            campaign.campaign_deployed_date = now;
-            campaign.campaign_actived_date = now;
-            campaign.begin_at = now;
-            campaign.deadline = now;
+            campaign.campaign_deployed_date = undefined;
+            campaign.campaign_actived_date = undefined;
+            campaign.begin_at = undefined;
+            campaign.deadline = undefined;
 
             campaign.mint_CampaignToken = true;
             campaign.campaignToken_CS = '';
-            campaign.campaignToken_TN = '';
+            campaign.campaignToken_TN = strToHex(CAMPAIGN_TOKEN_DEFAULT_TN_Str);
             campaign.campaignToken_PriceADA = 0n;
             campaign.requestedMaxADA = REQUESTED_DEFAULT_ADA;
             campaign.requestedMinADA = BigInt(Number(REQUESTED_DEFAULT_ADA) * REQUESTED_MIN_PERCENTAGE_FROM_MAX);
@@ -80,6 +81,8 @@ const CampaignsCreationPage: React.FC<CampaignsCreationPageProps> = (props) => {
             campaign.tokenomics_max_supply = REQUESTED_MAX_ADA;
             campaign.tokenomics_for_campaign = REQUESTED_MAX_ADA;
             campaign.tokenomics_description = '';
+
+            campaign._isDeployed = false;
 
             const campaignEX = await getCampaignEX(campaign);
 

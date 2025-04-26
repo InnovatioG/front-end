@@ -17,29 +17,34 @@ export const COLABORATORS = '/img/ui/colaborators.png';
 
 export const WALLET_ICON = '/img/icons/wallet.svg#icon';
 export const PLUS_ICON = '/img/icons/plus.svg#icon';
+export const CHECK_ICON = '/img/icons/check.svg#icon';
 export const CLOSE_ICON = '/img/icons/x.svg#icon';
-export const CALENDAR = '/img/icons/calendar.svg#icon';
-export const CHART = '/img/icons/chart.svg#icon';
-export const USER = '/img/icons/user.svg#icon';
-export const USERS = '/img/icons/users.svg#icon';
-export const TWO_USERS = '/img/icons/two-user.svg#icon';
-export const CHEVRON_RIGHT = '/img/icons/chevron-right.svg#icon';
-export const CHEVRON_LEFT = '/img/icons/chevron-left.svg#icon';
-export const CHEVRON_DOWN = '/img/icons/chevron-down.svg#icon';
-export const SEARCH = '/img/icons/search.png';
-export const FACEBOOK = '/img/icons/fb.svg#icon';
-export const DISCORD = '/img/icons/ds.svg#icon';
-export const TWITTER = '/img/icons/xs.svg#icon';
-export const WEBSITE = '/img/icons/website.svg#icon';
-export const INSTAGRAM = '/img/icons/ig.svg#icon';
-export const GOOGLE = '/img/icons/google.png';
-export const AVATAR = '/img/icons/defaultavatar.png';
-export const ADAIC = '/img/icons/ADA.svg#icon';
-export const LINKEDIN = '/img/icons/linkedin.svg#icon';
-export const REFRESH = '/img/icons/modal/refresh.svg#icon';
-export const HIDE = '/img/icons/modal/hide.svg#icon';
-export const SHOW = '/img/icons/modal/show.svg#icon';
-export const COPY = '/img/icons/modal/copy.svg#icon';
+export const REFRESH_ICON = '/img/icons/modal/refresh.svg#icon';
+export const HIDE_ICON = '/img/icons/modal/hide.svg#icon';
+export const SHOW_ICON = '/img/icons/modal/show.svg#icon';
+export const COPY_ICON = '/img/icons/modal/copy.svg#icon';
+export const CHEVRON_RIGHT_ICON = '/img/icons/chevron-right.svg#icon';
+export const CHEVRON_LEFT_ICON = '/img/icons/chevron-left.svg#icon';
+export const CHEVRON_DOWN_ICON = '/img/icons/chevron-down.svg#icon';
+export const SEARCH_ICON = '/img/icons/search.png';
+
+export const CALENDAR_ICON = '/img/icons/calendar.svg#icon';
+export const CHART_ICON = '/img/icons/chart.svg#icon';
+export const USER_ICON = '/img/icons/user.svg#icon';
+export const USERS_ICON = '/img/icons/users.svg#icon';
+export const TWO_USERS_ICON = '/img/icons/two-user.svg#icon';
+
+export const AVATAR_ICON = '/img/icons/defaultavatar.png';
+
+export const FACEBOOK_ICON = '/img/icons/fb.svg#icon';
+export const DISCORD_ICON = '/img/icons/ds.svg#icon';
+export const TWITTER_ICON = '/img/icons/xs.svg#icon';
+export const WEBSITE_ICON = '/img/icons/website.svg#icon';
+export const INSTAGRAM_ICON = '/img/icons/ig.svg#icon';
+export const GOOGLE_ICON = '/img/icons/google.png';
+export const LINKEDIN_ICON = '/img/icons/linkedin.svg#icon';
+
+export const ADA_ICON = '/img/icons/ADA.svg#icon';
 
 //ASSETS
 

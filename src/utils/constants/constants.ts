@@ -1,4 +1,4 @@
-import { DISCORD, FACEBOOK, INSTAGRAM, LINKEDIN, WEBSITE, TWITTER } from '@/utils/constants/images';
+import { DISCORD_ICON, FACEBOOK_ICON, INSTAGRAM_ICON, LINKEDIN_ICON, WEBSITE_ICON, TWITTER_ICON } from '@/utils/constants/images';
 //--------------------------------------------------------------
 
 export enum SocialLinksEnums {
@@ -12,12 +12,12 @@ export enum SocialLinksEnums {
 //--------------------------------------------------------------
 
 export const SocialLinksIcons = [
-    { icon: WEBSITE, name: SocialLinksEnums.WEBSITE },
-    { icon: FACEBOOK, name: SocialLinksEnums.FACEBOOK },
-    { icon: INSTAGRAM, name: SocialLinksEnums.INSTAGRAM },
-    { icon: TWITTER, name: SocialLinksEnums.TWITTER },
-    { icon: LINKEDIN, name: SocialLinksEnums.LINKEDIN },
-    { icon: DISCORD, name: SocialLinksEnums.DISCORD },
+    { icon: WEBSITE_ICON, name: SocialLinksEnums.WEBSITE },
+    { icon: FACEBOOK_ICON, name: SocialLinksEnums.FACEBOOK },
+    { icon: INSTAGRAM_ICON, name: SocialLinksEnums.INSTAGRAM },
+    { icon: TWITTER_ICON, name: SocialLinksEnums.TWITTER },
+    { icon: LINKEDIN_ICON, name: SocialLinksEnums.LINKEDIN },
+    { icon: DISCORD_ICON, name: SocialLinksEnums.DISCORD },
 ];
 
 //--------------------------------------------------------------
@@ -50,9 +50,9 @@ export enum ModalsEnums {
     SUCCESS = 'Success',
 
     CONFIRM_TX = 'ConfirmTx',
-    PROCESSING_TX = 'Processing',
+    PROCESSING_TX = 'ProcessingTx',
 
-
+    PROCESSING_TASK = 'ProcessingTask',
 
 }
 //--------------------------------------------------------------
@@ -64,6 +64,8 @@ export enum HandlesEnums {
     ARCHIVE_CAMPAIGN = 'Archive Campaign',
     UN_ARCHIVE_CAMPAIGN = 'unArchive Campaign',
 
+    DELETE_CAMPAIGN = 'Delete Campaign',
+
     SUBMIT_CAMPAIGN = 'Submit Campaign',
     APPROVE_CAMPAIGN = 'Approve Campaign',
     REJECT_CAMPAIGN = 'Reject Campaign',
@@ -71,6 +73,9 @@ export enum HandlesEnums {
     CREATE_SMART_CONTRACTS = 'Create Smart Contracts',
     PUBLISH_SMART_CONTRACTS = 'Publish Smart Contracts',
     INITIALIZE_CAMPAIGN = 'Initialize Campaign',
+    MANAGE_CAMPAIGN_UTXOS = 'Manage Campaign UTXOs',
+
+    
     LAUNCH_CAMPAIGN = 'Launch Campaign',
 
     SET_FUNDRAISING_STATUS = 'Set Fundraising Status',
@@ -78,11 +83,23 @@ export enum HandlesEnums {
     SET_REACHED_STATUS = 'Set Reached Status',
     SET_UNREACHED_STATUS = 'Set Unreached Status',
     SET_FAILED_STATUS = 'Set Failed Status',
-
 }
 
 //--------------------------------------------------------------
 
+export enum TaskEnums {
+    CREATE_PROTOCOL = 'CreateProtocol',
+    DELETE_PROTOCOL = 'DeleteProtocol',
+    
+    DELETE_CAMPAIGN = 'DeleteCampaignl',
+
+    SYNC_PROTOCOL = 'SyncProtocol',
+    CREATE_CAMPAIGN = 'CreateCampaign',
+    CREATE_CONTRACTS_CAMPAIGN = 'CreateContractsCampaign',
+
+}
+
+//--------------------------------------------------------------
 
 export const REQUESTED_MAX_ADA = 1000000n;
 export const REQUESTED_MIN_PERCENTAGE_FROM_MAX = 0.8;

@@ -2,11 +2,10 @@ import { ProtocolEntity } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import styles from './Protocol.module.scss';
 import { useProtocol } from './useProtocol';
-import { ADMIN_TOKEN_POLICY_CS } from '@/utils/constants/on-chain';
 
 export default function Protocol() {
-    const { list, editItem, view, setEditItem, setView, deploy, addScripts, sync } = useProtocol();
-
+    const { list, editItem, view, setEditItem, setView, handleDeployTx, handleAddScriptTx, handleSyncTaks } = useProtocol();
+    //--------------------------------------
     const AdminsForm: React.FC<{
         item: Partial<ProtocolEntity>;
         setItem: Dispatch<SetStateAction<Partial<ProtocolEntity>>>;
@@ -138,7 +137,7 @@ export default function Protocol() {
             </table>
         );
     };
-
+    //--------------------------------------
     const renderList = () => (
         <div>
             {list.length === 0 ? (
@@ -153,8 +152,8 @@ export default function Protocol() {
                             <th>Token Admin Policy</th>
                             <th>Min ADA</th>
                             {/* <th>Contracts</th> */}
-                            <th>Created At</th>
-                            <th>Updated At</th>
+                            {/* <th>Created At</th>
+                            <th>Updated At</th> */}
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -167,8 +166,8 @@ export default function Protocol() {
                                 <td>{item.pdTokenAdminPolicy_CS}</td>
                                 <td>{item.pdMinADA?.toString()}</td>
                                 {/* <td>{item.contracts.join(', ')}</td> */}
-                                <td>{item.createdAt.toISOString()}</td>
-                                <td>{item.updatedAt?.toISOString()}</td>
+                                {/* <td>{item.createdAt.toISOString()}</td>
+                                <td>{item.updatedAt?.toISOString()}</td> */}
                                 <td>
                                     {item._isDeployed === true ? (
                                         <button
@@ -189,13 +188,13 @@ export default function Protocol() {
                                             Deploy
                                         </button>
                                     )}
-                                     <button
-                                            onClick={() => {
-                                                sync(item)
-                                            }}
-                                        >
-                                            Sync
-                                        </button>
+                                    <button
+                                        onClick={() => {
+                                            handleSyncTaks(item);
+                                        }}
+                                    >
+                                        Sync
+                                    </button>
                                 </td>
                             </tr>
                         ))}
@@ -204,7 +203,7 @@ export default function Protocol() {
             )}
         </div>
     );
-
+    //--------------------------------------
     const renderDeploy = () => (
         <form className={styles.form}>
             <div>
@@ -238,7 +237,7 @@ export default function Protocol() {
                 />
             </div>
 
-            <button type="button" onClick={deploy}>
+            <button type="button" onClick={handleDeployTx}>
                 Deploy
             </button>
 
@@ -247,10 +246,10 @@ export default function Protocol() {
             </button>
         </form>
     );
-
+    //--------------------------------------
     const renderAddScripts = () => (
         <form className={styles.form}>
-            <button type="button" onClick={() => addScripts(editItem! as ProtocolEntity)}>
+            <button type="button" onClick={() => handleAddScriptTx(editItem! as ProtocolEntity)}>
                 Add Scripts
             </button>
 
@@ -259,7 +258,7 @@ export default function Protocol() {
             </button>
         </form>
     );
-
+    //--------------------------------------
     return (
         <div className={styles.content}>
             {view === 'list' && renderList()}

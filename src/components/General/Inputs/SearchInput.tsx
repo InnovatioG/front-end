@@ -1,4 +1,4 @@
-import { SEARCH } from '@/utils/constants/images';
+import { SEARCH_ICON } from '@/utils/constants/images';
 import Image from 'next/image';
 import styles from './Input.module.scss';
 
@@ -15,7 +15,7 @@ export default function SearchInput(props: SearchInputProps) {
     return (
         <div className={styles.searchActions} style={width ? { width: `${width}px` } : undefined}>
             <div className={styles.iconContainer}>
-                <Image src={SEARCH} height={24} width={24} alt="search" className={styles.icon} />
+                <Image src={SEARCH_ICON} height={24} width={24} alt="search" className={styles.icon} />
             </div>
             <input type="text" placeholder={placeholder} value={searchTerm} onChange={onSearchChange} className={styles.input} />
         </div>

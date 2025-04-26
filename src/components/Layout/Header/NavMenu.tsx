@@ -1,5 +1,5 @@
 import BtnHeaderCampaignNewOrManage from '@/components/GeneralOK/Buttons/Buttons/BtnHeaderCampaignNewOrManage/BtnHeaderCampaignNewOrManage';
-import { CALENDAR } from '@/utils/constants/images';
+import { CALENDAR_ICON } from '@/utils/constants/images';
 import Link from 'next/link';
 import { useState } from 'react';
 import styles from './NavMenu.module.scss';
@@ -26,7 +26,7 @@ export default function NavMenu() {
                     <h2 className={styles.menuTitle}>Menu</h2>
                     <div className={styles.btnCalendar}>
                         <svg width="29" height="29" className={styles.icon}>
-                            <use href={CALENDAR}></use>
+                            <use href={CALENDAR_ICON}></use>
                         </svg>
                     </div>
                     <div className={styles.infoSection}>

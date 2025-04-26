@@ -88,7 +88,7 @@ export class ScriptApi extends BaseSmartDBFrontEndTxApiCalls {
                 throw `CampaignAddScriptsTxParams not defined`;
             }
             const body = toJson({ walletTxParams, txParams });
-            const response = await fetch(`${process.env.NEXT_PUBLIC_REACT_SERVER_API_URL}/${this._Entity.apiRoute()}/tx/addFundScript`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_REACT_SERVER_API_URL}/${this._Entity.apiRoute()}/tx/addCampaignScript`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -4,11 +4,11 @@ import { createContext, ReactNode, useContext } from 'react';
 export interface IModalContext {
     activeModal: ModalsEnums | null;
     modalData?: Record<string, any>;
-    handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | undefined | void>>>;
+    handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | boolean | undefined | void>>>;
     openModal: (
         modal: ModalsEnums,
         data?: Record<string, any>,
-        handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | undefined | void>>>,
+        handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | boolean | undefined | void>>>,
         component?: ReactNode
     ) => void;
     closeModal: () => void;

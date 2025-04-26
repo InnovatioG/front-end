@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
 import { CampaignCategoryEntity } from '../../../lib/SmartDB/Entities/CampaignCategory.Entity';
 import { CampaignCategoryApi } from '../../../lib/SmartDB/FrontEnd/CampaignCategory.FrontEnd.Api.Calls';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 
 export function useCampaignCategory() {
     const [list, setList] = useState<CampaignCategoryEntity[]>([]);
@@ -16,7 +16,7 @@ export function useCampaignCategory() {
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching CampaignCategory: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching CampaignCategory: ${e}`);
         }
     }, []); 
 
@@ -33,7 +33,7 @@ export function useCampaignCategory() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating CampaignCategory: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating CampaignCategory: ${e}`);
         }
     };
 
@@ -47,7 +47,7 @@ export function useCampaignCategory() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating CampaignCategory: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating CampaignCategory: ${e}`);
             }
         }
     };
@@ -64,7 +64,7 @@ export function useCampaignCategory() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting CampaignCategory: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting CampaignCategory: ${e}`);
             }
         }
     };

@@ -14,6 +14,8 @@ interface CampaingCardInfoProps {
 const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> = (props: CampaingCardInfoProps & ICampaignDetails) => {
     const { campaign, label, labelClass, campaign_status_code_id, currentMilestoneStringOrdinal, totalMilestones, fundedPercentage } = props;
 
+    console.log('CampaingCardInfoInfo', campaign, label, labelClass, campaign_status_code_id, currentMilestoneStringOrdinal, totalMilestones, fundedPercentage);
+
     const StateContainer = ({ amount, subtext, classNameStyle }: { amount: string; subtext: string; classNameStyle?: string }) => (
         <div className={`${styles.status} ${styles[labelClass]}`}>
             <h4 className={`${styles.money}  ${classNameStyle && styles[classNameStyle]}`}>{amount}</h4>
@@ -26,7 +28,7 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
             {campaign_status_code_id === CampaignStatus_Code_Id_Enums.COUNTDOWN && (
                 <div className={styles.container}>
                     <div className={styles.flexRow}>
-                        <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.requestedMaxADA)} subtext="Target Raise" classNameStyle="white" />
+                       <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.requestedMaxADA)} subtext="Target Raise" classNameStyle="white" />
                     </div>
                     <Link href={`${ROUTES.campaignViewTab(campaign.campaign._DB_id, CampaignTabEnum.ROADMAP)}`}>
                         <div className={`${styles.footer} ${styles.link}`}>

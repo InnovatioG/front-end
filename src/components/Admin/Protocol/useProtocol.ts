@@ -1,20 +1,38 @@
+import { useModal } from '@/contexts/ModalContext';
+import { ProtocolAddScriptsTxParams, ProtocolDeployTxParams } from '@/lib/SmartDB/Commons/Params';
+import { ScriptApi } from '@/lib/SmartDB/FrontEnd';
+import { ModalsEnums, TaskEnums } from '@/utils/constants/constants';
+import { ADMIN_TOKEN_POLICY_CS, TxEnums } from '@/utils/constants/on-chain';
+import { ScriptHash } from '@lucid-evolution/lucid';
 import { useCallback, useEffect, useState } from 'react';
-import { isNullOrBlank, pushWarningNotification, toJson, useWalletStore, useTransactions, BaseSmartDBFrontEndBtnHandlers, IUseWalletStore, LucidToolsFrontEnd, pushSucessNotification, optionsGetMinimal, formatHash, isEmulator, sleep, TX_PROPAGATION_DELAY_MS, explainErrorTx } from 'smart-db';
+import {
+    AddressToFollowFrontEndApiCalls,
+    BaseSmartDBFrontEndBtnHandlers,
+    explainErrorTx,
+    formatHash,
+    isEmulator,
+    LucidToolsFrontEnd,
+    optionsGetMinimal,
+    PROYECT_NAME,
+    pushSucessNotification,
+    pushWarningNotification,
+    sleep,
+    TX_PROPAGATION_DELAY_MS,
+    useTransactions,
+    useWalletStore,
+} from 'smart-db';
 import { ProtocolEntity } from '../../../lib/SmartDB/Entities/Protocol.Entity';
 import { ProtocolApi } from '../../../lib/SmartDB/FrontEnd/Protocol.FrontEnd.Api.Calls';
-import { ProtocolAddScriptsTxParams, ProtocolDeployTxParams } from '@/lib/SmartDB/Commons/Params';
-import { ADMIN_TOKEN_POLICY_CS } from '@/utils/constants/on-chain';
-import { ScriptEntity } from '@/lib/SmartDB/Entities';
-import { ScriptHash } from '@lucid-evolution/lucid';
-import { ScriptApi } from '@/lib/SmartDB/FrontEnd';
 
 export function useProtocol() {
+    //-------------------------
     const [list, setList] = useState<ProtocolEntity[]>([]);
     const [editItem, setEditItem] = useState<Partial<ProtocolEntity> | null>(null);
     const [view, setView] = useState<'list' | 'addscripts' | 'deploy'>('list');
-
+    //-------------------------
     const walletStore = useWalletStore();
-
+    //-------------------------
+    const { openModal } = useModal();
     //--------------------------------------
     useEffect(() => {
         if (walletStore.isConnected === true && walletStore.info !== undefined && view === 'deploy' && editItem !== null) {
@@ -23,31 +41,31 @@ export function useProtocol() {
             }
         }
     }, [walletStore.isConnected, view, editItem]);
-    //--------------------------------------
-
-    const fetch = useCallback(async () => {
-        try {
-            const fetchedList: ProtocolEntity[] = await ProtocolApi.getAllApi_();
-            setList(fetchedList);
-        } catch (e) {
-            console.error(e);
-            pushWarningNotification('Error', `Error fetching Protocol: ${e}`);
-        }
-    }, []);
-
-    useEffect(() => {
-        fetch();
-    }, [fetch]);
-
     useEffect(() => {
         if (editItem === undefined) return;
         if (editItem?.pdTokenAdminPolicy_CS === undefined) {
             setEditItem({ ...editItem, pdTokenAdminPolicy_CS: ADMIN_TOKEN_POLICY_CS });
         }
     }, [editItem]);
-
+    //--------------------------------------
+    const fetch = useCallback(async () => {
+        try {
+            const fetchedList: ProtocolEntity[] = await ProtocolApi.getAllApi_();
+            setList(fetchedList);
+        } catch (e) {
+            console.error(e);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching Protocol: ${e}`);
+        }
+    }, []);
+    //--------------------------------------
+    useEffect(() => {
+        fetch();
+    }, [fetch]);
+    //--------------------------------------
     const onTx = async () => {
         fetch();
+        setView('list');
+        setEditItem(null);
     };
     const onTryAgainTx = async () => {
         setIsFaildedTx(false);
@@ -86,6 +104,8 @@ export function useProtocol() {
         setIsFaildedTx,
         isConfirmedTx,
         setIsConfirmedTx,
+        processingTxName,
+        setProcessingTxName,
         processingTxMessage,
         setProcessingTxMessage,
         processingTxHash,
@@ -103,18 +123,26 @@ export function useProtocol() {
         handleBtnDoTransaction_WithErrorControl,
     } = useTransactions({ dependenciesValidTx, checkIsValidTx, onTx });
     //--------------------------------------
-
-    const deploy = async () => {
+    const handleDeployTx = async () => {
+        //--------------------------------------
+        if (appStore.isProcessingTx === true) {
+            openModal(ModalsEnums.PROCESSING_TX);
+            return;
+        }
+        if (appStore.isProcessingTask === true) {
+            openModal(ModalsEnums.PROCESSING_TASK);
+            return;
+        }
         //--------------------------------------
         const fetchParams = async () => {
             //--------------------------------------
             const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
             //--------------------------------------
             const txParams: ProtocolDeployTxParams = {
-                            protocol_id: editItem!._DB_id!,
-                            pdAdmins: editItem!.pdAdmins!,
-                            pdTokenAdminPolicy_CS: editItem!.pdTokenAdminPolicy_CS!,
-                        };
+                protocol_id: editItem!._DB_id!,
+                pdAdmins: editItem!.pdAdmins!,
+                pdTokenAdminPolicy_CS: editItem!.pdTokenAdminPolicy_CS!,
+            };
             return {
                 lucid,
                 emulatorDB,
@@ -123,19 +151,36 @@ export function useProtocol() {
             };
         };
         //--------------------------------------
+        openModal(ModalsEnums.PROCESSING_TX);
+        //--------------------------------------
         const txApiCall = ProtocolApi.callGenericTxApi.bind(ProtocolApi);
         const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
         //--------------------------------------
-        await handleBtnDoTransaction_WithErrorControl(ProtocolEntity, `Deploy Tx`, 'Deploying FT...', 'deploy-tx', fetchParams, txApiCall, handleBtnTx);
+        await handleBtnDoTransaction_WithErrorControl(ProtocolEntity, TxEnums.PROTOCOL_DEPLOY, 'Deploying Protocol...', 'deploy-tx', fetchParams, txApiCall, handleBtnTx);
         //--------------------------------------
     };
-    
-    async function addScripts (
-        protocol: ProtocolEntity
-    ): Promise<boolean> {
+    //--------------------------------------
+    async function handleAddScriptTx(protocol: ProtocolEntity) {
         try {
             //--------------------------------------
+            if (appStore.isProcessingTx === true) {
+                openModal(ModalsEnums.PROCESSING_TX);
+                return;
+            }
+            if (appStore.isProcessingTask === true) {
+                openModal(ModalsEnums.PROCESSING_TASK);
+                return;
+            }
+            //--------------------------------------
+            setProcessingTxName(TxEnums.SCRIPTS_ADD);
+            setShowProcessingTx(true);
+            setIsProcessingTx(true);
+            setIsConfirmedTx(false);
+            setIsFaildedTx(false);
+            //--------------------------------------
             setProcessingTxMessage('Adding Protocol Scripts...');
+            setProcessingTxHash('');
+            openModal(ModalsEnums.PROCESSING_TX);
             //--------------------------------------
             const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
             //--------------------------------------
@@ -147,7 +192,7 @@ export function useProtocol() {
                 throw `Invalid protocol id`;
             }
             //--------------------------------------
-            const txParams: ProtocolAddScriptsTxParams  = {
+            const txParams: ProtocolAddScriptsTxParams = {
                 protocol_id: editItem!._DB_id!,
             };
             //--------------------------------------
@@ -203,7 +248,13 @@ export function useProtocol() {
                 }
             }
             //--------------------------------------
+            pushSucessNotification(`${ProtocolEntity.className()} Add Script Tx`, 'Completed', false);
+            //--------------------------------------
             await walletStore.loadWalletData();
+            //--------------------------------------
+            setIsConfirmedTx(true);
+            //--------------------------------------
+            onTx();
             //--------------------------------------
             return true;
         } catch (error) {
@@ -211,33 +262,67 @@ export function useProtocol() {
             console.log(`[${ProtocolEntity.className()}] - handleBtnProtocolAddScriptsTx - Error: ${error_explained}`);
             pushWarningNotification(`${ProtocolEntity.className()} Add Scripts Tx`, error_explained);
             setProcessingTxMessage(error_explained);
+            setIsFaildedTx(true);
             return false;
+        } finally {
+            setIsProcessingTx(false);
+            setProcessingTxMessage('');
+            setProcessingTxHash('');
         }
     }
+    //--------------------------------------
+    const handleSyncTaks = async (protocol: ProtocolEntity) => {
+        if (appStore.isProcessingTx === true) {
+            openModal(ModalsEnums.PROCESSING_TX);
+            return;
+        }
+        if (appStore.isProcessingTask === true) {
+            openModal(ModalsEnums.PROCESSING_TASK);
+            return;
+        }
+        if (confirm('Are you sure you want to sync the Protocol?')) {
+            //--------------------------------------
+            appStore.setProcessingTaskName(TaskEnums.SYNC_PROTOCOL);
+            appStore.setShowProcessingTask(true);
+            appStore.setIsProcessingTask(true);
+            appStore.setIsConfirmedTask(false);
+            appStore.setIsFaildedTask(false);
+            //--------------------------------------
+            appStore.setProcessingTaskMessage('Syncing Protocol...');
+            openModal(ModalsEnums.PROCESSING_TASK);
+            //--------------------------------------
+            try {
+                await AddressToFollowFrontEndApiCalls.syncAllApi(true);
 
-    const sync = async (protocol: ProtocolEntity) => {
-        try {
-            await ProtocolApi.syncWithAddressApi(ProtocolEntity, protocol.getNet_Address(), protocol.fdpProtocolPolicyID_CS, true);
-            await ProtocolApi.syncWithAddressApi(ScriptEntity, protocol.getNet_Script_Validator_Address(), protocol.fdpScriptPolicyID_CS, true);
-            pushSucessNotification(`${ProtocolEntity.className()}`, `${ProtocolEntity.className()} syncronized`, false);
-            return true;
-        } catch (error) {
-            console.log(`[${ProtocolEntity.className()}] - handleBtnProtocolHooksSync - Error: ${error}`);
-            pushWarningNotification(`${ProtocolEntity.className()}`, `Error syncronizing ${ProtocolEntity.className()}: ${error}`);
-            return false;
+                // await ProtocolApi.syncWithAddressApi(ProtocolEntity, protocol.getNet_Address(), protocol.fdpProtocolPolicyID_CS, true);
+                // await ProtocolApi.syncWithAddressApi(ScriptEntity, protocol.getNet_Script_Validator_Address(), protocol.fdpScriptPolicyID_CS, true);
+                pushSucessNotification(`${ProtocolEntity.className()}`, `${ProtocolEntity.className()} syncronized`, false);
+                //--------------------------------------
+                appStore.setIsConfirmedTask(true);
+                //--------------------------------------
+                onTx();
+                //--------------------------------------
+                return true;
+            } catch (error) {
+                console.log(`[${ProtocolEntity.className()}] - handleBtnProtocolHooksSync - Error: ${error}`);
+                pushWarningNotification(`${ProtocolEntity.className()}`, `Error syncronizing ${ProtocolEntity.className()}: ${error}`);
+                appStore.setIsFaildedTask(true);
+                return false;
+            } finally {
+                appStore.setIsProcessingTask(false);
+                appStore.setProcessingTaskMessage('');
+            }
         }
     };
-
- 
-
+    //--------------------------------------
     return {
         list,
         editItem,
         view,
         setEditItem,
         setView,
-        deploy,
-        addScripts,
-        sync
+        handleDeployTx,
+        handleAddScriptTx,
+        handleSyncTaks,
     };
 }

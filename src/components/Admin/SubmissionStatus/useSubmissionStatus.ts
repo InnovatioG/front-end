@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { SubmissionStatusEntity } from '../../../lib/SmartDB/Entities/SubmissionStatus.Entity';
 import { SubmissionStatusApi } from '../../../lib/SmartDB/FrontEnd/SubmissionStatus.FrontEnd.Api.Calls';
 
@@ -16,7 +16,7 @@ export function useSubmissionStatus() {
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching SubmissionStatus: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching SubmissionStatus: ${e}`);
         }
     }, []); 
 
@@ -33,7 +33,7 @@ export function useSubmissionStatus() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating SubmissionStatus: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating SubmissionStatus: ${e}`);
         }
     };
 
@@ -47,7 +47,7 @@ export function useSubmissionStatus() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating SubmissionStatus: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating SubmissionStatus: ${e}`);
             }
         }
     };
@@ -64,7 +64,7 @@ export function useSubmissionStatus() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting SubmissionStatus: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting SubmissionStatus: ${e}`);
             }
         }
     };

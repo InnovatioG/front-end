@@ -8,16 +8,22 @@ import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 
 interface SingleQuestionModalProps {
     modalType:
+        | ModalsEnums.DELETE_CAMPAIGN
         | ModalsEnums.SUBMIT_CAMPAIGN
         | ModalsEnums.CREATE_SMART_CONTRACTS
-        | ModalsEnums.PUBLISH_SMART_CONTRACTS
         | ModalsEnums.INITIALIZE_CAMPAIGN
+        | ModalsEnums.PUBLISH_SMART_CONTRACTS
+        | ModalsEnums.MANAGE_CAMPAIGN_UTXOS
+        | ModalsEnums.LAUNCH_CAMPAIGN
         | ModalsEnums.VALIDATE_FUNDRAISING_STATUS;
     handleType:
+        | HandlesEnums.DELETE_CAMPAIGN
         | HandlesEnums.SUBMIT_CAMPAIGN
         | HandlesEnums.CREATE_SMART_CONTRACTS
-        | HandlesEnums.PUBLISH_SMART_CONTRACTS
         | HandlesEnums.INITIALIZE_CAMPAIGN
+        | HandlesEnums.PUBLISH_SMART_CONTRACTS
+        | HandlesEnums.MANAGE_CAMPAIGN_UTXOS
+        | HandlesEnums.LAUNCH_CAMPAIGN
         | HandlesEnums.SET_REACHED_STATUS;
 }
 
@@ -43,6 +49,14 @@ const SingleQuestionModal: React.FC<SingleQuestionModalProps> = ({ modalType, ha
                 yes: 'Yes',
             },
         },
+        [ModalsEnums.DELETE_CAMPAIGN]: {
+            title: 'Delete Campaign',
+            subtitle: 'Are you sure that you want to delete this campaign?',
+            button: {
+                no: 'No',
+                yes: 'Yes',
+            },
+        },
         [ModalsEnums.CREATE_SMART_CONTRACTS]: {
             title: 'Create Smart Contract',
             subtitle: 'Are you sure that you want to create the Smart Contract for this proposal?',
@@ -62,6 +76,22 @@ const SingleQuestionModal: React.FC<SingleQuestionModalProps> = ({ modalType, ha
         [ModalsEnums.INITIALIZE_CAMPAIGN]: {
             title: 'Initialize Campaign',
             subtitle: 'Are you sure that you want to initialize this campaign?',
+            button: {
+                no: 'No',
+                yes: 'Yes',
+            },
+        },
+        [ModalsEnums.MANAGE_CAMPAIGN_UTXOS]: {
+            title: 'Manage Campaign UTXOs',
+            subtitle: 'Are you sure that you want to prepare the UTXOs for this proposal?',
+            button: {
+                no: 'No',
+                yes: 'Yes',
+            },
+        },
+        [ModalsEnums.LAUNCH_CAMPAIGN]: {
+            title: 'Launch Campaign',
+            subtitle: 'Are you sure that you want to launch this campaign?',
             button: {
                 no: 'No',
                 yes: 'Yes',
