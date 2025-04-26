@@ -1178,7 +1178,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 const valueFor_Buy_CampaignTokens: Assets = { [campaignTokens_AC_Lucid]: campaignTokensAmountBuyed };
                 console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_Buy_CampaignTokens: ${showData(valueFor_Buy_CampaignTokens)}`);
                 //--------------------------------------
-                const valueFor_Buy_ADA: Assets = { lovelace: campaignTokensAmountBuyed * campaign.campaignToken_PriceADA };
+                const valueFor_Buy_ADA: Assets = { lovelace: BigInt(Number(campaignTokensAmountBuyed) * (Number(campaign.campaignToken_PriceADA) / 1000000)) };
                 console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_Buy_ADA: ${showData(valueFor_Buy_ADA)}`);
                 //--------------------------------------
                 const value_Of_CampaignFundsDatum_In = campaignFunds_SmartUTxO.assets;
@@ -1192,9 +1192,9 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     campaignTokensAmountBuyed,
                     valueFor_Buy_ADA.lovelace
                 );
-                console_log(0, this._Entity.className(), `Invest Tx - campaignFundsDatum_Out: ${showData(campaignFundsDatum_Out, false)}`);
+                console_log(0, this._Entity.className(), `Fund Invest Tx - campaignFundsDatum_Out: ${showData(campaignFundsDatum_Out, false)}`);
                 const campaignFundsDatum_Out_Hex = CampaignFundsEntity.datumToCborHex(campaignFundsDatum_Out);
-                console_log(0, this._Entity.className(), `Invest Tx - campaignFundsDatum_Out_Hex: ${showData(campaignFundsDatum_Out_Hex, false)}`);
+                console_log(0, this._Entity.className(), `Fund Invest Tx - campaignFundsDatum_Out_Hex: ${showData(campaignFundsDatum_Out_Hex, false)}`);
                 //--------------------------------------
                 const campaignFundsValidatorRedeemerSell = new CampaignFundsValidatorRedeemerSell({ amount: campaignTokensAmountBuyed });
                 const campaignFundsValidatorRedeemerSell_Hex = campaignFundsValidatorRedeemerSell.toCborHex();

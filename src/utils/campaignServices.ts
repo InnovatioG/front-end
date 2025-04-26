@@ -2,6 +2,7 @@ import {
     CampaignAddScriptsTxParams,
     CampaignDeployTxParams,
     CampaignFundsAddTxParams,
+    CampaignFundsInvestTxParams,
     CampaignFundsMintDepositTxParams,
     CampaignLaunchTxParams,
 } from '@/lib/SmartDB/Commons/Params';
@@ -1552,10 +1553,7 @@ export async function serviceInvest(
 ) {
     try {
         //--------------------------------------
-        alert(1)
-        return 
-        //--------------------------------------
-        console.log(`serviceLaunchCampaign`);
+        console.log(`serviceInvest`);
         //--------------------------------------
         if (appStore.isProcessingTx === true) {
             openModal(ModalsEnums.PROCESSING_TX);
@@ -1570,24 +1568,29 @@ export async function serviceInvest(
             console.error('Protocol is undefined');
             return;
         }
-        if (campaign.campaign.campaignToken_PriceADA === undefined || campaign.campaign.campaignToken_PriceADA === 0n) {
-            alert('Must set Token Price');
-            return;
-        }
-        if (campaign.campaign.mint_CampaignToken === false && (isNullOrBlank(campaign.campaign.campaignToken_CS) || isNullOrBlank(campaign.campaign.campaignToken_TN))) {
-            alert('When providing your own Token, you must set Token Policy and Token Name');
-            return;
-        }
+        alert(data!.amount!);
         //--------------------------------------
         let campaign_id = campaign.campaign._DB_id;
+        //--------------------------------------
+        const campaignFunds: CampaignFundsEntity[] | undefined = await CampaignFundsApi.getByParamsApi_(
+            { cfdCampaignPolicy_CS: campaign.campaign.getNET_id_CS() },
+            {
+                loadRelations: { smartUTxO_id: true },
+            }
+        );
+        if (campaignFunds.length === 0) {
+            throw new Error(`Campaign Funds not found`);
+        }
         //--------------------------------------
         const fetchParams = async () => {
             //--------------------------------------
             const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
             //--------------------------------------
-            const txParams: CampaignLaunchTxParams = {
+            const txParams: CampaignFundsInvestTxParams = {
                 protocol_id: protocol!._DB_id!,
                 campaign_id,
+                campaign_funds_id: campaignFunds[0]._DB_id,
+                amount: data!.amount!,
             };
             return {
                 lucid,
@@ -1615,7 +1618,16 @@ export async function serviceInvest(
             // entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
         };
         //--------------------------------------
-        await handleBtnDoTransaction_WithErrorControl(CampaignEntity, TxEnums.CAMPAIG_LAUNCH, 'Launch Campaign...', 'launch-tx', fetchParams, txApiCall, handleBtnTx, onTx);
+        await handleBtnDoTransaction_WithErrorControl(
+            CampaignEntity,
+            TxEnums.CAMPAIGN_FUNDS_INVEST,
+            'Invest in Campaign...',
+            'campaign-invest-tx',
+            fetchParams,
+            txApiCall,
+            handleBtnTx,
+            onTx
+        );
         //--------------------------------------
         if (onFinish !== undefined) {
             await onFinish(campaign, data);
@@ -1623,7 +1635,7 @@ export async function serviceInvest(
         //--------------------------------------
     } catch (e) {
         console.error(e);
-        pushWarningNotification(`${PROYECT_NAME}`, `Error updating: ${e}`);
+        pushWarningNotification(`${PROYECT_NAME}`, `Error investing: ${e}`);
     }
 }
 

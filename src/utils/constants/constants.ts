@@ -75,8 +75,10 @@ export enum HandlesEnums {
     INITIALIZE_CAMPAIGN = 'Initialize Campaign',
     MANAGE_CAMPAIGN_UTXOS = 'Manage Campaign UTXOs',
 
-    
+
     LAUNCH_CAMPAIGN = 'Launch Campaign',
+
+    INVEST = 'Invest',
 
     SET_FUNDRAISING_STATUS = 'Set Fundraising Status',
     SET_FINISHING_STATUS = 'Set Finishing Status',

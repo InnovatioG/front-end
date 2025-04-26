@@ -10,6 +10,7 @@ import { formatWeekOfMonth } from '@/utils/formats';
 import { hexToStr, useAppStore } from 'smart-db';
 import { CampaignTabEnum, PageViewEnums, ROUTES } from '@/utils/constants/routes';
 import { useCampaignDetails } from '@/hooks/useCampaingDetails';
+import { HandlesEnums, ModalsEnums } from '@/utils/constants/constants';
 
 export interface InputField {
     id: string;
@@ -145,7 +146,13 @@ const InvestmentForm: React.FC = () => {
                     <Link href={`${ROUTES.campaignViewTab(campaign.campaign._DB_id, CampaignTabEnum.DETAILS)}`}>
                         <BtnGeneral onClick={() => {}} classNameStyle="outlineb" text="Cancel" />
                     </Link>
-                    <BtnGeneral text="Confirm Invest" onClick={handles.Invest!} classNameStyle="invest" />
+                    <BtnGeneral
+                        text="Confirm Invest"
+                        onClick={() => {
+                            if (handles[HandlesEnums.INVEST]) handles[HandlesEnums.INVEST]({ amount: amountInTokens });
+                        }}
+                        classNameStyle="invest"
+                    />
                 </div>
             </div>
             {appStore.isProcessingTx === true && <LoaderDots />}
