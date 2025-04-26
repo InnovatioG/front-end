@@ -58,3 +58,12 @@ export interface CampaignLaunchTxParams {
 }
 
 
+export interface CampaignCampaingReachedTxParams {
+    protocol_id: string;
+    campaign_id: string;
+}
+export interface CampaignCampaingNotReachedTxParams {
+    protocol_id: string;
+    campaign_id: string;
+}
+
