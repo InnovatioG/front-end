@@ -37,6 +37,8 @@ import {
     sanitizeForDatabase,
     showData,
     strToHex,
+    subsAssets,
+    subsAssetsList,
     toJson,
 } from 'smart-db/backEnd';
 import { CampaignDeployTxParams, CampaignFundsAddTxParams, CampaignFundsInvestTxParams, CampaignFundsMintDepositTxParams, CampaignLaunchTxParams } from '../Commons/Params';
@@ -373,9 +375,8 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                         return await this.campaignFundsAddTxApiHandler(req, res);
                     } else if (query[1] === 'campaign-fund-mint-deposit-tx') {
                         return await this.campaignFundsMintDepositTxApiHandler(req, res);
-                    }
-                    else if (query[1] === 'campaign-invest-tx') {
-                        return await this.campaignFundsMintDepositTxApiHandler(req, res);
+                    } else if (query[1] === 'campaign-invest-tx') {
+                        return await this.campaignFundsInvestTxApiHandler(req, res);
                     }
                 }
                 return res.status(405).json({ error: 'Wrong Api route' });
@@ -1160,23 +1161,27 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 const campaignFundsDatum_In = campaignFunds.getMyDatum() as CampaignFundsDatum;
                 console_log(0, this._Entity.className(), `Fund Invest Tx - campaignFundsDatum_In: ${showData(campaignFundsDatum_In, false)}`);
                 //--------------------------------------
-                //const campaignTokensAmount = campaign.cdRequestedMaxADA / campaign.cdCampaignToken_PriceADA;
-                const campaignTokensAmountBuyed = BigInt(txParams.amount) * campaign.cdCampaignToken_PriceADA;
-                const newAvalibleCampaignTokensAmount = campaignFunds.cfdSubtotal_Avalaible_CampaignToken - campaignTokensAmountBuyed;
+                const campaignTokensAmountBuyed = BigInt(txParams.amount) ;
                 //--------------------------------------
-                const valueFor_Mint_CampaignTokens: Assets = { [campaignTokens_AC_Lucid]: newAvalibleCampaignTokensAmount };
-                console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_Mint_CampaignTokens: ${showData(valueFor_Mint_CampaignTokens)}`);
+                const valueFor_Buy_CampaignTokens: Assets = { [campaignTokens_AC_Lucid]: campaignTokensAmountBuyed };
+                console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_Buy_CampaignTokens: ${showData(valueFor_Buy_CampaignTokens)}`);
+                //--------------------------------------
+                const valueFor_Buy_ADA: Assets = { [lovelace]: campaignTokensAmountBuyed * price };
+                console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_Buy_ADA: ${showData(valueFor_Buy_CampaignTokens)}`);
                 //--------------------------------------
                 const value_Of_CampaignFundsDatum_In = campaignFunds_SmartUTxO.assets;
                 console_log(0, this._Entity.className(), `Fund Invest Tx - value_Of_CampaignFundsDatum_In: ${showData(value_Of_CampaignFundsDatum_In, false)}`);
-                const valueFor_CampaignFundsDatum_Out = addAssetsList([value_Of_CampaignFundsDatum_In, valueFor_Mint_CampaignTokens]);
+                let valueFor_CampaignFundsDatum_Out = addAssetsList([value_Of_CampaignFundsDatum_In, valueFor_Buy_ADA]);
+                valueFor_CampaignFundsDatum_Out = subsAssets(valueFor_CampaignFundsDatum_Out,  valueFor_Buy_CampaignTokens);
                 console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_CampaignFundsDatum_Out: ${showData(valueFor_CampaignFundsDatum_Out, false)}`);
                 //--------------------------------------
-                const campaignFundsDatum_Out = CampaignFundsBackEndApplied.mkUpdated_CampaignFundsDatum_Invest(campaignFundsDatum_In, campaignTokensAmountBuyed, BigInt(txParams.amount));
+                const campaignFundsDatum_Out = CampaignFundsBackEndApplied.mkUpdated_CampaignFundsDatum_Invest(
+                    campaignFundsDatum_In,
+                    campaignTokensAmountBuyed, valueFor_Buy_ADA
+                );
                 console_log(0, this._Entity.className(), `Update Tx - campaignFundsDatum_Out: ${showData(campaignFundsDatum_Out, false)}`);
                 const campaignFundsDatum_Out_Hex = CampaignFundsEntity.datumToCborHex(campaignFundsDatum_Out);
                 console_log(0, this._Entity.className(), `Update Tx - campaignFundsDatum_Out_Hex: ${showData(campaignFundsDatum_Out_Hex, false)}`);
-
                 //--------------------------------------
                 const campaignFundsValidatorRedeemerDeposit = new CampaignFundsValidatorRedeemerSell({ amount: campaignTokensAmountBuyed });
                 const campaignFundsValidatorRedeemerDeposit_Hex = campaignFundsValidatorRedeemerDeposit.toCborHex();
