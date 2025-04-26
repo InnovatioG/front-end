@@ -58,6 +58,23 @@ export class CampaignFundsBackEndApplied extends BaseSmartDBBackEndApplied {
         return datum;
     }
 
+    public static mkUpdated_CampaignFundsDatum_Invest(campaignFundsDatum_In: CampaignFundsDatum, amount: bigint, campaignTokensAmountBuyed: bigint): CampaignFundsDatum {
+        // usado para que los campos del datum tengan las clases y tipos bien
+        // txParams trae los campos pero estan plain, no son clases ni tipos
+
+        const datumPlainObject: CampaignFundsDatum = {
+            ...JSON.parse(toJson(campaignFundsDatum_In)),
+            cfdSubtotal_Sold_CampaignToken: campaignFundsDatum_In.cfdSubtotal_Sold_CampaignToken + campaignTokensAmountBuyed,
+            cfdSubtotal_Avalaible_CampaignToken: campaignFundsDatum_In.cfdSubtotal_Avalaible_CampaignToken - campaignTokensAmountBuyed,
+            cfdSubtotal_Avalaible_ADA: campaignFundsDatum_In.cfdSubtotal_Avalaible_ADA + amount,
+
+        };
+
+        let datum: CampaignFundsDatum = CampaignFundsEntity.mkDatumFromPlainObject(datumPlainObject) as CampaignFundsDatum;
+
+        return datum;
+    }
+
     // #endregion datum methods
 }
 

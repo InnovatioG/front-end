@@ -39,7 +39,7 @@ import {
     strToHex,
     toJson,
 } from 'smart-db/backEnd';
-import { CampaignDeployTxParams, CampaignFundsAddTxParams, CampaignFundsMintDepositTxParams, CampaignLaunchTxParams } from '../Commons/Params';
+import { CampaignDeployTxParams, CampaignFundsAddTxParams, CampaignFundsInvestTxParams, CampaignFundsMintDepositTxParams, CampaignLaunchTxParams } from '../Commons/Params';
 import { CampaignFundsDatum, CampaignFundsEntity, CampaignMemberEntity, CampaignStatusEntity, MilestoneEntity, ProtocolEntity } from '../Entities';
 import { CampaignDatum, CampaignEntity, CampaignMilestoneDatum } from '../Entities/Campaign.Entity';
 import {
@@ -53,7 +53,7 @@ import { CampaignStatusBackEndApplied } from './CampaignStatus.BackEnd.Api.Handl
 import { MilestoneBackEndApplied } from './Milestone.BackEnd.Api.Handlers';
 import { ScriptBackEndApplied } from './Script.BackEnd.Api.Handlers';
 import { CampaignFundsBackEndApplied } from './CampaignFunds.BackEnd.Api.Handlers';
-import { CampaignFundsPolicyRedeemerMintID, CampaignFundsValidatorRedeemerDeposit } from '../Entities/Redeemers/CampaignFunds.Redeemer';
+import { CampaignFundsPolicyRedeemerMintID, CampaignFundsValidatorRedeemerDeposit, CampaignFundsValidatorRedeemerSell } from '../Entities/Redeemers/CampaignFunds.Redeemer';
 
 @BackEndAppliedFor(CampaignEntity)
 export class CampaignBackEndApplied extends BaseSmartDBBackEndApplied {
@@ -372,6 +372,9 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     } else if (query[1] === 'campaign-fund-add-tx') {
                         return await this.campaignFundsAddTxApiHandler(req, res);
                     } else if (query[1] === 'campaign-fund-mint-deposit-tx') {
+                        return await this.campaignFundsMintDepositTxApiHandler(req, res);
+                    }
+                    else if (query[1] === 'campaign-invest-tx') {
                         return await this.campaignFundsMintDepositTxApiHandler(req, res);
                     }
                 }
@@ -1071,6 +1074,258 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
         }
     }
 
+    public static async campaignFundsInvestTxApiHandler(req: NextApiRequestAuthenticated, res: NextApiResponse) {
+        //--------------------
+        if (req.method === 'POST') {
+            console_log(1, this._Entity.className(), `Fund Invest Tx - POST - Init`);
+            try {
+                //-------------------------
+                const sanitizedBody = sanitizeForDatabase(req.body);
+                //-------------------------
+                const { walletTxParams, txParams }: { walletTxParams: WalletTxParams; txParams: CampaignFundsInvestTxParams } = sanitizedBody;
+                //--------------------------------------
+                console_log(0, this._Entity.className(), `Fund Invest Tx - txParams: ${showData(txParams)}`);
+                //--------------------------------------
+                const { lucid } = await LucidToolsBackEnd.prepareLucidBackEndForTx(walletTxParams);
+                //--------------------------------------
+                walletTxParams.utxos = fixUTxOList(walletTxParams?.utxos ?? []);
+                //--------------------------------------
+                const ProtocolBackEndApplied = (await import('./Protocol.BackEnd.Api.Handlers')).ProtocolBackEndApplied;
+                const protocol = await ProtocolBackEndApplied.getById_<ProtocolEntity>(txParams.protocol_id, {
+                    ...optionsGetMinimalWithSmartUTxOCompleteFields,
+                    fieldsForSelect: {},
+                });
+                if (protocol === undefined) {
+                    throw `Invalid protocol id`;
+                }
+                //--------------------------------------
+                const protocol_SmartUTxO = protocol.smartUTxO;
+                if (protocol_SmartUTxO === undefined) {
+                    throw `Can't find Protocol UTxO`;
+                }
+                const protocol_UTxO = protocol_SmartUTxO.getUTxO();
+                //--------------------------------------
+                const campaign = await this._BackEndApplied.getById_<CampaignEntity>(txParams.campaign_id, {
+                    ...optionsGetMinimalWithSmartUTxOCompleteFields,
+                    fieldsForSelect: {},
+                });
+                if (campaign === undefined) {
+                    throw `Invalid campaign id`;
+                }
+                //--------------------------------------
+                const campaign_SmartUTxO = campaign.smartUTxO;
+                if (campaign_SmartUTxO === undefined) {
+                    throw `Can't find Campaign UTxO`;
+                }
+                //--------------------------------------
+                const campaign_UTxO = campaign_SmartUTxO.getUTxO();
+                console_log(0, this._Entity.className(), `Fund Invest Tx - campaign_UTxO: ${formatUTxO(campaign_UTxO.txHash, campaign_UTxO.outputIndex)}`);
+                //--------------------------------------
+                const campaignFunds = await CampaignFundsBackEndApplied.getById_<CampaignFundsEntity>(txParams.campaign_funds_id, {
+                    ...optionsGetMinimalWithSmartUTxOCompleteFields,
+                    fieldsForSelect: {},
+                });
+                if (campaignFunds === undefined) {
+                    throw `Invalid campaign_funds_id id`;
+                }
+                //--------------------------------------
+                const campaignFunds_SmartUTxO = campaignFunds.smartUTxO;
+                if (campaignFunds_SmartUTxO === undefined) {
+                    throw `Can't find Campaign Funds UTxO`;
+                }
+                //--------------------------------------
+                const campaignFunds_UTxO = campaignFunds_SmartUTxO.getUTxO();
+                console_log(0, this._Entity.className(), `Fund Invest Tx - campaignFunds_UTxO: ${formatUTxO(campaignFunds_UTxO.txHash, campaignFunds_UTxO.outputIndex)}`);
+                //--------------------------------------
+                const campaignPolicy_CS = campaign.fdpCampaignPolicy_CS;
+                const campaignPolicy_Script = campaign.fdpCampaignPolicy_Script;
+                const campaignValidator_Hash = campaign.fdpCampaignValidator_Hash;
+                const campaignValidator_Script = campaign.fdpCampaignValidator_Script;
+                const campaignValidator_Address = campaign.getNet_Address();
+                const campaignFundsPolicyID_CS = campaign.fdpCampaignFundsPolicyID_CS;
+                const campaignFundsPolicyID_Script = campaign.fdpCampaignFundsPolicyID_Script;
+                const campaignFundsValidator_Hash = campaign.fdpCampaignFundsValidator_Hash;
+                const campaignFundsValidator_Script = campaign.fdpCampaignFundsValidator_Script;
+                const campaignFundsValidator_Address = campaign.getNet_FundHolding_Validator_Address();
+                //--------------------------------------
+                const campaignTokens_AC_Lucid = campaignPolicy_CS + campaign.cdCampaignToken_TN;
+                //--------------------------------------
+                const campaignDatum_In = campaign.getMyDatum() as CampaignDatum;
+                console_log(0, this._Entity.className(), `Fund Invest Tx - campaignDatum_In: ${showData(campaignDatum_In, false)}`);
+                //--------------------------------------
+                const value_Of_CampaignDatum_In = campaign_SmartUTxO.assets;
+                const valueFor_CampaignDatum_Out = value_Of_CampaignDatum_In;
+                console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_CampaignDatum_Out: ${showData(valueFor_CampaignDatum_Out, false)}`);
+                //--------------------------------------
+                const campaignFundsDatum_In = campaignFunds.getMyDatum() as CampaignFundsDatum;
+                console_log(0, this._Entity.className(), `Fund Invest Tx - campaignFundsDatum_In: ${showData(campaignFundsDatum_In, false)}`);
+                //--------------------------------------
+                //const campaignTokensAmount = campaign.cdRequestedMaxADA / campaign.cdCampaignToken_PriceADA;
+                const campaignTokensAmountBuyed = BigInt(txParams.amount) * campaign.cdCampaignToken_PriceADA;
+                const newAvalibleCampaignTokensAmount = campaignFunds.cfdSubtotal_Avalaible_CampaignToken - campaignTokensAmountBuyed;
+                //--------------------------------------
+                const valueFor_Mint_CampaignTokens: Assets = { [campaignTokens_AC_Lucid]: newAvalibleCampaignTokensAmount };
+                console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_Mint_CampaignTokens: ${showData(valueFor_Mint_CampaignTokens)}`);
+                //--------------------------------------
+                const value_Of_CampaignFundsDatum_In = campaignFunds_SmartUTxO.assets;
+                console_log(0, this._Entity.className(), `Fund Invest Tx - value_Of_CampaignFundsDatum_In: ${showData(value_Of_CampaignFundsDatum_In, false)}`);
+                const valueFor_CampaignFundsDatum_Out = addAssetsList([value_Of_CampaignFundsDatum_In, valueFor_Mint_CampaignTokens]);
+                console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_CampaignFundsDatum_Out: ${showData(valueFor_CampaignFundsDatum_Out, false)}`);
+                //--------------------------------------
+                const campaignFundsDatum_Out = CampaignFundsBackEndApplied.mkUpdated_CampaignFundsDatum_Invest(campaignFundsDatum_In, campaignTokensAmountBuyed, BigInt(txParams.amount));
+                console_log(0, this._Entity.className(), `Update Tx - campaignFundsDatum_Out: ${showData(campaignFundsDatum_Out, false)}`);
+                const campaignFundsDatum_Out_Hex = CampaignFundsEntity.datumToCborHex(campaignFundsDatum_Out);
+                console_log(0, this._Entity.className(), `Update Tx - campaignFundsDatum_Out_Hex: ${showData(campaignFundsDatum_Out_Hex, false)}`);
+
+                //--------------------------------------
+                const campaignFundsValidatorRedeemerDeposit = new CampaignFundsValidatorRedeemerSell({ amount: campaignTokensAmountBuyed });
+                const campaignFundsValidatorRedeemerDeposit_Hex = campaignFundsValidatorRedeemerDeposit.toCborHex();
+                console_log(
+                    0,
+                    this._Entity.className(),
+                    `Fund Invest Tx - campaignFundsValidatorRedeemerDeposit_Hex: ${showData(campaignFundsValidatorRedeemerDeposit_Hex, false)}`
+                );
+                //--------------------------------------
+                const { from, until } = await TimeBackEnd.getTxTimeRange(lucid);
+                //--------------------------------------
+                const flomSlot = lucid.unixTimeToSlot(from);
+                const untilSlot = lucid.unixTimeToSlot(until);
+                //--------------------------------------
+                console_log(
+                    0,
+                    this._Entity.className(),
+                    `Fund Invest Tx - currentSlot: ${lucid.currentSlot()} - fromSlot ${flomSlot} to ${untilSlot} - from UnixTime ${from} to ${until} - from Date ${convertMillisToTime(
+                        from
+                    )} to ${convertMillisToTime(until)} `
+                );
+                //--------------------------------------
+                let transaction: TransactionEntity | undefined = undefined;
+                //--------------------------------------
+                try {
+                    const transaction_ = new TransactionEntity({
+                        paymentPKH: walletTxParams.pkh,
+                        date: new Date(from),
+                        type: TxEnums.CAMPAIGN_FUNDS_MINT_DEPOSIT,
+                        status: TRANSACTION_STATUS_CREATED,
+                        reading_UTxOs: [],
+                        consuming_UTxOs: [],
+                        valid_from: from,
+                        valid_until: until,
+                    });
+                    //--------------------------------------
+                    transaction = await TransactionBackEndApplied.create(transaction_);
+                    //--------------------------------------
+                    let tx: TxBuilder = lucid.newTx();
+                    //--------------------------------------
+                    tx = tx
+                        .readFrom([campaign_UTxO])
+                        .collectFrom([campaignFunds_UTxO], campaignFundsValidatorRedeemerDeposit_Hex)
+                        .pay.ToAddressWithData(campaignFundsValidator_Address, { kind: 'inline', value: campaignFundsDatum_Out_Hex }, valueFor_CampaignFundsDatum_Out)
+                        .addSigner(walletTxParams.address)
+                        .validFrom(from)
+                        .validTo(until);
+                    //--------------------------------------
+                    const scriptCampaignPolicy = await ScriptBackEndApplied.getByHash(campaignPolicy_CS);
+                    if (scriptCampaignPolicy !== undefined) {
+                        console_log(0, this._Entity.className(), `Fund Invest Tx - Using Script as Ref: ${campaignPolicy_CS}`);
+                        const smartUTxO = scriptCampaignPolicy.smartUTxO;
+                        if (smartUTxO === undefined) {
+                            throw `Can't find smartUTxO in Script`;
+                        }
+                        const uTxO = smartUTxO.getUTxO();
+                        tx = tx.readFrom([uTxO]);
+                    } else {
+                        console_log(0, this._Entity.className(), `Fund Invest Tx - Attaching Script: ${campaignPolicy_CS}`);
+                        tx = tx.attach.MintingPolicy(campaignPolicy_Script);
+                    }
+                    //--------------------------------------
+                    const scriptCampaignFundsValidator = await ScriptBackEndApplied.getByHash(campaignFundsValidator_Hash);
+                    if (scriptCampaignFundsValidator !== undefined) {
+                        console_log(0, this._Entity.className(), `Fund Invest Tx - Using Script as Ref: ${campaignFundsValidator_Hash}`);
+                        const smartUTxO = scriptCampaignFundsValidator.smartUTxO;
+                        if (smartUTxO === undefined) {
+                            throw `Can't find smartUTxO in Campaign`;
+                        }
+                        const uTxO = smartUTxO.getUTxO();
+                        tx = tx.readFrom([uTxO]);
+                    } else {
+                        console_log(0, this._Entity.className(), `Fund Invest Tx - Attaching Script: ${campaignFundsValidator_Hash}`);
+                        tx = tx.attach.MintingPolicy(campaignFundsValidator_Script);
+                    }
+                    //--------------------------------------
+                    const txComplete = await tx.complete();
+                    //--------------------------------------
+                    const txCborHex = txComplete.toCBOR();
+                    //--------------------------------------
+                    const txHash = txComplete.toHash();
+                    //--------------------------------------
+                    const resources = getTxRedeemersDetailsAndResources(txComplete);
+                    //--------------------------------------
+                    console_log(0, this._Entity.className(), `Fund Invest Tx - Tx Resources: ${showData({ redeemers: resources.redeemersLogs, tx: resources.tx })}`);
+                    //--------------------------------------
+                    const transactionCampaignPolicyRedeemerMintCampaignToken: TransactionRedeemer = {
+                        tx_index: 0,
+                        purpose: 'mint',
+                        redeemerObj: campaignPolicyRedeemerMintCampaignToken,
+                        unit_mem: resources.redeemers[0]?.MEM,
+                        unit_steps: resources.redeemers[0]?.CPU,
+                    };
+                    const transactionCampaignFundsValidatorRedeemerDeposit: TransactionRedeemer = {
+                        tx_index: 0,
+                        purpose: 'spend',
+                        redeemerObj: campaignFundsValidatorRedeemerDeposit,
+                        unit_mem: resources.redeemers[1]?.MEM,
+                        unit_steps: resources.redeemers[1]?.CPU,
+                    };
+                    const transactionFundsCampaignDatum_In: TransactionDatum = {
+                        address: campaignFundsValidator_Address,
+                        datumType: CampaignFundsEntity.className(),
+                        datumObj: campaignFundsDatum_In,
+                    };
+                    const transactionCampaignFundsDatum_Out: TransactionDatum = {
+                        address: campaignFundsValidator_Address,
+                        datumType: CampaignFundsEntity.className(),
+                        datumObj: campaignFundsDatum_Out,
+                    };
+                    //--------------------------------------
+                    await TransactionBackEndApplied.setPendingTransaction(transaction, {
+                        hash: txHash,
+                        ids: { campaign_id: campaign._DB_id, campaign_funds_id: txParams.campaign_funds_id },
+                        redeemers: {
+                            campaignPolicyRedeemerMintCampaignToken: transactionCampaignPolicyRedeemerMintCampaignToken,
+                            campaignFundsValidatorRedeemerDeposit: transactionCampaignFundsValidatorRedeemerDeposit,
+                        },
+                        datums: {
+                            campaignFundsDatum_In: transactionFundsCampaignDatum_In,
+                            campaignFundsDatum_Out: transactionCampaignFundsDatum_Out,
+                        },
+                        reading_UTxOs: [campaign_UTxO],
+                        consuming_UTxOs: [campaignFunds_UTxO],
+                        unit_mem: resources.tx[0]?.MEM,
+                        unit_steps: resources.tx[0]?.CPU,
+                        fee: resources.tx[0]?.FEE,
+                        size: resources.tx[0]?.SIZE,
+                        CBORHex: txCborHex,
+                    });
+                    //--------------------------------------
+                    console_log(-1, this._Entity.className(), `Fund Invest Tx - txCborHex: ${showData(txCborHex)}`);
+                    return res.status(200).json({ txHash, txCborHex });
+                } catch (error) {
+                    if (transaction !== undefined) {
+                        await TransactionBackEndApplied.setFailedTransaction(transaction, { error, walletInfo: walletTxParams, txInfo: txParams });
+                    }
+                    throw error;
+                }
+            } catch (error) {
+                console_error(-1, this._Entity.className(), `Fund Invest Tx - Error: ${error}`);
+                return res.status(500).json({ error: `An error occurred while creating the ${this._Entity.className()} Fund Add Tx: ${error}` });
+            }
+        } else {
+            console_error(-1, this._Entity.className(), `Fund Invest Tx - Error: Method not allowed`);
+            return res.status(405).json({ error: `Method not allowed` });
+        }
+    }
+
     public static async campaignLaunchTxApiHandler(req: NextApiRequestAuthenticated, res: NextApiResponse) {
         //--------------------
         if (req.method === 'POST') {
@@ -1135,7 +1390,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
 
                 //--------------------------------------
                 const campaignFunds_UTxOs = campaignFunds_SmartUTxOs.map((campaignFunds_SmartUTxO) => campaignFunds_SmartUTxO.getUTxO());
-                console_log(0, this._Entity.className(), `Fund Mint & Deposit Tx - campaignFunds_UTxOs: ${campaignFunds_UTxOs.length}`);
+                console_log(0, this._Entity.className(), `Fund Launch Tx - campaignFunds_UTxOs: ${campaignFunds_UTxOs.length}`);
                 //--------------------------------------
                 const campaignValidator_Hash = campaign.fdpCampaignValidator_Hash;
                 const campaignValidator_Script = campaign.fdpCampaignValidator_Script;

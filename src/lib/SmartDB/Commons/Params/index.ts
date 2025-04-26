@@ -45,6 +45,12 @@ export interface CampaignFundsMintDepositTxParams {
     campaign_funds_id: string;
 }
 
+export interface CampaignFundsInvestTxParams {
+    protocol_id: string;
+    campaign_id: string;
+    campaign_funds_id: string;
+    amount: string;
+}
 
 export interface CampaignLaunchTxParams {
     protocol_id: string;
