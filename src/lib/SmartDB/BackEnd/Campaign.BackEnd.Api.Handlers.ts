@@ -1161,23 +1161,24 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 const campaignFundsDatum_In = campaignFunds.getMyDatum() as CampaignFundsDatum;
                 console_log(0, this._Entity.className(), `Fund Invest Tx - campaignFundsDatum_In: ${showData(campaignFundsDatum_In, false)}`);
                 //--------------------------------------
-                const campaignTokensAmountBuyed = BigInt(txParams.amount) ;
+                const campaignTokensAmountBuyed = BigInt(txParams.amount);
                 //--------------------------------------
                 const valueFor_Buy_CampaignTokens: Assets = { [campaignTokens_AC_Lucid]: campaignTokensAmountBuyed };
                 console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_Buy_CampaignTokens: ${showData(valueFor_Buy_CampaignTokens)}`);
                 //--------------------------------------
-                const valueFor_Buy_ADA: Assets = { [lovelace]: campaignTokensAmountBuyed * price };
+                const valueFor_Buy_ADA: Assets = { lovelace: campaignTokensAmountBuyed * campaign.campaignToken_PriceADA };
                 console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_Buy_ADA: ${showData(valueFor_Buy_CampaignTokens)}`);
                 //--------------------------------------
                 const value_Of_CampaignFundsDatum_In = campaignFunds_SmartUTxO.assets;
                 console_log(0, this._Entity.className(), `Fund Invest Tx - value_Of_CampaignFundsDatum_In: ${showData(value_Of_CampaignFundsDatum_In, false)}`);
                 let valueFor_CampaignFundsDatum_Out = addAssetsList([value_Of_CampaignFundsDatum_In, valueFor_Buy_ADA]);
-                valueFor_CampaignFundsDatum_Out = subsAssets(valueFor_CampaignFundsDatum_Out,  valueFor_Buy_CampaignTokens);
+                valueFor_CampaignFundsDatum_Out = subsAssets(valueFor_CampaignFundsDatum_Out, valueFor_Buy_CampaignTokens);
                 console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_CampaignFundsDatum_Out: ${showData(valueFor_CampaignFundsDatum_Out, false)}`);
                 //--------------------------------------
                 const campaignFundsDatum_Out = CampaignFundsBackEndApplied.mkUpdated_CampaignFundsDatum_Invest(
                     campaignFundsDatum_In,
-                    campaignTokensAmountBuyed, valueFor_Buy_ADA
+                    campaignTokensAmountBuyed,
+                    valueFor_Buy_ADA.lovelace
                 );
                 console_log(0, this._Entity.className(), `Update Tx - campaignFundsDatum_Out: ${showData(campaignFundsDatum_Out, false)}`);
                 const campaignFundsDatum_Out_Hex = CampaignFundsEntity.datumToCborHex(campaignFundsDatum_Out);
@@ -1210,7 +1211,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     const transaction_ = new TransactionEntity({
                         paymentPKH: walletTxParams.pkh,
                         date: new Date(from),
-                        type: TxEnums.CAMPAIGN_FUNDS_MINT_DEPOSIT,
+                        type: TxEnums.CAMPAIGN_FUNDS_INVEST,
                         status: TRANSACTION_STATUS_CREATED,
                         reading_UTxOs: [],
                         consuming_UTxOs: [],
@@ -1268,13 +1269,6 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     //--------------------------------------
                     console_log(0, this._Entity.className(), `Fund Invest Tx - Tx Resources: ${showData({ redeemers: resources.redeemersLogs, tx: resources.tx })}`);
                     //--------------------------------------
-                    const transactionCampaignPolicyRedeemerMintCampaignToken: TransactionRedeemer = {
-                        tx_index: 0,
-                        purpose: 'mint',
-                        redeemerObj: campaignPolicyRedeemerMintCampaignToken,
-                        unit_mem: resources.redeemers[0]?.MEM,
-                        unit_steps: resources.redeemers[0]?.CPU,
-                    };
                     const transactionCampaignFundsValidatorRedeemerDeposit: TransactionRedeemer = {
                         tx_index: 0,
                         purpose: 'spend',
@@ -1297,7 +1291,6 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                         hash: txHash,
                         ids: { campaign_id: campaign._DB_id, campaign_funds_id: txParams.campaign_funds_id },
                         redeemers: {
-                            campaignPolicyRedeemerMintCampaignToken: transactionCampaignPolicyRedeemerMintCampaignToken,
                             campaignFundsValidatorRedeemerDeposit: transactionCampaignFundsValidatorRedeemerDeposit,
                         },
                         datums: {
