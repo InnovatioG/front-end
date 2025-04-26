@@ -1510,6 +1510,123 @@ export async function serviceLaunchCampaign(
     }
 }
 
+export async function serviceInvest(
+    appStore: IUseAppStore,
+    walletStore: IUseWalletStore,
+    openModal: (
+        modal: ModalsEnums,
+        data?: Record<string, any>,
+        handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | boolean | undefined | void>>>,
+        component?: ReactNode
+    ) => void,
+    protocol: ProtocolEntity | undefined,
+    handleBtnDoTransaction_WithErrorControl: (
+        Entity: typeof BaseSmartDBEntity,
+        modalTitleTx: string,
+        messageActionTx: string,
+        txApiRoute: string,
+        fetchParams: () => Promise<{
+            lucid: LucidEvolution;
+            emulatorDB: EmulatorEntity | undefined;
+            walletTxParams: WalletTxParams;
+            txParams: any;
+        }>,
+        txApiCall: (Entity: typeof BaseSmartDBEntity, txApiRoute: string, walletTxParams: WalletTxParams, txParams: any) => Promise<any>,
+        handleBtnTxNoErrorControl: (
+            Entity: typeof BaseSmartDBEntity,
+            modalTitleTx: string,
+            messageActionTx: string,
+            lucid: LucidEvolution,
+            emulatorDB: EmulatorEntity | undefined,
+            apiTxCall: () => Promise<any>,
+            setProcessingTxMessage: (processingTxMessage: string) => void,
+            setProcessingTxHash: (processingTxHash: string) => void,
+            walletStore: IUseWalletStore
+        ) => Promise<void>,
+        onTx?: (() => Promise<void>) | undefined
+    ) => Promise<void>,
+    campaign: CampaignEX,
+    campaignStatus: CampaignStatusEntity[],
+    data?: Record<string, any>,
+    onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
+) {
+    try {
+        //--------------------------------------
+        alert(1)
+        return 
+        //--------------------------------------
+        console.log(`serviceLaunchCampaign`);
+        //--------------------------------------
+        if (appStore.isProcessingTx === true) {
+            openModal(ModalsEnums.PROCESSING_TX);
+            return;
+        }
+        if (appStore.isProcessingTask === true) {
+            openModal(ModalsEnums.PROCESSING_TASK);
+            return;
+        }
+        //--------------------------------------
+        if (protocol === undefined) {
+            console.error('Protocol is undefined');
+            return;
+        }
+        if (campaign.campaign.campaignToken_PriceADA === undefined || campaign.campaign.campaignToken_PriceADA === 0n) {
+            alert('Must set Token Price');
+            return;
+        }
+        if (campaign.campaign.mint_CampaignToken === false && (isNullOrBlank(campaign.campaign.campaignToken_CS) || isNullOrBlank(campaign.campaign.campaignToken_TN))) {
+            alert('When providing your own Token, you must set Token Policy and Token Name');
+            return;
+        }
+        //--------------------------------------
+        let campaign_id = campaign.campaign._DB_id;
+        //--------------------------------------
+        const fetchParams = async () => {
+            //--------------------------------------
+            const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
+            //--------------------------------------
+            const txParams: CampaignLaunchTxParams = {
+                protocol_id: protocol!._DB_id!,
+                campaign_id,
+            };
+            return {
+                lucid,
+                emulatorDB,
+                walletTxParams,
+                txParams,
+            };
+        };
+        //--------------------------------------
+        openModal(ModalsEnums.PROCESSING_TX);
+        //--------------------------------------
+        const txApiCall = CampaignApi.callGenericTxApi.bind(CampaignApi);
+        const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
+        //--------------------------------------
+        const onTx = async () => {
+            // TODO: lo hace el backend acutomaticamente
+            // appStore.setProcessingTxMessage(`Updating status......`);
+            // const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.CONTRACT_STARTED);
+            // if (!status) {
+            //     throw new Error(`Status CONTRACT_STARTED code-id: ${CampaignStatus_Code_Id_Enums.CONTRACT_STARTED} not found`);
+            // }
+            // let entity = campaign.campaign;
+            // entity.campaign_status_id = status._DB_id;
+            // entity.campaign_deployed_date = new Date(); //TODO
+            // entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
+        };
+        //--------------------------------------
+        await handleBtnDoTransaction_WithErrorControl(CampaignEntity, TxEnums.CAMPAIG_LAUNCH, 'Launch Campaign...', 'launch-tx', fetchParams, txApiCall, handleBtnTx, onTx);
+        //--------------------------------------
+        if (onFinish !== undefined) {
+            await onFinish(campaign, data);
+        }
+        //--------------------------------------
+    } catch (e) {
+        console.error(e);
+        pushWarningNotification(`${PROYECT_NAME}`, `Error updating: ${e}`);
+    }
+}
+
 export async function serviceSetFundraisingCampaign(
     campaign: CampaignEX,
     campaignStatus: CampaignStatusEntity[],

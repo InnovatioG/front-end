@@ -1,4 +1,6 @@
+import { useModal } from '@/contexts/ModalContext';
 import { CampaignEntity } from '@/lib/SmartDB/Entities';
+import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 import { CampaignEX } from '@/types/types';
 import { CampaignStatusConfigs, campaignStatusConfigs } from '@/utils/campaignConfigs';
@@ -10,6 +12,7 @@ import {
     serviceFailMilestoneAndCampaign,
     serviceFeatureCampaign,
     serviceInitializeCampaign,
+    serviceInvest,
     serviceLaunchCampaign,
     servicePrepareUTxOs,
     servicePublishSmartContracts,
@@ -26,13 +29,10 @@ import {
 import { HandlesEnums, ModalsEnums } from '@/utils/constants/constants';
 import { PageViewEnums, ROUTES } from '@/utils/constants/routes';
 import { calculatePercentageValue, getOrdinalString, getTimeRemaining } from '@/utils/formats';
+import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
-import { toJson, useAppStore, useWalletStore, useTransactions } from 'smart-db';
+import { toJson, useAppStore, useTransactions, useWalletStore } from 'smart-db';
 import { getCampaignCategory_Name_By_Db_Id, getCampaignStatus_Code_Id_By_Db_Id, getCurrentMilestoneIndex, getMilestoneStatus_Code_Id_By_Db_Id } from '../utils/campaignHelpers';
-import { useModal } from '@/contexts/ModalContext';
-import { Router, useRouter } from 'next/router';
-import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status/status';
-import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 
 export interface ICampaignDetails extends CampaignStatusConfigs {
     handles: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | boolean | undefined | void | boolean>>>;
@@ -163,7 +163,7 @@ export const useCampaignDetails = ({
     // }
     // TODO : esa validacion se hace en los index de las paginas
 
-    if (pageView !== PageViewEnums.HOME && pageView !== PageViewEnums.CAMPAIGNS && pageView !== PageViewEnums.MANAGE) {
+    if (pageView !== PageViewEnums.HOME && pageView !== PageViewEnums.INVEST && pageView !== PageViewEnums.CAMPAIGNS && pageView !== PageViewEnums.MANAGE) {
         throw new Error('Invalid campaign view');
     }
 
@@ -307,6 +307,10 @@ export const useCampaignDetails = ({
 
     const handleLaunchCampaign = (data?: Record<string, any>) =>
         serviceLaunchCampaign(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
+
+    const handleInvest = (data?: Record<string, any>) =>
+        serviceInvest(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
+
     const handleSetFundraisingCampaign = (data?: Record<string, any>) => serviceSetFundraisingCampaign(campaign, campaignStatus, data, onFinishUpdates);
     const handleSetFinishingCampaign = (data?: Record<string, any>) => serviceSetFinishingCampaign(campaign, campaignStatus, data, onFinishUpdates);
     const handleValidateFundraisingStatusSetReached = (data?: Record<string, any>) => serviceValidateFundraisingStatusSetReached(campaign, campaignStatus, data, onFinishUpdates);
@@ -333,6 +337,8 @@ export const useCampaignDetails = ({
         [HandlesEnums.MANAGE_CAMPAIGN_UTXOS]: handlePrepareUTxOs,
 
         [HandlesEnums.LAUNCH_CAMPAIGN]: handleLaunchCampaign,
+
+        [HandlesEnums.INVEST]: handleInvest,
 
         [HandlesEnums.SET_FUNDRAISING_STATUS]: handleSetFundraisingCampaign,
         [HandlesEnums.SET_FINISHING_STATUS]: handleSetFinishingCampaign,

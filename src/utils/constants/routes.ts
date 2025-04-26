@@ -66,7 +66,8 @@ export const CampaignTabUrls: Record<CampaignTabEnum, string> = {
 export enum PageViewEnums {
     HOME = 'HOME',
     CAMPAIGNS = 'CAMPAIGNS',
-    MANAGE = 'MANAGE'
+    MANAGE = 'MANAGE',
+    INVEST = 'INVEST'
 }
 
 //--------------------------------------------------------------

@@ -7,8 +7,9 @@ import styles from './InvestmentForm.module.scss';
 import { useCampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
 import { ADA_ICON } from '@/utils/constants/images';
 import { formatWeekOfMonth } from '@/utils/formats';
-import { hexToStr } from 'smart-db';
-import { CampaignTabEnum, ROUTES } from '@/utils/constants/routes';
+import { hexToStr, useAppStore } from 'smart-db';
+import { CampaignTabEnum, PageViewEnums, ROUTES } from '@/utils/constants/routes';
+import { useCampaignDetails } from '@/hooks/useCampaingDetails';
 
 export interface InputField {
     id: string;
@@ -64,12 +65,25 @@ export const getRectangles = (cdCampaignToken_TN: string, amountInTokens: number
 ];
 
 const InvestmentForm: React.FC = () => {
-    const { campaign, isLoading, setIsLoading, setIsEditMode, fetchCampaignById, setCampaignTab } = useCampaignIdStoreSafe();
+    const propsCampaignIdStoreSafe = useCampaignIdStoreSafe();
+    const propsCampaignDetails = useCampaignDetails({
+        campaign: propsCampaignIdStoreSafe.campaign,
+        pageView: PageViewEnums.INVEST,
+        isEditMode: propsCampaignIdStoreSafe.isEditMode,
+        isValidEdit: propsCampaignIdStoreSafe.isValidEdit,
+        setIsValidEdit: propsCampaignIdStoreSafe.setIsValidEdit,
+        setCampaignEX: propsCampaignIdStoreSafe.setCampaignEX,
+        setCampaign: propsCampaignIdStoreSafe.setCampaign,
+    });
+
+    const { campaign, isLoading, setIsLoading, setIsEditMode, fetchCampaignById, setCampaignTab } = propsCampaignIdStoreSafe;
+
+    const handles = propsCampaignDetails.handles;
+
+    const appStore = useAppStore();
 
     const [amountInTokens, setAmountInTokens] = useState<number | string>(0);
     const [amountInADA, setAmountInADA] = useState<number | string>(0);
-
-    const [error, setError] = useState<string | null>(null);
 
     const handleTokenChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const tokens = parseFloat(e.target.value) || 0;
@@ -83,11 +97,6 @@ const InvestmentForm: React.FC = () => {
         setAmountInTokens(Number(campaign.campaign.cdCampaignToken_PriceADA.toString()) ? (ada * 1000000) / Number(campaign.campaign.cdCampaignToken_PriceADA.toString()) : 0);
     };
 
-    const handleInvest = () => {
-        setIsLoading(true);
-        setError(null);
-    };
-
     const inputFields = getInputFields(
         hexToStr(campaign.campaign.cdCampaignToken_TN),
         Number(campaign.campaign.cdCampaignToken_PriceADA.toString()),
@@ -97,8 +106,6 @@ const InvestmentForm: React.FC = () => {
         amountInADA,
         handleADAChange
     );
-
-    const rectangles = getRectangles(campaign.campaign.cdCampaignToken_TN, amountInTokens, amountInADA);
 
     return (
         <article className={styles.formContainer}>
@@ -136,17 +143,12 @@ const InvestmentForm: React.FC = () => {
                 )}
                 <div className={styles.buttonContainer}>
                     <Link href={`${ROUTES.campaignViewTab(campaign.campaign._DB_id, CampaignTabEnum.DETAILS)}`}>
-                        <div className={styles.buttonContainer}>
-                            <BtnGeneral onClick={() => {}} classNameStyle="outlineb" text="Cancel" />
-                        </div>
+                        <BtnGeneral onClick={() => {}} classNameStyle="outlineb" text="Cancel" />
                     </Link>
-                    <BtnGeneral text="Confirm Invest" onClick={handleInvest} classNameStyle="invest" />
+                    <BtnGeneral text="Confirm Invest" onClick={handles.Invest!} classNameStyle="invest" />
                 </div>
             </div>
-
-            {isLoading && <LoaderDots />}
-            {error && <ErrorMessage message={error} />}
-            {/* {success && <SuccessMessage message={''} id={id ?? ''} />} */}
+            {appStore.isProcessingTx === true && <LoaderDots />}
         </article>
     );
 };
