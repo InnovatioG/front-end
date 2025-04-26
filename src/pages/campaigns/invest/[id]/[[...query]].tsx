@@ -1,11 +1,12 @@
-import CampaignsDetails from '@/components/Campaigns/CampaignDetails/CampaignDetails';
 import GeneralError from '@/components/General/Errors/GeneralError';
 import LoadingPage from '@/components/GeneralOK/LoadingPage/LoadingPage';
 import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
-import { PageViewEnums } from '@/utils/constants/routes';
 import { CampaignTabEnum, CampaignTabUrls } from '@/utils/constants/routes';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import styles from './InvestPage.module.scss';
+import InvestHeader from '@/components/Campaigns/Invest/Sections/InvestHeader/InvestHeader';
+import InvestmentForm from '@/components/Campaigns/Invest/Sections/InvestmentForm/InvestmentForm';
 
 interface CampaignsInvestDetailsPageProps {
     // Define props here
@@ -46,8 +47,12 @@ const CampaignsInvestDetailsPage: React.FC<CampaignsInvestDetailsPageProps> = (p
     } else {
         return (
             <div>
-                INVEST
-                {/* <CampaignsDetails pageView={PageViewEnums.campaigns} /> */}
+                <main className={styles.layout}>
+                    <InvestHeader />
+                    <article>
+                        <InvestmentForm />
+                    </article>
+                </main>
             </div>
         );
     }
