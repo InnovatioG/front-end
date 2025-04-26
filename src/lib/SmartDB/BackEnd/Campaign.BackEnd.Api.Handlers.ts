@@ -163,7 +163,7 @@ export class CampaignBackEndApplied extends BaseSmartDBBackEndApplied {
         const prev = {
             begin_at: campaignInstance.begin_at,
             deadline: campaignInstance.deadline,
-            status_id: campaignInstance.campaign_status_id,
+            campaign_status_id: campaignInstance.campaign_status_id,
             campaignToken_CS: campaignInstance.campaignToken_CS,
             campaignToken_PriceADA: campaignInstance.campaignToken_PriceADA,
         };
@@ -217,7 +217,7 @@ export class CampaignBackEndApplied extends BaseSmartDBBackEndApplied {
         const current = {
             begin_at: campaignInstance.begin_at,
             deadline: campaignInstance.deadline,
-            status_id: campaignInstance.campaign_status_id,
+            campaign_status_id: campaignInstance.campaign_status_id,
             campaignToken_CS: campaignInstance.campaignToken_CS,
             campaignToken_PriceADA: campaignInstance.campaignToken_PriceADA,
         };
