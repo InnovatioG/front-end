@@ -1184,7 +1184,7 @@ export async function serviceInitializeCampaign(
             entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, { campaign_status_id, campaign_deployed_date });
         };
         //--------------------------------------
-        await handleBtnDoTransaction_WithErrorControl(CampaignEntity, TxEnums.CAMPAIG_DEPLOY, 'Deploying Campaign...', 'deploy-tx', fetchParams, txApiCall, handleBtnTx, onTx);
+        await handleBtnDoTransaction_WithErrorControl(CampaignEntity, TxEnums.CAMPAIGN_DEPLOY, 'Deploying Campaign...', 'deploy-tx', fetchParams, txApiCall, handleBtnTx, onTx);
         //--------------------------------------
         if (onFinish !== undefined) {
             await onFinish(campaign, data);
@@ -1499,7 +1499,7 @@ export async function serviceLaunchCampaign(
             // entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
         };
         //--------------------------------------
-        await handleBtnDoTransaction_WithErrorControl(CampaignEntity, TxEnums.CAMPAIG_LAUNCH, 'Launch Campaign...', 'launch-tx', fetchParams, txApiCall, handleBtnTx, onTx);
+        await handleBtnDoTransaction_WithErrorControl(CampaignEntity, TxEnums.CAMPAIGN_LAUNCH, 'Launch Campaign...', 'launch-tx', fetchParams, txApiCall, handleBtnTx, onTx);
         //--------------------------------------
         if (onFinish !== undefined) {
             await onFinish(campaign, data);

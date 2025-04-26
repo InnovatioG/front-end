@@ -27,8 +27,8 @@ export enum TxEnums {
     PROTOCOL_UPDATE_MIN_ADA = 'Protocol - Update Min ADA',
 
 
-    CAMPAIG_DEPLOY = 'Campaign - Deploy',
-    CAMPAIG_LAUNCH = 'Campaign - Launch',
+    CAMPAIGN_DEPLOY = 'Campaign - Deploy',
+    CAMPAIGN_LAUNCH = 'Campaign - Launch',
 
     CAMPAIGN_ADD_FUND = 'Campaign - Add Fund',
 
@@ -36,6 +36,10 @@ export enum TxEnums {
     
     CAMPAIGN_FUNDS_DEPOSIT = 'Campaign - Fund - Deposit',
     CAMPAIGN_FUNDS_INVEST = 'Campaign - Fund - Invest',
+
+    CAMPAIGN_FUNDS_COLLECT = 'Campaign - Fund - Invest',
+
+    CAMPAIGN_MILESTONE_APPROVE = 'Campaign - Milestone - Approve',
 
     CAMPAIGN_REACHED = 'Campaign - Reached',
     CAMPAIGN_NOT_REACHED = 'Campaign - Not Reached',

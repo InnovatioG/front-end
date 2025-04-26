@@ -52,11 +52,21 @@ export interface CampaignFundsInvestTxParams {
     amount: string;
 }
 
+export interface CampaignFundsCollectTxParams {
+    protocol_id: string;
+    campaign_id: string;
+    campaign_funds_id: string;
+}
+
 export interface CampaignLaunchTxParams {
     protocol_id: string;
     campaign_id: string;
 }
 
+export interface CampaignMilestoneAprobeTxParams {
+    protocol_id: string;
+    campaign_id: string;
+}
 
 export interface CampaignCampaingReachedTxParams {
     protocol_id: string;
