@@ -386,9 +386,9 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     } else if (query[1] === 'campaign-invest-tx') {
                         return await this.campaignFundsInvestTxApiHandler(req, res);
                     } else if (query[1] === 'campaign-reached-tx') {
-                        return await this.campaignCampaingReachedTxApiHandler(req, res);
+                        return await this.campaignReachedTxApiHandler(req, res);
                     } else if (query[1] === 'campaign-not-reached-tx') {
-                        return await this.campaignCampaingNotReachedTxApiHandler(req, res);
+                        return await this.campaignNotReachedTxApiHandler(req, res);
                     }
                 }
                 return res.status(405).json({ error: 'Wrong Api route' });
@@ -916,9 +916,9 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 console_log(0, this._Entity.className(), `Fund Mint & Deposit Tx - valueFor_CampaignFundsDatum_Out: ${showData(valueFor_CampaignFundsDatum_Out, false)}`);
                 //--------------------------------------
                 const campaignFundsDatum_Out = CampaignFundsBackEndApplied.mkUpdated_CampaignFundsDatum_With_Deposit(campaignFundsDatum_In, campaignTokensAmount);
-                console_log(0, this._Entity.className(), `Update Tx - campaignFundsDatum_Out: ${showData(campaignFundsDatum_Out, false)}`);
+                console_log(0, this._Entity.className(), `Mint & Deposit Tx - campaignFundsDatum_Out: ${showData(campaignFundsDatum_Out, false)}`);
                 const campaignFundsDatum_Out_Hex = CampaignFundsEntity.datumToCborHex(campaignFundsDatum_Out);
-                console_log(0, this._Entity.className(), `Update Tx - campaignFundsDatum_Out_Hex: ${showData(campaignFundsDatum_Out_Hex, false)}`);
+                console_log(0, this._Entity.className(), `Mint & Deposit Tx - campaignFundsDatum_Out_Hex: ${showData(campaignFundsDatum_Out_Hex, false)}`);
                 //--------------------------------------
                 const campaignPolicyRedeemerMintCampaignToken = new CampaignPolicyRedeemerMintCampaignToken();
                 console_log(
@@ -1179,7 +1179,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_Buy_CampaignTokens: ${showData(valueFor_Buy_CampaignTokens)}`);
                 //--------------------------------------
                 const valueFor_Buy_ADA: Assets = { lovelace: campaignTokensAmountBuyed * campaign.campaignToken_PriceADA };
-                console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_Buy_ADA: ${showData(valueFor_Buy_CampaignTokens)}`);
+                console_log(0, this._Entity.className(), `Fund Invest Tx - valueFor_Buy_ADA: ${showData(valueFor_Buy_ADA)}`);
                 //--------------------------------------
                 const value_Of_CampaignFundsDatum_In = campaignFunds_SmartUTxO.assets;
                 console_log(0, this._Entity.className(), `Fund Invest Tx - value_Of_CampaignFundsDatum_In: ${showData(value_Of_CampaignFundsDatum_In, false)}`);
@@ -1192,9 +1192,9 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     campaignTokensAmountBuyed,
                     valueFor_Buy_ADA.lovelace
                 );
-                console_log(0, this._Entity.className(), `Update Tx - campaignFundsDatum_Out: ${showData(campaignFundsDatum_Out, false)}`);
+                console_log(0, this._Entity.className(), `Invest Tx - campaignFundsDatum_Out: ${showData(campaignFundsDatum_Out, false)}`);
                 const campaignFundsDatum_Out_Hex = CampaignFundsEntity.datumToCborHex(campaignFundsDatum_Out);
-                console_log(0, this._Entity.className(), `Update Tx - campaignFundsDatum_Out_Hex: ${showData(campaignFundsDatum_Out_Hex, false)}`);
+                console_log(0, this._Entity.className(), `Invest Tx - campaignFundsDatum_Out_Hex: ${showData(campaignFundsDatum_Out_Hex, false)}`);
                 //--------------------------------------
                 const campaignFundsValidatorRedeemerSell = new CampaignFundsValidatorRedeemerSell({ amount: campaignTokensAmountBuyed });
                 const campaignFundsValidatorRedeemerSell_Hex = campaignFundsValidatorRedeemerSell.toCborHex();
@@ -1527,7 +1527,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
         }
     }
 
-    public static async campaignCampaingReachedTxApiHandler(req: NextApiRequestAuthenticated, res: NextApiResponse) {
+    public static async campaignReachedTxApiHandler(req: NextApiRequestAuthenticated, res: NextApiResponse) {
         //--------------------
         if (req.method === 'POST') {
             console_log(1, this._Entity.className(), `CampaingReached Tx - POST - Init`);
@@ -1736,7 +1736,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
         }
     }
 
-    public static async campaignCampaingNotReachedTxApiHandler(req: NextApiRequestAuthenticated, res: NextApiResponse) {
+    public static async campaignNotReachedTxApiHandler(req: NextApiRequestAuthenticated, res: NextApiResponse) {
         //--------------------
         if (req.method === 'POST') {
             console_log(1, this._Entity.className(), `CampaingNotReached Tx - POST - Init`);
