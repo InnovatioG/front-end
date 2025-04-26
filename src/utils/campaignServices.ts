@@ -3,7 +3,7 @@ import {
     CampaignDeployTxParams,
     CampaignFundsAddTxParams,
     CampaignFundsMintDepositTxParams,
-    CampaignLaunchTxParams
+    CampaignLaunchTxParams,
 } from '@/lib/SmartDB/Commons/Params';
 import { CampaignEntity, CampaignFundsEntity, CampaignStatusEntity, CampaignSubmissionEntity, ProtocolEntity, SubmissionStatusEntity } from '@/lib/SmartDB/Entities';
 import {
@@ -1178,9 +1178,9 @@ export async function serviceInitializeCampaign(
                 throw new Error(`Status CONTRACT_STARTED code-id: ${CampaignStatus_Code_Id_Enums.CONTRACT_STARTED} not found`);
             }
             let entity = campaign.campaign;
-            entity.campaign_status_id = status._DB_id;
-            entity.campaign_deployed_date = new Date(); //TODO
-            entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
+            const campaign_status_id = status._DB_id;
+            const campaign_deployed_date = new Date(); //TODO
+            entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, { campaign_status_id, campaign_deployed_date });
         };
         //--------------------------------------
         await handleBtnDoTransaction_WithErrorControl(CampaignEntity, TxEnums.CAMPAIG_DEPLOY, 'Deploying Campaign...', 'deploy-tx', fetchParams, txApiCall, handleBtnTx, onTx);
@@ -1324,6 +1324,7 @@ export async function servicePrepareUTxOs(
                 const txParams: CampaignFundsMintDepositTxParams = {
                     protocol_id: protocol!._DB_id!,
                     campaign_id,
+                    campaign_funds_id: campaignFunds[0]._DB_id,
                 };
                 return {
                     lucid,
@@ -1352,7 +1353,7 @@ export async function servicePrepareUTxOs(
             //--------------------------------------
             await handleBtnDoTransaction_WithErrorControl(
                 CampaignEntity,
-                TxEnums.CAMPAIGN_ADD_FUND,
+                TxEnums.CAMPAIGN_FUNDS_MINT_DEPOSIT,
                 'Campaign Fund Mint & Deposit...',
                 'campaign-fund-mint-deposit-tx',
                 fetchParams,

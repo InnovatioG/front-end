@@ -31,6 +31,9 @@ export enum TxEnums {
     CAMPAIG_LAUNCH = 'Campaign - Launch',
 
     CAMPAIGN_ADD_FUND = 'Campaign - Add Fund',
+
+    CAMPAIGN_FUNDS_MINT_DEPOSIT = 'Campaign - Fund - Mint & Deposit',
+    
     CAMPAIGN_FUNDS_DEPOSIT = 'Campaign - Fund - Deposit',
 
 }

@@ -10,6 +10,7 @@ import {
     NextApiRequestAuthenticated,
     console_error,
     console_log,
+    toJson,
 } from 'smart-db/backEnd';
 import { CampaignFundsDatum, CampaignFundsEntity } from '../Entities/CampaignFunds.Entity';
 import { CampaignEntity } from '../Entities/Campaign.Entity';
@@ -36,6 +37,20 @@ export class CampaignFundsBackEndApplied extends BaseSmartDBBackEndApplied {
             cfdSubtotal_Avalaible_ADA: 0n,
             cfdSubtotal_Collected_ADA: 0n,
             cfdMinADA: mindAda,
+        };
+
+        let datum: CampaignFundsDatum = CampaignFundsEntity.mkDatumFromPlainObject(datumPlainObject) as CampaignFundsDatum;
+
+        return datum;
+    }
+
+    public static mkUpdated_CampaignFundsDatum_With_Deposit(campaignFundsDatum_In: CampaignFundsDatum, amount: bigint): CampaignFundsDatum {
+        // usado para que los campos del datum tengan las clases y tipos bien
+        // txParams trae los campos pero estan plain, no son clases ni tipos
+
+        const datumPlainObject: CampaignFundsDatum = {
+            ...JSON.parse(toJson(campaignFundsDatum_In)),
+            cfdSubtotal_Avalaible_CampaignToken: campaignFundsDatum_In.cfdSubtotal_Avalaible_CampaignToken + amount,
         };
 
         let datum: CampaignFundsDatum = CampaignFundsEntity.mkDatumFromPlainObject(datumPlainObject) as CampaignFundsDatum;
