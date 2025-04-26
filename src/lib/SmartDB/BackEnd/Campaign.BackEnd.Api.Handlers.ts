@@ -1231,20 +1231,6 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                         .validFrom(from)
                         .validTo(until);
                     //--------------------------------------
-                    const scriptCampaignPolicy = await ScriptBackEndApplied.getByHash(campaignPolicy_CS);
-                    if (scriptCampaignPolicy !== undefined) {
-                        console_log(0, this._Entity.className(), `Fund Invest Tx - Using Script as Ref: ${campaignPolicy_CS}`);
-                        const smartUTxO = scriptCampaignPolicy.smartUTxO;
-                        if (smartUTxO === undefined) {
-                            throw `Can't find smartUTxO in Script`;
-                        }
-                        const uTxO = smartUTxO.getUTxO();
-                        tx = tx.readFrom([uTxO]);
-                    } else {
-                        console_log(0, this._Entity.className(), `Fund Invest Tx - Attaching Script: ${campaignPolicy_CS}`);
-                        tx = tx.attach.MintingPolicy(campaignPolicy_Script);
-                    }
-                    //--------------------------------------
                     const scriptCampaignFundsValidator = await ScriptBackEndApplied.getByHash(campaignFundsValidator_Hash);
                     if (scriptCampaignFundsValidator !== undefined) {
                         console_log(0, this._Entity.className(), `Fund Invest Tx - Using Script as Ref: ${campaignFundsValidator_Hash}`);
