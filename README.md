@@ -1,40 +1,146 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Innovatio DApp
 
-## Getting Started
+Welcome to the **Innovatio** Decentralized Crowdfunding Platform — built on **Cardano** and powered by **Plutus smart contracts**. This is the web application (frontend + backend) implemented with **Next.js**, **React**, and **TypeScript**, integrating directly with the blockchain and the SmartDB layer.
 
-First, run the development server:
+## 🚀 Features
+
+- 📦 Full integration with Cardano blockchain (on-chain campaign management)
+- 🧠 SmartDB sync between blockchain & PostgreSQL
+- 🖼️ Dynamic UI with React & SCSS Modules
+- 🔐 Web3 login via Cardano wallets (Eternl, Nami, etc.)
+- 🧾 Campaign creation, investment, milestone validation, and fund management
+- 🔧 Admin and user dashboards
+
+## 🛠️ Getting Started
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open <http://localhost:3000> in your browser to view the app.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## 🔗 Backend Integration
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+This frontend connects to:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- 🧠 **SmartDB**: Unified backend service managing PostgreSQL + Blockchain sync
+- 🧾 Smart contracts written in **Plutus V2 / Aiken** (see `/smart_contracts`)
+- 📡 Uses **Lucid** for transaction construction
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+> For backend configuration and API routes, see `src/lib/SmartDB` and `pages/api/`.
 
-## Learn More
+## 🧪 Development Notes
 
-To learn more about Next.js, take a look at the following resources:
+- Pages live under `src/pages/`
+- Components live under `src/components/`
+- Smart contract interaction logic is in `src/lib/SmartDB`
+- Reusable hooks and contexts are in `src/hooks/` and `src/contexts/`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧬 Technologies
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **Next.js** (App Router)
+- **TypeScript**
+- **Tailwind + SCSS Modules**
+- **Plutus / Lucid / CIP-68**
+- **PostgreSQL**
+- **SmartDB (custom off-chain layer)**
 
-## Deploy on Vercel
+## 🧾 Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# Innovatio DApp
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Welcome to the **Innovatio** Decentralized Crowdfunding Platform — built on **Cardano** and powered by **Plutus smart contracts**. This is the web application (frontend + backend) implemented with **Next.js**, **React**, and **TypeScript**, integrating directly with the blockchain and the SmartDB layer.
+
+## 🚀 Features
+
+- 📦 Full integration with Cardano blockchain (on-chain campaign management)
+- 🧠 SmartDB sync between blockchain & PostgreSQL
+- 🖼️ Dynamic UI with React & SCSS Modules
+- 🔐 Web3 login via Cardano wallets (Eternl, Nami, etc.)
+- 🧾 Campaign creation, investment, milestone validation, and fund management
+- 🔧 Admin and user dashboards
+
+## 🛠️ Getting Started
+
+### 1. Install dependencies
+```bash
+npm install
+```
+
+### 2. Run the development server
+
+```bash
+npm run dev
+```
+
+Open <http://localhost:3000> in your browser to view the app.
+
+## 🔗 Backend Integration
+
+This frontend connects to:
+
+- 🧠 **SmartDB**: Unified backend service managing PostgreSQL + Blockchain sync
+- 🧾 Smart contracts written in **Plutus V2 / Aiken** (see `/smart_contracts`)
+- 📡 Uses **Lucid** for transaction construction
+
+> For backend configuration and API routes, see `src/lib/SmartDB` and `pages/api/`.
+
+## 🧪 Development Notes
+
+- Pages live under `src/pages/`
+- Components live under `src/components/`
+- Smart contract interaction logic is in `src/lib/SmartDB`
+- Reusable hooks and contexts are in `src/hooks/` and `src/contexts/`
+
+## 🧬 Technologies
+
+- **Next.js** (App Router)
+- **TypeScript**
+- **Tailwind + SCSS Modules**
+- **Plutus / Lucid / CIP-68**
+- **PostgreSQL**
+- **SmartDB (custom off-chain layer)**
+
+## 🧾 Scripts
+
+```bash
+npm run dev                          # Start development server with increased memory
+npm run deb                          # Start dev server with debugger enabled
+npm run kill                         # Kill port 3000 if in use
+npm run build                        # Clean and build production bundle
+npm run start                        # Start production server
+npm run clean                        # Remove .next folder
+npm run cleanAll                     # Remove node_modules and .next
+npm run lint                         # Run Next.js linter
+npm run smartDBInstall               # Reinstall local smart-db.tgz (force)
+npm run watchSmartDBAndInstall       # Watch local smart-db.tgz and reinstall on change
+npm run watchOriginSmartDBAndInstall # Watch SmartDB from external source and reinstall locally
+npm run swagger-dev                 # Start Swagger server in dev mode
+npm run swagger-start               # Start Swagger server in production mode
+npm run resetTime                   # Reset mocked blockchain time
+npm run setTime                     # Set mocked blockchain time
+```
+
+## 📦 Deployment
+
+This project is ready to deploy on:
+
+- Vercel (<https://vercel.com>)
+- Docker (./Dockerfile - if present)
+- Custom server environments (check env vars)
+
+## 👥 Contributors
+
+- Protocol team: governance, approvals
+- Campaign managers: create & run campaigns
+- Investors: fund campaigns with ADA
+- Editors: manage content off-chain
