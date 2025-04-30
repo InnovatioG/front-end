@@ -1,0 +1,117 @@
+@forward  '@/styles/components/modalTemplate';
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
+@use '@/styles/InputStyle';
+
+.headerModal {
+    margin-bottom: 0px;
+    width: 92%;
+    // Title Modal and Icon include in mixin
+}
+
+.txContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    gap: 16px;
+
+    .txContainerTokenAndInfoPart {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 16px;
+
+        .tokensSection {
+            display: flex;
+            flex-direction: row;
+            gap: 16px;
+            width: 100%;
+
+            .valueGroup {
+                display: flex;
+                background-color: colors.$primary-background;
+                flex-direction: column;
+                border-radius: 16px;
+                padding: 16px;
+                width: 100%;
+                gap: 16px;
+
+                .valueTitle {
+                    font: fonts.$f200-bold;
+                }
+
+                .tokensContainer {
+                    max-height: 116px;
+                    overflow-y: auto;
+
+                    display: flex;
+                    flex-direction: column;
+                    gap: 16px;
+
+                    &.needScroll {
+                        padding-right: 8px;
+                    }
+                    .inputGroup {
+                        height: 50px;
+                        border: 1px solid colors.$border-light-color;
+                        border-radius: 16px;
+                        width: 100%;
+                        padding: 16px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 10px;
+
+                        .token {
+                            display: flex;
+                            align-items: center;
+                            gap: 10px;
+
+                            .tokenName {
+                                font: fonts.$f300-medium;
+                            }
+                        }
+                        .input {
+                            text-align: right;
+                            background: transparent;
+                            width: 100%;
+                            font: fonts.$f500-medium;
+                            color: colors.$light-color
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .extraInfo {
+        width: 100%;
+    }
+
+    .infoText {
+        display: flex;
+        gap: 6px;
+        flex-direction: column;
+        background-color: colors.$primary-background;
+        border-radius: 16px;
+        padding: 12px;
+
+        .textSmall {
+            font: fonts.$f50-regular;
+        }
+    }
+
+    .textQuestion {
+        font: fonts.$f200-medium
+    }
+}
+
+.btnGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+}

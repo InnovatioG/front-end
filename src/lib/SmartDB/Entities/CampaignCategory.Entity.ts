@@ -1,4 +1,4 @@
-import {} from 'lucid-cardano';
+import {} from '@lucid-evolution/lucid';
 import 'reflect-metadata';
 import { BaseEntity, Convertible, asEntity } from 'smart-db';
 
@@ -8,8 +8,6 @@ export class CampaignCategoryEntity extends BaseEntity {
     protected static _className: string = 'CampaignCategory';
 
     // #region fields
-    @Convertible()
-    id_internal!: number;
     @Convertible()
     name!: string;
     @Convertible()
@@ -27,7 +25,6 @@ export class CampaignCategoryEntity extends BaseEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-        internal_id: true,
         name: true,
         description: true,
         createdAt: true,

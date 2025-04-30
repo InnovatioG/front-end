@@ -1,9 +1,10 @@
-import BtnCampaign from '@/components/UI/Buttons/Campaign/BtnCampaign';
-import BtnConnectWallet from '@/components/UI/Buttons/ConnectWallet/BtnConnectWallet';
-import { CALENDAR } from '@/utils/images';
+import BtnHeaderCampaignNewOrManage from '@/components/GeneralOK/Buttons/Buttons/BtnHeaderCampaignNewOrManage/BtnHeaderCampaignNewOrManage';
+import { CALENDAR_ICON } from '@/utils/constants/images';
 import Link from 'next/link';
 import { useState } from 'react';
 import styles from './NavMenu.module.scss';
+import { ROUTES } from '@/utils/constants/routes';
+import BtnConnectWallet from '@/components/GeneralOK/Buttons/Buttons/BtnConnectWallet/BtnConnectWallet';
 
 export default function NavMenu() {
     const [isOpenMenu, setIsOpenMenu] = useState<boolean>(false);
@@ -25,17 +26,17 @@ export default function NavMenu() {
                     <h2 className={styles.menuTitle}>Menu</h2>
                     <div className={styles.btnCalendar}>
                         <svg width="29" height="29" className={styles.icon}>
-                            <use href={CALENDAR}></use>
+                            <use href={CALENDAR_ICON}></use>
                         </svg>
                     </div>
                     <div className={styles.infoSection}>
-                        <Link href={''} className={styles.infoLink}>
+                        <Link href={ROUTES.campaigns} className={styles.infoLink}>
                             <button onClick={() => setIsOpenMenu(false)}>How it works</button>
                         </Link>
-                        <Link href={''} className={styles.infoLink}>
+                        <Link href={ROUTES.aboutus} className={styles.infoLink}>
                             <button onClick={() => setIsOpenMenu(false)}>About us</button>
                         </Link>
-                        <Link href={'/campaigns'} className={styles.infoLink}>
+                        <Link href={ROUTES.campaigns} className={styles.infoLink}>
                             <button>Campaigns</button>
                         </Link>
                     </div>
@@ -43,7 +44,7 @@ export default function NavMenu() {
                         <div onClick={() => setIsOpenMenu(false)}>
                             <BtnConnectWallet type="secondary" width={230} />
                         </div>
-                        <BtnCampaign type="secondary" width={230} closeMenu={() => setIsOpenMenu(false)} />
+                        <BtnHeaderCampaignNewOrManage type="secondary" width={230} closeMenu={() => setIsOpenMenu(false)} />
                     </div>
                 </div>
             </div>

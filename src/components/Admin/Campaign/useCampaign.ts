@@ -1,7 +1,7 @@
 import { CampaignCategoryEntity, CampaignStatusEntity } from '@/lib/SmartDB/Entities';
 import { CampaignApi, CampaignCategoryApi, CampaignStatusApi } from '@/lib/SmartDB/FrontEnd';
-import { SetStateAction, useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { SetStateAction, useCallback, useEffect, useState } from 'react';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { CampaignEntity } from '../../../lib/SmartDB/Entities/Campaign.Entity';
 
 export interface MilestoneFormProps {
@@ -43,20 +43,20 @@ export function useCampaign() {
         return status?.name || 'Unknown';
     };
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             await fetchCampaignsExtras();
             const fetchedList: CampaignEntity[] = await CampaignApi.getAllApi_();
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching Campaign: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching Campaign: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {
@@ -70,7 +70,7 @@ export function useCampaign() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating Campaign: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating Campaign: ${e}`);
         }
     };
 
@@ -85,7 +85,7 @@ export function useCampaign() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating Campaign: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating Campaign: ${e}`);
             }
         }
     };
@@ -102,7 +102,7 @@ export function useCampaign() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting Campaign: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting Campaign: ${e}`);
             }
         }
     };

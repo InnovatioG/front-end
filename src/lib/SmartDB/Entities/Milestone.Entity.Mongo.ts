@@ -43,7 +43,7 @@ export class MilestoneEntityMongo extends BaseEntityMongo {
 
     // #region mongo db
 
-    public static MongoModel() {
+    public static DBModel() {
         interface Interface {
             campaign_id: string;
             milestone_status_id: string;
@@ -51,6 +51,7 @@ export class MilestoneEntityMongo extends BaseEntityMongo {
             estimate_delivery_date: Date;
             percentage: number;
             description: string;
+            order: number;
             createdAt: Date;
             updatedAt: Date;
         }
@@ -59,10 +60,12 @@ export class MilestoneEntityMongo extends BaseEntityMongo {
             {
                 campaign_id: { type: String, required: true },
                 milestone_status_id: { type: String, required: true },
-                estimate_delivery_days: { type: Number, required: true },
+                estimate_delivery_days: { type: Number, required: false },
                 estimate_delivery_date: { type: Date, required: false },
-                percentage: { type: Number, required: true },
-                description: { type: String, required: true },
+                percentage: { type: Number, required: false },
+                description: { type: String, required: false },
+                order: { type: Number, required: true }
+
             },
             { timestamps: true }
         );

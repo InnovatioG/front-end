@@ -43,7 +43,7 @@ export class MilestoneSubmissionEntityMongo extends BaseEntityMongo {
 
     // #region mongo db
 
-    public static MongoModel() {
+    public static DBModel() {
         interface Interface {
             milestone_id: string;
             submission_status_id: string;

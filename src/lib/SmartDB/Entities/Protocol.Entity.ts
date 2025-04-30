@@ -1,6 +1,7 @@
-import { type Script } from 'lucid-cardano';
+import { PROTOCOL_ID_TN_Str } from '@/utils/constants/on-chain';
+import { type Script } from '@lucid-evolution/lucid';
 import 'reflect-metadata';
-import { BaseSmartDBEntity, type CS, Convertible, LucidLUCID_NETWORK_MAINNET_NAME, asSmartDBEntity } from 'smart-db';
+import { BaseSmartDBEntity, type CS, Convertible, LUCID_NETWORK_MAINNET_NAME, asSmartDBEntity } from 'smart-db';
 
 export type CampaignFactory = {
     name: string;
@@ -24,8 +25,10 @@ export class ProtocolEntity extends BaseSmartDBEntity {
     protected static _className: string = 'Protocol';
 
     protected static _plutusDataIsSubType = true;
-    protected static _is_NET_id_Unique = true;
-    _NET_id_TN: string = 'protocol_id';
+
+    protected static _isOnlyDatum = false;
+
+    _NET_id_TN_Str: string = PROTOCOL_ID_TN_Str;
 
     // #region fields
 
@@ -149,12 +152,23 @@ export class ProtocolEntity extends BaseSmartDBEntity {
         updatedAt: true,
     };
 
+    public static defaultFieldsAddScriptsTxScript: Record<string, boolean> = {
+        fdpProtocolPolicyID_CS: true,
+        fdpProtocolPolicyID_Script: true,
+        fdpProtocolValidator_Hash: true,
+        fdpProtocolValidator_Script: true,
+        fdpScriptPolicyID_CS: true,
+        fdpScriptPolicyID_Script: true,
+        fdpScriptValidator_Hash: true,
+        fdpScriptValidator_Script: true,
+    };
+
     // #endregion db
 
     // #region class methods
 
     public getNet_Address(): string {
-        if (process.env.NEXT_PUBLIC_CARDANO_NET === LucidLUCID_NETWORK_MAINNET_NAME) {
+        if (process.env.NEXT_PUBLIC_CARDANO_NET === LUCID_NETWORK_MAINNET_NAME) {
             return this.fdpProtocolValidator_AddressMainnet;
         } else {
             return this.fdpProtocolValidator_AddressTestnet;
@@ -166,7 +180,7 @@ export class ProtocolEntity extends BaseSmartDBEntity {
     }
 
     public getNet_Script_Validator_Address(): string {
-        if (process.env.NEXT_PUBLIC_CARDANO_NET === LucidLUCID_NETWORK_MAINNET_NAME) {
+        if (process.env.NEXT_PUBLIC_CARDANO_NET === LUCID_NETWORK_MAINNET_NAME) {
             return this.fdpScriptValidator_AddressMainnet;
         } else {
             return this.fdpScriptValidator_AddressTestnet;

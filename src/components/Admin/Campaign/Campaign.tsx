@@ -1,8 +1,9 @@
-import { CampaignEntity, CampaignMilestone } from '@/lib/SmartDB/Entities';
+import { CampaignEntity, CampaignMilestoneDatum } from '@/lib/SmartDB/Entities';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { toJson } from 'smart-db';
 import styles from './Campaign.module.scss';
 import { MilestoneFormProps, useCampaign } from './useCampaign';
+import { MilestoneDatumStatus_Code_Id_Enums } from '@/utils/constants/status/status';
 
 export default function Campaign() {
     const { list, newItem, editItem, deleteItem, view, setNewItem, setEditItem, setDeleteItem, setView, create, update, remove, getCategoryName, getStatusName } = useCampaign();
@@ -140,7 +141,7 @@ export default function Campaign() {
     };
 
     const MilestoneForm: React.FC<MilestoneFormProps> = ({ item, setItem }) => {
-        const [localMilestones, setLocalMilestones] = useState<CampaignMilestone[]>(item.cdMilestones || []);
+        const [localMilestones, setLocalMilestones] = useState<CampaignMilestoneDatum[]>(item.cdMilestones || []);
         const [editingIndex, setEditingIndex] = useState<number | null>(null); // Track the currently edited row
 
         useEffect(() => {
@@ -148,9 +149,9 @@ export default function Campaign() {
         }, [item.cdMilestones]);
 
         const addMilestone = () => {
-            const newMilestone: CampaignMilestone = {
-                cmPerncentage: 0,
-                cmStatus: 0, // Default status
+            const newMilestone: CampaignMilestoneDatum = {
+                cmPerncentage: 0n,
+                cmStatus: MilestoneDatumStatus_Code_Id_Enums.MsCreated, // Default status
             };
             const newMilestoneIndex = localMilestones.length; // Index of the new milestone
             setLocalMilestones((prev) => [...prev, newMilestone]); // Add a new milestone row
@@ -169,7 +170,7 @@ export default function Campaign() {
             setEditingIndex(null); // Exit editing mode
         };
 
-        const updateMilestone = (index: number, field: keyof CampaignMilestone, value: string | number | bigint) => {
+        const updateMilestone = (index: number, field: keyof CampaignMilestoneDatum, value: string | number | bigint) => {
             const parsedValue = Number(value);
             const updatedMilestones = localMilestones.map((m, i) => (i === index ? { ...m, [field]: parsedValue } : m));
             setLocalMilestones(updatedMilestones); // Update local state
@@ -191,7 +192,7 @@ export default function Campaign() {
                                 {editingIndex === index ? (
                                     <input
                                         type="number"
-                                        value={milestone.cmPerncentage}
+                                        value={milestone.cmPerncentage.toString()}
                                         min="0"
                                         max="100"
                                         onChange={(e) => updateMilestone(index, 'cmPerncentage', e.target.value)}
@@ -208,9 +209,9 @@ export default function Campaign() {
                                         <option value="1">Success</option>
                                         <option value="2">Failed</option>
                                     </select>
-                                ) : milestone.cmStatus === 0 ? (
+                                ) : milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsCreated ? (
                                     'Created'
-                                ) : milestone.cmStatus === 1 ? (
+                                ) : milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsSuccess ? (
                                     'Success'
                                 ) : (
                                     'Failed'
@@ -334,6 +335,7 @@ export default function Campaign() {
                             <th>Visualizations</th>
                             <th>Investors</th>
                             <th>Tokenomics Max Supply</th>
+                            <th>Tokenomics For Campaign</th>
                             <th>Tokenomics Description</th>
 
                             <th>Campaign Version (Datum)</th>
@@ -367,7 +369,7 @@ export default function Campaign() {
                     <tbody>
                         {list.map((item) => (
                             <tr key={item._DB_id}>
-                                <td>{getCategoryName(item.campaing_category_id)}</td>
+                                <td>{getCategoryName(item.campaign_category_id)}</td>
                                 <td>{getStatusName(item.campaign_status_id)}</td>
                                 <td>{item.creator_wallet_id}</td>
 
@@ -385,9 +387,9 @@ export default function Campaign() {
                                 <td>{item.mint_CampaignToken ? 'Yes' : 'No'}</td>
                                 <td>{item.campaignToken_CS}</td>
                                 <td>{item.campaignToken_TN}</td>
-                                <td>{item.campaignToken_PriceADA.toString()}</td>
-                                <td>{item.requestedMaxADA.toString()}</td>
-                                <td>{item.requestedMinADA.toString()}</td>
+                                <td>{item.campaignToken_PriceADA?.toString()}</td>
+                                <td>{item.requestedMaxADA?.toString()}</td>
+                                <td>{item.requestedMinADA?.toString()}</td>
 
                                 <td>{item.logo_url}</td>
                                 <td>{item.banner_url}</td>
@@ -398,7 +400,8 @@ export default function Campaign() {
                                 <td>{item.facebook}</td>
                                 <td>{item.visualizations}</td>
                                 <td>{item.investors}</td>
-                                <td>{item.tokenomics_max_supply}</td>
+                                <td>{item.tokenomics_max_supply?.toString()}</td>
+                                <td>{item.tokenomics_for_campaign?.toString()}</td>
                                 <td>{item.tokenomics_description}</td>
 
                                 <td>{item.cdCampaignVersion}</td>
@@ -409,18 +412,18 @@ export default function Campaign() {
                                 <td>{item.cdMint_CampaignToken ? 'Yes' : 'No'}</td>
                                 <td>{item.cdCampaignToken_CS}</td>
                                 <td>{item.cdCampaignToken_TN}</td>
-                                <td>{item.cdCampaignToken_PriceADA.toString()}</td>
-                                <td>{item.cdRequestedMaxADA.toString()}</td>
-                                <td>{item.cdRequestedMinADA.toString()}</td>
-                                <td>{item.cdFundedADA.toString()}</td>
-                                <td>{item.cdCollectedADA.toString()}</td>
-                                <td>{item.cdbegin_at?.toString()}</td>
+                                <td>{item.cdCampaignToken_PriceADA?.toString()}</td>
+                                <td>{item.cdRequestedMaxADA?.toString()}</td>
+                                <td>{item.cdRequestedMinADA?.toString()}</td>
+                                <td>{item.cdFundedADA?.toString()}</td>
+                                <td>{item.cdCollectedADA?.toString()}</td>
+                                <td>{item.cdBegin_at?.toString()}</td>
                                 <td>{item.cdDeadline?.toString()}</td>
                                 <td>{item.cdStatus}</td>
                                 <td>{toJson(item.cdMilestones)}</td>
                                 <td>{item.cdFundsCount}</td>
                                 <td>{item.cdFundsIndex}</td>
-                                <td>{item.cdMinADA.toString()}</td>
+                                <td>{item.cdMinADA?.toString()}</td>
 
                                 <td>{item.featured ? 'Yes' : 'No'}</td>
                                 <td>{item.archived ? 'Yes' : 'No'}</td>
@@ -457,7 +460,7 @@ export default function Campaign() {
             {/* General Fields */}
             <div>
                 <label>Campaign Category ID:</label>
-                <input type="text" value={item.campaing_category_id || ''} onChange={(e) => setItem({ ...item, campaing_category_id: e.target.value })} />
+                <input type="text" value={item.campaign_category_id || ''} onChange={(e) => setItem({ ...item, campaign_category_id: e.target.value })} />
             </div>
             <div>
                 <label>Campaign Status ID:</label>
@@ -621,7 +624,27 @@ export default function Campaign() {
             </div>
             <div>
                 <label>Tokenomics Max Supply:</label>
-                <input type="text" value={item.tokenomics_max_supply || ''} onChange={(e) => setItem({ ...item, tokenomics_max_supply: e.target.value })} />
+                <input
+                    type="text"
+                    value={item.tokenomics_max_supply?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, cdCampaignToken_PriceADA: BigInt(e.target.value) });
+                        }
+                    }}
+                />
+            </div>
+            <div>
+                <label>Tokenomics For Campaign:</label>
+                <input
+                    type="text"
+                    value={item.tokenomics_for_campaign?.toString() || ''}
+                    onChange={(e) => {
+                        if (!isNaN(Number(e.target.value))) {
+                            setItem({ ...item, tokenomics_for_campaign: BigInt(e.target.value) });
+                        }
+                    }}
+                />
             </div>
             <div>
                 <label>Tokenomics Description:</label>
@@ -725,10 +748,10 @@ export default function Campaign() {
                 <label>Begin At (POSIXTime) (Datum):</label>
                 <input
                     type="text"
-                    value={item.cdbegin_at?.toString() || ''}
+                    value={item.cdBegin_at?.toString() || ''}
                     onChange={(e) => {
                         if (!isNaN(Number(e.target.value))) {
-                            setItem({ ...item, cdbegin_at: BigInt(e.target.value) });
+                            setItem({ ...item, cdBegin_at: BigInt(e.target.value) });
                         }
                     }}
                 />

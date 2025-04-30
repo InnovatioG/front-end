@@ -1,10 +1,10 @@
-import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
+import { PostgreSQLAppliedFor} from 'smart-db';
+import { BaseEntityPostgreSQL, PostgreSQLDatabaseService } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { SubmissionStatusEntity } from './SubmissionStatus.Entity';
 
 @PostgreSQLAppliedFor([SubmissionStatusEntity])
-@Entity({ name: getPostgreSQLTableName(SubmissionStatusEntity.className()) })
+@Entity({ name: PostgreSQLDatabaseService.getTableName(SubmissionStatusEntity.className()) })
 export class SubmissionStatusEntityPostgreSQL extends BaseEntityPostgreSQL {
     protected static Entity = SubmissionStatusEntity;
 
@@ -14,7 +14,7 @@ export class SubmissionStatusEntityPostgreSQL extends BaseEntityPostgreSQL {
     _id!: number; // Auto-generated primary key
 
     @Column({ type: 'integer' })
-    id_internal!: number;
+    code_id!: number;
     @Column({ type: 'varchar', length: 255 })
     name!: string;
     @Column({ type: 'text', nullable: true })
@@ -54,11 +54,4 @@ export class SubmissionStatusEntityPostgreSQL extends BaseEntityPostgreSQL {
 
     // #endregion internal class methods
 
-    // #region posgresql db
-
-    public static PostgreSQLModel() {
-        return this;
-    }
-
-    // #endregion posgresql db
 }

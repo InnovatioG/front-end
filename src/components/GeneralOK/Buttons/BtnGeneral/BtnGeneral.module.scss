@@ -1,0 +1,360 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
+.generalButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2.375rem;
+    width: 100%;
+    border: 1px solid;
+    padding: 1rem 2rem;
+
+    font: fonts.$f400-medium;
+
+    @media (max-width: 1360px) {
+        padding: 0.7rem 0.5rem;
+    }
+
+    &:disabled {
+        background-color: colors.$disabled;
+        color: colors.$placeholder-color;
+        cursor: not-allowed;
+    }
+}
+
+.outline {
+    background: colors.$white-background;
+    color: colors.$primary-dark-color;
+    border: 1px solid colors.$primary-dark-color;
+}
+
+.outlineb {
+    background: transparent;
+    color: colors.$primary-dark-color;
+    border: 1px solid colors.$primary-dark-color;
+    padding: 0.5rem 0.5rem;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    transition: all 0.3s ease;
+    text-wrap: nowrap;
+    width: 100%;
+
+    &:hover {
+        scale: 1.05;
+    }
+}
+
+.active-nav {
+    font: fonts.$f200-medium;
+    background-color: colors.$primary-dark-color;
+    color: white;
+    text-wrap: nowrap;
+}
+
+.passive-nav {
+    background-color: colors.$gray-menu;
+    color: colors.$primary-dark-color;
+    border: 1px solid colors.$primary-dark-color;
+    font: fonts.$f200-medium;
+    text-wrap: nowrap;
+}
+
+.passive-nav-transparent {
+    background-color: transparent;
+    color: colors.$primary-dark-color;
+    border: 1px solid colors.$primary-dark-color;
+    font: fonts.$f200-medium;
+}
+
+.overview {
+    background-color: #3e5bc1;
+    font: fonts.$f200-medium;
+    color: white;
+}
+
+.green {
+    background: var(--Green, #76d13e);
+    font: fonts.$f200-medium;
+    width: 100%;
+    transition: all 0.3s ease;
+    border: none;
+    padding: 1rem 2rem;
+
+ 
+}
+
+.gray {
+    background: colors.$light-gray-span;
+    font: fonts.$f200-medium;
+    width: 100%;
+    transition: all 0.3s ease;
+    border: none;
+    padding: 1rem 2rem;
+}
+
+.greenb {
+    background: var(--Green, #76d13e);
+    width: 100%;
+    border: 1px solid colors.$primary-dark-color;
+    padding: 0.5rem 0.5rem;
+    &:hover {
+        scale: 1.05;
+    }
+}
+
+.menu-index,
+.menu-index-selected,
+.navegation-buttons-add {
+    background-color: colors.$gray-menu;
+    color: colors.$secondary-background;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    overflow: visible;
+    text-align: left;
+    border: none;
+    padding-inline: 1rem;
+    font: fonts.$f150-medium;
+    @media (max-width: 768px) {
+        padding: 0.7rem 0.5rem;
+    }
+
+    @media (max-width: 1360px) {
+        padding: 0.7rem 0.5rem;
+    }
+    transition: all ease 0.1s;
+}
+
+.menu-index:hover,
+.menu-index-selected:hover {
+    border: 1px solid colors.$primary-dark-color;
+}
+
+.menu-index {
+    border: 1px solid colors.$primary-dark-color;
+    // scale: 1.1;
+}
+
+.hasContentButton {
+    background-color: red;
+}
+
+.non-empty-content {
+    background-color: colors.$primary-dark-color;
+    color: colors.$white-background;
+    font: fonts.$f400-medium;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .menu-index,
+    .menu-index-selected,
+    .non-empty-content {
+        padding: none;
+        text-wrap: nowrap;
+        align-self: center;
+        justify-self: center;
+        min-width: 200px;
+        height: 100%;
+    }
+    .passive-nav-transparent,
+    .active-nav,
+    .overview {
+        font-size: 1rem;
+        padding: 1rem 2rem;
+    }
+}
+
+.menu-index-selected {
+    padding: 1rem;
+}
+
+.navegation-buttons-add {
+    scale: 0.8;
+    justify-self: flex-end;
+    align-self: flex-end;
+    background-color: red;
+}
+
+/* BOTONES DEL DASHBOARD */
+
+.fill,
+.fillb {
+    background-color: colors.$primary-dark-color;
+    color: colors.$white-background;
+    font: fonts.$f400-medium;
+    border: none;
+    padding: 0.5rem;
+    border-radius: 2.375rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover {
+        scale: 1.05;
+    }
+    &:disabled {
+        background-color: colors.$disabled;
+        color: colors.$placeholder-color;
+        cursor: not-allowed;
+    }
+}
+
+.fillb {
+    justify-content: center;
+}
+
+.failed, .red {
+    background-color: colors.$primary-red;
+    border: none;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 0px;
+    &:hover {
+        color: white; // Color del texto al hacer hover
+        scale: 1.05;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background-color: colors.$primary-dark-color; // Color de la cortina
+        transition: left 0.3s ease;
+        z-index: 1;
+    }
+
+    &:hover:before {
+        left: 0;
+    }
+}
+
+.unreached {
+    background-color: colors.$secondary-red;
+    border: none;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 0px;
+    &:hover {
+        color: white; // Color del texto al hacer hover
+        scale: 1.05;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background-color: colors.$primary-dark-color; // Color de la cortina
+        transition: left 0.3s ease;
+        z-index: 1;
+    }
+
+    &:hover:before {
+        left: 0;
+    }
+}
+
+.outline-card {
+    background: transaprent !important;
+    padding: 0.5rem;
+    color: colors.$primary-dark-color;
+    border: 1px solid colors.$primary-dark-color;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+
+    &:hover {
+        scale: 1.05;
+    }
+}
+
+
+.invest, .green {
+    position: relative;
+    overflow: hidden;
+    background-color: colors.$primary-green;
+    transition: all 0.3s ease;
+    border: 0px;
+    color: colors.$primary-dark-color; // Color del texto inicial
+
+    &:hover {
+        color: white; // Color del texto al hacer hover
+        scale: 1.05;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background-color: colors.$primary-dark-color; // Color de la cortina
+        transition: left 0.3s ease;
+        z-index: 1;
+    }
+
+    &:hover:before {
+        left: 0;
+    }
+}
+
+
+.span {
+    position: relative;
+    z-index: 2;
+    color: inherit; // Hereda el color del botón
+}
+
+.buttonMenu {
+    background-color: #f4f4f4;
+    border: none;
+    width: 90%;
+}
+
+.span {
+    font-size: 14px;
+}
+
+.has {
+    background-color: colors.$primary-dark-color;
+    color: white;
+}
+
+.center {
+    justify-content: center;
+}
+
+.selected {
+    background-color: colors.$primary-dark-color;
+}
+
+
+.header {
+    height: 40px;
+    padding: 0.5rem;
+    margin: 0px;
+    border: 1px solid;
+}

@@ -19,6 +19,8 @@ export class MilestoneEntity extends BaseEntity {
     percentage!: number;
     @Convertible()
     description!: string;
+    @Convertible()
+    order!: number;
     @Convertible({ isCreatedAt: true })
     createdAt!: Date;
     @Convertible({ isUpdatedAt: true })
@@ -38,6 +40,7 @@ export class MilestoneEntity extends BaseEntity {
         estimate_delivery_date: true,
         percentage: true,
         description: true,
+        order: true,
         createdAt: true,
         updatedAt: true,
     };

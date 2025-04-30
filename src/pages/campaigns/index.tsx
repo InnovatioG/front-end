@@ -1,22 +1,17 @@
-import CampaignDashboard from '@/components/CampaignDashboard/Sections/Dashboard/CampaignDashboard';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
-import React, { useEffect } from 'react';
-interface CampaignsProps {
+import CampaignsDashboard from '@/components/Campaigns/CampaignsDashboard/CampaignsDashboard';
+import { PageViewEnums } from '@/utils/constants/routes';
+import React from 'react';
+
+interface CampaignsPageProps {
     // Define props here
 }
 
-const Campaigns: React.FC<CampaignsProps> = (props) => {
-    const { fetchAdaPrice } = useProjectDetailStore();
-
-    useEffect(() => {
-        fetchAdaPrice();
-    }, [fetchAdaPrice]);
-
+const CampaignsPage: React.FC<CampaignsPageProps> = (props) => {
     return (
         <div>
-            <CampaignDashboard />
+            <CampaignsDashboard pageView={PageViewEnums.CAMPAIGNS} />
         </div>
     );
 };
 
-export default Campaigns;
+export default CampaignsPage;

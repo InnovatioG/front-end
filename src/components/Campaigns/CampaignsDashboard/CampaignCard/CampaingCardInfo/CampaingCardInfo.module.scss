@@ -1,0 +1,200 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+@use '@/styles/components/statuses'; // Importa el nuevo archivo de estados
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .flexRow {
+        display: grid;
+        gap: 1rem;
+
+        &.flexRow2 {
+            grid-template-columns: 3fr 1fr;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            border-radius: 1.06rem;
+            padding: 2rem 2rem;
+            height: 8.625rem;
+
+            @extend .campaingStatus;
+
+            &.light {
+                background-color: colors.$light-color;
+            }
+
+            &.transparemt {
+                background-color: transparent;
+            }
+
+            .money {
+                color: colors.$primary-dark-color;
+                font: fonts.$f800-medium;
+
+                &.white {
+                    color: colors.$light-color;
+                }
+
+                &.black {
+                    color: colors.$primary-dark-color;
+                }
+            }
+
+            .span {
+                color: colors.$light-color;
+                font: fonts.$f150-medium;
+
+                &.white {
+                    color: colors.$light-color;
+                }
+
+                &.black {
+                    color: colors.$primary-dark-color;
+                }
+            }
+
+            .loaderContainer {
+                width: 100%; /* El contenedor siempre ocupa el ancho completo */
+                height: 6px;
+                background-color: colors.$primary-dark-color; /* Color del progreso */
+                border-radius: 2rem;
+                overflow: hidden; /* Asegura que el progreso no salga del contenedor */
+                margin: 0.4rem; /* Espaciado opcional */
+
+                .loader {
+                    height: 100%;
+                    background-color: colors.$green-color; /* Color del progreso */
+                    border-radius: 2rem;
+                    transition: width 0.3s ease-in-out; /* Transición suave al actualizar */
+                }
+            }
+        }
+
+        .ordinalString {
+            height: 100%;
+            background-color: colors.$light-color;
+            display: flex;
+            align-items: center;
+            border-radius: 1.0625rem;
+
+            .ordinal {
+                text-align: center;
+                flex-direction: column;
+                display: flex;
+                align-items: center;
+                height: 100%;
+                width: 100%;
+                justify-content: center;
+
+                .milestone {
+                    font: fonts.$fmilestone;
+                }
+            }
+        }
+    }
+
+    .header {
+        font: fonts.$f150-medium;
+
+        .strong {
+            font: fonts.$f150-medium;
+        }
+    }
+
+    .footer {
+        .milestonesQuant {
+            width: 100%;
+            border: 1px solid colors.$primary-dark-color;
+            border-radius: 2.3125rem;
+            padding: 0.4rem 1rem;
+        }
+    }
+}
+
+.link {
+    cursor: pointer;
+}
+
+// .countdown {
+//     background-color: colors.$primary-blue;
+// }
+
+// .fundraising {
+//     background-color: colors.$primary-light-color;
+//     border-radius: 1.06rem;
+//     padding: 1rem 2rem;
+//     color: colors.$primary-dark-color;
+// }
+
+// .active {
+//     background-color: colors.$light-color;
+// }
+
+// .unreached,
+// .failed {
+//     background-color: colors.$secondary-red;
+//     .span,
+//     .spanStrong {
+//         color: colors.$light-color;
+//     }
+//     .spanStrong {
+//         font: fonts.$f800-medium;
+//     }
+// }
+
+// .failed {
+//     background-color: colors.$red-color;
+// }
+
+// .success {
+//     background-color: colors.$green-color;
+// }
+
+// .flexRow {
+//     display: grid;
+//     grid-template-columns: 3fr 1fr;
+//     gap: 1rem;
+// }
+
+// .ordinalString,
+// .percentage {
+//     height: 100%;
+//     background-color: colors.$light-color;
+//     display: flex;
+//     align-items: center;
+//     border-radius: 1.0625rem;
+// }
+
+// .ordinal {
+//     text-align: center;
+//     flex-direction: column;
+//     display: flex;
+//     align-items: center;
+//     height: 100%;
+//     width: 100%;
+//     justify-content: center;
+// }
+
+// .percentage {
+//     display: flex;
+//     flex-direction: column;
+//     height: 100%;
+//     align-items: center;
+//     justify-content: center;
+// }
+
+// .span {
+//     color: colors.$light-color;
+//     font: fonts.$f150-medium;
+// }
+
+// .strong {
+//     font: fonts.$f150-medium;
+// }

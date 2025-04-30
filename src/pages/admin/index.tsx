@@ -1,63 +1,33 @@
-import Button from '@/components/UI/Buttons/UI/Button';
-import { ProtocolApi } from '@/lib/SmartDB/FrontEnd';
-import styles from '@/styles/Admin.module.scss';
-import type { NextPage } from 'next';
-import Link from 'next/link';
-import { LucidToolsFrontEnd, pushSucessNotification, pushWarningNotification, useWalletStore } from 'smart-db';
+import BtnConnectWallet from '@/components/GeneralOK/Buttons/Buttons/BtnConnectWallet/BtnConnectWallet';
+import { useResponsive } from '@/contexts/ResponsiveContext';
+import { useWalletStore } from 'smart-db';
+import styles from './index.module.scss';
+import AdminDashboard from '@/components/Admin/_AdminDashboard/AdminDashboard';
 
-const AdminDashboard: NextPage = () => {
-    const pages = [
-        { name: 'Campaign Category', path: '/admin/campaign-category' },
-        { name: 'Campaign Content', path: '/admin/campaign-content' },
-        { name: 'Campaign FAQs', path: '/admin/campaign-faqs' },
-        { name: 'Campaign Funds', path: '/admin/campaign-funds' },
-        { name: 'Campaign Member', path: '/admin/campaign-member' },
-        { name: 'Campaign Status', path: '/admin/campaign-status' },
-        { name: 'Campaign Submission', path: '/admin/campaign-submission' },
-        { name: 'Campaign', path: '/admin/campaign' },
-        { name: 'Custom Wallet', path: '/admin/custom-wallet' },
-        { name: 'Milestone Status', path: '/admin/milestone-status' },
-        { name: 'Milestone Submission', path: '/admin/milestone-submission' },
-        { name: 'Milestone', path: '/admin/milestone' },
-        { name: 'Protocol Admin Wallet', path: '/admin/protocol-admin-wallet' },
-        { name: 'Protocol', path: '/admin/protocol' },
-        { name: 'Submission Status', path: '/admin/submission-status' },
-    ];
+interface AdminDashboardPageProps {
+    // Define props here
+}
+
+const AdminDashboardPage: React.FC<AdminDashboardPageProps> = (props) => {
 
     const walletStore = useWalletStore();
+    const { screenSize } = useResponsive();
 
-    const handlePopulateDB = async () => {
-        try {
-            //--------------------------------------
-            const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
-            //--------------------------------------
-            const response = await ProtocolApi.populateApi(walletTxParams);
-            if (response === false) {
-                throw 'Failed to populate database';
-            }
-            pushSucessNotification('Success', 'Database populated successfully');
-        } catch (error) {
-            pushWarningNotification('Error', `Failed to populate database: ${error}`);
-        }
-    };
-
-    return (
-        <main className={styles.dashboard}>
-            <h1>Admin Dashboard</h1>
-            <div className="mb-6">
-                <Button onClick={handlePopulateDB} className="bg-blue-600 hover:bg-blue-700">
-                    Populate Database
-                </Button>
+    // If the user is not connected, show the connect wallet screen
+    if (!walletStore.isConnected || !walletStore.info?.isWalletValidatedWithSignedToken) {
+        return (
+            <div className={styles.campaignSection}>
+                <div className={styles.mainSection}>
+                    <h2 className={styles.title}>In order to continue with the management process you must connect wallet in Admin Mode</h2>
+                    <div className={styles.btns}>
+                        <BtnConnectWallet type="primary" width={screenSize === 'desktop' ? 225 : undefined} />
+                    </div>
+                </div>
             </div>
-            <ul className={styles.pageList}>
-                {pages.map((page) => (
-                    <li key={page.path}>
-                        <Link href={page.path}>{page.name}</Link>
-                    </li>
-                ))}
-            </ul>
-        </main>
-    );
+        );
+    }
+
+    return <div><AdminDashboard /></div>
 };
 
-export default AdminDashboard;
+export default AdminDashboardPage;

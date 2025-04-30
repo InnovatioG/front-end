@@ -43,7 +43,7 @@ export class CampaignFaqsEntityMongo extends BaseEntityMongo {
 
     // #region mongo db
 
-    public static MongoModel() {
+    public static DBModel() {
         interface Interface {
             campaign_id: string;
             question: string;
@@ -56,7 +56,7 @@ export class CampaignFaqsEntityMongo extends BaseEntityMongo {
         const schema = new Schema<Interface>(
             {
                 campaign_id: { type: String, required: true },
-                question: { type: String, required: true },
+                question: { type: String, required: false },
                 answer: { type: String, required: false },
                 order: { type: Number, required: true },
             },

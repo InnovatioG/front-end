@@ -43,9 +43,9 @@ export class MilestoneStatusEntityMongo extends BaseEntityMongo {
 
     // #region mongo db
 
-    public static MongoModel() {
+    public static DBModel() {
         interface Interface {
-            id_internal: number;
+            code_id: number;
             name: string;
             description: string;
             createdAt: Date;
@@ -54,7 +54,7 @@ export class MilestoneStatusEntityMongo extends BaseEntityMongo {
 
         const schema = new Schema<Interface>(
             {
-                id_internal: { type: Number, required: true },
+                code_id: { type: Number, required: true },
                 name: { type: String, required: true },
                 description: { type: String, required: false },
             },

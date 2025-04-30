@@ -1,33 +1,55 @@
-import { type Script } from 'lucid-cardano';
+import { CAMPAIGN_ID_TN_Str } from '@/utils/constants/on-chain';
+import { CampaignDatumStatus_Code_Id_Enums, MilestoneDatumStatus_Code_Id_Enums } from '@/utils/constants/status/status';
+import { Constr, Data, type Script } from '@lucid-evolution/lucid';
 import 'reflect-metadata';
-import { BaseSmartDBEntity, Convertible, LucidLUCID_NETWORK_MAINNET_NAME, asSmartDBEntity, type CS, type POSIXTime } from 'smart-db';
+import { BaseSmartDBEntity, Convertible, LUCID_NETWORK_MAINNET_NAME, asSmartDBEntity, type CS, type POSIXTime } from 'smart-db';
 
-export interface CampaignMilestone {
-    cmPerncentage: number;
-    cmStatus: number;
+export interface CampaignMilestoneDatum {
+    cmPerncentage: bigint;
+    cmStatus: MilestoneDatumStatus_Code_Id_Enums;
 }
 
-export const deserealizeCampaignMilestone = (value: any | undefined): CampaignMilestone | undefined => {
+export const toPlutusDataMilestoneStatus = (status: MilestoneDatumStatus_Code_Id_Enums): Data => {
+    return new Constr(status, []);
+};
+
+export const fromPlutusDataMilestoneStatus = (data: any): MilestoneDatumStatus_Code_Id_Enums => {
+    if (data?.index === undefined || data.fields?.length !== 0) {
+        throw `Invalid Constr for MilestoneStatus`;
+    }
+
+    const index = data.index;
+    if (index !== MilestoneDatumStatus_Code_Id_Enums.MsCreated && index !== MilestoneDatumStatus_Code_Id_Enums.MsSuccess && index !== MilestoneDatumStatus_Code_Id_Enums.MsFailed) {
+        throw `Unknown MilestoneStatus index: ${index}`;
+    }
+
+    return index as MilestoneDatumStatus_Code_Id_Enums;
+};
+
+export const deserealizeCampaignMilestone = (value: any | undefined): CampaignMilestoneDatum | undefined => {
     if (value === undefined) return undefined;
-    const deserialized: CampaignMilestone = {
+    const deserialized: CampaignMilestoneDatum = {
         cmPerncentage: value.cmPerncentage,
         cmStatus: value.cmStatus,
     };
     return deserialized;
 };
 
-export const campaignMilestonefromPlutusData = (lucidDataForDatum: any | undefined) => {
+export const campaignMilestonefromPlutusData = (lucidDataForDatum: any | undefined): CampaignMilestoneDatum => {
     if (lucidDataForDatum?.index === 0) {
-        const lucidDataForConstr0 = lucidDataForDatum.fields;
-        if (lucidDataForConstr0.length === 2) {
-            const objectInstance: CampaignMilestone = {
-                cmPerncentage: Number(lucidDataForConstr0[0]),
-                cmStatus: Number(lucidDataForConstr0[1]),
-            };
-            return objectInstance;
+        const fields = lucidDataForDatum.fields;
+        if (fields.length === 2) {
+            const cmPerncentage = BigInt(fields[0]);
+            const cmStatus = fromPlutusDataMilestoneStatus(fields[1]); // ← AQUÍ se interpreta como enum
+            return { cmPerncentage, cmStatus };
         }
     }
     throw `CampaignMilestone - Can't get from Datum`;
+};
+
+export const toPlutusDataCampaignMilestones = (milestones: CampaignMilestoneDatum[] | undefined): Data[] => {
+    if (!milestones) throw `CampaignMilestone is undefined`;
+    return milestones.map((m) => new Constr(0, [BigInt(m.cmPerncentage), toPlutusDataMilestoneStatus(m.cmStatus)]));
 };
 
 export interface CampaignDatum {
@@ -44,14 +66,37 @@ export interface CampaignDatum {
     cdRequestedMinADA: bigint;
     cdFundedADA: bigint;
     cdCollectedADA: bigint;
-    cdbegin_at: POSIXTime;
+    cdBegin_at: POSIXTime;
     cdDeadline: POSIXTime;
-    cdStatus: number;
-    cdMilestones: CampaignMilestone[];
+    cdStatus: CampaignDatumStatus_Code_Id_Enums;
+    cdMilestones: CampaignMilestoneDatum[];
     cdFundsCount: number;
     cdFundsIndex: number;
     cdMinADA: bigint;
 }
+
+export const toPlutusDataCampaignStatus = (status: CampaignDatumStatus_Code_Id_Enums): Data => {
+    return new Constr(status, []);
+};
+
+export const fromPlutusDataCampaignStatus = (data: any): CampaignDatumStatus_Code_Id_Enums => {
+    if (data?.index === undefined || data.fields?.length !== 0) {
+        throw `Invalid Constr for CampaignStatus`;
+    }
+
+    const index = data.index;
+    if (
+        index !== CampaignDatumStatus_Code_Id_Enums.CsCreated &&
+        index !== CampaignDatumStatus_Code_Id_Enums.CsInitialized &&
+        index !== CampaignDatumStatus_Code_Id_Enums.CsReached &&
+        index !== CampaignDatumStatus_Code_Id_Enums.CsNotReached &&
+        index !== CampaignDatumStatus_Code_Id_Enums.CsFailedMilestone
+    ) {
+        throw `Unknown CampaignStatus index: ${index}`;
+    }
+
+    return index as CampaignDatumStatus_Code_Id_Enums;
+};
 
 @asSmartDBEntity()
 export class CampaignEntity extends BaseSmartDBEntity {
@@ -59,13 +104,15 @@ export class CampaignEntity extends BaseSmartDBEntity {
     protected static _className: string = 'Campaign';
 
     protected static _plutusDataIsSubType = true;
-    protected static _is_NET_id_Unique = true;
-    _NET_id_TN: string = 'campaign_id';
+
+    protected static _isOnlyDatum = false;
+
+    _NET_id_TN_Str: string = CAMPAIGN_ID_TN_Str;
 
     // #region fields
 
     @Convertible({ isDB_id: true })
-    campaing_category_id!: string;
+    campaign_category_id!: string;
     @Convertible({ isDB_id: true })
     campaign_status_id!: string;
     @Convertible({ isDB_id: true })
@@ -77,13 +124,13 @@ export class CampaignEntity extends BaseSmartDBEntity {
     description?: string;
 
     @Convertible()
-    begin_at_days?: number;
+    begin_at_days!: number;
     @Convertible()
-    deadline_days?: number;
+    deadline_days!: number;
     @Convertible()
-    campaign_deployed_date!: Date;
+    campaign_deployed_date?: Date;
     @Convertible()
-    campaign_actived_date!: Date;
+    campaign_actived_date?: Date;
 
     @Convertible()
     begin_at?: Date;
@@ -116,13 +163,21 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible()
     discord?: string;
     @Convertible()
+    linkedin?: string;
+    @Convertible()
     facebook?: string;
     @Convertible()
     visualizations!: number;
     @Convertible()
     investors!: number;
     @Convertible()
-    tokenomics_max_supply!: string;
+    fundedADA!: bigint;
+    @Convertible()
+    collectedADA    !: bigint;
+    @Convertible()
+    tokenomics_max_supply!: bigint;
+    @Convertible()
+    tokenomics_for_campaign!: bigint;
     @Convertible()
     tokenomics_description!: string;
 
@@ -153,18 +208,24 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible({ isForDatum: true })
     cdCollectedADA!: bigint;
     @Convertible({ isForDatum: true, type: BigInt })
-    cdbegin_at!: POSIXTime;
+    cdBegin_at!: POSIXTime;
     @Convertible({ isForDatum: true, type: BigInt })
     cdDeadline!: POSIXTime;
-    @Convertible({ isForDatum: true })
-    cdStatus!: number;
+    @Convertible({
+        type: Number,
+        isForDatum: true,
+        toPlutusData: toPlutusDataCampaignStatus,
+        fromPlutusData: fromPlutusDataCampaignStatus,
+    })
+    cdStatus!: CampaignDatumStatus_Code_Id_Enums;
     @Convertible({
         isForDatum: true,
         type: Object,
         fromPlainObject: deserealizeCampaignMilestone,
         fromPlutusData: campaignMilestonefromPlutusData,
+        toPlutusData: toPlutusDataCampaignMilestones,
     })
-    cdMilestones!: CampaignMilestone[];
+    cdMilestones!: CampaignMilestoneDatum[];
     @Convertible({ isForDatum: true })
     cdFundsCount!: number;
     @Convertible({ isForDatum: true })
@@ -232,7 +293,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
     };
 
     public static fieldsForHomePage: Record<string, boolean> = {
-        campaing_category_id: true,
+        campaign_category_id: true,
         campaign_status_id: true,
         creator_wallet_id: true,
 
@@ -258,10 +319,12 @@ export class CampaignEntity extends BaseSmartDBEntity {
         instagram: true,
         twitter: true,
         discord: true,
+        linkedin: true,
         facebook: true,
         visualizations: true,
         investors: true,
         tokenomics_max_supply: true,
+        tokenomics_for_campaign: true,
         tokenomics_description: true,
         featured: true,
         archived: true,
@@ -271,7 +334,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
 
     public static alwaysFieldsForSelect: Record<string, boolean> = {
         ...super.alwaysFieldsForSelect,
-        campaing_category_id: true,
+        campaign_category_id: true,
         campaign_status_id: true,
         creator_wallet_id: true,
 
@@ -301,6 +364,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
         visualizations: true,
         investors: true,
         tokenomics_max_supply: true,
+        tokenomics_for_campaign: true,
         tokenomics_description: true,
 
         cdCampaignVersion: true,
@@ -316,7 +380,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
         cdRequestedMinADA: true,
         cdFundedADA: true,
         cdCollectedADA: true,
-        cdbegin_at: true,
+        cdBegin_at: true,
         cdDeadline: true,
         cdStatus: true,
         cdMilestones: true,
@@ -348,12 +412,23 @@ export class CampaignEntity extends BaseSmartDBEntity {
         updatedAt: true,
     };
 
+    public static defaultFieldsAddScriptsTxScript: Record<string, boolean> = {
+        fdpCampaignPolicy_CS: true,
+        fdpCampaignPolicy_Script: true,
+        fdpCampaignValidator_Hash: true,
+        fdpCampaignValidator_Script: true,
+        fdpCampaignFundsPolicyID_CS: true,
+        fdpCampaignFundsPolicyID_Script: true,
+        fdpCampaignFundsValidator_Hash: true,
+        fdpCampaignFundsValidator_Script: true,
+    };
+
     // #endregion db
 
     // #region class methods
 
     public getNet_Address(): string {
-        if (process.env.NEXT_PUBLIC_CARDANO_NET === LucidLUCID_NETWORK_MAINNET_NAME) {
+        if (process.env.NEXT_PUBLIC_CARDANO_NET === LUCID_NETWORK_MAINNET_NAME) {
             return this.fdpCampaignValidator_AddressMainnet;
         } else {
             return this.fdpCampaignValidator_AddressTestnet;
@@ -369,7 +444,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
     }
 
     public getNet_FundHolding_Validator_Address(): string {
-        if (process.env.NEXT_PUBLIC_CARDANO_NET === LucidLUCID_NETWORK_MAINNET_NAME) {
+        if (process.env.NEXT_PUBLIC_CARDANO_NET === LUCID_NETWORK_MAINNET_NAME) {
             return this.fdpCampaignFundsValidator_AddressMainnet;
         } else {
             return this.fdpCampaignFundsValidator_AddressTestnet;

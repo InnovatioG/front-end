@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { useCallback, useEffect, useState } from 'react';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { MilestoneStatusEntity } from '../../../lib/SmartDB/Entities/MilestoneStatus.Entity';
 import { MilestoneStatusApi } from '../../../lib/SmartDB/FrontEnd/MilestoneStatus.FrontEnd.Api.Calls';
 
@@ -10,19 +10,19 @@ export function useMilestoneStatus() {
     const [view, setView] = useState<'list' | 'create' | 'edit' | 'confirmDelete'>('list');
     const [deleteItem, setDeleteItem] = useState<MilestoneStatusEntity | null>(null);
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             const fetchedList: MilestoneStatusEntity[] = await MilestoneStatusApi.getAllApi_();
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching MilestoneStatus: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching MilestoneStatus: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {
@@ -33,7 +33,7 @@ export function useMilestoneStatus() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating MilestoneStatus: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating MilestoneStatus: ${e}`);
         }
     };
 
@@ -47,7 +47,7 @@ export function useMilestoneStatus() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating MilestoneStatus: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating MilestoneStatus: ${e}`);
             }
         }
     };
@@ -64,7 +64,7 @@ export function useMilestoneStatus() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting MilestoneStatus: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting MilestoneStatus: ${e}`);
             }
         }
     };

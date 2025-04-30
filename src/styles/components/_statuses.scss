@@ -1,0 +1,81 @@
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
+
+.campaingStatus {
+    &.draft {
+        background: colors.$blue-color;
+        color: colors.$light-font;
+    }
+
+    &.attempt-to-launch {
+        background-color: colors.$light-green;
+        color: colors.$primary-font;
+        
+    }
+    &.created,
+    &.submitted,
+    &.approved,
+    &.rejected,
+    &.deploy,
+    &.ready {
+        background: colors.$primary-yellow;
+        color: colors.$primary-font;
+    }
+
+    &.countdown {
+        background: colors.$primary-blue;
+        color: colors.$light-font;
+    }
+
+    &.fundraising {
+        background: colors.$intermediate-green;
+        color: colors.$primary-font;
+    }
+
+    &.finishing {
+        background: colors.$extra-light-green;
+        color: colors.$primary-font;
+    }
+
+    &.active {
+        background: colors.$light-green;
+        color: colors.$primary-font;
+    }
+
+    &.failed {
+        background: colors.$primary-red;
+        color: colors.$white-font;
+    }
+
+    &.unreached {
+        background: colors.$secondary-red;
+        color: colors.$white-font;
+    }
+
+    &.success {
+        background: colors.$primary-green;
+        color: colors.$primary-font;
+    }
+}
+
+.milestoneStatus {
+    
+    &.notStarted {
+        color: colors.$yellow-color !important;
+        font-size: large;
+    }
+
+    &.rejected,
+    &.failed {
+        color: colors.$red-color !important;
+    }
+
+    &.started,&.submitted,
+    &.collect {
+        color: colors.$blue-color !important;
+    }
+
+    &.finished {
+        color: colors.$green-color !important;
+    }
+}

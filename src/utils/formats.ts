@@ -4,25 +4,35 @@ export function formatAddress(address: string): string {
     if (!address) return '';
     return `${address.slice(0, 4)}...${address.slice(-4)}`;
 }
-export function formatMoney(amount: number, currency: string): string {
+
+export function formatMoney(amount: number | bigint, currency: string): string {
+    if (typeof amount !== 'number' && amount !== undefined) {
+        amount = Number(amount);
+    }
     if (currency === 'ADA') {
         return `₳${new Intl.NumberFormat('en-US', {
             minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
+            maximumFractionDigits: 6,
         }).format(amount)}`;
     }
     return new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
+        maximumFractionDigits: 2,
     }).format(amount);
 }
-export function getTimeRemaining(date: string) {
+
+export function getTimeRemaining(serverTime: number | undefined, date: Date | undefined) {
+    if (date === undefined) return { total: 0, days: 0, totalHours: 0, minutes: 0, seconds: 0 };
     const dat = new Date(date);
     const now = new Date();
 
     const total = dat.getTime() - now.getTime();
+
+    if (total <= 0) {
+        return { total: 0, days: 0, totalHours: 0, minutes: 0, seconds: 0 };
+    }
 
     const days = Math.floor(total / (1000 * 60 * 60 * 24));
     const totalHours = Math.floor(total / (1000 * 60 * 60));
@@ -34,10 +44,28 @@ export function getTimeRemaining(date: string) {
 
 export const formatTime = (time: number) => time.toString().padStart(2, '0');
 
+export const formatAllTime = (timeRemaining: any) => {
+    if (timeRemaining.days >= 4) {
+        return `${timeRemaining.days} days`;
+    } else {
+        return `${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}:${formatTime(timeRemaining.seconds)}`;
+    }
+};
+
 /* Funcion para calcular el porcentaje en base a un total y el % a aplicar */
 
-export const calculatePorcentage = (total: number, porcentage: number) => {
-    return (total * porcentage) / 100;
+export const calculateePercentage = (total: number | bigint, porcentage: number | bigint) => {
+    return (Number(total) * Number(porcentage)) / 100;
+};
+
+export const calculatePercentageValue = (total: number | bigint, amoutCollected: number | bigint) => {
+    if (typeof total !== 'number' && total !== undefined) {
+        total = Number(total);
+    }
+    if (typeof amoutCollected !== 'number' && amoutCollected !== undefined) {
+        amoutCollected = Number(amoutCollected);
+    }
+    return ((Number(amoutCollected) / Number(total)) * 100).toFixed(2);
 };
 
 export const formatLink = (link: string) => {
@@ -45,12 +73,6 @@ export const formatLink = (link: string) => {
         return `http://${link}`;
     }
     return link;
-};
-
-export const getOrdinalString = (n: number): string => {
-    const s = ['th', 'st', 'nd', 'rd'];
-    const v = n % 100;
-    return n + (s[(v - 20) % 10] || s[v] || s[0]);
 };
 
 export const formatDate = (date: string) => {
@@ -66,7 +88,7 @@ export const getMonthName = (date: string): string => {
 
 export const getWeekOfMonth = (date: string): number => {
     const dateFormatted = parseISO(date);
-    const week = Math.ceil((dateFormatted.getDate() + 1) / 7);
+    const week = Math.ceil((dateFormatted.getUTCDate() + 1) / 7);
     return week;
 };
 
@@ -76,11 +98,21 @@ export const formatWeekOfMonth = (date: string): string => {
     return `${getOrdinalString(week)} week of ${month}`;
 };
 
-export const formatDateFromString = (date: string) => {
-    if (date.includes('weeks')) {
-        return date;
-    } else {
-        const dateFormatted = parseISO(date);
-        return format(dateFormatted, 'MM/dd/yy');
+export const formatDateFromString = (date: Date): string => {
+    return format(date, 'MM/dd/yy');
+};
+
+export const daysToWeeks = (days: number): number => {
+    return Math.ceil(days / 7);
+};
+
+export const getOrdinalString = (num: number): string => {
+    const suffixes = ['th', 'st', 'nd', 'rd'];
+    const mod10 = num % 10;
+    const mod100 = num % 100;
+
+    if (mod10 >= 1 && mod10 <= 3 && !(mod100 >= 11 && mod100 <= 13)) {
+        return `${num}${suffixes[mod10]}`;
     }
+    return `${num}${suffixes[0]}`;
 };

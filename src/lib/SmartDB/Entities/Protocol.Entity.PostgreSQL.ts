@@ -1,11 +1,11 @@
-import { type Script } from 'lucid-cardano';
-import { type CS, PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
+import { type Script } from '@lucid-evolution/lucid';
+import { type CS, PostgreSQLAppliedFor} from 'smart-db';
+import { BaseSmartDBEntityPostgreSQL, PostgreSQLDatabaseService } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CampaignFactory, ProtocolEntity } from './Protocol.Entity';
 
 @PostgreSQLAppliedFor([ProtocolEntity])
-@Entity({ name: getPostgreSQLTableName(ProtocolEntity.className()) })
+@Entity({ name: PostgreSQLDatabaseService.getTableName(ProtocolEntity.className()) })
 export class ProtocolEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     protected static Entity = ProtocolEntity;
 
@@ -118,11 +118,4 @@ export class ProtocolEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
 
     // #endregion internal class methods
 
-    // #region posgresql db
-
-    public static PostgreSQLModel() {
-        return this;
-    }
-
-    // #endregion posgresql db
 }

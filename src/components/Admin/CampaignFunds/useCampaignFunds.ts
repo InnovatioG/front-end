@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { useCallback, useEffect, useState } from 'react';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { CampaignFundsEntity } from '../../../lib/SmartDB/Entities/CampaignFunds.Entity';
 import { CampaignFundsApi } from '../../../lib/SmartDB/FrontEnd/CampaignFunds.FrontEnd.Api.Calls';
 
@@ -10,25 +10,25 @@ export function useCampaignFunds() {
     const [view, setView] = useState<'list' | 'create' | 'edit' | 'confirmDelete'>('list');
     const [deleteItem, setDeleteItem] = useState<CampaignFundsEntity | null>(null);
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             const fetchedList: CampaignFundsEntity[] = await CampaignFundsApi.getAllApi_();
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching CampaignFunds: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching CampaignFunds: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {
             newItem._NET_address = 'test address';
             newItem._NET_id_CS = 'test CS';
-            newItem._NET_id_TN = 'test TN';
+            newItem._NET_id_TN_Str = 'test TN';
             newItem._isDeployed = false;
             let entity: CampaignFundsEntity = new CampaignFundsEntity(newItem);
             entity = await CampaignFundsApi.createApi(entity);
@@ -37,7 +37,7 @@ export function useCampaignFunds() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating CampaignFunds: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating CampaignFunds: ${e}`);
         }
     };
 
@@ -52,7 +52,7 @@ export function useCampaignFunds() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating CampaignFunds: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating CampaignFunds: ${e}`);
             }
         }
     };
@@ -69,7 +69,7 @@ export function useCampaignFunds() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting CampaignFunds: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting CampaignFunds: ${e}`);
             }
         }
     };

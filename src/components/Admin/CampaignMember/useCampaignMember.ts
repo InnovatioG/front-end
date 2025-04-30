@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { useCallback, useEffect, useState } from 'react';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { CampaignMemberEntity } from '../../../lib/SmartDB/Entities/CampaignMember.Entity';
 import { CampaignMemberApi } from '../../../lib/SmartDB/FrontEnd/CampaignMember.FrontEnd.Api.Calls';
 
@@ -10,19 +10,19 @@ export function useCampaignMember() {
     const [view, setView] = useState<'list' | 'create' | 'edit' | 'confirmDelete'>('list');
     const [deleteItem, setDeleteItem] = useState<CampaignMemberEntity | null>(null);
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             const fetchedList: CampaignMemberEntity[] = await CampaignMemberApi.getAllApi_();
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching CampaignMember: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching CampaignMember: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {
@@ -34,7 +34,7 @@ export function useCampaignMember() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating CampaignMember: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating CampaignMember: ${e}`);
         }
     };
 
@@ -48,7 +48,7 @@ export function useCampaignMember() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating CampaignMember: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating CampaignMember: ${e}`);
             }
         }
     };
@@ -65,7 +65,7 @@ export function useCampaignMember() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting CampaignMember: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting CampaignMember: ${e}`);
             }
         }
     };

@@ -1,11 +1,11 @@
-import { type Script } from 'lucid-cardano';
-import { type CS, PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
+import { type Script } from '@lucid-evolution/lucid';
+import { type CS, PostgreSQLAppliedFor} from 'smart-db';
+import { BaseSmartDBEntityPostgreSQL, PostgreSQLDatabaseService } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import { CampaignEntity, CampaignMilestone } from './Campaign.Entity';
+import { CampaignEntity, CampaignMilestoneDatum } from './Campaign.Entity';
 
 @PostgreSQLAppliedFor([CampaignEntity])
-@Entity({ name: getPostgreSQLTableName(CampaignEntity.className()) })
+@Entity({ name: PostgreSQLDatabaseService.getTableName(CampaignEntity.className()) })
 export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     protected static Entity = CampaignEntity;
 
@@ -15,7 +15,7 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     _id!: number; // Auto-generated primary key
 
     @Column({ type: 'varchar', length: 255 })
-    campaing_category_id!: string;
+    campaign_category_id!: string;
     @Column({ type: 'varchar', length: 255 })
     campaign_status_id!: string;
     @Column({ type: 'varchar', length: 255 })
@@ -52,9 +52,9 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'bigint', nullable: true })
     requestedMinADA!: string;
 
-    @Column({ type: 'varchar', length: 255, nullable: true })
+    @Column({ type: 'varchar', length: 1024, nullable: true })
     logo_url?: string;
-    @Column({ type: 'varchar', length: 255, nullable: true })
+    @Column({ type: 'varchar', length: 1024, nullable: true })
     banner_url?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     website?: string;
@@ -65,13 +65,21 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'varchar', length: 255, nullable: true })
     discord?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
+    linkedin?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
     facebook?: string;
     @Column({ type: 'integer', nullable: true })
     visualizations!: number;
+    @Column({ type: 'bigint', nullable: true })
+    fundedADA!: string;
+    @Column({ type: 'bigint', nullable: true })
+    collectedADA!: string;
     @Column({ type: 'integer', nullable: true })
     investors!: number;
-    @Column({ type: 'varchar', length: 255, nullable: true })
+    @Column({ type: 'bigint', nullable: true })
     tokenomics_max_supply!: string;
+    @Column({ type: 'bigint', nullable: true })
+    tokenomics_for_campaign!: string;
     @Column({ type: 'text', nullable: true })
     tokenomics_description!: string;
 
@@ -102,7 +110,7 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     @Column({ type: 'bigint', nullable: true })
     cdCollectedADA!: string;
     @Column({ type: 'bigint', nullable: true })
-    cdbegin_at!: string;
+    cdBegin_at!: string;
     @Column({ type: 'bigint', nullable: true })
     cdDeadline!: string;
     @Column({ type: 'integer', nullable: true })
@@ -111,7 +119,7 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
         type: 'jsonb',
         nullable: true,
         transformer: {
-            to: (value: CampaignMilestone[]) => value,
+            to: (value: CampaignMilestoneDatum[]) => value,
             from: (value: any) =>
                 value
                     ? value.map((m: { cmPerncentage: number; cmStatus: number }) => ({
@@ -121,7 +129,7 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
                     : [],
         },
     })
-    cdMilestones!: CampaignMilestone[];
+    cdMilestones!: CampaignMilestoneDatum[];
     @Column({ type: 'integer', nullable: true })
     cdFundsCount!: number;
     @Column({ type: 'integer', nullable: true })
@@ -203,11 +211,4 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
 
     // #endregion internal class methods
 
-    // #region posgresql db
-
-    public static PostgreSQLModel() {
-        return this;
-    }
-
-    // #endregion posgresql db
 }

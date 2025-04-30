@@ -1,0 +1,8 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
+@media screen and (max-width: 768px) {
+    .pictureContainer {
+        display: none;
+    }
+}

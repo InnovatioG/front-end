@@ -1,0 +1,26 @@
+@use '@/styles/settings/colors';
+@use '@/styles/settings/fonts';
+
+.generalContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 2.5rem;
+    padding: 3rem;
+   
+    .description {
+        margin-top: 1rem;
+        text-align: center;
+        color: colors.$campaign-dark-font;
+        font: fonts.$f200-medium;
+    }
+
+}
+
+
+@media screen and (max-width: 768px) {
+    .generalContainer {
+        padding: 1rem 0.5rem;
+        border-radius: 1rem;
+    }
+}

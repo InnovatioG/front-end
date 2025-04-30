@@ -23,6 +23,7 @@ export default function Milestone() {
                             <th>Estimated Delivery Date</th>
                             <th>Percentage</th>
                             <th>Description</th>
+                            <th>Order</th>
                             <th>Created At</th>
                             <th>Updated At</th>
                             <th>Actions</th>
@@ -37,6 +38,7 @@ export default function Milestone() {
                                 <td>{item.estimate_delivery_date?.toISOString()}</td>
                                 <td>{item.percentage}</td>
                                 <td>{item.description}</td>
+                                <td>{item.order}</td>
                                 <td>{item.createdAt.toISOString()}</td>
                                 <td>{item.updatedAt?.toISOString()}</td>
                                 <td>
@@ -122,6 +124,19 @@ export default function Milestone() {
             <div>
                 <label>Description:</label>
                 <textarea value={item.description || ''} onChange={(e) => setItem({ ...item, description: e.target.value })} />
+            </div>
+            <div>
+                <label>Order:</label>
+                <input
+                    type="number"
+                    value={item.order}
+                    onChange={(e) =>
+                        setItem({
+                            ...item,
+                            order: Number(e.target.value),
+                        })
+                    }
+                />
             </div>
             <div>
                 <label>Created At:</label>

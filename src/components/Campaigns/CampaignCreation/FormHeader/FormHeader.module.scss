@@ -1,0 +1,26 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+
+.header {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: calc(100% - 40px);
+    padding: 0 5dvw;
+    left: 20px;
+    height: 90px;
+    @media screen and (max-width: 748px) {
+    }
+
+    .logo {
+        height: 25px;
+        width: auto;
+    }
+}
+.containerPrimary {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}

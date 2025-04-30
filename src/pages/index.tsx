@@ -1,18 +1,12 @@
-import CampaignDashboard from '@/components/CampaignDashboard/Sections/Dashboard/CampaignDashboard';
-import CampaignHighLight from '@/components/CampaignDashboard/Sections/Highlight/CampaignHighLight';
-import { useProjectDetailStore } from '@/store/projectdetail/useProjectDetail';
+import CampaignsDashboard from '@/components/Campaigns/CampaignsDashboard/CampaignsDashboard';
+import CampaignsHighlights from '@/components/Campaigns/CampaignsHighlights/CampaignsHighlights';
 import styles from '@/styles/Home.module.scss';
-import { PEOPLE } from '@/utils/images';
+import { PageViewEnums } from '@/utils/constants/routes';
+import { PEOPLE } from '@/utils/constants/images';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useEffect } from 'react';
-export default function Home() {
-    const { fetchAdaPrice } = useProjectDetailStore();
 
-    useEffect(() => {
-        fetchAdaPrice();
-    }, [fetchAdaPrice]);
-
+export default function Index() {
     return (
         <>
             <Head>
@@ -32,8 +26,8 @@ export default function Home() {
                     </div>
                 </div>
             </main>
-            <CampaignHighLight />
-            <CampaignDashboard />
+            <CampaignsHighlights />
+            <CampaignsDashboard pageView={PageViewEnums.HOME} />
         </>
     );
 }

@@ -1,0 +1,27 @@
+@use '@/styles/settings/fonts';
+@use '@/styles/settings/colors';
+@use '@/styles/InputStyle';
+
+.input {
+    @include InputStyle.inputStyles;
+    padding: 1rem 1rem;
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.stepThreeLayout {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: calc(100% - 38px);
+    gap: 3rem;
+}
+
+.btnActions {
+    width: 33%;
+    align-self: flex-end;
+}

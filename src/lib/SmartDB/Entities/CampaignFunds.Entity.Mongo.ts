@@ -41,7 +41,7 @@ export class CampaignFundsEntityMongo extends BaseSmartDBEntityMongo {
 
     // #region mongo db
 
-    public static MongoModel() {
+    public static DBModel() {
         interface InterfaceDB extends IBaseSmartDBEntity {
             createdAt: Date;
             updatedAt: Date;

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { useCallback, useEffect, useState } from 'react';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { CampaignStatusEntity } from '../../../lib/SmartDB/Entities/CampaignStatus.Entity';
 import { CampaignStatusApi } from '../../../lib/SmartDB/FrontEnd/CampaignStatus.FrontEnd.Api.Calls';
 
@@ -10,19 +10,19 @@ export function useCampaignStatus() {
     const [view, setView] = useState<'list' | 'create' | 'edit' | 'confirmDelete'>('list');
     const [deleteItem, setDeleteItem] = useState<CampaignStatusEntity | null>(null);
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             const fetchedList: CampaignStatusEntity[] = await CampaignStatusApi.getAllApi_();
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching CampaignStatus: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching CampaignStatus: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {
@@ -33,7 +33,7 @@ export function useCampaignStatus() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating CampaignStatus: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating CampaignStatus: ${e}`);
         }
     };
 
@@ -47,7 +47,7 @@ export function useCampaignStatus() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating CampaignStatus: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating CampaignStatus: ${e}`);
             }
         }
     };
@@ -64,7 +64,7 @@ export function useCampaignStatus() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting CampaignStatus: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting CampaignStatus: ${e}`);
             }
         }
     };

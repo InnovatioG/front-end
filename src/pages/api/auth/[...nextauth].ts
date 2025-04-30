@@ -1,8 +1,10 @@
 import { initBackEnd } from '@/lib/SmartDB/backEnd';
 import { smartDBMainApiHandler } from 'smart-db/backEnd';
+
 // This function call must be included in every backend file, as it initializes the backend environment.
 // It loads all necessary configurations, decorators, and registries for entities and backend handlers.
 // Calling `initBackEnd()` ensures the backend is correctly set up and ready to handle requests.
+
 initBackEnd();
 
 export const config = {

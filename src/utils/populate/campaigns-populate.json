@@ -1,0 +1,2026 @@
+{
+    "campaigns": [
+        {
+            "name": "Draft Campaign",
+            "description": "This campaign is still being created and has not been submitted yet.",
+            "campaign_category_id_as_string": "TECHNOLOGY",
+            "campaign_status_id_as_string": "NOT_STARTED",
+            "creator_wallet_id_as_string": "USER3",
+            "begin_at_days": 10,
+            "deadline_days": 59,
+            "mint_CampaignToken": false,
+            "campaignToken_CS": "",
+            "campaignToken_TN": "",
+            "campaignToken_PriceADA": 0,
+            "requestedMaxADA": 0,
+            "requestedMinADA": 0,
+            "fundedADA": 0,
+            "collectedADA": 0,
+            "milestones": [],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER3",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user3@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user3",
+                        "linkedin": "https://linkedin.com/in/user3"
+                    }
+                }
+            ],
+            "contents": [],
+            "faqs": [],
+            "submissions": [],
+            "logo_url": "",
+            "banner_url": "",
+            "website": "",
+            "instagram": "",
+            "twitter": "",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 0,
+            "investors": 0,
+            "tokenomics_max_supply": 0,
+            "tokenomics_description": "",
+            "featured": false,
+            "archived": false
+        },
+        {
+            "name": "Launched Technology Campaign",
+            "description": "This campaign has been created and is ready to be submitted for review.",
+            "campaign_category_id_as_string": "TECHNOLOGY",
+            "campaign_status_id_as_string": "CREATED",
+            "creator_wallet_id_as_string": "USER4",
+            "begin_at_days": 1,
+            "deadline_days": 36,
+            "mint_CampaignToken": false,
+            "campaignToken_CS": "",
+            "campaignToken_TN": "",
+            "campaignToken_PriceADA": 0,
+            "requestedMaxADA": 5000,
+            "requestedMinADA": 1000,
+            "fundedADA": 0,
+            "collectedADA": 0,
+            "milestones": [],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER4",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user4@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user4",
+                        "linkedin": "https://linkedin.com/in/user4"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER5",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user5@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user5",
+                        "linkedin": "https://linkedin.com/in/user5"
+                    }
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Mission",
+                    "description": "Explains the goals and objectives of this campaign.",
+                    "order": 1
+                },
+                {
+                    "name": "Tokenomics",
+                    "description": "Details about the planned token distribution and utility.",
+                    "order": 2
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "When will the campaign be open for fundraising?",
+                    "answer": "The campaign will move to fundraising after being approved.",
+                    "order": 1
+                },
+                {
+                    "question": "What is the expected impact of the campaign?",
+                    "answer": "We aim to revolutionize the tech industry with innovative solutions.",
+                    "order": 2
+                }
+            ],
+            "submissions": [],
+            "logo_url": "/img/uploads/tech_launch_logo.jpg",
+            "banner_url": "/img/uploads/tech_launch_banner.jpg",
+            "website": "https://techlaunchcampaign.com",
+            "instagram": "https://instagram.com/techlaunchcampaign",
+            "twitter": "https://twitter.com/techlaunchcampaign",
+            "discord": "",
+            "facebook": "https://facebook.com/techlaunchcampaign",
+            "visualizations": 25,
+            "investors": 0,
+            "tokenomics_max_supply": 1000000,
+            "tokenomics_description": "Our token will power a new tech-driven economy.",
+            "featured": true,
+            "archived": false
+        },
+        {
+            "name": "Educational Innovation Campaign",
+            "description": "This campaign has been submitted for review and is awaiting approval.",
+            "campaign_category_id_as_string": "EDUCATION",
+            "campaign_status_id_as_string": "SUBMITTED",
+            "creator_wallet_id_as_string": "USER6",
+            "begin_at_days": 6,
+            "deadline_days": 26,
+            "mint_CampaignToken": false,
+            "campaignToken_CS": "",
+            "campaignToken_TN": "",
+            "campaignToken_PriceADA": 0,
+            "requestedMaxADA": 10000,
+            "requestedMinADA": 5000,
+            "fundedADA": 0,
+            "collectedADA": 0,
+            "milestones": [],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER6",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user6@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user6",
+                        "linkedin": "https://linkedin.com/in/user6"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER7",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user7@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user7",
+                        "linkedin": "https://linkedin.com/in/user7"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER8",
+                    "role": "Editor",
+                    "admin": false,
+                    "editor": true,
+                    "email": "user8@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user8",
+                        "linkedin": "https://linkedin.com/in/user8"
+                    }
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Overview",
+                    "description": "An introduction to the goals of this educational project.",
+                    "order": 1
+                },
+                {
+                    "name": "Impact Analysis",
+                    "description": "Details about the potential impact on the education sector.",
+                    "order": 2
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "What is the main focus of this campaign?",
+                    "answer": "We aim to provide cutting-edge educational resources.",
+                    "order": 1
+                },
+                {
+                    "question": "When will results be available?",
+                    "answer": "The results will be shared six months after the campaign starts.",
+                    "order": 2
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "SUBMITTED",
+                    "submitted_by_wallet_id_as_string": "USER6",
+                    "revised_by_wallet_id_as_string": null,
+                    "approved_justification": null,
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/education_innovation_logo.jpg",
+            "banner_url": "/img/uploads/education_innovation_banner.jpg",
+            "website": "https://educationinnovationcampaign.com",
+            "instagram": "https://instagram.com/educationcampaign",
+            "twitter": "https://twitter.com/educationcampaign",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 100,
+            "investors": 0,
+            "tokenomics_max_supply": 500000,
+            "tokenomics_description": "This token will revolutionize access to educational resources.",
+            "featured": false,
+            "archived": false
+        },
+        {
+            "name": "Green Energy Initiative",
+            "description": "This campaign was submitted but has been rejected due to insufficient documentation.",
+            "campaign_category_id_as_string": "TECHNOLOGY",
+            "campaign_status_id_as_string": "REJECTED",
+            "creator_wallet_id_as_string": "USER8",
+            "begin_at_days": 5,
+            "deadline_days": 55,
+            "mint_CampaignToken": false,
+            "campaignToken_CS": "",
+            "campaignToken_TN": "",
+            "campaignToken_PriceADA": 0,
+            "requestedMaxADA": 20000,
+            "requestedMinADA": 10000,
+            "fundedADA": 0,
+            "collectedADA": 0,
+            "milestones": [],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER8",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user8@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user8",
+                        "linkedin": "https://linkedin.com/in/user8"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER9",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user9@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user9",
+                        "linkedin": "https://linkedin.com/in/user9"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER10",
+                    "role": "Supervisor",
+                    "admin": false,
+                    "editor": false,
+                    "email": "user10@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user10",
+                        "linkedin": "https://linkedin.com/in/user10"
+                    }
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Mission",
+                    "description": "Promoting green energy through innovative solutions.",
+                    "order": 1
+                },
+                {
+                    "name": "Goals",
+                    "description": "Achieving energy efficiency in urban areas.",
+                    "order": 2
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "Why focus on green energy?",
+                    "answer": "Green energy is essential for sustainable urban development.",
+                    "order": 1
+                },
+                {
+                    "question": "What are the main challenges?",
+                    "answer": "Securing funding and raising awareness about green solutions.",
+                    "order": 2
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "REJECTED",
+                    "submitted_by_wallet_id_as_string": "USER8",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": null,
+                    "rejected_justification": "The provided documentation was incomplete and failed to meet the protocol requirements."
+                }
+            ],
+            "logo_url": "/img/uploads/green_energy_logo.jpg",
+            "banner_url": "/img/uploads/green_energy_banner.jpg",
+            "website": "https://greenenergyinitiative.com",
+            "instagram": "",
+            "twitter": "https://twitter.com/greenenergyinitiative",
+            "discord": "https://discord.com/invite/greenenergy",
+            "facebook": "",
+            "visualizations": 250,
+            "investors": 0,
+            "tokenomics_max_supply": 0,
+            "tokenomics_description": "",
+            "featured": false,
+            "archived": false
+        },
+        {
+            "name": "Tech Revolution Campaign",
+            "description": "This campaign has been submitted and successfully approved for the next steps.",
+            "campaign_category_id_as_string": "TECHNOLOGY",
+            "campaign_status_id_as_string": "APPROVED",
+            "creator_wallet_id_as_string": "USER10",
+            "begin_at_days": 8,
+            "deadline_days": 30,
+            "mint_CampaignToken": false,
+            "campaignToken_CS": "",
+            "campaignToken_TN": "",
+            "campaignToken_PriceADA": 0,
+            "requestedMaxADA": 30000,
+            "requestedMinADA": 15000,
+            "fundedADA": 0,
+            "collectedADA": 0,
+            "milestones": [],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER10",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user10@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user10",
+                        "linkedin": "https://linkedin.com/in/user10"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER11",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user11@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user11",
+                        "linkedin": "https://linkedin.com/in/user11"
+                    }
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Technology Focus",
+                    "description": "Details about how the campaign will leverage new technologies.",
+                    "order": 1
+                },
+                {
+                    "name": "Implementation Plan",
+                    "description": "A step-by-step plan to achieve campaign objectives.",
+                    "order": 2
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "What is the main goal of the campaign?",
+                    "answer": "To drive innovation in the tech sector with cutting-edge projects.",
+                    "order": 1
+                },
+                {
+                    "question": "How will funds be allocated?",
+                    "answer": "Funds will be allocated to research, development, and deployment.",
+                    "order": 2
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER10",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "The campaign meets all requirements and aligns with our mission.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/tech_revolution_logo.jpg",
+            "banner_url": "/img/uploads/tech_revolution_banner.jpg",
+            "website": "https://techrevolutioncampaign.com",
+            "instagram": "https://instagram.com/techrevolutioncampaign",
+            "twitter": "https://twitter.com/techrevcampaign",
+            "discord": "https://discord.com/invite/techrevolution",
+            "facebook": "https://facebook.com/techrevolutioncampaign",
+            "visualizations": 500,
+            "investors": 50,
+            "tokenomics_max_supply": 2000000,
+            "tokenomics_description": "This token will facilitate a tech-based ecosystem for developers and users.",
+            "featured": true,
+            "archived": false
+        },
+        {
+            "name": "Blockchain Development Initiative",
+            "description": "This campaign has successfully progressed to the contract creation phase.",
+            "campaign_category_id_as_string": "TECHNOLOGY",
+            "campaign_status_id_as_string": "CONTRACT_CREATED",
+            "creator_wallet_id_as_string": "USER12",
+            "begin_at_days": 9,
+            "deadline_days": 25,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "BLOCKCHAIN_DEV_CS",
+            "campaignToken_TN": "BLOCKCHAIN_TOKEN",
+            "campaignToken_PriceADA": 50,
+            "requestedMaxADA": 20000,
+            "requestedMinADA": 10000,
+            "fundedADA": 0,
+            "collectedADA": 0,
+            "milestones": [],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER12",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user12@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user12",
+                        "linkedin": "https://linkedin.com/in/user12"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER13",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user13@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user13",
+                        "linkedin": "https://linkedin.com/in/user13"
+                    }
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Contract Overview",
+                    "description": "Details about the contracts being developed for this campaign.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "What is the focus of this campaign?",
+                    "answer": "The focus is on creating blockchain contracts for decentralized applications.",
+                    "order": 1
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER12",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "All requirements were met, and the project is ready for contract creation.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/blockchain_logo.jpg",
+            "banner_url": "/img/uploads/blockchain_banner.jpg",
+            "website": "https://blockchaindevelopment.com",
+            "instagram": "",
+            "twitter": "https://twitter.com/blockchain_initiative",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 350,
+            "investors": 10,
+            "tokenomics_max_supply": 1000000,
+            "tokenomics_description": "Token supports participation in the blockchain ecosystem.",
+            "featured": true,
+            "archived": false
+        },
+        {
+            "name": "Smart Farming Initiative",
+            "description": "This campaign has published its contracts to the blockchain and is ready for operations.",
+            "campaign_category_id_as_string": "FOOD",
+            "campaign_status_id_as_string": "CONTRACT_PUBLISHED",
+            "creator_wallet_id_as_string": "USER14",
+            "begin_at_days": 10,
+            "deadline_days": 45,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "FARMING_CS",
+            "campaignToken_TN": "FARM_TOKEN",
+            "campaignToken_PriceADA": 20,
+            "requestedMaxADA": 50000,
+            "requestedMinADA": 25000,
+            "fundedADA": 10000,
+            "collectedADA": 10000,
+            "milestones": [
+                {
+                    "description": "Develop smart farming prototype.",
+                    "estimatedDeliveryDays": 30,
+                    "perncentage": 40,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                },
+                {
+                    "description": "Deploy smart farming technology to pilot farms.",
+                    "estimatedDeliveryDays": 60,
+                    "perncentage": 60,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                }
+            ],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER14",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user14@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user14",
+                        "linkedin": "https://linkedin.com/in/user14"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER15",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user15@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user15",
+                        "linkedin": "https://linkedin.com/in/user15"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER16",
+                    "role": "Contributor",
+                    "admin": false,
+                    "editor": false,
+                    "email": "user16@example.com",
+                    "socials": {
+                        "instagram": "https://instagram.com/user16"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER17",
+                    "role": "Reviewer",
+                    "admin": false,
+                    "editor": true,
+                    "email": "user17@example.com"
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Blockchain Details",
+                    "description": "Information about the published smart contracts for this campaign.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "What does the campaign focus on?",
+                    "answer": "Integrating blockchain with farming to enhance transparency and efficiency.",
+                    "order": 1
+                },
+                {
+                    "question": "How will funds be utilized?",
+                    "answer": "Funds will be allocated to develop and deploy smart farming technology.",
+                    "order": 2
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER14",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "The campaign met all requirements and contracts have been published.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/smart_farming_logo.jpg",
+            "banner_url": "/img/uploads/smart_farming_banner.jpg",
+            "website": "https://smartfarminginitiative.com",
+            "instagram": "https://instagram.com/smartfarming",
+            "twitter": "https://twitter.com/smartfarming",
+            "discord": "https://discord.com/invite/smartfarming",
+            "facebook": "",
+            "visualizations": 500,
+            "investors": 20,
+            "tokenomics_max_supply": 5000000,
+            "tokenomics_description": "The token incentivizes smart farming practices.",
+            "featured": false,
+            "archived": false
+        },
+        {
+            "name": "Renewable Energy Project",
+            "description": "The campaign has initiated its operations as the contracts are now live.",
+            "campaign_category_id_as_string": "SOCIAL",
+            "campaign_status_id_as_string": "CONTRACT_STARTED",
+            "creator_wallet_id_as_string": "USER18",
+            "begin_at_days": 11,
+            "deadline_days": 50,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "RENEWABLE_CS",
+            "campaignToken_TN": "RENEWABLE_TOKEN",
+            "campaignToken_PriceADA": 100,
+            "requestedMaxADA": 75000,
+            "requestedMinADA": 30000,
+            "fundedADA": 20000,
+            "collectedADA": 20000,
+            "milestones": [
+                {
+                    "description": "Design and build renewable energy systems.",
+                    "estimatedDeliveryDays": 20,
+                    "perncentage": 50,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                },
+                {
+                    "description": "Implement renewable energy systems in target areas.",
+                    "estimatedDeliveryDays": 40,
+                    "perncentage": 50,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                }
+            ],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER18",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user18@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user18",
+                        "linkedin": "https://linkedin.com/in/user18"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER19",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user19@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user19",
+                        "linkedin": "https://linkedin.com/in/user19"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER20",
+                    "role": "Field Engineer",
+                    "admin": false,
+                    "editor": false,
+                    "email": "user20@example.com"
+                },
+                {
+                    "wallet_id_as_string": "USER21",
+                    "role": "Financial Analyst",
+                    "admin": false,
+                    "editor": false,
+                    "email": "user21@example.com"
+                },
+                {
+                    "wallet_id_as_string": "USER22",
+                    "role": "Reviewer",
+                    "admin": false,
+                    "editor": true,
+                    "email": "user22@example.com"
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Renewable Energy Focus",
+                    "description": "Details about the initial phases of this project.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "How will funds be utilized?",
+                    "answer": "Funds will be used to deploy renewable energy systems in rural areas.",
+                    "order": 1
+                },
+                {
+                    "question": "What challenges does the campaign face?",
+                    "answer": "Implementing technology in remote areas and maintaining operations.",
+                    "order": 2
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER18",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "Contracts are live, and the campaign is operational.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/renewable_energy_logo.jpg",
+            "banner_url": "/img/uploads/renewable_energy_banner.jpg",
+            "website": "https://renewableenergyproject.com",
+            "instagram": "",
+            "twitter": "https://twitter.com/renewableenergy",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 800,
+            "investors": 35,
+            "tokenomics_max_supply": 10000000,
+            "tokenomics_description": "Tokens will fund renewable energy systems in underserved regions.",
+            "featured": true,
+            "archived": false
+        },
+        {
+            "name": "Tech for Tomorrow",
+            "description": "This campaign is in the countdown phase, preparing to begin fundraising.",
+            "campaign_category_id_as_string": "TECHNOLOGY",
+            "campaign_status_id_as_string": "COUNTDOWN",
+            "creator_wallet_id_as_string": "USER23",
+            "begin_at_days": 17,
+            "deadline_days": 30,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "TECH_TOMORROW_CS",
+            "campaignToken_TN": "TECH_TOKEN",
+            "campaignToken_PriceADA": 10,
+            "requestedMaxADA": 15000,
+            "requestedMinADA": 7000,
+            "fundedADA": 0,
+            "collectedADA": 0,
+            "milestones": [
+                {
+                    "description": "Initial prototype development.",
+                    "estimatedDeliveryDays": 25,
+                    "perncentage": 40,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                },
+                {
+                    "description": "Market analysis and scalability research.",
+                    "estimatedDeliveryDays": 40,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                },
+                {
+                    "description": "Final product launch preparation.",
+                    "estimatedDeliveryDays": 60,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                }
+            ],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER23",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user23@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user23",
+                        "linkedin": "https://linkedin.com/in/user23"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER24",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user24@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user24"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER25",
+                    "role": "Reviewer",
+                    "admin": false,
+                    "editor": true,
+                    "email": "user25@example.com"
+                },
+                {
+                    "wallet_id_as_string": "USER26",
+                    "role": "Contributor",
+                    "admin": false,
+                    "editor": false,
+                    "email": "user26@example.com"
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Innovation Plan",
+                    "description": "A detailed roadmap of how this campaign will foster technological innovation.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "What will happen during the countdown phase?",
+                    "answer": "Final preparations are made before the fundraising phase begins.",
+                    "order": 1
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER23",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "The campaign is approved and ready to move to countdown.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/tech_tomorrow_logo.jpg",
+            "banner_url": "/img/uploads/tech_tomorrow_banner.jpg",
+            "website": "https://techfortomorrow.com",
+            "instagram": "",
+            "twitter": "https://twitter.com/tech_tomorrow",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 150,
+            "investors": 0,
+            "tokenomics_max_supply": 2000000,
+            "tokenomics_description": "Tokens enable users to participate in the tech revolution.",
+            "featured": true,
+            "archived": false
+        },
+        {
+            "name": "Clean Water for All",
+            "description": "This campaign is actively fundraising to provide clean water access globally.",
+            "campaign_category_id_as_string": "SOCIAL",
+            "campaign_status_id_as_string": "FUNDRAISING",
+            "creator_wallet_id_as_string": "USER27",
+            "begin_at_days": 16,
+            "deadline_days": 45,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "WATER_FOR_ALL_CS",
+            "campaignToken_TN": "WATER_TOKEN",
+            "campaignToken_PriceADA": 5,
+            "requestedMaxADA": 20000,
+            "requestedMinADA": 10000,
+            "fundedADA": 12000,
+            "collectedADA": 0,
+            "milestones": [
+                {
+                    "description": "Establish clean water facilities in underserved regions.",
+                    "estimatedDeliveryDays": 30,
+                    "perncentage": 50,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                },
+                {
+                    "description": "Educational programs on water conservation.",
+                    "estimatedDeliveryDays": 50,
+                    "perncentage": 50,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                }
+            ],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER27",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user27@example.com",
+                    "socials": {
+                        "linkedin": "https://linkedin.com/in/user27"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER28",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user28@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user28"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER29",
+                    "role": "Reviewer",
+                    "admin": false,
+                    "editor": true,
+                    "email": "user29@example.com"
+                },
+                {
+                    "wallet_id_as_string": "USER30",
+                    "role": "Contributor",
+                    "admin": false,
+                    "editor": false,
+                    "email": "user30@example.com"
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Mission Statement",
+                    "description": "Outlines the campaign's objectives and expected impact.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "How will funds be used?",
+                    "answer": "Funds will establish clean water facilities and support conservation education.",
+                    "order": 1
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER27",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "The campaign is approved and ready to begin fundraising.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/clean_water_logo.jpg",
+            "banner_url": "/img/uploads/clean_water_banner.jpg",
+            "website": "https://cleanwaterforall.com",
+            "instagram": "",
+            "twitter": "https://twitter.com/cleanwaterforall",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 500,
+            "investors": 25,
+            "tokenomics_max_supply": 1500000,
+            "tokenomics_description": "Tokens ensure transparency in fund allocation for clean water access.",
+            "featured": false,
+            "archived": false
+        },
+        {
+            "name": "Sustainable Housing Project",
+            "description": "This campaign is in the finishing phase, nearing the completion of its fundraising goal.",
+            "campaign_category_id_as_string": "HOUSING",
+            "campaign_status_id_as_string": "FINISHING",
+            "creator_wallet_id_as_string": "USER31",
+            "begin_at_days": 13,
+            "deadline_days": 50,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "SUSTAIN_HOUSE_CS",
+            "campaignToken_TN": "HOUSE_TOKEN",
+            "campaignToken_PriceADA": 25,
+            "requestedMaxADA": 50000,
+            "requestedMinADA": 30000,
+            "fundedADA": 45000,
+            "collectedADA": 0,
+            "milestones": [
+                {
+                    "description": "Blueprint and land acquisition.",
+                    "estimatedDeliveryDays": 40,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                },
+                {
+                    "description": "Construction of basic infrastructure.",
+                    "estimatedDeliveryDays": 70,
+                    "perncentage": 40,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                },
+                {
+                    "description": "Final phase construction and handover.",
+                    "estimatedDeliveryDays": 100,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                }
+            ],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER31",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user31@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user31",
+                        "linkedin": "https://linkedin.com/in/user31"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER32",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user32@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user32",
+                        "linkedin": "https://linkedin.com/in/user32"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER33",
+                    "role": "Financial Advisor",
+                    "admin": false,
+                    "editor": false,
+                    "email": "user33@example.com"
+                },
+                {
+                    "wallet_id_as_string": "USER34",
+                    "role": "Reviewer",
+                    "admin": false,
+                    "editor": true,
+                    "email": "user34@example.com"
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Project Vision",
+                    "description": "Details about the sustainable housing plan and its impact.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "When will construction begin?",
+                    "answer": "Construction will begin after the funding goal is achieved.",
+                    "order": 1
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER31",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "The campaign meets all requirements and is progressing to the finishing phase.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/sustainable_housing_logo.jpg",
+            "banner_url": "/img/uploads/sustainable_housing_banner.jpg",
+            "website": "https://sustainablehousingproject.com",
+            "instagram": "",
+            "twitter": "https://twitter.com/sust_housing",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 750,
+            "investors": 100,
+            "tokenomics_max_supply": 2000000,
+            "tokenomics_description": "Tokens ensure sustainable housing projects.",
+            "featured": true,
+            "archived": false
+        },
+        {
+            "name": "Clean Energy for All",
+            "description": "This campaign is active, and the first milestone has started.",
+            "campaign_category_id_as_string": "ENERGY",
+            "campaign_status_id_as_string": "ACTIVE",
+            "creator_wallet_id_as_string": "USER35",
+            "begin_at_days": 14,
+            "deadline_days": 90,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "CLEAN_ENERGY_CS",
+            "campaignToken_TN": "ENERGY_TOKEN",
+            "campaignToken_PriceADA": 15,
+            "requestedMaxADA": 60000,
+            "requestedMinADA": 40000,
+            "fundedADA": 60000,
+            "collectedADA": 18000,
+            "milestones": [
+                {
+                    "description": "Initial research and resource allocation.",
+                    "estimatedDeliveryDays": 30,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "STARTED"
+                },
+                {
+                    "description": "Build clean energy prototypes.",
+                    "estimatedDeliveryDays": 60,
+                    "perncentage": 40,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                },
+                {
+                    "description": "Deploy and monitor clean energy systems.",
+                    "estimatedDeliveryDays": 90,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                }
+            ],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER35",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user35@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user35",
+                        "linkedin": "https://linkedin.com/in/user35"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER36",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user36@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user36",
+                        "linkedin": "https://linkedin.com/in/user36"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER37",
+                    "role": "Environmental Scientist",
+                    "admin": false,
+                    "editor": false,
+                    "email": "user37@example.com"
+                },
+                {
+                    "wallet_id_as_string": "USER38",
+                    "role": "Reviewer",
+                    "admin": false,
+                    "editor": true,
+                    "email": "user38@example.com"
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Energy Sustainability",
+                    "description": "Details about the clean energy systems being implemented.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "What is the current status of the project?",
+                    "answer": "The first milestone is underway, focusing on research and resource allocation.",
+                    "order": 1
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER35",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "The campaign is active and the first milestone has started.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/clean_energy_logo.jpg",
+            "banner_url": "/img/uploads/clean_energy_banner.jpg",
+            "website": "https://cleanenergyforall.com",
+            "instagram": "",
+            "twitter": "https://twitter.com/clean_energy_all",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 1200,
+            "investors": 150,
+            "tokenomics_max_supply": 3000000,
+            "tokenomics_description": "Tokens promote clean energy initiatives worldwide.",
+            "featured": true,
+            "archived": false
+        },
+        {
+            "name": "Global Health Outreach",
+            "description": "This campaign is active, with the first milestone submitted for approval.",
+            "campaign_category_id_as_string": "HEALTH",
+            "campaign_status_id_as_string": "ACTIVE",
+            "creator_wallet_id_as_string": "USER39",
+            "begin_at_days": 11,
+            "deadline_days": 40,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "GLOBAL_OUTREACH_CS",
+            "campaignToken_TN": "OUTREACH_TOKEN",
+            "campaignToken_PriceADA": 20,
+            "requestedMaxADA": 90000,
+            "requestedMinADA": 60000,
+            "fundedADA": 90000,
+            "collectedADA": 27000,
+            "milestones": [
+                {
+                    "description": "Establish health outreach centers.",
+                    "estimatedDeliveryDays": 45,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "SUBMITTED",
+                    "submissions": [
+                        {
+                            "submission_status_id_as_string": "SUBMITTED",
+                            "submitted_by_wallet_id_as_string": "USER39",
+                            "revised_by_wallet_id_as_string": null,
+                            "approved_justification": null,
+                            "rejected_justification": null,
+                            "ReportProofOfFinalization": "https://example.com/proof-outreach-centers"
+                        }
+                    ]
+                },
+                {
+                    "description": "Recruit and train health workers.",
+                    "estimatedDeliveryDays": 90,
+                    "perncentage": 40,
+                    "milestone_status_id_as_string": "NOT_STARTED",
+                    "submissions": []
+                },
+                {
+                    "description": "Deploy health services in target areas.",
+                    "estimatedDeliveryDays": 120,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "NOT_STARTED",
+                    "submissions": []
+                }
+            ],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER39",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user39@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user39",
+                        "linkedin": "https://linkedin.com/in/user39"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER40",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user40@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user40"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER41",
+                    "role": "Reviewer",
+                    "admin": false,
+                    "editor": true,
+                    "email": "user41@example.com",
+                    "socials": {
+                        "linkedin": "https://linkedin.com/in/user41"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER42",
+                    "role": "Contributor",
+                    "admin": false,
+                    "editor": false,
+                    "email": "user42@example.com",
+                    "socials": {
+                        "instagram": "https://instagram.com/user42"
+                    }
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Health Outreach Plan",
+                    "description": "Describes the detailed plan for health outreach in underserved regions.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "What is the primary goal of the campaign?",
+                    "answer": "To establish and operate health outreach centers in underserved regions.",
+                    "order": 1
+                },
+                {
+                    "question": "How will progress be tracked?",
+                    "answer": "Milestone submissions with proof will be reviewed by the team.",
+                    "order": 2
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER39",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "The campaign has met all requirements and is now active.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/global_health_logo.jpg",
+            "banner_url": "/img/uploads/global_health_banner.jpg",
+            "website": "https://globalhealthoutreach.com",
+            "instagram": "https://instagram.com/globalhealth",
+            "twitter": "https://twitter.com/globalhealth",
+            "discord": "https://discord.com/invite/globalhealth",
+            "facebook": "",
+            "visualizations": 350,
+            "investors": 45,
+            "tokenomics_max_supply": 3000000,
+            "tokenomics_description": "Tokens enable participation in global health initiatives.",
+            "featured": true,
+            "archived": false
+        },
+        {
+            "name": "Community Development Initiative",
+            "description": "This campaign is active, with the first milestone approved and ready for collect.",
+            "campaign_category_id_as_string": "SOCIAL",
+            "campaign_status_id_as_string": "ACTIVE",
+            "creator_wallet_id_as_string": "USER43",
+            "begin_at_days": 11,
+            "deadline_days": 40,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "COMMUNITY_DEV_CS",
+            "campaignToken_TN": "COMMUNITY_TOKEN",
+            "campaignToken_PriceADA": 15,
+            "requestedMaxADA": 80000,
+            "requestedMinADA": 50000,
+            "fundedADA": 80000,
+            "collectedADA": 56000,
+            "milestones": [
+                {
+                    "description": "Set up community centers.",
+                    "estimatedDeliveryDays": 45,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "COLLECT",
+                    "submissions": [
+                        {
+                            "submission_status_id_as_string": "APPROVED",
+                            "submitted_by_wallet_id_as_string": "USER43",
+                            "revised_by_wallet_id_as_string": "USER1",
+                            "approved_justification": "The first milestone meets all criteria and is approved.",
+                            "rejected_justification": null,
+                            "ReportProofOfFinalization": "https://example.com/proof-community-centers"
+                        }
+                    ]
+                },
+                {
+                    "description": "Train volunteers.",
+                    "estimatedDeliveryDays": 90,
+                    "perncentage": 40,
+                    "milestone_status_id_as_string": "NOT_STARTED",
+                    "submissions": []
+                },
+                {
+                    "description": "Expand community services.",
+                    "estimatedDeliveryDays": 120,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "NOT_STARTED",
+                    "submissions": []
+                }
+            ],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER43",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user43@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user43",
+                        "linkedin": "https://linkedin.com/in/user43"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER44",
+                    "role": "Promoter",
+                    "admin": false,
+                    "editor": false,
+                    "email": "user44@example.com",
+                    "socials": {
+                        "linkedin": "https://linkedin.com/in/user44"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER45",
+                    "role": "Contributor",
+                    "admin": false,
+                    "editor": false,
+                    "email": "user45@example.com",
+                    "socials": {
+                        "instagram": "https://instagram.com/user45"
+                    }
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Community Development Plan",
+                    "description": "Outlines the plan to build and operate community centers.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "What is the main goal of this campaign?",
+                    "answer": "To improve social infrastructure through community centers.",
+                    "order": 1
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER43",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "The campaign is approved and active.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/community_dev_logo.jpg",
+            "banner_url": "/img/uploads/community_dev_banner.jpg",
+            "website": "https://communitydevelopment.com",
+            "instagram": "",
+            "twitter": "https://twitter.com/communitydev",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 300,
+            "investors": 40,
+            "tokenomics_max_supply": 2000000,
+            "tokenomics_description": "Tokens enable participation in community development initiatives.",
+            "featured": true,
+            "archived": false
+        },
+        {
+            "name": "Green Energy Outreach",
+            "description": "This campaign is active, but the first milestone was rejected.",
+            "campaign_category_id_as_string": "TECHNOLOGY",
+            "campaign_status_id_as_string": "ACTIVE",
+            "creator_wallet_id_as_string": "USER46",
+            "begin_at_days": 13,
+            "deadline_days": 50,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "GREEN_OUTREACH_CS",
+            "campaignToken_TN": "OUTREACH_TOKEN",
+            "campaignToken_PriceADA": 25,
+            "requestedMaxADA": 100000,
+            "requestedMinADA": 75000,
+            "fundedADA": 100000,
+            "collectedADA": 30000,
+            "milestones": [
+                {
+                    "description": "Build renewable energy systems.",
+                    "estimatedDeliveryDays": 50,
+                    "perncentage": 35,
+                    "milestone_status_id_as_string": "REJECTED",
+                    "submissions": [
+                        {
+                            "submission_status_id_as_string": "REJECTED",
+                            "submitted_by_wallet_id_as_string": "USER46",
+                            "revised_by_wallet_id_as_string": "USER1",
+                            "approved_justification": null,
+                            "rejected_justification": "The milestone lacked sufficient proof of progress.",
+                            "ReportProofOfFinalization": "https://example.com/proof-energy-systems"
+                        }
+                    ]
+                },
+                {
+                    "description": "Deploy energy solutions.",
+                    "estimatedDeliveryDays": 100,
+                    "perncentage": 40,
+                    "milestone_status_id_as_string": "NOT_STARTED",
+                    "submissions": []
+                },
+                {
+                    "description": "Monitor and report outcomes.",
+                    "estimatedDeliveryDays": 150,
+                    "perncentage": 25,
+                    "milestone_status_id_as_string": "NOT_STARTED",
+                    "submissions": []
+                }
+            ],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER46",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user46@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user46"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER47",
+                    "role": "Marketing",
+                    "admin": false,
+                    "editor": false,
+                    "email": "user47@example.com",
+                    "socials": {
+                        "linkedin": "https://linkedin.com/in/user47"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER48",
+                    "role": "Reviewer",
+                    "admin": false,
+                    "editor": true,
+                    "email": "user48@example.com",
+                    "socials": {
+                        "linkedin": "https://linkedin.com/in/user48"
+                    }
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Energy Outreach Plan",
+                    "description": "Details the renewable energy systems to be deployed.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "Why was the first milestone rejected?",
+                    "answer": "Insufficient evidence provided in the submission.",
+                    "order": 1
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER46",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "The campaign is approved and active.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/green_outreach_logo.jpg",
+            "banner_url": "/img/uploads/green_outreach_banner.jpg",
+            "website": "https://greenenergyoutreach.com",
+            "instagram": "",
+            "twitter": "https://twitter.com/greenoutreach",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 450,
+            "investors": 55,
+            "tokenomics_max_supply": 5000000,
+            "tokenomics_description": "Tokens enable participation in renewable energy systems.",
+            "featured": false,
+            "archived": false
+        },
+        {
+            "name": "Tech Literacy Outreach",
+            "description": "This campaign is active, having resolved issues with the first milestone, and is now working on the second milestone.",
+            "campaign_category_id_as_string": "EDUCATION",
+            "campaign_status_id_as_string": "ACTIVE",
+            "creator_wallet_id_as_string": "USER52",
+            "begin_at_days": 11,
+            "deadline_days": 50,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "TECH_LITERACY_CS",
+            "campaignToken_TN": "LITERACY_TOKEN",
+            "campaignToken_PriceADA": 12,
+            "requestedMaxADA": 60000,
+            "requestedMinADA": 40000,
+            "fundedADA": 60000,
+            "collectedADA": 36000,
+            "milestones": [
+                {
+                    "description": "Develop training materials and resources.",
+                    "estimatedDeliveryDays": 45,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "FINISHED",
+                    "submissions": [
+                        {
+                            "submission_status_id_as_string": "REJECTED",
+                            "submitted_by_wallet_id_as_string": "USER52",
+                            "revised_by_wallet_id_as_string": "USER1",
+                            "approved_justification": null,
+                            "rejected_justification": "Initial submission lacked sufficient proof of resource quality.",
+                            "ReportProofOfFinalization": "https://example.com/proof-training-materials-rejected"
+                        },
+                        {
+                            "submission_status_id_as_string": "APPROVED",
+                            "submitted_by_wallet_id_as_string": "USER52",
+                            "revised_by_wallet_id_as_string": "USER1",
+                            "approved_justification": "Resubmission provided excellent proof of training material quality.",
+                            "rejected_justification": null,
+                            "ReportProofOfFinalization": "https://example.com/proof-training-materials-approved"
+                        }
+                    ]
+                },
+                {
+                    "description": "Train volunteers and educators.",
+                    "estimatedDeliveryDays": 90,
+                    "perncentage": 40,
+                    "milestone_status_id_as_string": "STARTED",
+                    "submissions": []
+                },
+                {
+                    "description": "Launch literacy programs in target areas.",
+                    "estimatedDeliveryDays": 120,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "NOT_STARTED",
+                    "submissions": []
+                }
+            ],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER52",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user52@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user52",
+                        "linkedin": "https://linkedin.com/in/user52"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER53",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user53@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user53",
+                        "linkedin": "https://linkedin.com/in/user53"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER54",
+                    "role": "Reviewer",
+                    "admin": false,
+                    "editor": true,
+                    "email": "user54@example.com",
+                    "socials": {
+                        "instagram": "https://instagram.com/user54"
+                    }
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Literacy Development Plan",
+                    "description": "A detailed overview of the outreach and educational plans.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "Why was the first milestone resubmitted?",
+                    "answer": "The initial submission lacked sufficient proof of material quality, which was addressed in the resubmission.",
+                    "order": 1
+                },
+                {
+                    "question": "What is the current focus of the campaign?",
+                    "answer": "The campaign is training volunteers and educators as part of the second milestone.",
+                    "order": 2
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER52",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "The campaign meets all requirements and is active.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/tech_literacy_logo.jpg",
+            "banner_url": "/img/uploads/tech_literacy_banner.jpg",
+            "website": "https://techliteracyoutreach.com",
+            "instagram": "",
+            "twitter": "https://twitter.com/techliteracy",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 850,
+            "investors": 60,
+            "tokenomics_max_supply": 2500000,
+            "tokenomics_description": "Tokens incentivize the development of literacy initiatives.",
+            "featured": true,
+            "archived": false
+        },
+        {
+            "name": "Global Tech Empowerment",
+            "description": "This campaign has successfully completed all milestones and achieved its goals.",
+            "campaign_category_id_as_string": "TECHNOLOGY",
+            "campaign_status_id_as_string": "SUCCESS",
+            "creator_wallet_id_as_string": "USER55",
+            "begin_at_days": 3,
+            "deadline_days": 30,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "GLOBAL_TECH_CS",
+            "campaignToken_TN": "TECH_TOKEN",
+            "campaignToken_PriceADA": 20,
+            "requestedMaxADA": 80000,
+            "requestedMinADA": 50000,
+            "fundedADA": 80000,
+            "collectedADA": 80000,
+            "milestones": [
+                {
+                    "description": "Develop tech training programs.",
+                    "estimatedDeliveryDays": 30,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "FINISHED",
+                    "submissions": [
+                        {
+                            "submission_status_id_as_string": "APPROVED",
+                            "submitted_by_wallet_id_as_string": "USER55",
+                            "revised_by_wallet_id_as_string": "USER1",
+                            "approved_justification": "Milestone achieved with comprehensive training material delivered.",
+                            "rejected_justification": null,
+                            "ReportProofOfFinalization": "https://example.com/proof-training-programs"
+                        }
+                    ]
+                },
+                {
+                    "description": "Expand tech training to underserved areas.",
+                    "estimatedDeliveryDays": 60,
+                    "perncentage": 40,
+                    "milestone_status_id_as_string": "FINISHED",
+                    "submissions": [
+                        {
+                            "submission_status_id_as_string": "APPROVED",
+                            "submitted_by_wallet_id_as_string": "USER55",
+                            "revised_by_wallet_id_as_string": "USER2",
+                            "approved_justification": "Training successfully expanded with proof of operations.",
+                            "rejected_justification": null,
+                            "ReportProofOfFinalization": "https://example.com/proof-training-expansion"
+                        }
+                    ]
+                },
+                {
+                    "description": "Deploy advanced tech tools for communities.",
+                    "estimatedDeliveryDays": 90,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "FINISHED",
+                    "submissions": [
+                        {
+                            "submission_status_id_as_string": "APPROVED",
+                            "submitted_by_wallet_id_as_string": "USER55",
+                            "revised_by_wallet_id_as_string": "USER2",
+                            "approved_justification": "Advanced tools deployed successfully with comprehensive documentation.",
+                            "rejected_justification": null,
+                            "ReportProofOfFinalization": "https://example.com/proof-tech-tools"
+                        }
+                    ]
+                }
+            ],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER55",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user55@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user55",
+                        "linkedin": "https://linkedin.com/in/user55"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER56",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user56@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user56",
+                        "linkedin": "https://linkedin.com/in/user56"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER57",
+                    "role": "Reviewer",
+                    "admin": false,
+                    "editor": true,
+                    "email": "user57@example.com",
+                    "socials": {
+                        "linkedin": "https://linkedin.com/in/user57"
+                    }
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Global Tech Vision",
+                    "description": "A roadmap for empowering communities with technology.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "What was the main objective of this campaign?",
+                    "answer": "To provide underserved communities with access to technology and training.",
+                    "order": 1
+                },
+                {
+                    "question": "How were milestones monitored?",
+                    "answer": "Each milestone was approved with detailed reports and evidence of progress.",
+                    "order": 2
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER55",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "The campaign was approved and successfully executed.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/global_tech_logo.jpg",
+            "banner_url": "/img/uploads/global_tech_banner.jpg",
+            "website": "https://globaltechempowerment.com",
+            "instagram": "https://instagram.com/globaltech",
+            "twitter": "https://twitter.com/globaltech",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 1000,
+            "investors": 120,
+            "tokenomics_max_supply": 3000000,
+            "tokenomics_description": "Tokens empower communities with access to cutting-edge technology.",
+            "featured": true,
+            "archived": false
+        },
+        {
+            "name": "Urban Green Spaces Initiative",
+            "description": "This campaign failed to reach its minimum funding goal and is now marked as unreached.",
+            "campaign_category_id_as_string": "ENVIRONMENT",
+            "campaign_status_id_as_string": "UNREACHED",
+            "creator_wallet_id_as_string": "USER60",
+            "begin_at_days": 16,
+            "deadline_days": 45,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "URBAN_GREEN_CS",
+            "campaignToken_TN": "GREEN_TOKEN",
+            "campaignToken_PriceADA": 10,
+            "requestedMaxADA": 40000,
+            "requestedMinADA": 25000,
+            "fundedADA": 20000,
+            "collectedADA": 0,
+            "milestones": [
+                {
+                    "description": "Acquire land for green spaces.",
+                    "estimatedDeliveryDays": 40,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                },
+                {
+                    "description": "Design and plan urban green spaces.",
+                    "estimatedDeliveryDays": 70,
+                    "perncentage": 40,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                },
+                {
+                    "description": "Plant trees and establish green zones.",
+                    "estimatedDeliveryDays": 100,
+                    "perncentage": 30,
+                    "milestone_status_id_as_string": "NOT_STARTED"
+                }
+            ],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER60",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user60@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user60",
+                        "linkedin": "https://linkedin.com/in/user60"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER61",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user61@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user61",
+                        "linkedin": "https://linkedin.com/in/user61"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER62",
+                    "role": "Financial Analyst",
+                    "admin": false,
+                    "editor": false,
+                    "email": "user62@example.com"
+                },
+                {
+                    "wallet_id_as_string": "USER63",
+                    "role": "Reviewer",
+                    "admin": false,
+                    "editor": true,
+                    "email": "user63@example.com"
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Project Overview",
+                    "description": "A plan to increase urban green spaces and promote sustainability.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "Why did the campaign fail to reach its goal?",
+                    "answer": "The campaign did not secure enough funding to meet the minimum ADA target.",
+                    "order": 1
+                },
+                {
+                    "question": "What happens to the funds collected?",
+                    "answer": "Funds will be refunded to investors as the campaign did not meet its minimum target.",
+                    "order": 2
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER60",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "The campaign was approved but failed to meet its funding goal.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/urban_green_logo.jpg",
+            "banner_url": "/img/uploads/urban_green_banner.jpg",
+            "website": "https://urbangreenspaces.com",
+            "instagram": "https://instagram.com/urban_green",
+            "twitter": "https://twitter.com/urban_green",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 300,
+            "investors": 50,
+            "tokenomics_max_supply": 1500000,
+            "tokenomics_description": "Tokens promote sustainability initiatives in urban areas.",
+            "featured": false,
+            "archived": false
+        },
+        {
+            "name": "Rural Tech Empowerment",
+            "description": "The campaign has failed after the first milestone was failed.",
+            "campaign_category_id_as_string": "EDUCATION",
+            "campaign_status_id_as_string": "FAILED",
+            "creator_wallet_id_as_string": "USER49",
+            "begin_at_days": 12,
+            "deadline_days": 40,
+            "mint_CampaignToken": true,
+            "campaignToken_CS": "RURAL_TECH_CS",
+            "campaignToken_TN": "TECH_TOKEN",
+            "campaignToken_PriceADA": 10,
+            "requestedMaxADA": 50000,
+            "requestedMinADA": 30000,
+            "fundedADA": 50000,
+            "collectedADA": 15000,
+            "milestones": [
+                {
+                    "description": "Set up rural tech hubs.",
+                    "estimatedDeliveryDays": 60,
+                    "perncentage": 40,
+                    "milestone_status_id_as_string": "FAILED",
+                    "submissions": [
+                        {
+                            "submission_status_id_as_string": "FAILED",
+                            "submitted_by_wallet_id_as_string": "USER49",
+                            "revised_by_wallet_id_as_string": "USER1",
+                            "approved_justification": null,
+                            "rejected_justification": "Critical failure in meeting milestone objectives.",
+                            "ReportProofOfFinalization": "https://example.com/proof-tech-hubs"
+                        }
+                    ]
+                },
+                {
+                    "description": "Train instructors.",
+                    "estimatedDeliveryDays": 120,
+                    "perncentage": 60,
+                    "milestone_status_id_as_string": "NOT_STARTED",
+                    "submissions": []
+                }
+            ],
+            "members": [
+                {
+                    "wallet_id_as_string": "USER49",
+                    "role": "Creator",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user49@example.com",
+                    "socials": {
+                        "twitter": "https://twitter.com/user49",
+                        "linkedin": "https://linkedin.com/in/user49"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER50",
+                    "role": "Admin",
+                    "admin": true,
+                    "editor": true,
+                    "email": "user50@example.com",
+                    "socials": {
+                        "linkedin": "https://linkedin.com/in/user50"
+                    }
+                },
+                {
+                    "wallet_id_as_string": "USER51",
+                    "role": "Reviewer",
+                    "admin": false,
+                    "editor": true,
+                    "email": "user51@example.com"
+                }
+            ],
+            "contents": [
+                {
+                    "name": "Tech Hubs Plan",
+                    "description": "Describes the plan to set up tech hubs in rural areas.",
+                    "order": 1
+                }
+            ],
+            "faqs": [
+                {
+                    "question": "What caused the campaign to fail?",
+                    "answer": "The first milestone was not achieved due to lack of progress.",
+                    "order": 1
+                }
+            ],
+            "submissions": [
+                {
+                    "submission_status_id_as_string": "APPROVED",
+                    "submitted_by_wallet_id_as_string": "USER49",
+                    "revised_by_wallet_id_as_string": "USER1",
+                    "approved_justification": "The campaign is approved and active.",
+                    "rejected_justification": null
+                }
+            ],
+            "logo_url": "/img/uploads/rural_tech_logo.jpg",
+            "banner_url": "/img/uploads/rural_tech_banner.jpg",
+            "website": "https://ruraltechempowerment.com",
+            "instagram": "",
+            "twitter": "https://twitter.com/ruraltech",
+            "discord": "",
+            "facebook": "",
+            "visualizations": 600,
+            "investors": 70,
+            "tokenomics_max_supply": 1000000,
+            "tokenomics_description": "Tokens empower rural communities through tech education.",
+            "featured": false,
+            "archived": false
+        }
+    ]
+}

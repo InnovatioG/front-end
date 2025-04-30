@@ -1,10 +1,10 @@
-import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
+import { PostgreSQLAppliedFor} from 'smart-db';
+import { BaseEntityPostgreSQL, PostgreSQLDatabaseService } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { CampaignMemberEntity } from './CampaignMember.Entity';
 
 @PostgreSQLAppliedFor([CampaignMemberEntity])
-@Entity({ name: getPostgreSQLTableName(CampaignMemberEntity.className()) })
+@Entity({ name: PostgreSQLDatabaseService.getTableName(CampaignMemberEntity.className()) })
 export class CampaignMemberEntityPostgreSQL extends BaseEntityPostgreSQL {
     protected static Entity = CampaignMemberEntity;
 
@@ -21,6 +21,10 @@ export class CampaignMemberEntityPostgreSQL extends BaseEntityPostgreSQL {
     last_name?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
     role?: string;
+    @Column({ type: 'text', nullable: true })
+    description?: string;
+    @Column({ type: 'varchar', length: 1024, nullable: true })
+    avatar_url?: string;
     @Column({ type: 'boolean', default: false })
     editor!: boolean;
     @Column({ type: 'boolean', default: false })
@@ -40,7 +44,11 @@ export class CampaignMemberEntityPostgreSQL extends BaseEntityPostgreSQL {
     @Column({ type: 'varchar', length: 255, nullable: true })
     discord?: string;
     @Column({ type: 'varchar', length: 255, nullable: true })
+    linkedin?: string;
+    @Column({ type: 'varchar', length: 255, nullable: true })
     facebook?: string;
+    @Column({ type: 'integer' })
+    order!: number;
     @CreateDateColumn()
     createdAt!: Date;
     @UpdateDateColumn()
@@ -76,11 +84,4 @@ export class CampaignMemberEntityPostgreSQL extends BaseEntityPostgreSQL {
 
     // #endregion internal class methods
 
-    // #region posgresql db
-
-    public static PostgreSQLModel() {
-        return this;
-    }
-
-    // #endregion posgresql db
 }

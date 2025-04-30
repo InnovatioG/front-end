@@ -43,12 +43,14 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo {
 
     // #region mongo db
 
-    public static MongoModel() {
+    public static DBModel() {
         interface Interface {
             campaign_id: string;
             name: string;
             last_name: string;
             role: string;
+            description: string;
+            avatar_url: string;
             editor: boolean;
             admin: boolean;
             email: string;
@@ -58,7 +60,9 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo {
             instagram: string;
             twitter: string;
             discord: string;
+            linkedin: string;
             facebook: string;
+            order: number;
             createdAt: Date;
             updatedAt: Date;
         }
@@ -69,6 +73,8 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo {
                 name: { type: String, required: false },
                 last_name: { type: String, required: false },
                 role: { type: String, required: false },
+                description: { type: String, required: false },
+                avatar_url: { type: String, required: false },
                 editor: { type: Boolean, required: true },
                 admin: { type: Boolean, required: true },
                 email: { type: String, required: false },
@@ -78,7 +84,9 @@ export class CampaignMemberEntityMongo extends BaseEntityMongo {
                 instagram: { type: String, required: false },
                 twitter: { type: String, required: false },
                 discord: { type: String, required: false },
+                linkedin: { type: String, required: false },
                 facebook: { type: String, required: false },
+                order: { type: Number, required: true },
             },
             { timestamps: true }
         );

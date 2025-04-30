@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { useCallback, useEffect, useState } from 'react';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { CampaignSubmissionEntity } from '../../../lib/SmartDB/Entities/CampaignSubmission.Entity';
 import { CampaignSubmissionApi } from '../../../lib/SmartDB/FrontEnd/CampaignSubmission.FrontEnd.Api.Calls';
 
@@ -10,19 +10,19 @@ export function useCampaignSubmission() {
     const [view, setView] = useState<'list' | 'create' | 'edit' | 'confirmDelete'>('list');
     const [deleteItem, setDeleteItem] = useState<CampaignSubmissionEntity | null>(null);
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             const fetchedList: CampaignSubmissionEntity[] = await CampaignSubmissionApi.getAllApi_();
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching CampaignSubmission: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching CampaignSubmission: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {
@@ -33,7 +33,7 @@ export function useCampaignSubmission() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating CampaignSubmission: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating CampaignSubmission: ${e}`);
         }
     };
 
@@ -47,7 +47,7 @@ export function useCampaignSubmission() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating CampaignSubmission: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating CampaignSubmission: ${e}`);
             }
         }
     };
@@ -64,7 +64,7 @@ export function useCampaignSubmission() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting CampaignSubmission: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting CampaignSubmission: ${e}`);
             }
         }
     };

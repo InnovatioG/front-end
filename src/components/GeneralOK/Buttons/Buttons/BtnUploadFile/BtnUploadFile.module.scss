@@ -1,0 +1,28 @@
+@use '@/styles/settings/colors';
+
+.containerIcon {
+    cursor: pointer;
+}
+
+.generalContainer,
+.generalContainerGray {
+    position: relative;
+    background-color: colors.$secondary-background;
+    padding: 1rem;
+    border-radius: 50%;
+    width: 76px;
+    height: 76px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+
+    &:hover {
+        background-color: colors.$primary-yellow;
+    }
+}
+
+.generalContainerGray {
+    background-color: colors.$disabled;
+    
+}

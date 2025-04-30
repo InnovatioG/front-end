@@ -1,13 +1,12 @@
-import PreLoadingPage from '@/components/General/Elements/PreLoadingPage/PreLoadingPage';
+import LoadingPage from '@/components/GeneralOK/LoadingPage/LoadingPage';
+import PreLoadingPage from '@/components/GeneralOK/LoadingPage/PreLoadingPage';
 import Footer from '@/components/Layout/Footer/Footer';
 import Header from '@/components/Layout/Header/Header';
-import LoadingPage from '@/components/LoadingPage/LoadingPage';
-import { ModalProvider } from '@/contexts/ModalContext';
-import { ResponsiveProvider } from '@/contexts/ResponsiveContext';
-import { fetchAllData } from '@/store/generalConstants/actions';
+import { ModalProvider } from '@/contexts/ModalProvider';
+import { ResponsiveProvider } from '@/contexts/ResponsiveProvider';
+import { fetchGeneralStoreData, useGeneralStore } from '@/store/generalStore/useGeneralStore';
 import '@/styles/globals.scss';
-import * as Images from '@/utils/images';
-import { ROUTES } from '@/utils/routes';
+import * as Images from '@/utils/constants/images';
 import { StoreProvider } from 'easy-peasy';
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
@@ -17,7 +16,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { ReactNotifications } from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
-import { AppGeneral, globalStore, useAppStore } from 'smart-db';
+import { AppGeneral, globalStore } from 'smart-db';
 import 'smart-db/dist/styles.css';
 
 type ImageType = string | { [key: string]: string };
@@ -37,20 +36,41 @@ const resourcesToPreload = getResourcesFromImages(Images);
 
 export default function App({ Component, pageProps }: AppProps<{ session?: Session }>) {
     const [isLoadingResources, setIsLoadingResources] = useState(true);
-    const [isLoadingDatabaseService, setIsLoadingDatabaseService] = useState(true);
     const [isLoadingApp, setIsLoadingApp] = useState(true);
 
     const router = useRouter();
-    
+
     useEffect(() => {
         const initialize = async () => {
-            await fetchAllData();
-            setIsLoadingDatabaseService(false);
+            await fetchGeneralStoreData();
         };
         if (isLoadingApp === false) {
             initialize();
         }
     }, [isLoadingApp]);
+
+    const { isProtocolTeam, _DebugIsProtocolTeam, _DebugIsAdmin, _DebugIsEditor, setDebugIsAdmin, setDebugIsEditor, setDebugIsProtocolTeam, setShowDebug, showDebug } =
+        useGeneralStore();
+
+    useEffect(() => {
+        const { isAdmin, isEditor, isProtocolTeam, showDebug } = router.query;
+
+        if (isAdmin === 'true' || isAdmin === 'false') {
+            setDebugIsAdmin(isAdmin === 'true');
+        }
+
+        if (isEditor === 'true' || isEditor === 'false') {
+            setDebugIsEditor(isEditor === 'true');
+        }
+
+        if (isProtocolTeam === 'true' || isProtocolTeam === 'false') {
+            setDebugIsProtocolTeam(isProtocolTeam === 'true');
+        }
+
+        if (showDebug === 'true' || showDebug === 'false') {
+            setShowDebug(showDebug === 'true');
+        }
+    }, [router.query, setDebugIsAdmin, setDebugIsEditor, setDebugIsProtocolTeam, setShowDebug]);
 
     return (
         <>
@@ -69,14 +89,16 @@ export default function App({ Component, pageProps }: AppProps<{ session?: Sessi
             <SessionProvider session={pageProps.session} refetchInterval={0}>
                 <StoreProvider store={globalStore}>
                     <AppGeneral loader={<LoadingPage />} onLoadComplete={() => setIsLoadingApp(false)}>
-                        {isLoadingApp || isLoadingResources || isLoadingDatabaseService ? (
+                        {isLoadingApp || isLoadingResources || useGeneralStore.getState().isLoadingStoreData === true ? (
                             <PreLoadingPage onLoadComplete={() => setIsLoadingResources(false)} resources={resourcesToPreload} />
                         ) : (
                             <ResponsiveProvider>
                                 <ModalProvider>
-                                    {router.pathname !== ROUTES.new && <Header />}
+                                    <Header />
+                                    {showDebug &&
+                                        `DEBUG - isProtocolTeam: ${isProtocolTeam} - _DebugIsProtocolTeam: ${_DebugIsProtocolTeam} -_DebugIsAdmin: ${_DebugIsAdmin} - _DebugIsEditor: ${_DebugIsEditor}`}
                                     <Component {...pageProps} />
-                                    {router.pathname !== ROUTES.new && <Footer />}
+                                    <Footer />
                                 </ModalProvider>
                             </ResponsiveProvider>
                         )}

@@ -1,4 +1,4 @@
-import { Script } from 'lucid-cardano';
+import { Script } from '@lucid-evolution/lucid';
 import { Schema, model, models } from 'mongoose';
 import 'reflect-metadata';
 import { MongoAppliedFor } from 'smart-db';
@@ -44,9 +44,9 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
 
     // #region mongo db
 
-    public static MongoModel() {
+    public static DBModel() {
         interface InterfaceDB extends IBaseSmartDBEntity {
-            campaing_category_id: string;
+            campaign_category_id: string;
             campaign_status_id: string;
             creator_wallet_id: string;
 
@@ -73,10 +73,14 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             instagram: string;
             twitter: string;
             discord: string;
+            linkedin: string;
             facebook: string;
             visualizations: number;
+            fundedADA: bigint;
+            collectedADA: bigint;
             investors: number;
-            tokenomics_max_supply: string;
+            tokenomics_max_supply: bigint;
+            tokenomics_for_campaign: bigint;
             tokenomics_description: string;
 
             fdpCampaignVersion: number;
@@ -108,7 +112,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
         //TODO: Esto es obligatorio así con SmartDB Entities
         const schemaDB = {
             ...BaseSmartDBEntityMongo.smartDBSchema,
-            campaing_category_id: { type: String, required: true },
+            campaign_category_id: { type: String, required: true },
             campaign_status_id: { type: String, required: true },
             creator_wallet_id: { type: String, required: true },
 
@@ -125,9 +129,9 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             mint_CampaignToken: { type: Boolean, required: false },
             campaignToken_CS: { type: String, required: false },
             campaignToken_TN: { type: String, required: false },
-            campaignToken_PriceADA: { type: Number, required: false },
-            requestedMaxADA: { type: Number, required: false },
-            requestedMinADA: { type: Number, required: false },
+            campaignToken_PriceADA: { type: String, required: false },
+            requestedMaxADA: { type: String, required: false },
+            requestedMinADA: { type: String, required: false },
 
             logo_url: { type: String, required: false },
             banner_url: { type: String, required: false },
@@ -135,10 +139,14 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             instagram: { type: String, required: false },
             twitter: { type: String, required: false },
             discord: { type: String, required: false },
+            linkedin: { type: String, required: false },
             facebook: { type: String, required: false },
             visualizations: { type: Number, required: false },
+            fundedADA : { type: String, required: false },
+            collectedADA : { type: String, required: false },
             investors: { type: Number, required: false },
             tokenomics_max_supply: { type: String, required: false },
+            tokenomics_for_campaign: { type: String, required: false },
             tokenomics_description: { type: String, required: false },
 
             fdpCampaignVersion: { type: Number, required: false },
@@ -177,7 +185,7 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             cdRequestedMinADA: { type: String, required: false },
             cdFundedADA: { type: String, required: false },
             cdCollectedADA: { type: String, required: false },
-            cdbegin_at: { type: String, required: false },
+            cdBegin_at: { type: String, required: false },
             cdDeadline: { type: String, required: false },
             cdStatus: { type: Number, required: false },
             cdMilestones: { type: [Object], required: false },

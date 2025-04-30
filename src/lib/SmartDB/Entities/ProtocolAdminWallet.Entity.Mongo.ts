@@ -43,7 +43,7 @@ export class ProtocolAdminWalletEntityMongo extends BaseEntityMongo {
 
     // #region mongo db
 
-    public static MongoModel() {
+    public static DBModel() {
         interface Interface {
             protocol_id: string;
             wallet_id: string;

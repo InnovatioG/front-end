@@ -10,13 +10,96 @@ import {
     NextApiRequestAuthenticated,
     console_error,
     console_log,
+    toJson,
 } from 'smart-db/backEnd';
-import { CampaignFundsEntity } from '../Entities/CampaignFunds.Entity';
+import { CampaignFundsDatum, CampaignFundsEntity } from '../Entities/CampaignFunds.Entity';
+import { CampaignEntity } from '../Entities/Campaign.Entity';
+import { CAMPAIGN_FUNDS_VERSION } from '@/utils/constants/on-chain';
+import { MilestoneDatumStatus_Code_Id_Enums } from '@/utils/constants/status/status';
 
 @BackEndAppliedFor(CampaignFundsEntity)
 export class CampaignFundsBackEndApplied extends BaseSmartDBBackEndApplied {
     protected static _Entity = CampaignFundsEntity;
     protected static _BackEndMethods = BaseSmartDBBackEndMethods;
+
+    // #region datum methods
+
+    public static mkNew_CampaignFundsDatum(campaign: CampaignEntity, mindAda: bigint): CampaignFundsDatum {
+        // usado para que los campos del datum tengan las clases y tipos bien
+        // txParams trae los campos pero estan plain, no son clases ni tipos
+
+        const datumPlainObject: CampaignFundsDatum = {
+            cfdVersion: CAMPAIGN_FUNDS_VERSION,
+            cfdIndex: campaign.cdFundsIndex,
+            cfdCampaignPolicy_CS: campaign.getNET_id_CS(),
+            cfdCampaignFundsPolicyID_CS: campaign.getNet_FundHoldingPolicyID_CS(),
+            cfdSubtotal_Avalaible_CampaignToken: 0n,
+            cfdSubtotal_Sold_CampaignToken: 0n,
+            cfdSubtotal_Avalaible_ADA: 0n,
+            cfdSubtotal_Collected_ADA: 0n,
+            cfdMinADA: mindAda,
+        };
+
+        let datum: CampaignFundsDatum = CampaignFundsEntity.mkDatumFromPlainObject(datumPlainObject) as CampaignFundsDatum;
+
+        return datum;
+    }
+
+    public static mkUpdated_CampaignFundsDatum_With_Deposit(campaignFundsDatum_In: CampaignFundsDatum, amount: bigint): CampaignFundsDatum {
+        // usado para que los campos del datum tengan las clases y tipos bien
+        // txParams trae los campos pero estan plain, no son clases ni tipos
+
+        const datumPlainObject: CampaignFundsDatum = {
+            ...JSON.parse(toJson(campaignFundsDatum_In)),
+            cfdSubtotal_Avalaible_CampaignToken: campaignFundsDatum_In.cfdSubtotal_Avalaible_CampaignToken + amount,
+        };
+
+        let datum: CampaignFundsDatum = CampaignFundsEntity.mkDatumFromPlainObject(datumPlainObject) as CampaignFundsDatum;
+
+        return datum;
+    }
+
+    public static mkUpdated_CampaignFundsDatum_Invest(campaignFundsDatum_In: CampaignFundsDatum, amountTokens: bigint, amountADA: bigint): CampaignFundsDatum {
+        // usado para que los campos del datum tengan las clases y tipos bien
+        // txParams trae los campos pero estan plain, no son clases ni tipos
+
+        const datumPlainObject: CampaignFundsDatum = {
+            ...JSON.parse(toJson(campaignFundsDatum_In)),
+            cfdSubtotal_Sold_CampaignToken: campaignFundsDatum_In.cfdSubtotal_Sold_CampaignToken + amountTokens,
+            cfdSubtotal_Avalaible_CampaignToken: campaignFundsDatum_In.cfdSubtotal_Avalaible_CampaignToken - amountTokens,
+            cfdSubtotal_Avalaible_ADA: campaignFundsDatum_In.cfdSubtotal_Avalaible_ADA + amountADA,
+        };
+
+        let datum: CampaignFundsDatum = CampaignFundsEntity.mkDatumFromPlainObject(datumPlainObject) as CampaignFundsDatum;
+
+        return datum;
+    }
+    public static mkUpdated_CampaignFundsDatum_Collect(campaignFundsDatum_In: CampaignFundsDatum, amountADAToCollect: bigint): CampaignFundsDatum {
+        // usado para que los campos del datum tengan las clases y tipos bien
+        // txParams trae los campos pero estan plain, no son clases ni tipos
+
+        const datumPlainObject: CampaignFundsDatum = {
+            ...JSON.parse(toJson(campaignFundsDatum_In)),
+            cfdSubtotal_Avalaible_ADA: campaignFundsDatum_In.cfdSubtotal_Avalaible_ADA - amountADAToCollect,
+            cfdSubtotal_Collected_ADA: campaignFundsDatum_In.cfdSubtotal_Collected_ADA + amountADAToCollect,
+        };
+
+        let datum: CampaignFundsDatum = CampaignFundsEntity.mkDatumFromPlainObject(datumPlainObject) as CampaignFundsDatum;
+
+        return datum;
+    }
+    // TODO: checkea si esta funcion debe ir aca
+    public static getAmountToCollect(campaign: CampaignEntity): bigint {
+        const sucessMilestones = campaign.cdMilestones.filter((milestone) => milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsSuccess);
+        const accumPorcentaje = sucessMilestones.reduce((acc, milestone) => acc + milestone.cmPerncentage, 0n);
+
+        const totalFundsToCollect = campaign.cdFundedADA * accumPorcentaje;
+        const avalibleFundsToCollect = totalFundsToCollect - campaign.cdCollectedADA;
+
+        return avalibleFundsToCollect;
+    }
+
+    // #endregion datum methods
 }
 
 @BackEndApiHandlersFor(CampaignFundsEntity)

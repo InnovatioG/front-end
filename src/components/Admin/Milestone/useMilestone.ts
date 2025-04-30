@@ -1,7 +1,7 @@
 import { MilestoneStatusEntity } from '@/lib/SmartDB/Entities';
 import { MilestoneStatusApi } from '@/lib/SmartDB/FrontEnd';
-import { useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { useCallback, useEffect, useState } from 'react';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { MilestoneEntity } from '../../../lib/SmartDB/Entities/Milestone.Entity';
 import { MilestoneApi } from '../../../lib/SmartDB/FrontEnd/Milestone.FrontEnd.Api.Calls';
 
@@ -25,20 +25,20 @@ export function useMilestone() {
         return status?.name || 'Unknown';
     };
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             await fetchMilestineExtras();
             const fetchedList: MilestoneEntity[] = await MilestoneApi.getAllApi_();
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching Milestone: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching Milestone: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {
@@ -49,7 +49,7 @@ export function useMilestone() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating Milestone: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating Milestone: ${e}`);
         }
     };
 
@@ -63,7 +63,7 @@ export function useMilestone() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating Milestone: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating Milestone: ${e}`);
             }
         }
     };
@@ -80,7 +80,7 @@ export function useMilestone() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting Milestone: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting Milestone: ${e}`);
             }
         }
     };

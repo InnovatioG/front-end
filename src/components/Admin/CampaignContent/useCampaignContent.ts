@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { pushWarningNotification } from 'smart-db';
+import { useCallback, useEffect, useState } from 'react';
+import { PROYECT_NAME, pushWarningNotification } from 'smart-db';
 import { CampaignContentEntity } from '../../../lib/SmartDB/Entities/CampaignContent.Entity';
 import { CampaignContentApi } from '../../../lib/SmartDB/FrontEnd/CampaignContent.FrontEnd.Api.Calls';
 
@@ -10,19 +10,19 @@ export function useCampaignContent() {
     const [view, setView] = useState<'list' | 'create' | 'edit' | 'confirmDelete'>('list');
     const [deleteItem, setDeleteItem] = useState<CampaignContentEntity | null>(null);
 
-    const fetch = async () => {
+    const fetch = useCallback(async () => {
         try {
             const fetchedList: CampaignContentEntity[] = await CampaignContentApi.getAllApi_();
             setList(fetchedList);
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error fetching CampaignContent: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error fetching CampaignContent: ${e}`);
         }
-    };
+    }, []); 
 
     useEffect(() => {
         fetch();
-    }, []);
+    }, [fetch]);
 
     const create = async () => {
         try {
@@ -33,7 +33,7 @@ export function useCampaignContent() {
             setView('list');
         } catch (e) {
             console.error(e);
-            pushWarningNotification('Error', `Error creating CampaignContent: ${e}`);
+            pushWarningNotification(`${PROYECT_NAME}`, `Error creating CampaignContent: ${e}`);
         }
     };
 
@@ -47,7 +47,7 @@ export function useCampaignContent() {
                 setView('list');
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error updating CampaignContent: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error updating CampaignContent: ${e}`);
             }
         }
     };
@@ -64,7 +64,7 @@ export function useCampaignContent() {
                 }
             } catch (e) {
                 console.error(e);
-                pushWarningNotification('Error', `Error deleting CampaignContent: ${e}`);
+                pushWarningNotification(`${PROYECT_NAME}`, `Error deleting CampaignContent: ${e}`);
             }
         }
     };

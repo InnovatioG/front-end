@@ -43,7 +43,7 @@ export class ProtocolEntityMongo extends BaseSmartDBEntityMongo {
 
     // #region mongo db
 
-    public static MongoModel() {
+    public static DBModel() {
         interface InterfaceDB extends IBaseSmartDBEntity {
             name: string;
             fdpProtocolVersion: number;

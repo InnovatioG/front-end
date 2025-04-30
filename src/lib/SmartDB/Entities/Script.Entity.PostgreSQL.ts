@@ -1,10 +1,10 @@
-import { Maybe, PostgreSQLAppliedFor, StakeCredentialPubKeyHash, getPostgreSQLTableName } from 'smart-db';
-import { BaseSmartDBEntityPostgreSQL } from 'smart-db/backEnd';
+import { Maybe, PostgreSQLAppliedFor, StakeCredentialPubKeyHash} from 'smart-db';
+import { BaseSmartDBEntityPostgreSQL, PostgreSQLDatabaseService } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ScriptEntity } from './Script.Entity';
 
 @PostgreSQLAppliedFor([ScriptEntity])
-@Entity({ name: getPostgreSQLTableName(ScriptEntity.className()) })
+@Entity({ name: PostgreSQLDatabaseService.getTableName(ScriptEntity.className()) })
 export class ScriptEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     protected static Entity = ScriptEntity;
 
@@ -70,11 +70,4 @@ export class ScriptEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
 
     // #endregion internal class methods
 
-    // #region posgresql db
-
-    public static PostgreSQLModel() {
-        return this;
-    }
-
-    // #endregion posgresql db
 }

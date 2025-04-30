@@ -1,10 +1,10 @@
-import { PostgreSQLAppliedFor, getPostgreSQLTableName } from 'smart-db';
-import { BaseEntityPostgreSQL } from 'smart-db/backEnd';
+import { PostgreSQLAppliedFor} from 'smart-db';
+import { BaseEntityPostgreSQL, PostgreSQLDatabaseService } from 'smart-db/backEnd';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ProtocolAdminWalletEntity } from './ProtocolAdminWallet.Entity';
 
 @PostgreSQLAppliedFor([ProtocolAdminWalletEntity])
-@Entity({ name: getPostgreSQLTableName(ProtocolAdminWalletEntity.className()) })
+@Entity({ name: PostgreSQLDatabaseService.getTableName(ProtocolAdminWalletEntity.className()) })
 export class ProtocolAdminWalletEntityPostgreSQL extends BaseEntityPostgreSQL {
     protected static Entity = ProtocolAdminWalletEntity;
 
@@ -52,11 +52,4 @@ export class ProtocolAdminWalletEntityPostgreSQL extends BaseEntityPostgreSQL {
 
     // #endregion internal class methods
 
-    // #region posgresql db
-
-    public static PostgreSQLModel() {
-        return this;
-    }
-
-    // #endregion posgresql db
 }

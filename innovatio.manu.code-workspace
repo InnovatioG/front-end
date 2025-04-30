@@ -1,0 +1,17 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "settings": {
+        "js/ts.implicitProjectConfig.module": "ESNext",
+        "workbench.colorCustomizations": {
+            "tab.activeBackground": "#0b3757",
+            "tab.activeBorder": "#0a7aca",
+            "tab.hoverBackground": "#0a436a",
+            "my.newcolor-terminal.ansiBrightBlue": "terminal.ansiBrightBlue"
+        }
+    },
+    
+}
