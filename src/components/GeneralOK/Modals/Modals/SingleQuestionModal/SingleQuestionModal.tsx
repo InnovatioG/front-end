@@ -24,7 +24,7 @@ interface SingleQuestionModalProps {
         | HandlesEnums.PUBLISH_SMART_CONTRACTS
         | HandlesEnums.MANAGE_CAMPAIGN_UTXOS
         | HandlesEnums.LAUNCH_CAMPAIGN
-        | HandlesEnums.SET_REACHED_STATUS;
+        | HandlesEnums.SET_FUNDRAISING_STATUS;
 }
 
 const SingleQuestionModal: React.FC<SingleQuestionModalProps> = ({ modalType, handleType }) => {

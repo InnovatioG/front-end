@@ -89,7 +89,7 @@ const TaskProcessingModal: React.FC = (props: TaskProcessingModalProps) => {
                     <div className={styles.txContainer}>
                         <div className={styles.textPart}>
                             <p className={styles.text}>We are thrilled to inform you that your recent operation has been completed successfully!</p>
-                            <p className={styles.text}>What do you want to do next?</p>
+                            {/* <p className={styles.text}>What do you want to do next?</p> */}
                         </div>
                         <div className={styles.btnGroup}>
                             {showNewTaskButton ? (

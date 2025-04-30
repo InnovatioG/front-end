@@ -111,7 +111,7 @@ const TxProcessingModal: React.FC = (props: TxProcessingModalData) => {
                                     />
                                 </div>
                             ) : null}
-                            <p className={styles.text}>What do you want to do next?</p>
+                            {/* <p className={styles.text}>What do you want to do next?</p> */}
                         </div>
                         <div className={styles.btnGroup}>
                             {showNewTransactionButton ? (

@@ -1,10 +1,11 @@
 import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 import { HIDE_ICON, REFRESH_ICON, SHOW_ICON } from '@/utils/constants/images';
 import Image from 'next/image';
-import React, { useState } from 'react';
-import { CARDANO_WALLETS, useWalletActions } from 'smart-db';
+import React, { useEffect, useState } from 'react';
+import { addAssets, CARDANO_WALLETS, isEmulator, LucidToolsFrontEnd, PROYECT_NAME, pushSucessNotification, toJson, TOKEN_ADA_SYMBOL, TOKEN_ADA_TICKER, useWalletActions } from 'smart-db';
 import styles from './WalletInformationModal.module.scss';
 import Toggle from '@/components/General/Buttons/Toggle/Toggle';
+import { Assets, UTxO } from '@lucid-evolution/lucid';
 
 interface WalletInformationModalProps {
     // Define props here
@@ -15,17 +16,27 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
     //  const { closeModal } = useModal();
     const closeModal = undefined;
     //--------------------------------------
-    const { session, walletStore, createSignedSession, walletRefresh, walletDisconnect, handleClickToggleAdminMode } = useWalletActions();
+    const { session, walletStore, createSignedSession, walletRefresh, walletDisconnect, handleClickToggleAdminMode, handleToggleIsHide } = useWalletActions();
     //--------------------------------------
     const [copySuccess, setCopySuccess] = useState<boolean>(false);
+    const [walletName, setWalletName] = useState<string | undefined>();
+    const [icon, setIcon] = useState<string | undefined>();
+    const [address, setAddress] = useState<string | undefined>();
+    const [balance, setBalance] = useState<bigint | undefined>();
 
-    const [show, setShow] = useState<boolean>(true);
-    const walletName = session?.user?.walletName;
-    console.log('walletName', walletName);
-    const icon = CARDANO_WALLETS.find((wallet) => wallet.wallet === walletName)?.icon;
-    const address = session?.user?.address;
-    /*     const start = address?.slice(0, 20);
-        const end = address?.slice(-1); */
+    useEffect(() => {
+        if (walletStore.isConnected !== true) return;
+        const walletInfo = CARDANO_WALLETS.find((wallet) => walletStore.info?.walletName !== undefined && wallet.wallet === walletStore.info?.walletName);
+        setWalletName(walletStore.info?.walletName);
+        setAddress(walletStore.info?.address);
+        setIcon(walletInfo?.icon.href ?? CARDANO_WALLETS[0].icon.href);
+    }, [walletStore.isConnected]);
+
+    useEffect(() => {
+        if (walletStore.isWalletDataLoaded !== true) return;
+        const fetchedBalance = walletStore.getTotalOfUnit('lovelace', true);
+        setBalance(fetchedBalance);
+    }, [walletStore.isWalletDataLoaded]);
 
     const handleCopy = () => {
         if (session?.user?.address) {
@@ -43,10 +54,40 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
         }
     };
 
+    const handleBtnGetADATx = async () => {
+        //--------------------------------------
+        const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
+        //--------------------------------------
+        const amount = 100_000_000_000n;
+        //--------------------------------------
+        const valueOf_ADA: Assets = { ['lovelace']: BigInt(amount) };
+        //--------------------------------------
+        const uTxOsAtWallet: UTxO[] = walletTxParams.utxos;
+        if (uTxOsAtWallet.length === 0) {
+            throw `Invalid uTxOsAtWallet length = 0`;
+        }
+        //--------------------------------------
+        const uTxO: UTxO = uTxOsAtWallet[0];
+        //--------------------------------------
+        const assets: Assets = ((lucid.config().provider as any).ledger[uTxO.txHash + uTxO.outputIndex].utxo as UTxO).assets as Assets;
+        ((lucid.config().provider as any).ledger[uTxO.txHash + uTxO.outputIndex].utxo as UTxO).assets = addAssets(assets, valueOf_ADA);
+        //--------------------------------------
+        pushSucessNotification(`${PROYECT_NAME}`, `User Get ${TOKEN_ADA_TICKER} Tx`, false);
+        //--------------------------------------
+        if (isEmulator && emulatorDB !== undefined) {
+            // normalmente esto se hace en el submit, pero esta tx es mock y no hay submit
+            await LucidToolsFrontEnd.syncEmulatorAfterTx(lucid, emulatorDB);
+        }
+        //--------------------------------------
+        await walletStore.loadWalletData();
+        //--------------------------------------
+        return true;
+    };
+
     return (
         <article className={styles.container}>
             <div className={styles.layout}>
-                <h2 className={styles.title}>Wallet Information</h2>
+                <h2 className={styles.title}>Wallet [{walletName}] Information</h2>
                 <section className={styles.header}>
                     <div
                         className={styles.headerIcon}
@@ -62,13 +103,13 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                     <div
                         className={styles.headerIcon}
                         onClick={() => {
-                            setShow(!show);
+                            handleToggleIsHide();
                         }}
                     >
                         <svg width="24" height="24" className={styles.icon}>
-                            <use href={show ? HIDE_ICON : SHOW_ICON}></use>
+                            <use href={walletStore.swHideBalance ? HIDE_ICON : SHOW_ICON}></use>
                         </svg>
-                        <span>{show ? 'Hide Balance' : 'Show Balance'}</span>
+                        <span>{walletStore.swHideBalance ? 'Hide Balance' : 'Show Balance'}</span>
                     </div>
                     <div className={styles.toogleIcon}>
                         <Toggle
@@ -100,7 +141,28 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                         </div>
                     </div>
                 </div>
+                <div className={styles.inputInformatiopn}>
+                    <label htmlFor="">Balance</label>
+                    <div className={styles.addressContainer}>
+                        <div className={styles.iconInput}>
+                            <div className={styles.dataContainer}>
+                                <span className={styles.wallet_address}>
+                                    {walletStore.swHideBalance === true ? `*** ${TOKEN_ADA_SYMBOL}` : `${balance?.toString()} ${TOKEN_ADA_SYMBOL}`}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className={styles.buttonDisconectContainer}>
+                    {isEmulator && (
+                        <BtnGeneral
+                            text="Get TEST ADA"
+                            classNameStyle="fillb"
+                            onClick={() => {
+                                handleBtnGetADATx();
+                            }}
+                        />
+                    )}
                     <BtnGeneral
                         text="Disconect Wallet"
                         classNameStyle="fillb"
