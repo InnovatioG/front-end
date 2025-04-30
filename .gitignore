@@ -61,3 +61,6 @@ bugs.md
 .env.*.local
 
 .priv
+
+
+innovatio.*.code-workspace
