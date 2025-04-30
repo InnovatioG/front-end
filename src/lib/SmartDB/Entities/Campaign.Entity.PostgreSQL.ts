@@ -70,6 +70,10 @@ export class CampaignEntityPostgreSQL extends BaseSmartDBEntityPostgreSQL {
     facebook?: string;
     @Column({ type: 'integer', nullable: true })
     visualizations!: number;
+    @Column({ type: 'bigint', nullable: true })
+    fundedADA!: string;
+    @Column({ type: 'bigint', nullable: true })
+    collectedADA!: string;
     @Column({ type: 'integer', nullable: true })
     investors!: number;
     @Column({ type: 'bigint', nullable: true })

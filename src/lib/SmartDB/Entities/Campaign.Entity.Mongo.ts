@@ -76,6 +76,8 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             linkedin: string;
             facebook: string;
             visualizations: number;
+            fundedADA: bigint;
+            collectedADA: bigint;
             investors: number;
             tokenomics_max_supply: bigint;
             tokenomics_for_campaign: bigint;
@@ -140,6 +142,8 @@ export class CampaignEntityMongo extends BaseSmartDBEntityMongo {
             linkedin: { type: String, required: false },
             facebook: { type: String, required: false },
             visualizations: { type: Number, required: false },
+            fundedADA : { type: String, required: false },
+            collectedADA : { type: String, required: false },
             investors: { type: Number, required: false },
             tokenomics_max_supply: { type: String, required: false },
             tokenomics_for_campaign: { type: String, required: false },

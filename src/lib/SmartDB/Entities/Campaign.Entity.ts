@@ -49,12 +49,7 @@ export const campaignMilestonefromPlutusData = (lucidDataForDatum: any | undefin
 
 export const toPlutusDataCampaignMilestones = (milestones: CampaignMilestoneDatum[] | undefined): Data[] => {
     if (!milestones) throw `CampaignMilestone is undefined`;
-    return milestones.map((m) =>
-        new Constr(0, [
-            BigInt(m.cmPerncentage),
-            toPlutusDataMilestoneStatus(m.cmStatus),
-        ])
-    );
+    return milestones.map((m) => new Constr(0, [BigInt(m.cmPerncentage), toPlutusDataMilestoneStatus(m.cmStatus)]));
 };
 
 export interface CampaignDatum {
@@ -175,6 +170,10 @@ export class CampaignEntity extends BaseSmartDBEntity {
     visualizations!: number;
     @Convertible()
     investors!: number;
+    @Convertible()
+    fundedADA!: bigint;
+    @Convertible()
+    collectedADA    !: bigint;
     @Convertible()
     tokenomics_max_supply!: bigint;
     @Convertible()
