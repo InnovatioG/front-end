@@ -46,7 +46,7 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
                 <div className={styles.container}>
                     <div className={styles.flexRow}>
                         <div className={`${styles.status} ${styles.light}`}>
-                            <h4 className={`${styles.money} ${styles.black}`}>{formatMoneyByADAOrDollar(campaign.campaign.cdFundedADA)}</h4>
+                            <h4 className={`${styles.money} ${styles.black}`}>{formatMoneyByADAOrDollar(campaign.campaign.fundedADA)}</h4>
                             <div className={styles.loaderContainer}>
                                 <div className={styles.loader} style={{ width: `${fundedPercentage}%` }}></div>
                             </div>
@@ -59,7 +59,7 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
             {campaign_status_code_id === CampaignStatus_Code_Id_Enums.ACTIVE && (
                 <div className={styles.container}>
                     <div className={`${styles.flexRow} ${styles.flexRow2}`}>
-                        <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.cdFundedADA)} subtext="Total Raised" classNameStyle="black" />
+                        <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.fundedADA)} subtext="Total Raised" classNameStyle="black" />
                         <Link href={`${ROUTES.campaignViewTab(campaign.campaign._DB_id, CampaignTabEnum.ROADMAP)}`}>
                             <div className={`${styles.ordinalString} ${styles.link}`}>
                                 <span className={styles.ordinal}>
@@ -75,7 +75,7 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
             {campaign_status_code_id === CampaignStatus_Code_Id_Enums.SUCCESS && (
                 <div className={styles.container}>
                     <div className={`${styles.flexRow} ${styles.flexRow2}`}>
-                        <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.cdFundedADA)} subtext="Total Raised" classNameStyle="black" />
+                        <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.fundedADA)} subtext="Total Raised" classNameStyle="black" />
                         <Link href={`${ROUTES.campaignViewTab(campaign.campaign._DB_id, CampaignTabEnum.ROADMAP)}`}>
                             <div className={`${styles.ordinalString} ${styles.link}`}>
                                 <span className={styles.ordinal}>
@@ -96,7 +96,7 @@ const CampaingCardInfoInfo: React.FC<CampaingCardInfoProps & ICampaignDetails> =
                         </div>
                     )}
                     <div className={`${styles.flexRow} ${styles.flexRow2}`}>
-                        <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.cdFundedADA)} subtext="Total Raised" classNameStyle="white" />
+                        <StateContainer amount={formatMoneyByADAOrDollar(campaign.campaign.fundedADA)} subtext="Total Raised" classNameStyle="white" />
                         {campaign_status_code_id === CampaignStatus_Code_Id_Enums.UNREACHED && (
                             <div className={styles.ordinalString}>
                                 <span className={styles.ordinal}>

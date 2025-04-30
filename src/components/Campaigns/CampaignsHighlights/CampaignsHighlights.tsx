@@ -21,9 +21,12 @@ export default function CampaignHighlights() {
         }
         const filter = filterConditions.length > 0 ? { $and: filterConditions } : {};
         const { count: launchedCampaigns } = await CampaignApi.getCountApi_(filter);
-        const campaigns: CampaignEntity[] = await CampaignApi.getByParamsApi_(filter, { fieldsForSelect: { cdFundedADA: true, investors: true }, doCallbackAfterLoad: true });
+        const campaigns: CampaignEntity[] = await CampaignApi.getByParamsApi_(filter, {
+            fieldsForSelect: { fundedADA: true, collectedADA: true, investors: true },
+            doCallbackAfterLoad: true,
+        });
         setLaunchedCampaigns(launchedCampaigns);
-        const contribuitedADA = campaigns.reduce((acc, campaign) => acc + (campaign.cdFundedADA ?? 0n), 0n);
+        const contribuitedADA = campaigns.reduce((acc, campaign) => acc + (campaign.fundedADA ?? 0n + campaign.collectedADA ?? 0n), 0n);
         setContribuitedADA(Number(contribuitedADA));
         const colaborators = campaigns.reduce((acc, campaign) => acc + (campaign.investors ?? 0), 0);
         setColaborators(colaborators);

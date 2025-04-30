@@ -33,7 +33,7 @@ const CampaignHeaderInfo: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (p
                 <span className={styles.goal}>{formatMoneyByADAOrDollar(campaign.campaign.requestedMaxADA)}</span>
             </div>
             <div className={styles.campaignCardMinRequest}>
-                <div className={styles.medidor}>
+                <div className={styles.medidor} title={`Funding progress: ${formatMoneyByADAOrDollar(campaign.campaign.fundedADA)}`}>
                     <div className={styles.progress} style={{ width: progressWidth }}></div>
                 </div>
                 {(() => {
