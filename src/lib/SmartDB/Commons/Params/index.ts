@@ -32,6 +32,8 @@ export interface CampaignDeployTxParams {
     protocol_id: string;
     campaign_id: string;
     cdTokenAdminPolicy_CS: string;
+    beginAt: number
+    deadline: number
 }
 
 export interface CampaignFundsAddTxParams {
