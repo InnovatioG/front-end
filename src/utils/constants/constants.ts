@@ -79,11 +79,9 @@ export enum HandlesEnums {
     LAUNCH_CAMPAIGN = 'Launch Campaign',
 
     INVEST = 'Invest',
+    
+    SET_FUNDRAISING_STATUS = 'Set Fund Raising Status',
 
-    SET_FUNDRAISING_STATUS = 'Set Fundraising Status',
-    SET_FINISHING_STATUS = 'Set Finishing Status',
-    SET_REACHED_STATUS = 'Set Reached Status',
-    SET_UNREACHED_STATUS = 'Set Unreached Status',
     SET_FAILED_STATUS = 'Set Failed Status',
 }
 

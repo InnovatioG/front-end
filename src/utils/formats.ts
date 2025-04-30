@@ -23,7 +23,7 @@ export function formatMoney(amount: number | bigint, currency: string): string {
     }).format(amount);
 }
 
-export function getTimeRemaining(date: Date | undefined) {
+export function getTimeRemaining(serverTime: number | undefined, date: Date | undefined) {
     if (date === undefined) return { total: 0, days: 0, totalHours: 0, minutes: 0, seconds: 0 };
     const dat = new Date(date);
     const now = new Date();
@@ -48,7 +48,7 @@ export const formatAllTime = (timeRemaining: any) => {
     if (timeRemaining.days >= 4) {
         return `${timeRemaining.days} days`;
     } else {
-        return `${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}: ${formatTime(timeRemaining.seconds)}`;
+        return `${formatTime(timeRemaining.totalHours)}:${formatTime(timeRemaining.minutes)}:${formatTime(timeRemaining.seconds)}`;
     }
 };
 

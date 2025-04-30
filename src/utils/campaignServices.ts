@@ -1,5 +1,7 @@
 import {
     CampaignAddScriptsTxParams,
+    CampaignCampaingNotReachedTxParams,
+    CampaignCampaingReachedTxParams,
     CampaignDeployTxParams,
     CampaignFundsAddTxParams,
     CampaignFundsInvestTxParams,
@@ -50,6 +52,7 @@ import {
     pushSucessNotification,
     pushWarningNotification,
     sleep,
+    toJson,
     TX_PROPAGATION_DELAY_MS,
     WalletTxParams,
 } from 'smart-db';
@@ -1147,6 +1150,10 @@ export async function serviceInitializeCampaign(
             alert('When providing your own Token, you must set Token Policy and Token Name');
             return;
         }
+        if (data?.beginAt === undefined || data?.deadline === undefined || data?.beginAt === '' || data?.deadline === '') {
+            alert('Must set From and To');
+            return;
+        }
         //--------------------------------------
         let campaign_id = campaign.campaign._DB_id;
         //--------------------------------------
@@ -1158,6 +1165,8 @@ export async function serviceInitializeCampaign(
                 protocol_id: protocol!._DB_id!,
                 campaign_id,
                 cdTokenAdminPolicy_CS: ADMIN_TOKEN_POLICY_CS,
+                beginAt: data?.beginAt,
+                deadline: data?.deadline,
             };
             return {
                 lucid,
@@ -1174,14 +1183,13 @@ export async function serviceInitializeCampaign(
         //--------------------------------------
         const onTx = async () => {
             appStore.setProcessingTxMessage(`Updating status......`);
-            const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.CONTRACT_STARTED);
-            if (!status) {
-                throw new Error(`Status CONTRACT_STARTED code-id: ${CampaignStatus_Code_Id_Enums.CONTRACT_STARTED} not found`);
-            }
-            let entity = campaign.campaign;
-            const campaign_status_id = status._DB_id;
-            const campaign_deployed_date = new Date(); //TODO
-            entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, { campaign_status_id, campaign_deployed_date });
+            // const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.CONTRACT_STARTED);
+            // if (!status) {
+            //     throw new Error(`Status CONTRACT_STARTED code-id: ${CampaignStatus_Code_Id_Enums.CONTRACT_STARTED} not found`);
+            // }
+            // const campaign_status_id = status._DB_id;
+            const campaign_deployed_date = new Date();
+            await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, { campaign_deployed_date });
         };
         //--------------------------------------
         await handleBtnDoTransaction_WithErrorControl(CampaignEntity, TxEnums.CAMPAIGN_DEPLOY, 'Deploying Campaign...', 'deploy-tx', fetchParams, txApiCall, handleBtnTx, onTx);
@@ -1259,7 +1267,7 @@ export async function servicePrepareUTxOs(
         //--------------------------------------
         let campaign_id = campaign.campaign._DB_id;
         //--------------------------------------
-        const campaignFunds: CampaignFundsEntity[] | undefined = await CampaignFundsApi.getByParamsApi_(
+        let campaignFunds: CampaignFundsEntity[] | undefined = await CampaignFundsApi.getByParamsApi_(
             { cfdCampaignPolicy_CS: campaign.campaign.getNET_id_CS() },
             {
                 loadRelations: { smartUTxO_id: true },
@@ -1289,17 +1297,7 @@ export async function servicePrepareUTxOs(
             const txApiCall = CampaignApi.callGenericTxApi.bind(CampaignApi);
             const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
             //--------------------------------------
-            const onTx = async () => {
-                // appStore.setProcessingTxMessage(`Updating status......`);
-                // const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.CONTRACT_STARTED);
-                // if (!status) {
-                //     throw new Error(`Status CONTRACT_STARTED code-id: ${CampaignStatus_Code_Id_Enums.CONTRACT_STARTED} not found`);
-                // }
-                // let entity = campaign.campaign;
-                // entity.campaign_status_id = status._DB_id;
-                // entity.campaign_deployed_date = new Date(); //TODO
-                // entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
-            };
+            const onTx = async () => {};
             //--------------------------------------
             await handleBtnDoTransaction_WithErrorControl(
                 CampaignEntity,
@@ -1316,7 +1314,16 @@ export async function servicePrepareUTxOs(
                 await onFinish(campaign, data);
             }
             //--------------------------------------
-        } else if (campaignFunds.length === 1 && campaignFunds[0].cfdSubtotal_Avalaible_CampaignToken === 0n) {
+        }
+        //--------------------------------------
+        campaignFunds = await CampaignFundsApi.getByParamsApi_(
+            { cfdCampaignPolicy_CS: campaign.campaign.getNET_id_CS() },
+            {
+                loadRelations: { smartUTxO_id: true },
+            }
+        );
+        //--------------------------------------
+        if (campaignFunds.length === 1 && campaignFunds[0].cfdSubtotal_Avalaible_CampaignToken === 0n) {
             //--------------------------------------
             const fetchParams = async () => {
                 //--------------------------------------
@@ -1340,17 +1347,7 @@ export async function servicePrepareUTxOs(
             const txApiCall = CampaignApi.callGenericTxApi.bind(CampaignApi);
             const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
             //--------------------------------------
-            const onTx = async () => {
-                // appStore.setProcessingTxMessage(`Updating status......`);
-                // const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.CONTRACT_STARTED);
-                // if (!status) {
-                //     throw new Error(`Status CONTRACT_STARTED code-id: ${CampaignStatus_Code_Id_Enums.CONTRACT_STARTED} not found`);
-                // }
-                // let entity = campaign.campaign;
-                // entity.campaign_status_id = status._DB_id;
-                // entity.campaign_deployed_date = new Date(); //TODO
-                // entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
-            };
+            const onTx = async () => {};
             //--------------------------------------
             await handleBtnDoTransaction_WithErrorControl(
                 CampaignEntity,
@@ -1367,31 +1364,32 @@ export async function servicePrepareUTxOs(
                 await onFinish(campaign, data);
             }
             //--------------------------------------
-        } else {
-            //--------------------------------------
-            appStore.setProcessingTxName(TxEnums.CAMPAIGN_ADD_FUND);
-            appStore.setShowProcessingTx(true);
-            appStore.setIsProcessingTx(true);
-            appStore.setIsConfirmedTx(false);
-            appStore.setIsFaildedTx(false);
-            //--------------------------------------
-            appStore.setProcessingTxMessage('Adding Campaign Funds...');
-            appStore.setProcessingTxHash('');
-            openModal(ModalsEnums.PROCESSING_TX);
-            //--------------------------------------
-            pushSucessNotification(`${CampaignEntity.className()} Fund Add Tx`, 'Completed', false);
-            //--------------------------------------
-            await walletStore.loadWalletData();
-            //--------------------------------------
-            appStore.setIsConfirmedTx(true);
-            appStore.setIsProcessingTx(false);
-            //--------------------------------------
+            return;
         }
+        //--------------------------------------
+        appStore.setProcessingTxName(TxEnums.CAMPAIGN_ADD_FUND);
+        appStore.setShowProcessingTx(true);
+        appStore.setIsProcessingTx(true);
+        appStore.setIsConfirmedTx(false);
+        appStore.setIsFaildedTx(false);
+        //--------------------------------------
+        appStore.setProcessingTxMessage('Adding Campaign Funds...');
+        appStore.setProcessingTxHash('');
+        openModal(ModalsEnums.PROCESSING_TX);
+        //--------------------------------------
+        pushSucessNotification(`${CampaignEntity.className()} Fund Add Tx`, 'Completed', false);
+        //--------------------------------------
+        await walletStore.loadWalletData();
+        //--------------------------------------
+        appStore.setIsConfirmedTx(true);
+        appStore.setIsProcessingTx(false);
+        //--------------------------------------
     } catch (e) {
         console.error(e);
         pushWarningNotification(`${PROYECT_NAME}`, `Error updating: ${e}`);
     }
 }
+
 export async function serviceLaunchCampaign(
     appStore: IUseAppStore,
     walletStore: IUseWalletStore,
@@ -1486,18 +1484,7 @@ export async function serviceLaunchCampaign(
         const txApiCall = CampaignApi.callGenericTxApi.bind(CampaignApi);
         const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
         //--------------------------------------
-        const onTx = async () => {
-            // TODO: lo hace el backend acutomaticamente
-            // appStore.setProcessingTxMessage(`Updating status......`);
-            // const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.CONTRACT_STARTED);
-            // if (!status) {
-            //     throw new Error(`Status CONTRACT_STARTED code-id: ${CampaignStatus_Code_Id_Enums.CONTRACT_STARTED} not found`);
-            // }
-            // let entity = campaign.campaign;
-            // entity.campaign_status_id = status._DB_id;
-            // entity.campaign_deployed_date = new Date(); //TODO
-            // entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
-        };
+        const onTx = async () => {};
         //--------------------------------------
         await handleBtnDoTransaction_WithErrorControl(CampaignEntity, TxEnums.CAMPAIGN_LAUNCH, 'Launch Campaign...', 'launch-tx', fetchParams, txApiCall, handleBtnTx, onTx);
         //--------------------------------------
@@ -1568,7 +1555,6 @@ export async function serviceInvest(
             console.error('Protocol is undefined');
             return;
         }
-        alert(data!.amount!);
         //--------------------------------------
         let campaign_id = campaign.campaign._DB_id;
         //--------------------------------------
@@ -1606,16 +1592,9 @@ export async function serviceInvest(
         const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
         //--------------------------------------
         const onTx = async () => {
-            // TODO: lo hace el backend acutomaticamente
-            // appStore.setProcessingTxMessage(`Updating status......`);
-            // const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.CONTRACT_STARTED);
-            // if (!status) {
-            //     throw new Error(`Status CONTRACT_STARTED code-id: ${CampaignStatus_Code_Id_Enums.CONTRACT_STARTED} not found`);
-            // }
-            // let entity = campaign.campaign;
-            // entity.campaign_status_id = status._DB_id;
-            // entity.campaign_deployed_date = new Date(); //TODO
-            // entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
+            appStore.setProcessingTxMessage(`Updating status......`);
+            const investors = campaign.campaign.investors + 1;
+            await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, { investors });
         };
         //--------------------------------------
         await handleBtnDoTransaction_WithErrorControl(
@@ -1639,85 +1618,48 @@ export async function serviceInvest(
     }
 }
 
-export async function serviceSetFundraisingCampaign(
+export async function serviceValidateFundraisingStatus(
+    appStore: IUseAppStore,
+    walletStore: IUseWalletStore,
+    openModal: (
+        modal: ModalsEnums,
+        data?: Record<string, any>,
+        handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | boolean | undefined | void>>>,
+        component?: ReactNode
+    ) => void,
+    protocol: ProtocolEntity | undefined,
+    handleBtnDoTransaction_WithErrorControl: (
+        Entity: typeof BaseSmartDBEntity,
+        modalTitleTx: string,
+        messageActionTx: string,
+        txApiRoute: string,
+        fetchParams: () => Promise<{
+            lucid: LucidEvolution;
+            emulatorDB: EmulatorEntity | undefined;
+            walletTxParams: WalletTxParams;
+            txParams: any;
+        }>,
+        txApiCall: (Entity: typeof BaseSmartDBEntity, txApiRoute: string, walletTxParams: WalletTxParams, txParams: any) => Promise<any>,
+        handleBtnTxNoErrorControl: (
+            Entity: typeof BaseSmartDBEntity,
+            modalTitleTx: string,
+            messageActionTx: string,
+            lucid: LucidEvolution,
+            emulatorDB: EmulatorEntity | undefined,
+            apiTxCall: () => Promise<any>,
+            setProcessingTxMessage: (processingTxMessage: string) => void,
+            setProcessingTxHash: (processingTxHash: string) => void,
+            walletStore: IUseWalletStore
+        ) => Promise<void>,
+        onTx?: (() => Promise<void>) | undefined
+    ) => Promise<void>,
     campaign: CampaignEX,
     campaignStatus: CampaignStatusEntity[],
     data?: Record<string, any>,
     onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
 ) {
     try {
-        // TODO: MOCK, no existe este, pasa automaticamente por fecha
-        // Estado Inicial DB: Countdown
-        // Estado Final DB: Fundraising
-        // Estado Inicial Datum: CsInitialized
-        // Estado Final Datum: CsInitialized
-
-        const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.FUNDRAISING);
-
-        if (!status) {
-            throw new Error(`Status FUNDRAISING code-id: ${CampaignStatus_Code_Id_Enums.FUNDRAISING} not found`);
-        }
-
-        let entity = campaign.campaign;
-        entity.campaign_status_id = status._DB_id;
-
-        entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
-
-        pushSucessNotification(`${PROYECT_NAME}`, 'Updated successfully', false);
-
-        if (onFinish !== undefined) {
-            await onFinish(campaign, data);
-        }
-    } catch (e) {
-        console.error(e);
-        pushWarningNotification(`${PROYECT_NAME}`, `Error updating: ${e}`);
-    }
-}
-
-export async function serviceSetFinishingCampaign(
-    campaign: CampaignEX,
-    campaignStatus: CampaignStatusEntity[],
-    data?: Record<string, any>,
-    onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
-) {
-    try {
-        // TODO: MOCK, no existe este, pasa automaticamente por fecha
-        // Estado Inicial DB: Fundraising
-        // Estado Final DB: Finishing
-        // Estado Inicial Datum: CsInitialized
-        // Estado Final Datum: CsInitialized
-
-        const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.FINISHING);
-
-        if (!status) {
-            throw new Error(`Status FINISHING code-id: ${CampaignStatus_Code_Id_Enums.FINISHING} not found`);
-        }
-
-        let entity = campaign.campaign;
-        entity.campaign_status_id = status._DB_id;
-
-        entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
-
-        pushSucessNotification(`${PROYECT_NAME}`, 'Updated successfully', false);
-
-        if (onFinish !== undefined) {
-            await onFinish(campaign, data);
-        }
-    } catch (e) {
-        console.error(e);
-        pushWarningNotification(`${PROYECT_NAME}`, `Error updating: ${e}`);
-    }
-}
-
-export async function serviceValidateFundraisingStatusSetReached(
-    campaign: CampaignEX,
-    campaignStatus: CampaignStatusEntity[],
-    data?: Record<string, any>,
-    onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
-) {
-    try {
-        // TODO: MOCK, no existe este, valida active or unreached por cantidad de tokens
-
+        //--------------------------------------
         // Campaign Reached (TX)
         // Descripción: Marca campaña como exitosa en alcanzar objetivo mínimo. El contrato verifica que la cantidad de tokens vendidos supere el mínimo esperado
         // Estado Inicial DB: Finishing (Milestone 1: Not Started)
@@ -1733,73 +1675,143 @@ export async function serviceValidateFundraisingStatusSetReached(
         // Estado Inicial Datum: CsInitialized
         // Estado Final Datum: CsNotReached
         // Ejecuta: Protocol Team, Campaign Managers
-
-        const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.ACTIVE);
-
-        if (!status) {
-            throw new Error(`Status ACTIVE code-id: ${CampaignStatus_Code_Id_Enums.ACTIVE} not found`);
+        //--------------------------------------
+        console.log(`serviceValidateFundraisingStatus`);
+        //--------------------------------------
+        if (appStore.isProcessingTx === true) {
+            openModal(ModalsEnums.PROCESSING_TX);
+            return;
         }
-
-        let entity = campaign.campaign;
-        entity.campaign_status_id = status._DB_id;
-
-        entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
-
-        pushSucessNotification(`${PROYECT_NAME}`, 'Updated successfully', false);
-
-        if (onFinish !== undefined) {
-            await onFinish(campaign, data);
+        if (appStore.isProcessingTask === true) {
+            openModal(ModalsEnums.PROCESSING_TASK);
+            return;
+        }
+        //--------------------------------------
+        if (protocol === undefined) {
+            console.error('Protocol is undefined');
+            return;
+        }
+        //--------------------------------------
+        let campaign_id = campaign.campaign._DB_id;
+        //--------------------------------------
+        const campaignFunds: CampaignFundsEntity[] | undefined = await CampaignFundsApi.getByParamsApi_(
+            { cfdCampaignPolicy_CS: campaign.campaign.getNET_id_CS() },
+            {
+                loadRelations: { smartUTxO_id: true },
+            }
+        );
+        if (campaignFunds.length === 0) {
+            throw new Error(`Campaign Funds not found`);
+        }
+        //--------------------------------------
+        const sumAvalaibleADA = campaignFunds.reduce((acc, campaignFund) => {
+            return acc + BigInt(campaignFund.cfdSubtotal_Avalaible_ADA);
+        }, BigInt(0));
+        //--------------------------------------
+        console.log(`sumAvalaibleADA: ${sumAvalaibleADA}`);
+        console.log(`campaign.campaign.cdRequestedMinADA: ${campaign.campaign.cdRequestedMinADA}`);
+        //--------------------------------------
+        if (sumAvalaibleADA > campaign.campaign.cdRequestedMinADA) {
+            //--------------------------------------
+            const fetchParams = async () => {
+                //--------------------------------------
+                const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
+                //--------------------------------------
+                const txParams: CampaignCampaingReachedTxParams = {
+                    protocol_id: protocol!._DB_id!,
+                    campaign_id,
+                };
+                return {
+                    lucid,
+                    emulatorDB,
+                    walletTxParams,
+                    txParams,
+                };
+            };
+            //--------------------------------------
+            openModal(ModalsEnums.PROCESSING_TX);
+            //--------------------------------------
+            const txApiCall = CampaignApi.callGenericTxApi.bind(CampaignApi);
+            const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
+            //--------------------------------------
+            const onTx = async () => {
+                appStore.setProcessingTxMessage(`Updating status......`);
+                // const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.ACTIVE);
+                // if (!status) {
+                //     throw new Error(`Status ACTIVE code-id: ${CampaignStatus_Code_Id_Enums.ACTIVE} not found`);
+                // }
+                // const campaign_status_id = status._DB_id;
+                const campaign_actived_date = new Date();
+                await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, { campaign_actived_date });
+            };
+            //--------------------------------------
+            await handleBtnDoTransaction_WithErrorControl(
+                CampaignEntity,
+                TxEnums.CAMPAIGN_REACHED,
+                'Validate Fundraising Status Reached...',
+                'campaign-reached-tx',
+                fetchParams,
+                txApiCall,
+                handleBtnTx,
+                onTx
+            );
+            //--------------------------------------
+            if (onFinish !== undefined) {
+                await onFinish(campaign, data);
+            }
+            //--------------------------------------
+        } else {
+            //--------------------------------------
+            const fetchParams = async () => {
+                //--------------------------------------
+                const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
+                //--------------------------------------
+                const txParams: CampaignCampaingNotReachedTxParams = {
+                    protocol_id: protocol!._DB_id!,
+                    campaign_id,
+                };
+                return {
+                    lucid,
+                    emulatorDB,
+                    walletTxParams,
+                    txParams,
+                };
+            };
+            //--------------------------------------
+            openModal(ModalsEnums.PROCESSING_TX);
+            //--------------------------------------
+            const txApiCall = CampaignApi.callGenericTxApi.bind(CampaignApi);
+            const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
+            //--------------------------------------
+            const onTx = async () => {
+                // appStore.setProcessingTxMessage(`Updating status......`);
+                // const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.UNREACHED);
+                // if (!status) {
+                //     throw new Error(`Status UNREACHED code-id: ${CampaignStatus_Code_Id_Enums.UNREACHED} not found`);
+                // }
+                // const campaign_status_id = status._DB_id;
+                // await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, { campaign_status_id });
+            };
+            //--------------------------------------
+            await handleBtnDoTransaction_WithErrorControl(
+                CampaignEntity,
+                TxEnums.CAMPAIGN_NOT_REACHED,
+                'Validate Fundraising Status Not Reached...',
+                'campaign-not-reached-tx',
+                fetchParams,
+                txApiCall,
+                handleBtnTx,
+                onTx
+            );
+            //--------------------------------------
+            if (onFinish !== undefined) {
+                await onFinish(campaign, data);
+            }
+            //--------------------------------------
         }
     } catch (e) {
         console.error(e);
-        pushWarningNotification(`${PROYECT_NAME}`, `Error updating: ${e}`);
-    }
-}
-
-export async function serviceValidateFundraisingStatusSetUnReached(
-    campaign: CampaignEX,
-    campaignStatus: CampaignStatusEntity[],
-    data?: Record<string, any>,
-    onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
-) {
-    try {
-        // TODO: MOCK, no existe este, valida active or unreached por cantidad de tokens
-
-        // Campaign Reached (TX)
-        // Descripción: Marca campaña como exitosa en alcanzar objetivo mínimo. El contrato verifica que la cantidad de tokens vendidos supere el mínimo esperado
-        // Estado Inicial DB: Finishing (Milestone 1: Not Started)
-        // Estado Final DB: Active (Milestone 1: Started)
-        // Estado Inicial Datum: CsInitialized (Milestone 1: MsCreated)
-        // Estado Final Datum: CsReached (Milestone 1: MsCreated)
-        // Ejecuta: Protocol Team, Campaign Managers
-
-        // Campaign Not Reached (TX)
-        // Descripción: Marca campaña como fallida en alcanzar objetivo mínimo. El contrato verifica que la cantidad de tokens vendidos no supera el mínimo esperado.
-        // Estado Inicial DB: Finishing
-        // Estado Final DB: Unreached
-        // Estado Inicial Datum: CsInitialized
-        // Estado Final Datum: CsNotReached
-        // Ejecuta: Protocol Team, Campaign Managers
-
-        const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.UNREACHED);
-
-        if (!status) {
-            throw new Error(`Status UNREACHED code-id: ${CampaignStatus_Code_Id_Enums.UNREACHED} not found`);
-        }
-
-        let entity = campaign.campaign;
-        entity.campaign_status_id = status._DB_id;
-
-        entity = await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, entity);
-
-        pushSucessNotification(`${PROYECT_NAME}`, 'Updated successfully', false);
-
-        if (onFinish !== undefined) {
-            await onFinish(campaign, data);
-        }
-    } catch (e) {
-        console.error(e);
-        pushWarningNotification(`${PROYECT_NAME}`, `Error updating: ${e}`);
+        pushWarningNotification(`${PROYECT_NAME}`, `Error Set Fund Raising Status: ${e}`);
     }
 }
 
