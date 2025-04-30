@@ -18,21 +18,19 @@ import {
     servicePublishSmartContracts,
     serviceRejectCampaign,
     serviceSaveCampaign,
-    serviceSetFinishingCampaign,
-    serviceSetFundraisingCampaign,
     serviceSubmitCampaign,
     serviceUnArchiveCampaign,
     serviceUnFeatureCampaign,
-    serviceValidateFundraisingStatusSetReached,
-    serviceValidateFundraisingStatusSetUnReached,
+    serviceValidateFundraisingStatus,
 } from '@/utils/campaignServices';
 import { HandlesEnums, ModalsEnums } from '@/utils/constants/constants';
 import { PageViewEnums, ROUTES } from '@/utils/constants/routes';
 import { calculatePercentageValue, getOrdinalString, getTimeRemaining } from '@/utils/formats';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
-import { toJson, useAppStore, useTransactions, useWalletStore } from 'smart-db';
+import { TimeApi, toJson, useAppStore, useTransactions, useWalletStore } from 'smart-db';
 import { getCampaignCategory_Name_By_Db_Id, getCampaignStatus_Code_Id_By_Db_Id, getCurrentMilestoneIndex, getMilestoneStatus_Code_Id_By_Db_Id } from '../utils/campaignHelpers';
+import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status/status';
 
 export interface ICampaignDetails extends CampaignStatusConfigs {
     handles: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | boolean | undefined | void | boolean>>>;
@@ -87,7 +85,8 @@ export const useCampaignDetails = ({
     const { isLoading, setIsEditMode, fetchCampaignById, setCampaignTab, campaignTab } = useCampaignIdStore();
     //----------------------------------------------
     // States
-    const { requestedMaxADA, requestedMinADA, cdFundedADA } = useMemo(() => campaign.campaign, [campaign]);
+    const [serverTime, setServerTime] = useState<number | undefined>();
+    const { requestedMaxADA, requestedMinADA, fundedADA } = useMemo(() => campaign.campaign, [campaign]);
     const [isAdmin, setIsAdmin] = useState(false);
     const [isEditor, setIsEditor] = useState(false);
     const campaign_category_name = useMemo(() => getCampaignCategory_Name_By_Db_Id(campaign.campaign.campaign_category_id), [campaign]);
@@ -96,13 +95,26 @@ export const useCampaignDetails = ({
     const currentMilestoneIndex = useMemo(() => getCurrentMilestoneIndex(campaign), [campaign]);
     const milestone_status_code_id =
         currentMilestoneIndex === undefined ? undefined : getMilestoneStatus_Code_Id_By_Db_Id(campaign.milestones![currentMilestoneIndex].milestone.milestone_status_id);
-    const [timeRemainingBeginAt, setTimeRemainingBeginAt] = useState(getTimeRemaining(campaign.campaign.begin_at));
-    const [timeRemainingDeadline, setTimeRemainingDeadline] = useState(getTimeRemaining(campaign.campaign.deadline));
-    const fundedPercentage = useMemo(() => calculatePercentageValue(requestedMaxADA, Number(cdFundedADA)), [requestedMaxADA, cdFundedADA]);
+    const [timeRemainingBeginAt, setTimeRemainingBeginAt] = useState(getTimeRemaining(serverTime, campaign.campaign.begin_at));
+    const [timeRemainingDeadline, setTimeRemainingDeadline] = useState(getTimeRemaining(serverTime, campaign.campaign.deadline));
+    const fundedPercentage = useMemo(() => calculatePercentageValue(requestedMaxADA, Number(fundedADA)), [requestedMaxADA, fundedADA]);
     const requestedMinPercentage = useMemo(() => calculatePercentageValue(requestedMaxADA, requestedMinADA), [requestedMinADA, requestedMaxADA]);
     const progressWidth = useMemo(() => `${fundedPercentage}%`, [fundedPercentage]);
     //----------------------------------------------
     // Effects
+
+    const fetchServerTime = async () => {
+        try {
+            const now = await TimeApi.getServerTimeApi();
+            setServerTime(now);
+        } catch (error) {
+            console.error('Error fetching time:', error);
+        }
+    };
+    useEffect(() => {
+        fetchServerTime();
+    }, []);
+    //----------------------------------------------
 
     useEffect(() => {
         console.log('useCampaignDetails - useEffect', walletStore.isConnected, walletStore.info, wallet, campaign, _DebugIsAdmin, _DebugIsEditor);
@@ -130,30 +142,43 @@ export const useCampaignDetails = ({
     }, [walletStore.isConnected, walletStore.info, wallet, campaign, _DebugIsAdmin, _DebugIsEditor]);
 
     useEffect(() => {
-        // // Don't set up any timers if we don't have the necessary date
-        // const isCountdown = campaign_status_code_id === CampaignStatus_Code_Id_Enums.COUNTDOWN;
-        // const isFundraising = campaign_status_code_id === CampaignStatus_Code_Id_Enums.FUNDRAISING;
-        // // Determine which date to use for the timer
-        // let targetDate = undefined;
-        // if (isCountdown && campaign.campaign.begin_at && campaign.campaign.begin_at.getTime() > 0) {
-        //     targetDate = campaign.campaign.begin_at;
-        // } else if (isFundraising && campaign.campaign.deadline && campaign.campaign.deadline.getTime() > 0) {
-        //     targetDate = campaign.campaign.deadline;
-        // }
-        // // Only set up a timer if we have a valid target date
-        // if (targetDate !== undefined) {
-        //     const timer = setInterval(() => {
-        //         const remaining = getTimeRemaining(targetDate);
-        //         // Update the appropriate state based on campaign status
-        //         if (isCountdown) {
-        //             setTimeRemainingBeginAt(remaining);
-        //         } else if (isFundraising) {
-        //             setTimeRemainingDeadline(remaining);
-        //         }
-        //     }, 1000);
-        //     // Clean up timer when component unmounts or dependencies change
-        //     return () => clearInterval(timer);
-        // }
+        // TODO: use server time
+        // Don't set up any timers if we don't have the necessary date
+        const isCountdown = campaign_status_code_id === CampaignStatus_Code_Id_Enums.COUNTDOWN;
+        const isFundraising = campaign_status_code_id === CampaignStatus_Code_Id_Enums.FUNDRAISING;
+        // Determine which date to use for the timer
+        let targetDate = undefined;
+        if (isCountdown && campaign.campaign.begin_at && campaign.campaign.begin_at.getTime() > 0) {
+            targetDate = campaign.campaign.begin_at;
+        } else if (isFundraising && campaign.campaign.deadline && campaign.campaign.deadline.getTime() > 0) {
+            targetDate = campaign.campaign.deadline;
+        }
+        // Only set up a timer if we have a valid target date
+        if (targetDate !== undefined) {
+            let diffTime = 0;
+            const timer = setInterval(() => {
+                const remaining = getTimeRemaining(serverTime === undefined ? undefined : serverTime + diffTime, targetDate);
+                diffTime += 1000;
+                // If the remaining time is less than 0, clear the timer
+                if (remaining.total <= 0) {
+                    if (isCountdown) {
+                        setTimeRemainingBeginAt({ total: 0, days: 0, totalHours: 0, minutes: 0, seconds: 0 });
+                    } else if (isFundraising) {
+                        setTimeRemainingDeadline({ total: 0, days: 0, totalHours: 0, minutes: 0, seconds: 0 });
+                    }
+                    clearInterval(timer);
+                    return;
+                }
+                // Update the appropriate state based on campaign status
+                if (isCountdown) {
+                    setTimeRemainingBeginAt(remaining);
+                } else if (isFundraising) {
+                    setTimeRemainingDeadline(remaining);
+                }
+            }, 1000);
+            // Clean up timer when component unmounts or dependencies change
+            return () => clearInterval(timer);
+        }
     }, [campaign.campaign.begin_at, campaign.campaign.deadline, campaign_status_code_id]);
 
     //----------------------------------------------
@@ -299,6 +324,7 @@ export const useCampaignDetails = ({
         serviceCreateSmartContracts(appStore, walletStore, openModal, protocol, campaign, campaignStatus, data, onFinishTasks);
     const handlePublishSmartContracts = (data?: Record<string, any>) =>
         servicePublishSmartContracts(appStore, walletStore, openModal, protocol, campaign, campaignStatus, data, onFinishTx);
+
     const handleInitializeCampaign = (data?: Record<string, any>) =>
         serviceInitializeCampaign(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
 
@@ -311,11 +337,9 @@ export const useCampaignDetails = ({
     const handleInvest = (data?: Record<string, any>) =>
         serviceInvest(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
 
-    const handleSetFundraisingCampaign = (data?: Record<string, any>) => serviceSetFundraisingCampaign(campaign, campaignStatus, data, onFinishUpdates);
-    const handleSetFinishingCampaign = (data?: Record<string, any>) => serviceSetFinishingCampaign(campaign, campaignStatus, data, onFinishUpdates);
-    const handleValidateFundraisingStatusSetReached = (data?: Record<string, any>) => serviceValidateFundraisingStatusSetReached(campaign, campaignStatus, data, onFinishUpdates);
-    const handleValidateFundraisingStatusSetUnReached = (data?: Record<string, any>) =>
-        serviceValidateFundraisingStatusSetUnReached(campaign, campaignStatus, data, onFinishUpdates);
+    const handleValidateFundraisingStatus = (data?: Record<string, any>) =>
+        serviceValidateFundraisingStatus(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
+
     const handleFailMilestoneAndCampaign = (data?: Record<string, any>) => serviceFailMilestoneAndCampaign(campaign, campaignStatus, data, onFinishUpdates);
     //----------------------------------------------
     const handles = {
@@ -340,10 +364,8 @@ export const useCampaignDetails = ({
 
         [HandlesEnums.INVEST]: handleInvest,
 
-        [HandlesEnums.SET_FUNDRAISING_STATUS]: handleSetFundraisingCampaign,
-        [HandlesEnums.SET_FINISHING_STATUS]: handleSetFinishingCampaign,
-        [HandlesEnums.SET_REACHED_STATUS]: handleValidateFundraisingStatusSetReached,
-        [HandlesEnums.SET_UNREACHED_STATUS]: handleValidateFundraisingStatusSetUnReached,
+        [HandlesEnums.SET_FUNDRAISING_STATUS]: handleValidateFundraisingStatus,
+
         [HandlesEnums.SET_FAILED_STATUS]: handleFailMilestoneAndCampaign,
     };
     //----------------------------------------------

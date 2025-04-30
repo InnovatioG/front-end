@@ -11,6 +11,7 @@ import WalletConnectorModal from '@/components/GeneralOK/Modals/Modals/WalletCon
 import { HandlesEnums, ModalsEnums } from '@/utils/constants/constants';
 import { ReactNode, useState } from 'react';
 import { ModalContext } from './ModalContext';
+import LaunchCampaignModal from '@/components/GeneralOK/Modals/Modals/LaunchCampaignModal/LaunchCampaignModal';
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
     const [activeModal, setActiveModal] = useState<ModalsEnums | null>(null);
@@ -47,10 +48,11 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         [ModalsEnums.VIEW_CAMPAIGN_SUBMISSIONS]: <ViewCampaignSubmissionModal />,
         [ModalsEnums.CREATE_SMART_CONTRACTS]: <SingleQuestionModal modalType={ModalsEnums.CREATE_SMART_CONTRACTS} handleType={HandlesEnums.CREATE_SMART_CONTRACTS} />,
         [ModalsEnums.PUBLISH_SMART_CONTRACTS]: <SingleQuestionModal modalType={ModalsEnums.PUBLISH_SMART_CONTRACTS} handleType={HandlesEnums.PUBLISH_SMART_CONTRACTS} />,
-        [ModalsEnums.INITIALIZE_CAMPAIGN]: <SingleQuestionModal modalType={ModalsEnums.INITIALIZE_CAMPAIGN} handleType={HandlesEnums.INITIALIZE_CAMPAIGN} />,
+        // [ModalsEnums.INITIALIZE_CAMPAIGN]: <SingleQuestionModal modalType={ModalsEnums.INITIALIZE_CAMPAIGN} handleType={HandlesEnums.INITIALIZE_CAMPAIGN} />,
+        [ModalsEnums.INITIALIZE_CAMPAIGN]: <LaunchCampaignModal />,
         [ModalsEnums.MANAGE_CAMPAIGN_UTXOS]: <SingleQuestionModal modalType={ModalsEnums.MANAGE_CAMPAIGN_UTXOS} handleType={HandlesEnums.MANAGE_CAMPAIGN_UTXOS} />,
         [ModalsEnums.LAUNCH_CAMPAIGN]: <SingleQuestionModal modalType={ModalsEnums.LAUNCH_CAMPAIGN} handleType={HandlesEnums.LAUNCH_CAMPAIGN} />,
-        [ModalsEnums.VALIDATE_FUNDRAISING_STATUS]: <SingleQuestionModal modalType={ModalsEnums.VALIDATE_FUNDRAISING_STATUS} handleType={HandlesEnums.SET_REACHED_STATUS} />,
+        [ModalsEnums.VALIDATE_FUNDRAISING_STATUS]: <SingleQuestionModal modalType={ModalsEnums.VALIDATE_FUNDRAISING_STATUS} handleType={HandlesEnums.SET_FUNDRAISING_STATUS} />,
         [ModalsEnums.WITHDRAW_TOKENS_FAILED]: undefined,
         [ModalsEnums.WITHDRAW_TOKENS_UNREACHED]: undefined,
         [ModalsEnums.GETBACK_TOKENS_FAILED]: undefined,
