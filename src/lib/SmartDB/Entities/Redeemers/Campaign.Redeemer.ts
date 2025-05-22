@@ -34,8 +34,8 @@ export type CampaignValidatorRedeemer =
     | CampaignValidatorRedeemerInitializeCampaign
     | CampaignValidatorRedeemerReachedCampaign
     | CampaignValidatorRedeemerNotReachedCampaign
-    | CampaignValidatorRedeemerMilestoneAprobe
-    | CampaignValidatorRedeemerMilestoneReprobe
+    | CampaignValidatorRedeemerMilestoneApprove
+    | CampaignValidatorRedeemerMilestoneReject
     | CampaignValidatorRedeemerEmergency
     | CampaignValidatorRedeemerDelete;
 
@@ -89,14 +89,14 @@ export class CampaignValidatorRedeemerNotReachedCampaign extends BaseTxRedeemer 
     protected static _plutusDataIsSubType = true;
 }
 
-export class CampaignValidatorRedeemerMilestoneAprobe extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerMilestoneApprove extends BaseTxRedeemer {
     protected static _plutusDataIndex = 5;
     protected static _plutusDataIsSubType = true;
     @Convertible({ isForRedeemer: true })
     milestoneIndex!: number;
 }
 
-export class CampaignValidatorRedeemerMilestoneReprobe extends BaseTxRedeemer {
+export class CampaignValidatorRedeemerMilestoneReject extends BaseTxRedeemer {
     protected static _plutusDataIndex = 6;
     protected static _plutusDataIsSubType = true;
     @Convertible({ isForRedeemer: true })

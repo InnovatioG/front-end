@@ -173,7 +173,7 @@ export class CampaignEntity extends BaseSmartDBEntity {
     @Convertible()
     fundedADA!: bigint;
     @Convertible()
-    collectedADA    !: bigint;
+    collectedADA!: bigint;
     @Convertible()
     tokenomics_max_supply!: bigint;
     @Convertible()
@@ -449,6 +449,16 @@ export class CampaignEntity extends BaseSmartDBEntity {
         } else {
             return this.fdpCampaignFundsValidator_AddressTestnet;
         }
+    }
+
+    public getAmountToCollect(): bigint {
+        const sucessMilestones = this.cdMilestones.filter((milestone) => milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsSuccess);
+        const accumPorcentaje = sucessMilestones.reduce((acc, milestone) => acc + milestone.cmPerncentage, 0n);
+
+        const totalFundsToCollect = this.cdFundedADA * accumPorcentaje;
+        const avalibleFundsToCollect = totalFundsToCollect - this.cdCollectedADA;
+
+        return avalibleFundsToCollect;
     }
 
     // #endregion class methods

@@ -83,6 +83,5 @@ export class CampaignFundsEntity extends BaseSmartDBEntity {
         }
         return '';
     }
-
     // #endregion class methods
 }
