@@ -586,6 +586,10 @@ export async function serviceSubmitCampaign(
         // Estado Inicial DB: Created/Rejected
         // Estado Final DB: Submitted
         // Ejecuta: Campaign Managers, Campaign Editors
+        const membersAdmin = campaign.members?.filter((m) => m.admin == true);
+        if (membersAdmin === undefined || membersAdmin.length === 0) {
+            throw new Error(`No admin members found`);
+        }
         const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.SUBMITTED);
         if (!status) {
             throw new Error(`Status SUBMITTED code-id: ${CampaignStatus_Code_Id_Enums.SUBMITTED} not found`);
@@ -609,7 +613,7 @@ export async function serviceSubmitCampaign(
         }
     } catch (e) {
         console.error(e);
-        pushWarningNotification(`${PROYECT_NAME}`, `Error updating: ${e}`);
+        pushWarningNotification(`${PROYECT_NAME}`, `Error Submiting Camapaign: ${e}`);
     }
 }
 
@@ -1783,15 +1787,7 @@ export async function serviceValidateFundraisingStatus(
             const txApiCall = CampaignApi.callGenericTxApi.bind(CampaignApi);
             const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
             //--------------------------------------
-            const onTx = async () => {
-                // appStore.setProcessingTxMessage(`Updating status......`);
-                // const status = campaignStatus.find((status) => status.code_id === CampaignStatus_Code_Id_Enums.UNREACHED);
-                // if (!status) {
-                //     throw new Error(`Status UNREACHED code-id: ${CampaignStatus_Code_Id_Enums.UNREACHED} not found`);
-                // }
-                // const campaign_status_id = status._DB_id;
-                // await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, { campaign_status_id });
-            };
+            const onTx = async () => {};
             //--------------------------------------
             await handleBtnDoTransaction_WithErrorControl(
                 CampaignEntity,

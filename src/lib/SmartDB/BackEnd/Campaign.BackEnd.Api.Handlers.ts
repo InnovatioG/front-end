@@ -529,7 +529,11 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 //--------------------------------------
                 const milestones = await MilestoneBackEndApplied.getByParams_<MilestoneEntity>({ campaign_id: campaign._DB_id }, { sort: { order: 1 } });
                 //--------------------------------------
-                const members = await CampaignMemberBackEndApplied.getByParams_<CampaignMemberEntity>({ campaign_id: campaign._DB_id }, { sort: { order: 1 } });
+                const members = await CampaignMemberBackEndApplied.getByParams_<CampaignMemberEntity>({ campaign_id: campaign._DB_id, admin: true }, { sort: { order: 1 } });
+                //--------------------------------------
+                if (members.length === 0) {
+                    throw `Must set at least one admin member`;
+                }
                 //--------------------------------------
                 const serverTime = await TimeBackEnd.getServerTime();
                 //--------------------------------------

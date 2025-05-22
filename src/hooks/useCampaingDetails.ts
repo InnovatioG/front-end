@@ -221,7 +221,7 @@ export const useCampaignDetails = ({
             if (campaignEx === undefined) return;
             if (setCampaignEX) setCampaignEX(campaignEx);
             if (setCampaign) setCampaign(campaignEx.campaign);
-            // if (fetchCampaignsEX) await fetchCampaignsEX();
+            if (fetchCampaignsEX) await fetchCampaignsEX();
             await refreshHaveCampaigns();
         };
         openModal(ModalsEnums.SUCCESS, data);
@@ -234,7 +234,7 @@ export const useCampaignDetails = ({
             if (campaignEx === undefined) return;
             if (setCampaignEX) setCampaignEX(campaignEx);
             if (setCampaign) setCampaign(campaignEx.campaign);
-            // if (fetchCampaignsEX) await fetchCampaignsEX();
+            if (fetchCampaignsEX) await fetchCampaignsEX();
             await refreshHaveCampaigns();
         };
         await updatePage();
@@ -246,7 +246,7 @@ export const useCampaignDetails = ({
             if (campaignEx === undefined) return;
             if (setCampaignEX) setCampaignEX(campaignEx);
             if (setCampaign) setCampaign(campaignEx.campaign);
-            // if (fetchCampaignsEX) await fetchCampaignsEX();
+            if (fetchCampaignsEX) await fetchCampaignsEX();
             await refreshHaveCampaigns();
         };
         await updatePage();

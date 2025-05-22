@@ -55,12 +55,14 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         [ModalsEnums.VALIDATE_FUNDRAISING_STATUS]: <SingleQuestionModal modalType={ModalsEnums.VALIDATE_FUNDRAISING_STATUS} handleType={HandlesEnums.SET_FUNDRAISING_STATUS} />,
         [ModalsEnums.WITHDRAW_TOKENS_FAILED]: undefined,
         [ModalsEnums.WITHDRAW_TOKENS_UNREACHED]: undefined,
+        // FALTAN ESTOS MODALES:
         [ModalsEnums.GETBACK_TOKENS_FAILED]: undefined,
         [ModalsEnums.GETBACK_TOKENS_UNREACHED]: undefined,
         [ModalsEnums.SUBMIT_MILESTONE]: undefined,
         [ModalsEnums.MANAGE_MILESTONE_SUBMISSIONS]: undefined,
         [ModalsEnums.VIEW_MILESTONE_SUBMISSIONS]: undefined,
         [ModalsEnums.COLLECT_FUNDS]: undefined,
+        // HASTA ACA
         [ModalsEnums.CONTACT_SUPPORT]: <ContactSupportModal />,
 
         [ModalsEnums.SUCCESS]: <SuccessModal />,

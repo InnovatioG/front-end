@@ -74,7 +74,7 @@ export const campaignStatusConfigs = (
         ButtonForDetails[ButtonsForDetailsEnum.DELETE_CAMPAIGN],
     ];
     const FOR_PROTOCOL_UTXOS_ARCHIVE_AND_DELETE = [
-        ButtonForDetails[ButtonsForDetailsEnum.MANAGE_CAMPAIGN_UTXOS],
+        UTXO,
         campaign.campaign.featured === false ? ButtonForDetails[ButtonsForDetailsEnum.FEATURE_CAMPAIGN] : ButtonForDetails[ButtonsForDetailsEnum.UNFEATURE_CAMPAIGN],
         campaign.campaign.archived === false ? ButtonForDetails[ButtonsForDetailsEnum.ARCHIVE_CAMPAIGN] : ButtonForDetails[ButtonsForDetailsEnum.UNARCHIVE_CAMPAIGN],
         ButtonForDetails[ButtonsForDetailsEnum.DELETE_CAMPAIGN],
@@ -340,9 +340,9 @@ export const campaignStatusConfigs = (
                 return {
                     label: 'Deploy',
                     labelClass: 'deploy',
-                    buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_CAMPAIGN_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
-                    buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS]]),
-                    buttonsForDetails: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS]], [], true),
+                    buttonsForCards: [UTXO, VIEW_OR_MANAGE_FOR_CARD],
+                    buttonsForHeader: MANAGE([UTXO]),
+                    buttonsForDetails: MANAGE([UTXO], [], true),
                 };
             } else if (isEditor === true) {
                 return {

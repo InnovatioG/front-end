@@ -22,11 +22,12 @@ export default function Wallet() {
                             <th>Created By</th>
                             <th>Last Connection</th>
                             <th>Wallet Used</th>
-                            <th>Validated</th>
                             <th>Payment Pkh</th>
                             <th>Stake Pkh</th>
                             <th>Testnet Address</th>
                             <th>Mainnet Address</th>
+                            <th>Validated</th>
+                            <th>Core Team</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -38,14 +39,29 @@ export default function Wallet() {
                                 <td>{item.createdBy}</td>
                                 <td>{item.lastConnection?.toISOString()}</td>
                                 <td>{item.walletName}</td>
-                                <td>{item.walletValidatedWithSignedToken ? 'Yes' : 'No'}</td>
                                 <td>{item.paymentPKH}</td>
                                 <td>{item.stakePKH}</td>
                                 <td>{item.testnet_address}</td>
                                 <td>{item.mainnet_address}</td>
+                                <td>{item.walletValidatedWithSignedToken ? 'Yes' : 'No'}</td>
+                                <td>{item.isCoreTeam ? 'Yes' : 'No'}</td>
                                 <td>
-                                    <button onClick={() => { setEditItem(item); setView('edit'); }}>Edit</button>
-                                    <button onClick={() => { setDeleteItem(item); setView('confirmDelete'); }}>Delete</button>
+                                    <button
+                                        onClick={() => {
+                                            setEditItem(item);
+                                            setView('edit');
+                                        }}
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            setDeleteItem(item);
+                                            setView('confirmDelete');
+                                        }}
+                                    >
+                                        Delete
+                                    </button>
                                 </td>
                             </tr>
                         ))}
@@ -55,10 +71,7 @@ export default function Wallet() {
         </div>
     );
 
-    const renderForm = (
-        item: Partial<WalletEntity>,
-        setItem: Dispatch<SetStateAction<Partial<WalletEntity>>> | Dispatch<SetStateAction<Partial<WalletEntity> | null>>
-    ) => (
+    const renderForm = (item: Partial<WalletEntity>, setItem: Dispatch<SetStateAction<Partial<WalletEntity>>> | Dispatch<SetStateAction<Partial<WalletEntity> | null>>) => (
         <form className={styles.form}>
             <div>
                 <label>Name:</label>
@@ -109,11 +122,17 @@ export default function Wallet() {
                 <input type="text" value={item.mainnet_address || ''} onChange={(e) => setItem({ ...item, mainnet_address: e.target.value })} />
             </div>
             {view === 'create' ? (
-                <button type="button" onClick={create}>Create</button>
+                <button type="button" onClick={create}>
+                    Create
+                </button>
             ) : (
-                <button type="button" onClick={update}>Update</button>
+                <button type="button" onClick={update}>
+                    Update
+                </button>
             )}
-            <button type="button" onClick={() => setView('list')}>Cancel</button>
+            <button type="button" onClick={() => setView('list')}>
+                Cancel
+            </button>
         </form>
     );
 

@@ -2,7 +2,18 @@ import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 import { HIDE_ICON, REFRESH_ICON, SHOW_ICON } from '@/utils/constants/images';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import { addAssets, CARDANO_WALLETS, isEmulator, LucidToolsFrontEnd, PROYECT_NAME, pushSucessNotification, toJson, TOKEN_ADA_SYMBOL, TOKEN_ADA_TICKER, useWalletActions } from 'smart-db';
+import {
+    addAssets,
+    CARDANO_WALLETS,
+    isEmulator,
+    LucidToolsFrontEnd,
+    PROYECT_NAME,
+    pushSucessNotification,
+    toJson,
+    TOKEN_ADA_SYMBOL,
+    TOKEN_ADA_TICKER,
+    useWalletActions,
+} from 'smart-db';
 import styles from './WalletInformationModal.module.scss';
 import Toggle from '@/components/General/Buttons/Toggle/Toggle';
 import { Assets, UTxO } from '@lucid-evolution/lucid';
@@ -140,6 +151,21 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                             )}
                         </div>
                     </div>
+                    <label htmlFor="">Payment Pub Key Hash</label>
+                    <div className={styles.addressContainer}>
+                        <div className={styles.iconInput}>
+                            <div className={styles.dataContainer}>
+                                <span className={styles.wallet_address}>{walletStore.info?.pkh}</span>
+                            </div>
+                        </div>
+                        <div onClick={handleCopy}>
+                            {copySuccess ? (
+                                <Image src="/img/icons/status/green.svg" alt="" height={12} width={15} />
+                            ) : (
+                                <Image src="/img/icons/modal/copy.svg" alt="" height={12} width={15} />
+                            )}
+                        </div>
+                    </div>
                 </div>
                 <div className={styles.inputInformatiopn}>
                     <label htmlFor="">Balance</label>
@@ -153,6 +179,11 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                         </div>
                     </div>
                 </div>
+                {walletStore.isCoreTeam() && (
+                    <div className={styles.inputInformatiopn}>
+                        <label htmlFor="">Core Team</label>
+                    </div>
+                )}
                 <div className={styles.buttonDisconectContainer}>
                     {isEmulator && (
                         <BtnGeneral
