@@ -4,11 +4,23 @@ import {
     CampaignCampaingReachedTxParams,
     CampaignDeployTxParams,
     CampaignFundsAddTxParams,
+    CampaignFundsCollectTxParams,
+    CampaignFundsGetBackTxParams,
     CampaignFundsInvestTxParams,
     CampaignFundsMintDepositTxParams,
     CampaignLaunchTxParams,
+    CampaignMilestoneApproveTxParams,
 } from '@/lib/SmartDB/Commons/Params';
-import { CampaignEntity, CampaignFundsEntity, CampaignStatusEntity, CampaignSubmissionEntity, ProtocolEntity, SubmissionStatusEntity } from '@/lib/SmartDB/Entities';
+import {
+    CampaignEntity,
+    CampaignFundsEntity,
+    CampaignStatusEntity,
+    CampaignSubmissionEntity,
+    MilestoneStatusEntity,
+    MilestoneSubmissionEntity,
+    ProtocolEntity,
+    SubmissionStatusEntity,
+} from '@/lib/SmartDB/Entities';
 import {
     CampaignApi,
     CampaignContentApi,
@@ -58,7 +70,7 @@ import {
 } from 'smart-db';
 import { HandlesEnums, ModalsEnums, TaskEnums } from './constants/constants';
 import { ADMIN_TOKEN_POLICY_CS, EMERGENCY_ADMIN_TOKEN_POLICY_CS, TxEnums } from './constants/on-chain';
-import { CampaignStatus_Code_Id_Enums, SubmissionStatus_Enums } from './constants/status/status';
+import { CampaignStatus_Code_Id_Enums, MilestoneStatus_Code_Id_Enums, SubmissionStatus_Enums } from './constants/status/status';
 import { deleteFileFromS3, uploadMemberAvatarToS3 } from './s3Upload';
 import { isBlobURL } from './utils';
 
@@ -1845,5 +1857,460 @@ export async function serviceFailMilestoneAndCampaign(
     } catch (e) {
         console.error(e);
         pushWarningNotification(`${PROYECT_NAME}`, `Error updating: ${e}`);
+    }
+}
+
+export async function serviceSubmitMilestone(
+    campaign: CampaignEX,
+    milestoneIndex: number,
+    milestoneStatus: MilestoneStatusEntity[],
+    submissionStatus: SubmissionStatusEntity[],
+    data?: Record<string, any>,
+    onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
+) {
+    try {
+        // Send Report Milestone (DB)
+        // Descripción: Presenta reporte de completitud del milestone actual
+        // Estado Inicial DB: Active (Milestone actual: Started)
+        // Estado Final DB: Active (Milestone actual: Submitted)
+        // Estado Inicial Datum: CsReached (Milestone actual: MsCreated)
+        // Estado Final Datum: Mismo estado
+        // Ejecuta: Campaign Managers, Campaign Editors
+
+        const membersAdmin = campaign.members?.filter((m) => m.admin == true);
+        if (membersAdmin === undefined || membersAdmin.length === 0) {
+            throw new Error(`No admin members found`);
+        }
+        const status = milestoneStatus.find((status) => status.code_id === MilestoneStatus_Code_Id_Enums.SUBMITTED);
+        if (!status) {
+            throw new Error(`Status SUBMITTED code-id: ${MilestoneStatus_Code_Id_Enums.SUBMITTED} not found`);
+        }
+        const statusSubmission = submissionStatus.find((status) => status.code_id === SubmissionStatus_Enums.SUBMITTED);
+        if (!statusSubmission) {
+            throw new Error(`Status SUBMITTED code-id: ${SubmissionStatus_Enums.SUBMITTED} not found`);
+        }
+        let entity = campaign.milestones![milestoneIndex].milestone;
+        entity.milestone_status_id = status._DB_id;
+        entity = await MilestoneApi.updateWithParamsApi_(entity._DB_id, entity);
+        let submission = new MilestoneSubmissionEntity({
+            milestone_id: entity._DB_id,
+            submission_status_id: statusSubmission?._DB_id,
+            submitted_by_wallet_id: data?.submitted_by_wallet_id,
+            report_proof_of_finalization: data?.report_proof_of_finalization,
+        });
+        submission = await MilestoneSubmissionApi.createApi(submission);
+        pushSucessNotification(`${PROYECT_NAME}`, 'Updated successfully', false);
+        if (onFinish !== undefined) {
+            await onFinish(campaign, data);
+        }
+    } catch (e) {
+        console.error(e);
+        pushWarningNotification(`${PROYECT_NAME}`, `Error Submiting Camapaign: ${e}`);
+    }
+}
+
+export async function serviceApproveMilestone(
+    appStore: IUseAppStore,
+    walletStore: IUseWalletStore,
+    openModal: (
+        modal: ModalsEnums,
+        data?: Record<string, any>,
+        handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | boolean | undefined | void>>>,
+        component?: ReactNode
+    ) => void,
+    protocol: ProtocolEntity | undefined,
+    handleBtnDoTransaction_WithErrorControl: (
+        Entity: typeof BaseSmartDBEntity,
+        modalTitleTx: string,
+        messageActionTx: string,
+        txApiRoute: string,
+        fetchParams: () => Promise<{
+            lucid: LucidEvolution;
+            emulatorDB: EmulatorEntity | undefined;
+            walletTxParams: WalletTxParams;
+            txParams: any;
+        }>,
+        txApiCall: (Entity: typeof BaseSmartDBEntity, txApiRoute: string, walletTxParams: WalletTxParams, txParams: any) => Promise<any>,
+        handleBtnTxNoErrorControl: (
+            Entity: typeof BaseSmartDBEntity,
+            modalTitleTx: string,
+            messageActionTx: string,
+            lucid: LucidEvolution,
+            emulatorDB: EmulatorEntity | undefined,
+            apiTxCall: () => Promise<any>,
+            setProcessingTxMessage: (processingTxMessage: string) => void,
+            setProcessingTxHash: (processingTxHash: string) => void,
+            walletStore: IUseWalletStore
+        ) => Promise<void>,
+        onTx?: (() => Promise<void>) | undefined
+    ) => Promise<void>,
+    campaign: CampaignEX,
+    campaignStatus: CampaignStatusEntity[],
+    data?: Record<string, any>,
+    onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
+) {
+    try {
+        //--------------------------------------
+        // Approve Milestone (DB + TX)
+        // Descripción: Aprueba completitud del milestone actual y permite cobro de fondos
+        // Estado Inicial DB: Active (Milestone actual: Submitted, Milestone siguiente: Not Started)
+        // Estado Final DB: Active (Milestone actual: Finished, Milestone siguiente: Started)
+        // Estado Inicial Datum: CsReached (Milestone actual: MsCreated)
+        // Estado Final Datum: CsReached (Milestone actual: MsSuccess)
+        // Ejecuta: Protocol Team
+        //--------------------------------------
+        console.log(`serviceAproveMilestone`);
+        //--------------------------------------
+        if (appStore.isProcessingTx === true) {
+            openModal(ModalsEnums.PROCESSING_TX);
+            return;
+        }
+        if (appStore.isProcessingTask === true) {
+            openModal(ModalsEnums.PROCESSING_TASK);
+            return;
+        }
+        //--------------------------------------
+        if (protocol === undefined) {
+            console.error('Protocol is undefined');
+            return;
+        }
+
+        //--------------------------------------
+        let campaign_id = campaign.campaign._DB_id;
+        //--------------------------------------
+        const fetchParams = async () => {
+            //--------------------------------------
+            const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
+            //--------------------------------------
+            const txParams: CampaignMilestoneApproveTxParams = {
+                protocol_id: protocol!._DB_id!,
+                campaign_id,
+            };
+            return {
+                lucid,
+                emulatorDB,
+                walletTxParams,
+                txParams,
+            };
+        };
+        //--------------------------------------
+        openModal(ModalsEnums.PROCESSING_TX);
+        //--------------------------------------
+        const txApiCall = CampaignApi.callGenericTxApi.bind(CampaignApi);
+        const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
+        //--------------------------------------
+        const onTx = async () => {};
+        //--------------------------------------
+        await handleBtnDoTransaction_WithErrorControl(
+            CampaignEntity,
+            TxEnums.CAMPAIGN_MILESTONE_APPROVE,
+            'Approving Milestone...',
+            'campaign-milestone-approve-tx',
+            fetchParams,
+            txApiCall,
+            handleBtnTx,
+            onTx
+        );
+        //--------------------------------------
+        if (onFinish !== undefined) {
+            await onFinish(campaign, data);
+        }
+        //--------------------------------------
+    } catch (e) {
+        console.error(e);
+        pushWarningNotification(`${PROYECT_NAME}`, `Error updating: ${e}`);
+    }
+}
+
+export async function serviceRejectMilestone(
+    campaign: CampaignEX,
+    milestoneIndex: number,
+    milestoneStatus: MilestoneStatusEntity[],
+    submissionStatus: SubmissionStatusEntity[],
+    data?: Record<string, any>,
+    onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
+) {
+    try {
+        // Reject Milestone (DB)
+        // Descripción: Rechaza presentación del milestone actual para revisión
+        // Estado Inicial DB: Active (Milestone actual: Submitted)
+        // Estado Final DB: Active (Milestone actual: Rejected)
+        // Estado Inicial Datum: CsReached (Milestone actual: MsCreated)
+        // Estado Final Datum: Mismo estado
+        // Ejecuta: Protocol Team
+
+        const status = milestoneStatus.find((status) => status.code_id === MilestoneStatus_Code_Id_Enums.REJECTED);
+        if (!status) {
+            throw new Error(`Status REJECTED code-id: ${MilestoneStatus_Code_Id_Enums.REJECTED} not found`);
+        }
+        const statusSubmission = submissionStatus.find((status) => status.code_id === SubmissionStatus_Enums.REJECTED);
+        if (!statusSubmission) {
+            throw new Error(`Status REJECTED code-id: ${SubmissionStatus_Enums.REJECTED} not found`);
+        }
+        let entity = campaign.milestones![milestoneIndex].milestone;
+        entity.milestone_status_id = status._DB_id;
+        entity = await MilestoneApi.updateWithParamsApi_(entity._DB_id, entity);
+        const submission: MilestoneSubmissionEntity | undefined = await MilestoneSubmissionApi.getOneByParamsApi_({ milestone_id: entity._DB_id });
+        if (!submission) {
+            throw new Error(`Submission not found for campaign_id: ${entity._DB_id}`);
+        }
+        await CampaignSubmissionApi.updateWithParamsApi_(submission._DB_id, {
+            ...submission,
+            submission_status_id: statusSubmission._DB_id,
+            revised_by_wallet_id: data?.revised_by_wallet_id,
+            rejected_justification: data?.justification,
+        });
+        pushSucessNotification(`${PROYECT_NAME}`, 'Updated successfully', false);
+        if (onFinish !== undefined) {
+            await onFinish(campaign, data);
+        }
+    } catch (e) {
+        console.error(e);
+        pushWarningNotification(`${PROYECT_NAME}`, `Error updating: ${e}`);
+    }
+}
+
+export async function serviceCollect(
+    appStore: IUseAppStore,
+    walletStore: IUseWalletStore,
+    openModal: (
+        modal: ModalsEnums,
+        data?: Record<string, any>,
+        handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | boolean | undefined | void>>>,
+        component?: ReactNode
+    ) => void,
+    protocol: ProtocolEntity | undefined,
+    handleBtnDoTransaction_WithErrorControl: (
+        Entity: typeof BaseSmartDBEntity,
+        modalTitleTx: string,
+        messageActionTx: string,
+        txApiRoute: string,
+        fetchParams: () => Promise<{
+            lucid: LucidEvolution;
+            emulatorDB: EmulatorEntity | undefined;
+            walletTxParams: WalletTxParams;
+            txParams: any;
+        }>,
+        txApiCall: (Entity: typeof BaseSmartDBEntity, txApiRoute: string, walletTxParams: WalletTxParams, txParams: any) => Promise<any>,
+        handleBtnTxNoErrorControl: (
+            Entity: typeof BaseSmartDBEntity,
+            modalTitleTx: string,
+            messageActionTx: string,
+            lucid: LucidEvolution,
+            emulatorDB: EmulatorEntity | undefined,
+            apiTxCall: () => Promise<any>,
+            setProcessingTxMessage: (processingTxMessage: string) => void,
+            setProcessingTxHash: (processingTxHash: string) => void,
+            walletStore: IUseWalletStore
+        ) => Promise<void>,
+        onTx?: (() => Promise<void>) | undefined
+    ) => Promise<void>,
+    campaign: CampaignEX,
+    campaignStatus: CampaignStatusEntity[],
+    data?: Record<string, any>,
+    onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
+) {
+    // Collect Funds (TX)
+    // Descripción: Cobra fondos liberados tras aprobación de milestone
+    // Estado Inicial DB: Active (Milestone actual: Finished)
+    // Estado Final DB: Mismo estado
+    // Estado Inicial Datum: CsReached (Milestone actual: MsSuccess)
+    // Estado Final Datum: Mismo estado
+    // Ejecuta: Campaign Managers
+
+    try {
+        //--------------------------------------
+        console.log(`serviceCollect`);
+        //--------------------------------------
+        if (appStore.isProcessingTx === true) {
+            openModal(ModalsEnums.PROCESSING_TX);
+            return;
+        }
+        if (appStore.isProcessingTask === true) {
+            openModal(ModalsEnums.PROCESSING_TASK);
+            return;
+        }
+        //--------------------------------------
+        if (protocol === undefined) {
+            console.error('Protocol is undefined');
+            return;
+        }
+        //--------------------------------------
+        let campaign_id = campaign.campaign._DB_id;
+        //--------------------------------------
+        const campaignFunds: CampaignFundsEntity[] | undefined = await CampaignFundsApi.getByParamsApi_(
+            { cfdCampaignPolicy_CS: campaign.campaign.getNET_id_CS() },
+            {
+                loadRelations: { smartUTxO_id: true },
+            }
+        );
+        if (campaignFunds.length === 0) {
+            throw new Error(`Campaign Funds not found`);
+        }
+        //--------------------------------------
+        const fetchParams = async () => {
+            //--------------------------------------
+            const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
+            //--------------------------------------
+            const txParams: CampaignFundsCollectTxParams = {
+                protocol_id: protocol!._DB_id!,
+                campaign_id,
+                campaign_funds_id: campaignFunds[0]._DB_id,
+            };
+            return {
+                lucid,
+                emulatorDB,
+                walletTxParams,
+                txParams,
+            };
+        };
+        //--------------------------------------
+        openModal(ModalsEnums.PROCESSING_TX);
+        //--------------------------------------
+        const txApiCall = CampaignApi.callGenericTxApi.bind(CampaignApi);
+        const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
+        //--------------------------------------
+        const onTx = async () => {
+            appStore.setProcessingTxMessage(`Updating status......`);
+            const investors = campaign.campaign.investors + 1;
+            await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, { investors });
+        };
+        //--------------------------------------
+        await handleBtnDoTransaction_WithErrorControl(
+            CampaignEntity,
+            TxEnums.CAMPAIGN_FUNDS_COLLECT,
+            'Invest in Campaign...',
+            'campaign-collect-tx',
+            fetchParams,
+            txApiCall,
+            handleBtnTx,
+            onTx
+        );
+        //--------------------------------------
+        if (onFinish !== undefined) {
+            await onFinish(campaign, data);
+        }
+        //--------------------------------------
+    } catch (e) {
+        console.error(e);
+        pushWarningNotification(`${PROYECT_NAME}`, `Error investing: ${e}`);
+    }
+}
+
+export async function serviceGetBack(
+    appStore: IUseAppStore,
+    walletStore: IUseWalletStore,
+    openModal: (
+        modal: ModalsEnums,
+        data?: Record<string, any>,
+        handles?: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | boolean | undefined | void>>>,
+        component?: ReactNode
+    ) => void,
+    protocol: ProtocolEntity | undefined,
+    handleBtnDoTransaction_WithErrorControl: (
+        Entity: typeof BaseSmartDBEntity,
+        modalTitleTx: string,
+        messageActionTx: string,
+        txApiRoute: string,
+        fetchParams: () => Promise<{
+            lucid: LucidEvolution;
+            emulatorDB: EmulatorEntity | undefined;
+            walletTxParams: WalletTxParams;
+            txParams: any;
+        }>,
+        txApiCall: (Entity: typeof BaseSmartDBEntity, txApiRoute: string, walletTxParams: WalletTxParams, txParams: any) => Promise<any>,
+        handleBtnTxNoErrorControl: (
+            Entity: typeof BaseSmartDBEntity,
+            modalTitleTx: string,
+            messageActionTx: string,
+            lucid: LucidEvolution,
+            emulatorDB: EmulatorEntity | undefined,
+            apiTxCall: () => Promise<any>,
+            setProcessingTxMessage: (processingTxMessage: string) => void,
+            setProcessingTxHash: (processingTxHash: string) => void,
+            walletStore: IUseWalletStore
+        ) => Promise<void>,
+        onTx?: (() => Promise<void>) | undefined
+    ) => Promise<void>,
+    campaign: CampaignEX,
+    campaignStatus: CampaignStatusEntity[],
+    data?: Record<string, any>,
+    onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
+) {
+    try {
+        //--------------------------------------
+        console.log(`serviceGetBack`);
+        //--------------------------------------
+        if (appStore.isProcessingTx === true) {
+            openModal(ModalsEnums.PROCESSING_TX);
+            return;
+        }
+        if (appStore.isProcessingTask === true) {
+            openModal(ModalsEnums.PROCESSING_TASK);
+            return;
+        }
+        //--------------------------------------
+        if (protocol === undefined) {
+            console.error('Protocol is undefined');
+            return;
+        }
+        //--------------------------------------
+        let campaign_id = campaign.campaign._DB_id;
+        //--------------------------------------
+        const campaignFunds: CampaignFundsEntity[] | undefined = await CampaignFundsApi.getByParamsApi_(
+            { cfdCampaignPolicy_CS: campaign.campaign.getNET_id_CS() },
+            {
+                loadRelations: { smartUTxO_id: true },
+            }
+        );
+        if (campaignFunds.length === 0) {
+            throw new Error(`Campaign Funds not found`);
+        }
+        //--------------------------------------
+        const fetchParams = async () => {
+            //--------------------------------------
+            const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
+            //--------------------------------------
+            const txParams: CampaignFundsGetBackTxParams = {
+                protocol_id: protocol!._DB_id!,
+                campaign_id,
+                campaign_funds_id: campaignFunds[0]._DB_id,
+                amount: data!.amount!,
+            };
+            return {
+                lucid,
+                emulatorDB,
+                walletTxParams,
+                txParams,
+            };
+        };
+        //--------------------------------------
+        openModal(ModalsEnums.PROCESSING_TX);
+        //--------------------------------------
+        const txApiCall = CampaignApi.callGenericTxApi.bind(CampaignApi);
+        const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
+        //--------------------------------------
+        const onTx = async () => {
+            appStore.setProcessingTxMessage(`Updating status......`);
+        };
+        //--------------------------------------
+        await handleBtnDoTransaction_WithErrorControl(
+            CampaignEntity,
+            TxEnums.CAMPAIGN_FUNDS_GET_BACK,
+            'GetBack in Campaign...',
+            'campaign-get-back-tx',
+            fetchParams,
+            txApiCall,
+            handleBtnTx,
+            onTx
+        );
+        //--------------------------------------
+        if (onFinish !== undefined) {
+            await onFinish(campaign, data);
+        }
+        //--------------------------------------
+    } catch (e) {
+        console.error(e);
+        pushWarningNotification(`${PROYECT_NAME}`, `Error Getting Back: ${e}`);
     }
 }
