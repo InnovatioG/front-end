@@ -6,19 +6,25 @@ import { CampaignEX } from '@/types/types';
 import { CampaignStatusConfigs, campaignStatusConfigs } from '@/utils/campaignConfigs';
 import {
     serviceApproveCampaign,
+    serviceApproveMilestone,
     serviceArchiveCampaign,
+    serviceCollect,
     serviceCreateSmartContracts,
     serviceDeleteCampaign,
+    serviceFailMilestone,
     serviceFailMilestoneAndCampaign,
     serviceFeatureCampaign,
+    serviceGetBack,
     serviceInitializeCampaign,
     serviceInvest,
     serviceLaunchCampaign,
     servicePrepareUTxOs,
     servicePublishSmartContracts,
     serviceRejectCampaign,
+    serviceRejectMilestone,
     serviceSaveCampaign,
     serviceSubmitCampaign,
+    serviceSubmitMilestone,
     serviceUnArchiveCampaign,
     serviceUnFeatureCampaign,
     serviceValidateFundraisingStatus,
@@ -340,7 +346,21 @@ export const useCampaignDetails = ({
     const handleValidateFundraisingStatus = (data?: Record<string, any>) =>
         serviceValidateFundraisingStatus(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
 
-    const handleFailMilestoneAndCampaign = (data?: Record<string, any>) => serviceFailMilestoneAndCampaign(campaign, campaignStatus, data, onFinishUpdates);
+    const handleSubmitMilestone = (data?: Record<string, any>) =>
+        serviceSubmitMilestone(campaign, currentMilestoneIndex ?? 1, campaignStatus, submissionStatus, data, onFinishUpdates);
+    const handleApproveMilestone = (data?: Record<string, any>) =>
+        serviceApproveMilestone(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
+    const handleRejectMilestone = (data?: Record<string, any>) =>
+        serviceRejectMilestone(campaign, currentMilestoneIndex ?? 1, campaignStatus, submissionStatus, data, onFinishUpdates);
+    const handleFailMilestone = (data?: Record<string, any>) =>
+        serviceFailMilestone(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
+
+    const handleCollect = (data?: Record<string, any>) =>
+        serviceCollect(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
+
+    const handleGetBack = (data?: Record<string, any>) =>
+        serviceGetBack(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
+
     //----------------------------------------------
     const handles = {
         [HandlesEnums.SAVE_CAMPAIGN]: handleSaveCampaign,
@@ -366,7 +386,14 @@ export const useCampaignDetails = ({
 
         [HandlesEnums.SET_FUNDRAISING_STATUS]: handleValidateFundraisingStatus,
 
-        [HandlesEnums.SET_FAILED_STATUS]: handleFailMilestoneAndCampaign,
+        [HandlesEnums.SUBMIT_MILESTONE]: handleSubmitMilestone,
+        [HandlesEnums.APPROVE_MILESTONE]: handleApproveMilestone,
+        [HandlesEnums.REJECT_MILESTONE]: handleRejectMilestone,
+        [HandlesEnums.FAIL_MILESTONE]: handleFailMilestone,
+
+        [HandlesEnums.COLLECT_FUNDS]: handleCollect,
+
+        [HandlesEnums.GETBACK_FUNDS]: handleGetBack,
     };
     //----------------------------------------------
     return {

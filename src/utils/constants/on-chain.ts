@@ -36,14 +36,16 @@ export enum TxEnums {
     
     CAMPAIGN_FUNDS_DEPOSIT = 'Campaign - Fund - Deposit',
     CAMPAIGN_FUNDS_INVEST = 'Campaign - Fund - Invest',
-    CAMPAIGN_FUNDS_GET_BACK = 'Campaign - Fund - Get Back',
     
     CAMPAIGN_REACHED = 'Campaign - Reached',
     CAMPAIGN_NOT_REACHED = 'Campaign - Not Reached',
 
-    CAMPAIGN_FUNDS_COLLECT = 'Campaign - Fund - Invest',
-
     CAMPAIGN_MILESTONE_APPROVE = 'Campaign - Milestone - Approve',
+    CAMPAIGN_MILESTONE_FAIL = 'Campaign - Milestone - Fail',
+
+    CAMPAIGN_FUNDS_COLLECT = 'Campaign - Fund - Collect',
+
+    CAMPAIGN_FUNDS_GET_BACK = 'Campaign - Fund - Get Back',
 
 
 }

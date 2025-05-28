@@ -81,13 +81,15 @@ export enum HandlesEnums {
     
     SET_FUNDRAISING_STATUS = 'Set Fund Raising Status',
 
-    SET_FAILED_STATUS = 'Set Failed Status',
-
     SUBMIT_MILESTONE = 'Submit Milestone',
     APPROVE_MILESTONE = 'Approve Milestone',
     REJECT_MILESTONE = 'Reject Milestone',
     FAIL_MILESTONE = 'Fail Milestone',
+
     COLLECT_FUNDS = 'Collect Funds',
+
+    GETBACK_FUNDS = 'GetBack Funds',
+
 }
 
 //--------------------------------------------------------------

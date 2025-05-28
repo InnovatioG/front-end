@@ -22,18 +22,16 @@ export interface CampaignAddScriptsTxParams {
     campaign_id: string;
 }
 
-
 export interface AddScriptTxParams {
     script_Hash: ScriptHash;
 }
-
 
 export interface CampaignDeployTxParams {
     protocol_id: string;
     campaign_id: string;
     cdTokenAdminPolicy_CS: string;
-    beginAt: number
-    deadline: number
+    beginAt: number;
+    deadline: number;
 }
 
 export interface CampaignFundsAddTxParams {
@@ -47,11 +45,35 @@ export interface CampaignFundsMintDepositTxParams {
     campaign_funds_id: string;
 }
 
+export interface CampaignLaunchTxParams {
+    protocol_id: string;
+    campaign_id: string;
+}
+
 export interface CampaignFundsInvestTxParams {
     protocol_id: string;
     campaign_id: string;
     campaign_funds_id: string;
     amount: string;
+}
+
+export interface CampaignCampaingReachedTxParams {
+    protocol_id: string;
+    campaign_id: string;
+}
+export interface CampaignCampaingNotReachedTxParams {
+    protocol_id: string;
+    campaign_id: string;
+}
+
+export interface CampaignMilestoneApproveTxParams {
+    protocol_id: string;
+    campaign_id: string;
+}
+
+export interface CampaignMilestoneFailTxParams {
+    protocol_id: string;
+    campaign_id: string;
 }
 
 export interface CampaignFundsGetBackTxParams {
@@ -66,23 +88,3 @@ export interface CampaignFundsCollectTxParams {
     campaign_id: string;
     campaign_funds_id: string;
 }
-
-export interface CampaignLaunchTxParams {
-    protocol_id: string;
-    campaign_id: string;
-}
-
-export interface CampaignMilestoneApproveTxParams {
-    protocol_id: string;
-    campaign_id: string;
-}
-
-export interface CampaignCampaingReachedTxParams {
-    protocol_id: string;
-    campaign_id: string;
-}
-export interface CampaignCampaingNotReachedTxParams {
-    protocol_id: string;
-    campaign_id: string;
-}
-
