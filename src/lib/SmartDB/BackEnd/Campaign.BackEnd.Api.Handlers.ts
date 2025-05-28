@@ -47,6 +47,7 @@ import {
     CampaignDeployTxParams,
     CampaignFundsAddTxParams,
     CampaignFundsCollectTxParams,
+    CampaignFundsGetBackTxParams,
     CampaignFundsInvestTxParams,
     CampaignFundsMintDepositTxParams,
     CampaignLaunchTxParams,
@@ -59,6 +60,7 @@ import {
     CampaignValidatorRedeemerFundsAdd,
     CampaignValidatorRedeemerFundsCollect,
     CampaignValidatorRedeemerInitializeCampaign,
+    CampaignValidatorRedeemerMilestoneApprove,
     CampaignValidatorRedeemerNotReachedCampaign,
     CampaignValidatorRedeemerReachedCampaign,
 } from '../Entities/Redeemers/Campaign.Redeemer';
@@ -71,6 +73,7 @@ import {
     CampaignFundsPolicyRedeemerMintID,
     CampaignFundsValidatorRedeemerCollect,
     CampaignFundsValidatorRedeemerDeposit,
+    CampaignFundsValidatorRedeemerGetBack,
     CampaignFundsValidatorRedeemerSell,
 } from '../Entities/Redeemers/CampaignFunds.Redeemer';
 
@@ -182,6 +185,19 @@ export class CampaignBackEndApplied extends BaseSmartDBBackEndApplied {
         };
         let datum: any = CampaignEntity.mkDatumFromPlainObject(datumPlainObject) as CampaignDatum;
         this.sortDatum(datum);
+        return datum;
+    }
+    public static mkUpdated_CampaignDatum_Collect(campaignDatum_In: CampaignDatum, amountADAToCollect: bigint): CampaignDatum {
+        // usado para que los campos del datum tengan las clases y tipos bien
+        // txParams trae los campos pero estan plain, no son clases ni tipos
+
+        const datumPlainObject: CampaignDatum = {
+            ...JSON.parse(toJson(campaignDatum_In)),
+            cdCollectedADA: campaignDatum_In.cdCollectedADA + amountADAToCollect,
+        };
+
+        let datum: CampaignDatum = CampaignEntity.mkDatumFromPlainObject(datumPlainObject) as CampaignDatum;
+
         return datum;
     }
 
@@ -477,6 +493,8 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                         return await this.campaignFundsCollectTxApiHandler(req, res);
                     } else if (query[1] === 'campaign-milestone-approve-tx') {
                         return await this.campaignMilestoneApproveTxApiHandler(req, res);
+                    } else if (query[1] === 'campaign-get-back-tx') {
+                        return await this.campaignFundsGetBackTxApiHandler(req, res);
                     }
                 }
                 return res.status(405).json({ error: 'Wrong Api route' });
@@ -1464,7 +1482,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     fieldsForSelect: {},
                 });
                 if (campaignFunds === undefined) {
-                    throw `Invalid campaign_funds_id id`;
+                    throw `Invalid campaign_funds_id`;
                 }
                 //--------------------------------------
                 const campaignFunds_SmartUTxO = campaignFunds.smartUTxO;
@@ -1498,11 +1516,22 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 const campaignFundsDatum_In = campaignFunds.getMyDatum() as CampaignFundsDatum;
                 console_log(0, this._Entity.className(), `Fund Collect Tx - campaignFundsDatum_In: ${showData(campaignFundsDatum_In, false)}`);
                 //--------------------------------------
-                //TODO: esta funcion devuelve el total disponible para collect, se puede aceptar una amount que verifique que no se pase de este valor
-                const campaignAdaToCollect = CampaignFundsBackEndApplied.getAmountToCollect(campaign);
+                const campaignAdaMaxToCollect = campaign.getAmountToCollect();
+                const campaignAdaToCollect = campaignAdaMaxToCollect < campaignFunds.cfdSubtotal_Avalaible_ADA ? campaignAdaMaxToCollect : campaignFunds.cfdSubtotal_Avalaible_ADA;
+
                 //--------------------------------------
                 const valueFor_Collect_ADA: Assets = { lovelace: BigInt(Number(campaignAdaToCollect) * (Number(campaign.campaignToken_PriceADA) / 1000000)) };
                 console_log(0, this._Entity.className(), `Fund Collect Tx - valueFor_Buy_ADA: ${showData(valueFor_Collect_ADA)}`);
+                //--------------------------------------
+                //--------------------------------------
+                const campaignDatum_Out = CampaignBackEndApplied.mkUpdated_CampaignDatum_Collect(campaignDatum_In, valueFor_Collect_ADA.lovelace);
+                console_log(0, this._Entity.className(), `Fund Collect Tx - campaignDatum_Out: ${showData(campaignDatum_Out, false)}`);
+                const campaignDatum_Out_Hex = CampaignEntity.datumToCborHex(campaignDatum_Out);
+                console_log(0, this._Entity.className(), `Fund Collect Tx - campaignDatum_Out_Hex: ${showData(campaignDatum_Out_Hex, false)}`);
+                //--------------------------------------
+                const campaignValidatorRedeemerCollect = new CampaignValidatorRedeemerFundsCollect({ amount: campaignAdaToCollect });
+                const campaignValidatorRedeemerCollect_Hex = campaignValidatorRedeemerCollect.toCborHex();
+                console_log(0, this._Entity.className(), `Fund Collect Tx - campaignValidatorRedeemerCollect_Hex: ${showData(campaignValidatorRedeemerCollect_Hex, false)}`);
                 //--------------------------------------
                 const value_Of_CampaignFundsDatum_In = campaignFunds_SmartUTxO.assets;
                 console_log(0, this._Entity.className(), `Fund Collect Tx - value_Of_CampaignFundsDatum_In: ${showData(value_Of_CampaignFundsDatum_In, false)}`);
@@ -1514,8 +1543,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 const campaignFundsDatum_Out_Hex = CampaignFundsEntity.datumToCborHex(campaignFundsDatum_Out);
                 console_log(0, this._Entity.className(), `Fund Collect Tx - campaignFundsDatum_Out_Hex: ${showData(campaignFundsDatum_Out_Hex, false)}`);
                 //--------------------------------------
-                // TODO: Verificar si esta reedeemer es el adecuado
-                const campaignFundsValidatorRedeemerCollect = new CampaignValidatorRedeemerFundsCollect({ amount: campaignAdaToCollect });
+                const campaignFundsValidatorRedeemerCollect = new CampaignFundsValidatorRedeemerCollect({ amount: campaignAdaToCollect });
                 const campaignFundsValidatorRedeemerCollect_Hex = campaignFundsValidatorRedeemerCollect.toCborHex();
                 console_log(
                     0,
@@ -1556,12 +1584,29 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     //--------------------------------------
                     // TODO: Agregar que todas las UTxO de la cual colectar
                     tx = tx
-                        .readFrom([campaign_UTxO])
+                        .collectFrom([campaign_UTxO], campaignValidatorRedeemerCollect_Hex)
                         .collectFrom([campaignFunds_UTxO], campaignFundsValidatorRedeemerCollect_Hex)
+
+                        .pay.ToAddressWithData(campaignValidator_Address, { kind: 'inline', value: campaignDatum_Out_Hex }, valueFor_CampaignDatum_Out)
                         .pay.ToAddressWithData(campaignFundsValidator_Address, { kind: 'inline', value: campaignFundsDatum_Out_Hex }, valueFor_CampaignFundsDatum_Out)
+
                         .addSigner(walletTxParams.address)
                         .validFrom(from)
                         .validTo(until);
+                    //--------------------------------------
+                    const scriptCampaignValidator = await ScriptBackEndApplied.getByHash(campaignValidator_Hash);
+                    if (scriptCampaignValidator !== undefined) {
+                        console_log(0, this._Entity.className(), `Fund Collect Tx - Using Script as Ref: ${campaignValidator_Hash}`);
+                        const smartUTxO = scriptCampaignValidator.smartUTxO;
+                        if (smartUTxO === undefined) {
+                            throw `Can't find smartUTxO in Campaign`;
+                        }
+                        const uTxO = smartUTxO.getUTxO();
+                        tx = tx.readFrom([uTxO]);
+                    } else {
+                        console_log(0, this._Entity.className(), `Fund Collect Tx - Attaching Script: ${campaignValidator_Hash}`);
+                        tx = tx.attach.MintingPolicy(campaignValidator_Script);
+                    }
                     //--------------------------------------
                     const scriptCampaignFundsValidator = await ScriptBackEndApplied.getByHash(campaignFundsValidator_Hash);
                     if (scriptCampaignFundsValidator !== undefined) {
@@ -1587,6 +1632,24 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     //--------------------------------------
                     console_log(0, this._Entity.className(), `Fund Collect Tx - Tx Resources: ${showData({ redeemers: resources.redeemersLogs, tx: resources.tx })}`);
                     //--------------------------------------
+                    const transactionCampaignValidatorRedeemerDeposit: TransactionRedeemer = {
+                        tx_index: 0,
+                        purpose: 'spend',
+                        redeemerObj: campaignValidatorRedeemerCollect,
+                        unit_mem: resources.redeemers[0]?.MEM,
+                        unit_steps: resources.redeemers[0]?.CPU,
+                    };
+                    const transactionCampaignDatum_In: TransactionDatum = {
+                        address: campaignValidator_Address,
+                        datumType: CampaignEntity.className(),
+                        datumObj: campaignDatum_In,
+                    };
+                    const transactionCampaignDatum_Out: TransactionDatum = {
+                        address: campaignValidator_Address,
+                        datumType: CampaignEntity.className(),
+                        datumObj: campaignDatum_Out,
+                    };
+                    //--------------------------------------
                     const transactionCampaignFundsValidatorRedeemerDeposit: TransactionRedeemer = {
                         tx_index: 0,
                         purpose: 'spend',
@@ -1609,14 +1672,18 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                         hash: txHash,
                         ids: { campaign_id: campaign._DB_id, campaign_funds_id: txParams.campaign_funds_id },
                         redeemers: {
+                            campaignValidatorRedeemerCollect: transactionCampaignValidatorRedeemerDeposit,
                             campaignFundsValidatorRedeemerCollect: transactionCampaignFundsValidatorRedeemerDeposit,
                         },
                         datums: {
+                            campaignDatum_In: transactionCampaignDatum_In,
+                            campaignDatum_Out: transactionCampaignDatum_Out,
+
                             campaignFundsDatum_In: transactionFundsCampaignDatum_In,
                             campaignFundsDatum_Out: transactionCampaignFundsDatum_Out,
                         },
-                        reading_UTxOs: [campaign_UTxO],
-                        consuming_UTxOs: [campaignFunds_UTxO],
+                        reading_UTxOs: [],
+                        consuming_UTxOs: [campaign_UTxO, campaignFunds_UTxO],
                         unit_mem: resources.tx[0]?.MEM,
                         unit_steps: resources.tx[0]?.CPU,
                         fee: resources.tx[0]?.FEE,
@@ -2361,7 +2428,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
 
                 //--------------------------------------
                 const campaignFunds_UTxOs = campaignFunds_SmartUTxOs.map((campaignFunds_SmartUTxO) => campaignFunds_SmartUTxO.getUTxO());
-                console_log(0, this._Entity.className(), `Fund MilestoneApprove Tx - campaignFunds_UTxOs: ${campaignFunds_UTxOs.length}`);
+                console_log(0, this._Entity.className(), `MilestoneApprove Tx - campaignFunds_UTxOs: ${campaignFunds_UTxOs.length}`);
                 //--------------------------------------
                 const campaignValidator_Hash = campaign.fdpCampaignValidator_Hash;
                 const campaignValidator_Script = campaign.fdpCampaignValidator_Script;
@@ -2385,17 +2452,17 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 const valueFor_CampaignDatum_Out = value_Of_CampaignDatum_In;
                 console_log(0, this._Entity.className(), `MilestoneApprove Tx - valueFor_CampaignDatum_Out: ${showData(valueFor_CampaignDatum_Out, false)}`);
                 //--------------------------------------
-                const campaignValidatorRedeemerInitializeCampaign = new CampaignValidatorRedeemerInitializeCampaign();
+                const campaignValidatorRedeemerMilestoneApprove = new CampaignValidatorRedeemerMilestoneApprove();
                 console_log(
                     0,
                     this._Entity.className(),
-                    `MilestoneApprove Tx - campaignValidatorRedeemerInitializeCampaign: ${showData(campaignValidatorRedeemerInitializeCampaign, false)}`
+                    `MilestoneApprove Tx - campaignValidatorRedeemerMilestoneApprove: ${showData(campaignValidatorRedeemerMilestoneApprove, false)}`
                 );
-                const campaignValidatorRedeemerInitializeCampaign_Hex = objToCborHex(campaignValidatorRedeemerInitializeCampaign);
+                const campaignValidatorRedeemerMilestoneApprove_Hex = objToCborHex(campaignValidatorRedeemerMilestoneApprove);
                 console_log(
                     0,
                     this._Entity.className(),
-                    `MilestoneApprove Tx - campaignValidatorRedeemerInitializeCampaign_Hex: ${showData(campaignValidatorRedeemerInitializeCampaign_Hex, false)}`
+                    `MilestoneApprove Tx - campaignValidatorRedeemerMilestoneApprove_Hex: ${showData(campaignValidatorRedeemerMilestoneApprove_Hex, false)}`
                 );
                 //--------------------------------------
                 const { from, until } = await TimeBackEnd.getTxTimeRange(lucid);
@@ -2431,7 +2498,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     //--------------------------------------
                     tx = tx
                         .readFrom([protocol_UTxO, ...campaignFunds_UTxOs])
-                        .collectFrom([campaign_UTxO], campaignValidatorRedeemerInitializeCampaign_Hex)
+                        .collectFrom([campaign_UTxO], campaignValidatorRedeemerMilestoneApprove_Hex)
                         .pay.ToAddressWithData(campaignValidator_Address, { kind: 'inline', value: campaignDatum_Out_Hex }, valueFor_CampaignDatum_Out)
                         .addSigner(walletTxParams.address)
                         .validFrom(from)
@@ -2464,7 +2531,7 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                     const transactionCampaignValidatorRedeemerInitializeCampaign: TransactionRedeemer = {
                         tx_index: 0,
                         purpose: 'spend',
-                        redeemerObj: campaignValidatorRedeemerInitializeCampaign,
+                        redeemerObj: campaignValidatorRedeemerMilestoneApprove,
                         unit_mem: resources.redeemers[0]?.MEM,
                         unit_steps: resources.redeemers[0]?.CPU,
                     };
@@ -2507,6 +2574,247 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
             }
         } else {
             console_error(-1, this._Entity.className(), `MilestoneApprove Tx - Error: Method not allowed`);
+            return res.status(405).json({ error: `Method not allowed` });
+        }
+    }
+
+    public static async campaignFundsGetBackTxApiHandler(req: NextApiRequestAuthenticated, res: NextApiResponse) {
+        //--------------------
+        if (req.method === 'POST') {
+            console_log(1, this._Entity.className(), `Fund Get Back Tx - POST - Init`);
+            try {
+                //-------------------------
+                const sanitizedBody = sanitizeForDatabase(req.body);
+                //-------------------------
+                const { walletTxParams, txParams }: { walletTxParams: WalletTxParams; txParams: CampaignFundsGetBackTxParams } = sanitizedBody;
+                //--------------------------------------
+                console_log(0, this._Entity.className(), `Fund Get Back Tx - txParams: ${showData(txParams)}`);
+                //--------------------------------------
+                const { lucid } = await LucidToolsBackEnd.prepareLucidBackEndForTx(walletTxParams);
+                //--------------------------------------
+                walletTxParams.utxos = fixUTxOList(walletTxParams?.utxos ?? []);
+                //--------------------------------------
+                const ProtocolBackEndApplied = (await import('./Protocol.BackEnd.Api.Handlers')).ProtocolBackEndApplied;
+                const protocol = await ProtocolBackEndApplied.getById_<ProtocolEntity>(txParams.protocol_id, {
+                    ...optionsGetMinimalWithSmartUTxOCompleteFields,
+                    fieldsForSelect: {},
+                });
+                if (protocol === undefined) {
+                    throw `Invalid protocol id`;
+                }
+                //--------------------------------------
+                const protocol_SmartUTxO = protocol.smartUTxO;
+                if (protocol_SmartUTxO === undefined) {
+                    throw `Can't find Protocol UTxO`;
+                }
+                const protocol_UTxO = protocol_SmartUTxO.getUTxO();
+                //--------------------------------------
+                const campaign = await this._BackEndApplied.getById_<CampaignEntity>(txParams.campaign_id, {
+                    ...optionsGetMinimalWithSmartUTxOCompleteFields,
+                    fieldsForSelect: {},
+                });
+                if (campaign === undefined) {
+                    throw `Invalid campaign id`;
+                }
+                //--------------------------------------
+                const campaign_SmartUTxO = campaign.smartUTxO;
+                if (campaign_SmartUTxO === undefined) {
+                    throw `Can't find Campaign UTxO`;
+                }
+                //--------------------------------------
+                const campaign_UTxO = campaign_SmartUTxO.getUTxO();
+                console_log(0, this._Entity.className(), `Fund Get Back Tx - campaign_UTxO: ${formatUTxO(campaign_UTxO.txHash, campaign_UTxO.outputIndex)}`);
+                //--------------------------------------
+                const campaignFunds = await CampaignFundsBackEndApplied.getById_<CampaignFundsEntity>(txParams.campaign_funds_id, {
+                    ...optionsGetMinimalWithSmartUTxOCompleteFields,
+                    fieldsForSelect: {},
+                });
+                if (campaignFunds === undefined) {
+                    throw `Invalid campaign_funds_id id`;
+                }
+                //--------------------------------------
+                const campaignFunds_SmartUTxO = campaignFunds.smartUTxO;
+                if (campaignFunds_SmartUTxO === undefined) {
+                    throw `Can't find Campaign Funds UTxO`;
+                }
+                //--------------------------------------
+                const campaignFunds_UTxO = campaignFunds_SmartUTxO.getUTxO();
+                console_log(0, this._Entity.className(), `Fund Get Back Tx - campaignFunds_UTxO: ${formatUTxO(campaignFunds_UTxO.txHash, campaignFunds_UTxO.outputIndex)}`);
+                //--------------------------------------
+                const campaignPolicy_CS = campaign.fdpCampaignPolicy_CS;
+                const campaignPolicy_Script = campaign.fdpCampaignPolicy_Script;
+                const campaignValidator_Hash = campaign.fdpCampaignValidator_Hash;
+                const campaignValidator_Script = campaign.fdpCampaignValidator_Script;
+                const campaignValidator_Address = campaign.getNet_Address();
+                const campaignFundsPolicyID_CS = campaign.fdpCampaignFundsPolicyID_CS;
+                const campaignFundsPolicyID_Script = campaign.fdpCampaignFundsPolicyID_Script;
+                const campaignFundsValidator_Hash = campaign.fdpCampaignFundsValidator_Hash;
+                const campaignFundsValidator_Script = campaign.fdpCampaignFundsValidator_Script;
+                const campaignFundsValidator_Address = campaign.getNet_FundHolding_Validator_Address();
+                //--------------------------------------
+                const campaignTokens_AC_Lucid = campaignPolicy_CS + campaign.cdCampaignToken_TN;
+                //--------------------------------------
+                const campaignDatum_In = campaign.getMyDatum() as CampaignDatum;
+                console_log(0, this._Entity.className(), `Fund Get Back Tx - campaignDatum_In: ${showData(campaignDatum_In, false)}`);
+                //--------------------------------------
+                const value_Of_CampaignDatum_In = campaign_SmartUTxO.assets;
+                const valueFor_CampaignDatum_Out = value_Of_CampaignDatum_In;
+                console_log(0, this._Entity.className(), `Fund Get Back Tx - valueFor_CampaignDatum_Out: ${showData(valueFor_CampaignDatum_Out, false)}`);
+                //--------------------------------------
+                const campaignFundsDatum_In = campaignFunds.getMyDatum() as CampaignFundsDatum;
+                console_log(0, this._Entity.className(), `Fund Get Back Tx - campaignFundsDatum_In: ${showData(campaignFundsDatum_In, false)}`);
+                const campaignFundsDatum_In_Hex = CampaignFundsEntity.datumToCborHex(campaignFundsDatum_In);
+                console_log(0, this._Entity.className(), `Fund Get Back Tx - campaignFundsDatum_In_Hex: ${showData(campaignFundsDatum_In_Hex, false)}`);
+                //--------------------------------------
+                const campaignTokensAmountToGetBack = BigInt(Math.round(Number(txParams.amount)));
+                //--------------------------------------
+                const valueFor_GetBack_CampaignTokens: Assets = { [campaignTokens_AC_Lucid]: campaignTokensAmountToGetBack };
+                console_log(0, this._Entity.className(), `Fund Get Back Tx - valueFor_GetBack_CampaignTokens: ${showData(valueFor_GetBack_CampaignTokens)}`);
+                //--------------------------------------
+                const valuation = 1 - Number(campaign.cdCollectedADA) / Number(campaign.cdFundedADA);
+                const current_price = Number(campaign.campaignToken_PriceADA) * valuation;
+                //--------------------------------------
+                const valueFor_GetBack_ADA: Assets = { lovelace: BigInt(Number(campaignTokensAmountToGetBack) * current_price) };
+                console_log(0, this._Entity.className(), `Fund Get Back Tx - valueFor_GetBack_ADA: ${showData(valueFor_GetBack_ADA)}`);
+                //--------------------------------------
+
+                const value_Of_CampaignFundsDatum_In = campaignFunds_SmartUTxO.assets;
+                console_log(0, this._Entity.className(), `Fund Get Back Tx - value_Of_CampaignFundsDatum_In: ${showData(value_Of_CampaignFundsDatum_In, false)}`);
+                let valueFor_CampaignFundsDatum_Out = addAssetsList([value_Of_CampaignFundsDatum_In, valueFor_GetBack_CampaignTokens]);
+                valueFor_CampaignFundsDatum_Out = subsAssets(valueFor_CampaignFundsDatum_Out, valueFor_GetBack_ADA);
+                console_log(0, this._Entity.className(), `Fund Get Back Tx - valueFor_CampaignFundsDatum_Out: ${showData(valueFor_CampaignFundsDatum_Out, false)}`);
+                //--------------------------------------
+                const campaignFundsDatum_Out = CampaignFundsBackEndApplied.mkUpdated_CampaignFundsDatum_GetBack(
+                    campaignFundsDatum_In,
+                    campaignTokensAmountToGetBack,
+                    valueFor_GetBack_ADA.lovelace
+                );
+                console_log(0, this._Entity.className(), `Fund Get Back Tx - campaignFundsDatum_Out: ${showData(campaignFundsDatum_Out, false)}`);
+                const campaignFundsDatum_Out_Hex = CampaignFundsEntity.datumToCborHex(campaignFundsDatum_Out);
+                console_log(0, this._Entity.className(), `Fund Get Back Tx - campaignFundsDatum_Out_Hex: ${showData(campaignFundsDatum_Out_Hex, false)}`);
+                //--------------------------------------
+                const campaignFundsValidatorRedeemerGetBack = new CampaignFundsValidatorRedeemerGetBack({ amount: campaignTokensAmountToGetBack });
+                const campaignFundsValidatorRedeemerGetBack_Hex = campaignFundsValidatorRedeemerGetBack.toCborHex();
+                console_log(
+                    0,
+                    this._Entity.className(),
+                    `Fund Get Back Tx - campaignFundsValidatorRedeemerGetBack_Hex: ${showData(campaignFundsValidatorRedeemerGetBack_Hex, false)}`
+                );
+                //--------------------------------------
+                const { from, until } = await TimeBackEnd.getTxTimeRange(lucid);
+                //--------------------------------------
+                const flomSlot = lucid.unixTimeToSlot(from);
+                const untilSlot = lucid.unixTimeToSlot(until);
+                //--------------------------------------
+                console_log(
+                    0,
+                    this._Entity.className(),
+                    `Fund Get Back Tx - currentSlot: ${lucid.currentSlot()} - fromSlot ${flomSlot} to ${untilSlot} - from UnixTime ${from} to ${until} - from Date ${convertMillisToTime(
+                        from
+                    )} to ${convertMillisToTime(until)} `
+                );
+                //--------------------------------------
+                let transaction: TransactionEntity | undefined = undefined;
+                //--------------------------------------
+                try {
+                    const transaction_ = new TransactionEntity({
+                        paymentPKH: walletTxParams.pkh,
+                        date: new Date(from),
+                        type: TxEnums.CAMPAIGN_FUNDS_INVEST,
+                        status: TRANSACTION_STATUS_CREATED,
+                        reading_UTxOs: [],
+                        consuming_UTxOs: [],
+                        valid_from: from,
+                        valid_until: until,
+                    });
+                    //--------------------------------------
+                    transaction = await TransactionBackEndApplied.create(transaction_);
+                    //--------------------------------------
+                    let tx: TxBuilder = lucid.newTx();
+                    //--------------------------------------
+                    tx = tx
+                        .readFrom([campaign_UTxO])
+                        .collectFrom([campaignFunds_UTxO], campaignFundsValidatorRedeemerGetBack_Hex)
+                        .pay.ToAddressWithData(campaignFundsValidator_Address, { kind: 'inline', value: campaignFundsDatum_Out_Hex }, valueFor_CampaignFundsDatum_Out)
+                        .addSigner(walletTxParams.address)
+                        .validFrom(from)
+                        .validTo(until);
+                    //--------------------------------------
+                    const scriptCampaignFundsValidator = await ScriptBackEndApplied.getByHash(campaignFundsValidator_Hash);
+                    if (scriptCampaignFundsValidator !== undefined) {
+                        console_log(0, this._Entity.className(), `Fund Get Back Tx - Using Script as Ref: ${campaignFundsValidator_Hash}`);
+                        const smartUTxO = scriptCampaignFundsValidator.smartUTxO;
+                        if (smartUTxO === undefined) {
+                            throw `Can't find smartUTxO in Campaign`;
+                        }
+                        const uTxO = smartUTxO.getUTxO();
+                        tx = tx.readFrom([uTxO]);
+                    } else {
+                        console_log(0, this._Entity.className(), `Fund Get Back Tx - Attaching Script: ${campaignFundsValidator_Hash}`);
+                        tx = tx.attach.MintingPolicy(campaignFundsValidator_Script);
+                    }
+                    //--------------------------------------
+                    const txComplete = await tx.complete();
+                    //--------------------------------------
+                    const txCborHex = txComplete.toCBOR();
+                    //--------------------------------------
+                    const txHash = txComplete.toHash();
+                    //--------------------------------------
+                    const resources = getTxRedeemersDetailsAndResources(txComplete);
+                    //--------------------------------------
+                    console_log(0, this._Entity.className(), `Fund Get Back Tx - Tx Resources: ${showData({ redeemers: resources.redeemersLogs, tx: resources.tx })}`);
+                    //--------------------------------------
+                    const transactionCampaignFundsValidatorRedeemerDeposit: TransactionRedeemer = {
+                        tx_index: 0,
+                        purpose: 'spend',
+                        redeemerObj: campaignFundsValidatorRedeemerGetBack,
+                        unit_mem: resources.redeemers[1]?.MEM,
+                        unit_steps: resources.redeemers[1]?.CPU,
+                    };
+                    const transactionFundsCampaignDatum_In: TransactionDatum = {
+                        address: campaignFundsValidator_Address,
+                        datumType: CampaignFundsEntity.className(),
+                        datumObj: campaignFundsDatum_In,
+                    };
+                    const transactionCampaignFundsDatum_Out: TransactionDatum = {
+                        address: campaignFundsValidator_Address,
+                        datumType: CampaignFundsEntity.className(),
+                        datumObj: campaignFundsDatum_Out,
+                    };
+                    //--------------------------------------
+                    await TransactionBackEndApplied.setPendingTransaction(transaction, {
+                        hash: txHash,
+                        ids: { campaign_id: campaign._DB_id, campaign_funds_id: txParams.campaign_funds_id },
+                        redeemers: {
+                            campaignFundsValidatorRedeemerGetBack: transactionCampaignFundsValidatorRedeemerDeposit,
+                        },
+                        datums: {
+                            campaignFundsDatum_In: transactionFundsCampaignDatum_In,
+                            campaignFundsDatum_Out: transactionCampaignFundsDatum_Out,
+                        },
+                        reading_UTxOs: [campaign_UTxO],
+                        consuming_UTxOs: [campaignFunds_UTxO],
+                        unit_mem: resources.tx[0]?.MEM,
+                        unit_steps: resources.tx[0]?.CPU,
+                        fee: resources.tx[0]?.FEE,
+                        size: resources.tx[0]?.SIZE,
+                        CBORHex: txCborHex,
+                    });
+                    //--------------------------------------
+                    console_log(-1, this._Entity.className(), `Fund Get Back Tx - txCborHex: ${showData(txCborHex)}`);
+                    return res.status(200).json({ txHash, txCborHex });
+                } catch (error) {
+                    if (transaction !== undefined) {
+                        await TransactionBackEndApplied.setFailedTransaction(transaction, { error, walletInfo: walletTxParams, txInfo: txParams });
+                    }
+                    throw error;
+                }
+            } catch (error) {
+                console_error(-1, this._Entity.className(), `Fund Get Back Tx - Error: ${error}`);
+                return res.status(500).json({ error: `An error occurred while creating the ${this._Entity.className()} Fund Get Back Tx: ${error}` });
+            }
+        } else {
+            console_error(-1, this._Entity.className(), `Fund Get Back Tx - Error: Method not allowed`);
             return res.status(405).json({ error: `Method not allowed` });
         }
     }

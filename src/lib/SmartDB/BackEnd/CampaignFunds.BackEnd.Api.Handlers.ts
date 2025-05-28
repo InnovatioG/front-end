@@ -74,6 +74,21 @@ export class CampaignFundsBackEndApplied extends BaseSmartDBBackEndApplied {
 
         return datum;
     }
+     public static mkUpdated_CampaignFundsDatum_GetBack(campaignFundsDatum_In: CampaignFundsDatum, amountTokens: bigint, amountADA: bigint): CampaignFundsDatum {
+        // usado para que los campos del datum tengan las clases y tipos bien
+        // txParams trae los campos pero estan plain, no son clases ni tipos
+
+        const datumPlainObject: CampaignFundsDatum = {
+            ...JSON.parse(toJson(campaignFundsDatum_In)),
+            cfdSubtotal_Sold_CampaignToken: campaignFundsDatum_In.cfdSubtotal_Sold_CampaignToken - amountTokens,
+            cfdSubtotal_Avalaible_CampaignToken: campaignFundsDatum_In.cfdSubtotal_Avalaible_CampaignToken + amountTokens,
+            cfdSubtotal_Avalaible_ADA: campaignFundsDatum_In.cfdSubtotal_Avalaible_ADA - amountADA,
+        };
+
+        let datum: CampaignFundsDatum = CampaignFundsEntity.mkDatumFromPlainObject(datumPlainObject) as CampaignFundsDatum;
+
+        return datum;
+    }
     public static mkUpdated_CampaignFundsDatum_Collect(campaignFundsDatum_In: CampaignFundsDatum, amountADAToCollect: bigint): CampaignFundsDatum {
         // usado para que los campos del datum tengan las clases y tipos bien
         // txParams trae los campos pero estan plain, no son clases ni tipos
@@ -87,16 +102,6 @@ export class CampaignFundsBackEndApplied extends BaseSmartDBBackEndApplied {
         let datum: CampaignFundsDatum = CampaignFundsEntity.mkDatumFromPlainObject(datumPlainObject) as CampaignFundsDatum;
 
         return datum;
-    }
-    // TODO: checkea si esta funcion debe ir aca
-    public static getAmountToCollect(campaign: CampaignEntity): bigint {
-        const sucessMilestones = campaign.cdMilestones.filter((milestone) => milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsSuccess);
-        const accumPorcentaje = sucessMilestones.reduce((acc, milestone) => acc + milestone.cmPerncentage, 0n);
-
-        const totalFundsToCollect = campaign.cdFundedADA * accumPorcentaje;
-        const avalibleFundsToCollect = totalFundsToCollect - campaign.cdCollectedADA;
-
-        return avalibleFundsToCollect;
     }
 
     // #endregion datum methods
