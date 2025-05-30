@@ -3,12 +3,20 @@ frontend:
   phases:
     preBuild:
       commands:
+        - echo "🧼 Cleaning .env, .next and node_modules"
+        - rm -f .env || true
+        - rm -rf .next || true
+        - rm -rf node_modules || true
         - nvm install 20
         - nvm use 20
-        - node -v
+        - echo "🔧 Node version:" && node -v
+        - echo "📦 Installing dependencies"
         - npm ci
     build:
       commands:
+        - echo "🔍 ENV VARS in build context:"
+        - printenv | grep -E 'POSTGRES|NEXTAUTH|JWT|DB|DATABASE|SECRET' || true
+        - echo "🚀 Building app"
         - npm run build
   artifacts:
     baseDirectory: .next
