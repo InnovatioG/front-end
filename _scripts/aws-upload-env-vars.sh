@@ -4,7 +4,7 @@
 APP_ID="d2z6s7x3swf1dj"
 BRANCH_NAME="main"
 
-ENV_FILE=".env.PREVIEW.local"
+ENV_FILE=".env.PREVIEW-AWS.local"
 
 if [ ! -f "$ENV_FILE" ]; then
   echo "❌ No se encontró el archivo $ENV_FILE"
