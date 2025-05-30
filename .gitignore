@@ -52,6 +52,9 @@ files-contents-export-*.txt
 
 bugs.md
 
+.env
+
+
 # local env files
 .env.local
 .env.development.local

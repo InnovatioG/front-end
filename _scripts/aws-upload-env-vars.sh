@@ -17,12 +17,14 @@ echo "🔄 Procesando $ENV_FILE..."
 ENV_VARS_JSON=$(awk -F= '
   /^[^#].*=.*$/ {
     key=$1
-    $1=""
-    sub(/^=/, "", $0)
-    gsub(/"/, "\\\"", $0)
-    printf "\"%s\":\"%s\",\n", key, $0
+    val=$0
+    sub("^[^=]*=", "", val)
+    gsub(/"/, "\\\"", val)
+    gsub(/^[ \t]+|[ \t]+$/, "", val)  # trim
+    printf "\"%s\":\"%s\",\n", key, val
   }
 ' "$ENV_FILE" | sed '$s/,$//' | awk 'BEGIN{print "{"} {print} END{print "}"}')
+
 
 # Escribe a archivo temporal para pasar como argumento
 echo "$ENV_VARS_JSON" > /tmp/env_vars.json
