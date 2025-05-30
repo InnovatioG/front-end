@@ -467,5 +467,22 @@ export class CampaignEntity extends BaseSmartDBEntity {
         return index;
     }
 
+    public calculateGetBackAmountLovelace(tokens: bigint): bigint {
+        // Refund valuation: returns the ADA equivalent of tokens based on unused funds
+
+        if (this.cdFundedADA === 0n) return tokens * this.cdCampaignToken_PriceADA;
+
+        const funded = Number(this.cdFundedADA);
+        const collected = Number(this.cdCollectedADA);
+        const price = Number(this.cdCampaignToken_PriceADA);
+        const tokensNum = Number(tokens);
+
+        const valuation = 1 - collected / funded;
+        const finalPrice = price * valuation;
+        const adaAmount = Math.trunc(tokensNum * finalPrice);
+
+        return BigInt(adaAmount);
+    }
+
     // #endregion class methods
 }
