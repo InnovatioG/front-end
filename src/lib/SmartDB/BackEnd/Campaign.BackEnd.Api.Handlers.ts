@@ -83,7 +83,6 @@ import {
     CampaignFundsValidatorRedeemerSell,
 } from '../Entities/Redeemers/CampaignFunds.Redeemer';
 import { MilestoneStatusBackEndApplied } from './MilestoneStatus.BackEnd.Api.Handlers';
-import { CampaignStatusEntity } from '../Entities/CampaignStatus.Entity';
 
 @BackEndAppliedFor(CampaignEntity)
 export class CampaignBackEndApplied extends BaseSmartDBBackEndApplied {
@@ -341,94 +340,43 @@ export class CampaignBackEndApplied extends BaseSmartDBBackEndApplied {
                     console_log(0, instance.className(), `callbackOnAfterLoad - statusDB set to COUNTDOWN`);
                 }
             } else if (statusDatum === CampaignDatumStatus_Code_Id_Enums.CsReached) {
+                //---------------------------------
                 console_log(0, instance.className(), `callbackOnAfterLoad - statusDatum: CsReached`);
-                const isMilestonesFailed = campaignInstance.cdMilestones.some((milestone) => milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsFailed);
-                const isMilestonesAllSuccess = campaignInstance.cdMilestones.every((milestone) => milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsSuccess);
-                console_log(0, instance.className(), `callbackOnAfterLoad - isMilestonesFailed: ${isMilestonesFailed}, isMilestonesAllSuccess: ${isMilestonesAllSuccess}`);
-                if (isMilestonesFailed) {
-                    const statusInstanceFAILED = await CampaignStatusBackEndApplied.getOneByParams_({ code_id: CampaignStatus_Code_Id_Enums.FAILED });
-                    if (!statusInstanceFAILED) {
-                        throw `Status ${CampaignStatus_Code_Id_Enums.FAILED} not found`;
-                    }
-                    console_log(0, instance.className(), `callbackOnAfterLoad - statusDB set to FAILED`);
-                    status_id = statusInstanceFAILED._DB_id;
-                } else if (isMilestonesAllSuccess) {
-                    const statusInstanceSUCCESS = await CampaignStatusBackEndApplied.getOneByParams_({ code_id: CampaignStatus_Code_Id_Enums.SUCCESS });
-                    if (!statusInstanceSUCCESS) {
-                        throw `Status ${CampaignStatus_Code_Id_Enums.SUCCESS} not found`;
-                    }
-                    console_log(0, instance.className(), `callbackOnAfterLoad - statusDB set to SUCCESS`);
-                    status_id = statusInstanceSUCCESS._DB_id;
-                } else {
-                    const statusInstanceACTIVE = await CampaignStatusBackEndApplied.getOneByParams_({ code_id: CampaignStatus_Code_Id_Enums.ACTIVE });
-                    if (!statusInstanceACTIVE) {
-                        throw `Status ${CampaignStatus_Code_Id_Enums.ACTIVE} not found`;
-                    }
-                    console_log(0, instance.className(), `callbackOnAfterLoad - statusDB set to ACTIVE`);
-                    status_id = statusInstanceACTIVE._DB_id;
-                }
-            } else if (statusDatum === CampaignDatumStatus_Code_Id_Enums.CsNotReached) {
-                console_log(0, instance.className(), `callbackOnAfterLoad - statusDatum: CsNotReached`);
-                const statusInstanceUNREACHED = await CampaignStatusBackEndApplied.getOneByParams_({ code_id: CampaignStatus_Code_Id_Enums.UNREACHED });
-                if (!statusInstanceUNREACHED) {
-                    throw `Status ${CampaignStatus_Code_Id_Enums.UNREACHED} not found`;
-                }
-                console_log(0, instance.className(), `callbackOnAfterLoad - statusDB set to UNREACHED`);
-                status_id = statusInstanceUNREACHED._DB_id;
-            } else if (statusDatum === CampaignDatumStatus_Code_Id_Enums.CsFailedMilestone) {
-                console_log(0, instance.className(), `callbackOnAfterLoad - statusDatum: CsFailedMilestone`);
-                const statusInstanceFAILED = await CampaignStatusBackEndApplied.getOneByParams_({ code_id: CampaignStatus_Code_Id_Enums.FAILED });
-                if (!statusInstanceFAILED) {
-                    throw `Status ${CampaignStatus_Code_Id_Enums.FAILED} not found`;
-                }
-                console_log(0, instance.className(), `callbackOnAfterLoad - statusDB set to FAILED`);
-                status_id = statusInstanceFAILED._DB_id;
-            }
-
-            campaignInstance.begin_at = new Date(Number(begin_at.toString()));
-            campaignInstance.deadline = new Date(Number(deadline.toString()));
-            campaignInstance.campaignToken_PriceADA = BigInt(campaignInstance.cdCampaignToken_PriceADA.toString());
-            campaignInstance.campaign_status_id = status_id;
-            campaignInstance.fundedADA = fundedADA;
-            campaignInstance.collectedADA = collectedADA;
-
-            //--------------------------------------
-            // 🔹 ACTUALIZACIÓN DE MILESTONES POR STATUS INFERIDO
-            if (statusDatum === CampaignDatumStatus_Code_Id_Enums.CsReached && campaignInstance.cdMilestones?.length) {
-                console_log(
-                    0,
-                    instance.className(),
-                    `callbackOnAfterLoad - statusDatum: CsReached - Actualizando milestones por status inferido. Total: ${campaignInstance.cdMilestones.length}`
-                );
+                //---------------------------------
                 const MilestoneBackEndApplied = (await import('./Milestone.BackEnd.Api.Handlers')).MilestoneBackEndApplied;
                 const milestones: MilestoneEntity[] = await MilestoneBackEndApplied.getByParams_({ campaign_id: campaignInstance._DB_id }, { sort: { order: 1 } });
+                //---------------------------------
                 const milestoneStatusNOT_STARTED = await MilestoneStatusBackEndApplied.getOneByParams_({ code_id: MilestoneStatus_Code_Id_Enums.NOT_STARTED });
                 const milestoneStatusSTARTED = await MilestoneStatusBackEndApplied.getOneByParams_({ code_id: MilestoneStatus_Code_Id_Enums.STARTED });
-                const milestoneStatusFINISHED = await MilestoneStatusBackEndApplied.getOneByParams_({ code_id: MilestoneStatus_Code_Id_Enums.FINISHED });
                 const milestoneStatusCOLLECT = await MilestoneStatusBackEndApplied.getOneByParams_({ code_id: MilestoneStatus_Code_Id_Enums.COLLECT });
+                const milestoneStatusFINISHED = await MilestoneStatusBackEndApplied.getOneByParams_({ code_id: MilestoneStatus_Code_Id_Enums.FINISHED });
                 const milestoneStatusFAILED = await MilestoneStatusBackEndApplied.getOneByParams_({ code_id: MilestoneStatus_Code_Id_Enums.FAILED });
+                //---------------------------------
                 if (!milestoneStatusNOT_STARTED || !milestoneStatusSTARTED || !milestoneStatusFINISHED || !milestoneStatusCOLLECT || !milestoneStatusFAILED) {
                     throw new Error(`Milestone status not found`);
                 }
+                //---------------------------------
                 if (milestones?.length) {
+                    // 🔹 ACTUALIZACIÓN DE MILESTONES POR STATUS INFERIDO
+                    console_log(0, instance.className(), `callbackOnAfterLoad - Actualizando milestones por status inferido. Total: ${campaignInstance.cdMilestones.length}`);
                     for (let i = 0; i < campaignInstance.cdMilestones.length; i++) {
                         const datumMilestone = campaignInstance.cdMilestones[i];
                         const statusMilestoneDatum = datumMilestone.cmStatus;
                         const statusMiestoneDatumStr = MilestoneDatumStatus_Code_Id_Enums[statusMilestoneDatum];
                         const dbMilestone = milestones[i];
                         let milestone_status_id = dbMilestone.milestone_status_id;
-                        const milestoneStatusCurrent: MilestoneStatusEntity | undefined = await MilestoneStatusBackEndApplied.getOneByParams_({ _id: milestone_status_id });
-                        if (!milestoneStatusCurrent) {
+                        const statusMilestoneDBCurrent: MilestoneStatusEntity | undefined = await MilestoneStatusBackEndApplied.getOneByParams_({ _id: milestone_status_id });
+                        if (!statusMilestoneDBCurrent) {
                             throw new Error(`Milestone status not found`);
                         }
                         console_log(
                             0,
                             instance.className(),
-                            `callbackOnAfterLoad - Revisando milestone[${i}] | statusMilestoneDatum: ${statusMiestoneDatumStr} | statusMilestoneDB: ${milestoneStatusCurrent.name}`
+                            `callbackOnAfterLoad - Revisando milestone[${i}] | statusMilestoneDatum: ${statusMiestoneDatumStr} | statusMilestoneDB: ${statusMilestoneDBCurrent.name}`
                         );
 
                         const statusIsManual = [MilestoneStatus_Code_Id_Enums.SUBMITTED, MilestoneStatus_Code_Id_Enums.REJECTED, MilestoneStatus_Code_Id_Enums.COLLECT].includes(
-                            milestoneStatusCurrent.code_id
+                            statusMilestoneDBCurrent.code_id
                         );
 
                         if (statusIsManual) {
@@ -477,7 +425,63 @@ export class CampaignBackEndApplied extends BaseSmartDBBackEndApplied {
                         }
                     }
                 }
+                //---------------------------------
+                const isMilestonesStatusDatumFailed = campaignInstance.cdMilestones.some((milestone) => milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsFailed);
+                const isMilestonesStatusDatumAllSuccess = campaignInstance.cdMilestones.every((milestone) => milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsSuccess);
+                const isMilestonesStatusDBAllSuccess = milestones.every((milestone) => milestone.milestone_status_id === milestoneStatusFINISHED._DB_id);
+                //---------------------------------
+                console_log(
+                    0,
+                    instance.className(),
+                    `callbackOnAfterLoad - isMilestonesStatusDatumFailed: ${isMilestonesStatusDatumFailed}, isMilestonesStatusDatumAllSuccess: ${isMilestonesStatusDatumAllSuccess}, isMilestonesStatusDBAllSuccess: ${isMilestonesStatusDBAllSuccess}`
+                );
+                //---------------------------------
+                if (isMilestonesStatusDatumFailed) {
+                    const statusInstanceFAILED = await CampaignStatusBackEndApplied.getOneByParams_({ code_id: CampaignStatus_Code_Id_Enums.FAILED });
+                    if (!statusInstanceFAILED) {
+                        throw `Status ${CampaignStatus_Code_Id_Enums.FAILED} not found`;
+                    }
+                    console_log(0, instance.className(), `callbackOnAfterLoad - statusDB set to FAILED`);
+                    status_id = statusInstanceFAILED._DB_id;
+                } else if (isMilestonesStatusDatumAllSuccess && isMilestonesStatusDBAllSuccess) {
+                    const statusInstanceSUCCESS = await CampaignStatusBackEndApplied.getOneByParams_({ code_id: CampaignStatus_Code_Id_Enums.SUCCESS });
+                    if (!statusInstanceSUCCESS) {
+                        throw `Status ${CampaignStatus_Code_Id_Enums.SUCCESS} not found`;
+                    }
+                    console_log(0, instance.className(), `callbackOnAfterLoad - statusDB set to SUCCESS`);
+                    status_id = statusInstanceSUCCESS._DB_id;
+                } else {
+                    const statusInstanceACTIVE = await CampaignStatusBackEndApplied.getOneByParams_({ code_id: CampaignStatus_Code_Id_Enums.ACTIVE });
+                    if (!statusInstanceACTIVE) {
+                        throw `Status ${CampaignStatus_Code_Id_Enums.ACTIVE} not found`;
+                    }
+                    console_log(0, instance.className(), `callbackOnAfterLoad - statusDB set to ACTIVE`);
+                    status_id = statusInstanceACTIVE._DB_id;
+                }
+            } else if (statusDatum === CampaignDatumStatus_Code_Id_Enums.CsNotReached) {
+                console_log(0, instance.className(), `callbackOnAfterLoad - statusDatum: CsNotReached`);
+                const statusInstanceUNREACHED = await CampaignStatusBackEndApplied.getOneByParams_({ code_id: CampaignStatus_Code_Id_Enums.UNREACHED });
+                if (!statusInstanceUNREACHED) {
+                    throw `Status ${CampaignStatus_Code_Id_Enums.UNREACHED} not found`;
+                }
+                console_log(0, instance.className(), `callbackOnAfterLoad - statusDB set to UNREACHED`);
+                status_id = statusInstanceUNREACHED._DB_id;
+            } else if (statusDatum === CampaignDatumStatus_Code_Id_Enums.CsFailedMilestone) {
+                console_log(0, instance.className(), `callbackOnAfterLoad - statusDatum: CsFailedMilestone`);
+                const statusInstanceFAILED = await CampaignStatusBackEndApplied.getOneByParams_({ code_id: CampaignStatus_Code_Id_Enums.FAILED });
+                if (!statusInstanceFAILED) {
+                    throw `Status ${CampaignStatus_Code_Id_Enums.FAILED} not found`;
+                }
+                console_log(0, instance.className(), `callbackOnAfterLoad - statusDB set to FAILED`);
+                status_id = statusInstanceFAILED._DB_id;
             }
+
+            campaignInstance.begin_at = new Date(Number(begin_at.toString()));
+            campaignInstance.deadline = new Date(Number(deadline.toString()));
+            campaignInstance.campaignToken_PriceADA = BigInt(campaignInstance.cdCampaignToken_PriceADA.toString());
+            campaignInstance.campaign_status_id = status_id;
+            campaignInstance.fundedADA = fundedADA;
+            campaignInstance.collectedADA = collectedADA;
         }
 
         //--------------------------------------
@@ -3036,34 +3040,19 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 //--------------------------------------
                 const campaignTokens_AC_Lucid = campaignPolicy_CS + campaign.cdCampaignToken_TN;
                 //--------------------------------------
-                const campaignDatum_In = campaign.getMyDatum() as CampaignDatum;
-                console_log(0, this._Entity.className(), `Get Back Tx - campaignDatum_In: ${showData(campaignDatum_In, false)}`);
+                const campaignTokensAmountToGetBack = BigInt(Math.round(Number(txParams.amount)));
                 //--------------------------------------
-                const value_Of_CampaignDatum_In = campaign_SmartUTxO.assets;
-                const valueFor_CampaignDatum_Out = value_Of_CampaignDatum_In;
-                console_log(0, this._Entity.className(), `Get Back Tx - valueFor_CampaignDatum_Out: ${showData(valueFor_CampaignDatum_Out, false)}`);
+                const amountLovelace = campaign.calculateGetBackAmountLovelace(campaignTokensAmountToGetBack);
+                const valueFor_GetBack_ADA: Assets = { lovelace: amountLovelace };
+                console_log(0, this._Entity.className(), `Get Back Tx - valueFor_GetBack_ADA: ${showData(valueFor_GetBack_ADA)}`);
+                //--------------------------------------
+                const valueFor_GetBack_CampaignTokens: Assets = { [campaignTokens_AC_Lucid]: campaignTokensAmountToGetBack };
+                console_log(0, this._Entity.className(), `Get Back Tx - valueFor_GetBack_CampaignTokens: ${showData(valueFor_GetBack_CampaignTokens)}`);
                 //--------------------------------------
                 const campaignFundsDatum_In = campaignFunds.getMyDatum() as CampaignFundsDatum;
                 console_log(0, this._Entity.className(), `Get Back Tx - campaignFundsDatum_In: ${showData(campaignFundsDatum_In, false)}`);
                 const campaignFundsDatum_In_Hex = CampaignFundsEntity.datumToCborHex(campaignFundsDatum_In);
                 console_log(0, this._Entity.className(), `Get Back Tx - campaignFundsDatum_In_Hex: ${showData(campaignFundsDatum_In_Hex, false)}`);
-                //--------------------------------------
-                const campaignTokensAmountToGetBack = BigInt(Math.round(Number(txParams.amount)));
-                //--------------------------------------
-                const valueFor_GetBack_CampaignTokens: Assets = { [campaignTokens_AC_Lucid]: campaignTokensAmountToGetBack };
-                console_log(0, this._Entity.className(), `Get Back Tx - valueFor_GetBack_CampaignTokens: ${showData(valueFor_GetBack_CampaignTokens)}`);
-                //--------------------------------------
-                const valuation = 1 - Number(campaign.cdCollectedADA) / Number(campaign.cdFundedADA);
-                const current_price = Number(campaign.campaignToken_PriceADA) * valuation;
-                //--------------------------------------
-                const valueFor_GetBack_ADA: Assets = { lovelace: BigInt(Number(campaignTokensAmountToGetBack) * current_price) };
-                console_log(0, this._Entity.className(), `Get Back Tx - valueFor_GetBack_ADA: ${showData(valueFor_GetBack_ADA)}`);
-                //--------------------------------------
-                const value_Of_CampaignFundsDatum_In = campaignFunds_SmartUTxO.assets;
-                console_log(0, this._Entity.className(), `Get Back Tx - value_Of_CampaignFundsDatum_In: ${showData(value_Of_CampaignFundsDatum_In, false)}`);
-                let valueFor_CampaignFundsDatum_Out = addAssetsList([value_Of_CampaignFundsDatum_In, valueFor_GetBack_CampaignTokens]);
-                valueFor_CampaignFundsDatum_Out = subsAssets(valueFor_CampaignFundsDatum_Out, valueFor_GetBack_ADA);
-                console_log(0, this._Entity.className(), `Get Back Tx - valueFor_CampaignFundsDatum_Out: ${showData(valueFor_CampaignFundsDatum_Out, false)}`);
                 //--------------------------------------
                 const campaignFundsDatum_Out = CampaignFundsBackEndApplied.mkUpdated_CampaignFundsDatum_GetBack(
                     campaignFundsDatum_In,
@@ -3073,6 +3062,12 @@ export class CampaignApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 console_log(0, this._Entity.className(), `Get Back Tx - campaignFundsDatum_Out: ${showData(campaignFundsDatum_Out, false)}`);
                 const campaignFundsDatum_Out_Hex = CampaignFundsEntity.datumToCborHex(campaignFundsDatum_Out);
                 console_log(0, this._Entity.className(), `Get Back Tx - campaignFundsDatum_Out_Hex: ${showData(campaignFundsDatum_Out_Hex, false)}`);
+                //--------------------------------------
+                const value_Of_CampaignFundsDatum_In = campaignFunds_SmartUTxO.assets;
+                console_log(0, this._Entity.className(), `Get Back Tx - value_Of_CampaignFundsDatum_In: ${showData(value_Of_CampaignFundsDatum_In, false)}`);
+                let valueFor_CampaignFundsDatum_Out = addAssetsList([value_Of_CampaignFundsDatum_In, valueFor_GetBack_CampaignTokens]);
+                valueFor_CampaignFundsDatum_Out = subsAssets(valueFor_CampaignFundsDatum_Out, valueFor_GetBack_ADA);
+                console_log(0, this._Entity.className(), `Get Back Tx - valueFor_CampaignFundsDatum_Out: ${showData(valueFor_CampaignFundsDatum_Out, false)}`);
                 //--------------------------------------
                 const campaignFundsValidatorRedeemerGetBack = new CampaignFundsValidatorRedeemerGetBack({ amount: campaignTokensAmountToGetBack });
                 const campaignFundsValidatorRedeemerGetBack_Hex = campaignFundsValidatorRedeemerGetBack.toCborHex();
