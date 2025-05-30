@@ -23,7 +23,7 @@ frontend:
             if [ -z "$val" ]; then
               echo "# $key=        (NOT FOUND in env)" >> .env.production
             else
-              echo "$key=\"$val\"" >> .env.production
+              echo "$key=$val" >> .env.production
             fi
           done < .env.EXAMPLE
         - echo "✅ .env.production generado:"
