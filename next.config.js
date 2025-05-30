@@ -14,6 +14,8 @@ const nextConfig = {
     swcMinify: true,
     reactStrictMode: false,
     //-------------
+    output: 'standalone', // ⚠️ ESTA LÍNEA ES CLAVE PARA AMPLIFY
+    //-------------
     images: {
         domains: ['localhost', 'ipfs.io', 'taptools.io', 'taptools-public.s3.amazonaws.com', 'img.cexplorer.io', 'github.com', 's3.amazonaws.com'],
         remotePatterns: [
@@ -95,7 +97,7 @@ const nextConfig = {
         } else {
             config.devtool = 'source-map'; // Detailed for production
         }
-        
+
         // config.plugins.push(
         //     //NOTE: para que anda cardano serialization lib browser y se agregue wasm en next static server
         //     new (class {
