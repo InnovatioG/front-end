@@ -1,22 +1,36 @@
 version: 1
 frontend:
+  framework: nextjs
+  config:
+    Runtime: nodejs20.x
+    ssr: true # ⚠️ ESTA LÍNEA ES CLAVE
   phases:
     preBuild:
       commands:
-        - echo "🧼 Cleaning .env, .next and node_modules"
-        - rm -f .env || true
-        - rm -rf .next || true
-        - rm -rf node_modules || true
         - nvm install 20
         - nvm use 20
-        - echo "🔧 Node version:" && node -v
-        - echo "📦 Installing dependencies"
+        - node -v
+        - echo "📦 Generando .env.production desde .env.EXAMPLE"
+        - |
+          > .env.production
+          while IFS= read -r line; do
+            if [[ "$line" =~ ^#.*$ || -z "$line" ]]; then
+              echo "$line" >> .env.production
+              continue
+            fi
+            key=$(echo "$line" | cut -d '=' -f1 | xargs)
+            val="${!key}"
+            if [ -z "$val" ]; then
+              echo "# $key=        (NOT FOUND in env)" >> .env.production
+            else
+              echo "$key=\"$val\"" >> .env.production
+            fi
+          done < .env.EXAMPLE
+        - echo "✅ .env.production generado:"
+        - cat .env.production
         - npm ci
     build:
       commands:
-        - echo "🔍 ENV VARS in build context:"
-        - printenv | grep -E 'POSTGRES|NEXTAUTH|JWT|DB|DATABASE|SECRET' || true
-        - echo "🚀 Building app"
         - npm run build
   artifacts:
     baseDirectory: .next
