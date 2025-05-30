@@ -19,7 +19,7 @@ frontend:
               continue
             fi
             key=$(echo "$line" | cut -d '=' -f1 | xargs)
-            val="${!key}"
+            val=$(printenv "$key")
             if [ -z "$val" ]; then
               echo "# $key=        (NOT FOUND in env)" >> .env.production
             else
