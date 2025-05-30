@@ -2,7 +2,7 @@ export const protocolVersion = 1;
 export const CampaignVersion = 1;
 export const ScriptVersion = 1;
 
-const PROTOCOL_BASE_VERSION = 1;
+const PROTOCOL_BASE_VERSION = 2;
 const CAMPAIGN_BASE_VERSION = 1;
 const SCRIPT_BASE_VERSION = 1;
 
