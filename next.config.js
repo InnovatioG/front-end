@@ -17,7 +17,7 @@ const nextConfig = {
     output: 'standalone', // ⚠️ ESTA LÍNEA ES CLAVE PARA AMPLIFY
     //-------------
     images: {
-        domains: ['localhost', 'ipfs.io', 'taptools.io', 'taptools-public.s3.amazonaws.com', 'img.cexplorer.io', 'github.com', 's3.amazonaws.com'],
+        domains: ['localhost', 'ipfs.io', 'taptools.io', 'taptools-public.s3.amazonaws.com', 'img.cexplorer.io', 'github.com', 's3.amazonaws.com', 'innovatio-assets.s3.amazonaws.com'],
         remotePatterns: [
             {
                 protocol: 'https',
