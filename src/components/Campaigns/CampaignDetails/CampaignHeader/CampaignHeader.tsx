@@ -24,22 +24,22 @@ const CampaignHeader: React.FC<ICampaignIdStoreSafe & ICampaignDetails> = (props
                 {pageView === PageViewEnums.MANAGE && isEditMode === false && (
                     <p>
                         {isProtocolTeam === true
-                            ? `- PROTOCOL TEAM - MANAGE CAMPAIGN`
+                            ? `PROTOCOL TEAM - MANAGE CAMPAIGN`
                             : isAdmin === true
-                            ? `- ADMIN - MANAGE CAMPAIGN`
+                            ? `ADMIN - MANAGE CAMPAIGN`
                             : isEditor === true
-                            ? `- EDITOR - MANAGE CAMPAIGN`
+                            ? `EDITOR - MANAGE CAMPAIGN`
                             : null}
                     </p>
                 )}
                 {pageView === PageViewEnums.MANAGE && isEditMode === true && (
                     <p>
                         {isProtocolTeam === true
-                            ? `- PROTOCOL TEAM - EDIT CAMPAIGN`
+                            ? `PROTOCOL TEAM - EDIT CAMPAIGN`
                             : isAdmin === true
-                            ? `- ADMIN - EDIT CAMPAIGN`
+                            ? `ADMIN - EDIT CAMPAIGN`
                             : isEditor === true
-                            ? `- EDITOR - EDIT CAMPAIGN`
+                            ? `EDITOR - EDIT CAMPAIGN`
                             : null}
                     </p>
                 )}
