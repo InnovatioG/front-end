@@ -1,4 +1,4 @@
-import { uploadFileToS3 } from '@/utils/s3Upload';
+import { apiUploadFileToS3 } from '@/utils/s3/frontend/s3-frontend-utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import ReactQuill from 'react-quill';
 
@@ -39,7 +39,7 @@ export default function useTextEditor({ content, onChange, menuOptions }: useTex
                 try {
                     const bucketName = 'innovatio.space/innovatioFounderMVP';
                     const key = `quill/${file.name}`;
-                    const fileUrl = await uploadFileToS3(file, bucketName, key);
+                    const fileUrl = await apiUploadFileToS3(file, bucketName, key);
                     setEditorContent((prevContent) => `${prevContent}<img src="${fileUrl}" />`);
                     if (!quillRef.current) return;
                     const quill = quillRef.current.getEditor();

@@ -72,8 +72,8 @@ import {
 import { HandlesEnums, ModalsEnums, TaskEnums } from './constants/constants';
 import { ADMIN_TOKEN_POLICY_CS, EMERGENCY_ADMIN_TOKEN_POLICY_CS, TxEnums } from './constants/on-chain';
 import { CampaignStatus_Code_Id_Enums, MilestoneStatus_Code_Id_Enums, SubmissionStatus_Enums } from './constants/status/status';
-import { deleteFileFromS3, uploadBlobURLToS3 } from './s3Upload';
 import { isBlobURL } from './utils';
+import { apiDeleteFileFromS3, apiUploadBlobURLToS3 } from './s3/frontend/s3-frontend-utils';
 
 export const processEntityListChanges = async <T extends { _DB_id?: string; campaign_id?: string }>(
     campaign_id: string,
@@ -98,7 +98,7 @@ export const processEntityListChanges = async <T extends { _DB_id?: string; camp
 
                 if (!isNullOrBlank(imageUrl) && isBlobURL(imageUrl)) {
                     try {
-                        const newImageUrl = await uploadBlobURLToS3(imageUrl);
+                        const newImageUrl = await apiUploadBlobURLToS3(imageUrl);
                         (item as any)[field] = newImageUrl; // Update entity with new S3 URL
                         URL.revokeObjectURL(imageUrl); // Revoke previous picture
                     } catch (error) {
@@ -198,7 +198,7 @@ export async function serviceSaveCampaign(
             const imageUrl = (entity as any)[field];
             if (!isNullOrBlank(imageUrl) && isBlobURL(imageUrl)) {
                 try {
-                    const newImageUrl = await uploadBlobURLToS3(imageUrl);
+                    const newImageUrl = await apiUploadBlobURLToS3(imageUrl);
                     (entity as any)[field] = newImageUrl; // Update entity with new S3 URL
                     URL.revokeObjectURL(imageUrl); // Revoke previous picture
                 } catch (error) {
@@ -296,7 +296,7 @@ export async function serviceSaveCampaign(
                 allFilesToDelete.map(async (fileKey) => {
                     try {
                         const bucketName = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME!;
-                        await deleteFileFromS3(bucketName, fileKey);
+                        await apiDeleteFileFromS3(bucketName, fileKey);
                     } catch (error) {
                         console.error(`Error deleting file from S3: ${fileKey}`, error);
                     }
@@ -495,7 +495,7 @@ export async function serviceDeleteCampaign(
                 allFilesToDelete.map(async (fileKey) => {
                     try {
                         const bucketName = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME!;
-                        await deleteFileFromS3(bucketName, fileKey);
+                        await apiDeleteFileFromS3(bucketName, fileKey);
                     } catch (error) {
                         console.error(`Error deleting file from S3: ${fileKey}`, error);
                     }
