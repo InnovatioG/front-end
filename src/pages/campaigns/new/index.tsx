@@ -126,7 +126,6 @@ const CampaignsCreationPage: React.FC<CampaignsCreationPageProps> = (props) => {
         <>
             {isLoading === true || (isLoadingStore === true && wallet !== undefined) ? (
                 <>
-                    {toJson({ isLoading, isLoadingStore })}
                     <LoadingPage />
                 </>
             ) : walletStore.isConnected === false || (walletStore.info?.isWalletValidatedWithSignedToken === false && wallet === undefined) ? (
