@@ -24,6 +24,11 @@ const nextConfig = {
                 hostname: 'github.com',
                 pathname: '/**',
             },
+            {
+                protocol: 'http',
+                hostname: '18.213.68.76',
+                pathname: '/_next/static/media/**',
+            },
         ],
     },
     generateBuildId: async () => {
