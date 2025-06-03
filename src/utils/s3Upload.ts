@@ -41,7 +41,7 @@ export const deleteFileFromS3 = async (bucketName: string, key: string) => {
     }
 };
 
-export const uploadMemberAvatarToS3 = async (blobUrl: string): Promise<string> => {
+export const uploadBlobURLToS3 = async (blobUrl: string): Promise<string> => {
     try {
         const response = await fetch(blobUrl);
         const blob = await response.blob();
