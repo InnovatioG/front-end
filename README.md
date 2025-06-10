@@ -129,9 +129,11 @@ npm run swagger-start               # Start Swagger server in production mode
 npm run resetTime                   # Reset mocked blockchain time
 npm run setTime                     # Set mocked blockchain time
 ```
+
 ## 📄 Technical Specification
 
 For detailed technical documentation, see the [documentation](./.docs/INNOVATIO_OFF_CHAIN_TECHNICAL.md).
+
 ## 📦 Deployment
 
 This project is ready to deploy on:

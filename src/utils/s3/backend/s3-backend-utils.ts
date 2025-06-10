@@ -23,20 +23,20 @@ export const uploadFileStreamToS3 = async ({
         Key: key,
         Body: stream,
         ContentType: contentType,
-        ACL: 'public-read',
+        // ACL: 'public-read',
     };
 
-    console.log(`[S3] Upload INIT`);
-    console.log(`[S3] Bucket: ${bucket}`);
-    console.log(`[S3] Key: ${key}`);
-    console.log(`[S3] Content-Type: ${contentType}`);
+    console.log(`[S3-BACK] Upload INIT`);
+    console.log(`[S3-BACK] Bucket: ${bucket}`);
+    console.log(`[S3-BACK] Key: ${key}`);
+    console.log(`[S3-BACK] Content-Type: ${contentType}`);
 
     try {
         const result = await s3.upload(params).promise();
-        console.log(`[S3] Upload OK: ${result.Location}`);
+        console.log(`[S3-BACK] Upload OK: ${result.Location}`);
         return { Location: result.Location };
     } catch (error) {
-        console.error(`[S3] Upload ERROR for key: ${key}`, error);
+        console.error(`[S3-BACK] Upload ERROR for key: ${key}`, error);
         throw error;
     }
 };
@@ -53,15 +53,15 @@ export const deleteFileFromS3 = async ({
         Key: key,
     };
 
-    console.log(`[S3] Delete INIT`);
-    console.log(`[S3] Bucket: ${bucket}`);
-    console.log(`[S3] Key: ${key}`);
+    console.log(`[S3-BACK] Delete INIT`);
+    console.log(`[S3-BACK] Bucket: ${bucket}`);
+    console.log(`[S3-BACK] Key: ${key}`);
 
     try {
         await s3.deleteObject(params).promise();
-        console.log(`[S3] Delete OK`);
+        console.log(`[S3-BACK] Delete OK`);
     } catch (error) {
-        console.error(`[S3] Delete ERROR for key: ${key}`, error);
+        console.error(`[S3-BACK] Delete ERROR for key: ${key}`, error);
         throw error;
     }
 };
