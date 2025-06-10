@@ -1746,7 +1746,7 @@ export async function serviceValidateFundraisingStatus(
         console.log(`sumAvalaibleADA: ${sumAvalaibleADA}`);
         console.log(`campaign.campaign.cdRequestedMinADA: ${campaign.campaign.cdRequestedMinADA}`);
         //--------------------------------------
-        if (sumAvalaibleADA > campaign.campaign.cdRequestedMinADA) {
+        if (sumAvalaibleADA >= campaign.campaign.cdRequestedMinADA) {
             //--------------------------------------
             const fetchParams = async () => {
                 //--------------------------------------
