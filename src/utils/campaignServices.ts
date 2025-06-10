@@ -295,7 +295,7 @@ export async function serviceSaveCampaign(
             await Promise.all(
                 allFilesToDelete.map(async (fileKey) => {
                     try {
-                        const bucketName = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME!;
+                        const bucketName = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME || 'innovatio-assets';
                         await apiDeleteFileFromS3(bucketName, fileKey);
                     } catch (error) {
                         console.error(`Error deleting file from S3: ${fileKey}`, error);
@@ -494,7 +494,7 @@ export async function serviceDeleteCampaign(
             await Promise.all(
                 allFilesToDelete.map(async (fileKey) => {
                     try {
-                        const bucketName = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME!;
+                        const bucketName = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME || 'innovatio-assets';
                         await apiDeleteFileFromS3(bucketName, fileKey);
                     } catch (error) {
                         console.error(`Error deleting file from S3: ${fileKey}`, error);

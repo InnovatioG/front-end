@@ -37,8 +37,9 @@ export default function useTextEditor({ content, onChange, menuOptions }: useTex
             const file = input.files?.[0];
             if (file) {
                 try {
-                    const bucketName = 'innovatio.space/innovatioFounderMVP';
-                    const key = `quill/${file.name}`;
+                    const bucketName = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME || 'innovatio-assets';
+                    const folder = process.env.NEXT_PUBLIC_AWS_BUCKET_CONTENTS_FOLDER || 'contents';
+                    const key = `${folder}/${file.name}`;
                     const fileUrl = await apiUploadFileToS3(file, bucketName, key);
                     setEditorContent((prevContent) => `${prevContent}<img src="${fileUrl}" />`);
                     if (!quillRef.current) return;

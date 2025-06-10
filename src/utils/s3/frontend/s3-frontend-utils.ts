@@ -56,10 +56,11 @@ export const apiUploadBlobURLToS3 = async (blobUrl: string): Promise<string> => 
 
     const file = new File([blob], `avatar-${Date.now()}.${extension}`, { type: mimeType });
 
-    const bucketName = process.env.NEXT_PUBLIC_S3_BUCKET!;
-    const key = `avatars/avatar-${Date.now()}.${extension}`;
+    const bucketName = process.env.NEXT_PUBLIC_AWS_BUCKET_NAME || 'innovatio-assets';
+    const folder = process.env.NEXT_PUBLIC_AWS_BUCKET_AVATARS_FOLDER || 'avatars';
+    const key = `${folder}/avatar-${Date.now()}.${extension}`;
 
-    console.log(`[S3-FRONT] Uploading Blob File - key: ${key}, type: ${mimeType}`);
+    console.log(`[S3-FRONT] Uploading Blob File - key: ${key}, type: ${mimeType}, size: ${file.size}, extension: ${extension}, bucket: ${bucketName}`);
 
     const result = await apiUploadFileToS3(file, bucketName, key);
     return result.Location;
