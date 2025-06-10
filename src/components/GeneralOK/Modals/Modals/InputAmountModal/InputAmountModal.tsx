@@ -63,6 +63,7 @@ const InputAmountModal: React.FC<InputAmountModalProps> = ({ modalType, handleTy
             switch (modalType) {
                 case ModalsEnums.INVEST:
                     setAmountStr('0');
+                    setAmountBigInt(0n);
                     break;
                 case ModalsEnums.GETBACK_FUNDS:
                     //--------------------------------------
@@ -72,6 +73,7 @@ const InputAmountModal: React.FC<InputAmountModalProps> = ({ modalType, handleTy
                     const tokensAmount = walletStore.getTotalOfUnit(campaignTokens_AC_Lucid, true);
                     //--------------------------------------
                     setAmountStr(`${tokensAmount.toString()} ${hexToStr(campaign.cdCampaignToken_TN)}`);
+                    setAmountBigInt(tokensAmount);
                     break;
                 case ModalsEnums.COLLECT_FUNDS:
                     //--------------------------------------
