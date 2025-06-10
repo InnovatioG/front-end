@@ -312,7 +312,7 @@ export const formatMoneyByADAOrDollar = (value: number | bigint) => {
     }
     if (useGeneralStore.getState().priceADAOrDollar === 'dollar') {
         if (!useGeneralStore.getState().adaPrice) return formatMoney(Number(value), 'ADA');
-        return formatMoney(Number(value) / Number(useGeneralStore.getState().adaPrice), 'USD');
+        return formatMoney(Number(value) * Number(useGeneralStore.getState().adaPrice), 'USD');
     }
     return formatMoney(Number(value), 'ADA');
 };

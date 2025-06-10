@@ -6,6 +6,7 @@ import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 import { REQUESTED_MAX_ADA, REQUESTED_MIN_ADA } from '@/utils/constants/constants';
 import React, { useMemo, useState } from 'react';
 import styles from './FundrasingSlider.module.scss';
+import { formatMoney } from '@/utils/formats';
 
 interface FundrasingSliderProps {
     handleSetNumOfMilestones: (numMilestones: number) => void;
@@ -23,10 +24,12 @@ const FundrasingSlider: React.FC<FundrasingSliderProps & ICampaignIdStoreSafe> =
     const [selectedMilestones, setSelectedMilestones] = useState<number>(milestones?.length ?? 0);
 
     const calculaterequestedMaxADA = (requestedMaxADA: number, adaPrice: number) => {
-        if (priceADAOrDollar == 'dollar') {
-            return requestedMaxADA / adaPrice;
-        }
-        return requestedMaxADA;
+        // if (priceADAOrDollar == 'dollar') {
+        //     return requestedMaxADA / adaPrice;
+        // }
+        // return requestedMaxADA;
+        if (!adaPrice) return formatMoney(Number(requestedMaxADA), 'ADA');
+        return formatMoney(Number(requestedMaxADA) * Number(useGeneralStore.getState().adaPrice), 'USD');
     };
 
     return (
@@ -35,10 +38,10 @@ const FundrasingSlider: React.FC<FundrasingSliderProps & ICampaignIdStoreSafe> =
                 <div className={styles.sliderHeader}>
                     <div className={styles.tooltipContainer}>
                         <ToolTipInformation
-                            content={`The fundraising requestedMaxADA is the amount of money you want to raise with your campaign, configured in ₳. While you can use the dollar value as a reference, the actual amount in dollars may vary at the time of signing the smart contract. In today value is ₳${calculaterequestedMaxADA(
+                            content={`The fundraising requestedMaxADA is the amount of money you want to raise with your campaign, configured in ₳. While you can use the dollar value as a reference, the actual amount in dollars may vary at the time of signing the smart contract. In today value is ${calculaterequestedMaxADA(
                                 Number(requestedMaxADA),
                                 adaPrice
-                            ).toFixed(2)}`}
+                            )}`}
                         />
                     </div>
                     <h3>Fundraise Goal</h3>
