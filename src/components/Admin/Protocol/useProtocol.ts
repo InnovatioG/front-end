@@ -1,5 +1,5 @@
 import { useModal } from '@/contexts/ModalContext';
-import { ProtocolAddScriptsTxParams, ProtocolDeployTxParams } from '@/lib/SmartDB/Commons/Params';
+import { ProtocolAddScriptsTxParams, ProtocolDeployTxParams, ProtocolUpdateTxParams } from '@/lib/SmartDB/Commons/Params';
 import { ScriptApi } from '@/lib/SmartDB/FrontEnd';
 import { ModalsEnums, TaskEnums } from '@/utils/constants/constants';
 import { ADMIN_TOKEN_POLICY_CS, TxEnums } from '@/utils/constants/on-chain';
@@ -28,7 +28,7 @@ export function useProtocol() {
     //-------------------------
     const [list, setList] = useState<ProtocolEntity[]>([]);
     const [editItem, setEditItem] = useState<Partial<ProtocolEntity> | null>(null);
-    const [view, setView] = useState<'list' | 'addscripts' | 'deploy'>('list');
+    const [view, setView] = useState<'list' | 'addscripts' | 'deploy' | 'update'>('list');
     //-------------------------
     const walletStore = useWalletStore();
     //-------------------------
@@ -157,6 +157,43 @@ export function useProtocol() {
         const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
         //--------------------------------------
         await handleBtnDoTransaction_WithErrorControl(ProtocolEntity, TxEnums.PROTOCOL_DEPLOY, 'Deploying Protocol...', 'deploy-tx', fetchParams, txApiCall, handleBtnTx);
+        //--------------------------------------
+    };
+    //--------------------------------------
+    const handleUpdateTx = async () => {
+        //--------------------------------------
+        if (appStore.isProcessingTx === true) {
+            openModal(ModalsEnums.PROCESSING_TX);
+            return;
+        }
+        if (appStore.isProcessingTask === true) {
+            openModal(ModalsEnums.PROCESSING_TASK);
+            return;
+        }
+        //--------------------------------------
+        const fetchParams = async () => {
+            //--------------------------------------
+            const { lucid, emulatorDB, walletTxParams } = await LucidToolsFrontEnd.prepareLucidFrontEndForTx(walletStore);
+            //--------------------------------------
+            const txParams: ProtocolUpdateTxParams = {
+                protocol_id: editItem!._DB_id!,
+                pdAdmins: editItem!.pdAdmins!,
+                pdTokenAdminPolicy_CS: editItem!.pdTokenAdminPolicy_CS!,
+            };
+            return {
+                lucid,
+                emulatorDB,
+                walletTxParams,
+                txParams,
+            };
+        };
+        //--------------------------------------
+        openModal(ModalsEnums.PROCESSING_TX);
+        //--------------------------------------
+        const txApiCall = ProtocolApi.callGenericTxApi.bind(ProtocolApi);
+        const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
+        //--------------------------------------
+        await handleBtnDoTransaction_WithErrorControl(ProtocolEntity, TxEnums.PROTOCOL_UPDATE, 'Updating Protocol...', 'update-tx', fetchParams, txApiCall, handleBtnTx);
         //--------------------------------------
     };
     //--------------------------------------
@@ -322,6 +359,7 @@ export function useProtocol() {
         setEditItem,
         setView,
         handleDeployTx,
+        handleUpdateTx,
         handleAddScriptTx,
         handleSyncTaks,
     };

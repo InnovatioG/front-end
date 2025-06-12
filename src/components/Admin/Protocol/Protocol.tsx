@@ -4,7 +4,7 @@ import styles from './Protocol.module.scss';
 import { useProtocol } from './useProtocol';
 
 export default function Protocol() {
-    const { list, editItem, view, setEditItem, setView, handleDeployTx, handleAddScriptTx, handleSyncTaks } = useProtocol();
+    const { list, editItem, view, setEditItem, setView, handleDeployTx, handleUpdateTx, handleAddScriptTx, handleSyncTaks } = useProtocol();
     //--------------------------------------
     const AdminsForm: React.FC<{
         item: Partial<ProtocolEntity>;
@@ -170,14 +170,24 @@ export default function Protocol() {
                                 <td>{item.updatedAt?.toISOString()}</td> */}
                                 <td>
                                     {item._isDeployed === true ? (
-                                        <button
-                                            onClick={() => {
-                                                setEditItem(item);
-                                                setView('addscripts');
-                                            }}
-                                        >
-                                            Add Scripts
-                                        </button>
+                                        <>
+                                            <button
+                                                onClick={() => {
+                                                    setEditItem(item);
+                                                    setView('update');
+                                                }}
+                                            >
+                                                Update
+                                            </button>
+                                            <button
+                                                onClick={() => {
+                                                    setEditItem(item);
+                                                    setView('addscripts');
+                                                }}
+                                            >
+                                                Add Scripts
+                                            </button>
+                                        </>
                                     ) : (
                                         <button
                                             onClick={() => {
@@ -204,48 +214,59 @@ export default function Protocol() {
         </div>
     );
     //--------------------------------------
-    const renderDeploy = () => (
-        <form className={styles.form}>
-            <div>
-                <label>Name:</label>
-                <input
-                    type="text"
-                    value={editItem!.name || ''}
-                    onChange={(e) =>
-                        setEditItem({
-                            ...editItem!,
-                            name: e.target.value,
-                        })
-                    }
-                />
-            </div>
-            <div>
-                <label>Admins:</label>
-                <AdminsForm item={editItem!} setItem={(value) => setEditItem(typeof value === 'function' ? (prev: any) => value(prev) : value)} />
-            </div>
-            <div>
-                <label>Token Admin Policy:</label>
-                <input
-                    type="text"
-                    value={editItem?.pdTokenAdminPolicy_CS || ''}
-                    onChange={(e) =>
-                        setEditItem({
-                            ...editItem!,
-                            pdTokenAdminPolicy_CS: e.target.value,
-                        })
-                    }
-                />
-            </div>
+    const renderDeployOrUpdate = () => {
+        if (editItem === null) return null;
 
-            <button type="button" onClick={handleDeployTx}>
-                Deploy
-            </button>
+        console.log(editItem);
 
-            <button type="button" onClick={() => setView('list')}>
-                Cancel
-            </button>
-        </form>
-    );
+        return (
+            <form className={styles.form}>
+                <div>
+                    <label>Name:</label>
+                    <input
+                        type="text"
+                        value={editItem!.name || ''}
+                        onChange={(e) =>
+                            setEditItem({
+                                ...editItem!,
+                                name: e.target.value,
+                            })
+                        }
+                    />
+                </div>
+                <div>
+                    <label>Admins:</label>
+                    <AdminsForm item={editItem!} setItem={(value) => setEditItem(typeof value === 'function' ? (prev: any) => value(prev) : value)} />
+                </div>
+                <div>
+                    <label>Token Admin Policy:</label>
+                    <input
+                        type="text"
+                        value={editItem?.pdTokenAdminPolicy_CS || ''}
+                        onChange={(e) =>
+                            setEditItem({
+                                ...editItem!,
+                                pdTokenAdminPolicy_CS: e.target.value,
+                            })
+                        }
+                    />
+                </div>
+                {editItem?._isDeployed === true ? (
+                    <button type="button" onClick={handleDeployTx}>
+                        Deploy
+                    </button>
+                ) : (
+                    <button type="button" onClick={handleUpdateTx}>
+                        Update
+                    </button>
+                )}
+
+                <button type="button" onClick={() => setView('list')}>
+                    Cancel
+                </button>
+            </form>
+        );
+    };
     //--------------------------------------
     const renderAddScripts = () => (
         <form className={styles.form}>
@@ -262,7 +283,8 @@ export default function Protocol() {
     return (
         <div className={styles.content}>
             {view === 'list' && renderList()}
-            {view === 'deploy' && editItem !== null && renderDeploy()}
+            {view === 'deploy' && editItem !== null && renderDeployOrUpdate()}
+            {view === 'update' && editItem !== null && renderDeployOrUpdate()}
             {view === 'addscripts' && editItem !== null && renderAddScripts()}
         </div>
     );

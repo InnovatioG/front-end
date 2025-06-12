@@ -74,7 +74,9 @@
     align-items: center;
     justify-content: center;
 }
-.wallet_address {
+
+.wallet_address,
+.wallet_pkh {
     font: fonts.$f200-medium;
     color: colors.$primary-dark-color;
     text-align: center;
@@ -87,13 +89,15 @@
     position: relative;
 }
 
-.wallet_address::before {
+.wallet_address::before,
+.wallet_pkh::before {
     content: attr(data-start);
     position: absolute;
     left: 0;
 }
 
-.wallet_address::after {
+.wallet_address::after,
+.wallet_pkh::after {
     content: attr(data-end);
     position: absolute;
     right: 0;

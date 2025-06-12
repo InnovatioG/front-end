@@ -74,7 +74,8 @@ export class CampaignFundsBackEndApplied extends BaseSmartDBBackEndApplied {
 
         return datum;
     }
-     public static mkUpdated_CampaignFundsDatum_GetBack(campaignFundsDatum_In: CampaignFundsDatum, amountTokens: bigint, amountADA: bigint): CampaignFundsDatum {
+    
+    public static mkUpdated_CampaignFundsDatum_GetBack(campaignFundsDatum_In: CampaignFundsDatum, amountTokens: bigint, amountADA: bigint): CampaignFundsDatum {
         // usado para que los campos del datum tengan las clases y tipos bien
         // txParams trae los campos pero estan plain, no son clases ni tipos
 

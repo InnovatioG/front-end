@@ -13,6 +13,12 @@ export interface ProtocolDeployTxParams {
     pdTokenAdminPolicy_CS: string;
 }
 
+export interface ProtocolUpdateTxParams {
+    protocol_id: string;
+    pdAdmins: string[];
+    pdTokenAdminPolicy_CS: string;
+}
+
 export interface ProtocolAddScriptsTxParams {
     protocol_id: string;
 }

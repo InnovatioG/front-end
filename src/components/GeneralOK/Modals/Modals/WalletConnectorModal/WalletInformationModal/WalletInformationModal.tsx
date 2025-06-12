@@ -29,7 +29,7 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
     //--------------------------------------
     const { session, walletStore, createSignedSession, walletRefresh, walletDisconnect, handleClickToggleAdminMode, handleToggleIsHide } = useWalletActions();
     //--------------------------------------
-    const [copySuccess, setCopySuccess] = useState<boolean>(false);
+    const [copySuccess, setCopySuccess] = useState<string | undefined>(undefined);
     const [walletName, setWalletName] = useState<string | undefined>();
     const [icon, setIcon] = useState<string | undefined>();
     const [address, setAddress] = useState<string | undefined>();
@@ -49,19 +49,22 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
         setBalance(fetchedBalance);
     }, [walletStore.isWalletDataLoaded]);
 
-    const handleCopy = () => {
-        if (session?.user?.address) {
+    const handleCopy = (str: string) => {
+        if (!str) return;
+
+        if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
             navigator.clipboard
-                .writeText(session.user.address)
+                .writeText(str)
                 .then(() => {
-                    setCopySuccess(true);
-                    setTimeout(() => {
-                        setCopySuccess(false);
-                    }, 2000);
+                    console.log(`[COPY] Copied string: \`${str}\``);
+                    setCopySuccess(str);
+                    setTimeout(() => setCopySuccess(undefined), 2000);
                 })
                 .catch((err) => {
-                    console.error('Failed to copy: ', err);
+                    console.error(`[COPY] Failed to copy string: \`${str}\``, err);
                 });
+        } else {
+            console.warn(`[COPY] Clipboard API not available. Cannot copy string: \`${str}\``);
         }
     };
 
@@ -143,8 +146,8 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                                 <span className={styles.wallet_address}>{address}</span>
                             </div>
                         </div>
-                        <div onClick={handleCopy}>
-                            {copySuccess ? (
+                        <div onClick={() => handleCopy(session?.user?.address || '')}>
+                            {copySuccess === session?.user?.address ? (
                                 <Image src="/img/icons/status/green.svg" alt="" height={12} width={15} />
                             ) : (
                                 <Image src="/img/icons/modal/copy.svg" alt="" height={12} width={15} />
@@ -157,11 +160,11 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                     <div className={styles.addressContainer}>
                         <div className={styles.iconInput}>
                             <div className={styles.dataContainer}>
-                                <span className={styles.wallet_address}>{walletStore.info?.pkh}</span>
+                                <span className={styles.wallet_pkh}>{walletStore.info?.pkh}</span>
                             </div>
                         </div>
-                        <div onClick={handleCopy}>
-                            {copySuccess ? (
+                        <div onClick={() => handleCopy(walletStore.info?.pkh || '')}>
+                            {copySuccess === walletStore.info?.pkh ? (
                                 <Image src="/img/icons/status/green.svg" alt="" height={12} width={15} />
                             ) : (
                                 <Image src="/img/icons/modal/copy.svg" alt="" height={12} width={15} />

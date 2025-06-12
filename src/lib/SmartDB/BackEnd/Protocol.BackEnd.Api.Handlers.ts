@@ -56,6 +56,7 @@ import {
     LucidToolsBackEnd,
     NextApiRequestAuthenticated,
     objToCborHex,
+    optionsGetMinimalWithSmartUTxOCompleteFields,
     sanitizeForDatabase,
     showData,
     TimeBackEnd,
@@ -72,7 +73,7 @@ import {
     WalletEntity,
     WalletTxParams,
 } from 'smart-db/backEnd';
-import { ProtocolCreateParams, ProtocolDeployTxParams } from '../Commons/Params';
+import { ProtocolCreateParams, ProtocolDeployTxParams, ProtocolUpdateTxParams } from '../Commons/Params';
 import {
     CampaignCategoryEntity,
     CampaignContentEntity,
@@ -90,7 +91,7 @@ import {
     SubmissionStatusEntity,
 } from '../Entities';
 import { CampaignFactory, ProtocolDatum, ProtocolEntity } from '../Entities/Protocol.Entity';
-import { ProtocolPolicyRedeemerMintID } from '../Entities/Redeemers/Protocol.Redeemer';
+import { ProtocolPolicyRedeemerMintID, ProtocolValidatorRedeemerDatumUpdate } from '../Entities/Redeemers/Protocol.Redeemer';
 
 @BackEndAppliedFor(ProtocolEntity)
 export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
@@ -1023,6 +1024,17 @@ export class ProtocolBackEndApplied extends BaseSmartDBBackEndApplied {
         return datum;
     }
 
+    public static mkUpdated_ProtocolDatum_With_NormalChanges(protocolDatum_In: ProtocolDatum, txParams: ProtocolUpdateTxParams): ProtocolDatum {
+        const datumPlainObject: ProtocolDatum = {
+            ...JSON.parse(toJson(protocolDatum_In)),
+            pdAdmins: txParams.pdAdmins,
+            pdTokenAdminPolicy_CS: txParams.pdTokenAdminPolicy_CS,
+        };
+        let datum: any = ProtocolEntity.mkDatumFromPlainObject(datumPlainObject) as ProtocolDatum;
+        this.sortDatum(datum);
+        return datum;
+    }
+
     // #endregion class methods
 }
 
@@ -1148,12 +1160,9 @@ export class ProtocolApiHandlers extends BaseSmartDBBackEndApiHandlers {
                 if (query.length === 2) {
                     if (query[1] === 'deploy-tx') {
                         return await this.protocolDeployTxApiHandler(req, res);
+                    } else if (query[1] === 'update-tx') {
+                        return await this.protocolUpdateTxApiHandler(req, res);
                     }
-                    //else if (query[1] === 'claim-tx') {
-                    //     return await this.claimTxApiHandler(req, res);
-                    // } else if (query[1] === 'update-tx') {
-                    //     return await this.updateTxApiHandler(req, res);
-                    // }
                 }
                 return res.status(405).json({ error: 'Wrong Api route' });
             } else if (query[0] === 'populate') {
@@ -1385,6 +1394,138 @@ export class ProtocolApiHandlers extends BaseSmartDBBackEndApiHandlers {
             }
         } else {
             console_error(-1, this._Entity.className(), `Deploy Tx - Error: Method not allowed`);
+            return res.status(405).json({ error: `Method not allowed` });
+        }
+    }
+
+    public static async protocolUpdateTxApiHandler(req: NextApiRequestAuthenticated, res: NextApiResponse) {
+        if (req.method === 'POST') {
+            console_log(1, this._Entity.className(), `Update Tx - POST - Init`);
+            try {
+                //-------------------------
+                const sanitizedBody = sanitizeForDatabase(req.body);
+                //-------------------------
+                const { walletTxParams, txParams }: { walletTxParams: WalletTxParams; txParams: ProtocolUpdateTxParams } = sanitizedBody;
+                //--------------------------------------
+                console_log(0, this._Entity.className(), `Update Tx - txParams: ${showData(txParams)}`);
+                //--------------------------------------
+                const { lucid } = await LucidToolsBackEnd.prepareLucidBackEndForTx(walletTxParams);
+                //--------------------------------------
+                walletTxParams.utxos = fixUTxOList(walletTxParams?.utxos ?? []);
+                //--------------------------------------
+                const protocol = await this._BackEndApplied.getById_<ProtocolEntity>(txParams.protocol_id, {
+                    ...optionsGetMinimalWithSmartUTxOCompleteFields,
+                    fieldsForSelect: {},
+                });
+                if (protocol === undefined) throw `Invalid protocol id`;
+                //--------------------------------------
+                const protocol_SmartUTxO = protocol.smartUTxO;
+                if (!protocol_SmartUTxO) throw `Can't find Protocol UTxO`;
+                const protocol_UTxO = protocol_SmartUTxO.getUTxO();
+                const valueFor_ProtocolDatum_Out = protocol_SmartUTxO.assets;
+                //--------------------------------------
+                const protocolValidator_Address: Address = protocol.getNet_Address();
+                const protocolValidator_Script = protocol.fdpProtocolValidator_Script;
+                //--------------------------------------
+                const protocolDatum_In = protocol.getMyDatum() as ProtocolDatum;
+                console_log(0, this._Entity.className(), `Update Tx - protocolDatum_In: ${showData(protocolDatum_In, false)}`);
+                const protocolDatum_In_Hex = ProtocolEntity.datumToCborHex(protocolDatum_In);
+                //--------------------------------------
+                const protocolDatum_Out = this._BackEndApplied.mkUpdated_ProtocolDatum_With_NormalChanges(protocolDatum_In, txParams);
+                console_log(0, this._Entity.className(), `Update Tx - protocolDatum_Out: ${showData(protocolDatum_Out, false)}`);
+                const protocolDatum_Out_Hex = ProtocolEntity.datumToCborHex(protocolDatum_Out);
+                //--------------------------------------
+                const protocolValidatorRedeemerDatumUpdate = new ProtocolValidatorRedeemerDatumUpdate();
+                const protocolValidatorRedeemerDatumUpdate_Hex = objToCborHex(protocolValidatorRedeemerDatumUpdate);
+                //--------------------------------------
+                const { from, until } = await TimeBackEnd.getTxTimeRange(lucid);
+                const flomSlot = lucid.unixTimeToSlot(from);
+                const untilSlot = lucid.unixTimeToSlot(until);
+                //--------------------------------------
+                console_log(
+                    0,
+                    this._Entity.className(),
+                    `Update Tx - currentSlot: ${lucid.currentSlot()} - fromSlot ${flomSlot} to ${untilSlot} - from UnixTime ${from} to ${until} - from Date ${convertMillisToTime(
+                        from
+                    )} to ${convertMillisToTime(until)}`
+                );
+                //--------------------------------------
+                let transaction: TransactionEntity | undefined = undefined;
+                try {
+                    const transaction_ = new TransactionEntity({
+                        paymentPKH: walletTxParams.pkh,
+                        date: new Date(from),
+                        type: TxEnums.PROTOCOL_UPDATE,
+                        status: TRANSACTION_STATUS_CREATED,
+                        reading_UTxOs: [],
+                        consuming_UTxOs: [],
+                        valid_from: from,
+                        valid_until: until,
+                    });
+                    transaction = await TransactionBackEndApplied.create(transaction_);
+                    //--------------------------------------
+                    let tx: TxBuilder = lucid.newTx();
+                    tx = tx
+                        .collectFrom([protocol_UTxO], protocolValidatorRedeemerDatumUpdate_Hex)
+                        .pay.ToAddressWithData(protocolValidator_Address, { kind: 'inline', value: protocolDatum_Out_Hex }, valueFor_ProtocolDatum_Out)
+                        .attach.SpendingValidator(protocolValidator_Script)
+                        .addSigner(walletTxParams.address)
+                        .validFrom(from)
+                        .validTo(until);
+                    //--------------------------------------
+                    const txComplete = await tx.complete();
+                    const txCborHex = txComplete.toCBOR();
+                    const txHash = txComplete.toHash();
+                    const resources = getTxRedeemersDetailsAndResources(txComplete);
+                    //--------------------------------------
+                    console_log(0, this._Entity.className(), `Update Tx - Tx Resources: ${showData({ redeemers: resources.redeemersLogs, tx: resources.tx })}`);
+                    //--------------------------------------
+                    const transactionProtocolValidatorRedeemerDatumUpdate: TransactionRedeemer = {
+                        tx_index: 0,
+                        purpose: 'spend',
+                        redeemerObj: protocolValidatorRedeemerDatumUpdate,
+                        unit_mem: resources.redeemers[0]?.MEM,
+                        unit_steps: resources.redeemers[0]?.CPU,
+                    };
+                    const transactionProtocolDatum_In: TransactionDatum = {
+                        address: protocolValidator_Address,
+                        datumType: ProtocolEntity.className(),
+                        datumObj: protocolDatum_In,
+                    };
+                    const transactionProtocolDatum_Out: TransactionDatum = {
+                        address: protocolValidator_Address,
+                        datumType: ProtocolEntity.className(),
+                        datumObj: protocolDatum_Out,
+                    };
+                    //--------------------------------------
+                    await TransactionBackEndApplied.setPendingTransaction(transaction, {
+                        hash: txHash,
+                        ids: { protocol_id: protocol._DB_id },
+                        redeemers: { protocolValidatorRedeemerDatumUpdate: transactionProtocolValidatorRedeemerDatumUpdate },
+                        datums: { protocolDatum_In: transactionProtocolDatum_In, protocolDatum_Out: transactionProtocolDatum_Out },
+                        reading_UTxOs: [],
+                        consuming_UTxOs: [protocol_UTxO],
+                        unit_mem: resources.tx[0]?.MEM,
+                        unit_steps: resources.tx[0]?.CPU,
+                        fee: resources.tx[0]?.FEE,
+                        size: resources.tx[0]?.SIZE,
+                        CBORHex: txCborHex,
+                    });
+                    //--------------------------------------
+                    console_log(-1, this._Entity.className(), `Update Tx - txCborHex: ${showData(txCborHex)}`);
+                    return res.status(200).json({ txHash, txCborHex });
+                } catch (error) {
+                    if (transaction !== undefined) {
+                        await TransactionBackEndApplied.setFailedTransaction(transaction, { error, walletInfo: walletTxParams, txInfo: txParams });
+                    }
+                    throw error;
+                }
+            } catch (error) {
+                console_error(-1, this._Entity.className(), `Update Tx - Error: ${error}`);
+                return res.status(500).json({ error: `An error occurred while creating the ${this._Entity.className()} Update Tx: ${error}` });
+            }
+        } else {
+            console_error(-1, this._Entity.className(), `Update Tx - Error: Method not allowed`);
             return res.status(405).json({ error: `Method not allowed` });
         }
     }
