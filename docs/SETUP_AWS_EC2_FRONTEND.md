@@ -7,7 +7,8 @@ This guide explains how to set up the AWS EC2 instance and deploy the frontend a
 Use SSH with your `.pem` key:
 
 ```bash
-ssh -i ~/sources/reposUbuntu/INNOVATIO/INFO/MANUOK.pem ubuntu@<YOUR_PUBLIC_IP>
+ssh -i <PATH TO KEY>.pem ubuntu@<YOUR_PUBLIC_IP>
+
 ```
 
 ## 2. Install Node.js, npm, git
@@ -108,7 +109,7 @@ pm2 logs innovatio-app
 From local machine to EC2:
 
 ```bash
-scp -i ~/sources/reposUbuntu/INNOVATIO/INFO/MANUOK.pem /home/manuelpadilla/sources/reposUbuntu/INNOVATIO/front-end-main-v2/.env.PREVIEW-AWS.local ubuntu@<YOUR_PUBLIC_IP>:~/front-end/.env.local
+scp -i <PATH TO KEY>.pem /<PATH TO LOCAL REPO>/.env.PREVIEW-AWS.local ubuntu@<YOUR_PUBLIC_IP>:~/front-end/.env.local
 ```
 
 ## ✅ Done

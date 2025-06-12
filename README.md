@@ -132,7 +132,7 @@ npm run setTime                     # Set mocked blockchain time
 
 ## 📄 Technical Specification
 
-For detailed technical documentation, see the [documentation](./.docs/INNOVATIO_OFF_CHAIN_TECHNICAL.md).
+For detailed technical documentation, see the [documentation](./docs/INNOVATIO_OFF_CHAIN_TECHNICAL.md).
 
 ## 📦 Deployment
 
