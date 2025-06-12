@@ -251,7 +251,7 @@ export default function Protocol() {
                         }
                     />
                 </div>
-                {editItem?._isDeployed === true ? (
+                {editItem?._isDeployed !== true ? (
                     <button type="button" onClick={handleDeployTx}>
                         Deploy
                     </button>
