@@ -32,14 +32,12 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
     const [copySuccess, setCopySuccess] = useState<string | undefined>(undefined);
     const [walletName, setWalletName] = useState<string | undefined>();
     const [icon, setIcon] = useState<string | undefined>();
-    const [address, setAddress] = useState<string | undefined>();
     const [balance, setBalance] = useState<bigint | undefined>();
 
     useEffect(() => {
         if (walletStore.isConnected !== true) return;
         const walletInfo = CARDANO_WALLETS.find((wallet) => walletStore.info?.walletName !== undefined && wallet.wallet === walletStore.info?.walletName);
         setWalletName(walletStore.info?.walletName);
-        setAddress(walletStore.info?.address);
         setIcon(walletInfo?.icon.href ?? CARDANO_WALLETS[0].icon.href);
     }, [walletStore.isConnected]);
 
@@ -143,7 +141,7 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                         <div className={styles.iconInput}>
                             {icon && <Image src={icon.toString()} alt="icon" width={34} height={24} />}
                             <div className={styles.dataContainer}>
-                                <span className={styles.wallet_address}>{address}</span>
+                                <span className={styles.wallet_address} title={session?.user?.address || ''}>{session?.user?.address || ''}</span>
                             </div>
                         </div>
                         <div onClick={() => handleCopy(session?.user?.address || '')}>
@@ -160,7 +158,7 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                     <div className={styles.addressContainer}>
                         <div className={styles.iconInput}>
                             <div className={styles.dataContainer}>
-                                <span className={styles.wallet_pkh}>{walletStore.info?.pkh}</span>
+                                <span className={styles.wallet_pkh} title={walletStore.info?.pkh}>{walletStore.info?.pkh}</span>
                             </div>
                         </div>
                         <div onClick={() => handleCopy(walletStore.info?.pkh || '')}>
