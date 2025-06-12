@@ -121,6 +121,14 @@ export default function Wallet() {
                 <label>Mainnet Address:</label>
                 <input type="text" value={item.mainnet_address || ''} onChange={(e) => setItem({ ...item, mainnet_address: e.target.value })} />
             </div>
+             <div>
+                <label>Core Team:</label>
+                <input
+                    type="checkbox"
+                    checked={item.isCoreTeam || false}
+                    onChange={(e) => setItem({ ...item, isCoreTeam: e.target.checked })}
+                />
+            </div>
             {view === 'create' ? (
                 <button type="button" onClick={create}>
                     Create
