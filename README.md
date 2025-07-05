@@ -134,9 +134,10 @@ npm run setTime                     # Set mocked blockchain time
 
 For detailed technical documentation, see the [documentation](./docs/INNOVATIO_OFF_CHAIN_TECHNICAL.md).
 
-## 📦 Deployment
+## 📦 Launched platform (Testnet network)
 
-This project it is already online in [preview](http://18.213.68.76/).
+This project it is already deployed online in [web](http://18.213.68.76/)
+
 ## 👥 Contributors
 
 - Protocol team: governance, approvals
