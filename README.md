@@ -136,12 +136,7 @@ For detailed technical documentation, see the [documentation](./docs/INNOVATIO_O
 
 ## 📦 Deployment
 
-This project is ready to deploy on:
-
-- Vercel (<https://vercel.com>)
-- Docker (./Dockerfile - if present)
-- Custom server environments (check env vars)
-
+This project it is already online in [preview](http://18.213.68.76/).
 ## 👥 Contributors
 
 - Protocol team: governance, approvals
