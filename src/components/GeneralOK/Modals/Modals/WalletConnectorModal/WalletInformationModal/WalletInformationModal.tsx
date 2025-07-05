@@ -123,7 +123,7 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                         </svg>
                         <span>{walletStore.swHideBalance ? 'Hide Balance' : 'Show Balance'}</span>
                     </div>
-                    <div className={styles.toogleIcon}>
+                    {/* <div className={styles.toogleIcon}>
                         <Toggle
                             isActive={walletStore.info?.isWalletValidatedWithSignedToken || false}
                             onClickToggle={() => {
@@ -133,7 +133,7 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                             transparent={true}
                         />
                         <span>Admin</span>
-                    </div>
+                    </div> */}
                 </section>
                 <div className={styles.inputInformatiopn}>
                     <label htmlFor="">Address</label>

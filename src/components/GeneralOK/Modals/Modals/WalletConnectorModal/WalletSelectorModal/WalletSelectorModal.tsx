@@ -34,6 +34,7 @@ export const WalletSelectorModal: React.FC = () => {
         setAvailableWallets(available);
         setUnAvailableWallets(unAvailable);
         setAvailableWalletsSeeds({ 'Master 1': process.env.NEXT_PUBLIC_walletMasterSeed1!, 'Master 2': process.env.NEXT_PUBLIC_walletMasterSeed2! });
+        setCreateSignedSession(true);
     }, [walletStore.cardanoWallets]);
     //--------------------------------------
     useEffect(() => {
@@ -46,7 +47,6 @@ export const WalletSelectorModal: React.FC = () => {
         }
     }, [walletStore.emulatorDB]);
     //--------------------------------------
-
     function showWalletButtons() {
         return (
             <>
@@ -150,7 +150,7 @@ export const WalletSelectorModal: React.FC = () => {
                             </>
                         )}
                     </ul>
-                    <div className={styles.toogleIcon}>
+                    {/* <div className={styles.toogleIcon}>
                         <Toggle
                             isActive={createSignedSession}
                             onClickToggle={() => {
@@ -160,7 +160,7 @@ export const WalletSelectorModal: React.FC = () => {
                             transparent={true}
                         />
                         <span>Admin</span>
-                    </div>
+                    </div> */}
                 </section>
             </div>
         </article>
