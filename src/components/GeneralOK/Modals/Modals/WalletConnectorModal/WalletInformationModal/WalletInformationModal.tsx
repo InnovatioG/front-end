@@ -151,6 +151,8 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                             )}
                         </div>
                     </div>
+                </div>
+                <div className={styles.inputInformatiopn}>
                     <label htmlFor="">Payment Pub Key Hash</label>
                     <div className={styles.addressContainer}>
                         <div className={styles.iconInput}>

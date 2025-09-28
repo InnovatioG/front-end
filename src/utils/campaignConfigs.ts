@@ -534,24 +534,24 @@ export const campaignStatusConfigs = (
                             return {
                                 label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
                                 labelClass: 'active',
-                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_MILESTONES], VIEW_OR_MANAGE_FOR_CARD],
-                                buttonsForHeader: MANAGE_EDIT_OR_SAVE([]),
-                                buttonsForDetails: MANAGE_EDIT_OR_SAVE([...FOR_PROTOCOL_UTXOS_ARCHIVE_AND_DELETE]),
+                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE], LEARN_OR_MANAGE_FOR_CARD],
+                                buttonsForHeader: MANAGE_OR_SAVE([ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE]]),
+                                buttonsForDetails: MANAGE_EDIT_OR_SAVE([ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE],...FOR_PROTOCOL_UTXOS_ARCHIVE_AND_DELETE]),
                             };
                         } else if (isAdmin === true) {
                             return {
                                 label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
                                 labelClass: 'active',
-                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_MILESTONES], VIEW_OR_MANAGE_FOR_CARD],
-                                buttonsForHeader: MANAGE([UTXO]),
-                                buttonsForDetails: MANAGE([UTXO], [], true),
+                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE], LEARN_OR_MANAGE_FOR_CARD],
+                                buttonsForHeader: MANAGE([ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE]]),
+                                buttonsForDetails: MANAGE([ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE]], [], true),
                             };
                         } else if (isEditor === true) {
                             return {
                                 label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
                                 labelClass: 'active',
-                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_MILESTONES], LEARN_FOR_CARD],
-                                buttonsForHeader: [CONTACT],
+                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE], LEARN_FOR_CARD],
+                                buttonsForHeader: [ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE]],
                                 buttonsForDetails: [CONTACT],
                             };
                         }

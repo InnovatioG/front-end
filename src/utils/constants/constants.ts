@@ -75,7 +75,6 @@ export enum HandlesEnums {
     INITIALIZE_CAMPAIGN = 'Initialize Campaign',
     MANAGE_CAMPAIGN_UTXOS = 'Manage Campaign UTXOs',
 
-
     LAUNCH_CAMPAIGN = 'Launch Campaign',
 
     INVEST = 'Invest',
@@ -83,6 +82,12 @@ export enum HandlesEnums {
     SET_FUNDRAISING_STATUS = 'Set Fund Raising Status',
 
     SET_FAILED_STATUS = 'Set Failed Status',
+
+    SUBMIT_MILESTONE = 'Submit Milestone',
+    APPROVE_MILESTONE = 'Approve Milestone',
+    REJECT_MILESTONE = 'Reject Milestone',
+    FAIL_MILESTONE = 'Fail Milestone',
+    COLLECT_FUNDS = 'Collect Funds',
 }
 
 //--------------------------------------------------------------

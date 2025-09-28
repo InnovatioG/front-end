@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from 'react';
 import { Calendar } from '@/components/General/Calendar/Calendar';
-import { TimeInput } from '@/components/General/TimePicker/TimePicker';
-import styles from './LaunchCampaignModal.module.scss';
 import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 import { useModal } from '@/contexts/ModalContext';
-import { HandlesEnums } from '@/utils/constants/constants';
-import { TimeApi, toJson } from 'smart-db';
-import { useCampaignIdStoreSafe } from '@/store/campaignId/useCampaignIdStoreSafe';
-import { useCampaignIdStore } from '@/store/campaignId/useCampaignIdStore';
 import { CampaignEntity } from '@/lib/SmartDB/Entities';
 import { CampaignApi } from '@/lib/SmartDB/FrontEnd';
-import { getCampaignEX, cloneCampaignEX } from '@/utils/campaignHelpers';
-import { set } from 'date-fns';
+import { HandlesEnums } from '@/utils/constants/constants';
+import React, { useEffect, useState } from 'react';
+import { TimeApi } from 'smart-db';
+import styles from './LaunchCampaignModal.module.scss';
 interface LaunchCampaignModalProps {}
 
 const LaunchCampaignModal: React.FC<LaunchCampaignModalProps> = ({}) => {
     const [dateRange, setDateRange] = React.useState<{ from: Date | undefined; to?: Date | undefined }>({ from: new Date() });
-    // const [time, setTime] = useState('');
     const [campaign, setCampaign] = useState<CampaignEntity | undefined>();
     const [serverTime, setServerTime] = useState<number | undefined>();
+    
+    // const [time, setTime] = useState('');
 
     // const handleTimeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     //     let value = event.target.value.replace(/\D/g, '');

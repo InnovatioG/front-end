@@ -12,6 +12,7 @@ import { HandlesEnums, ModalsEnums } from '@/utils/constants/constants';
 import { ReactNode, useState } from 'react';
 import { ModalContext } from './ModalContext';
 import LaunchCampaignModal from '@/components/GeneralOK/Modals/Modals/LaunchCampaignModal/LaunchCampaignModal';
+import MilestoneSubmissionModal from '@/components/GeneralOK/Modals/Modals/MilestoneSubmissionModal/MilestoneSubmissionModal';
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
     const [activeModal, setActiveModal] = useState<ModalsEnums | null>(null);
@@ -48,21 +49,23 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         [ModalsEnums.VIEW_CAMPAIGN_SUBMISSIONS]: <ViewCampaignSubmissionModal />,
         [ModalsEnums.CREATE_SMART_CONTRACTS]: <SingleQuestionModal modalType={ModalsEnums.CREATE_SMART_CONTRACTS} handleType={HandlesEnums.CREATE_SMART_CONTRACTS} />,
         [ModalsEnums.PUBLISH_SMART_CONTRACTS]: <SingleQuestionModal modalType={ModalsEnums.PUBLISH_SMART_CONTRACTS} handleType={HandlesEnums.PUBLISH_SMART_CONTRACTS} />,
-        // [ModalsEnums.INITIALIZE_CAMPAIGN]: <SingleQuestionModal modalType={ModalsEnums.INITIALIZE_CAMPAIGN} handleType={HandlesEnums.INITIALIZE_CAMPAIGN} />,
         [ModalsEnums.INITIALIZE_CAMPAIGN]: <LaunchCampaignModal />,
         [ModalsEnums.MANAGE_CAMPAIGN_UTXOS]: <SingleQuestionModal modalType={ModalsEnums.MANAGE_CAMPAIGN_UTXOS} handleType={HandlesEnums.MANAGE_CAMPAIGN_UTXOS} />,
         [ModalsEnums.LAUNCH_CAMPAIGN]: <SingleQuestionModal modalType={ModalsEnums.LAUNCH_CAMPAIGN} handleType={HandlesEnums.LAUNCH_CAMPAIGN} />,
         [ModalsEnums.VALIDATE_FUNDRAISING_STATUS]: <SingleQuestionModal modalType={ModalsEnums.VALIDATE_FUNDRAISING_STATUS} handleType={HandlesEnums.SET_FUNDRAISING_STATUS} />,
         [ModalsEnums.WITHDRAW_TOKENS_FAILED]: undefined,
         [ModalsEnums.WITHDRAW_TOKENS_UNREACHED]: undefined,
+
+        [ModalsEnums.SUBMIT_MILESTONE]: <MilestoneSubmissionModal />,
+
         // FALTAN ESTOS MODALES:
         [ModalsEnums.GETBACK_TOKENS_FAILED]: undefined,
         [ModalsEnums.GETBACK_TOKENS_UNREACHED]: undefined,
-        [ModalsEnums.SUBMIT_MILESTONE]: undefined,
         [ModalsEnums.MANAGE_MILESTONE_SUBMISSIONS]: undefined,
         [ModalsEnums.VIEW_MILESTONE_SUBMISSIONS]: undefined,
         [ModalsEnums.COLLECT_FUNDS]: undefined,
         // HASTA ACA
+
         [ModalsEnums.CONTACT_SUPPORT]: <ContactSupportModal />,
 
         [ModalsEnums.SUCCESS]: <SuccessModal />,
@@ -72,10 +75,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 
         [ModalsEnums.PROCESSING_TASK]: <TaskProcessingModal />,
 
-        // [ModalEnums.manageCampaignSubmissions]: <ManageCampaignModal  />,
-        // [ModalEnums.submitMilestone]: <SendReport campaign={modalState.campaign} />,
-        // [ModalEnums.manageMilestoneSubmissions]: <ViewReportModal id={modalState.campaign_id!} />,
-        // [ModalEnums.viewMilestoneSubmissions]: <ViewReportMilestone submission={modalState.submission} />,
+
     };
 
     return (
