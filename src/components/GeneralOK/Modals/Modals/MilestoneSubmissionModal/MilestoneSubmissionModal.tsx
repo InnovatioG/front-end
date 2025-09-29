@@ -4,7 +4,7 @@ import { CampaignEntity } from '@/lib/SmartDB/Entities';
 import { CampaignApi } from '@/lib/SmartDB/FrontEnd';
 import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 import { CampaignEX } from '@/types/types';
-import { getCampaignEX, getCurrentMilestoneIndex } from '@/utils/campaignHelpers';
+import { getCampaignEX, getCurrentMilestoneEXIndex } from '@/utils/campaignHelpers';
 import { HandlesEnums } from '@/utils/constants/constants';
 import { getOrdinalString } from '@/utils/formats';
 import React, { useEffect, useState } from 'react';
@@ -34,7 +34,7 @@ const MilestoneSubmissionModal: React.FC<MilestoneSubmissionModalProps> = ({}) =
             setCampaign(campaign);
             const campaignEX = await getCampaignEX(campaign);
             setCampaignEX(campaignEX);
-            const milestoneIndex = getCurrentMilestoneIndex(campaignEX);
+            const milestoneIndex = getCurrentMilestoneEXIndex(campaignEX.milestones);
             setCurrentMilestoneIndex(milestoneIndex);
         } catch (error) {
             console.error('Error fetching campaign:', error);
@@ -59,7 +59,7 @@ const MilestoneSubmissionModal: React.FC<MilestoneSubmissionModalProps> = ({}) =
         // Aquí puedes agregar la lógica para manejar la confirmación
         if (wallet === undefined) return;
 
-        const data = { ...modalData, revised_by_wallet_id: wallet._DB_id, justification: report };
+        const data = { ...modalData, submitted_by_wallet_id: wallet._DB_id, report_proof_of_finalization: report };
 
         console.log(`handleClick: ${HandlesEnums.SUBMIT_MILESTONE}`);
         if (handles && handles[HandlesEnums.SUBMIT_MILESTONE]) {

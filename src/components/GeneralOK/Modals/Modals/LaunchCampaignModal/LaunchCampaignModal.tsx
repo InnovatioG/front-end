@@ -11,7 +11,6 @@ interface LaunchCampaignModalProps {}
 
 const LaunchCampaignModal: React.FC<LaunchCampaignModalProps> = ({}) => {
     const [dateRange, setDateRange] = React.useState<{ from: Date | undefined; to?: Date | undefined }>({ from: new Date() });
-    const [campaign, setCampaign] = useState<CampaignEntity | undefined>();
     const [serverTime, setServerTime] = useState<number | undefined>();
     
     // const [time, setTime] = useState('');
@@ -27,6 +26,8 @@ const LaunchCampaignModal: React.FC<LaunchCampaignModalProps> = ({}) => {
     // };
 
     const { closeModal, handles, modalData } = useModal();
+
+    const [campaign, setCampaign] = useState<CampaignEntity | undefined>();
 
     const fetchCampaignById = async (id: string) => {
         try {

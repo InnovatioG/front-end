@@ -175,7 +175,7 @@ const WalletInformationModal: React.FC<WalletInformationModalProps> = (props) =>
                         <div className={styles.iconInput}>
                             <div className={styles.dataContainer}>
                                 <span className={styles.wallet_address}>
-                                    {walletStore.swHideBalance === true ? `*** ${TOKEN_ADA_SYMBOL}` : `${balance?.toString()} ${TOKEN_ADA_SYMBOL}`}
+                                    {walletStore.swHideBalance === true ? `*** ₳` : `${balance !== undefined ? (balance / 1000000n).toLocaleString() : '...'} ₳`}
                                 </span>
                             </div>
                         </div>

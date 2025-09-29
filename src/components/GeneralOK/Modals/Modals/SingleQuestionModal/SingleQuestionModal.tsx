@@ -1,10 +1,9 @@
+import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
 import { useModal } from '@/contexts/ModalContext';
+import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
+import { HandlesEnums, ModalsEnums } from '@/utils/constants/constants';
 import React, { useEffect, useState } from 'react';
 import styles from './SingleQuestionModal.module.scss';
-import BtnGeneral from '@/components/GeneralOK/Buttons/BtnGeneral/BtnGeneral';
-import { HandlesEnums, ModalsEnums } from '@/utils/constants/constants';
-import { toJson } from 'smart-db';
-import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 
 interface SingleQuestionModalProps {
     modalType:
