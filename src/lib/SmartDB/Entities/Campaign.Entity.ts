@@ -29,7 +29,7 @@ export const fromPlutusDataMilestoneStatus = (data: any): MilestoneDatumStatus_C
 export const deserealizeCampaignMilestone = (value: any | undefined): CampaignMilestoneDatum | undefined => {
     if (value === undefined) return undefined;
     const deserialized: CampaignMilestoneDatum = {
-        cmPerncentage: value.cmPerncentage,
+        cmPerncentage: BigInt(value.cmPerncentage),
         cmStatus: value.cmStatus,
     };
     return deserialized;
@@ -450,15 +450,21 @@ export class CampaignEntity extends BaseSmartDBEntity {
             return this.fdpCampaignFundsValidator_AddressTestnet;
         }
     }
-    
-    public getAmountToCollect(): bigint {
-        const sucessMilestones = this.cdMilestones.filter((milestone) => milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsSuccess);
-        const accumPorcentaje = sucessMilestones.reduce((acc, milestone) => acc + milestone.cmPerncentage, 0n);
 
-        const totalFundsToCollect = this.cdFundedADA * accumPorcentaje;
+    public getAmountLovelaceToCollect(): bigint {
+        const sucessMilestones = this.cdMilestones.filter((milestone) => milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsSuccess);
+        const accumPerncentage = sucessMilestones.reduce((acc, milestone) => acc + milestone.cmPerncentage, 0n);
+
+        const totalFundsToCollect = BigInt(Math.floor((Number(this.cdFundedADA) * Number(accumPerncentage)) / 100));
         const avalibleFundsToCollect = totalFundsToCollect - this.cdCollectedADA;
 
         return avalibleFundsToCollect;
+    }
+
+    // NOTE: existe un getCurrentMilestoneEXIndex en el CampaignEX, pero es diferente. este metodo solo se usa para saber que milestone actualizar en tx
+    public getCurrentMilestoneDatumIndex(): number {
+        const index = this.cdMilestones.findIndex((milestone) => milestone.cmStatus === MilestoneDatumStatus_Code_Id_Enums.MsCreated);
+        return index;
     }
 
     // #endregion class methods

@@ -87,4 +87,5 @@ export interface CampaignFundsCollectTxParams {
     protocol_id: string;
     campaign_id: string;
     campaign_funds_id: string;
+    amount: string;
 }

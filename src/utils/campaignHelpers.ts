@@ -1,4 +1,12 @@
-import { CampaignEntity, MilestoneEntity, CampaignFaqsEntity, CampaignMemberEntity, CampaignContentEntity, MilestoneSubmissionEntity, CampaignSubmissionEntity } from '@/lib/SmartDB/Entities';
+import {
+    CampaignEntity,
+    MilestoneEntity,
+    CampaignFaqsEntity,
+    CampaignMemberEntity,
+    CampaignContentEntity,
+    MilestoneSubmissionEntity,
+    CampaignSubmissionEntity,
+} from '@/lib/SmartDB/Entities';
 import { MilestoneApi, CampaignFaqsApi, CampaignMemberApi, CampaignContentApi, MilestoneSubmissionApi } from '@/lib/SmartDB/FrontEnd';
 import { useGeneralStore } from '@/store/generalStore/useGeneralStore';
 import { CampaignEX, MilestoneEX } from '@/types/types';
@@ -30,7 +38,6 @@ export const getMilestonesEX = async (milestone: MilestoneEntity): Promise<Miles
     };
 };
 // Deep copies a `CampaignEX` object, ensuring all nested entities are properly instantiated.
-
 
 export const cloneCampaignEX = (campaign: CampaignEX | undefined): CampaignEX | undefined => {
     if (!campaign) return undefined;
@@ -84,9 +91,9 @@ export const cloneMilestoneEX = (milestone: MilestoneEX): MilestoneEX => {
     };
 };
 
-export const getCurrentMilestoneIndex = (campaign: CampaignEX): number | undefined => {
+export const getCurrentMilestoneEXIndex = (milestones: MilestoneEX[] | undefined): number | undefined => {
     // console.log('getCurrentMilestoneIndex', toJson(campaign));
-    if (!campaign.milestones || campaign.milestones.length === 0) {
+    if (!milestones || milestones.length === 0) {
         return undefined;
     }
 
@@ -94,8 +101,8 @@ export const getCurrentMilestoneIndex = (campaign: CampaignEX): number | undefin
     let lastFinishedIndex = -1;
     let hasActiveMilestone = false;
 
-    for (let i = 0; i < campaign.milestones.length; i++) {
-        const milestone = campaign.milestones[i];
+    for (let i = 0; i < milestones.length; i++) {
+        const milestone = milestones[i];
         const code_id = getMilestoneStatus_Code_Id_By_Db_Id(milestone.milestone.milestone_status_id);
 
         if (code_id === MilestoneStatus_Code_Id_Enums.NOT_STARTED) {
@@ -123,8 +130,8 @@ export const getCurrentMilestoneIndex = (campaign: CampaignEX): number | undefin
 
     // Case 3: If a milestone is FINISHED, find the first NOT_STARTED milestone after it
     if (lastFinishedIndex !== -1) {
-        for (let i = lastFinishedIndex + 1; i < campaign.milestones.length; i++) {
-            const code_id = getMilestoneStatus_Code_Id_By_Db_Id(campaign.milestones[i].milestone.milestone_status_id);
+        for (let i = lastFinishedIndex + 1; i < milestones.length; i++) {
+            const code_id = getMilestoneStatus_Code_Id_By_Db_Id(milestones[i].milestone.milestone_status_id);
             if (code_id === MilestoneStatus_Code_Id_Enums.NOT_STARTED) {
                 return i;
             }
@@ -178,7 +185,6 @@ export const getMilestoneStatus_Code_Id_By_Db_Id = (id: string) => {
     return milestone.code_id;
 };
 
-
 export const getMilestoneStatus_Db_Id_By_Code_Id = (code_id: number) => {
     const milestone = useGeneralStore.getState().milestoneStatus.find((status) => status.code_id === code_id);
     if (!milestone) {
@@ -189,12 +195,11 @@ export const getMilestoneStatus_Db_Id_By_Code_Id = (code_id: number) => {
 
 export const getSubmissionStatus_Name_By_Db_Id = (id: string) => {
     const status = useGeneralStore.getState().submissionStatus.find((status) => status._DB_id === id);
-        if (!status) {
-            throw new Error(`Submission status with id ${id} not found`);
-        }
+    if (!status) {
+        throw new Error(`Submission status with id ${id} not found`);
+    }
     return status.name;
 };
-
 
 export const getSubmissionStatus_Code_Id_By_Db_Id = (id: string) => {
     const status = useGeneralStore.getState().submissionStatus.find((status) => status._DB_id === id);
@@ -203,7 +208,6 @@ export const getSubmissionStatus_Code_Id_By_Db_Id = (id: string) => {
     }
     return status.code_id;
 };
-
 
 export const getSubmissionStatus_Db_Id_By_Code_Id = (code_id: number) => {
     const status = useGeneralStore.getState().submissionStatus.find((status) => status.code_id === code_id);

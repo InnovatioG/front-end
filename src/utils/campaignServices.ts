@@ -1209,7 +1209,16 @@ export async function serviceInitializeCampaign(
             await CampaignApi.updateWithParamsApi_(campaign.campaign._DB_id, { campaign_deployed_date });
         };
         //--------------------------------------
-        await handleBtnDoTransaction_WithErrorControl(CampaignEntity, TxEnums.CAMPAIGN_DEPLOY, 'Deploying Campaign...', 'campaign-deploy-tx', fetchParams, txApiCall, handleBtnTx, onTx);
+        await handleBtnDoTransaction_WithErrorControl(
+            CampaignEntity,
+            TxEnums.CAMPAIGN_DEPLOY,
+            'Deploying Campaign...',
+            'campaign-deploy-tx',
+            fetchParams,
+            txApiCall,
+            handleBtnTx,
+            onTx
+        );
         //--------------------------------------
         if (onFinish !== undefined) {
             await onFinish(campaign, data);
@@ -1503,7 +1512,16 @@ export async function serviceLaunchCampaign(
         //--------------------------------------
         const onTx = async () => {};
         //--------------------------------------
-        await handleBtnDoTransaction_WithErrorControl(CampaignEntity, TxEnums.CAMPAIGN_LAUNCH, 'Launch Campaign...', 'campaign-launch-tx', fetchParams, txApiCall, handleBtnTx, onTx);
+        await handleBtnDoTransaction_WithErrorControl(
+            CampaignEntity,
+            TxEnums.CAMPAIGN_LAUNCH,
+            'Launch Campaign...',
+            'campaign-launch-tx',
+            fetchParams,
+            txApiCall,
+            handleBtnTx,
+            onTx
+        );
         //--------------------------------------
         if (onFinish !== undefined) {
             await onFinish(campaign, data);
@@ -1841,24 +1859,20 @@ export async function serviceSubmitMilestone(
         // Estado Final Datum: Mismo estado
         // Ejecuta: Campaign Managers, Campaign Editors
 
-        const membersAdmin = campaign.members?.filter((m) => m.admin == true);
-        if (membersAdmin === undefined || membersAdmin.length === 0) {
-            throw new Error(`No admin members found`);
+        const milestoneStatusSUBMITTED = milestoneStatus.find((status) => status.code_id === MilestoneStatus_Code_Id_Enums.SUBMITTED);
+        if (!milestoneStatusSUBMITTED) {
+            throw new Error(`Milestone Status SUBMITTED code-id: ${MilestoneStatus_Code_Id_Enums.SUBMITTED} not found`);
         }
-        const status = milestoneStatus.find((status) => status.code_id === MilestoneStatus_Code_Id_Enums.SUBMITTED);
-        if (!status) {
-            throw new Error(`Status SUBMITTED code-id: ${MilestoneStatus_Code_Id_Enums.SUBMITTED} not found`);
+        const statusSubmissionSUBMITTED = submissionStatus.find((status) => status.code_id === SubmissionStatus_Enums.SUBMITTED);
+        if (!statusSubmissionSUBMITTED) {
+            throw new Error(`Status Submission SUBMITTED code-id: ${SubmissionStatus_Enums.SUBMITTED} not found`);
         }
-        const statusSubmission = submissionStatus.find((status) => status.code_id === SubmissionStatus_Enums.SUBMITTED);
-        if (!statusSubmission) {
-            throw new Error(`Status SUBMITTED code-id: ${SubmissionStatus_Enums.SUBMITTED} not found`);
-        }
-        let entity = campaign.milestones![milestoneIndex].milestone;
-        entity.milestone_status_id = status._DB_id;
-        entity = await MilestoneApi.updateWithParamsApi_(entity._DB_id, entity);
+        let entityMilestone = campaign.milestones![milestoneIndex].milestone;
+        entityMilestone.milestone_status_id = milestoneStatusSUBMITTED._DB_id;
+        entityMilestone = await MilestoneApi.updateWithParamsApi_(entityMilestone._DB_id, entityMilestone);
         let submission = new MilestoneSubmissionEntity({
-            milestone_id: entity._DB_id,
-            submission_status_id: statusSubmission?._DB_id,
+            milestone_id: entityMilestone._DB_id,
+            submission_status_id: statusSubmissionSUBMITTED?._DB_id,
             submitted_by_wallet_id: data?.submitted_by_wallet_id,
             report_proof_of_finalization: data?.report_proof_of_finalization,
         });
@@ -1909,7 +1923,9 @@ export async function serviceApproveMilestone(
         onTx?: (() => Promise<void>) | undefined
     ) => Promise<void>,
     campaign: CampaignEX,
-    campaignStatus: CampaignStatusEntity[],
+    milestoneIndex: number,
+    milestoneStatus: MilestoneStatusEntity[],
+    submissionStatus: SubmissionStatusEntity[],
     data?: Record<string, any>,
     onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
 ) {
@@ -1963,7 +1979,30 @@ export async function serviceApproveMilestone(
         const txApiCall = CampaignApi.callGenericTxApi.bind(CampaignApi);
         const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
         //--------------------------------------
-        const onTx = async () => {};
+        const onTx = async () => {
+            const milestoneStatusCOLLECT = milestoneStatus.find((status) => status.code_id === MilestoneStatus_Code_Id_Enums.COLLECT);
+            if (!milestoneStatusCOLLECT) {
+                throw new Error(`Status COLLECT code-id: ${MilestoneStatus_Code_Id_Enums.COLLECT} not found`);
+            }
+            const statusSubmissionAPPROVED = submissionStatus.find((status) => status.code_id === SubmissionStatus_Enums.APPROVED);
+            if (!statusSubmissionAPPROVED) {
+                throw new Error(`Status APPROVED code-id: ${SubmissionStatus_Enums.APPROVED} not found`);
+            }
+            let entity = campaign.milestones![milestoneIndex].milestone;
+            entity.milestone_status_id = milestoneStatusCOLLECT._DB_id;
+            entity = await MilestoneApi.updateWithParamsApi_(entity._DB_id, entity);
+            const submission: MilestoneSubmissionEntity | undefined = await MilestoneSubmissionApi.getOneByParamsApi_({ milestone_id: entity._DB_id });
+            if (!submission) {
+                throw new Error(`Submission not found for campaign_id: ${campaign.campaign._DB_id}`);
+            }
+            await MilestoneSubmissionApi.updateWithParamsApi_(submission._DB_id, {
+                ...submission,
+                submission_status_id: statusSubmissionAPPROVED._DB_id,
+                revised_by_wallet_id: data?.revised_by_wallet_id,
+                approved_justification: data?.justification,
+            });
+            pushSucessNotification(`${PROYECT_NAME}`, 'Updated successfully', false);
+        };
         //--------------------------------------
         await handleBtnDoTransaction_WithErrorControl(
             CampaignEntity,
@@ -2003,24 +2042,24 @@ export async function serviceRejectMilestone(
         // Estado Final Datum: Mismo estado
         // Ejecuta: Protocol Team
 
-        const status = milestoneStatus.find((status) => status.code_id === MilestoneStatus_Code_Id_Enums.REJECTED);
-        if (!status) {
+        const milestoneStatusREJECTED = milestoneStatus.find((status) => status.code_id === MilestoneStatus_Code_Id_Enums.REJECTED);
+        if (!milestoneStatusREJECTED) {
             throw new Error(`Status REJECTED code-id: ${MilestoneStatus_Code_Id_Enums.REJECTED} not found`);
         }
-        const statusSubmission = submissionStatus.find((status) => status.code_id === SubmissionStatus_Enums.REJECTED);
-        if (!statusSubmission) {
+        const statusSubmissionREJECTED = submissionStatus.find((status) => status.code_id === SubmissionStatus_Enums.REJECTED);
+        if (!statusSubmissionREJECTED) {
             throw new Error(`Status REJECTED code-id: ${SubmissionStatus_Enums.REJECTED} not found`);
         }
         let entity = campaign.milestones![milestoneIndex].milestone;
-        entity.milestone_status_id = status._DB_id;
+        entity.milestone_status_id = milestoneStatusREJECTED._DB_id;
         entity = await MilestoneApi.updateWithParamsApi_(entity._DB_id, entity);
         const submission: MilestoneSubmissionEntity | undefined = await MilestoneSubmissionApi.getOneByParamsApi_({ milestone_id: entity._DB_id });
         if (!submission) {
             throw new Error(`Submission not found for campaign_id: ${entity._DB_id}`);
         }
-        await CampaignSubmissionApi.updateWithParamsApi_(submission._DB_id, {
+        await MilestoneSubmissionApi.updateWithParamsApi_(submission._DB_id, {
             ...submission,
-            submission_status_id: statusSubmission._DB_id,
+            submission_status_id: statusSubmissionREJECTED._DB_id,
             revised_by_wallet_id: data?.revised_by_wallet_id,
             rejected_justification: data?.justification,
         });
@@ -2070,7 +2109,9 @@ export async function serviceFailMilestone(
         onTx?: (() => Promise<void>) | undefined
     ) => Promise<void>,
     campaign: CampaignEX,
-    campaignStatus: CampaignStatusEntity[],
+    milestoneIndex: number,
+    milestoneStatus: MilestoneStatusEntity[],
+    submissionStatus: SubmissionStatusEntity[],
     data?: Record<string, any>,
     onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
 ) {
@@ -2124,7 +2165,30 @@ export async function serviceFailMilestone(
         const txApiCall = CampaignApi.callGenericTxApi.bind(CampaignApi);
         const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
         //--------------------------------------
-        const onTx = async () => {};
+        const onTx = async () => {
+            const milestoneStatusFAILED = milestoneStatus.find((status) => status.code_id === MilestoneStatus_Code_Id_Enums.FAILED);
+            if (!milestoneStatusFAILED) {
+                throw new Error(`Status FAILED code-id: ${MilestoneStatus_Code_Id_Enums.FAILED} not found`);
+            }
+            const statusSubmissionFAILED = submissionStatus.find((status) => status.code_id === SubmissionStatus_Enums.FAILED);
+            if (!statusSubmissionFAILED) {
+                throw new Error(`Status FAILED code-id: ${SubmissionStatus_Enums.FAILED} not found`);
+            }
+            let entity = campaign.milestones![milestoneIndex].milestone;
+            entity.milestone_status_id = milestoneStatusFAILED._DB_id;
+            entity = await MilestoneApi.updateWithParamsApi_(entity._DB_id, entity);
+            const submission: MilestoneSubmissionEntity | undefined = await MilestoneSubmissionApi.getOneByParamsApi_({ milestone_id: entity._DB_id });
+            if (!submission) {
+                throw new Error(`Submission not found for campaign_id: ${campaign.campaign._DB_id}`);
+            }
+            await MilestoneSubmissionApi.updateWithParamsApi_(submission._DB_id, {
+                ...submission,
+                submission_status_id: statusSubmissionFAILED._DB_id,
+                revised_by_wallet_id: data?.revised_by_wallet_id,
+                rejected_justification: data?.justification,
+            });
+            pushSucessNotification(`${PROYECT_NAME}`, 'Updated successfully', false);
+        };
         //--------------------------------------
         await handleBtnDoTransaction_WithErrorControl(
             CampaignEntity,
@@ -2183,7 +2247,8 @@ export async function serviceCollect(
         onTx?: (() => Promise<void>) | undefined
     ) => Promise<void>,
     campaign: CampaignEX,
-    campaignStatus: CampaignStatusEntity[],
+    milestoneIndex: number,
+    milestoneStatus: MilestoneStatusEntity[],
     data?: Record<string, any>,
     onFinish?: (campaign: CampaignEX, data?: Record<string, any>) => Promise<void>
 ) {
@@ -2215,13 +2280,14 @@ export async function serviceCollect(
         //--------------------------------------
         let campaign_id = campaign.campaign._DB_id;
         //--------------------------------------
-        const campaignFunds: CampaignFundsEntity[] | undefined = await CampaignFundsApi.getByParamsApi_(
-            { cfdCampaignPolicy_CS: campaign.campaign.getNET_id_CS() },
-            {
-                loadRelations: { smartUTxO_id: true },
-            }
-        );
-        if (campaignFunds.length === 0) {
+        if (data?.amount === undefined) {
+            throw new Error(`Invalid amount: ${data?.amount}`);
+        }
+        if (data?.campaign_funds_id === undefined) {
+            throw new Error(`Invalid campaign_funds_id: ${data?.campaign_funds_id}`);
+        }
+        const campaignFunds = await CampaignFundsApi.getByIdApi_<CampaignFundsEntity>(data.campaign_funds_id);
+        if (campaignFunds === undefined) {
             throw new Error(`Campaign Funds not found`);
         }
         //--------------------------------------
@@ -2232,7 +2298,8 @@ export async function serviceCollect(
             const txParams: CampaignFundsCollectTxParams = {
                 protocol_id: protocol!._DB_id!,
                 campaign_id,
-                campaign_funds_id: campaignFunds[0]._DB_id,
+                campaign_funds_id: data.campaign_funds_id,
+                amount: data!.amount!.toString(),
             };
             return {
                 lucid,
@@ -2248,6 +2315,14 @@ export async function serviceCollect(
         const handleBtnTx = BaseSmartDBFrontEndBtnHandlers.handleBtnDoTransaction_V2_NoErrorControl.bind(BaseSmartDBFrontEndBtnHandlers);
         //--------------------------------------
         const onTx = async () => {
+            const milestoneStatusFINISHED = milestoneStatus.find((status) => status.code_id === MilestoneStatus_Code_Id_Enums.FINISHED);
+            if (!milestoneStatusFINISHED) {
+                throw new Error(`Status FINISHED code-id: ${MilestoneStatus_Code_Id_Enums.FINISHED} not found`);
+            }
+            let entity = campaign.milestones![milestoneIndex].milestone;
+            entity.milestone_status_id = milestoneStatusFINISHED._DB_id;
+            entity = await MilestoneApi.updateWithParamsApi_(entity._DB_id, entity);
+            pushSucessNotification(`${PROYECT_NAME}`, 'Updated successfully', false);
         };
         //--------------------------------------
         await handleBtnDoTransaction_WithErrorControl(
@@ -2349,7 +2424,7 @@ export async function serviceGetBack(
                 protocol_id: protocol!._DB_id!,
                 campaign_id,
                 campaign_funds_id: campaignFunds[0]._DB_id,
-                amount: data!.amount!,
+                amount: data!.amount!.toString(),
             };
             return {
                 lucid,

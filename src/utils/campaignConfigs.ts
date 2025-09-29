@@ -529,36 +529,10 @@ export const campaignStatusConfigs = (
             }
             if (isProtocolTeam === true || isAdmin === true || isEditor === true) {
                 switch (milestone_status_code_id) {
-                    case MilestoneStatus_Code_Id_Enums.NOT_STARTED:
-                        if (isProtocolTeam === true) {
-                            return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
-                                labelClass: 'active',
-                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE], LEARN_OR_MANAGE_FOR_CARD],
-                                buttonsForHeader: MANAGE_OR_SAVE([ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE]]),
-                                buttonsForDetails: MANAGE_EDIT_OR_SAVE([ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE],...FOR_PROTOCOL_UTXOS_ARCHIVE_AND_DELETE]),
-                            };
-                        } else if (isAdmin === true) {
-                            return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
-                                labelClass: 'active',
-                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE], LEARN_OR_MANAGE_FOR_CARD],
-                                buttonsForHeader: MANAGE([ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE]]),
-                                buttonsForDetails: MANAGE([ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE]], [], true),
-                            };
-                        } else if (isEditor === true) {
-                            return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
-                                labelClass: 'active',
-                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE], LEARN_FOR_CARD],
-                                buttonsForHeader: [ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE]],
-                                buttonsForDetails: [CONTACT],
-                            };
-                        }
                     case MilestoneStatus_Code_Id_Enums.STARTED:
                         if (isProtocolTeam === true) {
                             return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
+                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones} [STARTED]`,
                                 labelClass: 'active',
                                 buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE], VIEW_OR_MANAGE_FOR_CARD],
                                 buttonsForHeader: MANAGE_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.SUBMIT_MILESTONE]]),
@@ -566,25 +540,33 @@ export const campaignStatusConfigs = (
                             };
                         } else if (isAdmin === true) {
                             return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
+                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones} [STARTED]`,
                                 labelClass: 'active',
-                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE], VIEW_OR_MANAGE_FOR_CARD],
-                                buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.SUBMIT_MILESTONE]]),
-                                buttonsForDetails: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.SUBMIT_MILESTONE], UTXO], [], true),
+                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE]],
+                                buttonsForHeader: [ButtonForDetails[ButtonsForDetailsEnum.SUBMIT_MILESTONE]],
+                                buttonsForDetails: MANAGE(
+                                    [ButtonForDetails[ButtonsForDetailsEnum.SUBMIT_MILESTONE], UTXO],
+                                    [ButtonForDetails[ButtonsForDetailsEnum.SUBMIT_MILESTONE]],
+                                    true
+                                ),
                             };
                         } else if (isEditor === true) {
                             return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
+                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones} [STARTED]`,
                                 labelClass: 'active',
-                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE], VIEW_OR_MANAGE_FOR_CARD],
-                                buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.SUBMIT_MILESTONE]]),
-                                buttonsForDetails: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.SUBMIT_MILESTONE]], [], true),
+                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.SUBMIT_MILESTONE]],
+                                buttonsForHeader: [ButtonForDetails[ButtonsForDetailsEnum.SUBMIT_MILESTONE]],
+                                buttonsForDetails: MANAGE(
+                                    [ButtonForDetails[ButtonsForDetailsEnum.SUBMIT_MILESTONE], UTXO],
+                                    [ButtonForDetails[ButtonsForDetailsEnum.SUBMIT_MILESTONE]],
+                                    true
+                                ),
                             };
                         }
                     case MilestoneStatus_Code_Id_Enums.SUBMITTED:
                         if (isProtocolTeam === true) {
                             return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
+                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones} [SUBMITTED]`,
                                 labelClass: 'active',
                                 buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.MANAGE_MILESTONE_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
                                 buttonsForHeader: MANAGE_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.MANAGE_MILESTONE_SUBMISSIONS]]),
@@ -596,25 +578,25 @@ export const campaignStatusConfigs = (
                             };
                         } else if (isAdmin === true) {
                             return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
+                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones} [SUBMITTED]`,
                                 labelClass: 'active',
-                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_CAMPAIGN_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
-                                buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS]]),
-                                buttonsForDetails: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS], UTXO], [], true),
+                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_MILESTONE_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
+                                buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_MILESTONE_SUBMISSIONS]]),
+                                buttonsForDetails: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_MILESTONE_SUBMISSIONS], UTXO], [], true),
                             };
                         } else if (isEditor === true) {
                             return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
+                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones} [SUBMITTED]`,
                                 labelClass: 'active',
-                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_CAMPAIGN_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
-                                buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS]]),
-                                buttonsForDetails: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_CAMPAIGN_SUBMISSIONS]], [], true),
+                                buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_MILESTONE_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
+                                buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_MILESTONE_SUBMISSIONS]]),
+                                buttonsForDetails: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_MILESTONE_SUBMISSIONS]], [], true),
                             };
                         }
                     case MilestoneStatus_Code_Id_Enums.REJECTED:
                         if (isProtocolTeam === true) {
                             return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
+                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones} [REJECTED]`,
                                 labelClass: 'active',
                                 buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_MILESTONE_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
                                 buttonsForHeader: MANAGE_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_MILESTONE_SUBMISSIONS]]),
@@ -626,7 +608,7 @@ export const campaignStatusConfigs = (
                             };
                         } else if (isAdmin === true) {
                             return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
+                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones} [REJECTED]`,
                                 labelClass: 'active',
                                 buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_MILESTONE_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
                                 buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_MILESTONE_SUBMISSIONS]]),
@@ -638,7 +620,7 @@ export const campaignStatusConfigs = (
                             };
                         } else if (isEditor === true) {
                             return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
+                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones} [REJECTED]`,
                                 labelClass: 'active',
                                 buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_MILESTONE_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
                                 buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_MILESTONE_SUBMISSIONS]], [], true),
@@ -652,7 +634,7 @@ export const campaignStatusConfigs = (
                     case MilestoneStatus_Code_Id_Enums.COLLECT:
                         if (isProtocolTeam === true) {
                             return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
+                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones} [APPROVED]`,
                                 labelClass: 'active',
                                 buttonsForCards: [VIEW_OR_MANAGE_FOR_CARD],
                                 buttonsForHeader: MANAGE_OR_SAVE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_MILESTONE_SUBMISSIONS]]),
@@ -663,7 +645,7 @@ export const campaignStatusConfigs = (
                             };
                         } else if (isAdmin === true) {
                             return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
+                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones} [APPROVED]`,
                                 labelClass: 'active',
                                 buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.COLLECT_MILESTONE], VIEW_OR_MANAGE_FOR_CARD],
                                 buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.COLLECT_MILESTONE]]),
@@ -675,7 +657,7 @@ export const campaignStatusConfigs = (
                             };
                         } else if (isEditor === true) {
                             return {
-                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones}`,
+                                label: `Active ${currentMilestoneIndex + 1}/${totalMilestones} [APPROVED]`,
                                 labelClass: 'active',
                                 buttonsForCards: [ButtonForCards[ButtonsForCardsEnum.VIEW_MILESTONE_SUBMISSIONS], VIEW_OR_MANAGE_FOR_CARD],
                                 buttonsForHeader: MANAGE([ButtonForDetails[ButtonsForDetailsEnum.VIEW_MILESTONE_SUBMISSIONS]], [], true),
@@ -685,7 +667,16 @@ export const campaignStatusConfigs = (
                     case MilestoneStatus_Code_Id_Enums.FAILED:
                         // nunca se muestra este estado, por que toda la campaña pasa a Failed
                         return {
-                            label: `Failed ${currentMilestoneIndex + 1}/${totalMilestones}`,
+                            label: `Failed ${currentMilestoneIndex + 1}/${totalMilestones} [FAILED]`,
+                            labelClass: 'active',
+                            buttonsForCards: [],
+                            buttonsForHeader: [],
+                            buttonsForDetails: [],
+                        };
+                    case MilestoneStatus_Code_Id_Enums.FINISHED:
+                        // nunca se muestra este estado, por que toda la campaña pasa a Failed
+                        return {
+                            label: `Finished ${currentMilestoneIndex + 1}/${totalMilestones} [FINISHED]`,
                             labelClass: 'active',
                             buttonsForCards: [],
                             buttonsForHeader: [],
