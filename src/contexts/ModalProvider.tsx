@@ -1,18 +1,21 @@
 import ModalTemplate from '@/components/GeneralOK/Modals/ModalTemplate/ModalTemplate';
 import ContactSupportModal from '@/components/GeneralOK/Modals/Modals/ContactSupportModal/ContactSupportModal';
+import LaunchCampaignModal from '@/components/GeneralOK/Modals/Modals/LaunchCampaignModal/LaunchCampaignModal';
 import ManageCampaignSubmissionModal from '@/components/GeneralOK/Modals/Modals/ManageCampaignSubmissionModal/ManageCampaignSubmissionModal';
+import ManageMilestoneSubmissionModal from '@/components/GeneralOK/Modals/Modals/ManageMilestoneSubmissionModal/ManageMilestoneSubmissionModal';
+import MilestoneSubmissionModal from '@/components/GeneralOK/Modals/Modals/MilestoneSubmissionModal/MilestoneSubmissionModal';
 import SingleQuestionModal from '@/components/GeneralOK/Modals/Modals/SingleQuestionModal/SingleQuestionModal';
 import SuccessModal from '@/components/GeneralOK/Modals/Modals/SuccessModal/SuccessModal';
 import TaskProcessingModal from '@/components/GeneralOK/Modals/Modals/TaskProcessingModal/TaskProcessingModal';
 import TxProcessingModal from '@/components/GeneralOK/Modals/Modals/TxProcessingModal/TxProcessingModal';
 import TxUserConfirmationModal from '@/components/GeneralOK/Modals/Modals/TxUserConfirmationModal/TxUserConfirmationModal';
 import ViewCampaignSubmissionModal from '@/components/GeneralOK/Modals/Modals/ViewCampaignSubmissionModal/ViewCampaignSubmissionModal';
+import ViewMilestoneSubmissionModal from '@/components/GeneralOK/Modals/Modals/ViewMilestoneSubmissionModal/ViewMilestoneSubmissionModal';
 import WalletConnectorModal from '@/components/GeneralOK/Modals/Modals/WalletConnectorModal/WalletConnectorModal';
 import { HandlesEnums, ModalsEnums } from '@/utils/constants/constants';
 import { ReactNode, useState } from 'react';
 import { ModalContext } from './ModalContext';
-import LaunchCampaignModal from '@/components/GeneralOK/Modals/Modals/LaunchCampaignModal/LaunchCampaignModal';
-import MilestoneSubmissionModal from '@/components/GeneralOK/Modals/Modals/MilestoneSubmissionModal/MilestoneSubmissionModal';
+import InputAmountModal from '@/components/GeneralOK/Modals/Modals/InputAmountModal/InputAmountModal';
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
     const [activeModal, setActiveModal] = useState<ModalsEnums | null>(null);
@@ -53,29 +56,22 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         [ModalsEnums.MANAGE_CAMPAIGN_UTXOS]: <SingleQuestionModal modalType={ModalsEnums.MANAGE_CAMPAIGN_UTXOS} handleType={HandlesEnums.MANAGE_CAMPAIGN_UTXOS} />,
         [ModalsEnums.LAUNCH_CAMPAIGN]: <SingleQuestionModal modalType={ModalsEnums.LAUNCH_CAMPAIGN} handleType={HandlesEnums.LAUNCH_CAMPAIGN} />,
         [ModalsEnums.VALIDATE_FUNDRAISING_STATUS]: <SingleQuestionModal modalType={ModalsEnums.VALIDATE_FUNDRAISING_STATUS} handleType={HandlesEnums.SET_FUNDRAISING_STATUS} />,
-        [ModalsEnums.WITHDRAW_TOKENS_FAILED]: undefined,
-        [ModalsEnums.WITHDRAW_TOKENS_UNREACHED]: undefined,
 
         [ModalsEnums.SUBMIT_MILESTONE]: <MilestoneSubmissionModal />,
+        [ModalsEnums.MANAGE_MILESTONE_SUBMISSIONS]: <ManageMilestoneSubmissionModal />,
+        [ModalsEnums.VIEW_MILESTONE_SUBMISSIONS]: <ViewMilestoneSubmissionModal />,
 
-        // FALTAN ESTOS MODALES:
-        [ModalsEnums.GETBACK_TOKENS_FAILED]: undefined,
-        [ModalsEnums.GETBACK_TOKENS_UNREACHED]: undefined,
-        [ModalsEnums.MANAGE_MILESTONE_SUBMISSIONS]: undefined,
-        [ModalsEnums.VIEW_MILESTONE_SUBMISSIONS]: undefined,
-        [ModalsEnums.COLLECT_FUNDS]: undefined,
-        // HASTA ACA
-
-        [ModalsEnums.CONTACT_SUPPORT]: <ContactSupportModal />,
-
-        [ModalsEnums.SUCCESS]: <SuccessModal />,
+        [ModalsEnums.COLLECT_FUNDS]: <InputAmountModal modalType={ModalsEnums.COLLECT_FUNDS} handleType={HandlesEnums.COLLECT_FUNDS} />,
+        [ModalsEnums.WITHDRAW_TOKENS]: <InputAmountModal modalType={ModalsEnums.WITHDRAW_TOKENS} handleType={HandlesEnums.WITHDRAW_TOKENS} />,
+        [ModalsEnums.GETBACK_FUNDS]: <InputAmountModal modalType={ModalsEnums.GETBACK_FUNDS} handleType={HandlesEnums.GETBACK_FUNDS} />,
 
         [ModalsEnums.CONFIRM_TX]: <TxUserConfirmationModal />,
         [ModalsEnums.PROCESSING_TX]: <TxProcessingModal />,
 
         [ModalsEnums.PROCESSING_TASK]: <TaskProcessingModal />,
 
-
+        [ModalsEnums.SUCCESS]: <SuccessModal />,
+        [ModalsEnums.CONTACT_SUPPORT]: <ContactSupportModal />,
     };
 
     return (
