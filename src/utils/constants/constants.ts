@@ -36,23 +36,23 @@ export enum ModalsEnums {
     INITIALIZE_CAMPAIGN = 'Initialize Campaign',
     MANAGE_CAMPAIGN_UTXOS = 'Manage Campaign UTXOs',
     LAUNCH_CAMPAIGN = 'Launch Campaign',
+    INVEST = 'Invest',
     VALIDATE_FUNDRAISING_STATUS = 'Validate Fundraising Status',
-    WITHDRAW_TOKENS_FAILED = 'Withdraw Tokens Failed',
-    WITHDRAW_TOKENS_UNREACHED = 'Withdraw Tokens Unreached',
-    GETBACK_TOKENS_FAILED = 'Getback Tokens Failed',
-    GETBACK_TOKENS_UNREACHED = 'Getback Tokens Unreached',
     SUBMIT_MILESTONE = 'Submit Milestone',
     MANAGE_MILESTONE_SUBMISSIONS = 'Manage Milestone Submissions',
     VIEW_MILESTONE_SUBMISSIONS = 'View Milestone Submissions',
     COLLECT_FUNDS = 'Collect Funds',
-    CONTACT_SUPPORT = 'Contact Support',
-
-    SUCCESS = 'Success',
+    GETBACK_FUNDS = 'Getback Tokens Failed or Unreached',
+    WITHDRAW_TOKENS = 'Withdraw Tokens Failed or Unreached',
 
     CONFIRM_TX = 'ConfirmTx',
     PROCESSING_TX = 'ProcessingTx',
 
     PROCESSING_TASK = 'ProcessingTask',
+
+    SUCCESS = 'Success',
+    CONTACT_SUPPORT = 'Contact Support',
+
 
 }
 //--------------------------------------------------------------
@@ -76,19 +76,16 @@ export enum HandlesEnums {
     MANAGE_CAMPAIGN_UTXOS = 'Manage Campaign UTXOs',
 
     LAUNCH_CAMPAIGN = 'Launch Campaign',
-
     INVEST = 'Invest',
-    
     SET_FUNDRAISING_STATUS = 'Set Fund Raising Status',
 
     SUBMIT_MILESTONE = 'Submit Milestone',
     APPROVE_MILESTONE = 'Approve Milestone',
     REJECT_MILESTONE = 'Reject Milestone',
     FAIL_MILESTONE = 'Fail Milestone',
-
     COLLECT_FUNDS = 'Collect Funds',
-
     GETBACK_FUNDS = 'GetBack Funds',
+    WITHDRAW_TOKENS = 'Withdraw Tokens',
 
 }
 

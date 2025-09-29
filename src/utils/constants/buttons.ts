@@ -230,28 +230,28 @@ export const ButtonForCards: Record<ButtonsForCardsEnum, ButtonType> = {
     [ButtonsForCardsEnum.GETBACK_FAILED]: {
         label: 'Get Back >',
         action: async (data, _navigate, openModal, handles) => {
-            if (data && openModal) openModal(ModalsEnums.GETBACK_TOKENS_FAILED, data, handles);
+            if (data && openModal) openModal(ModalsEnums.GETBACK_FUNDS, data, handles);
         },
         classNameType: 'failed center',
     },
     [ButtonsForCardsEnum.GETBACK_UNREACHED]: {
         label: 'Get Back >',
         action: async (data, _navigate, openModal, handles) => {
-            if (data && openModal) openModal(ModalsEnums.GETBACK_TOKENS_UNREACHED, data, handles);
+            if (data && openModal) openModal(ModalsEnums.GETBACK_FUNDS, data, handles);
         },
         classNameType: 'unreached center',
     },
     [ButtonsForCardsEnum.WITHDRAW_FAILED]: {
         label: 'Withdraw >',
         action: async (data, _navigate, openModal, handles) => {
-            if (data && openModal) openModal(ModalsEnums.WITHDRAW_TOKENS_FAILED, data, handles);
+            if (data && openModal) openModal(ModalsEnums.WITHDRAW_TOKENS, data, handles);
         },
         classNameType: 'failed center',
     },
     [ButtonsForCardsEnum.WITHDRAW_UNREACHED]: {
         label: 'Withdraw >',
         action: async (data, _navigate, openModal, handles) => {
-            if (data && openModal) openModal(ModalsEnums.WITHDRAW_TOKENS_UNREACHED, data, handles);
+            if (data && openModal) openModal(ModalsEnums.WITHDRAW_TOKENS, data, handles);
         },
         classNameType: 'unreached center',
     },
@@ -498,28 +498,28 @@ export const ButtonForDetails: Record<ButtonsForDetailsEnum, ButtonType> = {
     [ButtonsForDetailsEnum.GETBACK_FAILED]: {
         label: 'Get Back',
         action: async (data, _navigate, openModal, handles) => {
-            if (data && openModal) openModal(ModalsEnums.GETBACK_TOKENS_FAILED, data, handles);
+            if (data && openModal) openModal(ModalsEnums.GETBACK_FUNDS, data, handles);
         },
         classNameType: 'failed center',
     },
     [ButtonsForDetailsEnum.GETBACK_UNREACHED]: {
         label: 'Get Back',
         action: async (data, _navigate, openModal, handles) => {
-            if (data && openModal) openModal(ModalsEnums.GETBACK_TOKENS_UNREACHED, data, handles);
+            if (data && openModal) openModal(ModalsEnums.GETBACK_FUNDS, data, handles);
         },
         classNameType: 'unreached center',
     },
     [ButtonsForDetailsEnum.WITHDRAW_FAILED]: {
         label: 'Withdraw',
         action: async (data, _navigate, openModal, handles) => {
-            if (data && openModal) openModal(ModalsEnums.WITHDRAW_TOKENS_FAILED, data, handles);
+            if (data && openModal) openModal(ModalsEnums.WITHDRAW_TOKENS, data, handles);
         },
         classNameType: 'failed center',
     },
     [ButtonsForDetailsEnum.WITHDRAW_UNREACHED]: {
         label: 'Withdraw',
         action: async (data, _navigate, openModal, handles) => {
-            if (data && openModal) openModal(ModalsEnums.WITHDRAW_TOKENS_UNREACHED, data, handles);
+            if (data && openModal) openModal(ModalsEnums.WITHDRAW_TOKENS, data, handles);
         },
         classNameType: 'unreached center',
     },
