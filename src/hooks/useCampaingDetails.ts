@@ -12,7 +12,6 @@ import {
     serviceCreateSmartContracts,
     serviceDeleteCampaign,
     serviceFailMilestone,
-    serviceFailMilestoneAndCampaign,
     serviceFeatureCampaign,
     serviceGetBack,
     serviceInitializeCampaign,
@@ -31,12 +30,12 @@ import {
 } from '@/utils/campaignServices';
 import { HandlesEnums, ModalsEnums } from '@/utils/constants/constants';
 import { PageViewEnums, ROUTES } from '@/utils/constants/routes';
+import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status/status';
 import { calculatePercentageValue, getOrdinalString, getTimeRemaining } from '@/utils/formats';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { TimeApi, toJson, useAppStore, useTransactions, useWalletStore } from 'smart-db';
-import { getCampaignCategory_Name_By_Db_Id, getCampaignStatus_Code_Id_By_Db_Id, getCurrentMilestoneIndex, getMilestoneStatus_Code_Id_By_Db_Id } from '../utils/campaignHelpers';
-import { CampaignStatus_Code_Id_Enums } from '@/utils/constants/status/status';
+import { getCampaignCategory_Name_By_Db_Id, getCampaignStatus_Code_Id_By_Db_Id, getCurrentMilestoneEXIndex, getMilestoneStatus_Code_Id_By_Db_Id } from '../utils/campaignHelpers';
 
 export interface ICampaignDetails extends CampaignStatusConfigs {
     handles: Partial<Record<HandlesEnums, (data?: Record<string, any>) => Promise<string | boolean | undefined | void | boolean>>>;
@@ -87,7 +86,7 @@ export const useCampaignDetails = ({
     //--------------------------------------
     const router = useRouter();
     //--------------------------------------
-    const { wallet, isProtocolTeam, _DebugIsAdmin, _DebugIsEditor, campaignStatus, submissionStatus, protocol, refreshHaveCampaigns } = useGeneralStore();
+    const { wallet, isProtocolTeam, _DebugIsAdmin, _DebugIsEditor, campaignStatus, milestoneStatus, submissionStatus, protocol, refreshHaveCampaigns } = useGeneralStore();
     const { isLoading, setIsEditMode, fetchCampaignById, setCampaignTab, campaignTab } = useCampaignIdStore();
     //----------------------------------------------
     // States
@@ -98,7 +97,7 @@ export const useCampaignDetails = ({
     const campaign_category_name = useMemo(() => getCampaignCategory_Name_By_Db_Id(campaign.campaign.campaign_category_id), [campaign]);
     const campaign_status_code_id = useMemo(() => getCampaignStatus_Code_Id_By_Db_Id(campaign.campaign.campaign_status_id), [campaign]);
     const totalMilestones = useMemo(() => (campaign.milestones ? campaign.milestones.length : 0), [campaign]);
-    const currentMilestoneIndex = useMemo(() => getCurrentMilestoneIndex(campaign), [campaign]);
+    const currentMilestoneIndex = useMemo(() => getCurrentMilestoneEXIndex(campaign.milestones), [campaign]);
     const milestone_status_code_id =
         currentMilestoneIndex === undefined ? undefined : getMilestoneStatus_Code_Id_By_Db_Id(campaign.milestones![currentMilestoneIndex].milestone.milestone_status_id);
     const [timeRemainingBeginAt, setTimeRemainingBeginAt] = useState(getTimeRemaining(serverTime, campaign.campaign.begin_at));
@@ -347,16 +346,51 @@ export const useCampaignDetails = ({
         serviceValidateFundraisingStatus(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
 
     const handleSubmitMilestone = (data?: Record<string, any>) =>
-        serviceSubmitMilestone(campaign, currentMilestoneIndex ?? 1, campaignStatus, submissionStatus, data, onFinishUpdates);
+        serviceSubmitMilestone(campaign, currentMilestoneIndex ?? 1, milestoneStatus, submissionStatus, data, onFinishUpdates);
     const handleApproveMilestone = (data?: Record<string, any>) =>
-        serviceApproveMilestone(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
+        serviceApproveMilestone(
+            appStore,
+            walletStore,
+            openModal,
+            protocol,
+            handleBtnDoTransaction_WithErrorControl,
+            campaign,
+            currentMilestoneIndex ?? 1,
+            milestoneStatus,
+            submissionStatus,
+            data,
+            onFinishTx
+        );
     const handleRejectMilestone = (data?: Record<string, any>) =>
-        serviceRejectMilestone(campaign, currentMilestoneIndex ?? 1, campaignStatus, submissionStatus, data, onFinishUpdates);
+        serviceRejectMilestone(campaign, currentMilestoneIndex ?? 1, milestoneStatus, submissionStatus, data, onFinishUpdates);
     const handleFailMilestone = (data?: Record<string, any>) =>
-        serviceFailMilestone(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
+        serviceFailMilestone(
+            appStore,
+            walletStore,
+            openModal,
+            protocol,
+            handleBtnDoTransaction_WithErrorControl,
+            campaign,
+            currentMilestoneIndex ?? 1,
+            milestoneStatus,
+            submissionStatus,
+            data,
+            onFinishTx
+        );
 
     const handleCollect = (data?: Record<string, any>) =>
-        serviceCollect(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);
+        serviceCollect(
+            appStore,
+            walletStore,
+            openModal,
+            protocol,
+            handleBtnDoTransaction_WithErrorControl,
+            campaign,
+            currentMilestoneIndex ?? 1,
+            milestoneStatus,
+            data,
+            onFinishTx
+        );
 
     const handleGetBack = (data?: Record<string, any>) =>
         serviceGetBack(appStore, walletStore, openModal, protocol, handleBtnDoTransaction_WithErrorControl, campaign, campaignStatus, data, onFinishTx);

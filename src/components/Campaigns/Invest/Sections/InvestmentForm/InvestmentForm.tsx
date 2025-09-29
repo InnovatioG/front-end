@@ -39,7 +39,7 @@ export const getInputFields = (
     {
         id: 'ada',
         label: 'Total ADA',
-        placeholder: `${goal.toString()} $ADA`,
+        placeholder: `${goal.toLocaleString()} ₳`,
         value: amountInADA,
         onChange: handleADAChange,
     },
