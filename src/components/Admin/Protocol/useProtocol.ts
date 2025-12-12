@@ -40,6 +40,11 @@ export function useProtocol() {
                 setEditItem({ ...editItem, pdAdmins: [walletStore.info.pkh] });
             }
         }
+        if (walletStore.isConnected === true && walletStore.info !== undefined && view === 'update' && editItem !== null) {
+            if (editItem.pdAdmins?.length === 0) {
+                setEditItem({ ...editItem, pdAdmins: [walletStore.info.pkh] });
+            }
+        }
     }, [walletStore.isConnected, view, editItem]);
     useEffect(() => {
         if (editItem === undefined) return;
